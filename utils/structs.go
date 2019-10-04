@@ -26,6 +26,8 @@ type propValue struct {
 	OptionalCondition ArgOptionalIf
 }
 
+type TaskFunc func(connector client.Connector) error
+
 type taskImpl struct {
 	task TaskFunc
 	name string
@@ -37,5 +39,3 @@ type sessionManagerImpl struct {
 	connector     client.Connector
 	sessionError  error
 }
-
-type TaskFunc func(connector client.Connector) error
