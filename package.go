@@ -1,1 +1,1 @@
-package vsphere-automation-sdk-go
+package gosdk
