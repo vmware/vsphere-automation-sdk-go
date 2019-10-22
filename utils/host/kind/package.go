@@ -8,7 +8,7 @@ import (
 )
 
 var VCENTER Kind = hostTypeImpl{name: "vCenter", protocol: arch.JSONRPC, apiEndPointPrefix: "/api", supportedAuthTypes: []scheme.Scheme{scheme.BasicAuth, scheme.SAMLBearer}}
-var VMC Kind = hostTypeImpl{name: "VMC", protocol: arch.REST, apiEndPointPrefix: "/vmc/api", supportedAuthTypes: []scheme.Scheme{scheme.OAuthRefreshToken}}
+var VMC Kind = hostTypeImpl{name: "VMC", protocol: arch.REST, apiEndPointPrefix: "", supportedAuthTypes: []scheme.Scheme{scheme.OAuthRefreshToken}}
 var NSXT Kind = hostTypeImpl{name: "NSXT", protocol: arch.REST, apiEndPointPrefix: "", supportedAuthTypes: []scheme.Scheme{scheme.OAuthRefreshToken}}
 
 var All = []Kind{
