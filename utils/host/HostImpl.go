@@ -7,6 +7,8 @@ import (
 	"os"
 	"path"
 
+	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol/client"
+
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/log"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/args"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/args/keys"
@@ -19,6 +21,7 @@ import (
 
 type hostDetails struct {
 	args.Properties
+	sessionManager session.SessionManager
 }
 
 func (hd *hostDetails) Name() string {
@@ -108,11 +111,19 @@ func (hd *hostDetails) getSessionManager() (session.SessionManager, error) {
 	return sessionManager, nil
 }
 
+func (hd *hostDetails) Connector() client.Connector {
+	if hd.sessionManager == nil {
+		return nil
+	}
+	return hd.sessionManager.Connector()
+}
+
 func (hd *hostDetails) ExecuteTask(t task.TaskFunc) error {
 	sessionManager, err := hd.getSessionManager()
 	if err != nil {
 		return err
 	}
+	hd.sessionManager = sessionManager
 	execTask := task.CreateNewTask(t)
 	err = (*execTask).Execute(sessionManager)
 	return err

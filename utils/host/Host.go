@@ -3,6 +3,7 @@ package host
 import (
 	"net/http"
 
+	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol/client"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/args"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/auth/scheme"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/host/kind"
@@ -17,6 +18,7 @@ type Host interface {
 	AuthScheme() scheme.Scheme
 	AuthDetails() scheme.Details
 	ExecuteTask(t task.TaskFunc) error
+	Connector() client.Connector
 	getHTTPClient() http.Client
 	getSessionManager() (session.SessionManager, error)
 	args.Properties

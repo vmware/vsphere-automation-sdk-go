@@ -18,7 +18,7 @@ func (t *taskImpl) Execute(sessionManager session.SessionManager) error {
 
 	defer sessionManager.Logout()
 
-	err = t.task(sessionManager.Connector())
+	err = t.task(sessionManager)
 	if err != nil {
 		log.Fatal(err)
 		return err
