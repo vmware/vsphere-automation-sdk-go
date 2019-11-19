@@ -1,11 +1,11 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package bindings
 
-/* **********************************************************
- * Copyright 2019 VMware, Inc. All rights reserved.
- *      -- VMware Confidential
- * *********************************************************
- */
+
 import (
+	"encoding/base64"
 	"fmt"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/l10n"
@@ -121,9 +121,6 @@ func (v *RestToGolangVisitor) visitOptional(bindingType BindingType) []error {
 }
 
 func (v *RestToGolangVisitor) visitBlob() []error {
-
-	//todo:
-	// check optional blob handling
 	if v.inValue == nil {
 		var nilSlice []byte = nil
 		v.outValue = nilSlice
@@ -215,18 +212,20 @@ func (v *RestToGolangVisitor) visitSetType(setType SetType, optional bool) []err
 		return nil
 	}
 	if listValue, ok := v.inValue.(*data.ListValue); ok {
-		var modifiedlistVal = data.NewListValue()
+		var structVal = data.NewStructValue(lib.MAP_ENTRY, nil)
 		for _, element := range listValue.List() {
-			var field = make(map[string]data.DataValue)
-			field[lib.MAP_KEY_FIELD] = element
-			field[lib.MAP_VALUE_FIELD] = data.NewBooleanValue(true)
-			var structValue = data.NewStructValue(lib.MAP_ENTRY, field)
-			modifiedlistVal.Add(structValue)
+			setBindingType := reflect.TypeOf(setType.ElementType())
+			if setBindingType == IntegerBindingType {
+				intVal := element.(*data.IntegerValue).Value()
+				structVal.SetField(strconv.FormatInt(intVal, 10), data.NewBooleanValue(true))
+			} else {
+				structVal.SetField(element.(*data.StringValue).Value(), data.NewBooleanValue(true))
+			}
 		}
 		s := setType.bindingStruct
 		x := reflect.MakeMapWithSize(s, len(listValue.List()))
 		bType := NewMapType(setType.ElementType(), NewBooleanType(), s)
-		v.inValue = modifiedlistVal
+		v.inValue = structVal
 		err := v.setMapType(bType, optional, x)
 		if err != nil {
 			return err
@@ -461,8 +460,14 @@ func (v *RestToGolangVisitor) setBlobType(value reflect.Value) []error {
 	if v.typeConverter.permissive {
 		if stringValue, ok := v.inValue.(*data.StringValue); ok {
 			log.Debug("Expected BlobValue but found StringValue instead.")
-			input := []byte(stringValue.Value())
-			value.Elem().Set(reflect.ValueOf(input))
+			//decode base 64 encoded string.
+			decodedString, decodeErr := base64.StdEncoding.DecodeString(stringValue.Value())
+			if decodeErr != nil {
+				var args = map[string]string{
+					"errMsg": decodeErr.Error()}
+				return []error{l10n.NewRuntimeError("vapi.bindings.typeconverter.blob.base64.decode.error", args)}
+			}
+			value.Elem().Set(reflect.ValueOf(decodedString))
 			return nil
 		}
 		return v.unexpectedValueError("BlobValue or StringValue")
@@ -647,9 +652,7 @@ func (v *RestToGolangVisitor) setMapType(mapType MapType, optional bool, result 
 		inValue := v.inValue
 		for _, fieldName := range structValue.FieldNames() {
 			keyBindingType := reflect.TypeOf(mapType.KeyType)
-			if keyBindingType == StringBindingType {
-				v.inValue = data.NewStringValue(fieldName)
-			} else if keyBindingType == IntegerBindingType {
+			if keyBindingType == IntegerBindingType {
 				n, err := strconv.ParseInt(fieldName, 10, 64)
 				if err != nil {
 					log.Errorf("Error converting string to int64 %s", err)
@@ -657,6 +660,8 @@ func (v *RestToGolangVisitor) setMapType(mapType MapType, optional bool, result 
 						map[string]string{"key": fieldName})}
 				}
 				v.inValue = data.NewIntegerValue(n)
+			} else { //StringBindingType, IdBindingType, URIBindingType, EnumBindingType
+				v.inValue = data.NewStringValue(fieldName)
 			}
 			err := v.visit(mapType.KeyType)
 			if err != nil {

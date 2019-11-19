@@ -1,9 +1,7 @@
-package metadata
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
 
-/* **********************************************************
- * Copyright 2019 VMware, Inc.  All rights reserved.
- *      -- VMware Confidential
- * **********************************************************/
+package metadata
 
 import (
 	"encoding/json"
@@ -47,8 +45,8 @@ func (parser *PrivilegeParser) Parse(authzData []byte) error {
 		return getError("Json Data attribute component doesnot exists or assertion to map[string]interface{} failed")
 	}
 
-	var privilegeMap map[string][]string
 	for key, val := range componentData.(map[string]interface{}) {
+		var privilegeMap map[string][]string
 		if key == AUTH_PRIVILEGE_COMPONENT_NAME {
 			continue
 		} else {

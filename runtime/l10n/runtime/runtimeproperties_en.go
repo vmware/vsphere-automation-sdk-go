@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package runtime
 
 var RuntimeProperties_EN = []byte(
@@ -38,6 +41,7 @@ vapi.data.structure.isoneof.value.invalid=Invalid value '{value}' for field '{fi
 
 vapi.data.serializers.rest.datavalue.error=Error serializing DataValue of type '{type}'
 vapi.data.serializers.rest.metadata.value.nil=Rest metadata cannot be nil
+vapi.data.serializers.rest.nested.invalid.args=Parameter {param} doesnot have valid binding to be returned.
 vapi.data.serializers.rest.unsupported_data_value=Data value of type '{type}' is not supported to be serialized as part of REST request URL
 vapi.data.serializers.unsupported.json.type=Could not determine appropriate DataValue for json type '{jsonType}'
 vapi.data.invalid.json.number=json.Number neither Int64 nor Float64
@@ -74,11 +78,14 @@ vapi.security.sso.samltoken.invalid=Invalid saml token.
 vapi.security.sso.signature.invalid=Invalid signature.
 vapi.security.sso.signature.algorithm.invalid=Invalid signature algorithm.
 
-vapi.protocol.server.rest.param.invalid_value=Invalid value for request parameter '{paramName}'. Expected a value of type '{expectedType}', but parsing failed because of '{errMsg}'
+vapi.protocol.server.rest.param.invalid_value=Parsing failed because of '{errMsg}'
+vapi.protocol.server.rest.param.invalid_type=Invalid value for request parameter '{paramName}'. Expected a value of type '{expectedType}', but parsing failed because of '{errMsg}'
 vapi.protocol.server.rest.param.name_type_map_not_found='{paramName}' is not found in parameter name to type map
 vapi.protocol.server.rest.param.unsupport_type=Request parameter data type '{dataType}' not supported
 vapi.protocol.server.rest.param.body_parse_error=Error when parsing request body, '{errMsg}'
+vapi.protocol.server.rest.param.bodyfield_parse_invalid=Body Field data is not of type Map
 vapi.protocol.server.rest.param.body.unsupport_type=Request body data type '{dataType}' not supported
+vapi.protocol.server.rest.param.body.unexpected=Request body data type expected '{required}' but got '{type}'
 vapi.protocol.server.rest.response.unsupport_type=Response data type '{dataType}' not supported for field '{fieldName}'
 vapi.protocol.server.rest.response.not_structure=Response result is not a structure type
 vapi.protocol.server.rest.response.error_not_structure=Response error is not a structure type
@@ -92,11 +99,13 @@ vapi.protocol.client.response.unmarshall.error=Error unmarshalling server respon
 
 vapi.server.timedout = Request Timed out
 vapi.server.unavailable = Service not available
+vapi.server.response.error= Error reading server response '{errMsg}'
+
 
 #unused by golang
 vapi.bindings.skeleton.task.invalidstate=Service did not set the task state
 vapi.bindings.stub.jsonrpc.unsupported=JSON-RPC connector not supported for this invocation
-
+vapi.bindings.typeconverter.blob.base64.decode.error=Error in base64 decoding '{errMsg}'
 vapi.bindings.typeconverter.datetime.deserialize.day.invalid=Datetime string has an invalid day field= '%s'
 vapi.bindings.typeconverter.datetime.deserialize.hour.invalid=Datetime string has an invalid hour field= '%s'
 vapi.bindings.typeconverter.datetime.deserialize.invalid.format=Datetime string '%s' does not match expected pattern '%s'

@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package msg
 
 import (
@@ -24,15 +27,11 @@ func (j *JsonRpcDecoder) Decode(data []byte, v interface{}) error {
 }
 
 func (j *JsonRpcDecoder) DecodeDataValue(data string) (data.DataValue, error) {
-
-	var result = make(map[string]interface{})
-	d := json.NewDecoder(strings.NewReader(data))
-	d.UseNumber()
-	if err := d.Decode(&result); err != nil {
+	result, err := deserializeJsonString(data)
+	if err != nil {
 		return nil, err
 	}
 	return j.GetDataValue(result)
-
 }
 
 func (j *JsonRpcDecoder) GetDataValue(jsonDataValue interface{}) (data.DataValue, error) {
@@ -88,13 +87,15 @@ func (j *JsonRpcDecoder) DeSerializeSecretValue(jsonSecretValue interface{}) (*d
 func (j *JsonRpcDecoder) DeSerializeListValue(jsonListValue []interface{}) (*data.ListValue, error) {
 	var listValue = data.NewListValue()
 	for _, element := range jsonListValue {
-		var listElementDataValue, _ = j.GetDataValue(element)
+		listElementDataValue, dvError := j.GetDataValue(element)
+		if dvError != nil {
+			return nil, dvError
+		}
 		listValue.Add(listElementDataValue)
 	}
 	return listValue, nil
 }
 func (j *JsonRpcDecoder) DeSerializeStructValue(jsonStructValue map[string]interface{}) (*data.StructValue, error) {
-
 	var structName string
 	var fields map[string]interface{}
 	for key, val := range jsonStructValue {
@@ -104,7 +105,10 @@ func (j *JsonRpcDecoder) DeSerializeStructValue(jsonStructValue map[string]inter
 
 	var structVal = data.NewStructValue(structName, nil)
 	for fieldName, fieldJsonValue := range fields {
-		var fieldDataValue, _ = j.GetDataValue(fieldJsonValue)
+		var fieldDataValue, dvError = j.GetDataValue(fieldJsonValue)
+		if dvError != nil {
+			return nil, dvError
+		}
 		structVal.SetField(fieldName, fieldDataValue)
 	}
 	return structVal, nil
@@ -112,24 +116,28 @@ func (j *JsonRpcDecoder) DeSerializeStructValue(jsonStructValue map[string]inter
 }
 
 func (j *JsonRpcDecoder) DeSerializeErrorValue(jsonStructValue map[string]interface{}) (*data.ErrorValue, error) {
-
 	var errorName string
 	var fields map[string]interface{}
 	for key, val := range jsonStructValue {
 		errorName = key
 		fields = val.(map[string]interface{})
 	}
-
 	var structVal = data.NewErrorValue(errorName, nil)
 	for fieldName, fieldJsonValue := range fields {
-		var fieldDataValue, _ = j.GetDataValue(fieldJsonValue)
+		fieldDataValue, dvError := j.GetDataValue(fieldJsonValue)
+		if dvError != nil {
+			return nil, dvError
+		}
 		structVal.SetField(fieldName, fieldDataValue)
 	}
 	return structVal, nil
 
 }
 func (decoder *JsonRpcDecoder) DeSerializeOptionalValue(i interface{}) (*data.OptionalValue, error) {
-	var dataValue, _ = decoder.GetDataValue(i)
+	dataValue, dvError := decoder.GetDataValue(i)
+	if dvError != nil {
+		return nil, dvError
+	}
 	return data.NewOptionalValue(dataValue), nil
 }
 
@@ -151,7 +159,7 @@ func (decoder *JsonRpcDecoder) DeSerializeMethodResult(methodResultInput map[str
 		return core.NewMethodResult(nil, methodResultError.(*data.ErrorValue)), nil
 	}
 
-	return core.MethodResult{}, errors.New("Error deserializing methodresult")
+	return core.MethodResult{}, errors.New("error de-serializing methodresult")
 }
 
 func (decoder *JsonRpcDecoder) DeSerializeApplicationContext(appCtxData interface{}) (*core.ApplicationContext, error) {
@@ -167,7 +175,6 @@ func (decoder *JsonRpcDecoder) DeSerializeApplicationContext(appCtxData interfac
 			var stringPtr *string = nil
 			appCtxMap[key] = stringPtr
 		}
-
 	}
 	return core.NewApplicationContext(appCtxMap), nil
 }
@@ -189,7 +196,6 @@ func (decoder *JsonRpcDecoder) DeSerializeExecutionContext(executionContext inte
 	var executionContextMap map[string]interface{}
 	if executionContextMapVal, isMap := executionContext.(map[string]interface{}); !isMap {
 		return core.NewExecutionContext(nil, nil), nil
-
 	} else {
 		executionContextMap = executionContextMapVal
 	}
@@ -200,7 +206,6 @@ func (decoder *JsonRpcDecoder) DeSerializeExecutionContext(executionContext inte
 		if err != nil {
 			return nil, err
 		}
-
 	}
 	var secCtx core.SecurityContext
 	if val, ok := executionContextMap[lib.SECURITY_CONTEXT]; ok {
@@ -305,28 +310,26 @@ func (decoder *JsonRpcDecoder) getJsonRpc20Response(response map[string]interfac
 
 }
 
+func deserializeJsonString(inputString string) (map[string]interface{}, error) {
+	var requestObject = make(map[string]interface{})
+	d := json.NewDecoder(strings.NewReader(inputString))
+	d.UseNumber()
+	if err := d.Decode(&requestObject); err != nil {
+		return nil, err
+	} else {
+		return requestObject, nil
+	}
+}
+
 /**
  * Deserialize incoming json which could be in byte or string format.
  */
 func DeSerializeJson(request interface{}) (map[string]interface{}, error) {
-	var requestObject = make(map[string]interface{})
 	if requestString, ok := request.(string); ok {
-		d := json.NewDecoder(strings.NewReader(requestString))
-		d.UseNumber()
-		if err := d.Decode(&requestObject); err != nil {
-			return nil, err
-		} else {
-			return requestObject, nil
-		}
+		return deserializeJsonString(requestString)
 	} else if requestBytes, ok := request.([]byte); ok {
 		requestString := string(requestBytes)
-		d := json.NewDecoder(strings.NewReader(requestString))
-		d.UseNumber()
-		if err := d.Decode(&requestObject); err != nil {
-			return nil, err
-		} else {
-			return requestObject, nil
-		}
+		return deserializeJsonString(requestString)
 	}
 	return nil, errors.New("Error Deserializing json")
 }

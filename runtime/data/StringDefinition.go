@@ -1,8 +1,8 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package data
 
-/* **********************************************************
- * Copyright 2018 VMware, Inc.  All rights reserved. -- VMware Confidential
- * **********************************************************/
 
 type StringDefinition struct{}
 

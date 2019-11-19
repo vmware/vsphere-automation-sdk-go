@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package bindings
 
 import (
@@ -474,7 +477,7 @@ func (v *VapiJsonRpcDataValueToGolangVisitor) setDateTimeType(value reflect.Valu
 		x := stringValue.Value()
 		t, err := time.Parse(VAPI_DATETIME_LAYOUT, x)
 		if err != nil {
-			return []error{l10n.NewRuntimeError("vapi.bindings.typeconverter.uri.invalid",
+			return []error{l10n.NewRuntimeError("vapi.bindings.typeconverter.datetime.invalid",
 				map[string]string{"dateTime": x, "vapiFormat": VAPI_DATETIME_LAYOUT, "errorMessage": err.Error()})}
 		}
 		val.Set(reflect.ValueOf(t))

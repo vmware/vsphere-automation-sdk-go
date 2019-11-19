@@ -1,10 +1,11 @@
-/* **********************************************************
- * Copyright 2018 VMware, Inc.  All rights reserved. -- VMware Confidential
- * **********************************************************/
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package data
 
 import (
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/l10n"
+	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/lib"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/log"
 )
 
@@ -85,16 +86,18 @@ func (structDefinition StructDefinition) Validate(value DataValue) []error {
 	}
 	var structValue = value.(*StructValue)
 	if structDefinition.Name() != structValue.Name() {
-		var args = map[string]string{
-			"actualName":   structValue.Name(),
-			"expectedName": structDefinition.Name()}
-		return []error{l10n.NewRuntimeError("vapi.data.structure.name.mismatch", args)}
+		if !(structValue.Name() == lib.MAP_ENTRY || structValue.Name() == lib.OPERATION_INPUT) {
+			var args = map[string]string{
+				"actualName":   structValue.Name(),
+				"expectedName": structDefinition.Name()}
+			return []error{l10n.NewRuntimeError("vapi.data.structure.name.mismatch", args)}
+		}
 	}
 	// Make sure no fields are missing and those that are present are valid
 	for _, fieldName := range structDefinition.FieldNames() {
 		var fieldDef = structDefinition.Field(fieldName)
 		var fieldVal, err = structValue.Field(fieldName)
-		if err != nil {
+		if err != nil && fieldDef.Type() != OPTIONAL {
 			var args = map[string]string{
 				"structName": structDefinition.Name(),
 				"fieldName":  fieldName}

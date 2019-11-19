@@ -1,7 +1,11 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package data
 
 import (
 	"encoding/json"
+	"strconv"
 )
 
 type IntegerValue struct {
@@ -23,8 +27,7 @@ func (integerValue *IntegerValue) Value() int64 {
 }
 
 func (integerValue *IntegerValue) String() string {
-	//TODO
-	return ""
+	return strconv.FormatInt(integerValue.value, 10)
 }
 
 func (integerValue *IntegerValue) MarshalJSON() ([]byte, error) {

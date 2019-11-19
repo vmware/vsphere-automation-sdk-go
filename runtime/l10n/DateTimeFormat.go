@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package l10n
 
 // Constants that map to the enum values in std.LocalizationParam.DateTimeFormat

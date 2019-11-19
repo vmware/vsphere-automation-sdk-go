@@ -1,8 +1,5 @@
-/*
- *  **********************************************************
- *  Copyright (c)  2018-2019 VMware, Inc. All rights reserved. -- VMware Confidential
- *  *********************************************************
- */
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
 
 package bindings
 
@@ -192,7 +189,7 @@ func CreateErrorValueFromMessages(errorDef data.ErrorDefinition, messageList []e
 		if l10nErr, ok := msg.(*l10n.Error); ok {
 			messages.Add(ConvertMessageToStructValue(l10nErr))
 		} else {
-			log.Errorf("Expected msg of type *l10n.Error but found %s", reflect.TypeOf(l10nErr))
+			log.Errorf("Expected msg of type *l10n.Error but found %s", reflect.TypeOf(msg))
 		}
 
 	}
@@ -226,7 +223,7 @@ func CreateErrorValueFromErrorValueAndMessages(errorDef data.ErrorDefinition, ca
 		if l10nErr, ok := msg.(*l10n.Error); ok {
 			messageList.Add(ConvertMessageToStructValue(l10nErr))
 		} else {
-			log.Errorf("Expected msg of type *l10n.Error but found %s", reflect.TypeOf(l10nErr))
+			log.Errorf("Expected msg of type *l10n.Error but found %s", reflect.TypeOf(msg))
 		}
 
 	}

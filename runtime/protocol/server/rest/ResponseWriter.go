@@ -1,9 +1,7 @@
-package rest
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
 
-/* **********************************************************
- * Copyright 2019 VMware, Inc.  All rights reserved.
- *      -- VMware Confidential
- * **********************************************************/
+package rest
 
 import (
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/core"
@@ -188,7 +186,7 @@ func setResponseHeader(respDV data.DataValue,
 
 	var err []error
 	var headerName string
-	var exist      bool
+	var exist bool
 	for name, val := range respMap {
 		if headerName, exist = resultToHeaderMap[name]; !exist {
 			continue

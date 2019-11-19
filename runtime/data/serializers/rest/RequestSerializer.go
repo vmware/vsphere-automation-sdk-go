@@ -1,15 +1,18 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package rest
 
-/* **********************************************************
- * Copyright 2019 VMware, Inc.  All rights reserved. -- VMware Confidential
- * **********************************************************/
+
 
 import (
 	"encoding/base64"
 	"fmt"
 	"reflect"
 	"strconv"
+	"strings"
 
+	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/core"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data/serializers/cleanjson"
@@ -42,7 +45,9 @@ func (result *Request) InputHeaders() map[string]string {
 }
 
 func (result *Request) SetInputHeaders(headers map[string]string) {
-	result.inputHeaders = headers
+	for k, v := range headers {
+		result.inputHeaders[k] = v
+	}
 }
 
 func (result *Request) RequestBody() string {
@@ -76,6 +81,19 @@ func SerializeRequests(inputValue *data.StructValue, ctx *core.ExecutionContext,
 	return result, nil
 }
 
+func createParamsFieldMap( inputValue *data.StructValue, fieldsMapBindingtype map[string]bindings.BindingType, fieldNamesMap map[string]string) (map[string]string, error) {
+	fields := map[string]string{}
+	for field, fieldName := range fieldNamesMap {
+		if val, err := getNestedParams(field, inputValue, fieldsMapBindingtype); err == nil {
+			fields, err = replaceFieldValue(fields, fieldName, val)
+			if err != nil {
+				return nil, err
+			}
+		}
+	}
+	return fields, nil
+}
+
 // SerializeInput serializes the input value
 // Return Request with urlPath, inputHeaders and requestBody
 func SerializeInput(inputValue *data.StructValue, metadata *protocol.OperationRestMetadata) (*Request, error) {
@@ -85,35 +103,52 @@ func SerializeInput(inputValue *data.StructValue, metadata *protocol.OperationRe
 
 	var requestBodyInputValue data.DataValue
 	var err error
+	var bodyfieldAnnotations bool = false
+
+	fieldsMapBindingtype := metadata.Fields()
+
+	// Add @Body Field
 	requestBodyParam := metadata.BodyParamActualName()
 	if requestBodyParam != "" {
-		requestBodyInputValue, err = inputValue.Field(requestBodyParam)
+		requestBodyInputValue, err = getNestedParams(requestBodyParam, inputValue, fieldsMapBindingtype)
 		if err != nil {
+			log.Debugf("Body Param was not found, Error: %s ", err)
 			return nil, err
 		}
 	} else {
 		requestBodyInputValue = data.NewStructValue(inputValue.Name(), map[string]data.DataValue{})
+		bodyfieldAnnotations = true
 	}
 
-	pathVariableFields := map[string]string{}
-	queryParamFields := map[string]string{}
-	headerFields := map[string]string{}
+	// Add @Path Fields
+	pathFields, err := createParamsFieldMap(inputValue, fieldsMapBindingtype, metadata.PathParamsNameMap())
+	if err != nil {
+		return nil, err
+	}
 
-	pathVariableFieldNames := metadata.PathVariableFieldNames()
-	queryParamFieldNames := metadata.QueryParamFieldNames()
-	headerFieldNames := metadata.HeaderFieldNames()
-	for fieldName, fieldValue := range inputValue.Fields() {
-		if contains(pathVariableFieldNames, fieldName) {
-			pathVariableFields, err = replaceFieldValue(pathVariableFields, fieldName, fieldValue)
-		} else if contains(queryParamFieldNames, fieldName) {
-			queryParamFields, err = replaceFieldValue(queryParamFields, fieldName, fieldValue)
-		} else if contains(headerFieldNames, fieldName) {
-			headerFields, err = replaceFieldValue(headerFields, fieldName, fieldValue)
-		} else if requestBodyParam == "" {
-			requestBodyInputValue.(*data.StructValue).SetField(fieldName, fieldValue)
-		}
-		if err != nil {
-			return nil, err
+	// Add @Header Fields
+	headerFields, err := createParamsFieldMap(inputValue, fieldsMapBindingtype, metadata.HeaderParamsNameMap())
+	if err != nil {
+		return nil, err
+	}
+
+	// Add @Query Fields
+	queryFields, err := createParamsFieldMap(inputValue, fieldsMapBindingtype, metadata.QueryParamsNameMap())
+	if err != nil {
+		return nil, err
+	}
+
+	// Add @BodyField Fields
+	if  bodyfieldAnnotations {
+		requestFields := requestBodyInputValue.(*data.StructValue).FieldNames()
+		for field, _ := range metadata.FieldNameMap() {
+			if stringInSlice(field, requestFields) {
+				continue
+			} else if val, err := inputValue.Field(field); err == nil {
+				requestBodyInputValue.(*data.StructValue).SetField(field, val)
+			} else {
+				log.Error("Input datavalue doesn't contain BodyField %s which is required ", field)
+			}
 		}
 	}
 
@@ -123,8 +158,17 @@ func SerializeInput(inputValue *data.StructValue, metadata *protocol.OperationRe
 		return nil, err
 	}
 
-	urlPath := metadata.GetUrlPath(pathVariableFields, queryParamFields)
+	urlPath := metadata.GetUrlPath(pathFields, queryFields, metadata.DispatchParam())
 	return NewRequest(urlPath, headerFields, requestBodyStr), nil
+}
+
+func stringInSlice(a string, list []string) bool {
+    for _, b := range list {
+        if b == a {
+            return true
+        }
+    }
+    return false
 }
 
 func replaceFieldValue(fields map[string]string, fieldName string, fieldValue data.DataValue) (map[string]string, error) {
@@ -151,24 +195,35 @@ func convertDataValueToString(dataValue data.DataValue) (string, error) {
 	case data.BoolValuePtr:
 		return dataValueToJSONEncoder.Encode(dataValue)
 	case data.StringValuePtr:
-		encodedStr, err := dataValueToJSONEncoder.Encode(dataValue)
-		if err != nil {
-			log.Error(err)
-			return encodedStr, err
-		}
-		encodedStr, err = strconv.Unquote(encodedStr)
-		if err != nil {
-			log.Error(err)
-			return encodedStr, err
-		}
-		return encodedStr, nil
+		return unquote(dataValueToJSONEncoder.Encode(dataValue))
 	case data.IntegerValuePtr:
+		return dataValueToJSONEncoder.Encode(dataValue)
+	case data.DoubleValuePtr:
+		return dataValueToJSONEncoder.Encode(dataValue)
+	case data.BlobValuePtr:
+		return unquote(dataValueToJSONEncoder.Encode(dataValue))
+	case data.SecretValuePtr:
+		return unquote(dataValueToJSONEncoder.Encode(dataValue))
+	case data.ListValuePtr:
 		return dataValueToJSONEncoder.Encode(dataValue)
 	default:
 		return "", l10n.NewRuntimeError(
 			"vapi.data.serializers.rest.unsupported_data_value",
 			map[string]string{"type": dataValue.Type().String()})
 	}
+}
+
+func unquote(encodedStr string, err error) (string, error) {
+	if err != nil {
+		log.Error(err)
+		return encodedStr, err
+	}
+	encodedStr, err = strconv.Unquote(encodedStr)
+	if err != nil {
+		log.Error(err)
+		return encodedStr, err
+	}
+	return encodedStr, nil
 }
 
 // Get the authorization headers for the corresponding security context
@@ -260,4 +315,55 @@ func getSecurityCtxStrValue(securityContext core.SecurityContext, propKey string
 		propKey, reflect.TypeOf(propVal).String())
 	log.Error(err)
 	return "", err
+}
+
+
+
+func getNestedParams(field string, inputValue *data.StructValue, fields map[string]bindings.BindingType) (data.DataValue, error) {
+	tokens := strings.Split(field, ".")
+	if len(tokens) > 1 {
+		currentField := tokens[0]
+		if fieldBinding, ok := fields[currentField]; ok {
+			return getNestedParam(tokens, inputValue, fieldBinding)
+		}
+		return nil, l10n.NewRuntimeError("vapi.data.serializers.rest.nested.invalid.args",
+		map[string]string{"param": strings.Join(tokens, ".")})
+	}
+	return inputValue.Field(field)
+}
+
+
+func getNestedParam(tokens []string, inputValue *data.StructValue, fieldBinding bindings.BindingType) (data.DataValue, error) {
+	currentField := tokens[0]
+	if len(tokens) == 1 {
+		return inputValue.Field(currentField)
+	}
+
+	newInputValue, err := inputValue.Field(currentField)
+	if err != nil {
+		return nil, err
+	}
+	fieldBindingType := reflect.TypeOf(fieldBinding)
+	currentField = tokens[1]
+
+	if temp, ok := newInputValue.(*data.StructValue); ok {
+		if fieldBindingType == bindings.ReferenceBindingType {
+			return getNestedParam(tokens[1:], temp, fieldBinding.(bindings.ReferenceType).Resolve().(bindings.StructType).Field(currentField))
+		} else if fieldBindingType == bindings.StructBindingType {
+			return getNestedParam(tokens[1:], temp, fieldBinding.(bindings.StructType).Field(currentField))
+		}
+	} else if optVal, ok := newInputValue.(*data.OptionalValue); ok && fieldBindingType == bindings.OptionalBindingType {
+		if !optVal.IsSet() || len(tokens) == 1 {
+			return optVal, nil
+		}
+		
+		optElementBinding := fieldBinding.(bindings.OptionalType).ElementType()
+		if temp, ok := optVal.Value().(*data.StructValue); ok &&  reflect.TypeOf(optElementBinding) == bindings.ReferenceBindingType {
+			return getNestedParam(tokens[1:], temp, optElementBinding.(bindings.ReferenceType).Resolve())
+		}
+	} else if fieldBindingType == bindings.OptionalBindingType {
+		return data.NewOptionalValue(nil), nil
+	}
+	return nil, l10n.NewRuntimeError( "vapi.data.serializers.rest.nested.invalid.args",
+		map[string]string{"param": strings.Join(tokens, ".")})
 }

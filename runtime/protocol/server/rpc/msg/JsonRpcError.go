@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package msg
 
 var JSONRPC_INVALID_REQUEST = int64(-32600)

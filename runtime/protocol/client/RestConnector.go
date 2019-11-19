@@ -1,10 +1,6 @@
-/* **********************************************************
- * Copyright 2019 VMware, Inc. All rights reserved.
- *      -- VMware Confidential
- * *********************************************************
- */
-
 //TODO refactor this class to share code with jsonrpc connector
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
 
 package client
 
@@ -25,15 +21,16 @@ import (
 )
 
 type RestConnector struct {
-	url                string
-	httpClient         http.Client
-	securityContext    core.SecurityContext
-	appContext         *core.ApplicationContext
-	connectionMetadata map[string]interface{}
+	url                      string
+	httpClient               http.Client
+	securityContext          core.SecurityContext
+	appContext               *core.ApplicationContext
+	connectionMetadata       map[string]interface{}
+	enableDefaultContentType bool
 }
 
 func NewRestConnector(url string, client http.Client) *RestConnector {
-	return &RestConnector{url: url, httpClient: client}
+	return &RestConnector{url: url, httpClient: client, enableDefaultContentType: true}
 }
 
 func (j *RestConnector) ApplicationContext() *core.ApplicationContext {
@@ -58,6 +55,11 @@ func (j *RestConnector) SetConnectionMetadata(connectionMetadata map[string]inte
 
 func (j *RestConnector) ConnectionMetadata() map[string]interface{} {
 	return j.connectionMetadata
+}
+
+// If enableDefaultContentType is True then Header[Content-Type] gets overwritten to value 'application/json'
+func (j *RestConnector) SetEnableDefaultContentType(enableDefaultContentType bool) {
+	j.enableDefaultContentType = enableDefaultContentType
 }
 
 func (j *RestConnector) NewExecutionContext() *core.ExecutionContext {
@@ -93,7 +95,9 @@ func (j *RestConnector) buildHTTPRequest(serializedRequest *rest.Request,
 	for k, v := range serializedRequest.InputHeaders() {
 		req.Header.Set(k, v)
 	}
-	req.Header.Set(lib.HTTP_CONTENT_TYPE_HEADER, lib.JSON_CONTENT_TYPE)
+	if _, ok := req.Header[lib.HTTP_CONTENT_TYPE_HEADER]; !ok && j.enableDefaultContentType {
+		req.Header.Set(lib.HTTP_CONTENT_TYPE_HEADER, lib.JSON_CONTENT_TYPE)
+	}
 	return req, nil
 }
 

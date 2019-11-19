@@ -1,6 +1,6 @@
-/* **********************************************************
- * Copyright 2018 VMware, Inc.  All rights reserved. -- VMware Confidential
- * **********************************************************/
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package data
 
 import (
@@ -31,6 +31,10 @@ func (listDefinition ListDefinition) ElementType() DataDefinition {
 }
 
 func (listDefinition ListDefinition) Validate(value DataValue) []error {
+	// relax specific validation scenarios to support rest
+	if _, ok := value.(*StructValue); ok {
+		return nil
+	}
 	var result = listDefinition.Type().Validate(value)
 	if result != nil {
 		return result

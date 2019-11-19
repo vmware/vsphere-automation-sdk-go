@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package security
 
 import (
@@ -217,7 +220,7 @@ func (a *AuthenticationFilter) Invoke(serviceID string, operationId string,
 
 	// Get required Authn Schemes for ServiceId and OperationID
 	allowedAuthnSchemes := a.allowedSchemes(serviceID, operationId)
-	log.Debugf("Allowed Authentication schemes are: ", allowedAuthnSchemes)
+
 	// Checks for NO_AUTH
 	if len(allowedAuthnSchemes) == 0 {
 		isNoAuthAllowed = true
@@ -238,12 +241,18 @@ func (a *AuthenticationFilter) Invoke(serviceID string, operationId string,
 
 	authScheme := securityCtx.Property(AUTHENTICATION_SCHEME_ID)
 	if authScheme == nil {
-		return a.invokeProvider(serviceID, operationId, input, ctx)
+		if isNoAuthAllowed {
+			log.Debugf("Authn scheme Id is not provided but NO AUTH is allowed hence invoking the operation")
+			return a.invokeProvider(serviceID, operationId, input, ctx)
+		}
+		errorVal := bindings.CreateErrorValueFromMessageId(bindings.UNAUTHENTICATED_ERROR_DEF,
+			"vapi.security.authentication.invalid", nil)
+		return core.NewMethodResult(nil, errorVal)
 	}
 
 	if requestScheme, ok := authScheme.(string); ok {
 
-		if requestScheme == NO_AUTH {
+		if requestScheme == NO_AUTH && isNoAuthAllowed {
 			log.Debugf("Provided requestScheme is NO_AUTH hence invoking api provider")
 			return a.invokeProvider(serviceID, operationId, input, ctx)
 		}
@@ -293,7 +302,9 @@ func (a *AuthenticationFilter) Invoke(serviceID string, operationId string,
 
 	if authnResult == nil && !isNoAuthAllowed {
 		log.Info("Could not find supporting authentication handler")
-		ctx.SetSecurityContext(core.NewSecurityContextImpl())
+		errorVal := bindings.CreateErrorValueFromMessageId(bindings.UNAUTHENTICATED_ERROR_DEF,
+			"vapi.security.authentication.invalid", nil)
+		return core.NewMethodResult(nil, errorVal)
 	}
 
 	return a.invokeProvider(serviceID, operationId, input, ctx)

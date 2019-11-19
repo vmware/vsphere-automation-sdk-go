@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package msg
 
 import (
@@ -42,41 +45,39 @@ func NewJsonRpcHandler(apiProvider core.APIProvider) *JsonRpcHandler {
 }
 
 func (j *JsonRpcHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
-	if r.Method == "POST" {
-		body, err := ioutil.ReadAll(r.Body)
-		if err != nil {
-			http.Error(rw, "Error reading request body", http.StatusInternalServerError)
-		}
-		requestObj, err := DeSerializeJson(body)
-		if err != nil {
-			log.Error("Error deserializing jsonrpc request")
-			log.Error(err)
-			var jsonRpcRequestError = NewJsonRpcRequestError(NewJsonRpcErrorInvalidRequest("Error deserializing jsonrpc request"), nil)
-			j.sendResponse(jsonRpcRequestError, rw, nil)
-			return
-		}
-		var request, requestDeserializationError = j.jsonRpcDecoder.getJsonRpc20Request(requestObj)
-		if requestDeserializationError != nil {
-			log.Error("Error deserializing jsonrpc request")
-			var jsonRpcRequestError = NewJsonRpcRequestError(NewJsonRpcErrorInvalidRequest("Error deserializing jsonrpc request"), nil)
-			j.sendResponse(jsonRpcRequestError, rw, nil)
-			return
-		}
-		for _, reqProcessor := range j.requestProcessors {
-			err := reqProcessor.Process(&requestObj)
-			if err != nil {
-				log.Error("Encountered error during preprocessing of json request")
-				log.Error(err)
-				var jsonRpcRequestError = NewJsonRpcRequestError(NewJsonRpcErrorInvalidRequest(err), &request)
-				j.sendResponse(jsonRpcRequestError, rw, nil)
-				return
-			}
-		}
-		j.processJsonRpcRequest(rw, r, request)
-
-	} else {
+	if r.Method != "POST" {
 		http.Error(rw, "Invalid request method", http.StatusMethodNotAllowed)
 	}
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(rw, "Error reading request body", http.StatusInternalServerError)
+	}
+	requestObj, err := DeSerializeJson(body)
+	if err != nil {
+		log.Error("Error deserializing jsonrpc request")
+		log.Error(err)
+		var jsonRpcRequestError = NewJsonRpcRequestError(NewJsonRpcErrorInvalidRequest("Error deserializing jsonrpc request"), nil)
+		j.sendResponse(jsonRpcRequestError, rw, nil)
+		return
+	}
+	var request, requestDeserializationError = j.jsonRpcDecoder.getJsonRpc20Request(requestObj)
+	if requestDeserializationError != nil {
+		log.Error("Error deserializing jsonrpc request")
+		var jsonRpcRequestError = NewJsonRpcRequestError(NewJsonRpcErrorInvalidRequest("Error deserializing jsonrpc request"), nil)
+		j.sendResponse(jsonRpcRequestError, rw, nil)
+		return
+	}
+	for _, reqProcessor := range j.requestProcessors {
+		err := reqProcessor.Process(&requestObj)
+		if err != nil {
+			log.Error("Encountered error during preprocessing of json request")
+			log.Error(err)
+			var jsonRpcRequestError = NewJsonRpcRequestError(NewJsonRpcErrorInvalidRequest(err), &request)
+			j.sendResponse(jsonRpcRequestError, rw, nil)
+			return
+		}
+	}
+	j.processJsonRpcRequest(rw, r, request)
 }
 
 func (j *JsonRpcHandler) AddRequestPreProcessor(reqProcessor server.RequestPreProcessor) {
@@ -93,7 +94,10 @@ func (j *JsonRpcHandler) sendResponse(response interface{}, rw http.ResponseWrit
 		//Accessing directly to avoid canonicalizing header key.
 		rw.Header()[lib.VAPI_ERROR] = []string{error.Name()}
 	}
-	rw.Write(result)
+	_, writeErr := rw.Write(result)
+	if writeErr != nil {
+		log.Error(writeErr)
+	}
 }
 
 func (j *JsonRpcHandler) processJsonRpcRequest(rw http.ResponseWriter, r *http.Request, request JsonRpc20Request) {
@@ -163,7 +167,12 @@ func (j *JsonRpcHandler) processJsonRpcRequest(rw http.ResponseWriter, r *http.R
 	if logWireValue {
 		jsonRpcEncoder := NewJsonRpcEncoder()
 		jsonRpcEncoder.SetRedactSecretFields(true)
-		encodedInput, _ := jsonRpcEncoder.Encode(inputValue)
+		encodedInput, encodeError := jsonRpcEncoder.Encode(inputValue)
+		if encodeError != nil {
+			var jsonRpcRequestError = NewJsonRpcRequestError(NewJsonRpcErrorInvalidRequest(encodeError.Error()), &request)
+			j.sendResponse(jsonRpcRequestError, rw, nil)
+			return
+		}
 		log.Debugf("Handling new request with input %+v", string(encodedInput))
 	}
 
@@ -225,9 +234,9 @@ func (j *JsonRpcHandler) serviceId(request JsonRpc20Request) (string, error) {
 func (j *JsonRpcHandler) input(request JsonRpc20Request) (data.DataValue, error) {
 	var params = request.Params()
 	if val, ok := params[lib.REQUEST_INPUT]; ok {
-		var structValue, error = j.jsonRpcDecoder.GetDataValue(val)
-		if error != nil {
-			return nil, error
+		var structValue, dvError = j.jsonRpcDecoder.GetDataValue(val)
+		if dvError != nil {
+			return nil, dvError
 		}
 		return structValue, nil
 	} else {
@@ -238,9 +247,9 @@ func (j *JsonRpcHandler) input(request JsonRpc20Request) (data.DataValue, error)
 func (j *JsonRpcHandler) executionContext(request JsonRpc20Request) (*core.ExecutionContext, error) {
 	var params = request.Params()
 	if val, ok := params[lib.EXECUTION_CONTEXT]; ok {
-		var executionContext, error = j.jsonRpcDecoder.DeSerializeExecutionContext(val)
-		if error != nil {
-			return nil, errors.New("Error deserializing execution context.")
+		var executionContext, dsError = j.jsonRpcDecoder.DeSerializeExecutionContext(val)
+		if dsError != nil {
+			return nil, errors.New("error de-serializing execution context")
 		}
 		return executionContext, nil
 	} else {

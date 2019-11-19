@@ -1,9 +1,7 @@
-package security
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
 
-/* **********************************************************
- * Copyright 2019 VMware, Inc.  All rights reserved.
- *      -- VMware Confidential
- * **********************************************************/
+package security
 
 import (
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
@@ -86,13 +84,25 @@ func (privilegeProv *PrivilegeProviderImpl) GetPrivilegeInfo(fullyQualifiedOperN
 		return nil, l10n.NewRuntimeError("vapi.security.authorization.exception", args)
 	}
 
-	OpMetaParser := metadata.NewOperationMetadataParser(fullyQualifiedOperName, operInfo, privilegeProv.structureInfo)
+	if _, ok := inputValue.(*data.VoidValue); ok || inputValue == nil {
+		log.Debugf("No Operation Input provided")
+	} else {
+		structInputValue, ok := inputValue.(*data.StructValue)
+		if !ok {
+			args := map[string]string{
+				"msg": "Input Data value is not of type StructValue",
+			}
+			return nil, l10n.NewRuntimeError("vapi.security.authorization.exception", args)
+		}
 
-	// Add Privileges i.e we acquire from inputValue
-	// paramPrivilegeInfo is of type map[string][]*info.ParamPrivilegeInfo
-	paramPrivilegeInfo := OpMetaParser.GeneratePrivilegeInfo()
+		OpMetaParser := metadata.NewOperationMetadataParser(structInputValue.Name(), operInfo, privilegeProv.structureInfo)
 
-	visitDataValue(privilegesMap, inputValue, paramPrivilegeInfo)
+		// Add Privileges i.e we acquire from inputValue
+		// paramPrivilegeInfo is of type map[string][]*info.ParamPrivilegeInfo
+		paramPrivilegeInfo := OpMetaParser.GeneratePrivilegeInfo()
+
+		visitDataValue(privilegesMap, inputValue, paramPrivilegeInfo)
+	}
 
 	// Add Privileges required by the operation itself
 	operid := NewResourceIdentifier(true, fullyQualifiedOperName, "")

@@ -1,13 +1,11 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package bindings
 
 import (
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
 )
-
-/* **********************************************************
- * Copyright 2018 VMware, Inc.  All rights reserved.
- *      -- VMware Confidential
- * **********************************************************/
 
 /**
  * Given a BindingType, builds its corresponding StructValue instance.

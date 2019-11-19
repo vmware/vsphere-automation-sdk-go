@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package bindings
 
 import (
@@ -167,6 +170,10 @@ func (s StructType) BindingStruct() reflect.Type {
 
 func (s StructType) Field(fieldName string) BindingType {
 	return s.fields[fieldName]
+}
+
+func (s StructType) CanonicalField(fieldName string) string {
+	return s.canonicalFieldMap[fieldName]
 }
 
 func (s StructType) FieldNames() []string {

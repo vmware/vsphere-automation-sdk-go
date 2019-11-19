@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package client
 
 import (
@@ -89,12 +92,17 @@ func (j *JsonRpcConnector) Invoke(serviceId string, operationId string, inputVal
 	if encodingError != nil {
 		log.Error("Error encoding input")
 		log.Error(encodingError)
+		err := l10n.NewRuntimeError("vapi.protocol.client.request.error", map[string]string{"errMsg": encodingError.Error()})
+		err_val := bindings.CreateErrorValueFromMessages(bindings.INVALID_REQUEST_ERROR_DEF, []error{err})
+		return core.NewMethodResult(nil, err_val)
 	}
-	encodedInputMap := make(map[string]interface{})
-	var errx = json.Unmarshal(encodedInput, &encodedInputMap)
-	if errx != nil {
-		log.Error("Error unmarshalling inputValue")
-		log.Error(errx)
+	encodedInputMap := map[string]interface{}{}
+	var unmarshalError = json.Unmarshal(encodedInput, &encodedInputMap)
+	if unmarshalError != nil {
+		log.Error(unmarshalError)
+		err := l10n.NewRuntimeError("vapi.protocol.client.request.error", map[string]string{"errMsg": unmarshalError.Error()})
+		err_val := bindings.CreateErrorValueFromMessages(bindings.INVALID_REQUEST_ERROR_DEF, []error{err})
+		return core.NewMethodResult(nil, err_val)
 	}
 	log.Debugf("Invoking with input %+v", string(encodedInput))
 	params[lib.REQUEST_INPUT] = encodedInputMap
@@ -103,43 +111,69 @@ func (j *JsonRpcConnector) Invoke(serviceId string, operationId string, inputVal
 	params[lib.REQUEST_SERVICE_ID] = serviceId
 	var jsonRpcRequest = msg.NewJsonRpc20Request(lib.JSONRPC_VERSION, lib.JSONRPC_INVOKE, params, opId, false)
 	var jsonRpcRequestSerializer = msg.NewJsonRpc20RequestSerializer(jsonRpcRequest)
-	var requestBytes, _ = jsonRpcRequestSerializer.MarshalJSON()
+	var requestBytes, marshallError = jsonRpcRequestSerializer.MarshalJSON()
+	if marshallError != nil {
+		log.Error(unmarshalError)
+		err := l10n.NewRuntimeError("vapi.protocol.client.request.error", map[string]string{"errMsg": marshallError.Error()})
+		errVal := bindings.CreateErrorValueFromMessages(bindings.INVALID_REQUEST_ERROR_DEF, []error{err})
+		return core.NewMethodResult(nil, errVal)
+	}
 
-	req, err := http.NewRequest("POST", j.url, bytes.NewBuffer(requestBytes))
+	req, nrequestErr := http.NewRequest(http.MethodPost, j.url, bytes.NewBuffer(requestBytes))
+	if nrequestErr != nil {
+		log.Error(nrequestErr)
+		err := l10n.NewRuntimeError("vapi.protocol.client.request.error", map[string]string{"errMsg": nrequestErr.Error()})
+		errVal := bindings.CreateErrorValueFromMessages(bindings.INVALID_REQUEST_ERROR_DEF, []error{err})
+		return core.NewMethodResult(nil, errVal)
+	}
 	req.Header.Set(lib.HTTP_CONTENT_TYPE_HEADER, lib.JSON_CONTENT_TYPE)
 	req.Header.Set(lib.VAPI_SERVICE_HEADER, serviceId)
 	req.Header.Set(lib.VAPI_OPERATION_HEADER, operationId)
 	j.copyContextsToHeaders(ctx, req)
-	response, err := j.httpClient.Do(req)
-	if err != nil {
-		if strings.HasSuffix(err.Error(), "connection refused") {
+	response, requestErr := j.httpClient.Do(req)
+	if requestErr != nil {
+		if strings.HasSuffix(requestErr.Error(), "connection refused") {
 			err := l10n.NewRuntimeErrorNoParam("vapi.server.unavailable")
-			err_val := bindings.CreateErrorValueFromMessages(bindings.SERVICE_UNAVAILABLE_ERROR_DEF, []error{err})
-			return core.NewMethodResult(nil, err_val)
-		} else if strings.HasSuffix(err.Error(), "i/o timeout") {
+			errVal := bindings.CreateErrorValueFromMessages(bindings.SERVICE_UNAVAILABLE_ERROR_DEF, []error{err})
+			return core.NewMethodResult(nil, errVal)
+		} else if strings.HasSuffix(requestErr.Error(), "i/o timeout") {
 			err := l10n.NewRuntimeErrorNoParam("vapi.server.timedout")
-			err_val := bindings.CreateErrorValueFromMessages(bindings.TIMEDOUT_ERROR_DEF, []error{err})
-			return core.NewMethodResult(nil, err_val)
+			errVal := bindings.CreateErrorValueFromMessages(bindings.TIMEDOUT_ERROR_DEF, []error{err})
+			return core.NewMethodResult(nil, errVal)
 		}
 	}
 	defer response.Body.Close()
-	resp, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		log.Error(err)
+	resp, readErr := ioutil.ReadAll(response.Body)
+	if readErr != nil {
+		log.Error(readErr)
+		runtimeError := l10n.NewRuntimeError("vapi.server.response.error", map[string]string{"errMsg": readErr.Error()})
+		errVal := bindings.CreateErrorValueFromMessages(bindings.INTERNAL_SERVER_ERROR_DEF, []error{runtimeError})
+		return core.NewMethodResult(nil, errVal)
 	}
 	jsonRpcDecoder := msg.NewJsonRpcDecoder()
-	jsonRpcResponse, error := jsonRpcDecoder.DeSerializeResponse(resp)
-	if error != nil {
-		log.Error(error)
+	jsonRpcResponse, deserializeError := jsonRpcDecoder.DeSerializeResponse(resp)
+	//TODO
+	//simplify DeserializeResponse API to return only deserialization error instead of jsonrpcerror
+	if deserializeError != nil {
+		log.Error(deserializeError)
+		runtimeError := l10n.NewRuntimeErrorNoParam("vapi.protocol.client.response.error")
+		errVal := bindings.CreateErrorValueFromMessages(bindings.INTERNAL_SERVER_ERROR_DEF, []error{runtimeError})
+		return core.NewMethodResult(nil, errVal)
 	}
-	if jsonRpcResponse.Result() != nil {
-		methodResult, err := jsonRpcDecoder.DeSerializeMethodResult(jsonRpcResponse.Result().(map[string]interface{}))
+	if jsonRpcResponseMap, ok := jsonRpcResponse.Result().(map[string]interface{}); ok {
+		methodResult, err := jsonRpcDecoder.DeSerializeMethodResult(jsonRpcResponseMap)
 		if err != nil {
 			log.Error(err)
+			runtimeError := l10n.NewRuntimeError("vapi.server.response.error", map[string]string{"errMsg": err.Error()})
+			errVal := bindings.CreateErrorValueFromMessages(bindings.INTERNAL_SERVER_ERROR_DEF, []error{runtimeError})
+			return core.NewMethodResult(nil, errVal)
 		}
 		return methodResult
+	} else {
+		runtimeError := l10n.NewRuntimeError("vapi.server.response.error", map[string]string{"errMsg": ""})
+		errVal := bindings.CreateErrorValueFromMessages(bindings.INTERNAL_SERVER_ERROR_DEF, []error{runtimeError})
+		return core.NewMethodResult(nil, errVal)
 	}
-	return core.MethodResult{}
 }
 
 func (j *JsonRpcConnector) copyContextsToHeaders(ctx *core.ExecutionContext, req *http.Request) {

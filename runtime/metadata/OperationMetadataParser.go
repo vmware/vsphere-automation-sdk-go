@@ -1,9 +1,8 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package metadata
 
-/* **********************************************************
- * Copyright 2019 VMware, Inc.  All rights reserved.
- *      -- VMware Confidential
- * **********************************************************/
 
 // Note:
 // Parser is incomplete
@@ -17,16 +16,16 @@ import (
 )
 
 type OperationMetadataParser struct {
-	operationName      string
+	operationInputName string
 	operationInfo      *info.OperationInfo
 	structureInfoMap   map[string]*info.StructureInfo
 	paramPrivilegeInfo map[string][]*info.ParamPrivilegeInfo
 }
 
-func NewOperationMetadataParser(operationName string, operationInfo *info.OperationInfo, structureInfoMap map[string]*info.StructureInfo) *OperationMetadataParser {
+func NewOperationMetadataParser(operationInputName string, operationInfo *info.OperationInfo, structureInfoMap map[string]*info.StructureInfo) *OperationMetadataParser {
 	paramPrivilegeInfo := make(map[string][]*info.ParamPrivilegeInfo)
 	OpMetaParser := OperationMetadataParser{
-		operationName:      operationName,
+		operationInputName: operationInputName,
 		operationInfo:      operationInfo,
 		structureInfoMap:   structureInfoMap,
 		paramPrivilegeInfo: paramPrivilegeInfo,
@@ -45,12 +44,10 @@ func (opMetaParser *OperationMetadataParser) generatePrivInfoForPath(propertyPat
 	var propertyPathTokenizer []string = strings.Split(propertyPath, ".")
 	var fieldInfos map[string]*info.FieldInfo = opMetaParser.operationInfo.FieldInfoMap()
 
-	var currentTypeName string = opMetaParser.operationName
-	log.Debugf("Property Path Tokenizer: ", propertyPathTokenizer)
+	var currentTypeName string = opMetaParser.operationInputName
 	for i, currentToken := range propertyPathTokenizer {
 		if (i + 1) == len(propertyPathTokenizer) {
 			// it is the last token - add ParamPrivilegeInfo to the overall result
-			log.Debugf("Last Token ", currentTypeName, currentToken, fieldInfos, privileges)
 			opMetaParser.processFieldInfo(currentTypeName, currentToken, fieldInfos, privileges)
 
 		} else {
@@ -68,7 +65,6 @@ func (opMetaParser *OperationMetadataParser) generatePrivInfoForPath(propertyPat
 			if structinfo != nil {
 				fieldInfos = structinfo.FieldInfoMap()
 				currentTypeName = structinfo.Identifier()
-				log.Debugf("Current Token ", currentTypeName, currentToken, fieldInfos, privileges)
 			}
 		}
 	}

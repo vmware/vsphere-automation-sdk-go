@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package protocol
 
 import (
@@ -53,6 +56,7 @@ func (meta OperationMetadata) RestMetadata() OperationRestMetadata {
 	return meta.restMetadata
 }
 
+// fields and fieldsNameMap defines the bindingtype and name of field respectively of @BodyField annotation
 // Rest metadata for name and types of query, header and
 // body parameters of an operation. Example:
 //	meta.ParamsTypeMap["input.nested.bparam"] = bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{}))
@@ -64,12 +68,17 @@ func (meta OperationMetadata) RestMetadata() OperationRestMetadata {
 //	httpMethod = "GET|POST|UPDATE|PATCH|DELETE"
 //	urlTemplate = "/newannotations/properties/{id}"
 type OperationRestMetadata struct {
+	// Name of all the field name wrappers that should be present in Data Input Value
+	fields       map[string]bindings.BindingType
+	fieldNameMap map[string]string
 	// Flattened types of all parameters. Key is fully qualified field name
 	paramsTypeMap map[string]bindings.BindingType
 	//Names of rest parameter to fully qualified canonical name of the field
 	pathParamsNameMap   map[string]string
 	queryParamsNameMap  map[string]string
 	headerParamsNameMap map[string]string
+	//Encoded dispatch parameters
+	dispatchParam string
 	//Fully qualified field name canonical name of body param
 	bodyParamActualName string
 	//HTTP action for the operation
@@ -87,10 +96,13 @@ type OperationRestMetadata struct {
 }
 
 func NewOperationRestMetadata(
+	fields map[string]bindings.BindingType,
+	fieldNameMap map[string]string,
 	paramsTypeMap map[string]bindings.BindingType,
 	pathParamsNameMap map[string]string,
 	queryParamsNameMap map[string]string,
 	headerParamsNameMap map[string]string,
+	dispatchParam string,
 	bodyParamActualName string,
 	httpMethod string,
 	urlTemplate string,
@@ -100,10 +112,13 @@ func NewOperationRestMetadata(
 	errorCodeMap map[string]int) OperationRestMetadata {
 
 	return OperationRestMetadata{
+		fields:               fields,
+		fieldNameMap:         fieldNameMap,
 		paramsTypeMap:        paramsTypeMap,
 		pathParamsNameMap:    pathParamsNameMap,
 		queryParamsNameMap:   queryParamsNameMap,
 		headerParamsNameMap:  headerParamsNameMap,
+		dispatchParam:        dispatchParam,
 		bodyParamActualName:  bodyParamActualName,
 		httpMethod:           httpMethod,
 		urlTemplate:          urlTemplate,
@@ -111,6 +126,14 @@ func NewOperationRestMetadata(
 		errorCodeMap:         errorCodeMap,
 		resultHeadersNameMap: resultHeadersNameMap,
 		errorHeadersNameMap:  errorHeadersNameMap}
+}
+
+func (meta OperationRestMetadata) Fields() map[string]bindings.BindingType {
+	return meta.fields
+}
+
+func (meta OperationRestMetadata) FieldNameMap() map[string]string {
+	return meta.fieldNameMap
 }
 
 func (meta OperationRestMetadata) ParamsTypeMap() map[string]bindings.BindingType {
@@ -127,6 +150,10 @@ func (meta OperationRestMetadata) QueryParamsNameMap() map[string]string {
 
 func (meta OperationRestMetadata) HeaderParamsNameMap() map[string]string {
 	return meta.headerParamsNameMap
+}
+
+func (meta OperationRestMetadata) DispatchParam() string {
+	return meta.dispatchParam
 }
 
 func (meta OperationRestMetadata) BodyParamActualName() string {
@@ -157,16 +184,25 @@ func (meta OperationRestMetadata) ErrorHeadersNameMap() map[string]string {
 }
 
 func (meta OperationRestMetadata) GetUrlPath(
-	pathVariableFields map[string]string, queryParamFields map[string]string) string {
+	pathVariableFields map[string]string, queryParamFields map[string]string,
+	dispatchParam string) string {
 	urlPath := meta.urlTemplate
 	// Substitute path variables with values in the template
 	for fieldName, fieldStr := range pathVariableFields {
-		urlPath = strings.Replace(urlPath, fmt.Sprintf("{%s}", meta.pathParamsNameMap[fieldName]), fieldStr, 1)
+		urlPath = strings.Replace(urlPath, fmt.Sprintf("{%s}", fieldName), fieldStr, 1)
 	}
+
 	// Construct the query params portion of the url
 	queryPrams := []string{}
+
+	// Add dispatch parameter first if it presents
+	if dispatchParam != "" {
+		queryPrams = append(queryPrams, dispatchParam)
+	}
+
+	// Add other operation query parameters
 	for fieldName, fieldStr := range queryParamFields {
-		queryPrams = append(queryPrams, fmt.Sprintf("%s=%s", meta.queryParamsNameMap[fieldName], fieldStr))
+		queryPrams = append(queryPrams, fmt.Sprintf("%s=%s", fieldName, fieldStr))
 	}
 	queryParamStr := strings.Join(queryPrams, "&")
 
@@ -184,24 +220,20 @@ func (meta OperationRestMetadata) GetUrlPath(
 }
 
 func (meta OperationRestMetadata) PathVariableFieldNames() []string {
-	fields := make([]string, 0, len(meta.pathParamsNameMap))
-	for k := range meta.pathParamsNameMap {
-		fields = append(fields, k)
-	}
-	return fields
+	return getListOfMapValues(meta.pathParamsNameMap)
 }
 
 func (meta OperationRestMetadata) QueryParamFieldNames() []string {
-	fields := make([]string, 0, len(meta.queryParamsNameMap))
-	for k := range meta.queryParamsNameMap {
-		fields = append(fields, k)
-	}
-	return fields
+	return getListOfMapValues(meta.queryParamsNameMap)
 }
 
 func (meta OperationRestMetadata) HeaderFieldNames() []string {
-	fields := make([]string, 0, len(meta.headerParamsNameMap))
-	for k := range meta.headerParamsNameMap {
+	return getListOfMapValues(meta.headerParamsNameMap)
+}
+
+func getListOfMapValues(mapValue map[string]string) []string {
+	fields := []string{}
+	for k := range mapValue {
 		fields = append(fields, k)
 	}
 	return fields
