@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	sessionLib "gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/lib/cis/session"
+	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/lib/cis"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol/client"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/security"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/auth/scheme"
@@ -13,7 +13,7 @@ import (
 
 type sessionManagerImpl struct {
 	sessionID    string
-	client       sessionLib.SessionClient
+	client       *cis.DefaultSessionClient
 	connector    client.Connector
 	sessionError error
 	ArchType     arch.Type
@@ -40,7 +40,7 @@ func (sm *sessionManagerImpl) Login() error {
 	sm.connector.SetSecurityContext(secCtx)
 
 	if sm.ArchType == arch.JSONRPC {
-		sm.client = sessionLib.NewSessionClientImpl(sm.connector)
+		sm.client = cis.NewDefaultSessionClient(sm.connector)
 		sm.sessionID, sm.sessionError = sm.client.Create()
 		if sm.sessionError == nil && sm.AuthDetails.GetAuthScheme() == scheme.BasicAuth {
 			sm.connector.SetSecurityContext(security.NewSessionSecurityContext(sm.sessionID))
