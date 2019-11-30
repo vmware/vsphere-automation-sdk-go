@@ -113,3 +113,13 @@ Items added to the repository, including items from the Board members, require 2
 * [VMware Developer Community](https://communities.vmware.com/community/vmtn/developer)
 * [VMware vSphere GOLang API Reference documentation]().
 * [VMware GOLang forum]()
+
+## Contributing
+
+The vsphere-automation-sdk-go project team welcomes contributions from the community. Before you start working with vsphere-automation-sdk-go, please
+read our [Developer Certificate of Origin](https://cla.vmware.com/dco). All contributions to this repository must be
+signed as described on that page. Your signature certifies that you wrote the patch or have the right to pass it on
+as an open-source patch. For more detailed information, refer to [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+vsphere-automation-sdk-go is available under the [BSD-2 license](LICENSE.txt).
