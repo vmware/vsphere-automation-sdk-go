@@ -10,8 +10,8 @@ import (
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/host"
 )
 
-var Host host.Host
-var Hosts map[string]host.Host
+var Host host.Info
+var Hosts map[string]host.Info
 
 func ParseArgs() error {
 	if len(os.Args) < 3 {
@@ -79,12 +79,12 @@ func parseConfigFileHosts(hosts []map[string]interface{}) error {
 }
 
 func init() {
-	Hosts = make(map[string]host.Host)
+	Hosts = make(map[string]host.Info)
 	Hosts["default"] = host.DefineDefault()
 	Host = Hosts["default"]
 }
 
-func printDefaults(ht host.Host) {
+func printDefaults(ht host.Info) {
 	ht.PrintDefaults()
 	if ht.Name() == "default" {
 		fmt.Println("*Note:")
@@ -94,10 +94,3 @@ func printDefaults(ht host.Host) {
 		fmt.Println("- All Flags and Keys of Options are case insensitive.")
 	}
 }
-
-// func main() {
-// 	Arguments.DefineString("checkTest", "Check Test Description.", true)
-// 	ParseArguments()
-// 	fmt.Println(Arguments.Options())
-// 	fmt.Println(Arguments.Args())
-// }

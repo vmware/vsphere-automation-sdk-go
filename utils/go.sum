@@ -7,6 +7,7 @@ github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+
 github.com/gorilla/mux v1.7.3 h1:gnP5JzjVOuiZD07fKKToCAOjS0yOpj/qPETTXCCS6hw=
 github.com/gorilla/mux v1.7.3/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
 gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go v0.2.0 h1:SbaTko9tCK4Nhyd3lThqidKYs57svo+fq5yzMo8MzwA=
+gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go v0.3.0 h1:6asYeMsJd/sIwX7DvtwG1xp2sjcGLP4eACA1mAnpF5U=
 gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/lib v0.3.0 h1:LKiLhUNXs22EaVPShiKvCPHtEbwgcPPnqdzx8xRlvEQ=
 gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/lib v0.3.0/go.mod h1:xiNe1VqfhH/zIrxKqFRpUvMR8wlUgozclvW1A7XoKWg=
 gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime v0.3.0 h1:pNjRaZ+DomucHevjotJaAwt/iARDi9a1GgiOpoTydFA=

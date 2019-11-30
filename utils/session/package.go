@@ -4,11 +4,11 @@ import (
 	"net/http"
 
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol/client"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/auth/scheme"
+	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/auth"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/session/arch"
 )
 
-func NewSessionManager(url string, archType arch.Type, authDetails scheme.Details, httpClient http.Client) (SessionManager, error) {
+func NewSessionManager(url string, archType arch.Type, authDetails auth.Info, httpClient http.Client) (Manager, error) {
 	if len(url) == 0 {
 		return nil, &URLError{}
 	}
@@ -19,7 +19,7 @@ func NewSessionManager(url string, archType arch.Type, authDetails scheme.Detail
 		return nil, &AuthDetailsError{}
 	}
 
-	var sessionManager sessionManagerImpl = sessionManagerImpl{URL: url, ArchType: archType, AuthDetails: authDetails, HTTPClient: httpClient}
+	sessionManager := manager{URL: url, ArchType: archType, AuthDetails: authDetails, HTTPClient: httpClient}
 	if sessionManager.ArchType == arch.JSONRPC {
 		sessionManager.connector = client.NewJsonRpcConnector(sessionManager.URL, sessionManager.HTTPClient)
 	} else if sessionManager.ArchType == arch.REST {

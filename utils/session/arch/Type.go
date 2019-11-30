@@ -1,6 +1,11 @@
 package arch
 
-type Type interface {
-	isType() archType
-	String() string
+type archType string
+
+func (at archType) isType() archType {
+	return at
+}
+
+func (at archType) String() string {
+	return string(at)
 }

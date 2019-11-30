@@ -19,8 +19,18 @@ type propValue struct {
 	AllowedValues     []interface{}
 }
 
-func newPropValue(value interface{}, defaultValue interface{}, enumValues []interface{}, kind reflect.Kind, description string, required bool, optionalCondtion ArgOptionalIf) *propValue {
-	return &propValue{Value: value, DefaultValue: defaultValue, AllowedValues: enumValues, Kind: kind, Description: description, Required: required, OptionalCondition: optionalCondtion}
+func newPropValue(value interface{}, defaultValue interface{},
+	enumValues []interface{}, kind reflect.Kind, description string,
+	required bool, optionalCondtion ArgOptionalIf) *propValue {
+	return &propValue{
+		Value:             value,
+		DefaultValue:      defaultValue,
+		AllowedValues:     enumValues,
+		Kind:              kind,
+		Description:       description,
+		Required:          required,
+		OptionalCondition: optionalCondtion,
+	}
 }
 
 func (pv *propValue) setValue(val interface{}) {

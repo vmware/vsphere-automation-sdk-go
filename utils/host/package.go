@@ -4,17 +4,16 @@ import (
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/args"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/args/keys"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/auth"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/auth/scheme"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/auth/scheme/oauth/refreshtoken"
+	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/auth/oauth/refreshtoken"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/host/kind"
 )
 
-func DefineDefault() Host {
+func DefineDefault() Info {
 	return Define("")
 }
 
-func Define(hostName string) Host {
-	var host Host = &hostDetails{Properties: args.InitProperties()}
+func Define(hostName string) Info {
+	var host Info = &info{Properties: args.InitProperties()}
 	if len(hostName) == 0 {
 		hostName = "default"
 	} else {
@@ -23,23 +22,23 @@ func Define(hostName string) Host {
 	host.AddOption(keys.HostNameKey, hostName)
 	host.DefineString(keys.HostAddressKey, "Host server URL.", true, nil, nil)
 	host.DefineString(keys.HostTypeKey, "Type of host i.e. VMware Product.", true, nil, kind.GetAllHostKind())
-	host.DefineString(keys.AuthSchemeKey, "Authentication Protocol.", true, nil, scheme.GetAllAuthScheme())
+	host.DefineString(keys.AuthSchemeKey, "Authentication Protocol.", true, nil, auth.GetAllAuthScheme())
 	host.DefineBool(keys.SkipServerVerifiationKey, "Skip Server Verification. Do not skip server verification for the production servers.")
 	// Arguments definitions for Basic Authentication
 	host.DefineString(keys.AuthSchemeBasicUsernameKey,
-		"User Name for authentication. This Argument is mandatory only if "+keys.AuthSchemeKey+" has value "+string(scheme.BasicAuth),
+		"User Name for authentication. This Argument is mandatory only if "+keys.AuthSchemeKey+" has value "+string(auth.BasicAuth),
 		true, areBasicAuthParamsRequired, nil)
 	host.DefineString(keys.AuthSchemeBasicPasswordKey,
-		"Password for authentication. This Argument is mandatory only if "+keys.AuthSchemeKey+" has value "+string(scheme.BasicAuth),
+		"Password for authentication. This Argument is mandatory only if "+keys.AuthSchemeKey+" has value "+string(auth.BasicAuth),
 		true, areBasicAuthParamsRequired, nil)
 	// Arguments definitions for SAML Bearer Token Authentication
 	host.DefineString(keys.AuthSchemeSAMLBearerTokenKey,
-		"SAML Bearer Token for authentication. This Argument is mandatory only if "+keys.AuthSchemeKey+" has value "+string(scheme.SAMLBearer),
+		"SAML Bearer Token for authentication. This Argument is mandatory only if "+keys.AuthSchemeKey+" has value "+string(auth.SAMLBearer),
 		true, areSAMLBearerParamsRequired, nil)
 	// Arguments definitions for OAuth with Refresh Token
 	host.DefineStringWithDefaultValue(keys.AuthSchemeOAuthCSPURLKey, "CSP URL to get Access Token.", refreshtoken.CSPDefaultURL, areOAuthParamsRequired, nil)
 	host.DefineString(keys.AuthSchemeOAuthRefreshTokenKey,
-		"OAuth Refresh Token for authentication. This Argument is mandatory only if "+keys.AuthSchemeKey+" has value "+string(scheme.OAuthRefreshToken),
+		"OAuth Refresh Token for authentication. This Argument is mandatory only if "+keys.AuthSchemeKey+" has value "+string(auth.OAuthRefreshToken),
 		true, areOAuthParamsRequired, nil)
 	if hostName == "default" {
 		host.DefineString(keys.ConfigFileKey, "Full path to config file.", false, nil, nil)
@@ -47,7 +46,7 @@ func Define(hostName string) Host {
 	return host
 }
 
-func New(hostProperties map[string]interface{}) (Host, error) {
+func New(hostProperties map[string]interface{}) (Info, error) {
 	hostName, hostNamePresent := hostProperties[keys.HostNameKey]
 	if !hostNamePresent || hostName == nil || len(hostName.(string)) == 0 {
 		hostName = "default"
