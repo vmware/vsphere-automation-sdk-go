@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package auth
 
 import (
@@ -10,23 +13,23 @@ type info struct {
 	authScheme    Scheme
 }
 
-func (ai *info) GetAuthScheme() Scheme {
+func (ai *info) AuthScheme() Scheme {
 	return ai.authScheme
 }
 
-func (ai *info) GetAuthInterface() interface{} {
+func (ai *info) AuthInterface() interface{} {
 	switch ai.authScheme {
 	case BasicAuth, OAuthRefreshToken, SAMLBearer:
-		return ai.authInterface.GetAuthInterface()
+		return ai.authInterface.AuthInterface()
 	default:
 		return nil
 	}
 }
 
-func (ai *info) GetSecurityContext() (core.SecurityContext, error) {
+func (ai *info) SecurityContext() (core.SecurityContext, error) {
 	switch ai.authScheme {
 	case BasicAuth, OAuthRefreshToken, SAMLBearer:
-		return ai.authInterface.GetSecurityContext()
+		return ai.authInterface.SecurityContext()
 	default:
 		return nil, nil
 	}

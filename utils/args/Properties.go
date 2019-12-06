@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package args
 
 import (
@@ -275,7 +278,7 @@ func (prop *properties) UsageDescription() string {
 }
 
 func (prop *properties) ParseArgs(argList []string) error {
-	var originalMap map[string]interface{} = prop.Options()
+	allPropertiesValid := true
 	for i := 1; i < len(argList); i++ {
 		key := argList[i]
 		argsStarted := false
@@ -301,15 +304,20 @@ func (prop *properties) ParseArgs(argList []string) error {
 					isFlag = false
 				} else if i+1 < len(argList) {
 					value = argList[i+1]
-					isFlag, _ = regexp.MatchString(`-\d*\D+`, value)
+					isFlag, _ = regexp.MatchString(`^-\d*\D+`, value)
 					if !isFlag {
 						i++
 					}
 				}
+				var err error = nil
 				if isFlag {
-					prop.SetProperty(key, "true")
+					err = prop.SetProperty(key, "true")
 				} else {
-					prop.SetProperty(key, value)
+					err = prop.SetProperty(key, value)
+				}
+				if err != nil {
+					fmt.Printf("\n%v %v", err.Error(), key)
+					allPropertiesValid = false
 				}
 			} else {
 				prop.AddArg(key)
@@ -317,11 +325,12 @@ func (prop *properties) ParseArgs(argList []string) error {
 			}
 		}
 	}
-	err := prop.Validate()
-	if err != nil {
-		prop.restoreValues(originalMap)
+	if !allPropertiesValid {
+		fmt.Print("\n-----------------------------------\nPlease check the usage directions:")
+		prop.PrintDefaults()
+		return fmt.Errorf("Invalid Properties")
 	}
-	return err
+	return nil
 }
 
 func (prop *properties) AddProperties(jsonMap map[string]interface{}) error {
@@ -339,7 +348,7 @@ func (prop *properties) AddProperties(jsonMap map[string]interface{}) error {
 func (prop *properties) Validate() error {
 	allPropertiesValid := true
 	for k, v := range prop.options() {
-		isValid, err := v.isValueValid(Properties(prop))
+		isValid, err := v.Validate(Properties(prop))
 		allPropertiesValid = allPropertiesValid && isValid
 		if !isValid {
 			fmt.Printf("\n%v %v", err.Error(), k)

@@ -1,3 +1,7 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
+// Package session represents Session Management for the Hosts.
 package session
 
 import (
@@ -8,6 +12,7 @@ import (
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/session/arch"
 )
 
+// NewSessionManager creates and returns new Session Manager that manages API session with the Host server.
 func NewSessionManager(url string, archType arch.Type, authDetails auth.Info, httpClient http.Client) (Manager, error) {
 	if len(url) == 0 {
 		return nil, &URLError{}

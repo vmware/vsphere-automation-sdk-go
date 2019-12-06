@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package refreshtoken
 
 import (
@@ -18,26 +21,26 @@ type info struct {
 	refreshToken string
 }
 
-func (oad *info) CSPURL() string {
-	return oad.cspURL
+func (oai *info) CSPURL() string {
+	return oai.cspURL
 }
 
-func (oad *info) RefreshToken() string {
-	return oad.refreshToken
+func (oai *info) RefreshToken() string {
+	return oai.refreshToken
 }
 
-func (oad *info) GetName() string {
+func (oai *info) Name() string {
 	return Name
 }
 
-func (oad *info) GetAuthInterface() interface{} {
-	return oad
+func (oai *info) AuthInterface() interface{} {
+	return oai
 }
 
-func (oad *info) GetSecurityContext() (core.SecurityContext, error) {
-	payload := strings.NewReader("refresh_token=" + oad.refreshToken)
+func (oai *info) SecurityContext() (core.SecurityContext, error) {
+	payload := strings.NewReader("refresh_token=" + oai.refreshToken)
 
-	req, _ := http.NewRequest("POST", oad.cspURL+CSPRefreshURLSuffix, payload)
+	req, _ := http.NewRequest("POST", oai.cspURL+CSPRefreshURLSuffix, payload)
 
 	req.Header.Add("content-type", "application/x-www-form-urlencoded")
 

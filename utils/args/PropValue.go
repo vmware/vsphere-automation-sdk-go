@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package args
 
 import (
@@ -33,12 +36,19 @@ func newPropValue(value interface{}, defaultValue interface{},
 	}
 }
 
-func (pv *propValue) setValue(val interface{}) {
+func (pv *propValue) setValue(val interface{}) error {
+	originalValue := pv.Value
 	if val == nil {
 		pv.Value = nil
 	} else {
-		pv.Value = parseValue(reflect.ValueOf(val).String())
+		pv.Value = parseValue(fmt.Sprintf("%v", val))
 	}
+	isValid, err := pv.isValueValid()
+	if err != nil || !isValid {
+		pv.Value = originalValue
+		return err
+	}
+	return nil
 }
 
 func parseValue(value string) interface{} {
@@ -65,14 +75,18 @@ func parseValue(value string) interface{} {
 	return value
 }
 
-func (pv *propValue) isValueValid(properties Properties) (isValid bool, err error) {
+func (pv *propValue) Validate(properties Properties) (isValid bool, err error) {
 	if pv.Required && pv.Value == nil {
-		if pv.OptionalCondition(properties) {
+		if pv.OptionalCondition != nil && pv.OptionalCondition(properties) {
 			return true, fmt.Errorf("Value is nil for the Argument")
 		}
 		return false, fmt.Errorf("Missing value for Required Argument")
 	}
 
+	return pv.isValueValid()
+}
+
+func (pv *propValue) isValueValid() (isValid bool, err error) {
 	if pv.Value != nil && pv.Kind != reflect.ValueOf(pv.Value).Kind() {
 		return false, fmt.Errorf("Type mismatch for the value of the Argument")
 	}

@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package task
 
 import (
@@ -8,7 +11,7 @@ import (
 )
 
 type task struct {
-	task TaskFunc
+	task Function
 }
 
 func (t *task) Execute(sessionManager session.Manager) error {

@@ -1,3 +1,7 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
+// Package host represents the Host details.
 package host
 
 import (
@@ -8,10 +12,12 @@ import (
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/host/kind"
 )
 
+// DefineDefault defines the default Host with all default paramaters.
 func DefineDefault() Info {
 	return Define("")
 }
 
+// Define defines and returns Host with hostName with all default parameters.
 func Define(hostName string) Info {
 	var host Info = &info{Properties: args.InitProperties()}
 	if len(hostName) == 0 {
@@ -46,6 +52,7 @@ func Define(hostName string) Info {
 	return host
 }
 
+// New creates new Host with default parameters from Properties as map of string to interface.
 func New(hostProperties map[string]interface{}) (Info, error) {
 	hostName, hostNamePresent := hostProperties[keys.HostNameKey]
 	if !hostNamePresent || hostName == nil || len(hostName.(string)) == 0 {
@@ -59,48 +66,20 @@ func New(hostProperties map[string]interface{}) (Info, error) {
 	return host, nil
 }
 
+// areOAuthParamsRequired checks if OAuth related parameters
+// are required or not for Host.
 func areOAuthParamsRequired(properties args.Properties) bool {
 	return !auth.IsOAuthRefreshToken(properties)
 }
 
+// areBasicAuthParamsRequired checks if Basic Authentication
+// related parameters are required or not for Host.
 func areBasicAuthParamsRequired(properties args.Properties) bool {
 	return !auth.IsBasicAuth(properties)
 }
 
+// areSAMLBearerParamsRequired checks if SAML Bearer Authentication
+// related parameters are required or not for Host.
 func areSAMLBearerParamsRequired(properties args.Properties) bool {
 	return !auth.IsSAMLBearerAuth(properties)
 }
-
-// func getPropertiesMapByHostName(hostName string) (map[string]interface{}, error) {
-// 	var configFilePath string
-// 	for i := 1; i < len(os.Args)-1; i++ {
-// 		if os.Args[i] == "-config-file" {
-// 			configFilePath = os.Args[i+1]
-// 			break
-// 		}
-// 	}
-
-// 	if len(configFilePath) > 0 {
-// 		configFile, err := os.Open(configFilePath)
-// 		if err != nil {
-// 			return nil, err
-// 		}
-// 		defer configFile.Close()
-// 		byteValue, _ := ioutil.ReadAll(configFile)
-// 		var configFileMap map[string]interface{}
-// 		json.Unmarshal(byteValue, &configFileMap)
-// 		hosts, hostsValue := configFileMap["Hosts"]
-// 		if hostsValue {
-// 			//hosts := configFileMap["Hosts"].([]map[string]interface{})
-// 		}
-// 		for key, value := range configFileMap {
-// 			if len(hostName) > 0 && key != hostName {
-// 				continue
-// 			}
-// 			prop.setValue(key, value)
-// 			if key == hostName {
-// 				break
-// 			}
-// 		}
-// 	}
-// }

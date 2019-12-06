@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package host
 
 import (
@@ -51,7 +54,7 @@ func (hd *info) AuthScheme() auth.Scheme {
 	if authDetails == nil {
 		return auth.NoAuth
 	}
-	return authDetails.GetAuthScheme()
+	return authDetails.AuthScheme()
 }
 
 func (hd *info) AuthDetails() auth.Info {
@@ -116,7 +119,7 @@ func (hd *info) Connector() client.Connector {
 	return hd.sessionManager.Connector()
 }
 
-func (hd *info) ExecuteTask(t task.TaskFunc) error {
+func (hd *info) ExecuteTask(t task.Function) error {
 	sessionManager, err := hd.getSessionManager()
 	if err != nil {
 		return err
@@ -125,4 +128,10 @@ func (hd *info) ExecuteTask(t task.TaskFunc) error {
 	execTask := task.CreateNewTask(t)
 	err = (*execTask).Execute(sessionManager)
 	return err
+}
+
+func (hd *info) IsSet() bool {
+	return len(hd.Server()) > 0 &&
+		hd.Kind() != nil &&
+		hd.GetPropertyValue(keys.AuthSchemeKey) != nil
 }

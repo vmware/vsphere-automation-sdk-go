@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package basic
 
 import (
@@ -18,14 +21,14 @@ func (basicAuthInfo *info) Password() string {
 	return basicAuthInfo.password
 }
 
-func (basicAuthInfo *info) GetName() string {
+func (basicAuthInfo *info) Name() string {
 	return Name
 }
 
-func (basicAuthInfo *info) GetAuthInterface() interface{} {
+func (basicAuthInfo *info) AuthInterface() interface{} {
 	return Info(basicAuthInfo)
 }
 
-func (basicAuthInfo *info) GetSecurityContext() (core.SecurityContext, error) {
+func (basicAuthInfo *info) SecurityContext() (core.SecurityContext, error) {
 	return security.NewUserPasswordSecurityContext(basicAuthInfo.UserName(), basicAuthInfo.Password()), nil
 }

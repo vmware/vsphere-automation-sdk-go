@@ -1,3 +1,7 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
+// Package auth defines different Authentication Schemes.
 package auth
 
 import (
@@ -13,8 +17,9 @@ import (
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/utils/auth/samlbearer"
 )
 
+// GetAuthSchemeByName fetches Authentication Scheme by Scheme Name.
 func GetAuthSchemeByName(name string) Scheme {
-	for _, authScheme := range All {
+	for _, authScheme := range Schemes {
 		if strings.ToLower(string(authScheme)) == strings.ToLower(name) {
 			return authScheme
 		}
@@ -22,6 +27,7 @@ func GetAuthSchemeByName(name string) Scheme {
 	return NoAuth
 }
 
+// GetAuthSchemeFromProperties fetches Authentication Scheme from Properties.
 func GetAuthSchemeFromProperties(properties args.Properties) (Scheme, error) {
 	if properties == nil {
 		return NoAuth, fmt.Errorf("No Authentication Scheme set")
@@ -33,14 +39,16 @@ func GetAuthSchemeFromProperties(properties args.Properties) (Scheme, error) {
 	return GetAuthSchemeByName(schemeName), nil
 }
 
+// GetAllAuthScheme fetches All Authentication Scheme Names.
 func GetAllAuthScheme() []string {
 	var allAuthSchemes []string
-	for _, authScheme := range All {
+	for _, authScheme := range Schemes {
 		allAuthSchemes = append(allAuthSchemes, string(authScheme))
 	}
 	return allAuthSchemes
 }
 
+// GetAuthSchemeInfo returns Authentication Info from Properties.
 func GetAuthSchemeInfo(arguments args.Properties) (Info, error) {
 	var authInterface model.AuthInfo
 	authType := arguments.GetPropertyValue(keys.AuthSchemeKey)
@@ -74,7 +82,7 @@ func GetAuthSchemeInfo(arguments args.Properties) (Info, error) {
 			} else if cspurl == nil {
 				return nil, &refreshtoken.CSPURLError{}
 			} else if token == nil {
-				return nil, &refreshtoken.RefreshTokenError{}
+				return nil, &refreshtoken.TokenError{}
 			}
 			oAuthDetails, err := oauthRefreshToken.Create(token.(string), cspurl.(string))
 			if err != nil {
@@ -97,6 +105,8 @@ func GetAuthSchemeInfo(arguments args.Properties) (Info, error) {
 	return &info{authInterface: authInterface, authScheme: authScheme}, nil
 }
 
+// IsBasicAuth checks whether Basic Authentication Scheme
+// is defined or not in Properties.
 func IsBasicAuth(properties args.Properties) bool {
 	if properties == nil {
 		return false
@@ -108,6 +118,8 @@ func IsBasicAuth(properties args.Properties) bool {
 	return actualScheme == BasicAuth
 }
 
+// IsSAMLBearerAuth checks whether SAML Bearer Authentication Scheme
+// is defined or not in Properties.
 func IsSAMLBearerAuth(properties args.Properties) bool {
 	if properties == nil {
 		return false
@@ -119,6 +131,8 @@ func IsSAMLBearerAuth(properties args.Properties) bool {
 	return actualScheme == SAMLBearer
 }
 
+// IsOAuthRefreshToken checks whether OAuth Authentication Scheme
+// by Refresh Token is defined or not in Properties.
 func IsOAuthRefreshToken(properties args.Properties) bool {
 	if properties == nil {
 		return false

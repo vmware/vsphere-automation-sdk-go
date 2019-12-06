@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package session
 
 import (
@@ -32,7 +35,7 @@ func (sm *manager) SessionID() string {
 
 func (sm *manager) Login() error {
 	sm.sessionError = nil
-	secCtx, err := sm.AuthDetails.GetSecurityContext()
+	secCtx, err := sm.AuthDetails.SecurityContext()
 	sm.sessionError = err
 	if sm.sessionError != nil {
 		return sm.sessionError
@@ -42,7 +45,7 @@ func (sm *manager) Login() error {
 	if sm.ArchType == arch.JSONRPC {
 		sm.client = cis.NewDefaultSessionClient(sm.connector)
 		sm.sessionID, sm.sessionError = sm.client.Create()
-		if sm.sessionError == nil && sm.AuthDetails.GetAuthScheme() == auth.BasicAuth {
+		if sm.sessionError == nil && sm.AuthDetails.AuthScheme() == auth.BasicAuth {
 			sm.connector.SetSecurityContext(security.NewSessionSecurityContext(sm.sessionID))
 		}
 	}

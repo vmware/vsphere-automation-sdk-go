@@ -1,3 +1,6 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
 package auth
 
 import (
@@ -7,13 +10,18 @@ import (
 )
 
 const (
-	NoAuth            = Scheme("NoAuth")
-	BasicAuth         = Scheme(basic.Name)
-	SAMLBearer        = Scheme(samlbearer.Name)
+	// NoAuth defines no authentication.
+	NoAuth = Scheme("NoAuth")
+	// BasicAuth defines Basic Authentication Scheme.
+	BasicAuth = Scheme(basic.Name)
+	// SAMLBearer defines SAML Bearer Authentication Scheme.
+	SAMLBearer = Scheme(samlbearer.Name)
+	// OAuthRefreshToken defines OAuth Authentication Scheme by Refresh Token.
 	OAuthRefreshToken = Scheme(refreshtoken.Name)
 )
 
-var All []Scheme = []Scheme{
+// Schemes defines array of all the Authentication Schemes.
+var Schemes []Scheme = []Scheme{
 	NoAuth,
 	BasicAuth,
 	SAMLBearer,
