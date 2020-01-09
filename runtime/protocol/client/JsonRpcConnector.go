@@ -6,6 +6,10 @@ package client
 import (
 	"bytes"
 	"encoding/json"
+	"io/ioutil"
+	"net/http"
+	"strings"
+
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/common"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/core"
@@ -14,11 +18,6 @@ import (
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/lib"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/log"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol/server/rpc/msg"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/security"
-	"io/ioutil"
-	"net/http"
-	"reflect"
-	"strings"
 )
 
 type JsonRpcConnector struct {
@@ -129,7 +128,8 @@ func (j *JsonRpcConnector) Invoke(serviceId string, operationId string, inputVal
 	req.Header.Set(lib.HTTP_CONTENT_TYPE_HEADER, lib.JSON_CONTENT_TYPE)
 	req.Header.Set(lib.VAPI_SERVICE_HEADER, serviceId)
 	req.Header.Set(lib.VAPI_OPERATION_HEADER, operationId)
-	j.copyContextsToHeaders(ctx, req)
+	req.Header.Set(lib.HTTP_USER_AGENT_HEADER, GetRuntimeUserAgentHeader())
+	CopyContextsToHeaders(ctx, req)
 	response, requestErr := j.httpClient.Do(req)
 	if requestErr != nil {
 		if strings.HasSuffix(requestErr.Error(), "connection refused") {
@@ -173,35 +173,5 @@ func (j *JsonRpcConnector) Invoke(serviceId string, operationId string, inputVal
 		runtimeError := l10n.NewRuntimeError("vapi.server.response.error", map[string]string{"errMsg": ""})
 		errVal := bindings.CreateErrorValueFromMessages(bindings.INTERNAL_SERVER_ERROR_DEF, []error{runtimeError})
 		return core.NewMethodResult(nil, errVal)
-	}
-}
-
-func (j *JsonRpcConnector) copyContextsToHeaders(ctx *core.ExecutionContext, req *http.Request) {
-	appCtx := ctx.ApplicationContext()
-	secCtx := ctx.SecurityContext()
-
-	if appCtx != nil {
-		for key, value := range appCtx.GetAllProperties() {
-			keyLowerCase := strings.ToLower(key)
-			switch keyLowerCase {
-			case lib.HTTP_USER_AGENT_HEADER:
-				req.Header.Set(lib.HTTP_USER_AGENT_HEADER, *value)
-			case lib.HTTP_ACCEPT_LANGUAGE:
-				req.Header.Set(lib.HTTP_ACCEPT_LANGUAGE, *value)
-			default:
-				req.Header.Set(lib.VAPI_HEADER_PREFIX+keyLowerCase, *value)
-			}
-		}
-	}
-
-	if secCtx != nil {
-		if secCtx.Property(security.AUTHENTICATION_SCHEME_ID) == security.SESSION_SCHEME_ID {
-			if sessionId, ok := secCtx.Property(security.SESSION_ID).(string); ok {
-				req.Header.Set(lib.VAPI_SESSION_HEADER, sessionId)
-			} else {
-				log.Errorf("Invalid session ID in security context. Skipping setting request header. Expected string but was %s",
-					reflect.TypeOf(secCtx.Property(security.SESSION_ID)))
-			}
-		}
 	}
 }
