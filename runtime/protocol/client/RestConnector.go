@@ -82,7 +82,7 @@ func (j *RestConnector) TypeConverter() *bindings.TypeConverter {
 }
 
 func (j *RestConnector) buildHTTPRequest(serializedRequest *rest.Request,
-	restMetadata *protocol.OperationRestMetadata) (*http.Request, error) {
+	ctx *core.ExecutionContext, restMetadata *protocol.OperationRestMetadata) (*http.Request, error) {
 	body := strings.NewReader(serializedRequest.RequestBody())
 	url := j.url + serializedRequest.URLPath()
 	method := restMetadata.HttpMethod()
@@ -98,6 +98,8 @@ func (j *RestConnector) buildHTTPRequest(serializedRequest *rest.Request,
 	if _, ok := req.Header[lib.HTTP_CONTENT_TYPE_HEADER]; !ok && j.enableDefaultContentType {
 		req.Header.Set(lib.HTTP_CONTENT_TYPE_HEADER, lib.JSON_CONTENT_TYPE)
 	}
+	req.Header.Set(lib.HTTP_USER_AGENT_HEADER, GetRuntimeUserAgentHeader())
+	CopyContextsToHeaders(ctx, req)
 	return req, nil
 }
 
@@ -122,7 +124,7 @@ func (j *RestConnector) retrieveOperationRestMetadata() (*protocol.OperationRest
 
 func (j *RestConnector) Invoke(serviceID string, operationID string,
 	inputValue data.DataValue, ctx *core.ExecutionContext) core.MethodResult {
-
+	//TODO do we need serviceID and opID for rest connector?
 	if ctx == nil {
 		ctx = j.NewExecutionContext()
 	}
@@ -154,7 +156,7 @@ func (j *RestConnector) Invoke(serviceID string, operationID string,
 		return core.NewMethodResult(nil, errVal)
 	}
 
-	req, err := j.buildHTTPRequest(serializedRequest, restMetadata)
+	req, err := j.buildHTTPRequest(serializedRequest, ctx, restMetadata)
 	response, err := j.httpClient.Do(req)
 	if err != nil {
 		errString := err.Error()

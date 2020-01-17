@@ -3,7 +3,6 @@
 
 package bindings
 
-
 import (
 	"fmt"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
@@ -304,6 +303,14 @@ func (g *GolangToRestVisitor) visitOptionalType(typ OptionalType) []error {
 		g.outValue = data.NewOptionalValue(nil)
 	} else if reflect.TypeOf(g.inValue).Kind() == reflect.Ptr && reflect.ValueOf(g.inValue).IsNil() {
 		g.outValue = data.NewOptionalValue(nil)
+	} else if reflect.TypeOf(typ.ElementType()) == DynamicStructBindingType || reflect.TypeOf(typ.ElementType()) == AnyErrorBindingType {
+		// in case of optional dynamicstructure and anyerrortype, do not de-reference the pointer
+		// since optional and non optional cases are represented in the same way.
+		err := g.visit(typ.ElementType())
+		if err != nil {
+			return err
+		}
+		g.outValue = data.NewOptionalValue(g.outValue)
 	} else {
 		x := reflect.TypeOf(g.inValue)
 		if x.Kind() == reflect.Ptr {
