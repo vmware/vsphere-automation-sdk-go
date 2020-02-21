@@ -20,6 +20,10 @@ import (
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
+// Possible value for ``identitySourceType`` of method RoleBindings#list.
+const RoleBindings_LIST_IDENTITY_SOURCE_TYPE_VIDM = "VIDM"
+// Possible value for ``identitySourceType`` of method RoleBindings#list.
+const RoleBindings_LIST_IDENTITY_SOURCE_TYPE_LDAP = "LDAP"
 // Possible value for ``type`` of method RoleBindings#list.
 const RoleBindings_LIST_TYPE_REMOTE_USER = "remote_user"
 // Possible value for ``type`` of method RoleBindings#list.
@@ -203,16 +207,22 @@ func roleBindingsListInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["identity_source_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["identity_source_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fields["role"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["identity_source_id"] = "IdentitySourceId"
+	fieldNameMap["identity_source_type"] = "IdentitySourceType"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["name"] = "Name"
 	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["role"] = "Role"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["type"] = "Type_"
@@ -232,32 +242,44 @@ func roleBindingsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["identity_source_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["identity_source_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fields["role"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["identity_source_id"] = "IdentitySourceId"
+	fieldNameMap["identity_source_type"] = "IdentitySourceType"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["name"] = "Name"
 	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["role"] = "Role"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["type"] = "Type_"
+	paramsTypeMap["identity_source_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["name"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	paramsTypeMap["type"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["identity_source_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["role"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	queryParams["cursor"] = "cursor"
+	queryParams["identity_source_id"] = "identity_source_id"
+	queryParams["role"] = "role"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["name"] = "name"
 	queryParams["sort_by"] = "sort_by"
 	queryParams["type"] = "type"
+	queryParams["identity_source_type"] = "identity_source_type"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}

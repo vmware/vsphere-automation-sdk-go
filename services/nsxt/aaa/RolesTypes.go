@@ -27,9 +27,9 @@ import (
 func rolesCloneInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["role_id"] = bindings.NewStringType()
+	fields["role"] = bindings.NewStringType()
 	fields["new_role"] = bindings.NewReferenceType(model.NewRoleBindingType)
-	fieldNameMap["role_id"] = "RoleId"
+	fieldNameMap["role"] = "Role"
 	fieldNameMap["new_role"] = "NewRole"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
@@ -46,14 +46,14 @@ func rolesCloneRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
-	fields["role_id"] = bindings.NewStringType()
+	fields["role"] = bindings.NewStringType()
 	fields["new_role"] = bindings.NewReferenceType(model.NewRoleBindingType)
-	fieldNameMap["role_id"] = "RoleId"
+	fieldNameMap["role"] = "Role"
 	fieldNameMap["new_role"] = "NewRole"
-	paramsTypeMap["role_id"] = bindings.NewStringType()
+	paramsTypeMap["role"] = bindings.NewStringType()
 	paramsTypeMap["new_role"] = bindings.NewReferenceType(model.NewRoleBindingType)
-	paramsTypeMap["roleId"] = bindings.NewStringType()
-	pathParams["role_id"] = "roleId"
+	paramsTypeMap["role"] = bindings.NewStringType()
+	pathParams["role"] = "role"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -66,7 +66,7 @@ func rolesCloneRestMetadata() protocol.OperationRestMetadata {
 		"action=clone",
 		"new_role",
 		"POST",
-		"/policy/api/v1/aaa/roles/{roleId}",
+		"/policy/api/v1/aaa/roles/{role}",
 		resultHeaders,
 		200,
 		errorHeaders,
@@ -76,8 +76,8 @@ func rolesCloneRestMetadata() protocol.OperationRestMetadata {
 func rolesDeleteInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["role_id"] = bindings.NewStringType()
-	fieldNameMap["role_id"] = "RoleId"
+	fields["role"] = bindings.NewStringType()
+	fieldNameMap["role"] = "Role"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
@@ -93,11 +93,11 @@ func rolesDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
-	fields["role_id"] = bindings.NewStringType()
-	fieldNameMap["role_id"] = "RoleId"
-	paramsTypeMap["role_id"] = bindings.NewStringType()
-	paramsTypeMap["roleId"] = bindings.NewStringType()
-	pathParams["role_id"] = "roleId"
+	fields["role"] = bindings.NewStringType()
+	fieldNameMap["role"] = "Role"
+	paramsTypeMap["role"] = bindings.NewStringType()
+	paramsTypeMap["role"] = bindings.NewStringType()
+	pathParams["role"] = "role"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -110,7 +110,7 @@ func rolesDeleteRestMetadata() protocol.OperationRestMetadata {
 		"",
 		"",
 		"DELETE",
-		"/policy/api/v1/aaa/roles/{roleId}",
+		"/policy/api/v1/aaa/roles/{role}",
 		resultHeaders,
 		204,
 		errorHeaders,
@@ -201,9 +201,9 @@ func rolesListRestMetadata() protocol.OperationRestMetadata {
 func rolesUpdateInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["role_id"] = bindings.NewStringType()
+	fields["role"] = bindings.NewStringType()
 	fields["role_with_features"] = bindings.NewReferenceType(model.RoleWithFeaturesBindingType)
-	fieldNameMap["role_id"] = "RoleId"
+	fieldNameMap["role"] = "Role"
 	fieldNameMap["role_with_features"] = "RoleWithFeatures"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
@@ -220,14 +220,14 @@ func rolesUpdateRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
-	fields["role_id"] = bindings.NewStringType()
+	fields["role"] = bindings.NewStringType()
 	fields["role_with_features"] = bindings.NewReferenceType(model.RoleWithFeaturesBindingType)
-	fieldNameMap["role_id"] = "RoleId"
+	fieldNameMap["role"] = "Role"
 	fieldNameMap["role_with_features"] = "RoleWithFeatures"
-	paramsTypeMap["role_id"] = bindings.NewStringType()
+	paramsTypeMap["role"] = bindings.NewStringType()
 	paramsTypeMap["role_with_features"] = bindings.NewReferenceType(model.RoleWithFeaturesBindingType)
-	paramsTypeMap["roleId"] = bindings.NewStringType()
-	pathParams["role_id"] = "roleId"
+	paramsTypeMap["role"] = bindings.NewStringType()
+	pathParams["role"] = "role"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -240,7 +240,7 @@ func rolesUpdateRestMetadata() protocol.OperationRestMetadata {
 		"",
 		"role_with_features",
 		"PUT",
-		"/policy/api/v1/aaa/roles/{roleId}",
+		"/policy/api/v1/aaa/roles/{role}",
 		resultHeaders,
 		200,
 		errorHeaders,

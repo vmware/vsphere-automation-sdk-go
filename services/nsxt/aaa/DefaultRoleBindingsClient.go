@@ -170,14 +170,17 @@ func (rIface *DefaultRoleBindingsClient) Get(bindingIdParam string) (model.RoleB
 	}
 }
 
-func (rIface *DefaultRoleBindingsClient) List(cursorParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (model.RoleBindingListResult, error) {
+func (rIface *DefaultRoleBindingsClient) List(cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, roleParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) (model.RoleBindingListResult, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(rIface.interfaceIdentifier, "list")
 	sv := bindings.NewStructValueBuilder(roleBindingsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IdentitySourceId", identitySourceIdParam)
+	sv.AddStructField("IdentitySourceType", identitySourceTypeParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("Name", nameParam)
 	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("Role", roleParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
 	sv.AddStructField("Type_", type_Param)

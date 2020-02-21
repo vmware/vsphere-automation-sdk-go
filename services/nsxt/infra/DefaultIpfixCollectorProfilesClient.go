@@ -61,11 +61,12 @@ func NewDefaultIpfixCollectorProfilesClient(connector client.Connector) *Default
 	return &iIface
 }
 
-func (iIface *DefaultIpfixCollectorProfilesClient) Delete(ipfixCollectorProfileIdParam string) error {
+func (iIface *DefaultIpfixCollectorProfilesClient) Delete(ipfixCollectorProfileIdParam string, overrideParam *bool) error {
 	typeConverter := iIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(iIface.interfaceIdentifier, "delete")
 	sv := bindings.NewStructValueBuilder(ipfixCollectorProfilesDeleteInputType(), typeConverter)
 	sv.AddStructField("IpfixCollectorProfileId", ipfixCollectorProfileIdParam)
+	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return bindings.VAPIerrorsToError(inputError)
@@ -150,12 +151,13 @@ func (iIface *DefaultIpfixCollectorProfilesClient) List(cursorParam *string, inc
 	}
 }
 
-func (iIface *DefaultIpfixCollectorProfilesClient) Patch(ipfixCollectorProfileIdParam string, iPFIXCollectorProfileParam model.IPFIXCollectorProfile) error {
+func (iIface *DefaultIpfixCollectorProfilesClient) Patch(ipfixCollectorProfileIdParam string, iPFIXCollectorProfileParam model.IPFIXCollectorProfile, overrideParam *bool) error {
 	typeConverter := iIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(iIface.interfaceIdentifier, "patch")
 	sv := bindings.NewStructValueBuilder(ipfixCollectorProfilesPatchInputType(), typeConverter)
 	sv.AddStructField("IpfixCollectorProfileId", ipfixCollectorProfileIdParam)
 	sv.AddStructField("IPFIXCollectorProfile", iPFIXCollectorProfileParam)
+	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return bindings.VAPIerrorsToError(inputError)
@@ -175,12 +177,13 @@ func (iIface *DefaultIpfixCollectorProfilesClient) Patch(ipfixCollectorProfileId
 	}
 }
 
-func (iIface *DefaultIpfixCollectorProfilesClient) Update(ipfixCollectorProfileIdParam string, iPFIXCollectorProfileParam model.IPFIXCollectorProfile) (model.IPFIXCollectorProfile, error) {
+func (iIface *DefaultIpfixCollectorProfilesClient) Update(ipfixCollectorProfileIdParam string, iPFIXCollectorProfileParam model.IPFIXCollectorProfile, overrideParam *bool) (model.IPFIXCollectorProfile, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(iIface.interfaceIdentifier, "update")
 	sv := bindings.NewStructValueBuilder(ipfixCollectorProfilesUpdateInputType(), typeConverter)
 	sv.AddStructField("IpfixCollectorProfileId", ipfixCollectorProfileIdParam)
 	sv.AddStructField("IPFIXCollectorProfile", iPFIXCollectorProfileParam)
+	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.IPFIXCollectorProfile

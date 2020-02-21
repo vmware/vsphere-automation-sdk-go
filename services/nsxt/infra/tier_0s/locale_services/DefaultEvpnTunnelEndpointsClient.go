@@ -61,13 +61,14 @@ func NewDefaultEvpnTunnelEndpointsClient(connector client.Connector) *DefaultEvp
 	return &eIface
 }
 
-func (eIface *DefaultEvpnTunnelEndpointsClient) Delete(tier0IdParam string, localeServicesIdParam string, tunnelEndpointIdParam string) error {
+func (eIface *DefaultEvpnTunnelEndpointsClient) Delete(tier0IdParam string, localeServicesIdParam string, tunnelEndpointIdParam string, overrideParam *bool) error {
 	typeConverter := eIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(eIface.interfaceIdentifier, "delete")
 	sv := bindings.NewStructValueBuilder(evpnTunnelEndpointsDeleteInputType(), typeConverter)
 	sv.AddStructField("Tier0Id", tier0IdParam)
 	sv.AddStructField("LocaleServicesId", localeServicesIdParam)
 	sv.AddStructField("TunnelEndpointId", tunnelEndpointIdParam)
+	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return bindings.VAPIerrorsToError(inputError)
@@ -156,7 +157,7 @@ func (eIface *DefaultEvpnTunnelEndpointsClient) List(tier0IdParam string, locale
 	}
 }
 
-func (eIface *DefaultEvpnTunnelEndpointsClient) Patch(tier0IdParam string, localeServicesIdParam string, tunnelEndpointIdParam string, evpnTunnelEndpointConfigParam model.EvpnTunnelEndpointConfig) error {
+func (eIface *DefaultEvpnTunnelEndpointsClient) Patch(tier0IdParam string, localeServicesIdParam string, tunnelEndpointIdParam string, evpnTunnelEndpointConfigParam model.EvpnTunnelEndpointConfig, overrideParam *bool) error {
 	typeConverter := eIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(eIface.interfaceIdentifier, "patch")
 	sv := bindings.NewStructValueBuilder(evpnTunnelEndpointsPatchInputType(), typeConverter)
@@ -164,6 +165,7 @@ func (eIface *DefaultEvpnTunnelEndpointsClient) Patch(tier0IdParam string, local
 	sv.AddStructField("LocaleServicesId", localeServicesIdParam)
 	sv.AddStructField("TunnelEndpointId", tunnelEndpointIdParam)
 	sv.AddStructField("EvpnTunnelEndpointConfig", evpnTunnelEndpointConfigParam)
+	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return bindings.VAPIerrorsToError(inputError)
@@ -183,7 +185,7 @@ func (eIface *DefaultEvpnTunnelEndpointsClient) Patch(tier0IdParam string, local
 	}
 }
 
-func (eIface *DefaultEvpnTunnelEndpointsClient) Update(tier0IdParam string, localeServicesIdParam string, tunnelEndpointIdParam string, evpnTunnelEndpointConfigParam model.EvpnTunnelEndpointConfig) (model.EvpnTunnelEndpointConfig, error) {
+func (eIface *DefaultEvpnTunnelEndpointsClient) Update(tier0IdParam string, localeServicesIdParam string, tunnelEndpointIdParam string, evpnTunnelEndpointConfigParam model.EvpnTunnelEndpointConfig, overrideParam *bool) (model.EvpnTunnelEndpointConfig, error) {
 	typeConverter := eIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(eIface.interfaceIdentifier, "update")
 	sv := bindings.NewStructValueBuilder(evpnTunnelEndpointsUpdateInputType(), typeConverter)
@@ -191,6 +193,7 @@ func (eIface *DefaultEvpnTunnelEndpointsClient) Update(tier0IdParam string, loca
 	sv.AddStructField("LocaleServicesId", localeServicesIdParam)
 	sv.AddStructField("TunnelEndpointId", tunnelEndpointIdParam)
 	sv.AddStructField("EvpnTunnelEndpointConfig", evpnTunnelEndpointConfigParam)
+	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.EvpnTunnelEndpointConfig

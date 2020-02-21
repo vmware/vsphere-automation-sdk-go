@@ -61,11 +61,12 @@ func NewDefaultIpv6DadProfilesClient(connector client.Connector) *DefaultIpv6Dad
 	return &iIface
 }
 
-func (iIface *DefaultIpv6DadProfilesClient) Delete(dadProfileIdParam string) error {
+func (iIface *DefaultIpv6DadProfilesClient) Delete(dadProfileIdParam string, overrideParam *bool) error {
 	typeConverter := iIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(iIface.interfaceIdentifier, "delete")
 	sv := bindings.NewStructValueBuilder(ipv6DadProfilesDeleteInputType(), typeConverter)
 	sv.AddStructField("DadProfileId", dadProfileIdParam)
+	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return bindings.VAPIerrorsToError(inputError)
@@ -150,12 +151,13 @@ func (iIface *DefaultIpv6DadProfilesClient) List(cursorParam *string, includeMar
 	}
 }
 
-func (iIface *DefaultIpv6DadProfilesClient) Patch(dadProfileIdParam string, ipv6DadProfileParam model.Ipv6DadProfile) error {
+func (iIface *DefaultIpv6DadProfilesClient) Patch(dadProfileIdParam string, ipv6DadProfileParam model.Ipv6DadProfile, overrideParam *bool) error {
 	typeConverter := iIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(iIface.interfaceIdentifier, "patch")
 	sv := bindings.NewStructValueBuilder(ipv6DadProfilesPatchInputType(), typeConverter)
 	sv.AddStructField("DadProfileId", dadProfileIdParam)
 	sv.AddStructField("Ipv6DadProfile", ipv6DadProfileParam)
+	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return bindings.VAPIerrorsToError(inputError)
@@ -175,12 +177,13 @@ func (iIface *DefaultIpv6DadProfilesClient) Patch(dadProfileIdParam string, ipv6
 	}
 }
 
-func (iIface *DefaultIpv6DadProfilesClient) Update(dadProfileIdParam string, ipv6DadProfileParam model.Ipv6DadProfile) (model.Ipv6DadProfile, error) {
+func (iIface *DefaultIpv6DadProfilesClient) Update(dadProfileIdParam string, ipv6DadProfileParam model.Ipv6DadProfile, overrideParam *bool) (model.Ipv6DadProfile, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(iIface.interfaceIdentifier, "update")
 	sv := bindings.NewStructValueBuilder(ipv6DadProfilesUpdateInputType(), typeConverter)
 	sv.AddStructField("DadProfileId", dadProfileIdParam)
 	sv.AddStructField("Ipv6DadProfile", ipv6DadProfileParam)
+	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.Ipv6DadProfile

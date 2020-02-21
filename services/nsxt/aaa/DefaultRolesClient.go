@@ -63,11 +63,11 @@ func NewDefaultRolesClient(connector client.Connector) *DefaultRolesClient {
 	return &rIface
 }
 
-func (rIface *DefaultRolesClient) Clone(roleIdParam string, newRoleParam model.NewRole) (model.NewRole, error) {
+func (rIface *DefaultRolesClient) Clone(roleParam string, newRoleParam model.NewRole) (model.NewRole, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(rIface.interfaceIdentifier, "clone")
 	sv := bindings.NewStructValueBuilder(rolesCloneInputType(), typeConverter)
-	sv.AddStructField("RoleId", roleIdParam)
+	sv.AddStructField("Role", roleParam)
 	sv.AddStructField("NewRole", newRoleParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
@@ -94,11 +94,11 @@ func (rIface *DefaultRolesClient) Clone(roleIdParam string, newRoleParam model.N
 	}
 }
 
-func (rIface *DefaultRolesClient) Delete(roleIdParam string) error {
+func (rIface *DefaultRolesClient) Delete(roleParam string) error {
 	typeConverter := rIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(rIface.interfaceIdentifier, "delete")
 	sv := bindings.NewStructValueBuilder(rolesDeleteInputType(), typeConverter)
-	sv.AddStructField("RoleId", roleIdParam)
+	sv.AddStructField("Role", roleParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return bindings.VAPIerrorsToError(inputError)
@@ -177,11 +177,11 @@ func (rIface *DefaultRolesClient) List() (model.RoleListResult, error) {
 	}
 }
 
-func (rIface *DefaultRolesClient) Update(roleIdParam string, roleWithFeaturesParam model.RoleWithFeatures) (model.RoleWithFeatures, error) {
+func (rIface *DefaultRolesClient) Update(roleParam string, roleWithFeaturesParam model.RoleWithFeatures) (model.RoleWithFeatures, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(rIface.interfaceIdentifier, "update")
 	sv := bindings.NewStructValueBuilder(rolesUpdateInputType(), typeConverter)
-	sv.AddStructField("RoleId", roleIdParam)
+	sv.AddStructField("Role", roleParam)
 	sv.AddStructField("RoleWithFeatures", roleWithFeaturesParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {

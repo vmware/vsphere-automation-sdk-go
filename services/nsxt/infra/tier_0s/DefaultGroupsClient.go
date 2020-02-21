@@ -117,7 +117,7 @@ func (gIface *DefaultGroupsClient) Get(tier0IdParam string, groupIdParam string)
 	}
 }
 
-func (gIface *DefaultGroupsClient) List(tier0IdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.GroupListResult, error) {
+func (gIface *DefaultGroupsClient) List(tier0IdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, memberTypesParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.GroupListResult, error) {
 	typeConverter := gIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(gIface.interfaceIdentifier, "list")
 	sv := bindings.NewStructValueBuilder(groupsListInputType(), typeConverter)
@@ -125,6 +125,7 @@ func (gIface *DefaultGroupsClient) List(tier0IdParam string, cursorParam *string
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("MemberTypes", memberTypesParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
