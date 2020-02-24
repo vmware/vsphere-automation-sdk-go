@@ -55,7 +55,7 @@ func NewDefaultCompatibleSubnetsClient(connector client.Connector) *DefaultCompa
 	return &cIface
 }
 
-func (cIface *DefaultCompatibleSubnetsClient) Get(orgParam string, linkedAccountIdParam *string, regionParam *string, sddcParam *string, forceRefreshParam *bool, instanceTypeParam *string, sddcTypeParam *string, numOfHostsParam *int64) (model.AwsCompatibleSubnets, error) {
+func (cIface *DefaultCompatibleSubnetsClient) Get(orgParam string, linkedAccountIdParam string, regionParam *string, sddcParam *string, forceRefreshParam *bool, instanceTypeParam *string, sddcTypeParam *string, numOfHostsParam *int64) (model.AwsCompatibleSubnets, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(cIface.interfaceIdentifier, "get")
 	sv := bindings.NewStructValueBuilder(compatibleSubnetsGetInputType(), typeConverter)

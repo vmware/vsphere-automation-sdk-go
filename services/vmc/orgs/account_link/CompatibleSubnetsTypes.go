@@ -28,7 +28,7 @@ func compatibleSubnetsGetInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org"] = bindings.NewStringType()
-	fields["linked_account_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["linked_account_id"] = bindings.NewStringType()
 	fields["region"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["sddc"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["force_refresh"] = bindings.NewOptionalType(bindings.NewBooleanType())
@@ -59,7 +59,7 @@ func compatibleSubnetsGetRestMetadata() protocol.OperationRestMetadata {
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	fields["org"] = bindings.NewStringType()
-	fields["linked_account_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["linked_account_id"] = bindings.NewStringType()
 	fields["region"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["sddc"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["force_refresh"] = bindings.NewOptionalType(bindings.NewBooleanType())
@@ -77,7 +77,7 @@ func compatibleSubnetsGetRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["sddc"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["instance_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["region"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["linked_account_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["linked_account_id"] = bindings.NewStringType()
 	paramsTypeMap["org"] = bindings.NewStringType()
 	paramsTypeMap["force_refresh"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	paramsTypeMap["num_of_hosts"] = bindings.NewOptionalType(bindings.NewIntegerType())

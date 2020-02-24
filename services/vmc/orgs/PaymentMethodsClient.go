@@ -4,24 +4,24 @@
 // Code generated. DO NOT EDIT.
 
 /*
- * Interface file for service: Reservation
+ * Interface file for service: PaymentMethods
  * Used by client-side stubs.
  */
 
-package tbrs
+package orgs
 
 import (
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/vmc/model"
 )
 
-type ReservationClient interface {
+type PaymentMethodsClient interface {
 
-    // Retreive all reservations for all SDDCs in this org
+    // Get payment methods of organization
     //
     // @param orgParam Organization identifier. (required)
-    // @param sddcStateParam SDDCs and/or states to query (optional)
+    // @param defaultFlagParam When true, will only return default payment methods. (optional, default to false)
     // @throws Unauthenticated  Unauthorized
-    // @throws InvalidRequest  Bad Call
     // @throws Unauthorized  Forbidden
-	Post(orgParam string, sddcStateParam *model.SddcStateRequest) (map[string][]model.ReservationWindow, error)
+    // @throws NotFound  Organization doesn't exist
+	GetOrgPaymentMethods(orgParam string, defaultFlagParam *bool) ([]model.PaymentMethodInfo, error)
 }

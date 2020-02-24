@@ -55,7 +55,7 @@ func NewDefaultCompatibleSubnetsAsyncClient(connector client.Connector) *Default
 	return &cIface
 }
 
-func (cIface *DefaultCompatibleSubnetsAsyncClient) Get(orgParam string, linkedAccountIdParam *string, regionParam *string, sddcParam *string, instanceTypeParam *string, sddcTypeParam *string, numOfHostsParam *int64) (model.Task, error) {
+func (cIface *DefaultCompatibleSubnetsAsyncClient) Get(orgParam string, linkedAccountIdParam string, regionParam *string, sddcParam *string, instanceTypeParam *string, sddcTypeParam *string, numOfHostsParam *int64) (model.Task, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(cIface.interfaceIdentifier, "get")
 	sv := bindings.NewStructValueBuilder(compatibleSubnetsAsyncGetInputType(), typeConverter)

@@ -61,7 +61,7 @@ func NewDefaultSddcsClient(connector client.Connector) *DefaultSddcsClient {
 	return &sIface
 }
 
-func (sIface *DefaultSddcsClient) Create(orgParam string, sddcConfigParam model.AwsSddcConfig, validateOnlyParam *bool) error {
+func (sIface *DefaultSddcsClient) Create(orgParam string, sddcConfigParam model.AwsSddcConfig, validateOnlyParam *bool) (model.Task, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(sIface.interfaceIdentifier, "create")
 	sv := bindings.NewStructValueBuilder(sddcsCreateInputType(), typeConverter)
@@ -70,24 +70,30 @@ func (sIface *DefaultSddcsClient) Create(orgParam string, sddcConfigParam model.
 	sv.AddStructField("ValidateOnly", validateOnlyParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		var emptyOutput model.Task
+		return emptyOutput, bindings.VAPIerrorsToError(inputError)
 	}
 	operationRestMetaData := sddcsCreateRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
 	sIface.connector.SetConnectionMetadata(connectionMetadata)
 	methodResult := sIface.Invoke(sIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	var emptyOutput model.Task
 	if methodResult.IsSuccess() {
-		return nil
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), sddcsCreateOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(model.Task), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.errorBindingMap[methodResult.Error().Name()])
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
 		}
-		return methodError.(error)
+		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *DefaultSddcsClient) Delete(orgParam string, sddcParam string, retainConfigurationParam *bool, templateNameParam *string, forceParam *string) (model.Task, error) {
+func (sIface *DefaultSddcsClient) Delete(orgParam string, sddcParam string, retainConfigurationParam *bool, templateNameParam *string, forceParam *bool) (model.Task, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(sIface.interfaceIdentifier, "delete")
 	sv := bindings.NewStructValueBuilder(sddcsDeleteInputType(), typeConverter)

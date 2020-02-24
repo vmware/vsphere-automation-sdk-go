@@ -4,24 +4,25 @@
 // Code generated. DO NOT EDIT.
 
 /*
- * Interface file for service: Reservation
+ * Interface file for service: ProvisionSpec
  * Used by client-side stubs.
  */
 
-package tbrs
+package sddcs
 
 import (
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/vmc/model"
 )
 
-type ReservationClient interface {
+type ProvisionSpecClient interface {
 
-    // Retreive all reservations for all SDDCs in this org
+    // Get sddc provision spec for an org
     //
     // @param orgParam Organization identifier. (required)
-    // @param sddcStateParam SDDCs and/or states to query (optional)
+    // @return com.vmware.vmc.model.ProvisionSpec
     // @throws Unauthenticated  Unauthorized
-    // @throws InvalidRequest  Bad Call
+    // @throws InvalidRequest  BadRequest
     // @throws Unauthorized  Forbidden
-	Post(orgParam string, sddcStateParam *model.SddcStateRequest) (map[string][]model.ReservationWindow, error)
+    // @throws InternalServerError  Internal server error.
+	Get(orgParam string) (model.ProvisionSpec, error)
 }

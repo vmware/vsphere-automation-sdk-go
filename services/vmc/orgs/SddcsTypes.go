@@ -38,7 +38,7 @@ func sddcsCreateInputType() bindings.StructType {
 }
 
 func sddcsCreateOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+	return bindings.NewReferenceType(model.TaskBindingType)
 }
 
 func sddcsCreateRestMetadata() protocol.OperationRestMetadata {
@@ -75,7 +75,7 @@ func sddcsCreateRestMetadata() protocol.OperationRestMetadata {
 		"POST",
 		"/vmc/api/orgs/{org}/sddcs",
 		resultHeaders,
-		204,
+		201,
 		errorHeaders,
 		map[string]int{"Unauthenticated": 401,"Unauthorized": 403})
 }
@@ -87,7 +87,7 @@ func sddcsDeleteInputType() bindings.StructType {
 	fields["sddc"] = bindings.NewStringType()
 	fields["retain_configuration"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["template_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["force"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["retain_configuration"] = "RetainConfiguration"
@@ -112,13 +112,13 @@ func sddcsDeleteRestMetadata() protocol.OperationRestMetadata {
 	fields["sddc"] = bindings.NewStringType()
 	fields["retain_configuration"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["template_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["force"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["retain_configuration"] = "RetainConfiguration"
 	fieldNameMap["template_name"] = "TemplateName"
 	fieldNameMap["force"] = "Force"
-	paramsTypeMap["force"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	paramsTypeMap["org"] = bindings.NewStringType()
 	paramsTypeMap["sddc"] = bindings.NewStringType()
 	paramsTypeMap["template_name"] = bindings.NewOptionalType(bindings.NewStringType())

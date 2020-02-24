@@ -4,13 +4,13 @@
 // Code generated. DO NOT EDIT.
 
 /*
- * Data type definitions file for service: Reservation.
+ * Data type definitions file for service: PaymentMethods.
  * Includes binding types of a structures and enumerations defined in the service.
  * Shared by client-side stubs and server-side skeletons to ensure type
  * compatibility.
  */
 
-package tbrs
+package orgs
 
 import (
 	"reflect"
@@ -24,22 +24,22 @@ import (
 
 
 
-func reservationPostInputType() bindings.StructType {
+func paymentMethodsGetOrgPaymentMethodsInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org"] = bindings.NewStringType()
-	fields["sddc_state"] = bindings.NewOptionalType(bindings.NewReferenceType(model.SddcStateRequestBindingType))
+	fields["default_flag"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["org"] = "Org"
-	fieldNameMap["sddc_state"] = "SddcState"
+	fieldNameMap["default_flag"] = "DefaultFlag"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func reservationPostOutputType() bindings.BindingType {
-	return bindings.NewMapType(bindings.NewStringType(), bindings.NewListType(bindings.NewReferenceType(model.ReservationWindowBindingType), reflect.TypeOf([]model.ReservationWindow{})),reflect.TypeOf(map[string][]model.ReservationWindow{}))
+func paymentMethodsGetOrgPaymentMethodsOutputType() bindings.BindingType {
+	return bindings.NewListType(bindings.NewReferenceType(model.PaymentMethodInfoBindingType), reflect.TypeOf([]model.PaymentMethodInfo{}))
 }
 
-func reservationPostRestMetadata() protocol.OperationRestMetadata {
+func paymentMethodsGetOrgPaymentMethodsRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -47,13 +47,14 @@ func reservationPostRestMetadata() protocol.OperationRestMetadata {
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	fields["org"] = bindings.NewStringType()
-	fields["sddc_state"] = bindings.NewOptionalType(bindings.NewReferenceType(model.SddcStateRequestBindingType))
+	fields["default_flag"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["org"] = "Org"
-	fieldNameMap["sddc_state"] = "SddcState"
+	fieldNameMap["default_flag"] = "DefaultFlag"
 	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc_state"] = bindings.NewOptionalType(bindings.NewReferenceType(model.SddcStateRequestBindingType))
+	paramsTypeMap["default_flag"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	paramsTypeMap["org"] = bindings.NewStringType()
 	pathParams["org"] = "org"
+	queryParams["default_flag"] = "defaultFlag"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
@@ -65,13 +66,13 @@ func reservationPostRestMetadata() protocol.OperationRestMetadata {
 		queryParams,
 		headerParams,
 		"",
-		"sddc_state",
-		"POST",
-		"/vmc/api/orgs/{org}/tbrs/reservation",
+		"",
+		"GET",
+		"/vmc/api/orgs/{org}/payment-methods",
 		resultHeaders,
 		200,
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"InvalidRequest": 400,"Unauthorized": 403})
+		map[string]int{"Unauthenticated": 401,"Unauthorized": 403,"NotFound": 404})
 }
 
 
