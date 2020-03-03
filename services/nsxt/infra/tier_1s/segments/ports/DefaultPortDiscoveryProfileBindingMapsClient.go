@@ -75,8 +75,10 @@ func (pIface *DefaultPortDiscoveryProfileBindingMapsClient) Delete(tier1IdParam 
 	}
 	operationRestMetaData := portDiscoveryProfileBindingMapsDeleteRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	pIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := pIface.Invoke(pIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := pIface.connector.NewExecutionContext()
+	methodResult := pIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -103,8 +105,10 @@ func (pIface *DefaultPortDiscoveryProfileBindingMapsClient) Get(tier1IdParam str
 	}
 	operationRestMetaData := portDiscoveryProfileBindingMapsGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	pIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := pIface.Invoke(pIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := pIface.connector.NewExecutionContext()
+	methodResult := pIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.PortDiscoveryProfileBindingMap
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), portDiscoveryProfileBindingMapsGetOutputType())
@@ -141,8 +145,10 @@ func (pIface *DefaultPortDiscoveryProfileBindingMapsClient) List(tier1IdParam st
 	}
 	operationRestMetaData := portDiscoveryProfileBindingMapsListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	pIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := pIface.Invoke(pIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := pIface.connector.NewExecutionContext()
+	methodResult := pIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.PortDiscoveryProfileBindingMapListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), portDiscoveryProfileBindingMapsListOutputType())
@@ -174,8 +180,10 @@ func (pIface *DefaultPortDiscoveryProfileBindingMapsClient) Patch(tier1IdParam s
 	}
 	operationRestMetaData := portDiscoveryProfileBindingMapsPatchRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	pIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := pIface.Invoke(pIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := pIface.connector.NewExecutionContext()
+	methodResult := pIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -203,8 +211,10 @@ func (pIface *DefaultPortDiscoveryProfileBindingMapsClient) Update(tier1IdParam 
 	}
 	operationRestMetaData := portDiscoveryProfileBindingMapsUpdateRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	pIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := pIface.Invoke(pIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := pIface.connector.NewExecutionContext()
+	methodResult := pIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.PortDiscoveryProfileBindingMap
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), portDiscoveryProfileBindingMapsUpdateOutputType())

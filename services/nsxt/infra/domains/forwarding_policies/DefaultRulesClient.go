@@ -74,8 +74,10 @@ func (rIface *DefaultRulesClient) Delete(domainIdParam string, forwardingPolicyI
 	}
 	operationRestMetaData := rulesDeleteRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.Invoke(rIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := rIface.connector.NewExecutionContext()
+	methodResult := rIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -101,8 +103,10 @@ func (rIface *DefaultRulesClient) Get(domainIdParam string, forwardingPolicyIdPa
 	}
 	operationRestMetaData := rulesGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.Invoke(rIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := rIface.connector.NewExecutionContext()
+	methodResult := rIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.ForwardingRule
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rulesGetOutputType())
@@ -138,8 +142,10 @@ func (rIface *DefaultRulesClient) List(domainIdParam string, forwardingPolicyIdP
 	}
 	operationRestMetaData := rulesListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.Invoke(rIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := rIface.connector.NewExecutionContext()
+	methodResult := rIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.ForwardingRuleListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rulesListOutputType())
@@ -170,8 +176,10 @@ func (rIface *DefaultRulesClient) Patch(domainIdParam string, forwardingPolicyId
 	}
 	operationRestMetaData := rulesPatchRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.Invoke(rIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := rIface.connector.NewExecutionContext()
+	methodResult := rIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -198,8 +206,10 @@ func (rIface *DefaultRulesClient) Update(domainIdParam string, forwardingPolicyI
 	}
 	operationRestMetaData := rulesUpdateRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.Invoke(rIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := rIface.connector.NewExecutionContext()
+	methodResult := rIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.ForwardingRule
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rulesUpdateOutputType())

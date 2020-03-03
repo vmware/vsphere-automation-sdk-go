@@ -66,8 +66,10 @@ func (eIface *DefaultEffectivePermissionsClient) Get(featureNameParam string, ob
 	}
 	operationRestMetaData := effectivePermissionsGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	eIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := eIface.Invoke(eIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := eIface.connector.NewExecutionContext()
+	methodResult := eIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.PathPermissionGroup
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), effectivePermissionsGetOutputType())

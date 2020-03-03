@@ -67,8 +67,10 @@ func (gIface *DefaultGroupAssociationsClient) Get(serviceReferenceIdParam string
 	}
 	operationRestMetaData := groupAssociationsGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	gIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := gIface.Invoke(gIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := gIface.connector.NewExecutionContext()
+	methodResult := gIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.ServiceProfileGroups
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), groupAssociationsGetOutputType())

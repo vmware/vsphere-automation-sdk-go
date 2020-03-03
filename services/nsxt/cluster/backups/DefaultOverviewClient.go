@@ -72,8 +72,10 @@ func (oIface *DefaultOverviewClient) List(cursorParam *string, frameTypeParam *s
 	}
 	operationRestMetaData := overviewListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	oIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := oIface.Invoke(oIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := oIface.connector.NewExecutionContext()
+	methodResult := oIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.BackupOverview
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), overviewListOutputType())

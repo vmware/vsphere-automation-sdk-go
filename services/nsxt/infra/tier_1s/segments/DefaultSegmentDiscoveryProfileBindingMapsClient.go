@@ -74,8 +74,10 @@ func (sIface *DefaultSegmentDiscoveryProfileBindingMapsClient) Delete(tier1IdPar
 	}
 	operationRestMetaData := segmentDiscoveryProfileBindingMapsDeleteRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.Invoke(sIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := sIface.connector.NewExecutionContext()
+	methodResult := sIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -101,8 +103,10 @@ func (sIface *DefaultSegmentDiscoveryProfileBindingMapsClient) Get(tier1IdParam 
 	}
 	operationRestMetaData := segmentDiscoveryProfileBindingMapsGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.Invoke(sIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := sIface.connector.NewExecutionContext()
+	methodResult := sIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.SegmentDiscoveryProfileBindingMap
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), segmentDiscoveryProfileBindingMapsGetOutputType())
@@ -138,8 +142,10 @@ func (sIface *DefaultSegmentDiscoveryProfileBindingMapsClient) List(tier1IdParam
 	}
 	operationRestMetaData := segmentDiscoveryProfileBindingMapsListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.Invoke(sIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := sIface.connector.NewExecutionContext()
+	methodResult := sIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.SegmentDiscoveryProfileBindingMapListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), segmentDiscoveryProfileBindingMapsListOutputType())
@@ -170,8 +176,10 @@ func (sIface *DefaultSegmentDiscoveryProfileBindingMapsClient) Patch(tier1IdPara
 	}
 	operationRestMetaData := segmentDiscoveryProfileBindingMapsPatchRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.Invoke(sIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := sIface.connector.NewExecutionContext()
+	methodResult := sIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -198,8 +206,10 @@ func (sIface *DefaultSegmentDiscoveryProfileBindingMapsClient) Update(tier1IdPar
 	}
 	operationRestMetaData := segmentDiscoveryProfileBindingMapsUpdateRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.Invoke(sIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := sIface.connector.NewExecutionContext()
+	methodResult := sIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.SegmentDiscoveryProfileBindingMap
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), segmentDiscoveryProfileBindingMapsUpdateOutputType())

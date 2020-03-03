@@ -63,11 +63,11 @@ func NewDefaultRolesClient(connector client.Connector) *DefaultRolesClient {
 	return &rIface
 }
 
-func (rIface *DefaultRolesClient) Clone(roleIdParam string, newRoleParam model.NewRole) (model.NewRole, error) {
+func (rIface *DefaultRolesClient) Clone(roleParam string, newRoleParam model.NewRole) (model.NewRole, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(rIface.interfaceIdentifier, "clone")
 	sv := bindings.NewStructValueBuilder(rolesCloneInputType(), typeConverter)
-	sv.AddStructField("RoleId", roleIdParam)
+	sv.AddStructField("Role", roleParam)
 	sv.AddStructField("NewRole", newRoleParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
@@ -76,8 +76,10 @@ func (rIface *DefaultRolesClient) Clone(roleIdParam string, newRoleParam model.N
 	}
 	operationRestMetaData := rolesCloneRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.Invoke(rIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := rIface.connector.NewExecutionContext()
+	methodResult := rIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.NewRole
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rolesCloneOutputType())
@@ -94,19 +96,21 @@ func (rIface *DefaultRolesClient) Clone(roleIdParam string, newRoleParam model.N
 	}
 }
 
-func (rIface *DefaultRolesClient) Delete(roleIdParam string) error {
+func (rIface *DefaultRolesClient) Delete(roleParam string) error {
 	typeConverter := rIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(rIface.interfaceIdentifier, "delete")
 	sv := bindings.NewStructValueBuilder(rolesDeleteInputType(), typeConverter)
-	sv.AddStructField("RoleId", roleIdParam)
+	sv.AddStructField("Role", roleParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return bindings.VAPIerrorsToError(inputError)
 	}
 	operationRestMetaData := rolesDeleteRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.Invoke(rIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := rIface.connector.NewExecutionContext()
+	methodResult := rIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -130,8 +134,10 @@ func (rIface *DefaultRolesClient) Get(roleParam string) (model.RoleWithFeatures,
 	}
 	operationRestMetaData := rolesGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.Invoke(rIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := rIface.connector.NewExecutionContext()
+	methodResult := rIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.RoleWithFeatures
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rolesGetOutputType())
@@ -159,8 +165,10 @@ func (rIface *DefaultRolesClient) List() (model.RoleListResult, error) {
 	}
 	operationRestMetaData := rolesListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.Invoke(rIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := rIface.connector.NewExecutionContext()
+	methodResult := rIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.RoleListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rolesListOutputType())
@@ -177,11 +185,11 @@ func (rIface *DefaultRolesClient) List() (model.RoleListResult, error) {
 	}
 }
 
-func (rIface *DefaultRolesClient) Update(roleIdParam string, roleWithFeaturesParam model.RoleWithFeatures) (model.RoleWithFeatures, error) {
+func (rIface *DefaultRolesClient) Update(roleParam string, roleWithFeaturesParam model.RoleWithFeatures) (model.RoleWithFeatures, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(rIface.interfaceIdentifier, "update")
 	sv := bindings.NewStructValueBuilder(rolesUpdateInputType(), typeConverter)
-	sv.AddStructField("RoleId", roleIdParam)
+	sv.AddStructField("Role", roleParam)
 	sv.AddStructField("RoleWithFeatures", roleWithFeaturesParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
@@ -190,8 +198,10 @@ func (rIface *DefaultRolesClient) Update(roleIdParam string, roleWithFeaturesPar
 	}
 	operationRestMetaData := rolesUpdateRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.Invoke(rIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := rIface.connector.NewExecutionContext()
+	methodResult := rIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.RoleWithFeatures
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rolesUpdateOutputType())
@@ -220,8 +230,10 @@ func (rIface *DefaultRolesClient) Validate(featurePermissionArrayParam model.Fea
 	}
 	operationRestMetaData := rolesValidateRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.Invoke(rIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := rIface.connector.NewExecutionContext()
+	methodResult := rIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.RecommendedFeaturePermissionListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rolesValidateOutputType())

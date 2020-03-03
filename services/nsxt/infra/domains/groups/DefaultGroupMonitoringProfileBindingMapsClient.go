@@ -74,8 +74,10 @@ func (gIface *DefaultGroupMonitoringProfileBindingMapsClient) Delete(domainIdPar
 	}
 	operationRestMetaData := groupMonitoringProfileBindingMapsDeleteRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	gIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := gIface.Invoke(gIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := gIface.connector.NewExecutionContext()
+	methodResult := gIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -101,8 +103,10 @@ func (gIface *DefaultGroupMonitoringProfileBindingMapsClient) Get(domainIdParam 
 	}
 	operationRestMetaData := groupMonitoringProfileBindingMapsGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	gIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := gIface.Invoke(gIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := gIface.connector.NewExecutionContext()
+	methodResult := gIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.GroupMonitoringProfileBindingMap
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), groupMonitoringProfileBindingMapsGetOutputType())
@@ -138,8 +142,10 @@ func (gIface *DefaultGroupMonitoringProfileBindingMapsClient) List(domainIdParam
 	}
 	operationRestMetaData := groupMonitoringProfileBindingMapsListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	gIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := gIface.Invoke(gIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := gIface.connector.NewExecutionContext()
+	methodResult := gIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.GroupMonitoringProfileBindingMapListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), groupMonitoringProfileBindingMapsListOutputType())
@@ -170,8 +176,10 @@ func (gIface *DefaultGroupMonitoringProfileBindingMapsClient) Patch(domainIdPara
 	}
 	operationRestMetaData := groupMonitoringProfileBindingMapsPatchRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	gIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := gIface.Invoke(gIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := gIface.connector.NewExecutionContext()
+	methodResult := gIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -198,8 +206,10 @@ func (gIface *DefaultGroupMonitoringProfileBindingMapsClient) Update(domainIdPar
 	}
 	operationRestMetaData := groupMonitoringProfileBindingMapsUpdateRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	gIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := gIface.Invoke(gIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := gIface.connector.NewExecutionContext()
+	methodResult := gIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.GroupMonitoringProfileBindingMap
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), groupMonitoringProfileBindingMapsUpdateOutputType())

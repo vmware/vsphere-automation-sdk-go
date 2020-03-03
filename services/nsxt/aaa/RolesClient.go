@@ -16,9 +16,9 @@ import (
 
 type RolesClient interface {
 
-    // The role with id role-id is cloned and the new id, name and description are the ones provided in the request body.
     //
-    // @param roleIdParam Role id (required)
+    //
+    // @param roleParam Role id (required)
     // @param newRoleParam (required)
     // @return com.vmware.nsx_policy.model.NewRole
     // @throws InvalidRequest  Bad Request, Precondition Failed
@@ -26,21 +26,21 @@ type RolesClient interface {
     // @throws ServiceUnavailable  Service Unavailable
     // @throws InternalServerError  Internal Server Error
     // @throws NotFound  Not Found
-	Clone(roleIdParam string, newRoleParam model.NewRole) (model.NewRole, error)
+	Clone(roleParam string, newRoleParam model.NewRole) (model.NewRole, error)
 
     // If a role is assigned to a role binding then the deletion of the role is not allowed. Precanned roles cannot be deleted.
     //
-    // @param roleIdParam Custom role id (required)
+    // @param roleParam Custom role id (required)
     // @throws InvalidRequest  Bad Request, Precondition Failed
     // @throws Unauthorized  Forbidden
     // @throws ServiceUnavailable  Service Unavailable
     // @throws InternalServerError  Internal Server Error
     // @throws NotFound  Not Found
-	Delete(roleIdParam string) error
+	Delete(roleParam string) error
 
     // Get role information
     //
-    // @param roleParam Role Name (required)
+    // @param roleParam Role id (required)
     // @return com.vmware.nsx_policy.model.RoleWithFeatures
     // @throws InvalidRequest  Bad Request, Precondition Failed
     // @throws Unauthorized  Forbidden
@@ -58,9 +58,9 @@ type RolesClient interface {
     // @throws NotFound  Not Found
 	List() (model.RoleListResult, error)
 
-    // Creates a new role with id as role-id if there does not exist any role with id role-id, else updates the existing role.
     //
-    // @param roleIdParam Custom role id (required)
+    //
+    // @param roleParam Custom role id (required)
     // @param roleWithFeaturesParam (required)
     // @return com.vmware.nsx_policy.model.RoleWithFeatures
     // @throws InvalidRequest  Bad Request, Precondition Failed
@@ -68,7 +68,7 @@ type RolesClient interface {
     // @throws ServiceUnavailable  Service Unavailable
     // @throws InternalServerError  Internal Server Error
     // @throws NotFound  Not Found
-	Update(roleIdParam string, roleWithFeaturesParam model.RoleWithFeatures) (model.RoleWithFeatures, error)
+	Update(roleParam string, roleWithFeaturesParam model.RoleWithFeatures) (model.RoleWithFeatures, error)
 
     // Validate the permissions of an incoming role. Also, recommend the permissions which need to be corrected.
     //

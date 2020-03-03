@@ -73,8 +73,10 @@ func (eIface *DefaultEnforcementPointsClient) Delete(deploymentZoneIdParam strin
 	}
 	operationRestMetaData := enforcementPointsDeleteRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	eIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := eIface.Invoke(eIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := eIface.connector.NewExecutionContext()
+	methodResult := eIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -99,8 +101,10 @@ func (eIface *DefaultEnforcementPointsClient) Get(deploymentZoneIdParam string, 
 	}
 	operationRestMetaData := enforcementPointsGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	eIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := eIface.Invoke(eIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := eIface.connector.NewExecutionContext()
+	methodResult := eIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.EnforcementPoint
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), enforcementPointsGetOutputType())
@@ -135,8 +139,10 @@ func (eIface *DefaultEnforcementPointsClient) List(deploymentZoneIdParam string,
 	}
 	operationRestMetaData := enforcementPointsListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	eIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := eIface.Invoke(eIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := eIface.connector.NewExecutionContext()
+	methodResult := eIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.EnforcementPointListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), enforcementPointsListOutputType())
@@ -166,8 +172,10 @@ func (eIface *DefaultEnforcementPointsClient) Patch(deploymentZoneIdParam string
 	}
 	operationRestMetaData := enforcementPointsPatchRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	eIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := eIface.Invoke(eIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := eIface.connector.NewExecutionContext()
+	methodResult := eIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -193,8 +201,10 @@ func (eIface *DefaultEnforcementPointsClient) Update(deploymentZoneIdParam strin
 	}
 	operationRestMetaData := enforcementPointsUpdateRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	eIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := eIface.Invoke(eIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := eIface.connector.NewExecutionContext()
+	methodResult := eIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.EnforcementPoint
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), enforcementPointsUpdateOutputType())

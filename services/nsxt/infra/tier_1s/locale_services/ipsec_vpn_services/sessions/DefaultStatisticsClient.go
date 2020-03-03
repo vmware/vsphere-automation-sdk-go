@@ -37,6 +37,7 @@ func NewDefaultStatisticsClient(connector client.Connector) *DefaultStatisticsCl
 	interfaceName := "com.vmware.nsx_policy.infra.tier_1s.locale_services.ipsec_vpn_services.sessions.statistics"
 	interfaceIdentifier := core.NewInterfaceIdentifier(interfaceName)
 	methodIdentifiers := []core.MethodIdentifier{
+		core.NewMethodIdentifier(interfaceIdentifier, "create"),
 		core.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -49,8 +50,40 @@ func NewDefaultStatisticsClient(connector client.Connector) *DefaultStatisticsCl
 	errorBindingMap[errors.TimedOut{}.Error()] = errors.TimedOutBindingType()
 	sIface := DefaultStatisticsClient{interfaceName: interfaceName, methodIdentifiers: methodIdentifiers, interfaceDefinition: interfaceDefinition, errorBindingMap: errorBindingMap, interfaceIdentifier: interfaceIdentifier, connector: connector}
 	sIface.methodNameToDefMap = make(map[string]*core.MethodDefinition)
+	sIface.methodNameToDefMap["create"] = sIface.createMethodDefinition()
 	sIface.methodNameToDefMap["get"] = sIface.getMethodDefinition()
 	return &sIface
+}
+
+func (sIface *DefaultStatisticsClient) Create(tier1IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string, actionParam string, enforcementPointPathParam *string) error {
+	typeConverter := sIface.connector.TypeConverter()
+	methodIdentifier := core.NewMethodIdentifier(sIface.interfaceIdentifier, "create")
+	sv := bindings.NewStructValueBuilder(statisticsCreateInputType(), typeConverter)
+	sv.AddStructField("Tier1Id", tier1IdParam)
+	sv.AddStructField("LocaleServiceId", localeServiceIdParam)
+	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("SessionId", sessionIdParam)
+	sv.AddStructField("Action", actionParam)
+	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return bindings.VAPIerrorsToError(inputError)
+	}
+	operationRestMetaData := statisticsCreateRestMetadata()
+	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
+	sIface.connector.SetConnectionMetadata(connectionMetadata)
+	executionContext := sIface.connector.NewExecutionContext()
+	methodResult := sIface.Invoke(executionContext, methodIdentifier, inputDataValue)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.errorBindingMap[methodResult.Error().Name()])
+		if errorInError != nil {
+			return bindings.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
 }
 
 func (sIface *DefaultStatisticsClient) Get(tier1IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string, enforcementPointPathParam *string, sourceParam *string) (model.AggregateIPSecVpnSessionStatistics, error) {
@@ -70,8 +103,10 @@ func (sIface *DefaultStatisticsClient) Get(tier1IdParam string, localeServiceIdP
 	}
 	operationRestMetaData := statisticsGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.Invoke(sIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := sIface.connector.NewExecutionContext()
+	methodResult := sIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.AggregateIPSecVpnSessionStatistics
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), statisticsGetOutputType())
@@ -94,6 +129,69 @@ func (sIface *DefaultStatisticsClient) Invoke(ctx *core.ExecutionContext, method
 	return methodResult
 }
 
+
+func (sIface *DefaultStatisticsClient) createMethodDefinition() *core.MethodDefinition {
+	interfaceIdentifier := core.NewInterfaceIdentifier(sIface.interfaceName)
+	typeConverter := sIface.connector.TypeConverter()
+
+	input, inputError := typeConverter.ConvertToDataDefinition(statisticsCreateInputType())
+	output, outputError := typeConverter.ConvertToDataDefinition(statisticsCreateOutputType())
+	if inputError != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultStatisticsClient.create method's input - %s",
+			bindings.VAPIerrorsToError(inputError).Error())
+		return nil
+	}
+	if outputError != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultStatisticsClient.create method's output - %s",
+			bindings.VAPIerrorsToError(outputError).Error())
+		return nil
+	}
+	methodIdentifier := core.NewMethodIdentifier(interfaceIdentifier, "create")
+	errorDefinitions := make([]data.ErrorDefinition, 0)
+	sIface.errorBindingMap[errors.InvalidRequest{}.Error()] = errors.InvalidRequestBindingType()
+	errDef1, errError1 := typeConverter.ConvertToDataDefinition(errors.InvalidRequestBindingType())
+	if errError1 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultStatisticsClient.create method's errors.InvalidRequest error - %s",
+			bindings.VAPIerrorsToError(errError1).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef1.(data.ErrorDefinition))
+	sIface.errorBindingMap[errors.Unauthorized{}.Error()] = errors.UnauthorizedBindingType()
+	errDef2, errError2 := typeConverter.ConvertToDataDefinition(errors.UnauthorizedBindingType())
+	if errError2 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultStatisticsClient.create method's errors.Unauthorized error - %s",
+			bindings.VAPIerrorsToError(errError2).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef2.(data.ErrorDefinition))
+	sIface.errorBindingMap[errors.ServiceUnavailable{}.Error()] = errors.ServiceUnavailableBindingType()
+	errDef3, errError3 := typeConverter.ConvertToDataDefinition(errors.ServiceUnavailableBindingType())
+	if errError3 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultStatisticsClient.create method's errors.ServiceUnavailable error - %s",
+			bindings.VAPIerrorsToError(errError3).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef3.(data.ErrorDefinition))
+	sIface.errorBindingMap[errors.InternalServerError{}.Error()] = errors.InternalServerErrorBindingType()
+	errDef4, errError4 := typeConverter.ConvertToDataDefinition(errors.InternalServerErrorBindingType())
+	if errError4 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultStatisticsClient.create method's errors.InternalServerError error - %s",
+			bindings.VAPIerrorsToError(errError4).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef4.(data.ErrorDefinition))
+	sIface.errorBindingMap[errors.NotFound{}.Error()] = errors.NotFoundBindingType()
+	errDef5, errError5 := typeConverter.ConvertToDataDefinition(errors.NotFoundBindingType())
+	if errError5 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultStatisticsClient.create method's errors.NotFound error - %s",
+			bindings.VAPIerrorsToError(errError5).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef5.(data.ErrorDefinition))
+
+	methodDefinition := core.NewMethodDefinition(methodIdentifier, input, output, errorDefinitions)
+	return &methodDefinition
+}
 
 func (sIface *DefaultStatisticsClient) getMethodDefinition() *core.MethodDefinition {
 	interfaceIdentifier := core.NewInterfaceIdentifier(sIface.interfaceName)

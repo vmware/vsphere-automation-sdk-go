@@ -65,8 +65,10 @@ func (bIface *DefaultBackupsClient) Retrievesshfingerprint(remoteServerFingerpri
 	}
 	operationRestMetaData := backupsRetrievesshfingerprintRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	bIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := bIface.Invoke(bIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := bIface.connector.NewExecutionContext()
+	methodResult := bIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.RemoteServerFingerprint
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), backupsRetrievesshfingerprintOutputType())

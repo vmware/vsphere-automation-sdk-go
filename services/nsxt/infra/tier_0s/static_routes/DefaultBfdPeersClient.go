@@ -73,8 +73,10 @@ func (bIface *DefaultBfdPeersClient) Delete(tier0IdParam string, bfdPeerIdParam 
 	}
 	operationRestMetaData := bfdPeersDeleteRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	bIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := bIface.Invoke(bIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := bIface.connector.NewExecutionContext()
+	methodResult := bIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -99,8 +101,10 @@ func (bIface *DefaultBfdPeersClient) Get(tier0IdParam string, bfdPeerIdParam str
 	}
 	operationRestMetaData := bfdPeersGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	bIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := bIface.Invoke(bIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := bIface.connector.NewExecutionContext()
+	methodResult := bIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.StaticRouteBfdPeer
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), bfdPeersGetOutputType())
@@ -135,8 +139,10 @@ func (bIface *DefaultBfdPeersClient) List(tier0IdParam string, cursorParam *stri
 	}
 	operationRestMetaData := bfdPeersListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	bIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := bIface.Invoke(bIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := bIface.connector.NewExecutionContext()
+	methodResult := bIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.StaticRouteBfdPeerListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), bfdPeersListOutputType())
@@ -166,8 +172,10 @@ func (bIface *DefaultBfdPeersClient) Patch(tier0IdParam string, bfdPeerIdParam s
 	}
 	operationRestMetaData := bfdPeersPatchRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	bIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := bIface.Invoke(bIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := bIface.connector.NewExecutionContext()
+	methodResult := bIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -193,8 +201,10 @@ func (bIface *DefaultBfdPeersClient) Update(tier0IdParam string, bfdPeerIdParam 
 	}
 	operationRestMetaData := bfdPeersUpdateRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	bIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := bIface.Invoke(bIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := bIface.connector.NewExecutionContext()
+	methodResult := bIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.StaticRouteBfdPeer
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), bfdPeersUpdateOutputType())

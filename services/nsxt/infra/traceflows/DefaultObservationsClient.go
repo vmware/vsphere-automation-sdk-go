@@ -53,20 +53,12 @@ func NewDefaultObservationsClient(connector client.Connector) *DefaultObservatio
 	return &oIface
 }
 
-func (oIface *DefaultObservationsClient) List(traceflowIdParam string, componentNameParam *string, componentTypeParam *string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, resourceTypeParam *string, sortAscendingParam *bool, sortByParam *string, transportNodeNameParam *string) (model.TraceflowObservationListResult, error) {
+func (oIface *DefaultObservationsClient) List(traceflowIdParam string, enforcementPointPathParam *string) (model.TraceflowObservationListResult, error) {
 	typeConverter := oIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(oIface.interfaceIdentifier, "list")
 	sv := bindings.NewStructValueBuilder(observationsListInputType(), typeConverter)
 	sv.AddStructField("TraceflowId", traceflowIdParam)
-	sv.AddStructField("ComponentName", componentNameParam)
-	sv.AddStructField("ComponentType", componentTypeParam)
-	sv.AddStructField("Cursor", cursorParam)
-	sv.AddStructField("IncludedFields", includedFieldsParam)
-	sv.AddStructField("PageSize", pageSizeParam)
-	sv.AddStructField("ResourceType", resourceTypeParam)
-	sv.AddStructField("SortAscending", sortAscendingParam)
-	sv.AddStructField("SortBy", sortByParam)
-	sv.AddStructField("TransportNodeName", transportNodeNameParam)
+	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.TraceflowObservationListResult
@@ -74,8 +66,10 @@ func (oIface *DefaultObservationsClient) List(traceflowIdParam string, component
 	}
 	operationRestMetaData := observationsListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	oIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := oIface.Invoke(oIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := oIface.connector.NewExecutionContext()
+	methodResult := oIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.TraceflowObservationListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), observationsListOutputType())

@@ -76,8 +76,10 @@ func (oIface *DefaultObjectPermissionsClient) Delete(cursorParam *string, includ
 	}
 	operationRestMetaData := objectPermissionsDeleteRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	oIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := oIface.Invoke(oIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := oIface.connector.NewExecutionContext()
+	methodResult := oIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -109,8 +111,10 @@ func (oIface *DefaultObjectPermissionsClient) List(cursorParam *string, includeM
 	}
 	operationRestMetaData := objectPermissionsListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	oIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := oIface.Invoke(oIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := oIface.connector.NewExecutionContext()
+	methodResult := oIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.ObjectRolePermissionGroupListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), objectPermissionsListOutputType())
@@ -138,8 +142,10 @@ func (oIface *DefaultObjectPermissionsClient) Patch(objectRolePermissionGroupPar
 	}
 	operationRestMetaData := objectPermissionsPatchRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	oIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := oIface.Invoke(oIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := oIface.connector.NewExecutionContext()
+	methodResult := oIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {

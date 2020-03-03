@@ -74,8 +74,10 @@ func (vIface *DefaultVirtualEndpointsClient) Delete(tier0IdParam string, localeS
 	}
 	operationRestMetaData := virtualEndpointsDeleteRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	vIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := vIface.Invoke(vIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := vIface.connector.NewExecutionContext()
+	methodResult := vIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -101,8 +103,10 @@ func (vIface *DefaultVirtualEndpointsClient) Get(tier0IdParam string, localeServ
 	}
 	operationRestMetaData := virtualEndpointsGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	vIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := vIface.Invoke(vIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := vIface.connector.NewExecutionContext()
+	methodResult := vIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.VirtualEndpoint
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), virtualEndpointsGetOutputType())
@@ -138,8 +142,10 @@ func (vIface *DefaultVirtualEndpointsClient) List(tier0IdParam string, localeSer
 	}
 	operationRestMetaData := virtualEndpointsListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	vIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := vIface.Invoke(vIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := vIface.connector.NewExecutionContext()
+	methodResult := vIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.VirtualEndpointListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), virtualEndpointsListOutputType())
@@ -170,8 +176,10 @@ func (vIface *DefaultVirtualEndpointsClient) Patch(tier0IdParam string, localeSe
 	}
 	operationRestMetaData := virtualEndpointsPatchRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	vIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := vIface.Invoke(vIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := vIface.connector.NewExecutionContext()
+	methodResult := vIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -198,8 +206,10 @@ func (vIface *DefaultVirtualEndpointsClient) Update(tier0IdParam string, localeS
 	}
 	operationRestMetaData := virtualEndpointsUpdateRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	vIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := vIface.Invoke(vIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := vIface.connector.NewExecutionContext()
+	methodResult := vIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.VirtualEndpoint
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), virtualEndpointsUpdateOutputType())

@@ -28,15 +28,15 @@ func statusGetInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["traceflow_id"] = bindings.NewStringType()
-	fields["traceflow_status_request"] = bindings.NewReferenceType(model.TraceflowStatusRequestBindingType)
+	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["traceflow_id"] = "TraceflowId"
-	fieldNameMap["traceflow_status_request"] = "TraceflowStatusRequest"
+	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
 func statusGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TraceflowStatusResponseBindingType)
+	return bindings.NewReferenceType(model.TraceflowBindingType)
 }
 
 func statusGetRestMetadata() protocol.OperationRestMetadata {
@@ -47,13 +47,14 @@ func statusGetRestMetadata() protocol.OperationRestMetadata {
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	fields["traceflow_id"] = bindings.NewStringType()
-	fields["traceflow_status_request"] = bindings.NewReferenceType(model.TraceflowStatusRequestBindingType)
+	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["traceflow_id"] = "TraceflowId"
-	fieldNameMap["traceflow_status_request"] = "TraceflowStatusRequest"
+	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
+	paramsTypeMap["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["traceflow_id"] = bindings.NewStringType()
-	paramsTypeMap["traceflow_status_request"] = bindings.NewReferenceType(model.TraceflowStatusRequestBindingType)
 	paramsTypeMap["traceflowId"] = bindings.NewStringType()
 	pathParams["traceflow_id"] = "traceflowId"
+	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -64,7 +65,7 @@ func statusGetRestMetadata() protocol.OperationRestMetadata {
 		queryParams,
 		headerParams,
 		"",
-		"traceflow_status_request",
+		"",
 		"GET",
 		"/policy/api/v1/infra/traceflows/{traceflowId}/status",
 		resultHeaders,

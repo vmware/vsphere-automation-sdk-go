@@ -20,12 +20,6 @@ import (
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
 )
 
-// Possible value for ``source`` of method EffectiveResources#list.
-const EffectiveResources_LIST_SOURCE_AMAZON = "Amazon"
-// Possible value for ``source`` of method EffectiveResources#list.
-const EffectiveResources_LIST_SOURCE_AZURE = "Azure"
-// Possible value for ``source`` of method EffectiveResources#list.
-const EffectiveResources_LIST_SOURCE_NSX = "NSX"
 
 
 
@@ -34,22 +28,22 @@ func effectiveResourcesListInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["filter_text"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fields["scope"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["source"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["tag"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["filter_text"] = "FilterText"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["scope"] = "Scope"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	fieldNameMap["source"] = "Source"
 	fieldNameMap["tag"] = "Tag"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
@@ -67,38 +61,38 @@ func effectiveResourcesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["filter_text"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fields["scope"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["source"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["tag"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["filter_text"] = "FilterText"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["scope"] = "Scope"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	fieldNameMap["source"] = "Source"
 	fieldNameMap["tag"] = "Tag"
-	paramsTypeMap["source"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	paramsTypeMap["scope"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["filter_text"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["tag"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	queryParams["cursor"] = "cursor"
+	queryParams["filter_text"] = "filter_text"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["scope"] = "scope"
 	queryParams["sort_by"] = "sort_by"
-	queryParams["source"] = "source"
 	queryParams["tag"] = "tag"
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"

@@ -53,18 +53,18 @@ func NewDefaultEffectiveResourcesClient(connector client.Connector) *DefaultEffe
 	return &eIface
 }
 
-func (eIface *DefaultEffectiveResourcesClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, scopeParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string, tagParam *string) (model.PolicyResourceReferenceListResult, error) {
+func (eIface *DefaultEffectiveResourcesClient) List(cursorParam *string, filterTextParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, scopeParam *string, sortAscendingParam *bool, sortByParam *string, tagParam *string) (model.PolicyResourceReferenceListResult, error) {
 	typeConverter := eIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(eIface.interfaceIdentifier, "list")
 	sv := bindings.NewStructValueBuilder(effectiveResourcesListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("FilterText", filterTextParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("Scope", scopeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
-	sv.AddStructField("Source", sourceParam)
 	sv.AddStructField("Tag", tagParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
@@ -73,8 +73,10 @@ func (eIface *DefaultEffectiveResourcesClient) List(cursorParam *string, include
 	}
 	operationRestMetaData := effectiveResourcesListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	eIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := eIface.Invoke(eIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := eIface.connector.NewExecutionContext()
+	methodResult := eIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.PolicyResourceReferenceListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), effectiveResourcesListOutputType())

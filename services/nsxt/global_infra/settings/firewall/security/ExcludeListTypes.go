@@ -1,0 +1,203 @@
+/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
+// Code generated. DO NOT EDIT.
+
+/*
+ * Data type definitions file for service: ExcludeList.
+ * Includes binding types of a structures and enumerations defined in the service.
+ * Shared by client-side stubs and server-side skeletons to ensure type
+ * compatibility.
+ */
+
+package security
+
+import (
+	"reflect"
+	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+)
+
+
+
+
+
+func excludeListFilterInputType() bindings.StructType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["intent_path"] = bindings.NewStringType()
+	fields["deep_check"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["intent_path"] = "IntentPath"
+	fieldNameMap["deep_check"] = "DeepCheck"
+	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+}
+
+func excludeListFilterOutputType() bindings.BindingType {
+	return bindings.NewReferenceType(model.PolicyResourceReferenceBindingType)
+}
+
+func excludeListFilterRestMetadata() protocol.OperationRestMetadata {
+	fields := map[string]bindings.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]bindings.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	fields["intent_path"] = bindings.NewStringType()
+	fields["deep_check"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["intent_path"] = "IntentPath"
+	fieldNameMap["deep_check"] = "DeepCheck"
+	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
+	paramsTypeMap["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["deep_check"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["intent_path"] = bindings.NewStringType()
+	queryParams["deep_check"] = "deep_check"
+	queryParams["enforcement_point_path"] = "enforcement_point_path"
+	queryParams["intent_path"] = "intent_path"
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]string{}
+	return protocol.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		"action=filter",
+		"",
+		"POST",
+		"/policy/api/v1/global-infra/settings/firewall/security/exclude-list",
+		resultHeaders,
+		200,
+		errorHeaders,
+		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+}
+
+func excludeListGetInputType() bindings.StructType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+}
+
+func excludeListGetOutputType() bindings.BindingType {
+	return bindings.NewReferenceType(model.PolicyExcludeListBindingType)
+}
+
+func excludeListGetRestMetadata() protocol.OperationRestMetadata {
+	fields := map[string]bindings.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]bindings.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]string{}
+	return protocol.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		"",
+		"",
+		"GET",
+		"/policy/api/v1/global-infra/settings/firewall/security/exclude-list",
+		resultHeaders,
+		200,
+		errorHeaders,
+		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+}
+
+func excludeListPatchInputType() bindings.StructType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["policy_exclude_list"] = bindings.NewReferenceType(model.PolicyExcludeListBindingType)
+	fieldNameMap["policy_exclude_list"] = "PolicyExcludeList"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+}
+
+func excludeListPatchOutputType() bindings.BindingType {
+	return bindings.NewVoidType()
+}
+
+func excludeListPatchRestMetadata() protocol.OperationRestMetadata {
+	fields := map[string]bindings.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]bindings.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	fields["policy_exclude_list"] = bindings.NewReferenceType(model.PolicyExcludeListBindingType)
+	fieldNameMap["policy_exclude_list"] = "PolicyExcludeList"
+	paramsTypeMap["policy_exclude_list"] = bindings.NewReferenceType(model.PolicyExcludeListBindingType)
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]string{}
+	return protocol.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		"",
+		"policy_exclude_list",
+		"PATCH",
+		"/policy/api/v1/global-infra/settings/firewall/security/exclude-list",
+		resultHeaders,
+		204,
+		errorHeaders,
+		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+}
+
+func excludeListUpdateInputType() bindings.StructType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["policy_exclude_list"] = bindings.NewReferenceType(model.PolicyExcludeListBindingType)
+	fieldNameMap["policy_exclude_list"] = "PolicyExcludeList"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+}
+
+func excludeListUpdateOutputType() bindings.BindingType {
+	return bindings.NewReferenceType(model.PolicyExcludeListBindingType)
+}
+
+func excludeListUpdateRestMetadata() protocol.OperationRestMetadata {
+	fields := map[string]bindings.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]bindings.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	fields["policy_exclude_list"] = bindings.NewReferenceType(model.PolicyExcludeListBindingType)
+	fieldNameMap["policy_exclude_list"] = "PolicyExcludeList"
+	paramsTypeMap["policy_exclude_list"] = bindings.NewReferenceType(model.PolicyExcludeListBindingType)
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]string{}
+	return protocol.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		"",
+		"policy_exclude_list",
+		"PUT",
+		"/policy/api/v1/global-infra/settings/firewall/security/exclude-list",
+		resultHeaders,
+		200,
+		errorHeaders,
+		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+}
+
+

@@ -59,9 +59,12 @@ type RoleBindingsClient interface {
     // Get all users and groups with their roles
     //
     // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param identitySourceIdParam Identity source ID (optional)
+    // @param identitySourceTypeParam Identity source type (optional)
     // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
     // @param nameParam User/Group name (optional)
     // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param roleParam Role ID (optional)
     // @param sortAscendingParam (optional)
     // @param sortByParam Field by which records are sorted (optional)
     // @param type_Param Type (optional)
@@ -71,7 +74,7 @@ type RoleBindingsClient interface {
     // @throws ServiceUnavailable  Service Unavailable
     // @throws InternalServerError  Internal Server Error
     // @throws NotFound  Not Found
-	List(cursorParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (model.RoleBindingListResult, error)
+	List(cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, roleParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) (model.RoleBindingListResult, error)
 
     // Update User or Group's roles
     //

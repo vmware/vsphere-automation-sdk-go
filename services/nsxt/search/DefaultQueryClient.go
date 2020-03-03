@@ -70,8 +70,10 @@ func (qIface *DefaultQueryClient) List(queryParam string, cursorParam *string, i
 	}
 	operationRestMetaData := queryListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	qIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := qIface.Invoke(qIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := qIface.connector.NewExecutionContext()
+	methodResult := qIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.SearchResponse
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), queryListOutputType())

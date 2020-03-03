@@ -53,28 +53,30 @@ func NewDefaultStatusClient(connector client.Connector) *DefaultStatusClient {
 	return &sIface
 }
 
-func (sIface *DefaultStatusClient) Get(traceflowIdParam string, traceflowStatusRequestParam model.TraceflowStatusRequest) (model.TraceflowStatusResponse, error) {
+func (sIface *DefaultStatusClient) Get(traceflowIdParam string, enforcementPointPathParam *string) (model.Traceflow, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(sIface.interfaceIdentifier, "get")
 	sv := bindings.NewStructValueBuilder(statusGetInputType(), typeConverter)
 	sv.AddStructField("TraceflowId", traceflowIdParam)
-	sv.AddStructField("TraceflowStatusRequest", traceflowStatusRequestParam)
+	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.TraceflowStatusResponse
+		var emptyOutput model.Traceflow
 		return emptyOutput, bindings.VAPIerrorsToError(inputError)
 	}
 	operationRestMetaData := statusGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.Invoke(sIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
-	var emptyOutput model.TraceflowStatusResponse
+	executionContext := sIface.connector.NewExecutionContext()
+	methodResult := sIface.Invoke(executionContext, methodIdentifier, inputDataValue)
+	var emptyOutput model.Traceflow
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), statusGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.TraceflowStatusResponse), nil
+		return output.(model.Traceflow), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.errorBindingMap[methodResult.Error().Name()])
 		if errorInError != nil {

@@ -70,8 +70,10 @@ func (uIface *DefaultUsersClient) List(searchStringParam string, cursorParam *st
 	}
 	operationRestMetaData := usersListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	uIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := uIface.Invoke(uIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := uIface.connector.NewExecutionContext()
+	methodResult := uIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.VidmInfoListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), usersListOutputType())

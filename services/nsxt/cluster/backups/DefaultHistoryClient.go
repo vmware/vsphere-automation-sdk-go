@@ -64,8 +64,10 @@ func (hIface *DefaultHistoryClient) Get() (model.BackupOperationHistory, error) 
 	}
 	operationRestMetaData := historyGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	hIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := hIface.Invoke(hIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := hIface.connector.NewExecutionContext()
+	methodResult := hIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.BackupOperationHistory
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), historyGetOutputType())

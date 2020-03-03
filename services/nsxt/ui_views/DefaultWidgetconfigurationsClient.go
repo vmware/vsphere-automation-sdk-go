@@ -74,8 +74,10 @@ func (wIface *DefaultWidgetconfigurationsClient) Create(viewIdParam string, widg
 	}
 	operationRestMetaData := widgetconfigurationsCreateRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	wIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := wIface.Invoke(wIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := wIface.connector.NewExecutionContext()
+	methodResult := wIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput *data.StructValue
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), widgetconfigurationsCreateOutputType())
@@ -104,8 +106,10 @@ func (wIface *DefaultWidgetconfigurationsClient) Delete(viewIdParam string, widg
 	}
 	operationRestMetaData := widgetconfigurationsDeleteRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	wIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := wIface.Invoke(wIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := wIface.connector.NewExecutionContext()
+	methodResult := wIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -131,8 +135,10 @@ func (wIface *DefaultWidgetconfigurationsClient) Get(viewIdParam string, contain
 	}
 	operationRestMetaData := widgetconfigurationsGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	wIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := wIface.Invoke(wIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := wIface.connector.NewExecutionContext()
+	methodResult := wIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.WidgetConfigurationList
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), widgetconfigurationsGetOutputType())
@@ -162,8 +168,10 @@ func (wIface *DefaultWidgetconfigurationsClient) Get0(viewIdParam string, widget
 	}
 	operationRestMetaData := widgetconfigurationsGet0RestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	wIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := wIface.Invoke(wIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := wIface.connector.NewExecutionContext()
+	methodResult := wIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput *data.StructValue
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), widgetconfigurationsGet0OutputType())
@@ -194,8 +202,10 @@ func (wIface *DefaultWidgetconfigurationsClient) Update(viewIdParam string, widg
 	}
 	operationRestMetaData := widgetconfigurationsUpdateRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	wIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := wIface.Invoke(wIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := wIface.connector.NewExecutionContext()
+	methodResult := wIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput *data.StructValue
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), widgetconfigurationsUpdateOutputType())
