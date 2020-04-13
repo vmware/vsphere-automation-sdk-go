@@ -8,17 +8,16 @@ import (
 	"reflect"
 	"strings"
 
-	goruntime "gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime"
-
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/core"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/lib"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/log"
+	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol/client/metadata"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/security"
 )
 
 // GetRuntimeUserAgentHeader returns User-Agent header for go runtime
 func GetRuntimeUserAgentHeader() string {
-	return fmt.Sprintf("vAPI/%s Go/%s (%s; %s)", goruntime.RuntimeVersion, runtime.Version(), runtime.GOOS, runtime.GOARCH)
+	return fmt.Sprintf("vAPI/%s Go/%s (%s; %s)", metadata.RuntimeVersion, runtime.Version(), runtime.GOOS, runtime.GOARCH)
 }
 
 // CopyContextsToHeaders sets request headers using execution context properties
