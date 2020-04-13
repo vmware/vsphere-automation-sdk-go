@@ -305,7 +305,7 @@ func ReplicaDiskBindingType() bindings.BindingType {
 	fieldNameMap["name"] = "Name"
 	fields["collection_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["collection_id"] = "CollectionId"
-	fields["datastores_for_single_host_move"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewDynamicStructType(nil, bindings.REST), reflect.TypeOf([]*data.StructValue{})))
+	fields["datastores_for_single_host_move"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewDynamicStructType(nil, bindings.JSONRPC), reflect.TypeOf([]*data.StructValue{})))
 	fieldNameMap["datastores_for_single_host_move"] = "DatastoresForSingleHostMove"
 	fields["movable"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["movable"] = "Movable"
@@ -461,7 +461,7 @@ func TaskBindingType() bindings.BindingType {
 	fieldNameMap["progress_percent"] = "ProgressPercent"
 	fields["estimated_remaining_minutes"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["estimated_remaining_minutes"] = "EstimatedRemainingMinutes"
-	fields["params"] = bindings.NewOptionalType(bindings.NewDynamicStructType(nil, bindings.REST))
+	fields["params"] = bindings.NewOptionalType(bindings.NewDynamicStructType(nil, bindings.JSONRPC))
 	fieldNameMap["params"] = "Params"
 	fields["end_time"] = bindings.NewOptionalType(bindings.NewDateTimeType())
 	fieldNameMap["end_time"] = "EndTime"

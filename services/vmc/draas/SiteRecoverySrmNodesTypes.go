@@ -48,6 +48,8 @@ func siteRecoverySrmNodesDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
 	fields["srm_node"] = bindings.NewStringType()
@@ -73,14 +75,18 @@ func siteRecoverySrmNodesDeleteRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/vmc/draas/api/orgs/{org}/sddcs/{sddc}/site-recovery/srm-nodes/{srmNode}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"InvalidRequest": 400,"Unauthorized": 403,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func siteRecoverySrmNodesPostInputType() bindings.StructType {
@@ -107,6 +113,8 @@ func siteRecoverySrmNodesPostRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
 	fields["provision_srm_config"] = bindings.NewOptionalType(bindings.NewReferenceType(model.ProvisionSrmConfigBindingType))
@@ -130,14 +138,18 @@ func siteRecoverySrmNodesPostRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"provision_srm_config",
 		"POST",
 		"/vmc/draas/api/orgs/{org}/sddcs/{sddc}/site-recovery/srm-nodes",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"InvalidRequest": 400,"Unauthorized": 403,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 
