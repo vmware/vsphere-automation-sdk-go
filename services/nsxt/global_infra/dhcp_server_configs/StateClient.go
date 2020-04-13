@@ -16,7 +16,7 @@ import (
 
 type StateClient interface {
 
-    // Read DHCP server stateß
+    // Read DHCP server state
     //
     // @param configIdParam (required)
     // @param connectivityPathParam String Path of Tier0, Tier1 or Segment (required)

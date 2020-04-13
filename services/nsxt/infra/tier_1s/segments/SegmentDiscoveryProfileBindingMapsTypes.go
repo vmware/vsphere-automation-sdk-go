@@ -48,6 +48,8 @@ func segmentDiscoveryProfileBindingMapsDeleteRestMetadata() protocol.OperationRe
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["tier1_id"] = bindings.NewStringType()
 	fields["segment_id"] = bindings.NewStringType()
 	fields["segment_discovery_profile_binding_map_id"] = bindings.NewStringType()
@@ -72,14 +74,18 @@ func segmentDiscoveryProfileBindingMapsDeleteRestMetadata() protocol.OperationRe
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/policy/api/v1/infra/tier-1s/{tier1Id}/segments/{segmentId}/segment-discovery-profile-binding-maps/{segmentDiscoveryProfileBindingMapId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func segmentDiscoveryProfileBindingMapsGetInputType() bindings.StructType {
@@ -106,6 +112,8 @@ func segmentDiscoveryProfileBindingMapsGetRestMetadata() protocol.OperationRestM
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["tier1_id"] = bindings.NewStringType()
 	fields["segment_id"] = bindings.NewStringType()
 	fields["segment_discovery_profile_binding_map_id"] = bindings.NewStringType()
@@ -130,14 +138,18 @@ func segmentDiscoveryProfileBindingMapsGetRestMetadata() protocol.OperationRestM
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/infra/tier-1s/{tier1Id}/segments/{segmentId}/segment-discovery-profile-binding-maps/{segmentDiscoveryProfileBindingMapId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func segmentDiscoveryProfileBindingMapsListInputType() bindings.StructType {
@@ -174,6 +186,8 @@ func segmentDiscoveryProfileBindingMapsListRestMetadata() protocol.OperationRest
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["tier1_id"] = bindings.NewStringType()
 	fields["segment_id"] = bindings.NewStringType()
 	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -217,14 +231,18 @@ func segmentDiscoveryProfileBindingMapsListRestMetadata() protocol.OperationRest
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/infra/tier-1s/{tier1Id}/segments/{segmentId}/segment-discovery-profile-binding-maps",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func segmentDiscoveryProfileBindingMapsPatchInputType() bindings.StructType {
@@ -253,6 +271,8 @@ func segmentDiscoveryProfileBindingMapsPatchRestMetadata() protocol.OperationRes
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["tier1_id"] = bindings.NewStringType()
 	fields["segment_id"] = bindings.NewStringType()
 	fields["segment_discovery_profile_binding_map_id"] = bindings.NewStringType()
@@ -280,14 +300,18 @@ func segmentDiscoveryProfileBindingMapsPatchRestMetadata() protocol.OperationRes
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"segment_discovery_profile_binding_map",
 		"PATCH",
 		"/policy/api/v1/infra/tier-1s/{tier1Id}/segments/{segmentId}/segment-discovery-profile-binding-maps/{segmentDiscoveryProfileBindingMapId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func segmentDiscoveryProfileBindingMapsUpdateInputType() bindings.StructType {
@@ -316,6 +340,8 @@ func segmentDiscoveryProfileBindingMapsUpdateRestMetadata() protocol.OperationRe
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["tier1_id"] = bindings.NewStringType()
 	fields["segment_id"] = bindings.NewStringType()
 	fields["segment_discovery_profile_binding_map_id"] = bindings.NewStringType()
@@ -343,14 +369,18 @@ func segmentDiscoveryProfileBindingMapsUpdateRestMetadata() protocol.OperationRe
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"segment_discovery_profile_binding_map",
 		"PUT",
 		"/policy/api/v1/infra/tier-1s/{tier1Id}/segments/{segmentId}/segment-discovery-profile-binding-maps/{segmentDiscoveryProfileBindingMapId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

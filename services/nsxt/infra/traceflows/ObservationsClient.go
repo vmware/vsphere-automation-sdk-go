@@ -16,7 +16,7 @@ import (
 
 type ObservationsClient interface {
 
-    // Read traceflow observations for id traceflow-id
+    // Read traceflow observations for id traceflow-id. Traceflow configuration will be cleaned up by the system after two hours of inactivity.
     //
     // @param traceflowIdParam (required)
     // @param enforcementPointPathParam Enforcement point path (optional)

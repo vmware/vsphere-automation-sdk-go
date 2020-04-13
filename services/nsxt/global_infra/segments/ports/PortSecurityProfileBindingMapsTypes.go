@@ -48,6 +48,8 @@ func portSecurityProfileBindingMapsDeleteRestMetadata() protocol.OperationRestMe
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["segment_id"] = bindings.NewStringType()
 	fields["port_id"] = bindings.NewStringType()
 	fields["port_security_profile_binding_map_id"] = bindings.NewStringType()
@@ -72,14 +74,18 @@ func portSecurityProfileBindingMapsDeleteRestMetadata() protocol.OperationRestMe
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/policy/api/v1/global-infra/segments/{segmentId}/ports/{portId}/port-security-profile-binding-maps/{portSecurityProfileBindingMapId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func portSecurityProfileBindingMapsGetInputType() bindings.StructType {
@@ -106,6 +112,8 @@ func portSecurityProfileBindingMapsGetRestMetadata() protocol.OperationRestMetad
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["segment_id"] = bindings.NewStringType()
 	fields["port_id"] = bindings.NewStringType()
 	fields["port_security_profile_binding_map_id"] = bindings.NewStringType()
@@ -130,14 +138,18 @@ func portSecurityProfileBindingMapsGetRestMetadata() protocol.OperationRestMetad
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/global-infra/segments/{segmentId}/ports/{portId}/port-security-profile-binding-maps/{portSecurityProfileBindingMapId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func portSecurityProfileBindingMapsListInputType() bindings.StructType {
@@ -172,6 +184,8 @@ func portSecurityProfileBindingMapsListRestMetadata() protocol.OperationRestMeta
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["segment_id"] = bindings.NewStringType()
 	fields["port_id"] = bindings.NewStringType()
 	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -211,14 +225,18 @@ func portSecurityProfileBindingMapsListRestMetadata() protocol.OperationRestMeta
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/global-infra/segments/{segmentId}/ports/{portId}/port-security-profile-binding-maps",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func portSecurityProfileBindingMapsPatchInputType() bindings.StructType {
@@ -247,6 +265,8 @@ func portSecurityProfileBindingMapsPatchRestMetadata() protocol.OperationRestMet
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["segment_id"] = bindings.NewStringType()
 	fields["port_id"] = bindings.NewStringType()
 	fields["port_security_profile_binding_map_id"] = bindings.NewStringType()
@@ -274,14 +294,18 @@ func portSecurityProfileBindingMapsPatchRestMetadata() protocol.OperationRestMet
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"port_security_profile_binding_map",
 		"PATCH",
 		"/policy/api/v1/global-infra/segments/{segmentId}/ports/{portId}/port-security-profile-binding-maps/{portSecurityProfileBindingMapId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func portSecurityProfileBindingMapsUpdateInputType() bindings.StructType {
@@ -310,6 +334,8 @@ func portSecurityProfileBindingMapsUpdateRestMetadata() protocol.OperationRestMe
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["segment_id"] = bindings.NewStringType()
 	fields["port_id"] = bindings.NewStringType()
 	fields["port_security_profile_binding_map_id"] = bindings.NewStringType()
@@ -337,14 +363,18 @@ func portSecurityProfileBindingMapsUpdateRestMetadata() protocol.OperationRestMe
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"port_security_profile_binding_map",
 		"PUT",
 		"/policy/api/v1/global-infra/segments/{segmentId}/ports/{portId}/port-security-profile-binding-maps/{portSecurityProfileBindingMapId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

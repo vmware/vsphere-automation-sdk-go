@@ -42,6 +42,8 @@ func idsStandaloneHostConfigGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -51,14 +53,18 @@ func idsStandaloneHostConfigGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/infra/settings/firewall/security/intrusion-services/ids-standalone-host-config",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func idsStandaloneHostConfigPatchInputType() bindings.StructType {
@@ -81,6 +87,8 @@ func idsStandaloneHostConfigPatchRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["ids_standalone_host_config"] = bindings.NewReferenceType(model.IdsStandaloneHostConfigBindingType)
 	fieldNameMap["ids_standalone_host_config"] = "IdsStandaloneHostConfig"
 	paramsTypeMap["ids_standalone_host_config"] = bindings.NewReferenceType(model.IdsStandaloneHostConfigBindingType)
@@ -93,14 +101,18 @@ func idsStandaloneHostConfigPatchRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"ids_standalone_host_config",
 		"PATCH",
 		"/policy/api/v1/infra/settings/firewall/security/intrusion-services/ids-standalone-host-config",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func idsStandaloneHostConfigUpdateInputType() bindings.StructType {
@@ -123,6 +135,8 @@ func idsStandaloneHostConfigUpdateRestMetadata() protocol.OperationRestMetadata 
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["ids_standalone_host_config"] = bindings.NewReferenceType(model.IdsStandaloneHostConfigBindingType)
 	fieldNameMap["ids_standalone_host_config"] = "IdsStandaloneHostConfig"
 	paramsTypeMap["ids_standalone_host_config"] = bindings.NewReferenceType(model.IdsStandaloneHostConfigBindingType)
@@ -135,14 +149,18 @@ func idsStandaloneHostConfigUpdateRestMetadata() protocol.OperationRestMetadata 
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"ids_standalone_host_config",
 		"PUT",
 		"/policy/api/v1/infra/settings/firewall/security/intrusion-services/ids-standalone-host-config",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

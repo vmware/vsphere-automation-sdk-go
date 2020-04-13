@@ -16,19 +16,9 @@ import (
 
 type ClusterConfigsClient interface {
 
-    // Delete intrusion detection system cluster config.
-    //
-    // @param clusterIdParam Cluster ID (required)
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
-	Delete(clusterIdParam string) error
-
     // Read intrusion detection system cluster config
     //
-    // @param clusterIdParam Cluster ID (required)
+    // @param clusterIdParam User entered ID (required)
     // @return com.vmware.nsx_policy.model.IdsClusterConfig
     // @throws InvalidRequest  Bad Request, Precondition Failed
     // @throws Unauthorized  Forbidden
@@ -55,7 +45,7 @@ type ClusterConfigsClient interface {
 
     // Patch intrusion detection system on cluster level.
     //
-    // @param clusterIdParam Cluster ID (required)
+    // @param clusterIdParam User entered ID (required)
     // @param idsClusterConfigParam (required)
     // @throws InvalidRequest  Bad Request, Precondition Failed
     // @throws Unauthorized  Forbidden
@@ -66,7 +56,7 @@ type ClusterConfigsClient interface {
 
     // Update intrusion detection system on cluster level.
     //
-    // @param clusterIdParam Cluster ID (required)
+    // @param clusterIdParam User entered ID (required)
     // @param idsClusterConfigParam (required)
     // @return com.vmware.nsx_policy.model.IdsClusterConfig
     // @throws InvalidRequest  Bad Request, Precondition Failed

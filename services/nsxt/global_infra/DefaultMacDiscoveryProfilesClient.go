@@ -45,12 +45,33 @@ func NewDefaultMacDiscoveryProfilesClient(connector client.Connector) *DefaultMa
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorBindingMap := make(map[string]bindings.BindingType)
+	errorBindingMap[errors.AlreadyExists{}.Error()] = errors.AlreadyExistsBindingType()
+	errorBindingMap[errors.AlreadyInDesiredState{}.Error()] = errors.AlreadyInDesiredStateBindingType()
+	errorBindingMap[errors.Canceled{}.Error()] = errors.CanceledBindingType()
+	errorBindingMap[errors.ConcurrentChange{}.Error()] = errors.ConcurrentChangeBindingType()
+	errorBindingMap[errors.Error{}.Error()] = errors.ErrorBindingType()
+	errorBindingMap[errors.FeatureInUse{}.Error()] = errors.FeatureInUseBindingType()
 	errorBindingMap[errors.InternalServerError{}.Error()] = errors.InternalServerErrorBindingType()
 	errorBindingMap[errors.InvalidArgument{}.Error()] = errors.InvalidArgumentBindingType()
+	errorBindingMap[errors.InvalidElementConfiguration{}.Error()] = errors.InvalidElementConfigurationBindingType()
+	errorBindingMap[errors.InvalidElementType{}.Error()] = errors.InvalidElementTypeBindingType()
+	errorBindingMap[errors.InvalidRequest{}.Error()] = errors.InvalidRequestBindingType()
+	errorBindingMap[errors.NotFound{}.Error()] = errors.NotFoundBindingType()
+	errorBindingMap[errors.NotAllowedInCurrentState{}.Error()] = errors.NotAllowedInCurrentStateBindingType()
 	errorBindingMap[errors.OperationNotFound{}.Error()] = errors.OperationNotFoundBindingType()
-	errorBindingMap[errors.UnexpectedInput{}.Error()] = errors.UnexpectedInputBindingType()
+	errorBindingMap[errors.ResourceBusy{}.Error()] = errors.ResourceBusyBindingType()
+	errorBindingMap[errors.ResourceInUse{}.Error()] = errors.ResourceInUseBindingType()
+	errorBindingMap[errors.ResourceInaccessible{}.Error()] = errors.ResourceInaccessibleBindingType()
 	errorBindingMap[errors.ServiceUnavailable{}.Error()] = errors.ServiceUnavailableBindingType()
 	errorBindingMap[errors.TimedOut{}.Error()] = errors.TimedOutBindingType()
+	errorBindingMap[errors.UnableToAllocateResource{}.Error()] = errors.UnableToAllocateResourceBindingType()
+	errorBindingMap[errors.Unauthenticated{}.Error()] = errors.UnauthenticatedBindingType()
+	errorBindingMap[errors.Unauthorized{}.Error()] = errors.UnauthorizedBindingType()
+	errorBindingMap[errors.UnexpectedInput{}.Error()] = errors.UnexpectedInputBindingType()
+	errorBindingMap[errors.Unsupported{}.Error()] = errors.UnsupportedBindingType()
+	errorBindingMap[errors.UnverifiedPeer{}.Error()] = errors.UnverifiedPeerBindingType()
+
+
 	mIface := DefaultMacDiscoveryProfilesClient{interfaceName: interfaceName, methodIdentifiers: methodIdentifiers, interfaceDefinition: interfaceDefinition, errorBindingMap: errorBindingMap, interfaceIdentifier: interfaceIdentifier, connector: connector}
 	mIface.methodNameToDefMap = make(map[string]*core.MethodDefinition)
 	mIface.methodNameToDefMap["delete"] = mIface.deleteMethodDefinition()
@@ -61,20 +82,21 @@ func NewDefaultMacDiscoveryProfilesClient(connector client.Connector) *DefaultMa
 	return &mIface
 }
 
-func (mIface *DefaultMacDiscoveryProfilesClient) Delete(macDiscoveryProfileIdParam string, overrideParam *bool) error {
+func (mIface *DefaultMacDiscoveryProfilesClient) Delete(macDiscoveryProfileIdParam string) error {
 	typeConverter := mIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(mIface.interfaceIdentifier, "delete")
 	sv := bindings.NewStructValueBuilder(macDiscoveryProfilesDeleteInputType(), typeConverter)
 	sv.AddStructField("MacDiscoveryProfileId", macDiscoveryProfileIdParam)
-	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return bindings.VAPIerrorsToError(inputError)
 	}
 	operationRestMetaData := macDiscoveryProfilesDeleteRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	mIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := mIface.Invoke(mIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := mIface.connector.NewExecutionContext()
+	methodResult := mIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -98,8 +120,10 @@ func (mIface *DefaultMacDiscoveryProfilesClient) Get(macDiscoveryProfileIdParam 
 	}
 	operationRestMetaData := macDiscoveryProfilesGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	mIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := mIface.Invoke(mIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := mIface.connector.NewExecutionContext()
+	methodResult := mIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.MacDiscoveryProfile
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), macDiscoveryProfilesGetOutputType())
@@ -133,8 +157,10 @@ func (mIface *DefaultMacDiscoveryProfilesClient) List(cursorParam *string, inclu
 	}
 	operationRestMetaData := macDiscoveryProfilesListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	mIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := mIface.Invoke(mIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := mIface.connector.NewExecutionContext()
+	methodResult := mIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.MacDiscoveryProfileListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), macDiscoveryProfilesListOutputType())
@@ -151,21 +177,22 @@ func (mIface *DefaultMacDiscoveryProfilesClient) List(cursorParam *string, inclu
 	}
 }
 
-func (mIface *DefaultMacDiscoveryProfilesClient) Patch(macDiscoveryProfileIdParam string, macDiscoveryProfileParam model.MacDiscoveryProfile, overrideParam *bool) error {
+func (mIface *DefaultMacDiscoveryProfilesClient) Patch(macDiscoveryProfileIdParam string, macDiscoveryProfileParam model.MacDiscoveryProfile) error {
 	typeConverter := mIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(mIface.interfaceIdentifier, "patch")
 	sv := bindings.NewStructValueBuilder(macDiscoveryProfilesPatchInputType(), typeConverter)
 	sv.AddStructField("MacDiscoveryProfileId", macDiscoveryProfileIdParam)
 	sv.AddStructField("MacDiscoveryProfile", macDiscoveryProfileParam)
-	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return bindings.VAPIerrorsToError(inputError)
 	}
 	operationRestMetaData := macDiscoveryProfilesPatchRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	mIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := mIface.Invoke(mIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := mIface.connector.NewExecutionContext()
+	methodResult := mIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -177,13 +204,12 @@ func (mIface *DefaultMacDiscoveryProfilesClient) Patch(macDiscoveryProfileIdPara
 	}
 }
 
-func (mIface *DefaultMacDiscoveryProfilesClient) Update(macDiscoveryProfileIdParam string, macDiscoveryProfileParam model.MacDiscoveryProfile, overrideParam *bool) (model.MacDiscoveryProfile, error) {
+func (mIface *DefaultMacDiscoveryProfilesClient) Update(macDiscoveryProfileIdParam string, macDiscoveryProfileParam model.MacDiscoveryProfile) (model.MacDiscoveryProfile, error) {
 	typeConverter := mIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(mIface.interfaceIdentifier, "update")
 	sv := bindings.NewStructValueBuilder(macDiscoveryProfilesUpdateInputType(), typeConverter)
 	sv.AddStructField("MacDiscoveryProfileId", macDiscoveryProfileIdParam)
 	sv.AddStructField("MacDiscoveryProfile", macDiscoveryProfileParam)
-	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.MacDiscoveryProfile
@@ -191,8 +217,10 @@ func (mIface *DefaultMacDiscoveryProfilesClient) Update(macDiscoveryProfileIdPar
 	}
 	operationRestMetaData := macDiscoveryProfilesUpdateRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
 	mIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := mIface.Invoke(mIface.connector.NewExecutionContext(), methodIdentifier, inputDataValue)
+	executionContext := mIface.connector.NewExecutionContext()
+	methodResult := mIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.MacDiscoveryProfile
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), macDiscoveryProfilesUpdateOutputType())

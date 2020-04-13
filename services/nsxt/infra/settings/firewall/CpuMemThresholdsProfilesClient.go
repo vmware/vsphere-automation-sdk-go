@@ -19,13 +19,12 @@ type CpuMemThresholdsProfilesClient interface {
     // Delete CPU and memory thresholds profile.
     //
     // @param profileIdParam (required)
-    // @param overrideParam Locally override the global object (optional, default to false)
     // @throws InvalidRequest  Bad Request, Precondition Failed
     // @throws Unauthorized  Forbidden
     // @throws ServiceUnavailable  Service Unavailable
     // @throws InternalServerError  Internal Server Error
     // @throws NotFound  Not Found
-	Delete(profileIdParam string, overrideParam *bool) error
+	Delete(profileIdParam string) error
 
     // Read the CPU and memory thresholds profile.
     //
@@ -58,24 +57,22 @@ type CpuMemThresholdsProfilesClient interface {
     //
     // @param profileIdParam (required)
     // @param policyFirewallCpuMemThresholdsProfileParam (required)
-    // @param overrideParam Locally override the global object (optional, default to false)
     // @throws InvalidRequest  Bad Request, Precondition Failed
     // @throws Unauthorized  Forbidden
     // @throws ServiceUnavailable  Service Unavailable
     // @throws InternalServerError  Internal Server Error
     // @throws NotFound  Not Found
-	Patch(profileIdParam string, policyFirewallCpuMemThresholdsProfileParam model.PolicyFirewallCpuMemThresholdsProfile, overrideParam *bool) error
+	Patch(profileIdParam string, policyFirewallCpuMemThresholdsProfileParam model.PolicyFirewallCpuMemThresholdsProfile) error
 
     // Create or update CPU and memory thresholds profile.
     //
     // @param profileIdParam (required)
     // @param policyFirewallCpuMemThresholdsProfileParam (required)
-    // @param overrideParam Locally override the global object (optional, default to false)
     // @return com.vmware.nsx_policy.model.PolicyFirewallCpuMemThresholdsProfile
     // @throws InvalidRequest  Bad Request, Precondition Failed
     // @throws Unauthorized  Forbidden
     // @throws ServiceUnavailable  Service Unavailable
     // @throws InternalServerError  Internal Server Error
     // @throws NotFound  Not Found
-	Update(profileIdParam string, policyFirewallCpuMemThresholdsProfileParam model.PolicyFirewallCpuMemThresholdsProfile, overrideParam *bool) (model.PolicyFirewallCpuMemThresholdsProfile, error)
+	Update(profileIdParam string, policyFirewallCpuMemThresholdsProfileParam model.PolicyFirewallCpuMemThresholdsProfile) (model.PolicyFirewallCpuMemThresholdsProfile, error)
 }
