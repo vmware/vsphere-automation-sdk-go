@@ -43,6 +43,8 @@ func structureListRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -52,12 +54,16 @@ func structureListRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
 		map[string]int{})
 }
@@ -82,6 +88,8 @@ func structureGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["structure_id"] = bindings.NewIdType([]string{"com.vmware.vapi.structure"}, "")
 	fieldNameMap["structure_id"] = "StructureId"
 	resultHeaders := map[string]string{}
@@ -93,14 +101,18 @@ func structureGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

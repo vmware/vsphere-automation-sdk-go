@@ -26,10 +26,10 @@ type SourceClient interface {
     // The parameter must be an identifier for the resource type: ``com.vmware.vapi.metadata.privilege.source``.
     // @param specParam create specification.
     // @throws AlreadyExists if the metadata source identifier is already registered with the infrastructure.
-    // @throws InvalidArgument if the type of the source specified in null is invalid.
-    // @throws InvalidArgument if the file specified in null is not a valid JSON file or if the format of the privilege metadata in the JSON file is invalid.
-    // @throws InvalidArgument if the URI specified in null is unreachable or if there is a transport protocol or message protocol mismatch between the client and the server or if the remote server do not have interfaces present in com.vmware.vapi.metadata.privilege package.
-    // @throws NotFound if the file specified in null does not exist.
+    // @throws InvalidArgument if the type of the source specified in CreateSpec#type is invalid.
+    // @throws InvalidArgument if the file specified in CreateSpec#filepath is not a valid JSON file or if the format of the privilege metadata in the JSON file is invalid.
+    // @throws InvalidArgument if the URI specified in CreateSpec#address is unreachable or if there is a transport protocol or message protocol mismatch between the client and the server or if the remote server do not have interfaces present in com.vmware.vapi.metadata.privilege package.
+    // @throws NotFound if the file specified in CreateSpec#filepath does not exist.
 	Create(sourceIdParam string, specParam SourceCreateSpec) error
 
     // Deletes an existing privilege metadata source from the infrastructure.

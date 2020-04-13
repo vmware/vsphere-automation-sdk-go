@@ -14,10 +14,10 @@ package service
 
 import (
 	"reflect"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/lib/vapi/metadata/privilege"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/lib/vapi/metadata/privilege"
 )
 
 // Resource type for operation.
@@ -46,6 +46,8 @@ func operationListRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["service_id"] = bindings.NewIdType([]string{"com.vmware.vapi.service"}, "")
 	fieldNameMap["service_id"] = "ServiceId"
 	resultHeaders := map[string]string{}
@@ -57,14 +59,18 @@ func operationListRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func operationGetInputType() bindings.StructType {
@@ -89,6 +95,8 @@ func operationGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["service_id"] = bindings.NewIdType([]string{"com.vmware.vapi.service"}, "")
 	fields["operation_id"] = bindings.NewIdType([]string{"com.vmware.vapi.operation"}, "")
 	fieldNameMap["service_id"] = "ServiceId"
@@ -102,14 +110,18 @@ func operationGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

@@ -177,6 +177,8 @@ func commandListRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["path"] = "Path"
 	resultHeaders := map[string]string{}
@@ -188,14 +190,18 @@ func commandListRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func commandGetInputType() bindings.StructType {
@@ -218,6 +224,8 @@ func commandGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["identity"] = bindings.NewReferenceType(CommandIdentityBindingType)
 	fieldNameMap["identity"] = "Identity"
 	resultHeaders := map[string]string{}
@@ -229,14 +237,18 @@ func commandGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func commandFingerprintInputType() bindings.StructType {
@@ -257,6 +269,8 @@ func commandFingerprintRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -266,12 +280,16 @@ func commandFingerprintRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
 		map[string]int{})
 }
