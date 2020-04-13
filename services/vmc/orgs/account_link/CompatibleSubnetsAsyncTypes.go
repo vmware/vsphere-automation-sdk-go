@@ -56,6 +56,8 @@ func compatibleSubnetsAsyncGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["linked_account_id"] = bindings.NewStringType()
 	fields["region"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -95,14 +97,18 @@ func compatibleSubnetsAsyncGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/vmc/api/orgs/{org}/account-link/compatible-subnets-async",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 func compatibleSubnetsAsyncPostInputType() bindings.StructType {
@@ -127,6 +133,8 @@ func compatibleSubnetsAsyncPostRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["aws_subnet"] = bindings.NewReferenceType(model.AwsSubnetBindingType)
 	fields["org"] = bindings.NewStringType()
 	fieldNameMap["aws_subnet"] = "AwsSubnet"
@@ -145,14 +153,18 @@ func compatibleSubnetsAsyncPostRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"aws_subnet",
 		"POST",
 		"/vmc/api/orgs/{org}/account-link/compatible-subnets-async",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 

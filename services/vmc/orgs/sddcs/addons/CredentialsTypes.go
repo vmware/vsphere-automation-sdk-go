@@ -58,6 +58,8 @@ func credentialsCreateRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc_id"] = bindings.NewStringType()
 	fields["addon_type"] = bindings.NewStringType()
@@ -85,14 +87,18 @@ func credentialsCreateRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"credentials",
 		"POST",
 		"/vmc/api/orgs/{org}/sddcs/{sddcId}/addons/{addonType}/credentials",
+		"",
 		resultHeaders,
 		201,
+		"",
 		errorHeaders,
-		map[string]int{"ConcurrentChange": 409,"InvalidRequest": 400,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 func credentialsGetInputType() bindings.StructType {
@@ -121,6 +127,8 @@ func credentialsGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc_id"] = bindings.NewStringType()
 	fields["addon_type"] = bindings.NewStringType()
@@ -150,14 +158,18 @@ func credentialsGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/vmc/api/orgs/{org}/sddcs/{sddcId}/addons/{addonType}/credentials/{name}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 func credentialsListInputType() bindings.StructType {
@@ -184,6 +196,8 @@ func credentialsListRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc_id"] = bindings.NewStringType()
 	fields["addon_type"] = bindings.NewStringType()
@@ -208,14 +222,18 @@ func credentialsListRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/vmc/api/orgs/{org}/sddcs/{sddcId}/addons/{addonType}/credentials",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 func credentialsUpdateInputType() bindings.StructType {
@@ -246,6 +264,8 @@ func credentialsUpdateRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc_id"] = bindings.NewStringType()
 	fields["addon_type"] = bindings.NewStringType()
@@ -278,14 +298,18 @@ func credentialsUpdateRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"credentials",
 		"PUT",
 		"/vmc/api/orgs/{org}/sddcs/{sddcId}/addons/{addonType}/credentials/{name}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 

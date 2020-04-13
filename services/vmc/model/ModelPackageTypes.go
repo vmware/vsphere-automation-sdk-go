@@ -89,14 +89,6 @@ type AccountLinkSddcConfig struct {
 	ConnectedAccountId *string
 }
 
-// Represents part of a structure of host provisioning spec.
-type AdditionalHostSpec struct {
-    // The additional valid host count.
-	AdditionalHostCount *int64
-    // Information regarding storage policy reconfiguration. It will be set to null if no storage policy reconfiguration is available.
-	StoragePolicyReconfigInfo *StoragePolicyReconfigInfo
-}
-
 // Source or Destination for firewall rule. Default is 'any'.
 type AddressFWSourceDestination struct {
     // Exclude the specified source or destination.
@@ -370,6 +362,8 @@ type AwsSddcConfig struct {
 	Name string
     // A list of the SDDC linking configurations to use.
 	AccountLinkSddcConfig []AccountLinkSddcConfig
+    // If provided, will be assigned as SDDC id of the provisioned SDDC. format: UUID
+	SddcId *string
 	NumHosts int64
     // Denotes the sddc type , if the value is null or empty, the type is considered as default.
 	SddcType *string
@@ -649,12 +643,6 @@ type ClusterConfig struct {
     // For EBS-backed instances only, the requested storage capacity in GiB. format: int64
 	StorageCapacity *int64
 	NumHosts int64
-}
-
-// Represents a provisioning spec for a new cluster in an sddc.
-type ClusterProvisionSpec struct {
-    // List of instances available for the new cluster.
-	InstanceTypeConfigs []InstanceTypeConfigForCluster
 }
 
 type ClusterReconfigureParams struct {
@@ -1419,15 +1407,6 @@ type HostLeaseInfo struct {
 	Tstp *string
 }
 
-// Represents a provisioning spec for an add host operation in the given sddc.
-type HostProvisionSpec struct {
-	AdditionalHostSpecs []AdditionalHostSpec
-    // Error due to which instance provisioning is restricted on the cluster.
-	InstanceProvisioningErrorCause *string
-    // The capacity of the given host.
-	EntityCapacity *EntityCapacity
-}
-
 // Represents a structure for instance type config
 type InstanceTypeConfig struct {
     // Instance type name.
@@ -1438,22 +1417,6 @@ type InstanceTypeConfig struct {
 	DisplayName *string
     // The capacity of the given instance type.
 	EntityCapacity *EntityCapacity
-}
-
-// Represents a structure for instance type config
-type InstanceTypeConfigForCluster struct {
-    // Instance type name.
-	InstanceType *string
-    // Display name of instance_type.
-	DisplayName *string
-    // Error due to which instance provisioning is restricted on the cluster.
-	InstanceProvisioningErrorCause *string
-    // Array of number of hosts allowed for this operation. Range of hosts user can select for sddc provision
-	Hosts []int64
-    // The capacity of the given entity.
-	EntityCapacity *EntityCapacity
-    // Array of valid cpu cores values for the given instance type. Range of cpu cores user can select for new cluster.
-	CpuCores []int64
 }
 
 type InteractionPermissions struct {
@@ -2106,8 +2069,8 @@ type PagingInfo struct {
 }
 
 type PaymentMethodInfo struct {
-	_Default *bool
 	Type_ *string
+	DefaultFlag *bool
 	PaymentMethodId *string
 }
 
@@ -2398,6 +2361,8 @@ type SddcConfig struct {
 	Name string
     // A list of the SDDC linking configurations to use.
 	AccountLinkSddcConfig []AccountLinkSddcConfig
+    // If provided, will be assigned as SDDC id of the provisioned SDDC. format: UUID
+	SddcId *string
 	NumHosts int64
     // Denotes the sddc type , if the value is null or empty, the type is considered as default.
 	SddcType *string
@@ -2742,12 +2707,6 @@ type SslvpnDashboardStats struct {
 	SessionsCreated []DashboardStat
     // Tx bytes transmitted for SSL VPN.
 	SslvpnBytesOut []DashboardStat
-}
-
-// Information regarding storage policy reconfiguration.
-type StoragePolicyReconfigInfo struct {
-    // If 'true', policy reconfiguration is required. Otherwise, policy reconfiguration is not required.
-	ReconfigNeeded *bool
 }
 
 // NSX Edge sub interface configuration details. Sub interfaces are created on a trunk interface.
@@ -3364,17 +3323,6 @@ func AccountLinkSddcConfigBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.account_link_sddc_config", fields, reflect.TypeOf(AccountLinkSddcConfig{}), fieldNameMap, validators)
 }
 
-func AdditionalHostSpecBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["additional_host_count"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["additional_host_count"] = "AdditionalHostCount"
-	fields["storage_policy_reconfig_info"] = bindings.NewOptionalType(bindings.NewReferenceType(StoragePolicyReconfigInfoBindingType))
-	fieldNameMap["storage_policy_reconfig_info"] = "StoragePolicyReconfigInfo"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.additional_host_spec", fields, reflect.TypeOf(AdditionalHostSpec{}), fieldNameMap, validators)
-}
-
 func AddressFWSourceDestinationBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -3663,6 +3611,8 @@ func AwsSddcConfigBindingType() bindings.BindingType {
 	fieldNameMap["name"] = "Name"
 	fields["account_link_sddc_config"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(AccountLinkSddcConfigBindingType), reflect.TypeOf([]AccountLinkSddcConfig{})))
 	fieldNameMap["account_link_sddc_config"] = "AccountLinkSddcConfig"
+	fields["sddc_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["sddc_id"] = "SddcId"
 	fields["num_hosts"] = bindings.NewIntegerType()
 	fieldNameMap["num_hosts"] = "NumHosts"
 	fields["sddc_type"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -3963,15 +3913,6 @@ func ClusterConfigBindingType() bindings.BindingType {
 	fieldNameMap["num_hosts"] = "NumHosts"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.cluster_config", fields, reflect.TypeOf(ClusterConfig{}), fieldNameMap, validators)
-}
-
-func ClusterProvisionSpecBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["instance_type_configs"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(InstanceTypeConfigForClusterBindingType), reflect.TypeOf([]InstanceTypeConfigForCluster{})))
-	fieldNameMap["instance_type_configs"] = "InstanceTypeConfigs"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.cluster_provision_spec", fields, reflect.TypeOf(ClusterProvisionSpec{}), fieldNameMap, validators)
 }
 
 func ClusterReconfigureParamsBindingType() bindings.BindingType {
@@ -4877,19 +4818,6 @@ func HostLeaseInfoBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.host_lease_info", fields, reflect.TypeOf(HostLeaseInfo{}), fieldNameMap, validators)
 }
 
-func HostProvisionSpecBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["additional_host_specs"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(AdditionalHostSpecBindingType), reflect.TypeOf([]AdditionalHostSpec{})))
-	fieldNameMap["additional_host_specs"] = "AdditionalHostSpecs"
-	fields["instance_provisioning_error_cause"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["instance_provisioning_error_cause"] = "InstanceProvisioningErrorCause"
-	fields["entity_capacity"] = bindings.NewOptionalType(bindings.NewReferenceType(EntityCapacityBindingType))
-	fieldNameMap["entity_capacity"] = "EntityCapacity"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.host_provision_spec", fields, reflect.TypeOf(HostProvisionSpec{}), fieldNameMap, validators)
-}
-
 func InstanceTypeConfigBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -4903,25 +4831,6 @@ func InstanceTypeConfigBindingType() bindings.BindingType {
 	fieldNameMap["entity_capacity"] = "EntityCapacity"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.instance_type_config", fields, reflect.TypeOf(InstanceTypeConfig{}), fieldNameMap, validators)
-}
-
-func InstanceTypeConfigForClusterBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["instance_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["instance_type"] = "InstanceType"
-	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["display_name"] = "DisplayName"
-	fields["instance_provisioning_error_cause"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["instance_provisioning_error_cause"] = "InstanceProvisioningErrorCause"
-	fields["hosts"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewIntegerType(), reflect.TypeOf([]int64{})))
-	fieldNameMap["hosts"] = "Hosts"
-	fields["entity_capacity"] = bindings.NewOptionalType(bindings.NewReferenceType(EntityCapacityBindingType))
-	fieldNameMap["entity_capacity"] = "EntityCapacity"
-	fields["cpu_cores"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewIntegerType(), reflect.TypeOf([]int64{})))
-	fieldNameMap["cpu_cores"] = "CpuCores"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.instance_type_config_for_cluster", fields, reflect.TypeOf(InstanceTypeConfigForCluster{}), fieldNameMap, validators)
 }
 
 func InteractionPermissionsBindingType() bindings.BindingType {
@@ -5833,12 +5742,12 @@ func PagingInfoBindingType() bindings.BindingType {
 func PaymentMethodInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["default"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["default"] = "_Default"
 	fields["type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["type"] = "Type_"
-	fields["paymentMethodId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["paymentMethodId"] = "PaymentMethodId"
+	fields["default_flag"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["default_flag"] = "DefaultFlag"
+	fields["payment_method_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["payment_method_id"] = "PaymentMethodId"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.payment_method_info", fields, reflect.TypeOf(PaymentMethodInfo{}), fieldNameMap, validators)
 }
@@ -6122,6 +6031,8 @@ func SddcConfigBindingType() bindings.BindingType {
 	fieldNameMap["name"] = "Name"
 	fields["account_link_sddc_config"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(AccountLinkSddcConfigBindingType), reflect.TypeOf([]AccountLinkSddcConfig{})))
 	fieldNameMap["account_link_sddc_config"] = "AccountLinkSddcConfig"
+	fields["sddc_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["sddc_id"] = "SddcId"
 	fields["num_hosts"] = bindings.NewIntegerType()
 	fieldNameMap["num_hosts"] = "NumHosts"
 	fields["sddc_type"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -6495,15 +6406,6 @@ func SslvpnDashboardStatsBindingType() bindings.BindingType {
 	fieldNameMap["sslvpnBytesOut"] = "SslvpnBytesOut"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.sslvpn_dashboard_stats", fields, reflect.TypeOf(SslvpnDashboardStats{}), fieldNameMap, validators)
-}
-
-func StoragePolicyReconfigInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["reconfig_needed"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["reconfig_needed"] = "ReconfigNeeded"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.storage_policy_reconfig_info", fields, reflect.TypeOf(StoragePolicyReconfigInfo{}), fieldNameMap, validators)
 }
 
 func SubInterfaceBindingType() bindings.BindingType {
