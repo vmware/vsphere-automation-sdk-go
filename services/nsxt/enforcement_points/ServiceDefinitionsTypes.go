@@ -46,6 +46,8 @@ func serviceDefinitionsCreateRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["enforcement_point_id"] = bindings.NewStringType()
 	fields["service_definition"] = bindings.NewReferenceType(model.ServiceDefinitionBindingType)
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
@@ -63,14 +65,18 @@ func serviceDefinitionsCreateRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"service_definition",
 		"POST",
 		"/policy/api/v1/enforcement-points/{enforcementPointId}/service-definitions",
+		"",
 		resultHeaders,
 		201,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func serviceDefinitionsDeleteInputType() bindings.StructType {
@@ -95,6 +101,8 @@ func serviceDefinitionsDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["enforcement_point_id"] = bindings.NewStringType()
 	fields["service_definition_id"] = bindings.NewStringType()
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
@@ -114,14 +122,18 @@ func serviceDefinitionsDeleteRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/policy/api/v1/enforcement-points/{enforcementPointId}/service-definitions/{serviceDefinitionId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func serviceDefinitionsGetInputType() bindings.StructType {
@@ -146,6 +158,8 @@ func serviceDefinitionsGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["enforcement_point_id"] = bindings.NewStringType()
 	fields["service_definition_id"] = bindings.NewStringType()
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
@@ -165,14 +179,18 @@ func serviceDefinitionsGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/enforcement-points/{enforcementPointId}/service-definitions/{serviceDefinitionId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func serviceDefinitionsListInputType() bindings.StructType {
@@ -195,6 +213,8 @@ func serviceDefinitionsListRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["enforcement_point_id"] = bindings.NewStringType()
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	paramsTypeMap["enforcement_point_id"] = bindings.NewStringType()
@@ -209,14 +229,18 @@ func serviceDefinitionsListRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/enforcement-points/{enforcementPointId}/service-definitions",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func serviceDefinitionsUpdateInputType() bindings.StructType {
@@ -243,6 +267,8 @@ func serviceDefinitionsUpdateRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["enforcement_point_id"] = bindings.NewStringType()
 	fields["service_definition_id"] = bindings.NewStringType()
 	fields["service_definition"] = bindings.NewReferenceType(model.ServiceDefinitionBindingType)
@@ -265,14 +291,18 @@ func serviceDefinitionsUpdateRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"service_definition",
 		"PUT",
 		"/policy/api/v1/enforcement-points/{enforcementPointId}/service-definitions/{serviceDefinitionId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

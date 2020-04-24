@@ -48,6 +48,8 @@ func portMonitoringProfileBindingMapsDeleteRestMetadata() protocol.OperationRest
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["infra_segment_id"] = bindings.NewStringType()
 	fields["infra_port_id"] = bindings.NewStringType()
 	fields["port_monitoring_profile_binding_map_id"] = bindings.NewStringType()
@@ -72,14 +74,18 @@ func portMonitoringProfileBindingMapsDeleteRestMetadata() protocol.OperationRest
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/policy/api/v1/global-infra/segments/{infraSegmentId}/ports/{infraPortId}/port-monitoring-profile-binding-maps/{portMonitoringProfileBindingMapId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func portMonitoringProfileBindingMapsGetInputType() bindings.StructType {
@@ -106,6 +112,8 @@ func portMonitoringProfileBindingMapsGetRestMetadata() protocol.OperationRestMet
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["infra_segment_id"] = bindings.NewStringType()
 	fields["infra_port_id"] = bindings.NewStringType()
 	fields["port_monitoring_profile_binding_map_id"] = bindings.NewStringType()
@@ -130,14 +138,18 @@ func portMonitoringProfileBindingMapsGetRestMetadata() protocol.OperationRestMet
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/global-infra/segments/{infraSegmentId}/ports/{infraPortId}/port-monitoring-profile-binding-maps/{portMonitoringProfileBindingMapId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func portMonitoringProfileBindingMapsListInputType() bindings.StructType {
@@ -174,6 +186,8 @@ func portMonitoringProfileBindingMapsListRestMetadata() protocol.OperationRestMe
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["infra_segment_id"] = bindings.NewStringType()
 	fields["infra_port_id"] = bindings.NewStringType()
 	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -217,14 +231,18 @@ func portMonitoringProfileBindingMapsListRestMetadata() protocol.OperationRestMe
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/global-infra/segments/{infraSegmentId}/ports/{infraPortId}/port-monitoring-profile-binding-maps",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func portMonitoringProfileBindingMapsPatchInputType() bindings.StructType {
@@ -253,6 +271,8 @@ func portMonitoringProfileBindingMapsPatchRestMetadata() protocol.OperationRestM
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["infra_segment_id"] = bindings.NewStringType()
 	fields["infra_port_id"] = bindings.NewStringType()
 	fields["port_monitoring_profile_binding_map_id"] = bindings.NewStringType()
@@ -280,14 +300,18 @@ func portMonitoringProfileBindingMapsPatchRestMetadata() protocol.OperationRestM
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"port_monitoring_profile_binding_map",
 		"PATCH",
 		"/policy/api/v1/global-infra/segments/{infraSegmentId}/ports/{infraPortId}/port-monitoring-profile-binding-maps/{portMonitoringProfileBindingMapId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func portMonitoringProfileBindingMapsUpdateInputType() bindings.StructType {
@@ -316,6 +340,8 @@ func portMonitoringProfileBindingMapsUpdateRestMetadata() protocol.OperationRest
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["infra_segment_id"] = bindings.NewStringType()
 	fields["infra_port_id"] = bindings.NewStringType()
 	fields["port_monitoring_profile_binding_map_id"] = bindings.NewStringType()
@@ -343,14 +369,18 @@ func portMonitoringProfileBindingMapsUpdateRestMetadata() protocol.OperationRest
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"port_monitoring_profile_binding_map",
 		"PUT",
 		"/policy/api/v1/global-infra/segments/{infraSegmentId}/ports/{infraPortId}/port-monitoring-profile-binding-maps/{portMonitoringProfileBindingMapId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

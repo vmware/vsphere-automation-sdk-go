@@ -48,6 +48,8 @@ func dnsSecurityProfileBindingMapsDeleteRestMetadata() protocol.OperationRestMet
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["domain_id"] = bindings.NewStringType()
 	fields["group_id"] = bindings.NewStringType()
 	fields["dns_security_profile_binding_map_id"] = bindings.NewStringType()
@@ -72,14 +74,18 @@ func dnsSecurityProfileBindingMapsDeleteRestMetadata() protocol.OperationRestMet
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/policy/api/v1/global-infra/domains/{domainId}/groups/{groupId}/dns-security-profile-binding-maps/{dnsSecurityProfileBindingMapId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func dnsSecurityProfileBindingMapsGetInputType() bindings.StructType {
@@ -106,6 +112,8 @@ func dnsSecurityProfileBindingMapsGetRestMetadata() protocol.OperationRestMetada
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["domain_id"] = bindings.NewStringType()
 	fields["group_id"] = bindings.NewStringType()
 	fields["dns_security_profile_binding_map_id"] = bindings.NewStringType()
@@ -130,14 +138,18 @@ func dnsSecurityProfileBindingMapsGetRestMetadata() protocol.OperationRestMetada
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/global-infra/domains/{domainId}/groups/{groupId}/dns-security-profile-binding-maps/{dnsSecurityProfileBindingMapId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func dnsSecurityProfileBindingMapsListInputType() bindings.StructType {
@@ -174,6 +186,8 @@ func dnsSecurityProfileBindingMapsListRestMetadata() protocol.OperationRestMetad
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["domain_id"] = bindings.NewStringType()
 	fields["group_id"] = bindings.NewStringType()
 	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -217,14 +231,18 @@ func dnsSecurityProfileBindingMapsListRestMetadata() protocol.OperationRestMetad
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/global-infra/domains/{domainId}/groups/{groupId}/dns-security-profile-binding-maps",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func dnsSecurityProfileBindingMapsPatchInputType() bindings.StructType {
@@ -253,6 +271,8 @@ func dnsSecurityProfileBindingMapsPatchRestMetadata() protocol.OperationRestMeta
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["domain_id"] = bindings.NewStringType()
 	fields["group_id"] = bindings.NewStringType()
 	fields["dns_security_profile_binding_map_id"] = bindings.NewStringType()
@@ -280,14 +300,18 @@ func dnsSecurityProfileBindingMapsPatchRestMetadata() protocol.OperationRestMeta
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"dns_security_profile_binding_map",
 		"PATCH",
 		"/policy/api/v1/global-infra/domains/{domainId}/groups/{groupId}/dns-security-profile-binding-maps/{dnsSecurityProfileBindingMapId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func dnsSecurityProfileBindingMapsUpdateInputType() bindings.StructType {
@@ -316,6 +340,8 @@ func dnsSecurityProfileBindingMapsUpdateRestMetadata() protocol.OperationRestMet
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["domain_id"] = bindings.NewStringType()
 	fields["group_id"] = bindings.NewStringType()
 	fields["dns_security_profile_binding_map_id"] = bindings.NewStringType()
@@ -343,14 +369,18 @@ func dnsSecurityProfileBindingMapsUpdateRestMetadata() protocol.OperationRestMet
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"dns_security_profile_binding_map",
 		"PUT",
 		"/policy/api/v1/global-infra/domains/{domainId}/groups/{groupId}/dns-security-profile-binding-maps/{dnsSecurityProfileBindingMapId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

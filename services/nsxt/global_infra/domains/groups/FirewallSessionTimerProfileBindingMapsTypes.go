@@ -48,6 +48,8 @@ func firewallSessionTimerProfileBindingMapsDeleteRestMetadata() protocol.Operati
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["domain_id"] = bindings.NewStringType()
 	fields["group_id"] = bindings.NewStringType()
 	fields["firewall_session_timer_profile_binding_map_id"] = bindings.NewStringType()
@@ -72,14 +74,18 @@ func firewallSessionTimerProfileBindingMapsDeleteRestMetadata() protocol.Operati
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/policy/api/v1/global-infra/domains/{domainId}/groups/{groupId}/firewall-session-timer-profile-binding-maps/{firewallSessionTimerProfileBindingMapId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func firewallSessionTimerProfileBindingMapsGetInputType() bindings.StructType {
@@ -106,6 +112,8 @@ func firewallSessionTimerProfileBindingMapsGetRestMetadata() protocol.OperationR
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["domain_id"] = bindings.NewStringType()
 	fields["group_id"] = bindings.NewStringType()
 	fields["firewall_session_timer_profile_binding_map_id"] = bindings.NewStringType()
@@ -130,14 +138,18 @@ func firewallSessionTimerProfileBindingMapsGetRestMetadata() protocol.OperationR
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/global-infra/domains/{domainId}/groups/{groupId}/firewall-session-timer-profile-binding-maps/{firewallSessionTimerProfileBindingMapId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func firewallSessionTimerProfileBindingMapsListInputType() bindings.StructType {
@@ -174,6 +186,8 @@ func firewallSessionTimerProfileBindingMapsListRestMetadata() protocol.Operation
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["domain_id"] = bindings.NewStringType()
 	fields["group_id"] = bindings.NewStringType()
 	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -217,14 +231,18 @@ func firewallSessionTimerProfileBindingMapsListRestMetadata() protocol.Operation
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/global-infra/domains/{domainId}/groups/{groupId}/firewall-session-timer-profile-binding-maps",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func firewallSessionTimerProfileBindingMapsPatchInputType() bindings.StructType {
@@ -253,6 +271,8 @@ func firewallSessionTimerProfileBindingMapsPatchRestMetadata() protocol.Operatio
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["domain_id"] = bindings.NewStringType()
 	fields["group_id"] = bindings.NewStringType()
 	fields["firewall_session_timer_profile_binding_map_id"] = bindings.NewStringType()
@@ -280,14 +300,18 @@ func firewallSessionTimerProfileBindingMapsPatchRestMetadata() protocol.Operatio
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"policy_firewall_session_timer_profile_binding_map",
 		"PATCH",
 		"/policy/api/v1/global-infra/domains/{domainId}/groups/{groupId}/firewall-session-timer-profile-binding-maps/{firewallSessionTimerProfileBindingMapId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func firewallSessionTimerProfileBindingMapsUpdateInputType() bindings.StructType {
@@ -316,6 +340,8 @@ func firewallSessionTimerProfileBindingMapsUpdateRestMetadata() protocol.Operati
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["domain_id"] = bindings.NewStringType()
 	fields["group_id"] = bindings.NewStringType()
 	fields["firewall_session_timer_profile_binding_map_id"] = bindings.NewStringType()
@@ -343,14 +369,18 @@ func firewallSessionTimerProfileBindingMapsUpdateRestMetadata() protocol.Operati
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"policy_firewall_session_timer_profile_binding_map",
 		"PUT",
 		"/policy/api/v1/global-infra/domains/{domainId}/groups/{groupId}/firewall-session-timer-profile-binding-maps/{firewallSessionTimerProfileBindingMapId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

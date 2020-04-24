@@ -50,6 +50,8 @@ func sessionsDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["tier0_id"] = bindings.NewStringType()
 	fields["locale_service_id"] = bindings.NewStringType()
 	fields["service_id"] = bindings.NewStringType()
@@ -79,14 +81,18 @@ func sessionsDeleteRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}/locale-services/{localeServiceId}/ipsec-vpn-services/{serviceId}/sessions/{sessionId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsGetInputType() bindings.StructType {
@@ -115,6 +121,8 @@ func sessionsGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["tier0_id"] = bindings.NewStringType()
 	fields["locale_service_id"] = bindings.NewStringType()
 	fields["service_id"] = bindings.NewStringType()
@@ -144,14 +152,18 @@ func sessionsGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}/locale-services/{localeServiceId}/ipsec-vpn-services/{serviceId}/sessions/{sessionId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsListInputType() bindings.StructType {
@@ -190,6 +202,8 @@ func sessionsListRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["tier0_id"] = bindings.NewStringType()
 	fields["locale_service_id"] = bindings.NewStringType()
 	fields["service_id"] = bindings.NewStringType()
@@ -238,14 +252,18 @@ func sessionsListRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}/locale-services/{localeServiceId}/ipsec-vpn-services/{serviceId}/sessions",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsPatchInputType() bindings.StructType {
@@ -276,6 +294,8 @@ func sessionsPatchRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["tier0_id"] = bindings.NewStringType()
 	fields["locale_service_id"] = bindings.NewStringType()
 	fields["service_id"] = bindings.NewStringType()
@@ -308,14 +328,18 @@ func sessionsPatchRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"ip_sec_vpn_session",
 		"PATCH",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}/locale-services/{localeServiceId}/ipsec-vpn-services/{serviceId}/sessions/{sessionId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsShowsensitivedataInputType() bindings.StructType {
@@ -344,6 +368,8 @@ func sessionsShowsensitivedataRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["tier0_id"] = bindings.NewStringType()
 	fields["locale_service_id"] = bindings.NewStringType()
 	fields["service_id"] = bindings.NewStringType()
@@ -373,14 +399,18 @@ func sessionsShowsensitivedataRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"action=show_sensitive_data",
 		"",
 		"GET",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}/locale-services/{localeServiceId}/ipsec-vpn-services/{serviceId}/sessions/{sessionId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsUpdateInputType() bindings.StructType {
@@ -411,6 +441,8 @@ func sessionsUpdateRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["tier0_id"] = bindings.NewStringType()
 	fields["locale_service_id"] = bindings.NewStringType()
 	fields["service_id"] = bindings.NewStringType()
@@ -443,14 +475,18 @@ func sessionsUpdateRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"ip_sec_vpn_session",
 		"PUT",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}/locale-services/{localeServiceId}/ipsec-vpn-services/{serviceId}/sessions/{sessionId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

@@ -42,6 +42,8 @@ func standaloneHostSwitchSettingGetRestMetadata() protocol.OperationRestMetadata
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -51,14 +53,18 @@ func standaloneHostSwitchSettingGetRestMetadata() protocol.OperationRestMetadata
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/infra/settings/firewall/idfw/standalone-host-switch-setting",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func standaloneHostSwitchSettingPatchInputType() bindings.StructType {
@@ -81,6 +87,8 @@ func standaloneHostSwitchSettingPatchRestMetadata() protocol.OperationRestMetada
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["standalone_host_idfw_configuration"] = bindings.NewReferenceType(model.StandaloneHostIdfwConfigurationBindingType)
 	fieldNameMap["standalone_host_idfw_configuration"] = "StandaloneHostIdfwConfiguration"
 	paramsTypeMap["standalone_host_idfw_configuration"] = bindings.NewReferenceType(model.StandaloneHostIdfwConfigurationBindingType)
@@ -93,14 +101,18 @@ func standaloneHostSwitchSettingPatchRestMetadata() protocol.OperationRestMetada
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"standalone_host_idfw_configuration",
 		"PATCH",
 		"/policy/api/v1/infra/settings/firewall/idfw/standalone-host-switch-setting",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func standaloneHostSwitchSettingUpdateInputType() bindings.StructType {
@@ -123,6 +135,8 @@ func standaloneHostSwitchSettingUpdateRestMetadata() protocol.OperationRestMetad
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["standalone_host_idfw_configuration"] = bindings.NewReferenceType(model.StandaloneHostIdfwConfigurationBindingType)
 	fieldNameMap["standalone_host_idfw_configuration"] = "StandaloneHostIdfwConfiguration"
 	paramsTypeMap["standalone_host_idfw_configuration"] = bindings.NewReferenceType(model.StandaloneHostIdfwConfigurationBindingType)
@@ -135,14 +149,18 @@ func standaloneHostSwitchSettingUpdateRestMetadata() protocol.OperationRestMetad
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"standalone_host_idfw_configuration",
 		"PUT",
 		"/policy/api/v1/infra/settings/firewall/idfw/standalone-host-switch-setting",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

@@ -44,6 +44,8 @@ func ldapIdentitySourcesDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["ldap_identity_source_id"] = bindings.NewStringType()
 	fieldNameMap["ldap_identity_source_id"] = "LdapIdentitySourceId"
 	paramsTypeMap["ldap_identity_source_id"] = bindings.NewStringType()
@@ -58,14 +60,18 @@ func ldapIdentitySourcesDeleteRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/policy/api/v1/aaa/ldap-identity-sources/{ldapIdentitySourceId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func ldapIdentitySourcesFetchcertificateInputType() bindings.StructType {
@@ -88,6 +94,8 @@ func ldapIdentitySourcesFetchcertificateRestMetadata() protocol.OperationRestMet
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["identity_source_ldap_server_endpoint"] = bindings.NewReferenceType(model.IdentitySourceLdapServerEndpointBindingType)
 	fieldNameMap["identity_source_ldap_server_endpoint"] = "IdentitySourceLdapServerEndpoint"
 	paramsTypeMap["identity_source_ldap_server_endpoint"] = bindings.NewReferenceType(model.IdentitySourceLdapServerEndpointBindingType)
@@ -100,14 +108,18 @@ func ldapIdentitySourcesFetchcertificateRestMetadata() protocol.OperationRestMet
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"action=fetch_certificate",
 		"identity_source_ldap_server_endpoint",
 		"POST",
 		"/policy/api/v1/aaa/ldap-identity-sources",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func ldapIdentitySourcesGetInputType() bindings.StructType {
@@ -130,6 +142,8 @@ func ldapIdentitySourcesGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["ldap_identity_source_id"] = bindings.NewStringType()
 	fieldNameMap["ldap_identity_source_id"] = "LdapIdentitySourceId"
 	paramsTypeMap["ldap_identity_source_id"] = bindings.NewStringType()
@@ -144,14 +158,18 @@ func ldapIdentitySourcesGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/aaa/ldap-identity-sources/{ldapIdentitySourceId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func ldapIdentitySourcesListInputType() bindings.StructType {
@@ -182,6 +200,8 @@ func ldapIdentitySourcesListRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
@@ -211,14 +231,18 @@ func ldapIdentitySourcesListRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/aaa/ldap-identity-sources",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func ldapIdentitySourcesProbeInputType() bindings.StructType {
@@ -241,6 +265,8 @@ func ldapIdentitySourcesProbeRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["ldap_identity_source_id"] = bindings.NewStringType()
 	fieldNameMap["ldap_identity_source_id"] = "LdapIdentitySourceId"
 	paramsTypeMap["ldap_identity_source_id"] = bindings.NewStringType()
@@ -255,14 +281,18 @@ func ldapIdentitySourcesProbeRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"action=probe",
 		"",
 		"POST",
 		"/policy/api/v1/aaa/ldap-identity-sources/{ldapIdentitySourceId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func ldapIdentitySourcesProbeidentitysourceInputType() bindings.StructType {
@@ -285,6 +315,8 @@ func ldapIdentitySourcesProbeidentitysourceRestMetadata() protocol.OperationRest
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["ldap_identity_source"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.LdapIdentitySourceBindingType),}, bindings.REST)
 	fieldNameMap["ldap_identity_source"] = "LdapIdentitySource"
 	paramsTypeMap["ldap_identity_source"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.LdapIdentitySourceBindingType),}, bindings.REST)
@@ -297,14 +329,18 @@ func ldapIdentitySourcesProbeidentitysourceRestMetadata() protocol.OperationRest
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"action=probe_identity_source",
 		"ldap_identity_source",
 		"POST",
 		"/policy/api/v1/aaa/ldap-identity-sources",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func ldapIdentitySourcesProbeldapserverInputType() bindings.StructType {
@@ -327,6 +363,8 @@ func ldapIdentitySourcesProbeldapserverRestMetadata() protocol.OperationRestMeta
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["identity_source_ldap_server"] = bindings.NewReferenceType(model.IdentitySourceLdapServerBindingType)
 	fieldNameMap["identity_source_ldap_server"] = "IdentitySourceLdapServer"
 	paramsTypeMap["identity_source_ldap_server"] = bindings.NewReferenceType(model.IdentitySourceLdapServerBindingType)
@@ -339,14 +377,18 @@ func ldapIdentitySourcesProbeldapserverRestMetadata() protocol.OperationRestMeta
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"action=probe_ldap_server",
 		"identity_source_ldap_server",
 		"POST",
 		"/policy/api/v1/aaa/ldap-identity-sources",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func ldapIdentitySourcesUpdateInputType() bindings.StructType {
@@ -371,6 +413,8 @@ func ldapIdentitySourcesUpdateRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["ldap_identity_source_id"] = bindings.NewStringType()
 	fields["ldap_identity_source"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.LdapIdentitySourceBindingType),}, bindings.REST)
 	fieldNameMap["ldap_identity_source_id"] = "LdapIdentitySourceId"
@@ -388,14 +432,18 @@ func ldapIdentitySourcesUpdateRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"ldap_identity_source",
 		"PUT",
 		"/policy/api/v1/aaa/ldap-identity-sources/{ldapIdentitySourceId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

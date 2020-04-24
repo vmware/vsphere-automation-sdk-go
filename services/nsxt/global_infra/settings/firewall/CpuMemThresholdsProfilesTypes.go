@@ -28,9 +28,7 @@ func cpuMemThresholdsProfilesDeleteInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["profile_id"] = bindings.NewStringType()
-	fields["override"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["profile_id"] = "ProfileId"
-	fieldNameMap["override"] = "Override"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
@@ -46,15 +44,13 @@ func cpuMemThresholdsProfilesDeleteRestMetadata() protocol.OperationRestMetadata
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["profile_id"] = bindings.NewStringType()
-	fields["override"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["profile_id"] = "ProfileId"
-	fieldNameMap["override"] = "Override"
 	paramsTypeMap["profile_id"] = bindings.NewStringType()
-	paramsTypeMap["override"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	paramsTypeMap["profileId"] = bindings.NewStringType()
 	pathParams["profile_id"] = "profileId"
-	queryParams["override"] = "override"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -64,14 +60,18 @@ func cpuMemThresholdsProfilesDeleteRestMetadata() protocol.OperationRestMetadata
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/policy/api/v1/global-infra/settings/firewall/cpu-mem-thresholds-profiles/{profileId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func cpuMemThresholdsProfilesGetInputType() bindings.StructType {
@@ -94,6 +94,8 @@ func cpuMemThresholdsProfilesGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["profile_id"] = bindings.NewStringType()
 	fieldNameMap["profile_id"] = "ProfileId"
 	paramsTypeMap["profile_id"] = bindings.NewStringType()
@@ -108,14 +110,18 @@ func cpuMemThresholdsProfilesGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/global-infra/settings/firewall/cpu-mem-thresholds-profiles/{profileId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func cpuMemThresholdsProfilesListInputType() bindings.StructType {
@@ -148,6 +154,8 @@ func cpuMemThresholdsProfilesListRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -181,14 +189,18 @@ func cpuMemThresholdsProfilesListRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/global-infra/settings/firewall/cpu-mem-thresholds-profiles",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func cpuMemThresholdsProfilesPatchInputType() bindings.StructType {
@@ -196,10 +208,8 @@ func cpuMemThresholdsProfilesPatchInputType() bindings.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["profile_id"] = bindings.NewStringType()
 	fields["policy_firewall_cpu_mem_thresholds_profile"] = bindings.NewReferenceType(model.PolicyFirewallCpuMemThresholdsProfileBindingType)
-	fields["override"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["profile_id"] = "ProfileId"
 	fieldNameMap["policy_firewall_cpu_mem_thresholds_profile"] = "PolicyFirewallCpuMemThresholdsProfile"
-	fieldNameMap["override"] = "Override"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
@@ -215,18 +225,16 @@ func cpuMemThresholdsProfilesPatchRestMetadata() protocol.OperationRestMetadata 
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["profile_id"] = bindings.NewStringType()
 	fields["policy_firewall_cpu_mem_thresholds_profile"] = bindings.NewReferenceType(model.PolicyFirewallCpuMemThresholdsProfileBindingType)
-	fields["override"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["profile_id"] = "ProfileId"
 	fieldNameMap["policy_firewall_cpu_mem_thresholds_profile"] = "PolicyFirewallCpuMemThresholdsProfile"
-	fieldNameMap["override"] = "Override"
 	paramsTypeMap["policy_firewall_cpu_mem_thresholds_profile"] = bindings.NewReferenceType(model.PolicyFirewallCpuMemThresholdsProfileBindingType)
 	paramsTypeMap["profile_id"] = bindings.NewStringType()
-	paramsTypeMap["override"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	paramsTypeMap["profileId"] = bindings.NewStringType()
 	pathParams["profile_id"] = "profileId"
-	queryParams["override"] = "override"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -236,14 +244,18 @@ func cpuMemThresholdsProfilesPatchRestMetadata() protocol.OperationRestMetadata 
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"policy_firewall_cpu_mem_thresholds_profile",
 		"PATCH",
 		"/policy/api/v1/global-infra/settings/firewall/cpu-mem-thresholds-profiles/{profileId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func cpuMemThresholdsProfilesUpdateInputType() bindings.StructType {
@@ -251,10 +263,8 @@ func cpuMemThresholdsProfilesUpdateInputType() bindings.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["profile_id"] = bindings.NewStringType()
 	fields["policy_firewall_cpu_mem_thresholds_profile"] = bindings.NewReferenceType(model.PolicyFirewallCpuMemThresholdsProfileBindingType)
-	fields["override"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["profile_id"] = "ProfileId"
 	fieldNameMap["policy_firewall_cpu_mem_thresholds_profile"] = "PolicyFirewallCpuMemThresholdsProfile"
-	fieldNameMap["override"] = "Override"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
@@ -270,18 +280,16 @@ func cpuMemThresholdsProfilesUpdateRestMetadata() protocol.OperationRestMetadata
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["profile_id"] = bindings.NewStringType()
 	fields["policy_firewall_cpu_mem_thresholds_profile"] = bindings.NewReferenceType(model.PolicyFirewallCpuMemThresholdsProfileBindingType)
-	fields["override"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["profile_id"] = "ProfileId"
 	fieldNameMap["policy_firewall_cpu_mem_thresholds_profile"] = "PolicyFirewallCpuMemThresholdsProfile"
-	fieldNameMap["override"] = "Override"
 	paramsTypeMap["policy_firewall_cpu_mem_thresholds_profile"] = bindings.NewReferenceType(model.PolicyFirewallCpuMemThresholdsProfileBindingType)
 	paramsTypeMap["profile_id"] = bindings.NewStringType()
-	paramsTypeMap["override"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	paramsTypeMap["profileId"] = bindings.NewStringType()
 	pathParams["profile_id"] = "profileId"
-	queryParams["override"] = "override"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -291,14 +299,18 @@ func cpuMemThresholdsProfilesUpdateRestMetadata() protocol.OperationRestMetadata
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"policy_firewall_cpu_mem_thresholds_profile",
 		"PUT",
 		"/policy/api/v1/global-infra/settings/firewall/cpu-mem-thresholds-profiles/{profileId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

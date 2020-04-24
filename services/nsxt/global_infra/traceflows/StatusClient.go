@@ -16,7 +16,7 @@ import (
 
 type StatusClient interface {
 
-    // Read traceflow status with id traceflow-id
+    // Read traceflow status with id traceflow-id. Traceflow configuration will be cleaned up by the system after two hours of inactivity.
     //
     // @param traceflowIdParam (required)
     // @param enforcementPointPathParam Enforcement point path (optional)

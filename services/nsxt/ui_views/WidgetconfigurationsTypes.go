@@ -46,6 +46,8 @@ func widgetconfigurationsCreateRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["view_id"] = bindings.NewStringType()
 	fields["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType),}, bindings.REST)
 	fieldNameMap["view_id"] = "ViewId"
@@ -63,14 +65,18 @@ func widgetconfigurationsCreateRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"widget_configuration",
 		"POST",
 		"/policy/api/v1/ui-views/{viewId}/widgetconfigurations",
+		"",
 		resultHeaders,
 		201,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func widgetconfigurationsDeleteInputType() bindings.StructType {
@@ -95,6 +101,8 @@ func widgetconfigurationsDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["view_id"] = bindings.NewStringType()
 	fields["widgetconfiguration_id"] = bindings.NewStringType()
 	fieldNameMap["view_id"] = "ViewId"
@@ -114,14 +122,18 @@ func widgetconfigurationsDeleteRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/policy/api/v1/ui-views/{viewId}/widgetconfigurations/{widgetconfigurationId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func widgetconfigurationsGetInputType() bindings.StructType {
@@ -148,6 +160,8 @@ func widgetconfigurationsGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["view_id"] = bindings.NewStringType()
 	fields["container"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["widget_ids"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -170,14 +184,18 @@ func widgetconfigurationsGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/ui-views/{viewId}/widgetconfigurations",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func widgetconfigurationsGet0InputType() bindings.StructType {
@@ -202,6 +220,8 @@ func widgetconfigurationsGet0RestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["view_id"] = bindings.NewStringType()
 	fields["widgetconfiguration_id"] = bindings.NewStringType()
 	fieldNameMap["view_id"] = "ViewId"
@@ -221,14 +241,18 @@ func widgetconfigurationsGet0RestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/policy/api/v1/ui-views/{viewId}/widgetconfigurations/{widgetconfigurationId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func widgetconfigurationsUpdateInputType() bindings.StructType {
@@ -255,6 +279,8 @@ func widgetconfigurationsUpdateRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["view_id"] = bindings.NewStringType()
 	fields["widgetconfiguration_id"] = bindings.NewStringType()
 	fields["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType),}, bindings.REST)
@@ -277,14 +303,18 @@ func widgetconfigurationsUpdateRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"widget_configuration",
 		"PUT",
 		"/policy/api/v1/ui-views/{viewId}/widgetconfigurations/{widgetconfigurationId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 
