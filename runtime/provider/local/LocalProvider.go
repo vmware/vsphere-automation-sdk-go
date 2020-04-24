@@ -179,24 +179,28 @@ func (localProvider *LocalProvider) Invoke(serviceID string, operationID string,
 	//Step 4: Validate output
 	log.Debug("Validating output")
 	var outputDef = methodDef.OutputDefinition()
-
-	if methodResult.IsSuccess() {
-		var messages = outputDef.Validate(methodResult.Output())
-		if len(messages) != 0 {
-			log.Errorf("Output validation failed for method %s", methodID.Name())
-			var errorValue = bindings.CreateErrorValueFromMessages(bindings.INTERNAL_SERVER_ERROR_DEF, messages)
-			return core.NewMethodResult(nil, errorValue)
-		}
+	if methodResult.IsResponseStream() {
+		// Validation for stream response is done in binding (__Name__ApiInterface.go)
 	} else {
-		var err = methodResult.Error()
-		var messages = localProvider.validateError(err, methodDef)
-		if len(messages) != 0 {
-			var errorVal = bindings.CreateErrorValueFromErrorValueAndMessages(bindings.INTERNAL_SERVER_ERROR_DEF, err, messages)
-			return core.NewMethodResult(nil, errorVal)
+		if methodResult.IsSuccess() {
+			var messages = outputDef.Validate(methodResult.Output())
+			if len(messages) != 0 {
+				log.Errorf("Output validation failed for method %s", methodID.Name())
+				var errorValue = bindings.CreateErrorValueFromMessages(bindings.INTERNAL_SERVER_ERROR_DEF, messages)
+				return core.NewMethodResult(nil, errorValue)
+			}
+		} else {
+			var err = methodResult.Error()
+			var messages = localProvider.validateError(err, methodDef)
+			if len(messages) != 0 {
+				var errorVal = bindings.CreateErrorValueFromErrorValueAndMessages(bindings.INTERNAL_SERVER_ERROR_DEF, err, messages)
+				return core.NewMethodResult(nil, errorVal)
+			}
+			return core.NewMethodResult(nil, err)
 		}
-		return core.NewMethodResult(nil, err)
+		log.Debug("Request processing complete")
 	}
-	log.Debug("Request processing complete")
+
 	return methodResult
 
 }

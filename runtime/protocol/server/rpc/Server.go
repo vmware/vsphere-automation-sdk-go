@@ -4,9 +4,10 @@
 package rpc
 
 import (
+	"net/http"
+
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"golang.org/x/net/context"
-	"net/http"
 )
 
 type Server struct {
@@ -29,7 +30,7 @@ func (s *Server) Start() {
 		}
 	}()
 
-	log.Info("HTTP Server started")
+	log.Infof("HTTP Server starting on %s", s.srv.Addr)
 }
 
 func (s *Server) Stop() {
@@ -37,6 +38,10 @@ func (s *Server) Stop() {
 	if err := s.srv.Shutdown(context.TODO()); err != nil {
 		panic(err) // failure/timeout shutting down the server gracefully
 	}
-	log.Info("Server stopped")
+	log.Infof("Server at %s stopped.", s.srv.Addr)
 
+}
+
+func (s *Server) Address() string {
+	return s.srv.Addr
 }
