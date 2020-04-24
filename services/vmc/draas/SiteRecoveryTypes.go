@@ -50,6 +50,8 @@ func siteRecoveryDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
 	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
@@ -78,14 +80,18 @@ func siteRecoveryDeleteRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/vmc/draas/api/orgs/{org}/sddcs/{sddc}/site-recovery",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"InvalidRequest": 400,"Unauthorized": 403,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func siteRecoveryGetInputType() bindings.StructType {
@@ -110,6 +116,8 @@ func siteRecoveryGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
 	fieldNameMap["org"] = "Org"
@@ -130,14 +138,18 @@ func siteRecoveryGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/vmc/draas/api/orgs/{org}/sddcs/{sddc}/site-recovery",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"InvalidRequest": 400,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 func siteRecoveryPostInputType() bindings.StructType {
@@ -164,6 +176,8 @@ func siteRecoveryPostRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
 	fields["activate_site_recovery_config"] = bindings.NewOptionalType(bindings.NewReferenceType(model.ActivateSiteRecoveryConfigBindingType))
@@ -187,14 +201,18 @@ func siteRecoveryPostRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"activate_site_recovery_config",
 		"POST",
 		"/vmc/draas/api/orgs/{org}/sddcs/{sddc}/site-recovery",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"InvalidRequest": 400,"Unauthorized": 403,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 
