@@ -48,6 +48,8 @@ func nsxVmcAwsIntegrationAttachVifRestMetadata() protocol.OperationRestMetadata 
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["vif_id"] = bindings.NewStringType()
 	fields["action"] = bindings.NewStringType()
 	fieldNameMap["vif_id"] = "VifId"
@@ -66,14 +68,18 @@ func nsxVmcAwsIntegrationAttachVifRestMetadata() protocol.OperationRestMetadata 
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"POST",
 		"/cloud-service/api/v1/infra/direct-connect/vifs/{vifId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationCreatePublicIpInputType() bindings.StructType {
@@ -98,6 +104,8 @@ func nsxVmcAwsIntegrationCreatePublicIpRestMetadata() protocol.OperationRestMeta
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["public_ip_id"] = bindings.NewStringType()
 	fields["public_ip"] = bindings.NewReferenceType(model.PublicIpBindingType)
 	fieldNameMap["public_ip_id"] = "PublicIpId"
@@ -115,14 +123,18 @@ func nsxVmcAwsIntegrationCreatePublicIpRestMetadata() protocol.OperationRestMeta
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"public_ip",
 		"PUT",
 		"/cloud-service/api/v1/infra/public-ips/{publicIpId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationDeletePublicIpInputType() bindings.StructType {
@@ -147,6 +159,8 @@ func nsxVmcAwsIntegrationDeletePublicIpRestMetadata() protocol.OperationRestMeta
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["public_ip_id"] = bindings.NewStringType()
 	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["public_ip_id"] = "PublicIpId"
@@ -165,14 +179,18 @@ func nsxVmcAwsIntegrationDeletePublicIpRestMetadata() protocol.OperationRestMeta
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/cloud-service/api/v1/infra/public-ips/{publicIpId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationDeleteVifByIdInputType() bindings.StructType {
@@ -195,6 +213,8 @@ func nsxVmcAwsIntegrationDeleteVifByIdRestMetadata() protocol.OperationRestMetad
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["vif_id"] = bindings.NewStringType()
 	fieldNameMap["vif_id"] = "VifId"
 	paramsTypeMap["vif_id"] = bindings.NewStringType()
@@ -209,14 +229,18 @@ func nsxVmcAwsIntegrationDeleteVifByIdRestMetadata() protocol.OperationRestMetad
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/cloud-service/api/v1/infra/direct-connect/vifs/{vifId}",
+		"",
 		resultHeaders,
 		204,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationGetDxBgpInfoInputType() bindings.StructType {
@@ -237,6 +261,8 @@ func nsxVmcAwsIntegrationGetDxBgpInfoRestMetadata() protocol.OperationRestMetada
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -246,14 +272,18 @@ func nsxVmcAwsIntegrationGetDxBgpInfoRestMetadata() protocol.OperationRestMetada
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/cloud-service/api/v1/infra/direct-connect/bgp",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationGetLinkedVpcInputType() bindings.StructType {
@@ -276,6 +306,8 @@ func nsxVmcAwsIntegrationGetLinkedVpcRestMetadata() protocol.OperationRestMetada
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["linked_vpc_id"] = bindings.NewStringType()
 	fieldNameMap["linked_vpc_id"] = "LinkedVpcId"
 	paramsTypeMap["linked_vpc_id"] = bindings.NewStringType()
@@ -290,14 +322,18 @@ func nsxVmcAwsIntegrationGetLinkedVpcRestMetadata() protocol.OperationRestMetada
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/cloud-service/api/v1/infra/linked-vpcs/{linkedVpcId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationGetMgmtVmInfoInputType() bindings.StructType {
@@ -320,6 +356,8 @@ func nsxVmcAwsIntegrationGetMgmtVmInfoRestMetadata() protocol.OperationRestMetad
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["vm_id"] = bindings.NewStringType()
 	fieldNameMap["vm_id"] = "VmId"
 	paramsTypeMap["vm_id"] = bindings.NewStringType()
@@ -334,14 +372,18 @@ func nsxVmcAwsIntegrationGetMgmtVmInfoRestMetadata() protocol.OperationRestMetad
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/cloud-service/api/v1/infra/mgmt-vms/{vmId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationGetPublicIpInputType() bindings.StructType {
@@ -364,6 +406,8 @@ func nsxVmcAwsIntegrationGetPublicIpRestMetadata() protocol.OperationRestMetadat
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["public_ip_id"] = bindings.NewStringType()
 	fieldNameMap["public_ip_id"] = "PublicIpId"
 	paramsTypeMap["public_ip_id"] = bindings.NewStringType()
@@ -378,14 +422,18 @@ func nsxVmcAwsIntegrationGetPublicIpRestMetadata() protocol.OperationRestMetadat
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/cloud-service/api/v1/infra/public-ips/{publicIpId}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationGetRealizedStateStatusInputType() bindings.StructType {
@@ -408,6 +456,8 @@ func nsxVmcAwsIntegrationGetRealizedStateStatusRestMetadata() protocol.Operation
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["intent_path"] = bindings.NewStringType()
 	fieldNameMap["intent_path"] = "IntentPath"
 	paramsTypeMap["intent_path"] = bindings.NewStringType()
@@ -421,14 +471,18 @@ func nsxVmcAwsIntegrationGetRealizedStateStatusRestMetadata() protocol.Operation
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/cloud-service/api/v1/infra/realized-state/status",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationGetSddcUserConfigInputType() bindings.StructType {
@@ -449,6 +503,8 @@ func nsxVmcAwsIntegrationGetSddcUserConfigRestMetadata() protocol.OperationRestM
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -458,14 +514,18 @@ func nsxVmcAwsIntegrationGetSddcUserConfigRestMetadata() protocol.OperationRestM
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/cloud-service/api/v1/infra/sddc-user-config",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationListAccountsInputType() bindings.StructType {
@@ -486,6 +546,8 @@ func nsxVmcAwsIntegrationListAccountsRestMetadata() protocol.OperationRestMetada
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -495,14 +557,18 @@ func nsxVmcAwsIntegrationListAccountsRestMetadata() protocol.OperationRestMetada
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/cloud-service/api/v1/infra/accounts",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationListAdvertisedRoutesInputType() bindings.StructType {
@@ -523,6 +589,8 @@ func nsxVmcAwsIntegrationListAdvertisedRoutesRestMetadata() protocol.OperationRe
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -532,14 +600,18 @@ func nsxVmcAwsIntegrationListAdvertisedRoutesRestMetadata() protocol.OperationRe
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/cloud-service/api/v1/infra/direct-connect/routes/advertised",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationListConnectedServicesInputType() bindings.StructType {
@@ -562,6 +634,8 @@ func nsxVmcAwsIntegrationListConnectedServicesRestMetadata() protocol.OperationR
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["linked_vpc_id"] = bindings.NewStringType()
 	fieldNameMap["linked_vpc_id"] = "LinkedVpcId"
 	paramsTypeMap["linked_vpc_id"] = bindings.NewStringType()
@@ -576,14 +650,18 @@ func nsxVmcAwsIntegrationListConnectedServicesRestMetadata() protocol.OperationR
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/cloud-service/api/v1/infra/linked-vpcs/{linkedVpcId}/connected-services",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationListLearnedRoutesInputType() bindings.StructType {
@@ -604,6 +682,8 @@ func nsxVmcAwsIntegrationListLearnedRoutesRestMetadata() protocol.OperationRestM
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -613,14 +693,18 @@ func nsxVmcAwsIntegrationListLearnedRoutesRestMetadata() protocol.OperationRestM
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/cloud-service/api/v1/infra/direct-connect/routes/learned",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationListLinkedVpcsInputType() bindings.StructType {
@@ -641,6 +725,8 @@ func nsxVmcAwsIntegrationListLinkedVpcsRestMetadata() protocol.OperationRestMeta
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -650,14 +736,18 @@ func nsxVmcAwsIntegrationListLinkedVpcsRestMetadata() protocol.OperationRestMeta
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/cloud-service/api/v1/infra/linked-vpcs",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationListMgmtVmsInputType() bindings.StructType {
@@ -678,6 +768,8 @@ func nsxVmcAwsIntegrationListMgmtVmsRestMetadata() protocol.OperationRestMetadat
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -687,14 +779,18 @@ func nsxVmcAwsIntegrationListMgmtVmsRestMetadata() protocol.OperationRestMetadat
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/cloud-service/api/v1/infra/mgmt-vms",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationListPublicIpsInputType() bindings.StructType {
@@ -715,6 +811,8 @@ func nsxVmcAwsIntegrationListPublicIpsRestMetadata() protocol.OperationRestMetad
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -724,14 +822,18 @@ func nsxVmcAwsIntegrationListPublicIpsRestMetadata() protocol.OperationRestMetad
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/cloud-service/api/v1/infra/public-ips",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationListVifsInputType() bindings.StructType {
@@ -752,6 +854,8 @@ func nsxVmcAwsIntegrationListVifsRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -761,14 +865,18 @@ func nsxVmcAwsIntegrationListVifsRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/cloud-service/api/v1/infra/direct-connect/vifs",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationUpdateConnectedServiceInputType() bindings.StructType {
@@ -795,6 +903,8 @@ func nsxVmcAwsIntegrationUpdateConnectedServiceRestMetadata() protocol.Operation
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["linked_vpc_id"] = bindings.NewStringType()
 	fields["service_name"] = bindings.NewStringType()
 	fields["connected_service_status"] = bindings.NewReferenceType(model.ConnectedServiceStatusBindingType)
@@ -817,14 +927,18 @@ func nsxVmcAwsIntegrationUpdateConnectedServiceRestMetadata() protocol.Operation
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"connected_service_status",
 		"PUT",
 		"/cloud-service/api/v1/infra/linked-vpcs/{linkedVpcId}/connected-services/{serviceName}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func nsxVmcAwsIntegrationUpdateDxBgpInfoInputType() bindings.StructType {
@@ -847,6 +961,8 @@ func nsxVmcAwsIntegrationUpdateDxBgpInfoRestMetadata() protocol.OperationRestMet
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["direct_connect_bgp_info"] = bindings.NewReferenceType(model.DirectConnectBgpInfoBindingType)
 	fieldNameMap["direct_connect_bgp_info"] = "DirectConnectBgpInfo"
 	paramsTypeMap["direct_connect_bgp_info"] = bindings.NewReferenceType(model.DirectConnectBgpInfoBindingType)
@@ -859,14 +975,18 @@ func nsxVmcAwsIntegrationUpdateDxBgpInfoRestMetadata() protocol.OperationRestMet
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"direct_connect_bgp_info",
 		"PUT",
 		"/cloud-service/api/v1/infra/direct-connect/bgp",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidRequest": 400,"Unauthorized": 403,"ServiceUnavailable": 503,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 
