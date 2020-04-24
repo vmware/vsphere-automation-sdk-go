@@ -26,10 +26,10 @@ type SourceClient interface {
     // The parameter must be an identifier for the resource type: ``com.vmware.vapi.metadata.source``.
     // @param specParam create specification.
     // @throws AlreadyExists If the metadata source identifier is already registered with the infrastructure.
-    // @throws InvalidArgument If type of the source specified in null is invalid.
-    // @throws InvalidArgument If the file specified in null is not a valid JSON file or if the format of the CLI metadata in the JSON file is invalid.
-    // @throws InvalidArgument If the URI specified in null is unreachable or if there is a transport protocol or message protocol mismatch between the client and the server or if the remote server do not have interfaces present in com.vmware.vapi.metadata.cli package.
-    // @throws NotFound If the file specified in null does not exist.
+    // @throws InvalidArgument If type of the source specified in CreateSpec#type is invalid.
+    // @throws InvalidArgument If the file specified in CreateSpec#filepath is not a valid JSON file or if the format of the CLI metadata in the JSON file is invalid.
+    // @throws InvalidArgument If the URI specified in CreateSpec#address is unreachable or if there is a transport protocol or message protocol mismatch between the client and the server or if the remote server do not have interfaces present in com.vmware.vapi.metadata.cli package.
+    // @throws NotFound If the file specified in CreateSpec#filepath does not exist.
 	Create(sourceIdParam string, specParam SourceCreateSpec) error
 
     // Deletes an existing CLI metadata source from the infrastructure.

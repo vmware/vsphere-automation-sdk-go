@@ -52,6 +52,8 @@ func sessionCreateRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
@@ -62,14 +64,18 @@ func sessionCreateRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"ServiceUnavailable": 503})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.service_unavailable": 503})
 }
 
 func sessionDeleteInputType() bindings.StructType {
@@ -90,6 +96,8 @@ func sessionDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
@@ -100,14 +108,18 @@ func sessionDeleteRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"ServiceUnavailable": 503})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.service_unavailable": 503})
 }
 
 func sessionGetInputType() bindings.StructType {
@@ -128,6 +140,8 @@ func sessionGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
@@ -138,14 +152,18 @@ func sessionGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"ServiceUnavailable": 503})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.service_unavailable": 503})
 }
 
 

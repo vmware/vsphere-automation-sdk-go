@@ -14,10 +14,10 @@ package routing
 
 import (
 	"reflect"
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata"
 	"net/url"
 )
 
@@ -75,6 +75,8 @@ func sourceCreateRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["source_id"] = bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, "")
 	fields["spec"] = bindings.NewReferenceType(SourceCreateSpecBindingType)
 	fieldNameMap["source_id"] = "SourceId"
@@ -88,14 +90,18 @@ func sourceCreateRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"AlreadyExists": 400,"InvalidArgument": 400,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.already_exists": 400,"com.vmware.vapi.std.errors.invalid_argument": 400,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sourceDeleteInputType() bindings.StructType {
@@ -118,6 +124,8 @@ func sourceDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["source_id"] = bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, "")
 	fieldNameMap["source_id"] = "SourceId"
 	resultHeaders := map[string]string{}
@@ -129,14 +137,18 @@ func sourceDeleteRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sourceGetInputType() bindings.StructType {
@@ -159,6 +171,8 @@ func sourceGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["source_id"] = bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, "")
 	fieldNameMap["source_id"] = "SourceId"
 	resultHeaders := map[string]string{}
@@ -170,14 +184,18 @@ func sourceGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sourceListInputType() bindings.StructType {
@@ -198,6 +216,8 @@ func sourceListRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -207,12 +227,16 @@ func sourceListRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
 		map[string]int{})
 }
@@ -237,6 +261,8 @@ func sourceReloadRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["source_id"] = bindings.NewOptionalType(bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, ""))
 	fieldNameMap["source_id"] = "SourceId"
 	resultHeaders := map[string]string{}
@@ -248,14 +274,18 @@ func sourceReloadRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sourceFingerprintInputType() bindings.StructType {
@@ -278,6 +308,8 @@ func sourceFingerprintRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["source_id"] = bindings.NewOptionalType(bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, ""))
 	fieldNameMap["source_id"] = "SourceId"
 	resultHeaders := map[string]string{}
@@ -289,14 +321,18 @@ func sourceFingerprintRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

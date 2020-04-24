@@ -14,9 +14,9 @@ package task
 
 import (
 	"reflect"
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std"
 	"time"
 )
 

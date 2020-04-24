@@ -14,12 +14,12 @@ package vapi
 
 import (
 	"reflect"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/authentication"
 	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/cli"
 	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/metamodel"
 	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/privilege"
 	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/routing"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 )
 
 

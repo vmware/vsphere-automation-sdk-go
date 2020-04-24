@@ -32,7 +32,7 @@ type ComponentInfo struct {
 	Packages map[string]PackageInfo
 }
 
-// Information about a vAPI operation that contains routing information. For an explanation of containment within operations, see null
+// Information about a vAPI operation that contains routing information. For an explanation of containment within operations, see com.vmware.vapi.metadata.routing.Operation
 type OperationInfo struct {
     // The routing information assigned for this operation. For an explanation of routing information, see RoutingInfo
 	RoutingInfo RoutingInfo
@@ -66,7 +66,7 @@ type ServiceInfo struct {
 	RoutingInfo RoutingInfo
     // Information about all operations in this service that contain routing Information. The key in the map is the ID of the operation and the value in the map is the routing information for this operation. 
     //
-    //  For an explanation of routing information within operations, see null
+    //  For an explanation of routing information within operations, see com.vmware.vapi.metadata.routing.Operation
 	Operations map[string]OperationInfo
 }
 

@@ -14,11 +14,11 @@ package cis
 
 import (
 	"reflect"
-	"github.com/vmware/vsphere-automation-sdk-go/lib/cis/task"
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	"github.com/vmware/vsphere-automation-sdk-go/lib/cis/task"
+	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std"
 )
 
 // Resource type for task.
@@ -77,6 +77,8 @@ func tasksGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["task"] = bindings.NewIdType([]string{"com.vmware.cis.task"}, "")
 	fields["spec"] = bindings.NewOptionalType(bindings.NewReferenceType(TasksGetSpecBindingType))
 	fieldNameMap["task"] = "Task"
@@ -91,14 +93,18 @@ func tasksGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"Error": 500,"NotFound": 404,"ResourceInaccessible": 500,"ServiceUnavailable": 503,"Unauthenticated": 401,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.error": 500,"com.vmware.vapi.std.errors.not_found": 404,"com.vmware.vapi.std.errors.resource_inaccessible": 500,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 func tasksListInputType() bindings.StructType {
@@ -123,6 +129,8 @@ func tasksListRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["filter_spec"] = bindings.NewOptionalType(bindings.NewReferenceType(TasksFilterSpecBindingType))
 	fields["result_spec"] = bindings.NewOptionalType(bindings.NewReferenceType(TasksGetSpecBindingType))
 	fieldNameMap["filter_spec"] = "FilterSpec"
@@ -137,14 +145,18 @@ func tasksListRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"InvalidArgument": 400,"ResourceInaccessible": 500,"ServiceUnavailable": 503,"Unauthenticated": 401,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_argument": 400,"com.vmware.vapi.std.errors.resource_inaccessible": 500,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 func tasksCancelInputType() bindings.StructType {
@@ -167,6 +179,8 @@ func tasksCancelRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["task"] = bindings.NewIdType([]string{"com.vmware.cis.task"}, "")
 	fieldNameMap["task"] = "Task"
 	resultHeaders := map[string]string{}
@@ -179,14 +193,18 @@ func tasksCancelRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"null",
 		"",
+		"",
 		resultHeaders,
 		0,
+		"",
 		errorHeaders,
-		map[string]int{"Error": 500,"NotAllowedInCurrentState": 400,"NotFound": 404,"ResourceInaccessible": 500,"ServiceUnavailable": 503,"Unauthenticated": 401,"Unauthorized": 403,"Unsupported": 400})
+		map[string]int{"com.vmware.vapi.std.errors.error": 500,"com.vmware.vapi.std.errors.not_allowed_in_current_state": 400,"com.vmware.vapi.std.errors.not_found": 404,"com.vmware.vapi.std.errors.resource_inaccessible": 500,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.unsupported": 400})
 }
 
 
