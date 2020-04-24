@@ -46,6 +46,8 @@ func mwGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["reservation"] = bindings.NewStringType()
 	fieldNameMap["org"] = "Org"
@@ -66,14 +68,18 @@ func mwGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/vmc/api/orgs/{org}/reservations/{reservation}/mw",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 func mwPutInputType() bindings.StructType {
@@ -100,6 +106,8 @@ func mwPutRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["reservation"] = bindings.NewStringType()
 	fields["window"] = bindings.NewReferenceType(model.MaintenanceWindowBindingType)
@@ -123,14 +131,18 @@ func mwPutRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"window",
 		"PUT",
 		"/vmc/api/orgs/{org}/reservations/{reservation}/mw",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"ConcurrentChange": 409,"InvalidRequest": 400,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.concurrent_change": 409,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 

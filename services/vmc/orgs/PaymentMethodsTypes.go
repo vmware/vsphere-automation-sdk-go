@@ -4,13 +4,13 @@
 // Code generated. DO NOT EDIT.
 
 /*
- * Data type definitions file for service: Ipsec.
+ * Data type definitions file for service: PaymentMethods.
  * Includes binding types of a structures and enumerations defined in the service.
  * Shared by client-side stubs and server-side skeletons to ensure type
  * compatibility.
  */
 
-package dashboard
+package orgs
 
 import (
 	"reflect"
@@ -24,26 +24,22 @@ import (
 
 
 
-func ipsecGetInputType() bindings.StructType {
+func paymentMethodsGetOrgPaymentMethodsInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["edge_id"] = bindings.NewStringType()
-	fields["interval"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["default_flag"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["org"] = "Org"
-	fieldNameMap["sddc"] = "Sddc"
-	fieldNameMap["edge_id"] = "EdgeId"
-	fieldNameMap["interval"] = "Interval"
+	fieldNameMap["default_flag"] = "DefaultFlag"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func ipsecGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.DashboardStatisticsBindingType)
+func paymentMethodsGetOrgPaymentMethodsOutputType() bindings.BindingType {
+	return bindings.NewListType(bindings.NewReferenceType(model.PaymentMethodInfoBindingType), reflect.TypeOf([]model.PaymentMethodInfo{}))
 }
 
-func ipsecGetRestMetadata() protocol.OperationRestMetadata {
+func paymentMethodsGetOrgPaymentMethodsRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -53,26 +49,17 @@ func ipsecGetRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["edge_id"] = bindings.NewStringType()
-	fields["interval"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["default_flag"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["org"] = "Org"
-	fieldNameMap["sddc"] = "Sddc"
-	fieldNameMap["edge_id"] = "EdgeId"
-	fieldNameMap["interval"] = "Interval"
+	fieldNameMap["default_flag"] = "DefaultFlag"
 	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["interval"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["edge_id"] = bindings.NewStringType()
+	paramsTypeMap["default_flag"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["edgeId"] = bindings.NewStringType()
-	pathParams["edge_id"] = "edgeId"
 	pathParams["org"] = "org"
-	pathParams["sddc"] = "sddc"
-	queryParams["interval"] = "interval"
+	queryParams["default_flag"] = "defaultFlag"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]string{}
+	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -85,13 +72,13 @@ func ipsecGetRestMetadata() protocol.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/vmc/api/orgs/{org}/sddcs/{sddc}/networks/4.0/edges/{edgeId}/statistics/dashboard/ipsec",
+		"/vmc/api/orgs/{org}/payment-methods",
 		"",
 		resultHeaders,
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

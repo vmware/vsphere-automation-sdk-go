@@ -32,13 +32,13 @@ type SddcsClient interface {
     // @param sddcParam Sddc Identifier. (required)
     // @param retainConfigurationParam If = 'true', the SDDC's configuration is retained as a template for later use. This flag is applicable only to SDDCs in ACTIVE state. (optional)
     // @param templateNameParam Only applicable when retainConfiguration is also set to 'true'. When set, this value will be used as the name of the SDDC configuration template generated. (optional)
-    // @param forceParam If = 'true', will delete forcefully. Beware: do not use the force flag if there is a chance an active provisioning or deleting task is running against this SDDC. This option is restricted. (optional)
+    // @param forceParam If = true, will delete forcefully. Beware: do not use the force flag if there is a chance an active provisioning or deleting task is running against this SDDC. This option is restricted. (optional)
     // @return com.vmware.vmc.model.Task
     // @throws Unauthenticated  Unauthorized
     // @throws InvalidRequest  The sddc is not in a state that's valid for deletion
     // @throws Unauthorized  Access not allowed to the operation for the current user
     // @throws NotFound  Cannot find the SDDC with given identifier
-	Delete(orgParam string, sddcParam string, retainConfigurationParam *bool, templateNameParam *string, forceParam *string) (model.Task, error)
+	Delete(orgParam string, sddcParam string, retainConfigurationParam *bool, templateNameParam *string, forceParam *bool) (model.Task, error)
 
     // Get SDDC
     //

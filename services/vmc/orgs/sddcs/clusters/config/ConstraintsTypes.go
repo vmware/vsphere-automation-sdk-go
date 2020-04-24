@@ -50,6 +50,8 @@ func constraintsGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
 	fields["cluster"] = bindings.NewStringType()
@@ -79,14 +81,18 @@ func constraintsGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/vmc/api/orgs/{org}/sddcs/{sddc}/clusters/{cluster}/config/constraints",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"InvalidRequest": 400,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 

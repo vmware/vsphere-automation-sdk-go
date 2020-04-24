@@ -355,13 +355,15 @@ type AwsSddcConfig struct {
 	SkipCreatingVxlan *bool
     // VXLAN IP subnet in CIDR for compute gateway
 	VxlanSubnet *string
-    // The size of the vCenter and NSX appliances. xlarge sddcSize corresponds to an 'extra_large' vCenter appliance and 'large' NSX appliance. 'medium' sddcSize corresponds to 'medium' vCenter appliance and 'medium' NSX appliance. Value defaults to 'medium'.
+    // The size of the vCenter and NSX appliances. \"large\" sddcSize corresponds to a 'large' vCenter appliance and 'large' NSX appliance. 'medium' sddcSize corresponds to 'medium' vCenter appliance and 'medium' NSX appliance. Value defaults to 'medium'.
 	Size *string
     // The storage capacity value to be requested for the sddc primary cluster, in GiBs. If provided, instead of using the direct-attached storage, a capacity value amount of seperable storage will be used. format: int64
 	StorageCapacity *int64
 	Name string
     // A list of the SDDC linking configurations to use.
 	AccountLinkSddcConfig []AccountLinkSddcConfig
+    // If provided, will be assigned as SDDC id of the provisioned SDDC. format: UUID
+	SddcId *string
 	NumHosts int64
     // Denotes the sddc type , if the value is null or empty, the type is considered as default.
 	SddcType *string
@@ -2066,6 +2068,12 @@ type PagingInfo struct {
 	PageSize *int64
 }
 
+type PaymentMethodInfo struct {
+	Type_ *string
+	DefaultFlag *bool
+	PaymentMethodId *string
+}
+
 type PopAgentXeniConnection struct {
     // The gateway route ip fo the subnet.
 	DefaultSubnetRoute *string
@@ -2346,13 +2354,15 @@ type SddcConfig struct {
 	SkipCreatingVxlan *bool
     // VXLAN IP subnet in CIDR for compute gateway
 	VxlanSubnet *string
-    // The size of the vCenter and NSX appliances. xlarge sddcSize corresponds to an 'extra_large' vCenter appliance and 'large' NSX appliance. 'medium' sddcSize corresponds to 'medium' vCenter appliance and 'medium' NSX appliance. Value defaults to 'medium'.
+    // The size of the vCenter and NSX appliances. \"large\" sddcSize corresponds to a 'large' vCenter appliance and 'large' NSX appliance. 'medium' sddcSize corresponds to 'medium' vCenter appliance and 'medium' NSX appliance. Value defaults to 'medium'.
 	Size *string
     // The storage capacity value to be requested for the sddc primary cluster, in GiBs. If provided, instead of using the direct-attached storage, a capacity value amount of seperable storage will be used. format: int64
 	StorageCapacity *int64
 	Name string
     // A list of the SDDC linking configurations to use.
 	AccountLinkSddcConfig []AccountLinkSddcConfig
+    // If provided, will be assigned as SDDC id of the provisioned SDDC. format: UUID
+	SddcId *string
 	NumHosts int64
     // Denotes the sddc type , if the value is null or empty, the type is considered as default.
 	SddcType *string
@@ -2750,6 +2760,8 @@ type SubnetInfo struct {
 	AvailabilityZone *string
     // The ID of the subnet.
 	SubnetId *string
+    // The availability zone id (customer-centric) this subnet is in.
+	AvailabilityZoneId *string
     // The CIDR block of the subnet.
 	SubnetCidrBlock *string
     // Why a subnet is marked as not compatible. May be blank if compatible.
@@ -2787,6 +2799,9 @@ type SubscriptionDetails struct {
     // * SubscriptionDetails#SubscriptionDetails_STATUS_EXPIRED
     // * SubscriptionDetails#SubscriptionDetails_STATUS_PENDING_PROVISIONING
     // * SubscriptionDetails#SubscriptionDetails_STATUS_ORDER_SUBMITTED
+    // * SubscriptionDetails#SubscriptionDetails_STATUS_SUSPENDED
+    // * SubscriptionDetails#SubscriptionDetails_STATUS_TERMINATED
+    // * SubscriptionDetails#SubscriptionDetails_STATUS_UKNOWN
 	Status *string
 	AnniversaryBillingDate *string
 	EndDate *string
@@ -2815,6 +2830,9 @@ const SubscriptionDetails_STATUS_CANCELLED = "CANCELLED"
 const SubscriptionDetails_STATUS_EXPIRED = "EXPIRED"
 const SubscriptionDetails_STATUS_PENDING_PROVISIONING = "PENDING_PROVISIONING"
 const SubscriptionDetails_STATUS_ORDER_SUBMITTED = "ORDER_SUBMITTED"
+const SubscriptionDetails_STATUS_SUSPENDED = "SUSPENDED"
+const SubscriptionDetails_STATUS_TERMINATED = "TERMINATED"
+const SubscriptionDetails_STATUS_UKNOWN = "UKNOWN"
 
 // Details of products that are available for purchase.
 type SubscriptionProducts struct {
@@ -3042,6 +3060,8 @@ type VpcInfo struct {
     // set of virtual interfaces attached to the sddc
 	VifIds []string
 	VmSecurityGroupId *string
+    // Mapping from AZ to a list of IP addresses assigned to TGW ENI that's connected with Vpc
+	TgwIps map[string][]string
     // (deprecated)
 	RouteTableId *string
     // Id of the NSX edge associated with this VPC (deprecated)
@@ -3591,6 +3611,8 @@ func AwsSddcConfigBindingType() bindings.BindingType {
 	fieldNameMap["name"] = "Name"
 	fields["account_link_sddc_config"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(AccountLinkSddcConfigBindingType), reflect.TypeOf([]AccountLinkSddcConfig{})))
 	fieldNameMap["account_link_sddc_config"] = "AccountLinkSddcConfig"
+	fields["sddc_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["sddc_id"] = "SddcId"
 	fields["num_hosts"] = bindings.NewIntegerType()
 	fieldNameMap["num_hosts"] = "NumHosts"
 	fields["sddc_type"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -5717,6 +5739,19 @@ func PagingInfoBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.paging_info", fields, reflect.TypeOf(PagingInfo{}), fieldNameMap, validators)
 }
 
+func PaymentMethodInfoBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["type"] = "Type_"
+	fields["default_flag"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["default_flag"] = "DefaultFlag"
+	fields["payment_method_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["payment_method_id"] = "PaymentMethodId"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.payment_method_info", fields, reflect.TypeOf(PaymentMethodInfo{}), fieldNameMap, validators)
+}
+
 func PopAgentXeniConnectionBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -5996,6 +6031,8 @@ func SddcConfigBindingType() bindings.BindingType {
 	fieldNameMap["name"] = "Name"
 	fields["account_link_sddc_config"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(AccountLinkSddcConfigBindingType), reflect.TypeOf([]AccountLinkSddcConfig{})))
 	fieldNameMap["account_link_sddc_config"] = "AccountLinkSddcConfig"
+	fields["sddc_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["sddc_id"] = "SddcId"
 	fields["num_hosts"] = bindings.NewIntegerType()
 	fieldNameMap["num_hosts"] = "NumHosts"
 	fields["sddc_type"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -6435,6 +6472,8 @@ func SubnetInfoBindingType() bindings.BindingType {
 	fieldNameMap["availability_zone"] = "AvailabilityZone"
 	fields["subnet_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["subnet_id"] = "SubnetId"
+	fields["availability_zone_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["availability_zone_id"] = "AvailabilityZoneId"
 	fields["subnet_cidr_block"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["subnet_cidr_block"] = "SubnetCidrBlock"
 	fields["note"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -6814,6 +6853,8 @@ func VpcInfoBindingType() bindings.BindingType {
 	fieldNameMap["vif_ids"] = "VifIds"
 	fields["vm_security_group_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vm_security_group_id"] = "VmSecurityGroupId"
+	fields["tgwIps"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})),reflect.TypeOf(map[string][]string{})))
+	fieldNameMap["tgwIps"] = "TgwIps"
 	fields["route_table_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["route_table_id"] = "RouteTableId"
 	fields["edge_subnet_id"] = bindings.NewOptionalType(bindings.NewStringType())

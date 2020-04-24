@@ -46,6 +46,8 @@ func convertCreateRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
 	fieldNameMap["org"] = "Org"
@@ -66,14 +68,18 @@ func convertCreateRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"POST",
 		"/vmc/api/orgs/{org}/sddcs/{sddc}/convert",
+		"",
 		resultHeaders,
 		201,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"InvalidRequest": 400,"Unauthorized": 403,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

@@ -44,6 +44,8 @@ func localeSetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["vmc_locale"] = bindings.NewReferenceType(model.VmcLocaleBindingType)
 	fieldNameMap["vmc_locale"] = "VmcLocale"
 	paramsTypeMap["vmc_locale"] = bindings.NewReferenceType(model.VmcLocaleBindingType)
@@ -57,14 +59,18 @@ func localeSetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"vmc_locale",
 		"POST",
 		"/vmc/api/locale",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 

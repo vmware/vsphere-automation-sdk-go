@@ -50,6 +50,8 @@ func subscriptionsCreateRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["subscription_request"] = bindings.NewReferenceType(model.SubscriptionRequestBindingType)
 	fieldNameMap["org"] = "Org"
@@ -68,14 +70,18 @@ func subscriptionsCreateRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"subscription_request",
 		"POST",
 		"/vmc/api/orgs/{org}/subscriptions",
+		"",
 		resultHeaders,
 		201,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"Unauthorized": 403,"InternalServerError": 500})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.internal_server_error": 500})
 }
 
 func subscriptionsGetInputType() bindings.StructType {
@@ -100,6 +106,8 @@ func subscriptionsGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["subscription"] = bindings.NewStringType()
 	fieldNameMap["org"] = "Org"
@@ -119,14 +127,18 @@ func subscriptionsGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/vmc/api/orgs/{org}/subscriptions/{subscription}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func subscriptionsGet0InputType() bindings.StructType {
@@ -151,6 +163,8 @@ func subscriptionsGet0RestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["offer_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["org"] = "Org"
@@ -170,14 +184,18 @@ func subscriptionsGet0RestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/vmc/api/orgs/{org}/subscriptions",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"InternalServerError": 500,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

@@ -48,6 +48,8 @@ func sddcsCreateRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc_config"] = bindings.NewReferenceType(model.AwsSddcConfigBindingType)
 	fields["validate_only"] = bindings.NewOptionalType(bindings.NewBooleanType())
@@ -70,14 +72,18 @@ func sddcsCreateRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"sddc_config",
 		"POST",
 		"/vmc/api/orgs/{org}/sddcs",
+		"",
 		resultHeaders,
 		201,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 func sddcsDeleteInputType() bindings.StructType {
@@ -87,7 +93,7 @@ func sddcsDeleteInputType() bindings.StructType {
 	fields["sddc"] = bindings.NewStringType()
 	fields["retain_configuration"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["template_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["force"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["retain_configuration"] = "RetainConfiguration"
@@ -108,17 +114,19 @@ func sddcsDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
 	fields["retain_configuration"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["template_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["force"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["retain_configuration"] = "RetainConfiguration"
 	fieldNameMap["template_name"] = "TemplateName"
 	fieldNameMap["force"] = "Force"
-	paramsTypeMap["force"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	paramsTypeMap["org"] = bindings.NewStringType()
 	paramsTypeMap["sddc"] = bindings.NewStringType()
 	paramsTypeMap["template_name"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -140,14 +148,18 @@ func sddcsDeleteRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"DELETE",
 		"/vmc/api/orgs/{org}/sddcs/{sddc}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"InvalidRequest": 400,"Unauthorized": 403,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sddcsGetInputType() bindings.StructType {
@@ -172,6 +184,8 @@ func sddcsGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
 	fieldNameMap["org"] = "Org"
@@ -192,14 +206,18 @@ func sddcsGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/vmc/api/orgs/{org}/sddcs/{sddc}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"Unauthorized": 403,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sddcsListInputType() bindings.StructType {
@@ -224,6 +242,8 @@ func sddcsListRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["include_deleted"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["org"] = "Org"
@@ -243,14 +263,18 @@ func sddcsListRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/vmc/api/orgs/{org}/sddcs",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 func sddcsPatchInputType() bindings.StructType {
@@ -277,6 +301,8 @@ func sddcsPatchRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
 	fields["sddc_patch_request"] = bindings.NewReferenceType(model.SddcPatchRequestBindingType)
@@ -300,14 +326,18 @@ func sddcsPatchRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"sddc_patch_request",
 		"PATCH",
 		"/vmc/api/orgs/{org}/sddcs/{sddc}",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"InvalidRequest": 400,"Unauthorized": 403,"NotFound": 404})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

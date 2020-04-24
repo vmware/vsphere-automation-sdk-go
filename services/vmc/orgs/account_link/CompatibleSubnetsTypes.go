@@ -28,7 +28,7 @@ func compatibleSubnetsGetInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org"] = bindings.NewStringType()
-	fields["linked_account_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["linked_account_id"] = bindings.NewStringType()
 	fields["region"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["sddc"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["force_refresh"] = bindings.NewOptionalType(bindings.NewBooleanType())
@@ -58,8 +58,10 @@ func compatibleSubnetsGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
-	fields["linked_account_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["linked_account_id"] = bindings.NewStringType()
 	fields["region"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["sddc"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["force_refresh"] = bindings.NewOptionalType(bindings.NewBooleanType())
@@ -77,7 +79,7 @@ func compatibleSubnetsGetRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["sddc"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["instance_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["region"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["linked_account_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["linked_account_id"] = bindings.NewStringType()
 	paramsTypeMap["org"] = bindings.NewStringType()
 	paramsTypeMap["force_refresh"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	paramsTypeMap["num_of_hosts"] = bindings.NewOptionalType(bindings.NewIntegerType())
@@ -101,14 +103,18 @@ func compatibleSubnetsGetRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"GET",
 		"/vmc/api/orgs/{org}/account-link/compatible-subnets",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 func compatibleSubnetsPostInputType() bindings.StructType {
@@ -131,6 +137,8 @@ func compatibleSubnetsPostRestMetadata() protocol.OperationRestMetadata {
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fieldNameMap["org"] = "Org"
 	paramsTypeMap["org"] = bindings.NewStringType()
@@ -146,14 +154,18 @@ func compatibleSubnetsPostRestMetadata() protocol.OperationRestMetadata {
 		pathParams,
 		queryParams,
 		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
 		"",
 		"",
 		"POST",
 		"/vmc/api/orgs/{org}/account-link/compatible-subnets",
+		"",
 		resultHeaders,
 		200,
+		"",
 		errorHeaders,
-		map[string]int{"Unauthenticated": 401,"Unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 
