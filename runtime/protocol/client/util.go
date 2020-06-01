@@ -8,11 +8,11 @@ import (
 	"reflect"
 	"strings"
 
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/core"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/lib"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/log"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol/client/metadata"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/security"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/core"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/lib"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol/client/metadata"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/security"
 )
 
 // GetRuntimeUserAgentHeader returns User-Agent header for go runtime

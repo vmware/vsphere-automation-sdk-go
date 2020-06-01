@@ -5,7 +5,7 @@ package metadata
 
 import (
 	"encoding/json"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/metadata/info"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/metadata/info"
 	"strings"
 )
 

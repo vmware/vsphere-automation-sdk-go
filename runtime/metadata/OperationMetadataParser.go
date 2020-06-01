@@ -9,8 +9,8 @@ package metadata
 // Only valid to find resource/hasFieldOf metadata of structure info for given params info, Need to implement enumeration info
 
 import (
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/log"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/metadata/info"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/metadata/info"
 	"reflect"
 	"strings"
 )

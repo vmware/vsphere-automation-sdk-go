@@ -1,4 +1,4 @@
-module gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime
+module gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime
 
 go 1.13
 

@@ -6,7 +6,7 @@ package rpc
 import (
 	"net/http"
 
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/log"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
 	"golang.org/x/net/context"
 )
 

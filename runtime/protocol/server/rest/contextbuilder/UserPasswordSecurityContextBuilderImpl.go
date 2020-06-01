@@ -5,9 +5,9 @@ package contextbuilder
 
 import (
 	"encoding/base64"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/core"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/lib"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/security"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/core"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/lib"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/security"
 	"net/http"
 	"strings"
 )

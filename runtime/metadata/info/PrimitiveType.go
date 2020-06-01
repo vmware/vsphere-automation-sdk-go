@@ -4,7 +4,7 @@
 package info
 
 
-import "gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
+import "gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 
 const ID PrimitiveType = 16
 

@@ -5,7 +5,7 @@ package l10n
 
 import (
 	"fmt"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/log"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
 	"strings"

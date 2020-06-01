@@ -4,7 +4,7 @@
 package metadata
 
 
-import "gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/l10n"
+import "gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/l10n"
 
 func getError(msg string) error {
 	args := map[string]string{
