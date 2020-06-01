@@ -11,7 +11,7 @@
 package service
 
 import (
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/lib/vapi/metadata/privilege"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/vapi/metadata/privilege"
 )
 
 // The ``Operation`` interface provides methods to retrieve privilege information of an operation element. 

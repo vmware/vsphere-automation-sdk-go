@@ -11,7 +11,7 @@
 package service
 
 import (
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/lib/vapi/metadata/authentication"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/vapi/metadata/authentication"
 )
 
 // The ``Operation`` interface provides methods to retrieve authentication information of an operation element. 

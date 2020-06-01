@@ -11,7 +11,7 @@
 package cis
 
 import (
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/lib/cis/task"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/cis/task"
 )
 
 // The ``Tasks`` interface provides methods for managing the task related to a long running operation.

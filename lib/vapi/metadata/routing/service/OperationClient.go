@@ -11,7 +11,7 @@
 package service
 
 import (
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/lib/vapi/metadata/routing"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/vapi/metadata/routing"
 )
 
 // Operations to retrieve information about routing in a vAPI operation

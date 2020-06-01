@@ -11,7 +11,7 @@
 package service
 
 import (
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/lib/vapi/metadata/metamodel"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/vapi/metadata/metamodel"
 )
 
 // The ``Operation`` interface provides methods to retrieve metamodel information of an operation element in the interface definition language.
