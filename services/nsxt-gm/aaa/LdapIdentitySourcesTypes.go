@@ -14,10 +14,10 @@ package aaa
 
 import (
 	"reflect"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
 
@@ -52,7 +52,7 @@ func ldapIdentitySourcesDeleteRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["ldapIdentitySourceId"] = bindings.NewStringType()
 	pathParams["ldap_identity_source_id"] = "ldapIdentitySourceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -100,7 +100,7 @@ func ldapIdentitySourcesFetchcertificateRestMetadata() protocol.OperationRestMet
 	fieldNameMap["identity_source_ldap_server_endpoint"] = "IdentitySourceLdapServerEndpoint"
 	paramsTypeMap["identity_source_ldap_server_endpoint"] = bindings.NewReferenceType(model.IdentitySourceLdapServerEndpointBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -150,7 +150,7 @@ func ldapIdentitySourcesGetRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["ldapIdentitySourceId"] = bindings.NewStringType()
 	pathParams["ldap_identity_source_id"] = "ldapIdentitySourceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -223,7 +223,7 @@ func ldapIdentitySourcesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["sort_by"] = "sort_by"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -273,7 +273,7 @@ func ldapIdentitySourcesProbeRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["ldapIdentitySourceId"] = bindings.NewStringType()
 	pathParams["ldap_identity_source_id"] = "ldapIdentitySourceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -321,7 +321,7 @@ func ldapIdentitySourcesProbeidentitysourceRestMetadata() protocol.OperationRest
 	fieldNameMap["ldap_identity_source"] = "LdapIdentitySource"
 	paramsTypeMap["ldap_identity_source"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.LdapIdentitySourceBindingType),}, bindings.REST)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -369,7 +369,7 @@ func ldapIdentitySourcesProbeldapserverRestMetadata() protocol.OperationRestMeta
 	fieldNameMap["identity_source_ldap_server"] = "IdentitySourceLdapServer"
 	paramsTypeMap["identity_source_ldap_server"] = bindings.NewReferenceType(model.IdentitySourceLdapServerBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -424,7 +424,7 @@ func ldapIdentitySourcesUpdateRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["ldapIdentitySourceId"] = bindings.NewStringType()
 	pathParams["ldap_identity_source_id"] = "ldapIdentitySourceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

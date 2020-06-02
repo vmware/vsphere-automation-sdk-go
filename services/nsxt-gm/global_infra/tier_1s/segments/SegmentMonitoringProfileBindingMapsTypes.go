@@ -14,10 +14,10 @@ package segments
 
 import (
 	"reflect"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
 
@@ -66,7 +66,7 @@ func segmentMonitoringProfileBindingMapsDeleteRestMetadata() protocol.OperationR
 	pathParams["tier1_id"] = "tier1Id"
 	pathParams["segment_monitoring_profile_binding_map_id"] = "segmentMonitoringProfileBindingMapId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -130,7 +130,7 @@ func segmentMonitoringProfileBindingMapsGetRestMetadata() protocol.OperationRest
 	pathParams["tier1_id"] = "tier1Id"
 	pathParams["segment_monitoring_profile_binding_map_id"] = "segmentMonitoringProfileBindingMapId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -223,7 +223,7 @@ func segmentMonitoringProfileBindingMapsListRestMetadata() protocol.OperationRes
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -292,7 +292,7 @@ func segmentMonitoringProfileBindingMapsPatchRestMetadata() protocol.OperationRe
 	pathParams["tier1_id"] = "tier1Id"
 	pathParams["segment_monitoring_profile_binding_map_id"] = "segmentMonitoringProfileBindingMapId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -361,7 +361,7 @@ func segmentMonitoringProfileBindingMapsUpdateRestMetadata() protocol.OperationR
 	pathParams["tier1_id"] = "tier1Id"
 	pathParams["segment_monitoring_profile_binding_map_id"] = "segmentMonitoringProfileBindingMapId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

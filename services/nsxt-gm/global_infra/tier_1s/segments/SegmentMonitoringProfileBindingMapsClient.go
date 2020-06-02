@@ -11,7 +11,7 @@
 package segments
 
 import (
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
 )
 
 type SegmentMonitoringProfileBindingMapsClient interface {

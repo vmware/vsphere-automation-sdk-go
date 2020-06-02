@@ -14,10 +14,10 @@ package ui_views
 
 import (
 	"reflect"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
 
@@ -57,7 +57,7 @@ func widgetconfigurationsCreateRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["viewId"] = bindings.NewStringType()
 	pathParams["view_id"] = "viewId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -114,7 +114,7 @@ func widgetconfigurationsDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams["view_id"] = "viewId"
 	pathParams["widgetconfiguration_id"] = "widgetconfigurationId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -176,7 +176,7 @@ func widgetconfigurationsGetRestMetadata() protocol.OperationRestMetadata {
 	queryParams["container"] = "container"
 	queryParams["widget_ids"] = "widget_ids"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -233,7 +233,7 @@ func widgetconfigurationsGet0RestMetadata() protocol.OperationRestMetadata {
 	pathParams["view_id"] = "viewId"
 	pathParams["widgetconfiguration_id"] = "widgetconfigurationId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -295,7 +295,7 @@ func widgetconfigurationsUpdateRestMetadata() protocol.OperationRestMetadata {
 	pathParams["view_id"] = "viewId"
 	pathParams["widgetconfiguration_id"] = "widgetconfigurationId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

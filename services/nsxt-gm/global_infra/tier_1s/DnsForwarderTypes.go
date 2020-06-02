@@ -14,10 +14,10 @@ package tier_1s
 
 import (
 	"reflect"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
 // Possible value for ``action`` of method DnsForwarder#create.
@@ -66,7 +66,7 @@ func dnsForwarderCreateRestMetadata() protocol.OperationRestMetadata {
 	queryParams["action"] = "action"
 	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -116,7 +116,7 @@ func dnsForwarderDeleteRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["tier1Id"] = bindings.NewStringType()
 	pathParams["tier1_id"] = "tier1Id"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -166,7 +166,7 @@ func dnsForwarderGetRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["tier1Id"] = bindings.NewStringType()
 	pathParams["tier1_id"] = "tier1Id"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -221,7 +221,7 @@ func dnsForwarderPatchRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["tier1Id"] = bindings.NewStringType()
 	pathParams["tier1_id"] = "tier1Id"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -276,7 +276,7 @@ func dnsForwarderUpdateRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["tier1Id"] = bindings.NewStringType()
 	pathParams["tier1_id"] = "tier1Id"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

@@ -14,10 +14,10 @@ package security_policies
 
 import (
 	"reflect"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
 // Possible value for ``operation`` of method Rules#revise.
@@ -74,7 +74,7 @@ func rulesDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams["rule_id"] = "ruleId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -138,7 +138,7 @@ func rulesGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams["rule_id"] = "ruleId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -231,7 +231,7 @@ func rulesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -300,7 +300,7 @@ func rulesPatchRestMetadata() protocol.OperationRestMetadata {
 	pathParams["rule_id"] = "ruleId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -381,7 +381,7 @@ func rulesReviseRestMetadata() protocol.OperationRestMetadata {
 	queryParams["anchor_path"] = "anchor_path"
 	queryParams["operation"] = "operation"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -450,7 +450,7 @@ func rulesUpdateRestMetadata() protocol.OperationRestMetadata {
 	pathParams["rule_id"] = "ruleId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
