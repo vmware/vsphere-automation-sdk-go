@@ -16,133 +16,205 @@ import (
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
-// Create http response status based on method result, and
+// CreateResponseStatus Create http response status based on method result, and
 // annotated definition of succeed or exception cases.
 func CreateResponseStatus(result core.MethodResult,
 	opRestMetaData protocol.OperationRestMetadata) (statusCode int, status string, respError []error) {
 
-	var found bool
 	if result.IsSuccess() {
+		statusOKTextFunc := func(statusCode int) string {
+			statusText := http.StatusText(statusCode)
+			if statusText == "" {
+				return http.StatusText(http.StatusOK)
+			}
+			return statusText
+		}
+
 		for _, code := range rest.SUCCESSFUL_STATUS_CODES {
 			if opRestMetaData.SuccessCode() == code {
-				found = true
-				statusCode = code
-				break
+				return code, statusOKTextFunc(code), nil
 			}
 		}
-		if !found {
-			// Note: Sucessful response code not annotated is not an error case
-			statusCode = http.StatusOK
-		}
-		status = http.StatusText(statusCode)
-		if status == "" {
-			status = http.StatusText(http.StatusOK)
-		}
-	} else {
+		return http.StatusOK, statusOKTextFunc(http.StatusOK), nil
+	}
 
-		errorNameToStatusMap := opRestMetaData.ErrorCodeMap()
-		if len(errorNameToStatusMap) > 0 {
-			errorName := result.Error().Name()
-			if httpErrorCode, ok := errorNameToStatusMap[errorName]; ok {
-				statusCode = httpErrorCode
-				if httpErrorCode < 500 {
-					status = errorName
-				} else {
-					status = "Internal Server Error"
-				}
+	errorNameToStatusMap := opRestMetaData.ErrorCodeMap()
+	if len(errorNameToStatusMap) > 0 {
+		errorName := result.Error().Name()
+		if httpErrorCode, ok := errorNameToStatusMap[errorName]; ok {
+			statusCode = httpErrorCode
+			if httpErrorCode < 500 {
+				status = errorName
 			} else {
-				statusCode = rest.HTTP_500_INTERNAL_SERVER_ERROR
 				status = "Internal Server Error"
-				return statusCode, status, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.error.not_supported",
-					map[string]string{"errorName": errorName})}
 			}
 		} else {
-			errorName := result.Error().Name()
-			if httpErrorCode, ok := rest.VAPI_TO_HTTP_ERROR_MAP[errorName]; ok {
-				statusCode = httpErrorCode
-				status = http.StatusText(statusCode)
-			} else {
-				statusCode = rest.HTTP_500_INTERNAL_SERVER_ERROR
-				status = "Internal Server Error"
-				return statusCode, status, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.error.not_supported",
-					map[string]string{"errorName": errorName})}
-			}
+			statusCode = rest.HTTP_500_INTERNAL_SERVER_ERROR
+			status = "Internal Server Error"
+			return statusCode, status, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.error.not_supported",
+				map[string]string{"errorName": errorName})}
+		}
+	} else {
+		errorName := result.Error().Name()
+		if httpErrorCode, ok := rest.VAPI_TO_HTTP_ERROR_MAP[errorName]; ok {
+			statusCode = httpErrorCode
+			status = http.StatusText(statusCode)
+		} else {
+			statusCode = rest.HTTP_500_INTERNAL_SERVER_ERROR
+			status = "Internal Server Error"
+			return statusCode, status, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.error.not_supported",
+				map[string]string{"errorName": errorName})}
+		}
 
-			if status == "" {
-				status = http.StatusText(http.StatusInternalServerError)
-			}
+		if status == "" {
+			status = http.StatusText(http.StatusInternalServerError)
 		}
 	}
 
 	return statusCode, status, nil
 }
 
-// Create http response header based on method result, and
+// SetResponseHeader Create http response header based on method result, and
 // annotated definition of result to header name map.
 // If the method throws error, it will set header value with
 // the annotated field in error value.
 func SetResponseHeader(result core.MethodResult,
 	resultToHeaderMap map[string]string,
-	errorToHeaderMap map[string]string,
+	errorToHeaderMap map[string]map[string]string,
 	header http.Header) []error {
 
 	if !result.IsSuccess() {
-		return setResponseHeader(result.Error(), errorToHeaderMap, header)
+		for errName, errorHeadersMap := range errorToHeaderMap {
+			if errName == result.Error().Name() {
+				return setResponseHeader(result.Error(), errorHeadersMap, header)
+			}
+		}
+		return setResponseHeader(result.Error(), map[string]string{}, header)
 	}
 	return setResponseHeader(result.Output(), resultToHeaderMap, header)
 }
 
-// Create http response body based on method result and
+// CreateResponseBody Create http response body based on method result and
 // restmetadata to w.r.t result headers and response body name
 func CreateResponseBody(result core.MethodResult,
 	metadata protocol.OperationRestMetadata) (string, []error) {
 
+	var respDV data.DataValue
+
 	if !result.IsSuccess() {
-		// Only pack the Error field
-		// errorDV := result.Error()
-		// errorStruct, err := filterBodyFields(errorDV, errorFieldList)
-		// if err != nil {
-		// 	return "", err
-		// }
-		return setResponseBody(result.Error())
+		respDV = result.Error()
+	} else {
+		respDV = result.Output()
 	}
 
-	respDV := result.Output()
+	if respDV == nil {
+		return "", []error{l10n.NewRuntimeErrorNoParam("vapi.protocol.server.rest.response.invalid")}
+	}
 
-	switch respDV.Type() {
+	switch respDVType := respDV.Type(); respDVType {
 	case data.VOID:
 		// Return null if result is void
 		return "null", nil
 	case data.STRUCTURE:
 		// For structure type response, filter out fields with @Header annotation
-		resultHeadersNameMap := metadata.ResultHeadersNameMap()
-		resStruct, ok := respDV.(*data.StructValue)
-		if !ok || (len(resultHeadersNameMap) == 0) {
-			return setResponseBody(resStruct)
+		structVal, ok := respDV.(*data.StructValue)
+		if !ok {
+			return "", []error{l10n.NewRuntimeErrorNoParam("vapi.protocol.server.rest.response.not_structure")}
 		}
-		structName := resStruct.Name()
-		structFields := resStruct.Fields()
+		return getResponseBodyFromStructValue(structVal, metadata)
+	case data.ERROR:
+		// For error type response, filter out fields with @Header annotation
+		errorVal, ok := respDV.(*data.ErrorValue)
+		if !ok {
+			return "", []error{l10n.NewRuntimeErrorNoParam("vapi.protocol.server.rest.response.not_error")}
+		}
+		return getResponseBodyFromErrorValue(errorVal, metadata)
+	default:
+		// For non-structure response, we reply on DataValueToJsonEncoder
+		// to serialize the value.
+		return getResponseBody(respDV)
+	}
+}
 
-		output := data.NewStructValue(structName, nil)
+func getResponseBodyFromStructValue(structVal *data.StructValue,
+	metadata protocol.OperationRestMetadata) (string, []error) {
+
+	var output *data.StructValue
+
+	// remove result headers values from output
+	resultHeadersNameMap := metadata.ResultHeadersNameMap()
+	if len(resultHeadersNameMap) > 0 {
+		structName := structVal.Name()
+		structFields := structVal.Fields()
+
+		output = data.NewStructValue(structName, nil)
 
 		for field, value := range structFields {
 			if _, ok := resultHeadersNameMap[field]; !ok {
 				output.SetField(field, value)
 			}
 		}
+	} else {
+		output = structVal
+	}
 
-		if bodyName := metadata.ResponseBodyName(); bodyName != "" {
-			if fieldVal, err := output.Field(bodyName); err == nil {
-				return setResponseBody(fieldVal)
+	// get response body for given body name only
+	if bodyName := metadata.ResponseBodyName(); bodyName != "" {
+		if fieldVal, err := output.Field(bodyName); err == nil {
+			return getResponseBody(fieldVal)
+		}
+	}
+
+	return getResponseBody(output)
+}
+
+func getResponseBodyFromErrorValue(errorVal *data.ErrorValue,
+	metadata protocol.OperationRestMetadata) (string, []error) {
+
+	var output *data.ErrorValue
+
+	// remove error headers values from output
+	errorHeadersNameMap := metadata.ErrorHeadersNameMap()
+	if len(errorHeadersNameMap) > 0 {
+		errorName := errorVal.Name()
+		errorFields := errorVal.Fields()
+
+		output = data.NewErrorValue(errorName, nil)
+
+		for field, value := range errorFields {
+			if errorHeadersMap, ok := errorHeadersNameMap[errorName]; !ok {
+				output.SetField(field, value)
+			} else {
+				if _, ok := errorHeadersMap[field]; !ok {
+					output.SetField(field, value)
+				}
 			}
 		}
-
-		return setResponseBody(output)
-	default:
-		// For non-structure response, we reply on DataValueToJsonEncoder
-		// to serialize the value.
-		return setResponseBody(respDV)
+	} else {
+		output = errorVal
 	}
+
+	// get response body for given body name only
+	if bodyName := metadata.ResponseBodyName(); bodyName != "" {
+		if fieldVal, err := output.Field(bodyName); err == nil {
+			return getResponseBody(fieldVal)
+		}
+	}
+
+	return getResponseBody(output)
+}
+
+// Set response value to http response body
+func getResponseBody(respDV data.DataValue) (string, []error) {
+	var dataValueToJSONEncoder = cleanjson.NewDataValueToJsonEncoder()
+
+	bodyString, err := dataValueToJSONEncoder.Encode(respDV)
+
+	if err != nil {
+		return "",
+			[]error{l10n.NewRuntimeErrorNoParam("vapi.protocol.server.rest.response.body_parse_error")}
+	}
+	return bodyString, nil
 }
 
 func convertDVToHeaderValue(name string, respDV data.DataValue, header http.Header) []error {
@@ -206,14 +278,17 @@ func setResponseHeader(respDV data.DataValue,
 	header http.Header) []error {
 
 	var respMap map[string]data.DataValue
+	var respType = respDV.Type()
+	var errorStruct *data.ErrorValue
 
 	if len(resultToHeaderMap) == 0 {
 		return nil
 	}
 
-	switch respDV.Type() {
+	switch respType {
 	case data.ERROR:
-		errorStruct, ok := respDV.(*data.ErrorValue)
+		var ok bool
+		errorStruct, ok = respDV.(*data.ErrorValue)
 		if !ok {
 			return []error{l10n.NewRuntimeErrorNoParam("vapi.protocol.server.rest.response.error_not_structure")}
 		}
@@ -247,19 +322,6 @@ func setResponseHeader(respDV data.DataValue,
 		}
 	}
 	return nil
-}
-
-// Set response value to http response body
-func setResponseBody(respDV data.DataValue) (string, []error) {
-	var dataValueToJsonEncoder = cleanjson.NewDataValueToJsonEncoder()
-
-	bodyString, err := dataValueToJsonEncoder.Encode(respDV)
-
-	if err != nil {
-		return "",
-			[]error{l10n.NewRuntimeErrorNoParam("vapi.protocol.server.rest.response.body_parse_error")}
-	}
-	return bodyString, nil
 }
 
 // Filter out structure fields with @Header annotation

@@ -144,18 +144,23 @@ func (rh *RequestHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	if errs != nil {
 		log.Debugf(" header errs : ", errs)
 		returnError(errs, rw)
+		return
 	}
 
 	statusCode, status, errs = CreateResponseStatus(methodResult, opRestMetaData)
 	if errs != nil {
 		log.Debugf(" Failure :: statusCode, status: ", statusCode, status)
 		returnError(errs, rw)
+		return
 	}
-	rw.WriteHeader(statusCode)
 
 	resp, errs = CreateResponseBody(methodResult, opRestMetaData)
 	if errs != nil {
 		log.Debugf(" response body errs : ", errs)
+		returnError(errs, rw)
+		return
 	}
+
+	rw.WriteHeader(statusCode)
 	rw.Write([]byte(resp))
 }
