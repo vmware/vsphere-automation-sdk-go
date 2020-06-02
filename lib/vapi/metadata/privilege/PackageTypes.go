@@ -46,7 +46,7 @@ func packageListRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -93,7 +93,7 @@ func packageGetRestMetadata() protocol.OperationRestMetadata {
 	fields["package_id"] = bindings.NewIdType([]string{"com.vmware.vapi.package"}, "")
 	fieldNameMap["package_id"] = "PackageId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

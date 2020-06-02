@@ -15,6 +15,8 @@ package metadata
 import (
 	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
 	"net/url"
 )
 
@@ -57,6 +59,23 @@ type SourceCreateSpec struct {
 	Address *url.URL
 }
 
+func (s SourceCreateSpec) GetType__() bindings.BindingType {
+	return SourceCreateSpecBindingType()
+}
+
+func (s SourceCreateSpec) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SourceCreateSpec._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Metadata source info
 type SourceInfo struct {
     // Type of the metadata source
@@ -68,6 +87,23 @@ type SourceInfo struct {
     // Message protocol to be used
 	MsgProtocol *string
 }
+
+func (s SourceInfo) GetType__() bindings.BindingType {
+	return SourceInfoBindingType()
+}
+
+func (s SourceInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SourceInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 

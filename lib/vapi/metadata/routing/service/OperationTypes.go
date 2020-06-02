@@ -51,7 +51,7 @@ func operationListRestMetadata() protocol.OperationRestMetadata {
 	fields["service_id"] = bindings.NewIdType([]string{"com.vmware.vapi.service"}, "")
 	fieldNameMap["service_id"] = "ServiceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -102,7 +102,7 @@ func operationGetRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["operation_id"] = "OperationId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

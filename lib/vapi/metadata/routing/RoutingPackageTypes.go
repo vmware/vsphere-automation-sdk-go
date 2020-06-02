@@ -15,6 +15,8 @@ package routing
 import (
 	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
 )
 
 
@@ -26,17 +28,68 @@ type ComponentData struct {
 	Fingerprint string
 }
 
+func (s ComponentData) GetType__() bindings.BindingType {
+	return ComponentDataBindingType()
+}
+
+func (s ComponentData) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ComponentData._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Information about a vAPI component that contains routing information For an explanation of routing information within components, see Component
 type ComponentInfo struct {
     // Routing information of all the vAPI packages. The key in the map is the ID of the package and the value in the map is the routing information for the package For an explanation of routing information within packages, see Package
 	Packages map[string]PackageInfo
 }
 
+func (s ComponentInfo) GetType__() bindings.BindingType {
+	return ComponentInfoBindingType()
+}
+
+func (s ComponentInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ComponentInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Information about a vAPI operation that contains routing information. For an explanation of containment within operations, see com.vmware.vapi.metadata.routing.Operation
 type OperationInfo struct {
     // The routing information assigned for this operation. For an explanation of routing information, see RoutingInfo
 	RoutingInfo RoutingInfo
 }
+
+func (s OperationInfo) GetType__() bindings.BindingType {
+	return OperationInfoBindingType()
+}
+
+func (s OperationInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for OperationInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Information about a vAPI package containing routing information. 
 //
@@ -47,6 +100,23 @@ type PackageInfo struct {
     // Information about all services in this package that contain routing information. The key in the map is the ID of the service and the value in the map is the routing information for the service For an explanation of routing information within service, see Service
 	Services map[string]ServiceInfo
 }
+
+func (s PackageInfo) GetType__() bindings.BindingType {
+	return PackageInfoBindingType()
+}
+
+func (s PackageInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for PackageInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Routing information
 type RoutingInfo struct {
@@ -60,6 +130,23 @@ type RoutingInfo struct {
 	IdTypes map[string]string
 }
 
+func (s RoutingInfo) GetType__() bindings.BindingType {
+	return RoutingInfoBindingType()
+}
+
+func (s RoutingInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for RoutingInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Information about a vAPI service that has routing information A service is said to contain routing information if any of its operations have routing information
 type ServiceInfo struct {
     // The routing information to be used for all the operations present in this service. If a particular operation has no explicit routing information defined in the routing definition file, this routing info will be used for enforcing routing.
@@ -69,6 +156,23 @@ type ServiceInfo struct {
     //  For an explanation of routing information within operations, see com.vmware.vapi.metadata.routing.Operation
 	Operations map[string]OperationInfo
 }
+
+func (s ServiceInfo) GetType__() bindings.BindingType {
+	return ServiceInfoBindingType()
+}
+
+func (s ServiceInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ServiceInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 

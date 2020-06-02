@@ -46,7 +46,7 @@ func structureListRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -93,7 +93,7 @@ func structureGetRestMetadata() protocol.OperationRestMetadata {
 	fields["structure_id"] = bindings.NewIdType([]string{"com.vmware.vapi.structure"}, "")
 	fieldNameMap["structure_id"] = "StructureId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

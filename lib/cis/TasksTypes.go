@@ -16,6 +16,7 @@ import (
 	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/cis/task"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/vapi/std"
@@ -32,6 +33,23 @@ type TasksGetSpec struct {
     // If true, the result will not be included in the task information, otherwise it will be included.
 	ExcludeResult *bool
 }
+
+func (s TasksGetSpec) GetType__() bindings.BindingType {
+	return TasksGetSpecBindingType()
+}
+
+func (s TasksGetSpec) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for TasksGetSpec._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``FilterSpec`` class contains properties used to filter the results when listing tasks (see Tasks#list). If multiple properties are specified, only tasks matching all of the properties match the filter. 
 //
@@ -52,6 +70,23 @@ type TasksFilterSpec struct {
     // Users who must have initiated the operation for the associated task to match the filter (see task.CommonInfo#user).
 	Users map[string]bool
 }
+
+func (s TasksFilterSpec) GetType__() bindings.BindingType {
+	return TasksFilterSpecBindingType()
+}
+
+func (s TasksFilterSpec) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for TasksFilterSpec._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 
@@ -84,8 +119,9 @@ func tasksGetRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["task"] = "Task"
 	fieldNameMap["spec"] = "Spec"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
-	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
+	errorHeaders := map[string]map[string]string{}
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -136,8 +172,9 @@ func tasksListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["filter_spec"] = "FilterSpec"
 	fieldNameMap["result_spec"] = "ResultSpec"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
-	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
+	errorHeaders := map[string]map[string]string{}
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -184,8 +221,9 @@ func tasksCancelRestMetadata() protocol.OperationRestMetadata {
 	fields["task"] = bindings.NewIdType([]string{"com.vmware.cis.task"}, "")
 	fieldNameMap["task"] = "Task"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
-	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
+	errorHeaders := map[string]map[string]string{}
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

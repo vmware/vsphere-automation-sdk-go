@@ -16,6 +16,7 @@ import (
 	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/vapi/metadata"
 	"net/url"
@@ -37,6 +38,23 @@ type SourceInfo struct {
 	Address *url.URL
 }
 
+func (s SourceInfo) GetType__() bindings.BindingType {
+	return SourceInfoBindingType()
+}
+
+func (s SourceInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SourceInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``CreateSpec`` class contains the registration information of a CLI source.
 type SourceCreateSpec struct {
     // English language human readable description of the source.
@@ -50,6 +68,23 @@ type SourceCreateSpec struct {
     //  The remote server should contain the interfaces in com.vmware.vapi.metadata.metamodel package. It could expose metamodel information of one or more components.
 	Address *url.URL
 }
+
+func (s SourceCreateSpec) GetType__() bindings.BindingType {
+	return SourceCreateSpecBindingType()
+}
+
+func (s SourceCreateSpec) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SourceCreateSpec._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 
@@ -82,7 +117,7 @@ func sourceCreateRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["source_id"] = "SourceId"
 	fieldNameMap["spec"] = "Spec"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -129,7 +164,7 @@ func sourceDeleteRestMetadata() protocol.OperationRestMetadata {
 	fields["source_id"] = bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, "")
 	fieldNameMap["source_id"] = "SourceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -176,7 +211,7 @@ func sourceGetRestMetadata() protocol.OperationRestMetadata {
 	fields["source_id"] = bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, "")
 	fieldNameMap["source_id"] = "SourceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -219,7 +254,7 @@ func sourceListRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -266,7 +301,7 @@ func sourceReloadRestMetadata() protocol.OperationRestMetadata {
 	fields["source_id"] = bindings.NewOptionalType(bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, ""))
 	fieldNameMap["source_id"] = "SourceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -313,7 +348,7 @@ func sourceFingerprintRestMetadata() protocol.OperationRestMetadata {
 	fields["source_id"] = bindings.NewOptionalType(bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, ""))
 	fieldNameMap["source_id"] = "SourceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

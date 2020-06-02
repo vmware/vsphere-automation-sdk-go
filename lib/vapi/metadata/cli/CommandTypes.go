@@ -16,6 +16,7 @@ import (
 	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
@@ -105,6 +106,23 @@ type CommandOutputFieldInfo struct {
 	DisplayName string
 }
 
+func (s CommandOutputFieldInfo) GetType__() bindings.BindingType {
+	return CommandOutputFieldInfoBindingType()
+}
+
+func (s CommandOutputFieldInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for CommandOutputFieldInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``OutputInfo`` class describes the names used by the CLI to display the properties of a class element in the interface definition language as well as the order in which the properties will be displayed.
 type CommandOutputInfo struct {
     // Name of the class.
@@ -112,6 +130,23 @@ type CommandOutputInfo struct {
     // The order in which the properties of the class will be displayed by the CLI as well as the names used to display the properties.
 	OutputFields []CommandOutputFieldInfo
 }
+
+func (s CommandOutputInfo) GetType__() bindings.BindingType {
+	return CommandOutputInfoBindingType()
+}
+
+func (s CommandOutputInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for CommandOutputInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``OptionInfo`` class describes information about a specific input option of a command.
 type CommandOptionInfo struct {
@@ -129,6 +164,23 @@ type CommandOptionInfo struct {
 	Generic CommandGenericType
 }
 
+func (s CommandOptionInfo) GetType__() bindings.BindingType {
+	return CommandOptionInfoBindingType()
+}
+
+func (s CommandOptionInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for CommandOptionInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``Identity`` class uniquely identifies a command in the CLI commands tree.
 type CommandIdentity struct {
     // The dot-separated path of the namespace containing the command in the CLI command tree.
@@ -136,6 +188,23 @@ type CommandIdentity struct {
     // Name of the command.
 	Name string
 }
+
+func (s CommandIdentity) GetType__() bindings.BindingType {
+	return CommandIdentityBindingType()
+}
+
+func (s CommandIdentity) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for CommandIdentity._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``Info`` class contains information about a command. It includes the identity of the command, a description, information about the interface and method that implement the command, and CLI-specific information for the command.
 type CommandInfo struct {
@@ -154,6 +223,23 @@ type CommandInfo struct {
     // List of output structure name and output field info.
 	OutputFieldList []CommandOutputInfo
 }
+
+func (s CommandInfo) GetType__() bindings.BindingType {
+	return CommandInfoBindingType()
+}
+
+func (s CommandInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for CommandInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 
@@ -182,7 +268,7 @@ func commandListRestMetadata() protocol.OperationRestMetadata {
 	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["path"] = "Path"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -229,7 +315,7 @@ func commandGetRestMetadata() protocol.OperationRestMetadata {
 	fields["identity"] = bindings.NewReferenceType(CommandIdentityBindingType)
 	fieldNameMap["identity"] = "Identity"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -272,7 +358,7 @@ func commandFingerprintRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

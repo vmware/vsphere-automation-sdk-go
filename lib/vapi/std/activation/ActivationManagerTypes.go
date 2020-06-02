@@ -48,7 +48,7 @@ func activationManagerCancelRestMetadata() protocol.OperationRestMetadata {
 	fields["activation_id"] = bindings.NewStringType()
 	fieldNameMap["activation_id"] = "ActivationId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

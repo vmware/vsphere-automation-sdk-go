@@ -16,6 +16,7 @@ import (
 	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 	"time"
 )
@@ -31,6 +32,23 @@ type SessionInfo struct {
     // Last time this session was used by passing the session key for invoking an API.
 	LastAccessedTime time.Time
 }
+
+func (s SessionInfo) GetType__() bindings.BindingType {
+	return SessionInfoBindingType()
+}
+
+func (s SessionInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SessionInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 
@@ -55,8 +73,9 @@ func sessionCreateRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
-	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
+	errorHeaders := map[string]map[string]string{}
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -99,8 +118,9 @@ func sessionDeleteRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
-	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
+	errorHeaders := map[string]map[string]string{}
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -143,8 +163,9 @@ func sessionGetRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
-	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
+	errorHeaders := map[string]map[string]string{}
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

@@ -15,6 +15,8 @@ package metamodel
 import (
 	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
 )
 
 
@@ -34,6 +36,23 @@ type ComponentData struct {
 	Fingerprint string
 }
 
+func (s ComponentData) GetType__() bindings.BindingType {
+	return ComponentDataBindingType()
+}
+
+func (s ComponentData) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ComponentData._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``ComponentInfo`` class contains metamodel metadata information about a component element.
 type ComponentInfo struct {
     // Dot separated name of the component element. The segments in the name reflect the organization of the APIs. The format of each segment is lower case with underscores. Each underscore represents a word boundary. If there are acronyms in the word, the capitalization is preserved. This format makes it easy to translate the segment into a different naming convention.
@@ -48,6 +67,23 @@ type ComponentInfo struct {
 	Documentation string
 }
 
+func (s ComponentInfo) GetType__() bindings.BindingType {
+	return ComponentInfoBindingType()
+}
+
+func (s ComponentInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ComponentInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``ConstantInfo`` class contains metamodel information of the constant elements.
 type ConstantInfo struct {
     // Type of the constant element.
@@ -58,6 +94,23 @@ type ConstantInfo struct {
 	Documentation string
 }
 
+func (s ConstantInfo) GetType__() bindings.BindingType {
+	return ConstantInfoBindingType()
+}
+
+func (s ConstantInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ConstantInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``ConstantValue`` class contains the metamodel information of the constant element.
 type ConstantValue struct {
     // Category of the type of constant value.
@@ -67,6 +120,23 @@ type ConstantValue struct {
     // List value of the constant element.
 	ListValue []PrimitiveValue
 }
+
+func (s ConstantValue) GetType__() bindings.BindingType {
+	return ConstantValueBindingType()
+}
+
+func (s ConstantValue) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ConstantValue._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``Category`` enumeration class defines enumeration constants for the valid kinds of values.
 //
@@ -102,6 +172,23 @@ type ElementMap struct {
 	Elements map[string]ElementValue
 }
 
+func (s ElementMap) GetType__() bindings.BindingType {
+	return ElementMapBindingType()
+}
+
+func (s ElementMap) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ElementMap._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``ElementValue`` class describes the value of the metadata element.
 type ElementValue struct {
     // Type of the value.
@@ -117,6 +204,23 @@ type ElementValue struct {
     // List of identifiers of the structure elements.
 	StructureIds []string
 }
+
+func (s ElementValue) GetType__() bindings.BindingType {
+	return ElementValueBindingType()
+}
+
+func (s ElementValue) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ElementValue._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``Type`` enumeration class defines the valid types for values in metadata elements.
 //
@@ -170,6 +274,23 @@ type EnumerationInfo struct {
 	Documentation string
 }
 
+func (s EnumerationInfo) GetType__() bindings.BindingType {
+	return EnumerationInfoBindingType()
+}
+
+func (s EnumerationInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for EnumerationInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``EnumerationValueInfo`` class describes the enumeration constant in the enumeration class.
 type EnumerationValueInfo struct {
     // Value in the enumerated type. All the characters in the string are capitalized.
@@ -182,6 +303,23 @@ type EnumerationValueInfo struct {
 	Documentation string
 }
 
+func (s EnumerationValueInfo) GetType__() bindings.BindingType {
+	return EnumerationValueInfoBindingType()
+}
+
+func (s EnumerationValueInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for EnumerationValueInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``ErrorInfo`` class contains the metadata information about the error elements contained in an operation element.
 type ErrorInfo struct {
     // Identifier for the structure element corresponding to the error that is being reported by the operation.
@@ -189,6 +327,23 @@ type ErrorInfo struct {
     // The English language documentation for the service element. It can contain HTML markup and Javadoc tags.
 	Documentation string
 }
+
+func (s ErrorInfo) GetType__() bindings.BindingType {
+	return ErrorInfoBindingType()
+}
+
+func (s ErrorInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ErrorInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``FieldInfo`` class contains metamodel information of a field element contained in a structure element.
 type FieldInfo struct {
@@ -204,6 +359,23 @@ type FieldInfo struct {
 	Documentation string
 }
 
+func (s FieldInfo) GetType__() bindings.BindingType {
+	return FieldInfoBindingType()
+}
+
+func (s FieldInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for FieldInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``GenericInstantiation`` class describes the type information of a typed element when the type is an instantiation of one of the generic types provided by the infrastructure.
 type GenericInstantiation struct {
     // The generic type that is being instantiated.
@@ -215,6 +387,23 @@ type GenericInstantiation struct {
     // Type of the value parameter of the map generic type instantiation. The map generic type has a key parameter and value parameter. The type of the key parameter is described by GenericInstantiation#mapKeyType..
 	MapValueType *Type
 }
+
+func (s GenericInstantiation) GetType__() bindings.BindingType {
+	return GenericInstantiationBindingType()
+}
+
+func (s GenericInstantiation) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for GenericInstantiation._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``GenericType`` enumeration class provides enumeration constants for each of the generic types provided by the infrastructure.
 //
@@ -266,6 +455,23 @@ type OperationInfo struct {
 	Documentation string
 }
 
+func (s OperationInfo) GetType__() bindings.BindingType {
+	return OperationInfoBindingType()
+}
+
+func (s OperationInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for OperationInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``OperationResultInfo`` class contains the metamodel information of an operation result element. 
 //
 //  An operation accepts a list of parameters and returns a result or an error. The ``OperationResultInfo`` describes the result element of an operation.
@@ -279,6 +485,23 @@ type OperationResultInfo struct {
     // English language documentation for the operation result element. It can contain HTML markup and Javadoc tags.
 	Documentation string
 }
+
+func (s OperationResultInfo) GetType__() bindings.BindingType {
+	return OperationResultInfoBindingType()
+}
+
+func (s OperationResultInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for OperationResultInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``PackageInfo`` class contains the metamodel information of all the service elements, structure elements and enumeration elements contained in the package element.
 type PackageInfo struct {
@@ -304,6 +527,23 @@ type PackageInfo struct {
 	Documentation string
 }
 
+func (s PackageInfo) GetType__() bindings.BindingType {
+	return PackageInfoBindingType()
+}
+
+func (s PackageInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for PackageInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``PrimitiveValue`` class contains value of the constant element.
 type PrimitiveValue struct {
     // Type of the constant value.
@@ -317,6 +557,23 @@ type PrimitiveValue struct {
     // String value of the constant.
 	StringValue *string
 }
+
+func (s PrimitiveValue) GetType__() bindings.BindingType {
+	return PrimitiveValueBindingType()
+}
+
+func (s PrimitiveValue) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for PrimitiveValue._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``Type`` enumeration class defines the valid types for values in constant elements.
 //
@@ -370,6 +627,23 @@ type ServiceInfo struct {
 	Documentation string
 }
 
+func (s ServiceInfo) GetType__() bindings.BindingType {
+	return ServiceInfoBindingType()
+}
+
+func (s ServiceInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ServiceInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``StructureInfo`` class contains the metamodel information of all the field elements, constant elements and enumeration elements contained in the structure element. 
 //
 //  In the interface definition language, API designers have the ability to include all the fields from one structure to another structure. This is done by using an annotation ``\\\\@Include`` on the structure in which we want to add the fields. If this annotation is present, the list of fields in the ``StructureInfo`` will also contain the fields that are being included. The annotation information is also retained in the StructureInfo#metadata element as well.
@@ -391,6 +665,23 @@ type StructureInfo struct {
     // English language documentation for a structure element. It can contain HTML markup and Javadoc tags. The first sentence of the structure documentation is a complete sentence that identifies the structure by name and summarizes the purpose of the structure.
 	Documentation string
 }
+
+func (s StructureInfo) GetType__() bindings.BindingType {
+	return StructureInfoBindingType()
+}
+
+func (s StructureInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for StructureInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``Type`` enumeration class defines the kind of this structure element. In the interface definition language, structure element and error element have similar characteristics. The difference is that only error elements can be used to describe the exceptions of an operation element.
 //
@@ -437,6 +728,23 @@ type Type struct {
     // Instantiation of one of the generic types available in the interface definition language.
 	GenericInstantiation *GenericInstantiation
 }
+
+func (s Type) GetType__() bindings.BindingType {
+	return TypeBindingType()
+}
+
+func (s Type) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for Type._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``Category`` enumeration class provides enumeration constant for each category of the type.
 //
@@ -541,6 +849,23 @@ type UserDefinedType struct {
     // Identifier of the user defined named type.
 	ResourceId string
 }
+
+func (s UserDefinedType) GetType__() bindings.BindingType {
+	return UserDefinedTypeBindingType()
+}
+
+func (s UserDefinedType) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for UserDefinedType._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 

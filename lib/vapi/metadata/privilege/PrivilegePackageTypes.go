@@ -15,6 +15,8 @@ package privilege
 import (
 	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
 )
 
 
@@ -30,6 +32,23 @@ type ComponentData struct {
 	Fingerprint string
 }
 
+func (s ComponentData) GetType__() bindings.BindingType {
+	return ComponentDataBindingType()
+}
+
+func (s ComponentData) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ComponentData._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``ComponentInfo`` class contains the privilege information of a component element. 
 //
 //  For an explanation of privilege information contained within component elements, see Component.
@@ -39,6 +58,23 @@ type ComponentInfo struct {
     //  For an explanation of privilege information containment within package elements, see Package.
 	Packages map[string]PackageInfo
 }
+
+func (s ComponentInfo) GetType__() bindings.BindingType {
+	return ComponentInfoBindingType()
+}
+
+func (s ComponentInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ComponentInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``OperationInfo`` class contains privilege information of an operation element. 
 //
@@ -50,6 +86,23 @@ type OperationInfo struct {
 	PrivilegeInfo []PrivilegeInfo
 }
 
+func (s OperationInfo) GetType__() bindings.BindingType {
+	return OperationInfoBindingType()
+}
+
+func (s OperationInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for OperationInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``PackageInfo`` class contains the privilege information of a package element. 
 //
 //  For an explanation of privilege information contained within package elements, see Package.
@@ -59,6 +112,23 @@ type PackageInfo struct {
     // Information about all service elements contained in this package element that contain privilege information. The key in the map is the identifier of the service element and the value in the map is the privilege information for the service element. For an explanation of privilege information containment within service elements, see Service.
 	Services map[string]ServiceInfo
 }
+
+func (s PackageInfo) GetType__() bindings.BindingType {
+	return PackageInfoBindingType()
+}
+
+func (s PackageInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for PackageInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``PrivilegeInfo`` class contains the privilege information for a parameter element in an operation element.
 type PrivilegeInfo struct {
@@ -70,6 +140,23 @@ type PrivilegeInfo struct {
 	Privileges []string
 }
 
+func (s PrivilegeInfo) GetType__() bindings.BindingType {
+	return PrivilegeInfoBindingType()
+}
+
+func (s PrivilegeInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for PrivilegeInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``ServiceInfo`` class contains privilege information of a service element. 
 //
 //  For an explanation of privilege information contained within service elements, see Service.
@@ -79,6 +166,23 @@ type ServiceInfo struct {
     //  For an explanation of containment of privilege information within operation elements, see Operation.
 	Operations map[string]OperationInfo
 }
+
+func (s ServiceInfo) GetType__() bindings.BindingType {
+	return ServiceInfoBindingType()
+}
+
+func (s ServiceInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ServiceInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 
