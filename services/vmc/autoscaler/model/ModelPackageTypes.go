@@ -16,6 +16,7 @@ import (
 	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
 	"time"
 )
 
@@ -33,6 +34,23 @@ type AbstractEntity struct {
 	Created time.Time
 }
 
+func (s AbstractEntity) GetType__() bindings.BindingType {
+	return AbstractEntityBindingType()
+}
+
+func (s AbstractEntity) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for AbstractEntity._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 type AwsEvent struct {
     // AWS instance id of the host.
 	InstanceId string
@@ -49,6 +67,23 @@ type AwsEvent struct {
 //
 // This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
 const AwsEvent__TYPE_IDENTIFIER = "AwsEvent"
+
+func (s AwsEvent) GetType__() bindings.BindingType {
+	return AwsEventBindingType()
+}
+
+func (s AwsEvent) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for AwsEvent._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 type EdrsClusterInfo struct {
     // Possible values are: 
@@ -68,6 +103,23 @@ type EdrsClusterInfo struct {
 const EdrsClusterInfo_STATUS_KEY_MIN_HOSTS = "skyscraper.autoscaler.elastic.drs.min.hosts"
 const EdrsClusterInfo_STATUS_KEY_MAX_HOSTS = "skyscraper.autoscaler.elastic.drs.max.hosts"
 const EdrsClusterInfo_STATUS_KEY_FAILED_HOSTS = "skyscraper.autoscaler.elastic.drs.failed.hosts"
+
+func (s EdrsClusterInfo) GetType__() bindings.BindingType {
+	return EdrsClusterInfoBindingType()
+}
+
+func (s EdrsClusterInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for EdrsClusterInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 type EdrsPolicy struct {
     // True if EDRS is enabled
@@ -91,6 +143,23 @@ const EdrsPolicy_POLICY_TYPE_PERFORMANCE = "performance"
 const EdrsPolicy_POLICY_TYPE_STORAGE_SCALEUP = "storage-scaleup"
 const EdrsPolicy_POLICY_TYPE_RAPID_SCALEUP = "rapid-scaleup"
 
+func (s EdrsPolicy) GetType__() bindings.BindingType {
+	return EdrsPolicyBindingType()
+}
+
+func (s EdrsPolicy) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for EdrsPolicy._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 type ErrorResponse struct {
     // HTTP status code
 	Status int64
@@ -103,6 +172,23 @@ type ErrorResponse struct {
     // localized error messages
 	ErrorMessages []string
 }
+
+func (s ErrorResponse) GetType__() bindings.BindingType {
+	return ErrorResponseBindingType()
+}
+
+func (s ErrorResponse) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ErrorResponse._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Detailed service errors associated with a task.
 type ServiceError struct {
@@ -119,6 +205,23 @@ type ServiceError struct {
     // The localized message.
 	LocalizedMessage *string
 }
+
+func (s ServiceError) GetType__() bindings.BindingType {
+	return ServiceErrorBindingType()
+}
+
+func (s ServiceError) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ServiceError._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 type Task struct {
 	Updated time.Time
@@ -168,6 +271,23 @@ const Task_STATUS_FINISHED = "FINISHED"
 const Task_STATUS_FAILED = "FAILED"
 const Task_STATUS_CANCELED = "CANCELED"
 
+func (s Task) GetType__() bindings.BindingType {
+	return TaskBindingType()
+}
+
+func (s Task) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for Task._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // A task progress can be (but does NOT have to be) divided to more meaningful progress phases.
 type TaskProgressPhase struct {
     // The identifier of the task progress phase
@@ -177,6 +297,23 @@ type TaskProgressPhase struct {
     // The percentage of the phase that has completed format: int32
 	ProgressPercent int64
 }
+
+func (s TaskProgressPhase) GetType__() bindings.BindingType {
+	return TaskProgressPhaseBindingType()
+}
+
+func (s TaskProgressPhase) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for TaskProgressPhase._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 
