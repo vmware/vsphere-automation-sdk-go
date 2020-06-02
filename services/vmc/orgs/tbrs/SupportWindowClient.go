@@ -11,7 +11,7 @@
 package tbrs
 
 import (
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/vmc/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/vmc/model"
 )
 
 type SupportWindowClient interface {

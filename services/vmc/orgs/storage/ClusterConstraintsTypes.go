@@ -14,10 +14,10 @@ package storage
 
 import (
 	"reflect"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/vmc/model"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/vmc/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
 
@@ -30,11 +30,9 @@ func clusterConstraintsGetInputType() bindings.StructType {
 	fields["org"] = bindings.NewStringType()
 	fields["provider"] = bindings.NewStringType()
 	fields["num_hosts"] = bindings.NewIntegerType()
-	fields["one_node_reduced_capacity"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["provider"] = "Provider"
 	fieldNameMap["num_hosts"] = "NumHosts"
-	fieldNameMap["one_node_reduced_capacity"] = "OneNodeReducedCapacity"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
@@ -55,23 +53,20 @@ func clusterConstraintsGetRestMetadata() protocol.OperationRestMetadata {
 	fields["org"] = bindings.NewStringType()
 	fields["provider"] = bindings.NewStringType()
 	fields["num_hosts"] = bindings.NewIntegerType()
-	fields["one_node_reduced_capacity"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["provider"] = "Provider"
 	fieldNameMap["num_hosts"] = "NumHosts"
-	fieldNameMap["one_node_reduced_capacity"] = "OneNodeReducedCapacity"
 	paramsTypeMap["provider"] = bindings.NewStringType()
 	paramsTypeMap["org"] = bindings.NewStringType()
 	paramsTypeMap["num_hosts"] = bindings.NewIntegerType()
-	paramsTypeMap["one_node_reduced_capacity"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	paramsTypeMap["org"] = bindings.NewStringType()
 	pathParams["org"] = "org"
 	queryParams["num_hosts"] = "num_hosts"
-	queryParams["one_node_reduced_capacity"] = "one_node_reduced_capacity"
 	queryParams["provider"] = "provider"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
-	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
+	errorHeaders := map[string]map[string]string{}
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

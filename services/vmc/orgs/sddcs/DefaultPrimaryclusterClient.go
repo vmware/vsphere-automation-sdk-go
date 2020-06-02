@@ -5,12 +5,12 @@
 // Code generated. DO NOT EDIT.
 
 /*
- * Client stubs for service: Edges
- * Functions that implement the generated EdgesClient interface
+ * Client stubs for service: Primarycluster
+ * Functions that implement the generated PrimaryclusterClient interface
  */
 
 
-package networks
+package sddcs
 
 import (
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -23,7 +23,7 @@ import (
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol/client"
 )
 
-type DefaultEdgesClient struct {
+type DefaultPrimaryclusterClient struct {
 	interfaceName       string
 	interfaceDefinition core.InterfaceDefinition
 	methodIdentifiers   []core.MethodIdentifier
@@ -33,8 +33,8 @@ type DefaultEdgesClient struct {
 	connector           client.Connector
 }
 
-func NewDefaultEdgesClient(connector client.Connector) *DefaultEdgesClient {
-	interfaceName := "com.vmware.vmc.orgs.sddcs.networks.edges"
+func NewDefaultPrimaryclusterClient(connector client.Connector) *DefaultPrimaryclusterClient {
+	interfaceName := "com.vmware.vmc.orgs.sddcs.primarycluster"
 	interfaceIdentifier := core.NewInterfaceIdentifier(interfaceName)
 	methodIdentifiers := []core.MethodIdentifier{
 		core.NewMethodIdentifier(interfaceIdentifier, "get"),
@@ -68,46 +68,38 @@ func NewDefaultEdgesClient(connector client.Connector) *DefaultEdgesClient {
 	errorBindingMap[errors.UnverifiedPeer{}.Error()] = errors.UnverifiedPeerBindingType()
 
 
-	eIface := DefaultEdgesClient{interfaceName: interfaceName, methodIdentifiers: methodIdentifiers, interfaceDefinition: interfaceDefinition, errorBindingMap: errorBindingMap, interfaceIdentifier: interfaceIdentifier, connector: connector}
-	eIface.methodNameToDefMap = make(map[string]*core.MethodDefinition)
-	eIface.methodNameToDefMap["get"] = eIface.getMethodDefinition()
-	return &eIface
+	pIface := DefaultPrimaryclusterClient{interfaceName: interfaceName, methodIdentifiers: methodIdentifiers, interfaceDefinition: interfaceDefinition, errorBindingMap: errorBindingMap, interfaceIdentifier: interfaceIdentifier, connector: connector}
+	pIface.methodNameToDefMap = make(map[string]*core.MethodDefinition)
+	pIface.methodNameToDefMap["get"] = pIface.getMethodDefinition()
+	return &pIface
 }
 
-func (eIface *DefaultEdgesClient) Get(orgParam string, sddcParam string, edgeTypeParam string, prevEdgeIdParam *string, startIndexParam *int64, pageSizeParam *int64, sortOrderAscendingParam *bool, sortByParam *string, filterParam *string, ldRnameParam *string) (model.PagedEdgeList, error) {
-	typeConverter := eIface.connector.TypeConverter()
-	methodIdentifier := core.NewMethodIdentifier(eIface.interfaceIdentifier, "get")
-	sv := bindings.NewStructValueBuilder(edgesGetInputType(), typeConverter)
+func (pIface *DefaultPrimaryclusterClient) Get(orgParam string, sddcParam string) (model.Cluster, error) {
+	typeConverter := pIface.connector.TypeConverter()
+	methodIdentifier := core.NewMethodIdentifier(pIface.interfaceIdentifier, "get")
+	sv := bindings.NewStructValueBuilder(primaryclusterGetInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
-	sv.AddStructField("EdgeType", edgeTypeParam)
-	sv.AddStructField("PrevEdgeId", prevEdgeIdParam)
-	sv.AddStructField("StartIndex", startIndexParam)
-	sv.AddStructField("PageSize", pageSizeParam)
-	sv.AddStructField("SortOrderAscending", sortOrderAscendingParam)
-	sv.AddStructField("SortBy", sortByParam)
-	sv.AddStructField("Filter", filterParam)
-	sv.AddStructField("LdRname", ldRnameParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.PagedEdgeList
+		var emptyOutput model.Cluster
 		return emptyOutput, bindings.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := edgesGetRestMetadata()
+	operationRestMetaData := primaryclusterGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
 	connectionMetadata["isStreamingResponse"] = false
-	eIface.connector.SetConnectionMetadata(connectionMetadata)
-	executionContext := eIface.connector.NewExecutionContext()
-	methodResult := eIface.Invoke(executionContext, methodIdentifier, inputDataValue)
-	var emptyOutput model.PagedEdgeList
+	pIface.connector.SetConnectionMetadata(connectionMetadata)
+	executionContext := pIface.connector.NewExecutionContext()
+	methodResult := pIface.Invoke(executionContext, methodIdentifier, inputDataValue)
+	var emptyOutput model.Cluster
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), edgesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), primaryclusterGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.PagedEdgeList), nil
+		return output.(model.Cluster), nil
 	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), eIface.errorBindingMap[methodResult.Error().Name()])
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.errorBindingMap[methodResult.Error().Name()])
 		if errorInError != nil {
 			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
 		}
@@ -116,54 +108,62 @@ func (eIface *DefaultEdgesClient) Get(orgParam string, sddcParam string, edgeTyp
 }
 
 
-func (eIface *DefaultEdgesClient) Invoke(ctx *core.ExecutionContext, methodId core.MethodIdentifier, inputDataValue data.DataValue) core.MethodResult {
-	methodResult := eIface.connector.GetApiProvider().Invoke(eIface.interfaceName, methodId.Name(), inputDataValue, ctx)
+func (pIface *DefaultPrimaryclusterClient) Invoke(ctx *core.ExecutionContext, methodId core.MethodIdentifier, inputDataValue data.DataValue) core.MethodResult {
+	methodResult := pIface.connector.GetApiProvider().Invoke(pIface.interfaceName, methodId.Name(), inputDataValue, ctx)
 	return methodResult
 }
 
 
-func (eIface *DefaultEdgesClient) getMethodDefinition() *core.MethodDefinition {
-	interfaceIdentifier := core.NewInterfaceIdentifier(eIface.interfaceName)
-	typeConverter := eIface.connector.TypeConverter()
+func (pIface *DefaultPrimaryclusterClient) getMethodDefinition() *core.MethodDefinition {
+	interfaceIdentifier := core.NewInterfaceIdentifier(pIface.interfaceName)
+	typeConverter := pIface.connector.TypeConverter()
 
-	input, inputError := typeConverter.ConvertToDataDefinition(edgesGetInputType())
-	output, outputError := typeConverter.ConvertToDataDefinition(edgesGetOutputType())
+	input, inputError := typeConverter.ConvertToDataDefinition(primaryclusterGetInputType())
+	output, outputError := typeConverter.ConvertToDataDefinition(primaryclusterGetOutputType())
 	if inputError != nil {
-		log.Errorf("Error in ConvertToDataDefinition for DefaultEdgesClient.get method's input - %s",
+		log.Errorf("Error in ConvertToDataDefinition for DefaultPrimaryclusterClient.get method's input - %s",
 			bindings.VAPIerrorsToError(inputError).Error())
 		return nil
 	}
 	if outputError != nil {
-		log.Errorf("Error in ConvertToDataDefinition for DefaultEdgesClient.get method's output - %s",
+		log.Errorf("Error in ConvertToDataDefinition for DefaultPrimaryclusterClient.get method's output - %s",
 			bindings.VAPIerrorsToError(outputError).Error())
 		return nil
 	}
 	methodIdentifier := core.NewMethodIdentifier(interfaceIdentifier, "get")
 	errorDefinitions := make([]data.ErrorDefinition, 0)
-	eIface.errorBindingMap[errors.InvalidRequest{}.Error()] = errors.InvalidRequestBindingType()
-	errDef1, errError1 := typeConverter.ConvertToDataDefinition(errors.InvalidRequestBindingType())
+	pIface.errorBindingMap[errors.Unauthenticated{}.Error()] = errors.UnauthenticatedBindingType()
+	errDef1, errError1 := typeConverter.ConvertToDataDefinition(errors.UnauthenticatedBindingType())
 	if errError1 != nil {
-		log.Errorf("Error in ConvertToDataDefinition for DefaultEdgesClient.get method's errors.InvalidRequest error - %s",
+		log.Errorf("Error in ConvertToDataDefinition for DefaultPrimaryclusterClient.get method's errors.Unauthenticated error - %s",
 			bindings.VAPIerrorsToError(errError1).Error())
 		return nil
 	}
 	errorDefinitions = append(errorDefinitions, errDef1.(data.ErrorDefinition))
-	eIface.errorBindingMap[errors.Unauthorized{}.Error()] = errors.UnauthorizedBindingType()
-	errDef2, errError2 := typeConverter.ConvertToDataDefinition(errors.UnauthorizedBindingType())
+	pIface.errorBindingMap[errors.InvalidRequest{}.Error()] = errors.InvalidRequestBindingType()
+	errDef2, errError2 := typeConverter.ConvertToDataDefinition(errors.InvalidRequestBindingType())
 	if errError2 != nil {
-		log.Errorf("Error in ConvertToDataDefinition for DefaultEdgesClient.get method's errors.Unauthorized error - %s",
+		log.Errorf("Error in ConvertToDataDefinition for DefaultPrimaryclusterClient.get method's errors.InvalidRequest error - %s",
 			bindings.VAPIerrorsToError(errError2).Error())
 		return nil
 	}
 	errorDefinitions = append(errorDefinitions, errDef2.(data.ErrorDefinition))
-	eIface.errorBindingMap[errors.NotFound{}.Error()] = errors.NotFoundBindingType()
-	errDef3, errError3 := typeConverter.ConvertToDataDefinition(errors.NotFoundBindingType())
+	pIface.errorBindingMap[errors.Unauthorized{}.Error()] = errors.UnauthorizedBindingType()
+	errDef3, errError3 := typeConverter.ConvertToDataDefinition(errors.UnauthorizedBindingType())
 	if errError3 != nil {
-		log.Errorf("Error in ConvertToDataDefinition for DefaultEdgesClient.get method's errors.NotFound error - %s",
+		log.Errorf("Error in ConvertToDataDefinition for DefaultPrimaryclusterClient.get method's errors.Unauthorized error - %s",
 			bindings.VAPIerrorsToError(errError3).Error())
 		return nil
 	}
 	errorDefinitions = append(errorDefinitions, errDef3.(data.ErrorDefinition))
+	pIface.errorBindingMap[errors.NotFound{}.Error()] = errors.NotFoundBindingType()
+	errDef4, errError4 := typeConverter.ConvertToDataDefinition(errors.NotFoundBindingType())
+	if errError4 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultPrimaryclusterClient.get method's errors.NotFound error - %s",
+			bindings.VAPIerrorsToError(errError4).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef4.(data.ErrorDefinition))
 
 	methodDefinition := core.NewMethodDefinition(methodIdentifier, input, output, errorDefinitions)
 	return &methodDefinition

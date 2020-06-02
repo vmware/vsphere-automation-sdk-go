@@ -13,14 +13,14 @@
 package storage
 
 import (
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/vmc/model"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/core"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/lib"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/log"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol/client"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/vmc/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/core"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/lib"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol/client"
 )
 
 type DefaultClusterConstraintsClient struct {
@@ -74,14 +74,13 @@ func NewDefaultClusterConstraintsClient(connector client.Connector) *DefaultClus
 	return &cIface
 }
 
-func (cIface *DefaultClusterConstraintsClient) Get(orgParam string, providerParam string, numHostsParam int64, oneNodeReducedCapacityParam *bool) (model.VsanConfigConstraints, error) {
+func (cIface *DefaultClusterConstraintsClient) Get(orgParam string, providerParam string, numHostsParam int64) (model.VsanConfigConstraints, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(cIface.interfaceIdentifier, "get")
 	sv := bindings.NewStructValueBuilder(clusterConstraintsGetInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Provider", providerParam)
 	sv.AddStructField("NumHosts", numHostsParam)
-	sv.AddStructField("OneNodeReducedCapacity", oneNodeReducedCapacityParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.VsanConfigConstraints

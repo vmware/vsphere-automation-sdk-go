@@ -14,10 +14,10 @@ package vmc
 
 import (
 	"reflect"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/vmc/model"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/vmc/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
 
@@ -52,8 +52,9 @@ func orgsGetRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["org"] = bindings.NewStringType()
 	pathParams["org"] = "org"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
-	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
+	errorHeaders := map[string]map[string]string{}
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -96,8 +97,9 @@ func orgsListRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
-	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
+	errorHeaders := map[string]map[string]string{}
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
