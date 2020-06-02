@@ -14,10 +14,10 @@ package nsx_policy
 
 import (
 	"reflect"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/nsxt/model"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
 
@@ -51,7 +51,7 @@ func globalInfraGetRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["filter"] = bindings.NewOptionalType(bindings.NewStringType())
 	queryParams["filter"] = "filter"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -105,7 +105,7 @@ func globalInfraPatchRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["infra"] = bindings.NewReferenceType(model.InfraBindingType)
 	queryParams["enforce_revision_check"] = "enforce_revision_check"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -153,7 +153,7 @@ func globalInfraUpdateRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["infra"] = "Infra"
 	paramsTypeMap["infra"] = bindings.NewReferenceType(model.InfraBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

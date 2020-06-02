@@ -14,10 +14,10 @@ package ports
 
 import (
 	"reflect"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/nsxt/model"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
 
@@ -66,7 +66,7 @@ func portQosProfileBindingMapsDeleteRestMetadata() protocol.OperationRestMetadat
 	pathParams["port_qos_profile_binding_map_id"] = "portQosProfileBindingMapId"
 	pathParams["port_id"] = "portId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -130,7 +130,7 @@ func portQosProfileBindingMapsGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams["port_qos_profile_binding_map_id"] = "portQosProfileBindingMapId"
 	pathParams["port_id"] = "portId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -217,7 +217,7 @@ func portQosProfileBindingMapsListRestMetadata() protocol.OperationRestMetadata 
 	queryParams["sort_by"] = "sort_by"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -286,7 +286,7 @@ func portQosProfileBindingMapsPatchRestMetadata() protocol.OperationRestMetadata
 	pathParams["port_qos_profile_binding_map_id"] = "portQosProfileBindingMapId"
 	pathParams["port_id"] = "portId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -355,7 +355,7 @@ func portQosProfileBindingMapsUpdateRestMetadata() protocol.OperationRestMetadat
 	pathParams["port_qos_profile_binding_map_id"] = "portQosProfileBindingMapId"
 	pathParams["port_id"] = "portId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

@@ -14,10 +14,10 @@ package global_infra
 
 import (
 	"reflect"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/nsxt/model"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
 
@@ -52,7 +52,7 @@ func dhcpServerConfigsDeleteRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["dhcpServerConfigId"] = bindings.NewStringType()
 	pathParams["dhcp_server_config_id"] = "dhcpServerConfigId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -102,7 +102,7 @@ func dhcpServerConfigsGetRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["dhcpServerConfigId"] = bindings.NewStringType()
 	pathParams["dhcp_server_config_id"] = "dhcpServerConfigId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -181,7 +181,7 @@ func dhcpServerConfigsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -236,7 +236,7 @@ func dhcpServerConfigsPatchRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["dhcpServerConfigId"] = bindings.NewStringType()
 	pathParams["dhcp_server_config_id"] = "dhcpServerConfigId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -291,7 +291,7 @@ func dhcpServerConfigsUpdateRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["dhcpServerConfigId"] = bindings.NewStringType()
 	pathParams["dhcp_server_config_id"] = "dhcpServerConfigId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

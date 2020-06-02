@@ -11,7 +11,7 @@
 package byod_service_instances
 
 import (
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/nsxt/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 type ServiceInstanceEndpointsClient interface {

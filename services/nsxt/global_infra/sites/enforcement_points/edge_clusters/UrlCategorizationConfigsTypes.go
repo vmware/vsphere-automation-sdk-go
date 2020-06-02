@@ -14,10 +14,10 @@ package edge_clusters
 
 import (
 	"reflect"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/nsxt/model"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
 
@@ -73,7 +73,7 @@ func urlCategorizationConfigsDeleteRestMetadata() protocol.OperationRestMetadata
 	pathParams["enforcement_point_id"] = "enforcementPointId"
 	pathParams["url_categorization_config_id"] = "urlCategorizationConfigId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -144,7 +144,7 @@ func urlCategorizationConfigsGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams["enforcement_point_id"] = "enforcementPointId"
 	pathParams["url_categorization_config_id"] = "urlCategorizationConfigId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -220,7 +220,7 @@ func urlCategorizationConfigsPatchRestMetadata() protocol.OperationRestMetadata 
 	pathParams["enforcement_point_id"] = "enforcementPointId"
 	pathParams["url_categorization_config_id"] = "urlCategorizationConfigId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -296,7 +296,7 @@ func urlCategorizationConfigsUpdateRestMetadata() protocol.OperationRestMetadata
 	pathParams["enforcement_point_id"] = "enforcementPointId"
 	pathParams["url_categorization_config_id"] = "urlCategorizationConfigId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
