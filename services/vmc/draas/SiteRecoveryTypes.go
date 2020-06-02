@@ -14,10 +14,10 @@ package draas
 
 import (
 	"reflect"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/vmc/draas/model"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/bindings"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/data"
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/vmc/draas/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
 
 
@@ -71,8 +71,9 @@ func siteRecoveryDeleteRestMetadata() protocol.OperationRestMetadata {
 	queryParams["deactivate_hcx"] = "deactivate_hcx"
 	queryParams["force"] = "force"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
-	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
+	errorHeaders := map[string]map[string]string{}
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -129,8 +130,9 @@ func siteRecoveryGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
-	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
+	errorHeaders := map[string]map[string]string{}
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -192,8 +194,9 @@ func siteRecoveryPostRestMetadata() protocol.OperationRestMetadata {
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
-	errorHeaders["Unauthenticated.challenge"] = "WWW-Authenticate"
+	errorHeaders := map[string]map[string]string{}
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
+	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

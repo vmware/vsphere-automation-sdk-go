@@ -11,7 +11,7 @@
 package draas
 
 import (
-	"gitlab.eng.vmware.com/golangsdk/vsphere-automation-sdk-go/services/vmc/draas/model"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/vmc/draas/model"
 )
 
 type SiteRecoveryVersionsClient interface {
