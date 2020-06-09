@@ -34,7 +34,7 @@ const (
 	headerParamsType ParamsType = "header"
 )
 
-// Parse the URL path variable. It takes annotation name to param name map,
+// ParsePathParams Parse the URL path variable. It takes annotation name to param name map,
 // param name to type map, and http request. It generates a map from
 // param name its value.
 func ParsePathParams(
@@ -86,7 +86,7 @@ func canonicalizeFieldNames(headerParamMap map[string]string) map[string]string 
 	return res
 }
 
-// Parse the http header. It takes annotation name to param name map,
+// ParseHeaderParams Parse the http header. It takes annotation name to param name map,
 // param name to type map, and http request. It generates a map from
 // param name to its value.
 func ParseHeaderParams(
@@ -122,7 +122,7 @@ func HeaderDataValueMap(request *http.Request,
 		headerParamsType)
 }
 
-// Parse the http query. It takes annotation name to param name map,
+// ParseQueryParams Parse the http query. It takes annotation name to param name map,
 // param name to type map, and http request. It generates a map from
 // param name to its value.
 func ParseQueryParams(
@@ -229,7 +229,7 @@ func QueryDataValueMap(request *http.Request,
 	// Get map of query param name to its value (slice)
 	queryParamMap := request.URL.Query()
 	requestKeys := []string{}
-	for k, _ := range queryParamMap {
+	for k := range queryParamMap {
 		requestKeys = append(requestKeys, k)
 	}
 
@@ -240,12 +240,12 @@ func QueryDataValueMap(request *http.Request,
 
 	// Collect all keys that you have for query field, for validation.
 	requiredKeys := []string{}
-	for k, _ := range dispatchparam {
+	for k := range dispatchparam {
 		requiredKeys = append(requiredKeys, k)
 	}
 
 	reverseQueryParamsName := reverseMap(metadata.QueryParamsNameMap())
-	for k, _ := range reverseQueryParamsName {
+	for k := range reverseQueryParamsName {
 		requiredKeys = append(requiredKeys, k)
 	}
 
@@ -520,7 +520,7 @@ func ParseBodyFieldParams(
 	Body param processing
 */
 
-// Parse the http body. There is at most one @Body annotation per operation.
+// ParseBodyParams Parse the http body. There is at most one @Body annotation per operation.
 // It takes param type, and http request. It generates param value.
 func ParseBodyParams(
 	r *http.Request,
