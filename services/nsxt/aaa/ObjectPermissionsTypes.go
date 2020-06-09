@@ -99,7 +99,7 @@ func objectPermissionsDeleteRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	queryParams["path_prefix"] = "path_prefix"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -196,7 +196,7 @@ func objectPermissionsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	queryParams["path_prefix"] = "path_prefix"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -244,7 +244,7 @@ func objectPermissionsPatchRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["object_role_permission_group"] = "ObjectRolePermissionGroup"
 	paramsTypeMap["object_role_permission_group"] = bindings.NewReferenceType(model.ObjectRolePermissionGroupBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

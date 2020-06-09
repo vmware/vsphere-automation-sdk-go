@@ -45,7 +45,7 @@ func configGetRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -93,7 +93,7 @@ func configUpdateRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["restore_configuration"] = "RestoreConfiguration"
 	paramsTypeMap["restore_configuration"] = bindings.NewReferenceType(model.RestoreConfigurationBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

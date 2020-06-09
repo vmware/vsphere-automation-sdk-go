@@ -66,7 +66,7 @@ func l2vpnsDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams["locale_service_id"] = "localeServiceId"
 	pathParams["l2vpn_id"] = "l2vpnId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -130,7 +130,7 @@ func l2vpnsGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams["locale_service_id"] = "localeServiceId"
 	pathParams["l2vpn_id"] = "l2vpnId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -223,7 +223,7 @@ func l2vpnsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -292,7 +292,7 @@ func l2vpnsPatchRestMetadata() protocol.OperationRestMetadata {
 	pathParams["locale_service_id"] = "localeServiceId"
 	pathParams["l2vpn_id"] = "l2vpnId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -361,7 +361,7 @@ func l2vpnsUpdateRestMetadata() protocol.OperationRestMetadata {
 	pathParams["locale_service_id"] = "localeServiceId"
 	pathParams["l2vpn_id"] = "l2vpnId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

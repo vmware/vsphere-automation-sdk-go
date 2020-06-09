@@ -72,7 +72,7 @@ func dadStateGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams["locale_service_id"] = "localeServiceId"
 	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

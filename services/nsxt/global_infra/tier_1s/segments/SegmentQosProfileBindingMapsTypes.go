@@ -66,7 +66,7 @@ func segmentQosProfileBindingMapsDeleteRestMetadata() protocol.OperationRestMeta
 	pathParams["segment_qos_profile_binding_map_id"] = "segmentQosProfileBindingMapId"
 	pathParams["tier1_id"] = "tier1Id"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -130,7 +130,7 @@ func segmentQosProfileBindingMapsGetRestMetadata() protocol.OperationRestMetadat
 	pathParams["segment_qos_profile_binding_map_id"] = "segmentQosProfileBindingMapId"
 	pathParams["tier1_id"] = "tier1Id"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -217,7 +217,7 @@ func segmentQosProfileBindingMapsListRestMetadata() protocol.OperationRestMetada
 	queryParams["sort_by"] = "sort_by"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -286,7 +286,7 @@ func segmentQosProfileBindingMapsPatchRestMetadata() protocol.OperationRestMetad
 	pathParams["segment_qos_profile_binding_map_id"] = "segmentQosProfileBindingMapId"
 	pathParams["tier1_id"] = "tier1Id"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -355,7 +355,7 @@ func segmentQosProfileBindingMapsUpdateRestMetadata() protocol.OperationRestMeta
 	pathParams["segment_qos_profile_binding_map_id"] = "segmentQosProfileBindingMapId"
 	pathParams["tier1_id"] = "tier1Id"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

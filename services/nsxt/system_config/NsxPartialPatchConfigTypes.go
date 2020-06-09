@@ -45,7 +45,7 @@ func nsxPartialPatchConfigGetRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -93,7 +93,7 @@ func nsxPartialPatchConfigPatchRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["partial_patch_config"] = "PartialPatchConfig"
 	paramsTypeMap["partial_patch_config"] = bindings.NewReferenceType(model.PartialPatchConfigBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

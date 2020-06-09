@@ -45,7 +45,7 @@ func idsStandaloneHostConfigGetRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -93,7 +93,7 @@ func idsStandaloneHostConfigPatchRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["ids_standalone_host_config"] = "IdsStandaloneHostConfig"
 	paramsTypeMap["ids_standalone_host_config"] = bindings.NewReferenceType(model.IdsStandaloneHostConfigBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -141,7 +141,7 @@ func idsStandaloneHostConfigUpdateRestMetadata() protocol.OperationRestMetadata 
 	fieldNameMap["ids_standalone_host_config"] = "IdsStandaloneHostConfig"
 	paramsTypeMap["ids_standalone_host_config"] = bindings.NewReferenceType(model.IdsStandaloneHostConfigBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

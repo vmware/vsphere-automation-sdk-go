@@ -52,7 +52,7 @@ func clusterGetRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["clusterId"] = bindings.NewStringType()
 	pathParams["cluster_id"] = "clusterId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -125,7 +125,7 @@ func clusterListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["sort_by"] = "sort_by"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -180,7 +180,7 @@ func clusterPatchRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["clusterId"] = bindings.NewStringType()
 	pathParams["cluster_id"] = "clusterId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -235,7 +235,7 @@ func clusterUpdateRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["clusterId"] = bindings.NewStringType()
 	pathParams["cluster_id"] = "clusterId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

@@ -73,7 +73,7 @@ func portMonitoringProfileBindingMapsDeleteRestMetadata() protocol.OperationRest
 	pathParams["tier1_id"] = "tier1Id"
 	pathParams["port_id"] = "portId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -144,7 +144,7 @@ func portMonitoringProfileBindingMapsGetRestMetadata() protocol.OperationRestMet
 	pathParams["tier1_id"] = "tier1Id"
 	pathParams["port_id"] = "portId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -244,7 +244,7 @@ func portMonitoringProfileBindingMapsListRestMetadata() protocol.OperationRestMe
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -320,7 +320,7 @@ func portMonitoringProfileBindingMapsPatchRestMetadata() protocol.OperationRestM
 	pathParams["tier1_id"] = "tier1Id"
 	pathParams["port_id"] = "portId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -396,7 +396,7 @@ func portMonitoringProfileBindingMapsUpdateRestMetadata() protocol.OperationRest
 	pathParams["tier1_id"] = "tier1Id"
 	pathParams["port_id"] = "portId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

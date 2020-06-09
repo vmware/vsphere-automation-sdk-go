@@ -73,7 +73,7 @@ func sessionsDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams["locale_service_id"] = "localeServiceId"
 	pathParams["service_id"] = "serviceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -144,7 +144,7 @@ func sessionsGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams["locale_service_id"] = "localeServiceId"
 	pathParams["service_id"] = "serviceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -244,7 +244,7 @@ func sessionsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -320,7 +320,7 @@ func sessionsPatchRestMetadata() protocol.OperationRestMetadata {
 	pathParams["locale_service_id"] = "localeServiceId"
 	pathParams["service_id"] = "serviceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -391,7 +391,7 @@ func sessionsShowsensitivedataRestMetadata() protocol.OperationRestMetadata {
 	pathParams["locale_service_id"] = "localeServiceId"
 	pathParams["service_id"] = "serviceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -467,7 +467,7 @@ func sessionsUpdateRestMetadata() protocol.OperationRestMetadata {
 	pathParams["locale_service_id"] = "localeServiceId"
 	pathParams["service_id"] = "serviceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

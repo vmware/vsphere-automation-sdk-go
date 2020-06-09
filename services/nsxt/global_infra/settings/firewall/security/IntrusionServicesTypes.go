@@ -45,7 +45,7 @@ func intrusionServicesGetRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -93,7 +93,7 @@ func intrusionServicesPatchRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["ids_settings"] = "IdsSettings"
 	paramsTypeMap["ids_settings"] = bindings.NewReferenceType(model.IdsSettingsBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -141,7 +141,7 @@ func intrusionServicesUpdateRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["ids_settings"] = "IdsSettings"
 	paramsTypeMap["ids_settings"] = bindings.NewReferenceType(model.IdsSettingsBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

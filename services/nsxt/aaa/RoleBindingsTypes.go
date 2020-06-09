@@ -62,7 +62,7 @@ func roleBindingsCreateRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["role_binding"] = "RoleBinding"
 	paramsTypeMap["role_binding"] = bindings.NewReferenceType(model.RoleBindingBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -112,7 +112,7 @@ func roleBindingsDeleteRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["bindingId"] = bindings.NewStringType()
 	pathParams["binding_id"] = "bindingId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -155,7 +155,7 @@ func roleBindingsDeletestalebindingsRestMetadata() protocol.OperationRestMetadat
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -205,7 +205,7 @@ func roleBindingsGetRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["bindingId"] = bindings.NewStringType()
 	pathParams["binding_id"] = "bindingId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -308,7 +308,7 @@ func roleBindingsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["identity_source_type"] = "identity_source_type"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -363,7 +363,7 @@ func roleBindingsUpdateRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["bindingId"] = bindings.NewStringType()
 	pathParams["binding_id"] = "bindingId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

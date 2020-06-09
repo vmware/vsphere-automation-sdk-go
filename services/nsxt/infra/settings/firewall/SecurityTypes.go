@@ -45,7 +45,7 @@ func securityGetRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -93,7 +93,7 @@ func securityPatchRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["dfw_firewall_configuration"] = "DfwFirewallConfiguration"
 	paramsTypeMap["dfw_firewall_configuration"] = bindings.NewReferenceType(model.DfwFirewallConfigurationBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -141,7 +141,7 @@ func securityUpdateRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["dfw_firewall_configuration"] = "DfwFirewallConfiguration"
 	paramsTypeMap["dfw_firewall_configuration"] = bindings.NewReferenceType(model.DfwFirewallConfigurationBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

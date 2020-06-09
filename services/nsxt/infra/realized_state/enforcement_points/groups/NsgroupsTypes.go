@@ -59,7 +59,7 @@ func nsgroupsGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams["enforcement_point_name"] = "enforcementPointName"
 	pathParams["nsgroup_name"] = "nsgroupName"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -139,7 +139,7 @@ func nsgroupsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["sort_by"] = "sort_by"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

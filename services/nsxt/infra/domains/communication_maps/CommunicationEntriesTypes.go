@@ -74,7 +74,7 @@ func communicationEntriesDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams["communication_map_id"] = "communicationMapId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -138,7 +138,7 @@ func communicationEntriesGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams["communication_map_id"] = "communicationMapId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -231,7 +231,7 @@ func communicationEntriesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -300,7 +300,7 @@ func communicationEntriesPatchRestMetadata() protocol.OperationRestMetadata {
 	pathParams["communication_map_id"] = "communicationMapId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -381,7 +381,7 @@ func communicationEntriesReviseRestMetadata() protocol.OperationRestMetadata {
 	queryParams["anchor_path"] = "anchor_path"
 	queryParams["operation"] = "operation"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -450,7 +450,7 @@ func communicationEntriesUpdateRestMetadata() protocol.OperationRestMetadata {
 	pathParams["communication_map_id"] = "communicationMapId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

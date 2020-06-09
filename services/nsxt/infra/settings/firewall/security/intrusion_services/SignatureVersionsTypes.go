@@ -75,7 +75,7 @@ func signatureVersionsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["sort_by"] = "sort_by"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -123,7 +123,7 @@ func signatureVersionsMakeactiveversionRestMetadata() protocol.OperationRestMeta
 	fieldNameMap["ids_signature_version"] = "IdsSignatureVersion"
 	paramsTypeMap["ids_signature_version"] = bindings.NewReferenceType(model.IdsSignatureVersionBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

@@ -51,7 +51,7 @@ func responseGetRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["taskId"] = bindings.NewStringType()
 	pathParams["task_id"] = "taskId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

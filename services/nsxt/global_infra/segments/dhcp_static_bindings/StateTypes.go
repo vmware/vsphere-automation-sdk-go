@@ -59,7 +59,7 @@ func stateGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams["segment_id"] = "segmentId"
 	pathParams["binding_id"] = "bindingId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

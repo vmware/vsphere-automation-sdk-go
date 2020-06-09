@@ -79,7 +79,7 @@ func peerConfigGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams["service_id"] = "serviceId"
 	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

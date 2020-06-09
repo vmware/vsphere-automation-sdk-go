@@ -45,7 +45,7 @@ func standaloneHostSwitchSettingGetRestMetadata() protocol.OperationRestMetadata
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -93,7 +93,7 @@ func standaloneHostSwitchSettingPatchRestMetadata() protocol.OperationRestMetada
 	fieldNameMap["standalone_host_idfw_configuration"] = "StandaloneHostIdfwConfiguration"
 	paramsTypeMap["standalone_host_idfw_configuration"] = bindings.NewReferenceType(model.StandaloneHostIdfwConfigurationBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -141,7 +141,7 @@ func standaloneHostSwitchSettingUpdateRestMetadata() protocol.OperationRestMetad
 	fieldNameMap["standalone_host_idfw_configuration"] = "StandaloneHostIdfwConfiguration"
 	paramsTypeMap["standalone_host_idfw_configuration"] = bindings.NewReferenceType(model.StandaloneHostIdfwConfigurationBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

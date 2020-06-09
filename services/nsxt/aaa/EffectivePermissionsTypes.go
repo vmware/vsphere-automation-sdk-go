@@ -57,7 +57,7 @@ func effectivePermissionsGetRestMetadata() protocol.OperationRestMetadata {
 	queryParams["feature_name"] = "feature_name"
 	queryParams["object_path"] = "object_path"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
