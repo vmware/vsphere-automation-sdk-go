@@ -16,6 +16,7 @@ import (
 	"reflect"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"time"
 )
 
@@ -36,10 +37,44 @@ type AbstractEntity struct {
 	Id string
 }
 
+func (s AbstractEntity) GetType__() bindings.BindingType {
+	return AbstractEntityBindingType()
+}
+
+func (s AbstractEntity) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for AbstractEntity._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 type ActivateSiteRecoveryConfig struct {
     // Optional custom extension key suffix for SRM. If not specified, default extension key will be used. The custom extension suffix must contain 13 characters or less, be composed of letters, numbers, ., -, and _ characters. The extension suffix must begin and end with a letter or number. The suffix is appended to com.vmware.vcDr- to form the full extension key.
 	SrmExtensionKeySuffix *string
 }
+
+func (s ActivateSiteRecoveryConfig) GetType__() bindings.BindingType {
+	return ActivateSiteRecoveryConfigBindingType()
+}
+
+func (s ActivateSiteRecoveryConfig) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ActivateSiteRecoveryConfig._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 type ErrorResponse struct {
     // HTTP status code
@@ -54,10 +89,44 @@ type ErrorResponse struct {
 	ErrorMessages []string
 }
 
+func (s ErrorResponse) GetType__() bindings.BindingType {
+	return ErrorResponseBindingType()
+}
+
+func (s ErrorResponse) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ErrorResponse._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 type ProvisionSrmConfig struct {
     // Optional custom extension key suffix for SRM. If not specified, default extension key will be used.
 	SrmExtensionKeySuffix *string
 }
+
+func (s ProvisionSrmConfig) GetType__() bindings.BindingType {
+	return ProvisionSrmConfigBindingType()
+}
+
+func (s ProvisionSrmConfig) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ProvisionSrmConfig._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 type ReplicaDisk struct {
 	SpaceRequirement *float64
@@ -69,6 +138,23 @@ type ReplicaDisk struct {
 	DatastoreMoId *string
 }
 
+func (s ReplicaDisk) GetType__() bindings.BindingType {
+	return ReplicaDiskBindingType()
+}
+
+func (s ReplicaDisk) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ReplicaDisk._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 type ReplicaDiskCollection struct {
 	CollectionId *string
 	Generated *time.Time
@@ -76,6 +162,23 @@ type ReplicaDiskCollection struct {
 	PlaceholderVmMoId *string
 	Name *string
 }
+
+func (s ReplicaDiskCollection) GetType__() bindings.BindingType {
+	return ReplicaDiskCollectionBindingType()
+}
+
+func (s ReplicaDiskCollection) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ReplicaDiskCollection._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 type SiteRecovery struct {
 	Updated time.Time
@@ -114,6 +217,23 @@ const SiteRecovery_SITE_RECOVERY_STATE_FAILED = "FAILED"
 const SiteRecovery_SITE_RECOVERY_STATE_CANCELED = "CANCELED"
 const SiteRecovery_SITE_RECOVERY_STATE_DELETED = "DELETED"
 
+func (s SiteRecovery) GetType__() bindings.BindingType {
+	return SiteRecoveryBindingType()
+}
+
+func (s SiteRecovery) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SiteRecovery._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 type SiteRecoveryNode struct {
 	VmMorefId *string
 	IpAddress *string
@@ -145,6 +265,23 @@ const SiteRecoveryNode_TYPE_VRMS = "VRMS"
 const SiteRecoveryNode_TYPE_SRM = "SRM"
 const SiteRecoveryNode_TYPE_VRS = "VRS"
 
+func (s SiteRecoveryNode) GetType__() bindings.BindingType {
+	return SiteRecoveryNodeBindingType()
+}
+
+func (s SiteRecoveryNode) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SiteRecoveryNode._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 type SiteRecoveryNodeVersion struct {
     // Possible values are: 
     //
@@ -169,12 +306,46 @@ const SiteRecoveryNodeVersion_NODE_TYPE_VRMS = "VRMS"
 const SiteRecoveryNodeVersion_NODE_TYPE_SRM = "SRM"
 const SiteRecoveryNodeVersion_NODE_TYPE_VRS = "VRS"
 
+func (s SiteRecoveryNodeVersion) GetType__() bindings.BindingType {
+	return SiteRecoveryNodeVersionBindingType()
+}
+
+func (s SiteRecoveryNodeVersion) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SiteRecoveryNodeVersion._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 type SiteRecoveryVersions struct {
 	Generated *time.Time
 	SddcId *string
     // list of site recovery node version
 	NodeVersions []SiteRecoveryNodeVersion
 }
+
+func (s SiteRecoveryVersions) GetType__() bindings.BindingType {
+	return SiteRecoveryVersionsBindingType()
+}
+
+func (s SiteRecoveryVersions) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SiteRecoveryVersions._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 type Task struct {
 	Updated time.Time
@@ -225,6 +396,23 @@ const Task_STATUS_FINISHED = "FINISHED"
 const Task_STATUS_FAILED = "FAILED"
 const Task_STATUS_CANCELED = "CANCELED"
 
+func (s Task) GetType__() bindings.BindingType {
+	return TaskBindingType()
+}
+
+func (s Task) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for Task._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // A task progress can be (but does NOT have to be) divided to more meaningful progress phases.
 type TaskProgressPhase struct {
     // The identifier of the task progress phase
@@ -234,6 +422,23 @@ type TaskProgressPhase struct {
     // The percentage of the phase that has completed format: int32
 	ProgressPercent int64
 }
+
+func (s TaskProgressPhase) GetType__() bindings.BindingType {
+	return TaskProgressPhaseBindingType()
+}
+
+func (s TaskProgressPhase) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for TaskProgressPhase._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 
@@ -305,7 +510,7 @@ func ReplicaDiskBindingType() bindings.BindingType {
 	fieldNameMap["name"] = "Name"
 	fields["collection_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["collection_id"] = "CollectionId"
-	fields["datastores_for_single_host_move"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewDynamicStructType(nil, bindings.JSONRPC), reflect.TypeOf([]*data.StructValue{})))
+	fields["datastores_for_single_host_move"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewDynamicStructType(nil, bindings.REST), reflect.TypeOf([]*data.StructValue{})))
 	fieldNameMap["datastores_for_single_host_move"] = "DatastoresForSingleHostMove"
 	fields["movable"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["movable"] = "Movable"
@@ -461,7 +666,7 @@ func TaskBindingType() bindings.BindingType {
 	fieldNameMap["progress_percent"] = "ProgressPercent"
 	fields["estimated_remaining_minutes"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["estimated_remaining_minutes"] = "EstimatedRemainingMinutes"
-	fields["params"] = bindings.NewOptionalType(bindings.NewDynamicStructType(nil, bindings.JSONRPC))
+	fields["params"] = bindings.NewOptionalType(bindings.NewDynamicStructType(nil, bindings.REST))
 	fieldNameMap["params"] = "Params"
 	fields["end_time"] = bindings.NewOptionalType(bindings.NewDateTimeType())
 	fieldNameMap["end_time"] = "EndTime"
