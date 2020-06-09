@@ -16,6 +16,7 @@ import (
 	"reflect"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 )
 
 
@@ -34,6 +35,23 @@ type AdvertisedRoute struct {
 const AdvertisedRoute_ADVERTISEMENT_STATE_SUCCESS = "SUCCESS"
 const AdvertisedRoute_ADVERTISEMENT_STATE_FAILED = "FAILED"
 
+func (s AdvertisedRoute) GetType__() bindings.BindingType {
+	return AdvertisedRouteBindingType()
+}
+
+func (s AdvertisedRoute) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for AdvertisedRoute._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Detailed information about an API Error
 type ApiError struct {
     // The module name where the error occurred
@@ -50,6 +68,23 @@ type ApiError struct {
 	RelatedErrors []RelatedApiError
 }
 
+func (s ApiError) GetType__() bindings.BindingType {
+	return ApiErrorBindingType()
+}
+
+func (s ApiError) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ApiError._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Advertised bgp routes
 type BGPAdvertisedRoutes struct {
     // Number of routes failed to advertise format: int32
@@ -58,11 +93,45 @@ type BGPAdvertisedRoutes struct {
 	AdvertisedRoutes []AdvertisedRoute
 }
 
+func (s BGPAdvertisedRoutes) GetType__() bindings.BindingType {
+	return BGPAdvertisedRoutesBindingType()
+}
+
+func (s BGPAdvertisedRoutes) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for BGPAdvertisedRoutes._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Learned bgp routes
 type BGPLearnedRoutes struct {
     // The route that is learned from BGP via Direct Connect format: ipv4-cidr-block
 	Ipv4Cidr []string
 }
+
+func (s BGPLearnedRoutes) GetType__() bindings.BindingType {
+	return BGPLearnedRoutesBindingType()
+}
+
+func (s BGPLearnedRoutes) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for BGPLearnedRoutes._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // A list of status of 'Enabled/Disabled' for a service connected to a linked vpc
 type ConnectedServiceListResult struct {
@@ -84,6 +153,23 @@ type ConnectedServiceListResult struct {
 	Results []ConnectedServiceStatus
 }
 
+func (s ConnectedServiceListResult) GetType__() bindings.BindingType {
+	return ConnectedServiceListResultBindingType()
+}
+
+func (s ConnectedServiceListResult) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ConnectedServiceListResult._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Status of 'Enabled/Disabled' for a service connected to a linked vpc
 type ConnectedServiceStatus struct {
     // status of service
@@ -91,6 +177,23 @@ type ConnectedServiceStatus struct {
     // service name
 	Name *string
 }
+
+func (s ConnectedServiceStatus) GetType__() bindings.BindingType {
+	return ConnectedServiceStatusBindingType()
+}
+
+func (s ConnectedServiceStatus) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ConnectedServiceStatus._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Direct Connect BGP related information
 type DirectConnectBgpInfo struct {
@@ -108,6 +211,23 @@ type DirectConnectBgpInfo struct {
 }
 const DirectConnectBgpInfo_ROUTE_PREFERENCE_DX_PREFERED_OVER_VPN = "DX_PREFERED_OVER_VPN"
 const DirectConnectBgpInfo_ROUTE_PREFERENCE_VPN_PREFERED_OVER_DX = "VPN_PREFERED_OVER_DX"
+
+func (s DirectConnectBgpInfo) GetType__() bindings.BindingType {
+	return DirectConnectBgpInfoBindingType()
+}
+
+func (s DirectConnectBgpInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for DirectConnectBgpInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Base class for resources that are discovered and automatically updated
 type DiscoveredResource struct {
@@ -128,6 +248,23 @@ type DiscoveredResource struct {
     // Opaque identifiers meaningful to the API user
 	Tags []Tag
 }
+
+func (s DiscoveredResource) GetType__() bindings.BindingType {
+	return DiscoveredResourceBindingType()
+}
+
+func (s DiscoveredResource) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for DiscoveredResource._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Base class for resources that are embedded in other resources
 type EmbeddedResource struct {
@@ -151,6 +288,23 @@ type EmbeddedResource struct {
 	Description *string
 }
 
+func (s EmbeddedResource) GetType__() bindings.BindingType {
+	return EmbeddedResourceBindingType()
+}
+
+func (s EmbeddedResource) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for EmbeddedResource._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Host elastic network interface (ENI)
 type HostEni struct {
     // Interface mac
@@ -168,6 +322,23 @@ type HostEni struct {
     // Interface id
 	InterfaceId *string
 }
+
+func (s HostEni) GetType__() bindings.BindingType {
+	return HostEniBindingType()
+}
+
+func (s HostEni) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for HostEni._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Host status
 type HostStatus struct {
@@ -194,6 +365,23 @@ const HostStatus_VMCD_STATUS_GREEN = "GREEN"
 const HostStatus_VMCD_STATUS_RED = "RED"
 const HostStatus_VMCD_STATUS_UNKNOWN = "UNKNOWN"
 
+func (s HostStatus) GetType__() bindings.BindingType {
+	return HostStatusBindingType()
+}
+
+func (s HostStatus) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for HostStatus._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Host status list result
 type HostStatusListResult struct {
     // Link to this resource
@@ -214,6 +402,23 @@ type HostStatusListResult struct {
 	Results []HostStatus
 }
 
+func (s HostStatusListResult) GetType__() bindings.BindingType {
+	return HostStatusListResultBindingType()
+}
+
+func (s HostStatusListResult) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for HostStatusListResult._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Host virtual distributed router (VDR)
 type HostVdr struct {
     // List of VDR routes
@@ -223,6 +428,23 @@ type HostVdr struct {
     // VDR type
 	Type_ *string
 }
+
+func (s HostVdr) GetType__() bindings.BindingType {
+	return HostVdrBindingType()
+}
+
+func (s HostVdr) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for HostVdr._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Statistics for a network interface
 type InterfaceStatistics struct {
@@ -246,12 +468,46 @@ type InterfaceStatistics struct {
 	TxPackets *int64
 }
 
+func (s InterfaceStatistics) GetType__() bindings.BindingType {
+	return InterfaceStatisticsBindingType()
+}
+
+func (s InterfaceStatistics) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for InterfaceStatistics._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 type IpAttachmentPair struct {
     // Management VM IP Address format: ipv4
 	Ip string
     // Attachment id which maps to management VM IP
 	AttachmentId string
 }
+
+func (s IpAttachmentPair) GetType__() bindings.BindingType {
+	return IpAttachmentPairBindingType()
+}
+
+func (s IpAttachmentPair) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for IpAttachmentPair._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Infromation related to a subnet where linked ENIs were created.
 type LinkedSubnetInfo struct {
@@ -262,6 +518,23 @@ type LinkedSubnetInfo struct {
     // Linked subnet availability zone
 	AvailabilityZone string
 }
+
+func (s LinkedSubnetInfo) GetType__() bindings.BindingType {
+	return LinkedSubnetInfoBindingType()
+}
+
+func (s LinkedSubnetInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for LinkedSubnetInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Linked VPC info
 type LinkedVpcInfo struct {
@@ -287,6 +560,23 @@ type LinkedVpcInfo struct {
 	ExternalId string
 }
 
+func (s LinkedVpcInfo) GetType__() bindings.BindingType {
+	return LinkedVpcInfoBindingType()
+}
+
+func (s LinkedVpcInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for LinkedVpcInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Linked VPC list query result
 type LinkedVpcsListResult struct {
     // Link to this resource
@@ -307,6 +597,23 @@ type LinkedVpcsListResult struct {
 	Results []LinkedVpcInfo
 }
 
+func (s LinkedVpcsListResult) GetType__() bindings.BindingType {
+	return LinkedVpcsListResultBindingType()
+}
+
+func (s LinkedVpcsListResult) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for LinkedVpcsListResult._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Base class for list results from collections
 type ListResult struct {
     // Link to this resource
@@ -324,6 +631,23 @@ type ListResult struct {
     // Count of results found (across all pages), set only on first page format: int64
 	ResultCount *int64
 }
+
+func (s ListResult) GetType__() bindings.BindingType {
+	return ListResultBindingType()
+}
+
+func (s ListResult) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ListResult._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Base type for resources that are managed by API clients
 type ManagedResource struct {
@@ -359,6 +683,23 @@ type ManagedResource struct {
 	ResourceType *string
 }
 
+func (s ManagedResource) GetType__() bindings.BindingType {
+	return ManagedResourceBindingType()
+}
+
+func (s ManagedResource) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ManagedResource._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // A service entry describes the detail of a network service.
 type MgmtServiceEntry struct {
     // Service path should refer to a valid service in the system. Service can be system defined or user defined.
@@ -366,6 +707,23 @@ type MgmtServiceEntry struct {
     // Display name for this service
 	DisplayName *string
 }
+
+func (s MgmtServiceEntry) GetType__() bindings.BindingType {
+	return MgmtServiceEntryBindingType()
+}
+
+func (s MgmtServiceEntry) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for MgmtServiceEntry._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Management VM access information
 type MgmtVmInfo struct {
@@ -382,6 +740,23 @@ type MgmtVmInfo struct {
     // Management VM identifier
 	Id *string
 }
+
+func (s MgmtVmInfo) GetType__() bindings.BindingType {
+	return MgmtVmInfoBindingType()
+}
+
+func (s MgmtVmInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for MgmtVmInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Management VM list query result
 type MgmtVmsListResult struct {
@@ -403,6 +778,23 @@ type MgmtVmsListResult struct {
 	Results []MgmtVmInfo
 }
 
+func (s MgmtVmsListResult) GetType__() bindings.BindingType {
+	return MgmtVmsListResultBindingType()
+}
+
+func (s MgmtVmsListResult) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for MgmtVmsListResult._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Network status entry
 type NetworkStatusEntry struct {
     // Indicate whether issues is a non-empty array
@@ -414,6 +806,23 @@ type NetworkStatusEntry struct {
     // Known issues detected with the entry
 	Issues []string
 }
+
+func (s NetworkStatusEntry) GetType__() bindings.BindingType {
+	return NetworkStatusEntryBindingType()
+}
+
+func (s NetworkStatusEntry) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for NetworkStatusEntry._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Key used to group network status inquiry results.
 type NetworkStatusKey struct {
@@ -451,6 +860,23 @@ const NetworkStatusKey_CONTEXT_PUBLIC = "PUBLIC"
 const NetworkStatusKey_CONTEXT_CONNECTED_VPC = "CONNECTED_VPC"
 const NetworkStatusKey_CONTEXT_DIRECT_CONNECT = "DIRECT_CONNECT"
 
+func (s NetworkStatusKey) GetType__() bindings.BindingType {
+	return NetworkStatusKeyBindingType()
+}
+
+func (s NetworkStatusKey) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for NetworkStatusKey._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // List of network status
 type NetworkStatusKeyValuePair struct {
     // Network status value
@@ -458,6 +884,23 @@ type NetworkStatusKeyValuePair struct {
     // Network status key
 	Key *NetworkStatusKey
 }
+
+func (s NetworkStatusKeyValuePair) GetType__() bindings.BindingType {
+	return NetworkStatusKeyValuePairBindingType()
+}
+
+func (s NetworkStatusKeyValuePair) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for NetworkStatusKeyValuePair._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // List of network status
 type NetworkStatusListResult struct {
@@ -481,6 +924,23 @@ type NetworkStatusListResult struct {
 	Issues []string
 }
 
+func (s NetworkStatusListResult) GetType__() bindings.BindingType {
+	return NetworkStatusListResultBindingType()
+}
+
+func (s NetworkStatusListResult) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for NetworkStatusListResult._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The server will populate this field when returing the resource. Ignored on PUT and POST.
 type OwnerResourceLink struct {
     // Optional action
@@ -491,6 +951,23 @@ type OwnerResourceLink struct {
 	Rel *string
 }
 
+func (s OwnerResourceLink) GetType__() bindings.BindingType {
+	return OwnerResourceLinkBindingType()
+}
+
+func (s OwnerResourceLink) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for OwnerResourceLink._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Service IP prefixes information
 type PrefixInfo struct {
     // Service IP prefixes format: ipv4-cidr-block
@@ -498,6 +975,23 @@ type PrefixInfo struct {
     // Display name
 	DisplayName *string
 }
+
+func (s PrefixInfo) GetType__() bindings.BindingType {
+	return PrefixInfoBindingType()
+}
+
+func (s PrefixInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for PrefixInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Service Prefix list query result
 type PrefixesListResult struct {
@@ -519,6 +1013,23 @@ type PrefixesListResult struct {
 	Results []PrefixInfo
 }
 
+func (s PrefixesListResult) GetType__() bindings.BindingType {
+	return PrefixesListResultBindingType()
+}
+
+func (s PrefixesListResult) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for PrefixesListResult._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 type PublicIp struct {
     // IPv4 address format: ipv4
 	Ip *string
@@ -526,6 +1037,23 @@ type PublicIp struct {
     // Public IP identifier
 	Id *string
 }
+
+func (s PublicIp) GetType__() bindings.BindingType {
+	return PublicIpBindingType()
+}
+
+func (s PublicIp) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for PublicIp._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Public IP list
 type PublicIpsListResult struct {
@@ -547,6 +1075,23 @@ type PublicIpsListResult struct {
 	Results []PublicIp
 }
 
+func (s PublicIpsListResult) GetType__() bindings.BindingType {
+	return PublicIpsListResultBindingType()
+}
+
+func (s PublicIpsListResult) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for PublicIpsListResult._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Detailed information about a related API error
 type RelatedApiError struct {
     // The module name where the error occurred
@@ -561,6 +1106,23 @@ type RelatedApiError struct {
 	ErrorData *data.StructValue
 }
 
+func (s RelatedApiError) GetType__() bindings.BindingType {
+	return RelatedApiErrorBindingType()
+}
+
+func (s RelatedApiError) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for RelatedApiError._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Base class for resources
 type Resource struct {
     // Link to this resource
@@ -571,6 +1133,23 @@ type Resource struct {
 	Schema *string
 }
 
+func (s Resource) GetType__() bindings.BindingType {
+	return ResourceBindingType()
+}
+
+func (s Resource) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for Resource._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // A link to a related resource
 type ResourceLink struct {
     // Optional action
@@ -580,6 +1159,23 @@ type ResourceLink struct {
     // Custom relation type (follows RFC 5988 where appropriate definitions exist)
 	Rel *string
 }
+
+func (s ResourceLink) GetType__() bindings.BindingType {
+	return ResourceLinkBindingType()
+}
+
+func (s ResourceLink) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ResourceLink._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // A base class for types that track revisions
 type RevisionedResource struct {
@@ -592,6 +1188,23 @@ type RevisionedResource struct {
     // The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
 	Revision *int64
 }
+
+func (s RevisionedResource) GetType__() bindings.BindingType {
+	return RevisionedResourceBindingType()
+}
+
+func (s RevisionedResource) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for RevisionedResource._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // SDDC configuration parameters for users. User-level addresses/CIDRs are provided.
 type SddcUserConfiguration struct {
@@ -627,6 +1240,23 @@ type SddcUserConfiguration struct {
 	ManagementGatewayLabel string
 }
 
+func (s SddcUserConfiguration) GetType__() bindings.BindingType {
+	return SddcUserConfigurationBindingType()
+}
+
+func (s SddcUserConfiguration) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SddcUserConfiguration._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The server will populate this field when returing the resource. Ignored on PUT and POST.
 type SelfResourceLink struct {
     // Optional action
@@ -637,6 +1267,23 @@ type SelfResourceLink struct {
 	Rel *string
 }
 
+func (s SelfResourceLink) GetType__() bindings.BindingType {
+	return SelfResourceLinkBindingType()
+}
+
+func (s SelfResourceLink) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SelfResourceLink._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Arbitrary key-value pairs that may be attached to an entity
 type Tag struct {
     // Tag searches may optionally be restricted by scope
@@ -644,6 +1291,23 @@ type Tag struct {
     // Identifier meaningful to user
 	Tag *string
 }
+
+func (s Tag) GetType__() bindings.BindingType {
+	return TagBindingType()
+}
+
+func (s Tag) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for Tag._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Task properties
 type TaskProperties struct {
@@ -694,6 +1358,23 @@ const TaskProperties_STATUS_CANCELING = "canceling"
 const TaskProperties_STATUS_CANCELED = "canceled"
 const TaskProperties_STATUS_KILLED = "killed"
 
+func (s TaskProperties) GetType__() bindings.BindingType {
+	return TaskPropertiesBindingType()
+}
+
+func (s TaskProperties) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for TaskProperties._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // A component that processed the packet injected by traceflow
 type TraceflowAction struct {
     // Reason to drop or reject packet if it is not forwarded
@@ -724,6 +1405,23 @@ const TraceflowAction_COMPONENT_SUB_TYPE_VDR = "VDR"
 const TraceflowAction_COMPONENT_SUB_TYPE_ENI = "ENI"
 const TraceflowAction_COMPONENT_SUB_TYPE_AWS_GATEWAY = "AWS_GATEWAY"
 
+func (s TraceflowAction) GetType__() bindings.BindingType {
+	return TraceflowActionBindingType()
+}
+
+func (s TraceflowAction) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for TraceflowAction._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // A list containing all traceflow actions that have been taken to process the packet
 type TraceflowActionListResults struct {
     // Link to this resource
@@ -744,6 +1442,23 @@ type TraceflowActionListResults struct {
 	Results []TraceflowAction
 }
 
+func (s TraceflowActionListResults) GetType__() bindings.BindingType {
+	return TraceflowActionListResultsBindingType()
+}
+
+func (s TraceflowActionListResults) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for TraceflowActionListResults._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Shadow account and linked VPC account
 type VMCAccounts struct {
     // linked VPC account number
@@ -751,6 +1466,23 @@ type VMCAccounts struct {
     // Shadow VPC account number
 	ShadowAccount string
 }
+
+func (s VMCAccounts) GetType__() bindings.BindingType {
+	return VMCAccountsBindingType()
+}
+
+func (s VMCAccounts) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VMCAccounts._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Virtual distributed router (VDR) LIF
 type VdrLif struct {
@@ -764,6 +1496,23 @@ type VdrLif struct {
 	VlanId *int64
 }
 
+func (s VdrLif) GetType__() bindings.BindingType {
+	return VdrLifBindingType()
+}
+
+func (s VdrLif) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VdrLif._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Virtual Distributed Router (VDR) route entry
 type VdrRoute struct {
     // Destination IP CIDR Block format: ipv4-cidr-block
@@ -773,6 +1522,23 @@ type VdrRoute struct {
     // Outgoing Lif ID
 	LifId *string
 }
+
+func (s VdrRoute) GetType__() bindings.BindingType {
+	return VdrRouteBindingType()
+}
+
+func (s VdrRoute) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VdrRoute._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Direct Connect VIFs (Virtual Interface) list query result
 type VifsListResult struct {
@@ -793,6 +1559,23 @@ type VifsListResult struct {
     // VIFs list
 	Results []VirtualInterface
 }
+
+func (s VifsListResult) GetType__() bindings.BindingType {
+	return VifsListResultBindingType()
+}
+
+func (s VifsListResult) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VifsListResult._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 type VirtualInterface struct {
     // Identifier for the Direct Connect
@@ -847,6 +1630,23 @@ const VirtualInterface_STATE_ERROR = "ERROR"
 const VirtualInterface_BGP_STATUS_UP = "UP"
 const VirtualInterface_BGP_STATUS_DOWN = "DOWN"
 
+func (s VirtualInterface) GetType__() bindings.BindingType {
+	return VirtualInterfaceBindingType()
+}
+
+func (s VirtualInterface) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VirtualInterface._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Represents aggregated realized status for intent entity across associated realized entities.
 type VmcConsolidatedRealizedStatus struct {
     // Consolidated state of objects for a given intent entity.
@@ -856,6 +1656,23 @@ type VmcConsolidatedRealizedStatus struct {
     // Intent path of the object representing this consolidated state.
 	IntentPath *string
 }
+
+func (s VmcConsolidatedRealizedStatus) GetType__() bindings.BindingType {
+	return VmcConsolidatedRealizedStatusBindingType()
+}
+
+func (s VmcConsolidatedRealizedStatus) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VmcConsolidatedRealizedStatus._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Consolidated status of an object.
 type VmcConsolidatedStatus struct {
@@ -876,6 +1693,23 @@ const VmcConsolidatedStatus_CONSOLIDATED_STATUS_SUCCESS = "SUCCESS"
 const VmcConsolidatedStatus_CONSOLIDATED_STATUS_ERROR = "ERROR"
 const VmcConsolidatedStatus_CONSOLIDATED_STATUS_UNAVAILABLE = "UNAVAILABLE"
 
+func (s VmcConsolidatedStatus) GetType__() bindings.BindingType {
+	return VmcConsolidatedStatusBindingType()
+}
+
+func (s VmcConsolidatedStatus) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VmcConsolidatedStatus._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Realized status consolidated by individual objects.
 type VmcConsolidatedStatusPerObject struct {
     // Detailed consolidated realized status for an intent object.
@@ -883,6 +1717,23 @@ type VmcConsolidatedStatusPerObject struct {
     // Object id used to consolidate state. This can be a particular backend task/job, etc.
 	ObjectId string
 }
+
+func (s VmcConsolidatedStatusPerObject) GetType__() bindings.BindingType {
+	return VmcConsolidatedStatusPerObjectBindingType()
+}
+
+func (s VmcConsolidatedStatusPerObject) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VmcConsolidatedStatusPerObject._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 

@@ -60,7 +60,7 @@ func nsxVmcAwsIntegrationAttachVifRestMetadata() protocol.OperationRestMetadata 
 	pathParams["vif_id"] = "vifId"
 	queryParams["action"] = "action"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -115,7 +115,7 @@ func nsxVmcAwsIntegrationCreatePublicIpRestMetadata() protocol.OperationRestMeta
 	paramsTypeMap["publicIpId"] = bindings.NewStringType()
 	pathParams["public_ip_id"] = "publicIpId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -171,7 +171,7 @@ func nsxVmcAwsIntegrationDeletePublicIpRestMetadata() protocol.OperationRestMeta
 	pathParams["public_ip_id"] = "publicIpId"
 	queryParams["force"] = "force"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -221,7 +221,7 @@ func nsxVmcAwsIntegrationDeleteVifByIdRestMetadata() protocol.OperationRestMetad
 	paramsTypeMap["vifId"] = bindings.NewStringType()
 	pathParams["vif_id"] = "vifId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -264,7 +264,7 @@ func nsxVmcAwsIntegrationGetDxBgpInfoRestMetadata() protocol.OperationRestMetada
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -314,7 +314,7 @@ func nsxVmcAwsIntegrationGetLinkedVpcRestMetadata() protocol.OperationRestMetada
 	paramsTypeMap["linkedVpcId"] = bindings.NewStringType()
 	pathParams["linked_vpc_id"] = "linkedVpcId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -364,7 +364,7 @@ func nsxVmcAwsIntegrationGetMgmtVmInfoRestMetadata() protocol.OperationRestMetad
 	paramsTypeMap["vmId"] = bindings.NewStringType()
 	pathParams["vm_id"] = "vmId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -414,7 +414,7 @@ func nsxVmcAwsIntegrationGetPublicIpRestMetadata() protocol.OperationRestMetadat
 	paramsTypeMap["publicIpId"] = bindings.NewStringType()
 	pathParams["public_ip_id"] = "publicIpId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -463,7 +463,7 @@ func nsxVmcAwsIntegrationGetRealizedStateStatusRestMetadata() protocol.Operation
 	paramsTypeMap["intent_path"] = bindings.NewStringType()
 	queryParams["intent_path"] = "intent_path"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -506,7 +506,7 @@ func nsxVmcAwsIntegrationGetSddcUserConfigRestMetadata() protocol.OperationRestM
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -549,7 +549,7 @@ func nsxVmcAwsIntegrationListAccountsRestMetadata() protocol.OperationRestMetada
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -592,7 +592,7 @@ func nsxVmcAwsIntegrationListAdvertisedRoutesRestMetadata() protocol.OperationRe
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -642,7 +642,7 @@ func nsxVmcAwsIntegrationListConnectedServicesRestMetadata() protocol.OperationR
 	paramsTypeMap["linkedVpcId"] = bindings.NewStringType()
 	pathParams["linked_vpc_id"] = "linkedVpcId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -685,7 +685,7 @@ func nsxVmcAwsIntegrationListLearnedRoutesRestMetadata() protocol.OperationRestM
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -728,7 +728,7 @@ func nsxVmcAwsIntegrationListLinkedVpcsRestMetadata() protocol.OperationRestMeta
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -771,7 +771,7 @@ func nsxVmcAwsIntegrationListMgmtVmsRestMetadata() protocol.OperationRestMetadat
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -814,7 +814,7 @@ func nsxVmcAwsIntegrationListPublicIpsRestMetadata() protocol.OperationRestMetad
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -857,7 +857,7 @@ func nsxVmcAwsIntegrationListVifsRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -919,7 +919,7 @@ func nsxVmcAwsIntegrationUpdateConnectedServiceRestMetadata() protocol.Operation
 	pathParams["linked_vpc_id"] = "linkedVpcId"
 	pathParams["service_name"] = "serviceName"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -967,7 +967,7 @@ func nsxVmcAwsIntegrationUpdateDxBgpInfoRestMetadata() protocol.OperationRestMet
 	fieldNameMap["direct_connect_bgp_info"] = "DirectConnectBgpInfo"
 	paramsTypeMap["direct_connect_bgp_info"] = bindings.NewReferenceType(model.DirectConnectBgpInfoBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
