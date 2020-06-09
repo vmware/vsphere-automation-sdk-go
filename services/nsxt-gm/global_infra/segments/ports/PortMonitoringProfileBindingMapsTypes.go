@@ -66,7 +66,7 @@ func portMonitoringProfileBindingMapsGetRestMetadata() protocol.OperationRestMet
 	pathParams["port_monitoring_profile_binding_map_id"] = "portMonitoringProfileBindingMapId"
 	pathParams["infra_segment_id"] = "infraSegmentId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -159,7 +159,7 @@ func portMonitoringProfileBindingMapsListRestMetadata() protocol.OperationRestMe
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

@@ -81,7 +81,7 @@ func searchCreateRestMetadata() protocol.OperationRestMetadata {
 	queryParams["search_string"] = "search_string"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

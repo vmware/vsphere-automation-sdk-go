@@ -59,7 +59,7 @@ func staticArpDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams["segment_id"] = "segmentId"
 	pathParams["tier1_id"] = "tier1Id"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -116,7 +116,7 @@ func staticArpGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams["segment_id"] = "segmentId"
 	pathParams["tier1_id"] = "tier1Id"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -178,7 +178,7 @@ func staticArpPatchRestMetadata() protocol.OperationRestMetadata {
 	pathParams["segment_id"] = "segmentId"
 	pathParams["tier1_id"] = "tier1Id"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -240,7 +240,7 @@ func staticArpUpdateRestMetadata() protocol.OperationRestMetadata {
 	pathParams["segment_id"] = "segmentId"
 	pathParams["tier1_id"] = "tier1Id"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

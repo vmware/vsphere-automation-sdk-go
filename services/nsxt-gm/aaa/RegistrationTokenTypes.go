@@ -45,7 +45,7 @@ func registrationTokenCreateRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -95,7 +95,7 @@ func registrationTokenDeleteRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["token"] = bindings.NewStringType()
 	pathParams["token"] = "token"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -145,7 +145,7 @@ func registrationTokenGetRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["token"] = bindings.NewStringType()
 	pathParams["token"] = "token"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

@@ -52,7 +52,7 @@ func versionWhitelistGetRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["componentType"] = bindings.NewStringType()
 	pathParams["component_type"] = "componentType"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -95,7 +95,7 @@ func versionWhitelistListRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -150,7 +150,7 @@ func versionWhitelistUpdateRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["componentType"] = bindings.NewStringType()
 	pathParams["component_type"] = "componentType"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

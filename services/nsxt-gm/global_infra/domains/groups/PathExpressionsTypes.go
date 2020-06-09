@@ -81,7 +81,7 @@ func pathExpressionsCreateRestMetadata() protocol.OperationRestMetadata {
 	pathParams["domain_id"] = "domainId"
 	queryParams["action"] = "action"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -145,7 +145,7 @@ func pathExpressionsDeleteRestMetadata() protocol.OperationRestMetadata {
 	pathParams["group_id"] = "groupId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -214,7 +214,7 @@ func pathExpressionsPatchRestMetadata() protocol.OperationRestMetadata {
 	pathParams["group_id"] = "groupId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

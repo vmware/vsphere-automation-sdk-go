@@ -58,7 +58,7 @@ func searchCreateRestMetadata() protocol.OperationRestMetadata {
 	pathParams["ldap_identity_source_id"] = "ldapIdentitySourceId"
 	queryParams["filter_value"] = "filter_value"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

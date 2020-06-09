@@ -99,7 +99,7 @@ func effectiveResourcesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

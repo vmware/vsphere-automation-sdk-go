@@ -75,7 +75,7 @@ func rolesWithFeaturePermissionsListRestMetadata() protocol.OperationRestMetadat
 	queryParams["sort_by"] = "sort_by"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

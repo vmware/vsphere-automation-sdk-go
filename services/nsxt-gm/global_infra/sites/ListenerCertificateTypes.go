@@ -57,7 +57,7 @@ func listenerCertificateGetRestMetadata() protocol.OperationRestMetadata {
 	queryParams["address"] = "address"
 	queryParams["port"] = "port"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

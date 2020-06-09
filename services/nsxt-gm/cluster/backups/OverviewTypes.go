@@ -101,7 +101,7 @@ func overviewListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["frame_type"] = "frame_type"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

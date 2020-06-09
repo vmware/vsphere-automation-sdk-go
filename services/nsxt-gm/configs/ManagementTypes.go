@@ -45,7 +45,7 @@ func managementGetRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -93,7 +93,7 @@ func managementUpdateRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["management_config"] = "ManagementConfig"
 	paramsTypeMap["management_config"] = bindings.NewReferenceType(model.ManagementConfigBindingType)
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
