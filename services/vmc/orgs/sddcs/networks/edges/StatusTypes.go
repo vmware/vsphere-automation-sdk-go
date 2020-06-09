@@ -78,7 +78,7 @@ func statusGetRestMetadata() protocol.OperationRestMetadata {
 	queryParams["detailed"] = "detailed"
 	queryParams["getlatest"] = "getlatest"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

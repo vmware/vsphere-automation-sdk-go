@@ -51,7 +51,7 @@ func accountLinkGetRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["org"] = bindings.NewStringType()
 	pathParams["org"] = "org"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

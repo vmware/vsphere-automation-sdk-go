@@ -78,7 +78,7 @@ func interfacesGetRestMetadata() protocol.OperationRestMetadata {
 	queryParams["start_time"] = "startTime"
 	queryParams["end_time"] = "endTime"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

@@ -83,7 +83,7 @@ func peerconfigGetRestMetadata() protocol.OperationRestMetadata {
 	queryParams["templateid"] = "templateid"
 	queryParams["objectid"] = "objectid"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

@@ -79,7 +79,7 @@ func credentialsCreateRestMetadata() protocol.OperationRestMetadata {
 	pathParams["sddc_id"] = "sddcId"
 	pathParams["addon_type"] = "addonType"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -150,7 +150,7 @@ func credentialsGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams["addon_type"] = "addonType"
 	pathParams["name"] = "name"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -214,7 +214,7 @@ func credentialsListRestMetadata() protocol.OperationRestMetadata {
 	pathParams["sddc_id"] = "sddcId"
 	pathParams["addon_type"] = "addonType"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -290,7 +290,7 @@ func credentialsUpdateRestMetadata() protocol.OperationRestMetadata {
 	pathParams["addon_type"] = "addonType"
 	pathParams["name"] = "name"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

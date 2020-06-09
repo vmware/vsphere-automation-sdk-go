@@ -107,7 +107,7 @@ func edgesGetRestMetadata() protocol.OperationRestMetadata {
 	queryParams["sort_order_ascending"] = "sortOrderAscending"
 	queryParams["ld_rname"] = "LDRname"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

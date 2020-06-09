@@ -72,7 +72,7 @@ func firewallGetRestMetadata() protocol.OperationRestMetadata {
 	pathParams["sddc"] = "sddc"
 	queryParams["interval"] = "interval"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

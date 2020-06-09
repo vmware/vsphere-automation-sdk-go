@@ -4,13 +4,13 @@
 // Code generated. DO NOT EDIT.
 
 /*
- * Data type definitions file for service: Public.
+ * Data type definitions file for service: Primarycluster.
  * Includes binding types of a structures and enumerations defined in the service.
  * Shared by client-side stubs and server-side skeletons to ensure type
  * compatibility.
  */
 
-package dns
+package sddcs
 
 import (
 	"reflect"
@@ -24,7 +24,7 @@ import (
 
 
 
-func publicUpdateInputType() bindings.StructType {
+func primaryclusterGetInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org"] = bindings.NewStringType()
@@ -35,11 +35,11 @@ func publicUpdateInputType() bindings.StructType {
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func publicUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TaskBindingType)
+func primaryclusterGetOutputType() bindings.BindingType {
+	return bindings.NewReferenceType(model.ClusterBindingType)
 }
 
-func publicUpdateRestMetadata() protocol.OperationRestMetadata {
+func primaryclusterGetRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -73,14 +73,14 @@ func publicUpdateRestMetadata() protocol.OperationRestMetadata {
 		bodyFieldsMap,
 		"",
 		"",
-		"PUT",
-		"/vmc/api/orgs/{org}/sddcs/{sddc}/dns/public",
+		"GET",
+		"/vmc/api/orgs/{org}/sddcs/{sddc}/primarycluster",
 		"",
 		resultHeaders,
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 
