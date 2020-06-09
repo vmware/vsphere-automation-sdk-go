@@ -15,6 +15,8 @@ package authentication
 import (
 	"reflect"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 )
 
 
@@ -36,6 +38,23 @@ type AuthenticationInfo struct {
     // * The identifier ``com.vmware.vapi.std.security.user_pass`` for username and password based authentication mechanism.
 	Scheme string
 }
+
+func (s AuthenticationInfo) GetType__() bindings.BindingType {
+	return AuthenticationInfoBindingType()
+}
+
+func (s AuthenticationInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for AuthenticationInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``SchemeType`` enumeration class provides enumeration constants for the set of valid authentication scheme types.
 //
@@ -73,6 +92,23 @@ type ComponentData struct {
 	Fingerprint string
 }
 
+func (s ComponentData) GetType__() bindings.BindingType {
+	return ComponentDataBindingType()
+}
+
+func (s ComponentData) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ComponentData._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``ComponentInfo`` class contains authentication information of a component element. 
 //
 //  For an explanation of authentication information contained within component elements, see Component.
@@ -83,11 +119,45 @@ type ComponentInfo struct {
 	Packages map[string]PackageInfo
 }
 
+func (s ComponentInfo) GetType__() bindings.BindingType {
+	return ComponentInfoBindingType()
+}
+
+func (s ComponentInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ComponentInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``OperationInfo`` class contains authentication information of an operation element.
 type OperationInfo struct {
     // List of authentication schemes used by an operation element. The authentication scheme specified on the service element corresponding to this operation element is ignored.
 	Schemes []AuthenticationInfo
 }
+
+func (s OperationInfo) GetType__() bindings.BindingType {
+	return OperationInfoBindingType()
+}
+
+func (s OperationInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for OperationInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``PackageInfo`` class contains authentication information of a package element. 
 //
@@ -101,6 +171,23 @@ type PackageInfo struct {
 	Services map[string]ServiceInfo
 }
 
+func (s PackageInfo) GetType__() bindings.BindingType {
+	return PackageInfoBindingType()
+}
+
+func (s PackageInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for PackageInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``ServiceInfo`` class contains authentication information of a service element. 
 //
 //  For an explanation of authentication information contained within service elements, see Service.
@@ -112,6 +199,23 @@ type ServiceInfo struct {
     //  For an explanation of containment of authentication information within operation elements, see Operation.
 	Operations map[string]OperationInfo
 }
+
+func (s ServiceInfo) GetType__() bindings.BindingType {
+	return ServiceInfoBindingType()
+}
+
+func (s ServiceInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ServiceInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 

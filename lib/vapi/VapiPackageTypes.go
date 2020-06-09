@@ -15,6 +15,8 @@ package vapi
 import (
 	"reflect"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/authentication"
 	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/cli"
 	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/metamodel"
@@ -37,6 +39,23 @@ type ComponentInfo struct {
 	Privilege *privilege.ComponentInfo
 }
 
+func (s ComponentInfo) GetType__() bindings.BindingType {
+	return ComponentInfoBindingType()
+}
+
+func (s ComponentInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ComponentInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``MetadataInfo`` is a class which holds a map of the available metadata aggregated in a ComponentInfo class.
 type MetadataInfo struct {
     // Version of the current ``MetadataInfo`` class. Property value changes when the content of the ``MetadataInfo`` or referenced classes changes. This enables class processing adjustments.
@@ -44,6 +63,23 @@ type MetadataInfo struct {
     // Component information of all available components. The key in the map is the identifier of the component and the value is the aggregated ComponentInfo.
 	Metadata map[string]ComponentInfo
 }
+
+func (s MetadataInfo) GetType__() bindings.BindingType {
+	return MetadataInfoBindingType()
+}
+
+func (s MetadataInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for MetadataInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 

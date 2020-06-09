@@ -16,6 +16,7 @@ import (
 	"reflect"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 )
 
 
@@ -33,6 +34,23 @@ type InvocationRequest struct {
 	Groups []SecurityPrincipal
 }
 
+func (s InvocationRequest) GetType__() bindings.BindingType {
+	return InvocationRequestBindingType()
+}
+
+func (s InvocationRequest) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for InvocationRequest._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Information about the result from an interposed operation invocation. All POST interposers will receive an instance of this structure.
 type InvocationResult struct {
     // Type of the invocation result.
@@ -42,6 +60,23 @@ type InvocationResult struct {
     // Error result value.
 	Error_ *data.StructValue
 }
+
+func (s InvocationResult) GetType__() bindings.BindingType {
+	return InvocationResultBindingType()
+}
+
+func (s InvocationResult) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for InvocationResult._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // Type of the invocation result.
 //
@@ -74,6 +109,23 @@ type SecurityPrincipal struct {
     // Principal domain.
 	Domain *string
 }
+
+func (s SecurityPrincipal) GetType__() bindings.BindingType {
+	return SecurityPrincipalBindingType()
+}
+
+func (s SecurityPrincipal) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SecurityPrincipal._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 

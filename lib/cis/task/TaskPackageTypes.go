@@ -16,6 +16,7 @@ import (
 	"reflect"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std"
 	"time"
 )
@@ -67,6 +68,23 @@ type Progress struct {
 	Message std.LocalizableMessage
 }
 
+func (s Progress) GetType__() bindings.BindingType {
+	return ProgressBindingType()
+}
+
+func (s Progress) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for Progress._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``CommonInfo`` class contains information common to all tasks.
 type CommonInfo struct {
     // Description of the operation associated with the task.
@@ -92,6 +110,23 @@ type CommonInfo struct {
     // Name of the user who performed the operation.
 	User *string
 }
+
+func (s CommonInfo) GetType__() bindings.BindingType {
+	return CommonInfoBindingType()
+}
+
+func (s CommonInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for CommonInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The ``Info`` class contains information about a task.
 type Info struct {
@@ -122,6 +157,23 @@ type Info struct {
     // Name of the user who performed the operation.
 	User *string
 }
+
+func (s Info) GetType__() bindings.BindingType {
+	return InfoBindingType()
+}
+
+func (s Info) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for Info._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 

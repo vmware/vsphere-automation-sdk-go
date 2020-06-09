@@ -48,7 +48,7 @@ func modelListRestMetadata() protocol.OperationRestMetadata {
 	fields["resource_id"] = bindings.NewIdType([]string{"com.vmware.vapi.resource"}, "")
 	fieldNameMap["resource_id"] = "ResourceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

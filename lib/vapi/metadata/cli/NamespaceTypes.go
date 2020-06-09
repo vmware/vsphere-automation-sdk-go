@@ -16,6 +16,7 @@ import (
 	"reflect"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
 )
 
@@ -29,6 +30,23 @@ type NamespaceIdentity struct {
 	Name string
 }
 
+func (s NamespaceIdentity) GetType__() bindings.BindingType {
+	return NamespaceIdentityBindingType()
+}
+
+func (s NamespaceIdentity) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for NamespaceIdentity._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // The ``Info`` class contains information about a namespace. It includes the identity of the namespace, a description, information children namespaces.
 type NamespaceInfo struct {
     // Basic namespace identity.
@@ -38,6 +56,23 @@ type NamespaceInfo struct {
     // The children of this namespace in the tree of CLI namespaces.
 	Children []NamespaceIdentity
 }
+
+func (s NamespaceInfo) GetType__() bindings.BindingType {
+	return NamespaceInfoBindingType()
+}
+
+func (s NamespaceInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for NamespaceInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 
 
@@ -62,7 +97,7 @@ func namespaceListRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -109,7 +144,7 @@ func namespaceGetRestMetadata() protocol.OperationRestMetadata {
 	fields["identity"] = bindings.NewReferenceType(NamespaceIdentityBindingType)
 	fieldNameMap["identity"] = "Identity"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -152,7 +187,7 @@ func namespaceFingerprintRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

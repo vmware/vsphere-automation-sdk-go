@@ -16,6 +16,7 @@ import (
 	"reflect"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
 )
 
@@ -32,6 +33,23 @@ type OperationDataDefinition struct {
     // Fields of the structure type. The key of the map is the canonical name of the field and the value is the OperationDataDefinition for the field. The order of the structure fields defined in IDL is not maintained by the Operation service.
 	Fields map[string]OperationDataDefinition
 }
+
+func (s OperationDataDefinition) GetType__() bindings.BindingType {
+	return OperationDataDefinitionBindingType()
+}
+
+func (s OperationDataDefinition) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for OperationDataDefinition._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 
 // The OperationDataDefinitionDataType enumeration provides values representing the data types supported by the vAPI infrastructure.
 //
@@ -123,6 +141,23 @@ type OperationInfo struct {
 	ErrorDefinitions []OperationDataDefinition
 }
 
+func (s OperationInfo) GetType__() bindings.BindingType {
+	return OperationInfoBindingType()
+}
+
+func (s OperationInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for OperationInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 
 
 func operationListInputType() bindings.StructType {
@@ -150,7 +185,7 @@ func operationListRestMetadata() protocol.OperationRestMetadata {
 	fields["service_id"] = bindings.NewIdType([]string{"com.vmware.vapi.service"}, "")
 	fieldNameMap["service_id"] = "ServiceId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -201,7 +236,7 @@ func operationGetRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["operation_id"] = "OperationId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,

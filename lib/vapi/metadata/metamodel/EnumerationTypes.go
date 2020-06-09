@@ -46,7 +46,7 @@ func enumerationListRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -93,7 +93,7 @@ func enumerationGetRestMetadata() protocol.OperationRestMetadata {
 	fields["enumeration_id"] = bindings.NewIdType([]string{"com.vmware.vapi.enumeration"}, "")
 	fieldNameMap["enumeration_id"] = "EnumerationId"
 	resultHeaders := map[string]string{}
-	errorHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
