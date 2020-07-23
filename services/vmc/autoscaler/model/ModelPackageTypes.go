@@ -25,13 +25,15 @@ type AbstractEntity struct {
 	Updated time.Time
     // User id that last updated this record
 	UserId string
-    // User name that last updated this record
-	UpdatedByUserName string
     // User id that last updated this record
 	UpdatedByUserId string
     // User name that last updated this record
-	UserName string
+	UpdatedByUserName string
 	Created time.Time
+    // User name that last updated this record
+	UserName string
+    // Unique ID for this entity
+	Id string
 }
 
 func (s AbstractEntity) GetType__() bindings.BindingType {
@@ -227,13 +229,15 @@ type Task struct {
 	Updated time.Time
     // User id that last updated this record
 	UserId string
-    // User name that last updated this record
-	UpdatedByUserName string
     // User id that last updated this record
 	UpdatedByUserId string
     // User name that last updated this record
-	UserName string
+	UpdatedByUserName string
 	Created time.Time
+    // User name that last updated this record
+	UserName string
+    // Unique ID for this entity
+	Id string
     // Possible values are: 
     //
     // * Task#Task_STATUS_STARTED
@@ -325,14 +329,16 @@ func AbstractEntityBindingType() bindings.BindingType {
 	fieldNameMap["updated"] = "Updated"
 	fields["user_id"] = bindings.NewStringType()
 	fieldNameMap["user_id"] = "UserId"
-	fields["updated_by_user_name"] = bindings.NewStringType()
-	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
 	fields["updated_by_user_id"] = bindings.NewStringType()
 	fieldNameMap["updated_by_user_id"] = "UpdatedByUserId"
-	fields["user_name"] = bindings.NewStringType()
-	fieldNameMap["user_name"] = "UserName"
+	fields["updated_by_user_name"] = bindings.NewStringType()
+	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
 	fields["created"] = bindings.NewDateTimeType()
 	fieldNameMap["created"] = "Created"
+	fields["user_name"] = bindings.NewStringType()
+	fieldNameMap["user_name"] = "UserName"
+	fields["id"] = bindings.NewStringType()
+	fieldNameMap["id"] = "Id"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.model.abstract_entity", fields, reflect.TypeOf(AbstractEntity{}), fieldNameMap, validators)
 }
@@ -427,14 +433,16 @@ func TaskBindingType() bindings.BindingType {
 	fieldNameMap["updated"] = "Updated"
 	fields["user_id"] = bindings.NewStringType()
 	fieldNameMap["user_id"] = "UserId"
-	fields["updated_by_user_name"] = bindings.NewStringType()
-	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
 	fields["updated_by_user_id"] = bindings.NewStringType()
 	fieldNameMap["updated_by_user_id"] = "UpdatedByUserId"
-	fields["user_name"] = bindings.NewStringType()
-	fieldNameMap["user_name"] = "UserName"
+	fields["updated_by_user_name"] = bindings.NewStringType()
+	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
 	fields["created"] = bindings.NewDateTimeType()
 	fieldNameMap["created"] = "Created"
+	fields["user_name"] = bindings.NewStringType()
+	fieldNameMap["user_name"] = "UserName"
+	fields["id"] = bindings.NewStringType()
+	fieldNameMap["id"] = "Id"
 	fields["status"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["status"] = "Status"
 	fields["resource_id"] = bindings.NewOptionalType(bindings.NewStringType())

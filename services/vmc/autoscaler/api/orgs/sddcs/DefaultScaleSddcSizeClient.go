@@ -5,12 +5,12 @@
 // Code generated. DO NOT EDIT.
 
 /*
- * Client stubs for service: Analysis
- * Functions that implement the generated AnalysisClient interface
+ * Client stubs for service: ScaleSddcSize
+ * Functions that implement the generated ScaleSddcSizeClient interface
  */
 
 
-package xlb
+package sddcs
 
 import (
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/vmc/autoscaler/model"
@@ -23,7 +23,7 @@ import (
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol/client"
 )
 
-type DefaultAnalysisClient struct {
+type DefaultScaleSddcSizeClient struct {
 	interfaceName       string
 	interfaceDefinition core.InterfaceDefinition
 	methodIdentifiers   []core.MethodIdentifier
@@ -33,8 +33,8 @@ type DefaultAnalysisClient struct {
 	connector           client.Connector
 }
 
-func NewDefaultAnalysisClient(connector client.Connector) *DefaultAnalysisClient {
-	interfaceName := "com.vmware.api.orgs.sddcs.xlb.analysis"
+func NewDefaultScaleSddcSizeClient(connector client.Connector) *DefaultScaleSddcSizeClient {
+	interfaceName := "com.vmware.api.orgs.sddcs.scale_sddc_size"
 	interfaceIdentifier := core.NewInterfaceIdentifier(interfaceName)
 	methodIdentifiers := []core.MethodIdentifier{
 		core.NewMethodIdentifier(interfaceIdentifier, "post"),
@@ -68,39 +68,38 @@ func NewDefaultAnalysisClient(connector client.Connector) *DefaultAnalysisClient
 	errorBindingMap[errors.UnverifiedPeer{}.Error()] = errors.UnverifiedPeerBindingType()
 
 
-	aIface := DefaultAnalysisClient{interfaceName: interfaceName, methodIdentifiers: methodIdentifiers, interfaceDefinition: interfaceDefinition, errorBindingMap: errorBindingMap, interfaceIdentifier: interfaceIdentifier, connector: connector}
-	aIface.methodNameToDefMap = make(map[string]*core.MethodDefinition)
-	aIface.methodNameToDefMap["post"] = aIface.postMethodDefinition()
-	return &aIface
+	sIface := DefaultScaleSddcSizeClient{interfaceName: interfaceName, methodIdentifiers: methodIdentifiers, interfaceDefinition: interfaceDefinition, errorBindingMap: errorBindingMap, interfaceIdentifier: interfaceIdentifier, connector: connector}
+	sIface.methodNameToDefMap = make(map[string]*core.MethodDefinition)
+	sIface.methodNameToDefMap["post"] = sIface.postMethodDefinition()
+	return &sIface
 }
 
-func (aIface *DefaultAnalysisClient) Post(orgParam string, sddcParam string, clustersParam []string) (model.Task, error) {
-	typeConverter := aIface.connector.TypeConverter()
-	methodIdentifier := core.NewMethodIdentifier(aIface.interfaceIdentifier, "post")
-	sv := bindings.NewStructValueBuilder(analysisPostInputType(), typeConverter)
+func (sIface *DefaultScaleSddcSizeClient) Post(orgParam string, sddcParam string) (model.Task, error) {
+	typeConverter := sIface.connector.TypeConverter()
+	methodIdentifier := core.NewMethodIdentifier(sIface.interfaceIdentifier, "post")
+	sv := bindings.NewStructValueBuilder(scaleSddcSizePostInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
-	sv.AddStructField("Clusters", clustersParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.Task
 		return emptyOutput, bindings.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := analysisPostRestMetadata()
+	operationRestMetaData := scaleSddcSizePostRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
 	connectionMetadata["isStreamingResponse"] = false
-	aIface.connector.SetConnectionMetadata(connectionMetadata)
-	executionContext := aIface.connector.NewExecutionContext()
-	methodResult := aIface.Invoke(executionContext, methodIdentifier, inputDataValue)
+	sIface.connector.SetConnectionMetadata(connectionMetadata)
+	executionContext := sIface.connector.NewExecutionContext()
+	methodResult := sIface.Invoke(executionContext, methodIdentifier, inputDataValue)
 	var emptyOutput model.Task
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), analysisPostOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), scaleSddcSizePostOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.Task), nil
 	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), aIface.errorBindingMap[methodResult.Error().Name()])
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.errorBindingMap[methodResult.Error().Name()])
 		if errorInError != nil {
 			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
 		}
@@ -109,54 +108,46 @@ func (aIface *DefaultAnalysisClient) Post(orgParam string, sddcParam string, clu
 }
 
 
-func (aIface *DefaultAnalysisClient) Invoke(ctx *core.ExecutionContext, methodId core.MethodIdentifier, inputDataValue data.DataValue) core.MethodResult {
-	methodResult := aIface.connector.GetApiProvider().Invoke(aIface.interfaceName, methodId.Name(), inputDataValue, ctx)
+func (sIface *DefaultScaleSddcSizeClient) Invoke(ctx *core.ExecutionContext, methodId core.MethodIdentifier, inputDataValue data.DataValue) core.MethodResult {
+	methodResult := sIface.connector.GetApiProvider().Invoke(sIface.interfaceName, methodId.Name(), inputDataValue, ctx)
 	return methodResult
 }
 
 
-func (aIface *DefaultAnalysisClient) postMethodDefinition() *core.MethodDefinition {
-	interfaceIdentifier := core.NewInterfaceIdentifier(aIface.interfaceName)
-	typeConverter := aIface.connector.TypeConverter()
+func (sIface *DefaultScaleSddcSizeClient) postMethodDefinition() *core.MethodDefinition {
+	interfaceIdentifier := core.NewInterfaceIdentifier(sIface.interfaceName)
+	typeConverter := sIface.connector.TypeConverter()
 
-	input, inputError := typeConverter.ConvertToDataDefinition(analysisPostInputType())
-	output, outputError := typeConverter.ConvertToDataDefinition(analysisPostOutputType())
+	input, inputError := typeConverter.ConvertToDataDefinition(scaleSddcSizePostInputType())
+	output, outputError := typeConverter.ConvertToDataDefinition(scaleSddcSizePostOutputType())
 	if inputError != nil {
-		log.Errorf("Error in ConvertToDataDefinition for DefaultAnalysisClient.post method's input - %s",
+		log.Errorf("Error in ConvertToDataDefinition for DefaultScaleSddcSizeClient.post method's input - %s",
 			bindings.VAPIerrorsToError(inputError).Error())
 		return nil
 	}
 	if outputError != nil {
-		log.Errorf("Error in ConvertToDataDefinition for DefaultAnalysisClient.post method's output - %s",
+		log.Errorf("Error in ConvertToDataDefinition for DefaultScaleSddcSizeClient.post method's output - %s",
 			bindings.VAPIerrorsToError(outputError).Error())
 		return nil
 	}
 	methodIdentifier := core.NewMethodIdentifier(interfaceIdentifier, "post")
 	errorDefinitions := make([]data.ErrorDefinition, 0)
-	aIface.errorBindingMap[errors.Unauthenticated{}.Error()] = errors.UnauthenticatedBindingType()
-	errDef1, errError1 := typeConverter.ConvertToDataDefinition(errors.UnauthenticatedBindingType())
+	sIface.errorBindingMap[errors.InvalidRequest{}.Error()] = errors.InvalidRequestBindingType()
+	errDef1, errError1 := typeConverter.ConvertToDataDefinition(errors.InvalidRequestBindingType())
 	if errError1 != nil {
-		log.Errorf("Error in ConvertToDataDefinition for DefaultAnalysisClient.post method's errors.Unauthenticated error - %s",
+		log.Errorf("Error in ConvertToDataDefinition for DefaultScaleSddcSizeClient.post method's errors.InvalidRequest error - %s",
 			bindings.VAPIerrorsToError(errError1).Error())
 		return nil
 	}
 	errorDefinitions = append(errorDefinitions, errDef1.(data.ErrorDefinition))
-	aIface.errorBindingMap[errors.InvalidRequest{}.Error()] = errors.InvalidRequestBindingType()
-	errDef2, errError2 := typeConverter.ConvertToDataDefinition(errors.InvalidRequestBindingType())
+	sIface.errorBindingMap[errors.Unauthorized{}.Error()] = errors.UnauthorizedBindingType()
+	errDef2, errError2 := typeConverter.ConvertToDataDefinition(errors.UnauthorizedBindingType())
 	if errError2 != nil {
-		log.Errorf("Error in ConvertToDataDefinition for DefaultAnalysisClient.post method's errors.InvalidRequest error - %s",
+		log.Errorf("Error in ConvertToDataDefinition for DefaultScaleSddcSizeClient.post method's errors.Unauthorized error - %s",
 			bindings.VAPIerrorsToError(errError2).Error())
 		return nil
 	}
 	errorDefinitions = append(errorDefinitions, errDef2.(data.ErrorDefinition))
-	aIface.errorBindingMap[errors.Unauthorized{}.Error()] = errors.UnauthorizedBindingType()
-	errDef3, errError3 := typeConverter.ConvertToDataDefinition(errors.UnauthorizedBindingType())
-	if errError3 != nil {
-		log.Errorf("Error in ConvertToDataDefinition for DefaultAnalysisClient.post method's errors.Unauthorized error - %s",
-			bindings.VAPIerrorsToError(errError3).Error())
-		return nil
-	}
-	errorDefinitions = append(errorDefinitions, errDef3.(data.ErrorDefinition))
 
 	methodDefinition := core.NewMethodDefinition(methodIdentifier, input, output, errorDefinitions)
 	return &methodDefinition

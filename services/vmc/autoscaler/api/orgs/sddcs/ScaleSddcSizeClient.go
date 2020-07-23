@@ -4,24 +4,23 @@
 // Code generated. DO NOT EDIT.
 
 /*
- * Interface file for service: Stop
+ * Interface file for service: ScaleSddcSize
  * Used by client-side stubs.
  */
 
-package xlb
+package sddcs
 
 import (
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/vmc/autoscaler/model"
 )
 
-type StopClient interface {
+type ScaleSddcSizeClient interface {
 
-    // Stop cross-cluster load balancer initiated xvMotion operations on the sddc.
+    // Scale SDDC Size.
     //
     // @param orgParam org identifier (required)
     // @param sddcParam Sddc identifier (required)
     // @return com.vmware.model.Task
-    // @throws Unauthenticated  Unauthorized
     // @throws InvalidRequest  Invalid action or bad argument
     // @throws Unauthorized  Forbidden
 	Post(orgParam string, sddcParam string) (model.Task, error)
