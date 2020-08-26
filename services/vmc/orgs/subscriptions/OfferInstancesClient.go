@@ -18,7 +18,7 @@ type OfferInstancesClient interface {
 
     // List all offers available for the specific product type in the specific region
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param regionParam Region for the offer (required)
     // @param productTypeParam Type of the product in offers. \*This has been deprecated\*. Please use product & type parameters (required)
     // @param productParam The product that you are trying to purchase, eg. host. This needs to be accompanied by the type parameter (optional)

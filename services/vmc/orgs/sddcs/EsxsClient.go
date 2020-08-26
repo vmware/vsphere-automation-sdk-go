@@ -18,8 +18,8 @@ type EsxsClient interface {
 
     // Add/Remove one or more ESX hosts in the target cloud
     //
-    // @param orgParam Organization identifier. (required)
-    // @param sddcParam Sddc Identifier. (required)
+    // @param orgParam Organization identifier (required)
+    // @param sddcParam Sddc identifier (required)
     // @param esxConfigParam esxConfig (required)
     // @param actionParam If = 'add', will add the esx. If = 'remove', will delete the esx/esxs bound to a single cluster (Cluster Id is mandatory for non cluster 1 esx remove). If = 'force-remove', will delete the esx even if it can lead to data loss (This is an privileged operation). If = 'addToAll', will add esxs to all clusters in the SDDC (This is an privileged operation). If = 'removeFromAll', will delete the esxs from all clusters in the SDDC (This is an privileged operation). If = 'attach-diskgroup', will attach the provided diskgroups to a given host (privileged). If = 'detach-diskgroup', will detach the diskgroups of a given host (privileged). Default behaviour is 'add' (optional)
     // @return com.vmware.vmc.model.Task

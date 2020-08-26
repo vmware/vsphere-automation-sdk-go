@@ -18,7 +18,7 @@ type MwClient interface {
 
     // get the maintenance window for this SDDC
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param reservationParam Reservation Identifier (required)
     // @return com.vmware.vmc.model.MaintenanceWindowGet
     // @throws Unauthenticated  Unauthorized
@@ -27,7 +27,7 @@ type MwClient interface {
 
     // update the maintenance window for this SDDC
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param reservationParam Reservation Identifier (required)
     // @param windowParam Maintenance Window (required)
     // @return com.vmware.vmc.model.MaintenanceWindow

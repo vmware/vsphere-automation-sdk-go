@@ -18,8 +18,8 @@ type ClustersClient interface {
 
     // Creates a new cluster in customers sddcs with passed clusterConfig.
     //
-    // @param orgParam Organization identifier. (required)
-    // @param sddcParam Sddc Identifier. (required)
+    // @param orgParam Organization identifier (required)
+    // @param sddcParam Sddc identifier (required)
     // @param clusterConfigParam clusterConfig (required)
     // @return com.vmware.vmc.model.Task
     // @throws Unauthenticated  Unauthorized
@@ -30,8 +30,8 @@ type ClustersClient interface {
 
     // This is a force operation which will delete the cluster even if there can be a data loss. Before calling this operation, all the VMs should be powered off.
     //
-    // @param orgParam Organization identifier. (required)
-    // @param sddcParam Sddc Identifier. (required)
+    // @param orgParam Organization identifier (required)
+    // @param sddcParam Sddc identifier (required)
     // @param clusterParam cluster identifier (required)
     // @return com.vmware.vmc.model.Task
     // @throws Unauthenticated  Unauthorized

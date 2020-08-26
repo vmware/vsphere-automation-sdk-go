@@ -18,7 +18,7 @@ type SddcsClient interface {
 
     // Provision an SDDC in target cloud
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param sddcConfigParam sddcConfig (required)
     // @param validateOnlyParam When true, only validates the given sddc configuration without provisioning. (optional)
     // @return com.vmware.vmc.model.Task
@@ -28,8 +28,8 @@ type SddcsClient interface {
 
     // Delete SDDC
     //
-    // @param orgParam Organization identifier. (required)
-    // @param sddcParam Sddc Identifier. (required)
+    // @param orgParam Organization identifier (required)
+    // @param sddcParam Sddc identifier (required)
     // @param retainConfigurationParam If = 'true', the SDDC's configuration is retained as a template for later use. This flag is applicable only to SDDCs in ACTIVE state. (optional)
     // @param templateNameParam Only applicable when retainConfiguration is also set to 'true'. When set, this value will be used as the name of the SDDC configuration template generated. (optional)
     // @param forceParam If = true, will delete forcefully. Beware: do not use the force flag if there is a chance an active provisioning or deleting task is running against this SDDC. This option is restricted. (optional)
@@ -42,8 +42,8 @@ type SddcsClient interface {
 
     // Get SDDC
     //
-    // @param orgParam Organization identifier. (required)
-    // @param sddcParam Sddc Identifier. (required)
+    // @param orgParam Organization identifier (required)
+    // @param sddcParam Sddc identifier (required)
     // @return com.vmware.vmc.model.Sddc
     // @throws Unauthenticated  Unauthorized
     // @throws Unauthorized  Forbidden
@@ -52,7 +52,7 @@ type SddcsClient interface {
 
     // List all the SDDCs of an organization
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param includeDeletedParam When true, forces the result to also include deleted SDDCs. (optional)
     // @throws Unauthenticated  Unauthorized
     // @throws Unauthorized  Forbidden
@@ -60,8 +60,8 @@ type SddcsClient interface {
 
     // Patch SDDC
     //
-    // @param orgParam Organization identifier. (required)
-    // @param sddcParam Sddc Identifier. (required)
+    // @param orgParam Organization identifier (required)
+    // @param sddcParam Sddc identifier (required)
     // @param sddcPatchRequestParam Patch request for the SDDC (required)
     // @return com.vmware.vmc.model.Sddc
     // @throws Unauthenticated  Unauthorized

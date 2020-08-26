@@ -18,8 +18,8 @@ type ConstraintsClient interface {
 
     // This API provides the storage choices available when reconfiguring storage in a cluster. The constraints returned will give vSAN reconfiguration biases and available vSAN capacities per reconfiguration bias. The constraints also indicate the default vSAN capacity per reconfiguration biases as well as the default reconfiguration bias.
     //
-    // @param orgParam Organization identifier. (required)
-    // @param sddcParam Sddc Identifier. (required)
+    // @param orgParam Organization identifier (required)
+    // @param sddcParam Sddc identifier (required)
     // @param clusterParam cluster identifier (required)
     // @param expectedNumHostsParam The expected number of hosts in the cluster. If not specified, returned is based on current number of hosts in the cluster. (optional)
     // @return com.vmware.vmc.model.VsanClusterReconfigConstraints

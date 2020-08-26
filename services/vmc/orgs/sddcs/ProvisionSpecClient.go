@@ -18,7 +18,7 @@ type ProvisionSpecClient interface {
 
     // Get sddc provision spec for an org
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @return com.vmware.vmc.model.ProvisionSpec
     // @throws Unauthenticated  Unauthorized
     // @throws InvalidRequest  BadRequest

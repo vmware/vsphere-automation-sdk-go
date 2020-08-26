@@ -18,7 +18,7 @@ type ReservationClient interface {
 
     // Retreive all reservations for all SDDCs in this org
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param sddcStateParam SDDCs and/or states to query (optional)
     // @throws Unauthenticated  Unauthorized
     // @throws InvalidRequest  Bad Call

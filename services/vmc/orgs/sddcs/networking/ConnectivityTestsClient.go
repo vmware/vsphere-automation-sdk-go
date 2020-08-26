@@ -18,8 +18,8 @@ type ConnectivityTestsClient interface {
 
     // Retrieve metadata for connectivity tests.
     //
-    // @param orgParam Organization identifier. (required)
-    // @param sddcParam Sddc Identifier. (required)
+    // @param orgParam Organization identifier (required)
+    // @param sddcParam Sddc identifier (required)
     // @return com.vmware.vmc.model.ConnectivityValidationGroups
     // @throws Unauthenticated  Unauthorized
     // @throws Unauthorized  Forbidden
@@ -27,8 +27,8 @@ type ConnectivityTestsClient interface {
 
     // ConnectivityValidationGroupResultWrapper will be available at task.params['test_result'].
     //
-    // @param orgParam Organization identifier. (required)
-    // @param sddcParam Sddc Identifier. (required)
+    // @param orgParam Organization identifier (required)
+    // @param sddcParam Sddc identifier (required)
     // @param requestInfoParam request information (required)
     // @param actionParam If = 'start', start connectivity tests. (required)
     // @return com.vmware.vmc.model.Task

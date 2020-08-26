@@ -18,7 +18,7 @@ type CompatibleSubnetsClient interface {
 
     // Gets a customer's compatible subnets for account linking
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param linkedAccountIdParam The linked connected account identifier (required)
     // @param regionParam The region of the cloud resources to work in (optional)
     // @param sddcParam sddc (optional)
@@ -33,7 +33,7 @@ type CompatibleSubnetsClient interface {
 
     // Sets which subnet to use to link accounts and finishes the linking process
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @return com.vmware.vmc.model.AwsSubnet
     // @throws Unauthenticated  Unauthorized
     // @throws Unauthorized  Forbidden

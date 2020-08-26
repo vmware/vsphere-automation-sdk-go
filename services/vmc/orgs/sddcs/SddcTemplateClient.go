@@ -18,8 +18,8 @@ type SddcTemplateClient interface {
 
     // Get configuration template for an SDDC
     //
-    // @param orgParam Organization identifier. (required)
-    // @param sddcParam Sddc Identifier. (required)
+    // @param orgParam Organization identifier (required)
+    // @param sddcParam Sddc identifier (required)
     // @return com.vmware.vmc.model.SddcTemplate
     // @throws Unauthenticated  Unauthorized
     // @throws InvalidRequest  SDDC is in a state that cannot be use for generating configuration template

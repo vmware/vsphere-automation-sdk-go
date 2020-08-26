@@ -4,25 +4,25 @@
 // Code generated. DO NOT EDIT.
 
 /*
- * Interface file for service: Public
+ * Interface file for service: Publish
  * Used by client-side stubs.
  */
 
-package dns
+package msft_licensing
 
 import (
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/vmc/model"
 )
 
-type PublicClient interface {
+type PublishClient interface {
 
-    // Update the DNS records of management VMs to use public IP addresses
+    // Sets the current Microsoft license status of the given SDDC's cluster.
     //
     // @param orgParam Organization identifier (required)
     // @param sddcParam Sddc identifier (required)
+    // @param clusterParam cluster identifier (required)
+    // @param configChangeParam The license data to set for the clusters. (required)
     // @return com.vmware.vmc.model.Task
-    // @throws Unauthenticated  Unauthorized
-    // @throws InvalidRequest  The sddc is not in a state that's valid for updates or invalid body
     // @throws Unauthorized  Forbidden
-	Update(orgParam string, sddcParam string) (model.Task, error)
+	Post(orgParam string, sddcParam string, clusterParam string, configChangeParam model.MsftLicensingConfig) (model.Task, error)
 }

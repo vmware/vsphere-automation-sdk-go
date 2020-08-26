@@ -18,7 +18,7 @@ type PaymentMethodsClient interface {
 
     // Get payment methods of organization
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param defaultFlagParam When true, will only return default payment methods. (optional, default to false)
     // @throws Unauthenticated  Unauthorized
     // @throws Unauthorized  Forbidden

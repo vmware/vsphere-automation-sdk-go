@@ -4,13 +4,13 @@
 // Code generated. DO NOT EDIT.
 
 /*
- * Data type definitions file for package: com.vmware.vmc.orgs.sddcs.networks.edges.statistics.dashboard.
+ * Data type definitions file for package: com.vmware.vmc.orgs.sddcs.clusters.msft_licensing.
  * Includes binding types of a top level structures and enumerations.
  * Shared by client-side stubs and server-side skeletons to ensure type
  * compatibility.
  */
 
-package dashboard
+package msft_licensing
 
 
 

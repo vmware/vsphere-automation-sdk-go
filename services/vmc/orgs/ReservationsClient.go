@@ -18,7 +18,7 @@ type ReservationsClient interface {
 
     // Get all reservations for this org
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @throws Unauthenticated  Unauthorized
     // @throws Unauthorized  Access not allowed to the operation for the current user
 	List(orgParam string) ([]model.MaintenanceWindowEntry, error)

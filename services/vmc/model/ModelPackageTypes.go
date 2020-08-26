@@ -141,35 +141,6 @@ func (s AccountLinkSddcConfig) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Source or Destination for firewall rule. Default is 'any'.
-type AddressFWSourceDestination struct {
-    // Exclude the specified source or destination.
-	Exclude *bool
-    // List of string. Can specify single IP address, range of IP address, or in CIDR format. Can define multiple.
-	IpAddress []string
-    // List of string. Id of cluster, datacenter, distributedPortGroup, legacyPortGroup, VirtualMachine, vApp, resourcePool, logicalSwitch, IPSet, securityGroup. Can define multiple.
-	GroupingObjectId []string
-    // List of string. Possible values are vnic-index-[1-9], vse, external or internal. Can define multiple.
-	VnicGroupId []string
-}
-
-func (s AddressFWSourceDestination) GetType__() bindings.BindingType {
-	return AddressFWSourceDestinationBindingType()
-}
-
-func (s AddressFWSourceDestination) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for AddressFWSourceDestination._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 type Agent struct {
     // The internal IP address of the agent which is provided by the underlying cloud provider
 	InternalIp *string
@@ -260,90 +231,7 @@ func (s AmiInfo) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// NSX Edge appliance summary.
-type AppliancesSummary struct {
-    // vCenter MOID of the active NSX Edge appliance's data store.
-	DataStoreMoidOfActiveVse *string
-    // Value is true if FIPS is enabled on NSX Edge appliance.
-	EnableFips *bool
-    // Host name of the active NSX Edge appliance.
-	HostNameOfActiveVse *string
-    // NSX Edge appliance build version.
-	VmBuildInfo *string
-    // Value is true if NSX Edge appliances are to be deployed.
-	DeployAppliances *bool
-    // Communication channel used to communicate with NSX Edge appliance.
-	CommunicationChannel *string
-    // Name of the active NSX Edge appliance.
-	VmNameOfActiveVse *string
-    // Number of deployed appliances of the NSX Edge. format: int32
-	NumberOfDeployedVms *int64
-    // vCenter MOID of the active NSX Edge appliance's resource pool/cluster. Can be resource pool ID, e.g. resgroup-15 or cluster ID, e.g. domain-c41.
-	ResourcePoolMoidOfActiveVse *string
-    // Datastore name of the active NSX Edge appliance.
-	DataStoreNameOfActiveVse *string
-    // vCenter MOID of the active NSX Edge appliance.
-	VmMoidOfActiveVse *string
-    // Time stamp value when healthcheck status was last updated for the NSX Edge appliance. format: int64
-	StatusFromVseUpdatedOn *int64
-    // FQDN of the NSX Edge.
-	Fqdn *string
-    // NSX Edge appliance size.
-	ApplianceSize *string
-    // Resource Pool/Cluster name of the active NSX Edge appliance.
-	ResourcePoolNameOfActiveVse *string
-    // HA index of the active NSX Edge appliance. format: int32
-	ActiveVseHaIndex *int64
-    // NSX Edge appliance version.
-	VmVersion *string
-    // vCenter MOID of the active NSX Edge appliance's host.
-	HostMoidOfActiveVse *string
-}
-
-func (s AppliancesSummary) GetType__() bindings.BindingType {
-	return AppliancesSummaryBindingType()
-}
-
-func (s AppliancesSummary) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for AppliancesSummary._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Application for firewall rule
-type Application struct {
-    // List of string. Id of service or serviceGroup groupingObject. Can define multiple.
-	ApplicationId []string
-    // List of protocol and ports. Can define multiple.
-	Service []Nsxfirewallservice
-}
-
-func (s Application) GetType__() bindings.BindingType {
-	return ApplicationBindingType()
-}
-
-func (s Application) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Application._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 type AvailableZoneInfo struct {
-    // null
 	Subnets []Subnet
     // available zone name
 	Name *string
@@ -618,6 +506,8 @@ func (s AwsKmsInfo) GetDataValue__() (data.DataValue, []error) {
 
 type AwsSddcConfig struct {
 	Region string
+    // Indicates the desired licensing support, if any, of Microsoft software.
+	MsftLicenseConfig *MsftLicensingConfig
     // AWS VPC IP range. Only prefix of 16 or 20 is currently supported.
 	VpcCidr *string
     // The instance type for the esx hosts in the primary cluster of the SDDC.
@@ -845,6 +735,8 @@ type AwsSddcResourceConfig struct {
     //
     //  Denotes if this is a SingleAZ SDDC or a MultiAZ SDDC.
 	DeploymentType *string
+    // The Microsoft license status of this SDDC.
+	MsftLicenseConfig *MsftLicensingConfig
 	NsxtAddons *NsxtAddons
     // if true, use the private IP addresses to register DNS records for the management VMs
 	DnsWithManagementVmPrivateIp *bool
@@ -909,113 +801,6 @@ func (s AwsSubnet) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// CA certificate list. Optional.
-type CaCertificates struct {
-	CaCertificate []string
-}
-
-func (s CaCertificates) GetType__() bindings.BindingType {
-	return CaCertificatesBindingType()
-}
-
-func (s CaCertificates) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for CaCertificates._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Statistics data for each vnic.
-type CbmStatistic struct {
-    // Vnic index. format: int32
-	Vnic *int64
-    // Timestamp value. format: int64
-	Timestamp *int64
-    // Tx rate (Kilobits per second - kbps) format: double
-	Out *float64
-    // Rx rate (Kilobits per second - kbps) format: double
-	In *float64
-}
-
-func (s CbmStatistic) GetType__() bindings.BindingType {
-	return CbmStatisticBindingType()
-}
-
-func (s CbmStatistic) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for CbmStatistic._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// NSX Edge Interface Statistics.
-type CbmStatistics struct {
-    // Statistics data.
-	DataDto *CbmStatsData
-    // Start time, end time and interval details.
-	MetaDto *MetaDashboardStats
-}
-
-func (s CbmStatistics) GetType__() bindings.BindingType {
-	return CbmStatisticsBindingType()
-}
-
-func (s CbmStatistics) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for CbmStatistics._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Statistics data.
-type CbmStatsData struct {
-	Vnic9 []CbmStatistic
-	Vnic8 []CbmStatistic
-	Vnic7 []CbmStatistic
-	Vnic6 []CbmStatistic
-	Vnic5 []CbmStatistic
-	Vnic4 []CbmStatistic
-	Vnic3 []CbmStatistic
-	Vnic2 []CbmStatistic
-	Vnic1 []CbmStatistic
-	Vnic0 []CbmStatistic
-}
-
-func (s CbmStatsData) GetType__() bindings.BindingType {
-	return CbmStatsDataBindingType()
-}
-
-func (s CbmStatsData) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for CbmStatsData._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 type CloudProvider struct {
     // Name of the Cloud Provider
 	Provider string
@@ -1044,6 +829,8 @@ func (s CloudProvider) GetDataValue__() (data.DataValue, []error) {
 
 type Cluster struct {
 	EsxHostList []AwsEsxHost
+    // The Microsoft license configuration of this cluster.
+	MsftLicenseConfig *MsftLicensingConfig
     // Possible values are: 
     //
     // * Cluster#Cluster_CLUSTER_STATE_DEPLOYING
@@ -1053,12 +840,12 @@ type Cluster struct {
 	ClusterState *string
     // AWS Key Management Service information associated with this cluster
 	AwsKmsInfo *AwsKmsInfo
+    // The capacity of this cluster.
+	ClusterCapacity *EntityCapacity
     // Information of the hosts added to this cluster
 	EsxHostInfo *EsxHostInfo
     // Number of cores enabled on ESX hosts added to this cluster format: int32
 	HostCpuCoresCount *int64
-    // The capacity of this cluster.
-	ClusterCapacity *EntityCapacity
 	ClusterId string
 	ClusterName *string
 }
@@ -1091,6 +878,8 @@ type ClusterConfig struct {
 	HostInstanceType *HostInstanceTypes
     // For EBS-backed instances only, the requested storage capacity in GiB. format: int64
 	StorageCapacity *int64
+    // The desired Microsoft license status to apply to this cluster.
+	MsftLicenseConfig *MsftLicensingConfig
 	NumHosts int64
 }
 
@@ -1384,28 +1173,6 @@ func (s ConnectivityValidationSubGroup) GetDataValue__() (data.DataValue, []erro
 }
 
 
-// CRL certificate list. Optional.
-type CrlCertificates struct {
-	CrlCertificate []string
-}
-
-func (s CrlCertificates) GetType__() bindings.BindingType {
-	return CrlCertificatesBindingType()
-}
-
-func (s CrlCertificates) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for CrlCertificates._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 // Indicates a single cross-account ENI and its characteristics.
 type CustomerEniInfo struct {
     // Indicates list of secondary IP created for this ENI.
@@ -1433,415 +1200,6 @@ func (s CustomerEniInfo) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Dashboard Statistics data.
-type DashboardData struct {
-    // NSX Edge Firewall Statistics data.
-	Firewall *FirewallDashboardStats
-    // NSX Edge SSL VPN Statistics data.
-	Sslvpn *SslvpnDashboardStats
-    // NSX Edge Interface Statistics data.
-	Interfaces *InterfacesDashboardStats
-    // NSX Edge Load Balancer Statistics data.
-	LoadBalancer *LoadBalancerDashboardStats
-    // NSX Edge Ipsec Statistics data.
-	Ipsec *IpsecDashboardStats
-}
-
-func (s DashboardData) GetType__() bindings.BindingType {
-	return DashboardDataBindingType()
-}
-
-func (s DashboardData) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DashboardData._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type DashboardStat struct {
-	Timestamp *int64
-	Value *float64
-}
-
-func (s DashboardStat) GetType__() bindings.BindingType {
-	return DashboardStatBindingType()
-}
-
-func (s DashboardStat) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DashboardStat._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Dashboard Statistics data.
-type DashboardStatistics struct {
-    // Dashboard Statistics data.
-	DataDto *DashboardData
-    // Start time, end time and interval details.
-	MetaDto *MetaDashboardStats
-}
-
-func (s DashboardStatistics) GetType__() bindings.BindingType {
-	return DashboardStatisticsBindingType()
-}
-
-func (s DashboardStatistics) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DashboardStatistics._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type DataPageEdgeSummary struct {
-	PagingInfo *PagingInfo
-	Data []EdgeSummary
-}
-
-func (s DataPageEdgeSummary) GetType__() bindings.BindingType {
-	return DataPageEdgeSummaryBindingType()
-}
-
-func (s DataPageEdgeSummary) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DataPageEdgeSummary._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type DataPageSddcNetwork struct {
-	PagingInfo *PagingInfo
-	Data []SddcNetwork
-}
-
-func (s DataPageSddcNetwork) GetType__() bindings.BindingType {
-	return DataPageSddcNetworkBindingType()
-}
-
-func (s DataPageSddcNetwork) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DataPageSddcNetwork._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type DataPermissions struct {
-	SavePermission *bool
-	PublishPermission *bool
-}
-
-func (s DataPermissions) GetType__() bindings.BindingType {
-	return DataPermissionsBindingType()
-}
-
-func (s DataPermissions) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DataPermissions._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// DHCP lease information.
-type DhcpLeaseInfo struct {
-    // List of DHCP leases.
-	HostLeaseInfoDtos []HostLeaseInfo
-}
-
-func (s DhcpLeaseInfo) GetType__() bindings.BindingType {
-	return DhcpLeaseInfoBindingType()
-}
-
-func (s DhcpLeaseInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DhcpLeaseInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// DHCP leases information
-type DhcpLeases struct {
-    // The timestamp of the DHCP lease. format: int64
-	TimeStamp *int64
-    // DHCP lease information.
-	HostLeaseInfosDto *DhcpLeaseInfo
-}
-
-func (s DhcpLeases) GetType__() bindings.BindingType {
-	return DhcpLeasesBindingType()
-}
-
-func (s DhcpLeases) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DhcpLeases._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// DNS configuration
-type DnsConfig struct {
-	FeatureType *string
-    // DNS logging setting.
-	Logging *Logging
-    // Value is true if feature is enabled. Default value is true. Optional.
-	Enabled *bool
-    // List of DNS views.
-	DnsViews *DnsViews
-    // List of DNS listeners.
-	Listeners *DnsListeners
-    // Version number tracking each configuration change. To avoid problems with overwriting changes, always retrieve and modify the latest configuration to include the current version number in your request. If you provide a version number which is not current, the request is rejected. If you omit the version number, the request is accepted but may overwrite any current changes if your change is not in sync with the latest change. format: int64
-	Version *int64
-	Template *string
-    // The cache size of the DNS service. format: int64
-	CacheSize *int64
-	DnsServers *IpAddresses
-}
-
-func (s DnsConfig) GetType__() bindings.BindingType {
-	return DnsConfigBindingType()
-}
-
-func (s DnsConfig) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DnsConfig._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// DNS forwarders.
-type DnsForwarders struct {
-    // IP addresses of the DNS servers.
-	IpAddress []string
-}
-
-func (s DnsForwarders) GetType__() bindings.BindingType {
-	return DnsForwardersBindingType()
-}
-
-func (s DnsForwarders) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DnsForwarders._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type DnsListeners struct {
-    // List of IP addresses.
-	IpAddress []string
-    // Vnic for DNS listener.
-	Vnic []string
-	Type_ *string
-}
-
-func (s DnsListeners) GetType__() bindings.BindingType {
-	return DnsListenersBindingType()
-}
-
-func (s DnsListeners) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DnsListeners._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// DNS response statistics.
-type DnsResponseStats struct {
-	Total *int64
-	FormErr *int64
-	NxDomain *int64
-	Success *int64
-	ServerFail *int64
-	Nxrrset *int64
-	Others *int64
-}
-
-func (s DnsResponseStats) GetType__() bindings.BindingType {
-	return DnsResponseStatsBindingType()
-}
-
-func (s DnsResponseStats) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DnsResponseStats._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// DNS statistics.
-type DnsStatusAndStats struct {
-	TimeStamp *int64
-	Requests *Requests
-	Responses *DnsResponseStats
-	CachedDBRRSet *int64
-}
-
-func (s DnsStatusAndStats) GetType__() bindings.BindingType {
-	return DnsStatusAndStatsBindingType()
-}
-
-func (s DnsStatusAndStats) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DnsStatusAndStats._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// DNS View
-type DnsView struct {
-    // Name of the DNS view.
-	Name string
-    // Rules that match the DNS query to this view. The rule can be ipAddress, or ipSet. Defaults to ipAddress 'any' and 'any' vnic.
-	ViewMatch *DnsViewMatch
-    // Recursion enabled on DNS view.
-	Recursion *bool
-    // Identifier for the DNS view.
-	ViewId *string
-    // DNS forwarders.
-	Forwarders *DnsForwarders
-    // DNS view is enabled.
-	Enabled *bool
-}
-
-func (s DnsView) GetType__() bindings.BindingType {
-	return DnsViewBindingType()
-}
-
-func (s DnsView) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DnsView._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Dns view match
-type DnsViewMatch struct {
-	Vnic []string
-	IpSet []string
-	IpAddress []string
-}
-
-func (s DnsViewMatch) GetType__() bindings.BindingType {
-	return DnsViewMatchBindingType()
-}
-
-func (s DnsViewMatch) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DnsViewMatch._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// DNS views.
-type DnsViews struct {
-    // List of DNS views.
-	DnsView []DnsView
-}
-
-func (s DnsViews) GetType__() bindings.BindingType {
-	return DnsViewsBindingType()
-}
-
-func (s DnsViews) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DnsViews._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 // information for EBS-backed VSAN configuration
 type EbsBackedVsanConfig struct {
     // instance type for EBS-backed VSAN configuration
@@ -1858,244 +1216,6 @@ func (s EbsBackedVsanConfig) GetDataValue__() (data.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		log.Errorf("Error in ConvertToVapi for EbsBackedVsanConfig._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Job status information for the configuration change carried out on NSX Edge.
-type EdgeJob struct {
-    // Job status.
-	Status *string
-    // NSX Edge ID.
-	EdgeId *string
-    // Module information.
-	Module *string
-    // Job ID.
-	JobId *string
-    // Error code identifying the failure of the configuration change.
-	ErrorCode *string
-    // Job result information.
-	Result []Result
-    // Job start time. format: date-time
-	StartTime *time.Time
-    // Job message.
-	Message *string
-    // Job end time. format: date-time
-	EndTime *time.Time
-}
-
-func (s EdgeJob) GetType__() bindings.BindingType {
-	return EdgeJobBindingType()
-}
-
-func (s EdgeJob) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for EdgeJob._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// NSX Edge Appliance status.
-type EdgeStatus struct {
-    // Value is true if pre rules publish is enabled.
-	PreRulesExists *bool
-    // Individual feature status.
-	FeatureStatuses []FeatureStatus
-    // Timestamp value at which the NSX Edge healthcheck was done. format: int64
-	Timestamp *int64
-    // Status of the latest configuration change for the NSX Edge. Values are APPLIED or PERSISTED (not published to NSX Edge Appliance yet).
-	PublishStatus *string
-    // Value of the last published pre rules generation number. format: int64
-	LastPublishedPreRulesGenerationNumber *int64
-    // Version number of the current configuration. format: int64
-	Version *int64
-    // Detailed status of each of the deployed NSX Edge appliances.
-	EdgeVmStatus []EdgeVmStatus
-    // Index of the active NSX Edge appliance. Values are 0 and 1. format: int32
-	ActiveVseHaIndex *int64
-    // System status of the active NSX Edge appliance.
-	SystemStatus *string
-    // Index of the vnic consumed for NSX Edge HA. format: int32
-	HaVnicInUse *int64
-    // NSX Edge appliance health status identified by GREY (unknown status), GREEN (health checks are successful), YELLOW (intermittent health check failure), RED (none of the appliances are in serving state). If health check fails for 5 consecutive times for all appliance (2 for HA else 1) then status will turn from YELLOW to RED.
-	EdgeStatus *string
-}
-
-func (s EdgeStatus) GetType__() bindings.BindingType {
-	return EdgeStatusBindingType()
-}
-
-func (s EdgeStatus) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for EdgeStatus._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// NSX Edge summary. Read only.
-type EdgeSummary struct {
-    // List of Features and their capability details based on Edge appliance form factor.
-	FeatureCapabilities *FeatureCapabilities
-    // NSX Edge type, whether 'gatewayServices' or 'distributedRouter'.
-	EdgeType *string
-    // Backing type scope (DistributedVirtualSwitch - VLAN, TransportZone -VXLAN) and its ID for the Distributed Logical Router.
-	LogicalRouterScopes *LogicalRouterScopes
-    // Job information for the most recent configuration change carried out on the NSX Edge.
-	RecentJobInfo *EdgeJob
-	HypervisorAssist *bool
-    // ID generated by NSX Manager for Distributed Logical Router only. format: int64
-	EdgeAssistId *int64
-    // NSX Edge appliance health status identified by GREY (unknown status), GREEN (health checks are successful), YELLOW (intermittent health check failure), RED (none of the appliances are in serving state). If health check fails for 5 consecutive times for all appliance (2 for HA else 1) then status will turn from YELLOW to RED.
-	EdgeStatus *string
-    // Name derived by NSX Manager only for Distributed Logical Router.
-	EdgeAssistInstanceName *string
-	ObjectId *string
-	NodeId *string
-    // NSX Edge ID.
-	Id *string
-    // Datacenter name where the NSX Edge is deployed.
-	DatacenterName *string
-    // Deployment state of the NSX Edge appliance. Values are 'deployed' when VMs have been deployed, 'undeployed' when no VMs are deployed and 'active' when Edge type is Distributed Logical Router and has no appliance deployed but is serving data path.
-	State *string
-	ClientHandle *string
-	Scope *ScopeInfo
-	Type_ *ObjectType
-	Revision *int64
-	VsmUuid *string
-	Description *string
-	ExtendedAttributes []ExtendedAttribute
-    // Value is true if local egress is enabled for UDLR traffic. Applicable only for Universal Distributed Logical Router.
-	LocalEgressEnabled *bool
-	UniversalRevision *int64
-	AllowedActions []string
-	ObjectTypeName *string
-    // Value is true if NSX Edge upgrade is available.
-	IsUpgradeAvailable *bool
-	IsUniversal *bool
-	Name *string
-    // Distributed Logical Router UUID provided by the NSX Controller.
-	LrouterUuid *string
-    // NSX Edge appliance summary.
-	AppliancesSummary *AppliancesSummary
-    // REST API version applicable for the NSX Edge.
-	ApiVersion *string
-    // Tenant ID for the NSX Edge.
-	TenantId *string
-    // vCenter MOID of the datacenter where the NSX Edge is deployed.
-	DatacenterMoid *string
-    // Number of connected vnics that are configured on the NSX Edge. format: int32
-	NumberOfConnectedVnics *int64
-}
-
-func (s EdgeSummary) GetType__() bindings.BindingType {
-	return EdgeSummaryBindingType()
-}
-
-func (s EdgeSummary) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for EdgeSummary._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Status of each of the deployed NSX Edge appliances.
-type EdgeVmStatus struct {
-    // High Availability index of the appliance. Values are 0 and 1. format: int32
-	Index *int64
-    // High Availability state of the appliance. Values are active and standby.
-	HaState *string
-    // Name of the NSX Edge appliance.
-	Name *string
-    // vCenter MOID of the NSX Edge appliance.
-	Id *string
-    // NSX Edge appliance health status identified by GREY (unknown status), GREEN (health checks are successful), YELLOW (intermittent health check failure), RED (appliance not in serving state).
-	EdgeVMStatus *string
-    // Value of the last published pre rules generation number. format: int64
-	PreRulesGenerationNumber *int64
-}
-
-func (s EdgeVmStatus) GetType__() bindings.BindingType {
-	return EdgeVmStatusBindingType()
-}
-
-func (s EdgeVmStatus) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for EdgeVmStatus._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Address group configuration of the NSX Edge vnic. An interface can have one primary and multiple secondary IP addresses.
-type EdgeVnicAddressGroup struct {
-    // Subnet prefix length of the primary IP address.
-	SubnetPrefixLength *string
-    // Secondary IP addresses of the NSX Edge vnic address group. Optional.
-	SecondaryAddresses *SecondaryAddresses
-    // Primary IP address of the vnic interface. Required.
-	PrimaryAddress *string
-	SubnetMask *string
-}
-
-func (s EdgeVnicAddressGroup) GetType__() bindings.BindingType {
-	return EdgeVnicAddressGroupBindingType()
-}
-
-func (s EdgeVnicAddressGroup) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for EdgeVnicAddressGroup._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// NSX Edge vnic address group configuration details.
-type EdgeVnicAddressGroups struct {
-    // Address group configuration of the NSX Edge vnic. Vnic can be configured to have more than one address group/subnets.
-	AddressGroups []EdgeVnicAddressGroup
-}
-
-func (s EdgeVnicAddressGroups) GetType__() bindings.BindingType {
-	return EdgeVnicAddressGroupsBindingType()
-}
-
-func (s EdgeVnicAddressGroups) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for EdgeVnicAddressGroups._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -2136,11 +1256,17 @@ func (s EniInfo) GetDataValue__() (data.DataValue, []error) {
 
 // Decribes the capacity of a given entity.
 type EntityCapacity struct {
+    // The storage capacity for the given entity in GiB.
 	StorageCapacityGib *int64
+    // The memory capacity for the given entity in GiB.
 	MemoryCapacityGib *int64
+    // The number of CPU cores for the given entity.
 	TotalNumberOfCores *int64
+    // The number of SSDs for the given entity.
 	NumberOfSsds *int64
+    // The CPU capacity for the given entity in Ghz.
 	CpuCapacityGhz *float64
+    // The number of sockets for the given entity.
 	NumberOfSockets *int64
 }
 
@@ -2194,9 +1320,12 @@ func (s ErrorResponse) GetDataValue__() (data.DataValue, []error) {
 type EsxConfig struct {
     // Availability zone where the hosts should be provisioned. (Can be specified only for privileged host operations).
 	AvailabilityZone *string
-	Esxs []string
+    // An option to indicate if the host needs to be strictly placed in a placement group. Fail the operation otherwise.
+	StrictPlacement *bool
     // An optional cluster id if the esxs operation has to be on a specific cluster.
 	ClusterId *string
+    // An optional list of ESX IDs to remove. format: UUID
+	Esxs []string
 	NumHosts int64
 }
 
@@ -2289,245 +1418,6 @@ func (s EsxHostInfo) GetDataValue__() (data.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		log.Errorf("Error in ConvertToVapi for EsxHostInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type ExtendedAttribute struct {
-	Name *string
-	Value *string
-}
-
-func (s ExtendedAttribute) GetType__() bindings.BindingType {
-	return ExtendedAttributeBindingType()
-}
-
-func (s ExtendedAttribute) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ExtendedAttribute._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// List of features and their capability details based on NSX Edge appliance form factor.
-type FeatureCapabilities struct {
-    // Time stamp value at which the feature capabilities were retrieved. format: int64
-	Timestamp *int64
-    // List of feature capability information.
-	FeatureCapabilities []FeatureCapability
-}
-
-func (s FeatureCapabilities) GetType__() bindings.BindingType {
-	return FeatureCapabilitiesBindingType()
-}
-
-func (s FeatureCapabilities) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for FeatureCapabilities._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Feature capability information.
-type FeatureCapability struct {
-    // List of key value pairs describing the feature configuration limits.
-	ConfigurationLimits []KeyValueAttributes
-    // Value is true if feature is supported on NSX Edge.
-	IsSupported *bool
-    // Name of the feature or service.
-	Service *string
-    // Licence and access control information for the feature.
-	Permission *LicenceAclPermissions
-}
-
-func (s FeatureCapability) GetType__() bindings.BindingType {
-	return FeatureCapabilityBindingType()
-}
-
-func (s FeatureCapability) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for FeatureCapability._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Individual feature status.
-type FeatureStatus struct {
-    // Status of the feature or service.
-	Status *string
-    // Value is true if feature is configured.
-	Configured *bool
-    // Server status of the feature or service. Values are up and down.
-	ServerStatus *string
-    // Publish status of the feature, whether APPLIED or PERSISTED.
-	PublishStatus *string
-    // Name of the feature or service.
-	Service *string
-}
-
-func (s FeatureStatus) GetType__() bindings.BindingType {
-	return FeatureStatusBindingType()
-}
-
-func (s FeatureStatus) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for FeatureStatus._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Firewall Configuration
-type FirewallConfig struct {
-    // Ordered list of firewall rules.
-	FirewallRules *FirewallRules
-	FeatureType *string
-    // Version number tracking each configuration change. To avoid problems with overwriting changes, always retrieve and modify the latest configuration to include the current version number in your request. If you provide a version number which is not current, the request is rejected. If you omit the version number, the request is accepted but may overwrite any current changes if your change is not in sync with the latest change. format: int64
-	Version *int64
-	Template *string
-    // Global configuration applicable to all rules.
-	GlobalConfig *FirewallGlobalConfig
-    // Value is true if feature is enabled. Default value is true. Optional.
-	Enabled *bool
-    // Default Policy.
-	DefaultPolicy *FirewallDefaultPolicy
-}
-
-func (s FirewallConfig) GetType__() bindings.BindingType {
-	return FirewallConfigBindingType()
-}
-
-func (s FirewallConfig) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for FirewallConfig._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Dashboard Statistics data for Firewall.
-type FirewallDashboardStats struct {
-    // Number of NSX Edge firewall connections and rules.
-	Connections []DashboardStat
-}
-
-func (s FirewallDashboardStats) GetType__() bindings.BindingType {
-	return FirewallDashboardStatsBindingType()
-}
-
-func (s FirewallDashboardStats) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for FirewallDashboardStats._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Firewall default policy. Default is deny.
-type FirewallDefaultPolicy struct {
-    // Action. Default is deny. Supported values accept, deny
-	Action *string
-    // Enable logging for the rule.
-	LoggingEnabled *bool
-}
-
-func (s FirewallDefaultPolicy) GetType__() bindings.BindingType {
-	return FirewallDefaultPolicyBindingType()
-}
-
-func (s FirewallDefaultPolicy) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for FirewallDefaultPolicy._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Global configuration applicable to all rules.
-type FirewallGlobalConfig struct {
-    // Allow TCP out of window packets.
-	TcpAllowOutOfWindowPackets *bool
-    // UDP timeout close. format: int32
-	UdpTimeout *int64
-    // IP generic timeout. format: int32
-	IpGenericTimeout *int64
-    // Pick TCP ongoing connections.
-	TcpPickOngoingConnections *bool
-    // TCP timeout open. format: int32
-	TcpTimeoutOpen *int64
-    // TCP timeout close. format: int32
-	TcpTimeoutClose *int64
-    // ICMP6 timeout. format: int32
-	Icmp6Timeout *int64
-    // Drop icmp replays.
-	DropIcmpReplays *bool
-    // Log icmp errors.
-	LogIcmpErrors *bool
-    // Send TCP reset for closed NSX Edge ports.
-	TcpSendResetForClosedVsePorts *bool
-    // Drop invalid traffic.
-	DropInvalidTraffic *bool
-    // Protect against SYN flood attacks by detecting bogus TCP connections and terminating them without consuming firewall state tracking resources. Default : false
-	EnableSynFloodProtection *bool
-    // ICMP timeout. format: int32
-	IcmpTimeout *int64
-    // TCP timeout established. format: int32
-	TcpTimeoutEstablished *int64
-    // Log invalid traffic.
-	LogInvalidTraffic *bool
-}
-
-func (s FirewallGlobalConfig) GetType__() bindings.BindingType {
-	return FirewallGlobalConfigBindingType()
-}
-
-func (s FirewallGlobalConfig) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for FirewallGlobalConfig._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -2635,58 +1525,6 @@ func (s FirewallRuleScope) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Statistics for firewall rule
-type FirewallRuleStats struct {
-    // Timestamp of statistics collection. format: int64
-	Timestamp *int64
-    // Connection count. format: int64
-	ConnectionCount *int64
-    // Byte count. format: int64
-	ByteCount *int64
-    // Packet count. format: int64
-	PacketCount *int64
-}
-
-func (s FirewallRuleStats) GetType__() bindings.BindingType {
-	return FirewallRuleStatsBindingType()
-}
-
-func (s FirewallRuleStats) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for FirewallRuleStats._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Ordered list of firewall rules.
-type FirewallRules struct {
-    // Ordered list of firewall rules.
-	FirewallRules []Nsxfirewallrule
-}
-
-func (s FirewallRules) GetType__() bindings.BindingType {
-	return FirewallRulesBindingType()
-}
-
-func (s FirewallRules) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for FirewallRules._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 type FirewallService struct {
     // protocol name, such as 'tcp', 'udp' etc.
 	Protocol *string
@@ -2762,53 +1600,6 @@ func (s GlcmBundle) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// DHCP lease information.
-type HostLeaseInfo struct {
-    // MAC address of the client.
-	MacAddress *string
-    // End time of the lease.
-	Ends *string
-    // Time stamp of when IP address was marked as abandoned.
-	Abandoned *string
-    // Client Last Transaction Time of the lease info.
-	Cltt *string
-    // Name of the client.
-	ClientHostname *string
-    // Start time of the lease.
-	Starts *string
-    // Lease's binding state.
-	BindingState *string
-    // The hardware type on which the lease will be used.
-	HardwareType *string
-    // Time Sent From Partner of the lease info.
-	Tsfp *string
-    // Uid to identify the DHCP lease.
-	Uid *string
-    // Indicates what state the lease will move to when the current state expires.
-	NextBindingState *string
-    // IP address of the client.
-	IpAddress *string
-    // Time Sent To Partner of the lease info.
-	Tstp *string
-}
-
-func (s HostLeaseInfo) GetType__() bindings.BindingType {
-	return HostLeaseInfoBindingType()
-}
-
-func (s HostLeaseInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for HostLeaseInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 // Represents a structure for instance type config
 type InstanceTypeConfig struct {
     // Instance type name.
@@ -2831,414 +1622,6 @@ func (s InstanceTypeConfig) GetDataValue__() (data.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		log.Errorf("Error in ConvertToVapi for InstanceTypeConfig._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type InteractionPermissions struct {
-	ManagePermission *bool
-	ViewPermission *bool
-}
-
-func (s InteractionPermissions) GetType__() bindings.BindingType {
-	return InteractionPermissionsBindingType()
-}
-
-func (s InteractionPermissions) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for InteractionPermissions._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Dashboard Statistics data for Interfaces.
-type InterfacesDashboardStats struct {
-	Vnic7InPkt []DashboardStat
-	Vnic0InByte []DashboardStat
-	Vnic8OutPkt []DashboardStat
-	Vnic5InByte []DashboardStat
-	Vnic2InPkt []DashboardStat
-	Vnic3InPkt []DashboardStat
-	Vnic6OutByte []DashboardStat
-	Vnic3InByte []DashboardStat
-	Vnic8InPkt []DashboardStat
-	Vnic1InByte []DashboardStat
-	Vnic1OutPkt []DashboardStat
-	Vnic5OutByte []DashboardStat
-	Vnic0OutPkt []DashboardStat
-	Vnic0OutByte []DashboardStat
-	Vnic6OutPkt []DashboardStat
-	Vnic3OutByte []DashboardStat
-	Vnic7InByte []DashboardStat
-	Vnic1OutByte []DashboardStat
-	Vnic9OutPkt []DashboardStat
-	Vnic9InPkt []DashboardStat
-	Vnic4InByte []DashboardStat
-	Vnic5OutPkt []DashboardStat
-	Vnic2OutPkt []DashboardStat
-	Vnic2InByte []DashboardStat
-	Vnic5InPkt []DashboardStat
-	Vnic7OutPkt []DashboardStat
-	Vnic3OutPkt []DashboardStat
-	Vnic4OutPkt []DashboardStat
-	Vnic4OutByte []DashboardStat
-	Vnic1InPkt []DashboardStat
-	Vnic2OutByte []DashboardStat
-	Vnic6InByte []DashboardStat
-	Vnic0InPkt []DashboardStat
-	Vnic9InByte []DashboardStat
-	Vnic7OutByte []DashboardStat
-	Vnic4InPkt []DashboardStat
-	Vnic9OutByte []DashboardStat
-	Vnic8OutByte []DashboardStat
-	Vnic8InByte []DashboardStat
-	Vnic6InPkt []DashboardStat
-}
-
-func (s InterfacesDashboardStats) GetType__() bindings.BindingType {
-	return InterfacesDashboardStatsBindingType()
-}
-
-func (s InterfacesDashboardStats) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for InterfacesDashboardStats._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// IP address
-type IpAddresses struct {
-    // List of IP addresses.
-	IpAddress []string
-}
-
-func (s IpAddresses) GetType__() bindings.BindingType {
-	return IpAddressesBindingType()
-}
-
-func (s IpAddresses) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for IpAddresses._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// NSX Edge IPsec configuration details.
-type Ipsec struct {
-	FeatureType *string
-    // Configure logging for the feature on NSX Edge appliance. Logging is disabled by default. Optional.
-	Logging *Logging
-    // IPsec Global configuration details.
-	Global *IpsecGlobalConfig
-    // Value is true if feature is enabled. Default value is true. Optional.
-	Enabled *bool
-    // IPsec Site configuration details.
-	Sites *IpsecSites
-    // Enable/disable event generation on NSX Edge appliance for IPsec.
-	DisableEvent *bool
-    // Version number tracking each configuration change. To avoid problems with overwriting changes, always retrieve and modify the latest configuration to include the current version number in your request. If you provide a version number which is not current, the request is rejected. If you omit the version number, the request is accepted but may overwrite any current changes if your change is not in sync with the latest change. format: int64
-	Version *int64
-	Template *string
-}
-
-func (s Ipsec) GetType__() bindings.BindingType {
-	return IpsecBindingType()
-}
-
-func (s Ipsec) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Ipsec._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Dashboard Statistics data for Ipsec.
-type IpsecDashboardStats struct {
-    // Tx transmitted bytes.
-	IpsecBytesOut []DashboardStat
-    // Rx received bytes.
-	IpsecBytesIn []DashboardStat
-    // Number of Ipsec tunnels.
-	IpsecTunnels []DashboardStat
-}
-
-func (s IpsecDashboardStats) GetType__() bindings.BindingType {
-	return IpsecDashboardStatsBindingType()
-}
-
-func (s IpsecDashboardStats) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for IpsecDashboardStats._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// IPsec Global configuration details.
-type IpsecGlobalConfig struct {
-    // IPsec Global Pre Shared Key. Maximum characters is 128. Required when peerIp is configured as 'any' in NSX Edge IPsec Site configuration.
-	Psk *string
-    // CA certificate list. Optional.
-	CaCertificates *CaCertificates
-    // Certificate name or identifier. Required when x.509 is selected as the authentication mode.
-	ServiceCertificate *string
-    // CRL certificate list. Optional.
-	CrlCertificates *CrlCertificates
-	Extension *string
-}
-
-func (s IpsecGlobalConfig) GetType__() bindings.BindingType {
-	return IpsecGlobalConfigBindingType()
-}
-
-func (s IpsecGlobalConfig) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for IpsecGlobalConfig._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// NSX Edge IPsec Site configuration details.
-type IpsecSite struct {
-    // Pre Shared Key for the IPsec Site. Required if Site peerIp is not 'any'. Global PSK is used when Authentication mode is PSK and Site peerIp is 'any'.
-	Psk *string
-    // Local ID of the IPsec Site. Defaults to the local IP.
-	LocalId *string
-    // Enable/disable Perfect Forward Secrecy. Default is true.
-	EnablePfs *bool
-    // Authentication mode for the IPsec Site. Valid values are psk and x.509, with psk as default.
-	AuthenticationMode *string
-    // Peer subnets for which IPsec VPN is configured.
-	PeerSubnets *Subnets
-    // Diffie-Hellman algorithm group. Defaults to DH14 for FIPS enabled NSX Edge. DH2 and DH5 are not supported when FIPS is enabled on NSX Edge. Valid values are DH2, DH5, DH14, DH15, DH16.
-	DhGroup *string
-    // ID of the IPsec Site configuration provided by NSX Manager.
-	SiteId *string
-    // Description of the IPsec Site.
-	Description *string
-    // IP (IPv4) address or FQDN of the Peer. Can also be specified as 'any'. Required.
-	PeerIp *string
-    // Name of the IPsec Site.
-	Name *string
-	Certificate *string
-    // Local IP of the IPsec Site. Should be one of the IP addresses configured on the uplink interfaces of the NSX Edge. Required.
-	LocalIp *string
-    // IPsec encryption algorithm with default as aes256. Valid values are 'aes', 'aes256', '3des', 'aes-gcm'.
-	EncryptionAlgorithm *string
-    // Enable/disable IPsec Site.
-	Enabled *bool
-    // MTU for the IPsec site. Defaults to the mtu of the NSX Edge vnic specified by the localIp. Optional. format: int32
-	Mtu *int64
-	Extension *string
-    // Peer ID. Should be unique for all IPsec Site's configured for an NSX Edge.
-	PeerId *string
-    // Local subnets for which IPsec VPN is configured.
-	LocalSubnets *Subnets
-}
-
-func (s IpsecSite) GetType__() bindings.BindingType {
-	return IpsecSiteBindingType()
-}
-
-func (s IpsecSite) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for IpsecSite._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type IpsecSiteIKEStatus struct {
-	ChannelStatus *string
-	ChannelState *string
-	PeerIpAddress *string
-	LocalIpAddress *string
-	PeerSubnets []string
-	PeerId *string
-	LastInformationalMessage *string
-	LocalSubnets []string
-}
-
-func (s IpsecSiteIKEStatus) GetType__() bindings.BindingType {
-	return IpsecSiteIKEStatusBindingType()
-}
-
-func (s IpsecSiteIKEStatus) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for IpsecSiteIKEStatus._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type IpsecSiteStats struct {
-	RxBytesOnSite *int64
-	TunnelStats []IpsecTunnelStats
-	IkeStatus *IpsecSiteIKEStatus
-	SiteStatus *string
-	TxBytesFromSite *int64
-}
-
-func (s IpsecSiteStats) GetType__() bindings.BindingType {
-	return IpsecSiteStatsBindingType()
-}
-
-func (s IpsecSiteStats) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for IpsecSiteStats._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// List of IPsec sites for NSX Edge.
-type IpsecSites struct {
-	Sites []IpsecSite
-}
-
-func (s IpsecSites) GetType__() bindings.BindingType {
-	return IpsecSitesBindingType()
-}
-
-func (s IpsecSites) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for IpsecSites._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type IpsecStatusAndStats struct {
-	TimeStamp *int64
-	ServerStatus *string
-	SiteStatistics []IpsecSiteStats
-}
-
-func (s IpsecStatusAndStats) GetType__() bindings.BindingType {
-	return IpsecStatusAndStatsBindingType()
-}
-
-func (s IpsecStatusAndStats) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for IpsecStatusAndStats._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type IpsecTunnelStats struct {
-	TunnelStatus *string
-	PeerSPI *string
-	RxBytesOnLocalSubnet *int64
-	EstablishedDate *string
-	PeerSubnet *string
-	AuthenticationAlgorithm *string
-	TunnelState *string
-	TxBytesFromLocalSubnet *int64
-	LastInformationalMessage *string
-	LocalSPI *string
-	EncryptionAlgorithm *string
-	LocalSubnet *string
-}
-
-func (s IpsecTunnelStats) GetType__() bindings.BindingType {
-	return IpsecTunnelStatsBindingType()
-}
-
-func (s IpsecTunnelStats) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for IpsecTunnelStats._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Key value pair describing the feature configuration limit.
-type KeyValueAttributes struct {
-    // Value corresponding to the key of the configuration limit parameter.
-	Value *string
-    // Key name of the configuration limit parameter.
-	Key *string
-}
-
-func (s KeyValueAttributes) GetType__() bindings.BindingType {
-	return KeyValueAttributesBindingType()
-}
-
-func (s KeyValueAttributes) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for KeyValueAttributes._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -3269,29 +1652,6 @@ func (s KmsVpcEndpoint) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Layer 2 extension.
-type L2Extension struct {
-    // Identifier for layer 2 extension tunnel. Valid range: 1-4093. format: int32
-	TunnelId int64
-}
-
-func (s L2Extension) GetType__() bindings.BindingType {
-	return L2ExtensionBindingType()
-}
-
-func (s L2Extension) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for L2Extension._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 type L2Vpn struct {
     // Enable (true) or disable (false) L2 VPN.
 	Enabled *bool
@@ -3311,154 +1671,6 @@ func (s L2Vpn) GetDataValue__() (data.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		log.Errorf("Error in ConvertToVapi for L2Vpn._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// L2 VPN status and statistics of a single L2 VPN site.
-type L2vpnStats struct {
-    // Status of the tunnel (UP/DOWN).
-	TunnelStatus *string
-    // Tunnel established date. format: int64
-	EstablishedDate *int64
-    // User defined name of the site.
-	Name *string
-    // Number of received packets dropped.
-	DroppedRxPackets *int64
-    // Cipher used in encryption.
-	EncryptionAlgorithm *string
-    // Reason for the tunnel down.
-	FailureMessage *string
-    // Number of bytes transferred from local subnet.
-	TxBytesFromLocalSubnet *int64
-    // Number of bytes received on the local subnet.
-	RxBytesOnLocalSubnet *int64
-    // Number of transferred packets dropped.
-	DroppedTxPackets *int64
-    // Time stamp of the statistics collection. format: int64
-	LastUpdatedTime *int64
-}
-
-func (s L2vpnStats) GetType__() bindings.BindingType {
-	return L2vpnStatsBindingType()
-}
-
-func (s L2vpnStats) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for L2vpnStats._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// L2 VPN status and statistics.
-type L2vpnStatusAndStats struct {
-    // Time stamp of statistics collection. format: int64
-	TimeStamp *int64
-	ServerStatus *string
-    // List of statistics for each Site.
-	SiteStats []L2vpnStats
-}
-
-func (s L2vpnStatusAndStats) GetType__() bindings.BindingType {
-	return L2vpnStatusAndStatsBindingType()
-}
-
-func (s L2vpnStatusAndStats) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for L2vpnStatusAndStats._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Licence and access control information for the feature.
-type LicenceAclPermissions struct {
-    // Data access control information for the feature.
-	DataPermission *DataPermissions
-    // Value is true if feature is licenced.
-	IsLicensed *bool
-    // Access control information for the feature.
-	AccessPermission *InteractionPermissions
-}
-
-func (s LicenceAclPermissions) GetType__() bindings.BindingType {
-	return LicenceAclPermissionsBindingType()
-}
-
-func (s LicenceAclPermissions) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for LicenceAclPermissions._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Dashboard Statistics data for Load Balancer.
-type LoadBalancerDashboardStats struct {
-    // Number of bytes in.
-	LbBpsIn []DashboardStat
-    // Number of HTTP requests received by Load Balancer.
-	LbHttpReqs []DashboardStat
-    // Number of bytes out.
-	LbBpsOut []DashboardStat
-    // Number of Load Balancer sessions.
-	LbSessions []DashboardStat
-}
-
-func (s LoadBalancerDashboardStats) GetType__() bindings.BindingType {
-	return LoadBalancerDashboardStatsBindingType()
-}
-
-func (s LoadBalancerDashboardStats) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for LoadBalancerDashboardStats._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// logging.
-type Logging struct {
-    // Log level. Valid values: emergency, alert, critical, error, warning, notice, info, debug.
-	LogLevel *string
-    // Logging enabled.
-	Enable *bool
-}
-
-func (s Logging) GetType__() bindings.BindingType {
-	return LoggingBindingType()
-}
-
-func (s Logging) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Logging._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -3501,71 +1713,6 @@ func (s LogicalNetwork) GetDataValue__() (data.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		log.Errorf("Error in ConvertToVapi for LogicalNetwork._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type LogicalRouterScope struct {
-	Type_ *string
-	Id *string
-}
-
-func (s LogicalRouterScope) GetType__() bindings.BindingType {
-	return LogicalRouterScopeBindingType()
-}
-
-func (s LogicalRouterScope) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for LogicalRouterScope._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type LogicalRouterScopes struct {
-	LogicalRouterScope []LogicalRouterScope
-}
-
-func (s LogicalRouterScopes) GetType__() bindings.BindingType {
-	return LogicalRouterScopesBindingType()
-}
-
-func (s LogicalRouterScopes) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for LogicalRouterScopes._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type MacAddress struct {
-	EdgeVmHaIndex *int64
-	Value *string
-}
-
-func (s MacAddress) GetType__() bindings.BindingType {
-	return MacAddressBindingType()
-}
-
-func (s MacAddress) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for MacAddress._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -3733,35 +1880,6 @@ func (s MapZonesRequest) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Start time, end time and interval details.
-type MetaDashboardStats struct {
-    // Statistics data is collected for these vNICs.
-	Vnics []Vnic
-    // End time in seconds. format: int64
-	EndTime *int64
-    // Start time in seconds. format: int64
-	StartTime *int64
-    // Time interval in seconds. format: int32
-	Interval *int64
-}
-
-func (s MetaDashboardStats) GetType__() bindings.BindingType {
-	return MetaDashboardStatsBindingType()
-}
-
-func (s MetaDashboardStats) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for MetaDashboardStats._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 // metadata of the sddc manifest
 type Metadata struct {
     // the timestamp for the bundle
@@ -3787,28 +1905,41 @@ func (s Metadata) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// NAT configuration
-type Nat struct {
-    // Ordered list of NAT rules.
-	Rules *NatRules
-	FeatureType *string
-    // Version number tracking each configuration change. To avoid problems with overwriting changes, always retrieve and modify the latest configuration to include the current version number in your request. If you provide a version number which is not current, the request is rejected. If you omit the version number, the request is accepted but may overwrite any current changes if your change is not in sync with the latest change. format: int64
-	Version *int64
-    // Value is true if feature is enabled. Default value is true. Optional.
-	Enabled *bool
-	Template *string
+type MsftLicensingConfig struct {
+    // Possible values are: 
+    //
+    // * MsftLicensingConfig#MsftLicensingConfig_MSSQL_LICENSING_DISABLED
+    // * MsftLicensingConfig#MsftLicensingConfig_MSSQL_LICENSING_CUSTOMER_SUPPLIED
+    // * MsftLicensingConfig#MsftLicensingConfig_MSSQL_LICENSING_ENABLED
+    //
+    //  The status MSSQL licensing for this SDDC's clusters.
+	MssqlLicensing *string
+    // Possible values are: 
+    //
+    // * MsftLicensingConfig#MsftLicensingConfig_WINDOWS_LICENSING_DISABLED
+    // * MsftLicensingConfig#MsftLicensingConfig_WINDOWS_LICENSING_CUSTOMER_SUPPLIED
+    // * MsftLicensingConfig#MsftLicensingConfig_WINDOWS_LICENSING_ENABLED
+    //
+    //  The status of Windows licensing for this SDDC's clusters. Can be enabled, disabled, or customer's.
+	WindowsLicensing *string
+}
+const MsftLicensingConfig_MSSQL_LICENSING_DISABLED = "DISABLED"
+const MsftLicensingConfig_MSSQL_LICENSING_CUSTOMER_SUPPLIED = "CUSTOMER_SUPPLIED"
+const MsftLicensingConfig_MSSQL_LICENSING_ENABLED = "ENABLED"
+const MsftLicensingConfig_WINDOWS_LICENSING_DISABLED = "DISABLED"
+const MsftLicensingConfig_WINDOWS_LICENSING_CUSTOMER_SUPPLIED = "CUSTOMER_SUPPLIED"
+const MsftLicensingConfig_WINDOWS_LICENSING_ENABLED = "ENABLED"
+
+func (s MsftLicensingConfig) GetType__() bindings.BindingType {
+	return MsftLicensingConfigBindingType()
 }
 
-func (s Nat) GetType__() bindings.BindingType {
-	return NatBindingType()
-}
-
-func (s Nat) GetDataValue__() (data.DataValue, []error) {
+func (s MsftLicensingConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Nat._GetDataValue method - %s",
+		log.Errorf("Error in ConvertToVapi for MsftLicensingConfig._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -3846,29 +1977,6 @@ func (s NatRule) GetDataValue__() (data.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		log.Errorf("Error in ConvertToVapi for NatRule._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Ordered list of NAT rules.
-type NatRules struct {
-    // Ordered list of NAT rules.
-	NatRulesDtos []Nsxnatrule
-}
-
-func (s NatRules) GetType__() bindings.BindingType {
-	return NatRulesBindingType()
-}
-
-func (s NatRules) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for NatRules._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -3924,204 +2032,6 @@ func (s NewCredentials) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Firewall Rule
-type Nsxfirewallrule struct {
-    // Identifies the type of the rule. internal_high or user.
-	RuleType *string
-    // Description for the rule
-	Description *string
-    // Identifier for the rule. format: int64
-	RuleId *int64
-    // Defines the order of NAT and Firewall pipeline. When false, firewall happens before NAT. Default : false
-	MatchTranslated *bool
-	InvalidApplication *bool
-    // Direction. Possible values in or out. Default is 'any'.
-	Direction *string
-    // Statistics for the rule
-	Statistics *FirewallRuleStats
-    // Name for the rule.
-	Name *string
-	InvalidSource *bool
-    // Enable logging for the rule.
-	LoggingEnabled *bool
-    // List of destinations. Default is any.
-	Destination *AddressFWSourceDestination
-    // Enable rule.
-	Enabled *bool
-    // List of applications. Default is any.
-	Application *Application
-    // List of sources. Default is any.
-	Source *AddressFWSourceDestination
-    // Action. Values : accept, deny
-	Action *string
-	InvalidDestination *bool
-    // Rule tag. Used to specify user-defined ruleId. If not specified NSX Manager will generate ruleId. format: int64
-	RuleTag *int64
-}
-
-func (s Nsxfirewallrule) GetType__() bindings.BindingType {
-	return NsxfirewallruleBindingType()
-}
-
-func (s Nsxfirewallrule) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Nsxfirewallrule._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Application (service) for firewall rule.
-type Nsxfirewallservice struct {
-    // List of source ports.
-	SourcePort []string
-    // Protocol.
-	Protocol *string
-    // List of destination ports.
-	Port []string
-    // IcmpType. Only supported when protocol is icmp. Default is 'any'.
-	IcmpType *string
-}
-
-func (s Nsxfirewallservice) GetType__() bindings.BindingType {
-	return NsxfirewallserviceBindingType()
-}
-
-func (s Nsxfirewallservice) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Nsxfirewallservice._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// L2 VPN server configuration.
-type Nsxl2vpn struct {
-    // Listener IP addresses.
-	ListenerIps []string
-    // Enabled state of L2 VPN service.
-	Enabled *bool
-    // List of L2 VPN sites.
-	Sites Sites
-}
-
-func (s Nsxl2vpn) GetType__() bindings.BindingType {
-	return Nsxl2vpnBindingType()
-}
-
-func (s Nsxl2vpn) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Nsxl2vpn._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// NAT rule
-type Nsxnatrule struct {
-    // Interface on which the NAT rule is applied.
-	Vnic *string
-    // Identifies the type of the rule. internal_high or user.
-	RuleType *string
-    // Protocol. Default is 'any'
-	Protocol *string
-    // Description for the rule.
-	Description *string
-    // Identifier for the rule. format: int64
-	RuleId *int64
-    // Apply SNAT rule only if traffic has this destination port. Default is 'any'.
-	SnatMatchDestinationPort *string
-    // Original address or address range. This is the original source address for SNAT rules and the original destination address for DNAT rules.
-	OriginalAddress *string
-    // Apply DNAT rule only if traffic has this source address. Default is 'any'.
-	DnatMatchSourceAddress *string
-    // Apply DNAT rule only if traffic has this source port. Default is 'any'.
-	DnatMatchSourcePort *string
-    // Apply SNAT rule only if traffic has this destination address. Default is 'any'.
-	SnatMatchDestinationAddress *string
-    // Original port. This is the original source port for SNAT rules, and the original destination port for DNAT rules.
-	OriginalPort *string
-    // Enable logging for the rule.
-	LoggingEnabled *bool
-    // Translated address or address range.
-	TranslatedAddress *string
-    // Enable rule.
-	Enabled *bool
-    // ICMP type. Only supported when protocol is icmp. Default is 'any'.
-	IcmpType *string
-    // Translated port. Supported in DNAT rules only.
-	TranslatedPort *string
-    // Action for the rule. SNAT or DNAT.
-	Action *string
-    // Rule tag. Used to specify user-defined ruleId. If not specified NSX Manager will generate ruleId. format: int64
-	RuleTag *int64
-}
-
-func (s Nsxnatrule) GetType__() bindings.BindingType {
-	return NsxnatruleBindingType()
-}
-
-func (s Nsxnatrule) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Nsxnatrule._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// L2 VPN site.
-type Nsxsite struct {
-    // Secure L2VPN traffic.
-	SecureTraffic *bool
-    // Identifier for L2 VPN site.
-	SiteId *string
-    // Name of L2 VPN site. Length: 1-255 characters.
-	Name *string
-    // Password for L2 VPN user. Passwords must contain the following: 12-63 characters, a mix of upper case letters, lower case letters, numbers, and at least one special character. Password must not contain the username as a substring. Do not repeat a character 3 or more times.
-	Password *string
-    // L2 VPN user ID. Valid user names: 1-63 characters, letters and numbers only. No white space or special characters.
-	UserId *string
-    // Description of L2 VPN site.
-	Description *string
-}
-
-func (s Nsxsite) GetType__() bindings.BindingType {
-	return NsxsiteBindingType()
-}
-
-func (s Nsxsite) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Nsxsite._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 // Details the state of different NSX add-ons.
 type NsxtAddons struct {
     // Indicates whether NSX Advanced addon is enabled or disabled.
@@ -4138,27 +2048,6 @@ func (s NsxtAddons) GetDataValue__() (data.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		log.Errorf("Error in ConvertToVapi for NsxtAddons._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type ObjectType struct {
-	Name *string
-}
-
-func (s ObjectType) GetType__() bindings.BindingType {
-	return ObjectTypeBindingType()
-}
-
-func (s ObjectType) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ObjectType._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -4243,6 +2132,30 @@ func (s OrgProperties) GetDataValue__() (data.DataValue, []error) {
 }
 
 
+type OrgSellerInfo struct {
+    // The accountid for this org for the seller-of-record. NILLABLE.
+	SellerAccountId *string
+    // The seller-of-record for the current organization. For example AWS or VMWARE
+	Seller *string
+}
+
+func (s OrgSellerInfo) GetType__() bindings.BindingType {
+	return OrgSellerInfoBindingType()
+}
+
+func (s OrgSellerInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for OrgSellerInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 type Organization struct {
 	Updated time.Time
     // User id that last updated this record
@@ -4262,6 +2175,7 @@ type Organization struct {
 	OrgType *string
 	DisplayName *string
 	Name *string
+	OrgSellerInfo *OrgSellerInfo
     // Possible values are: 
     //
     // * Organization#Organization_PROJECT_STATE_CREATED
@@ -4282,54 +2196,6 @@ func (s Organization) GetDataValue__() (data.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		log.Errorf("Error in ConvertToVapi for Organization._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// NSX Edges listed by pages.
-type PagedEdgeList struct {
-    // Page details with matched records.
-	EdgePage *DataPageEdgeSummary
-}
-
-func (s PagedEdgeList) GetType__() bindings.BindingType {
-	return PagedEdgeListBindingType()
-}
-
-func (s PagedEdgeList) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for PagedEdgeList._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type PagingInfo struct {
-	SortOrderAscending *bool
-	TotalCount *int64
-	StartIndex *int64
-	SortBy *string
-	PageSize *int64
-}
-
-func (s PagingInfo) GetType__() bindings.BindingType {
-	return PagingInfoBindingType()
-}
-
-func (s PagingInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for PagingInfo._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -4539,29 +2405,6 @@ func (s ProvisionSpec) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// DNS request statistics.
-type Requests struct {
-	Total *int64
-	Queries *int64
-}
-
-func (s Requests) GetType__() bindings.BindingType {
-	return RequestsBindingType()
-}
-
-func (s Requests) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Requests._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 type Reservation struct {
     // Duration - required for reservation in maintenance window format: int64
 	Duration *int64
@@ -4725,31 +2568,6 @@ func (s ReservationWindowMaintenanceProperties) GetDataValue__() (data.DataValue
 }
 
 
-// Job result information for the configuration change carried out on NSX Edge.
-type Result struct {
-    // Job Result value associated with key ID.
-	Value *string
-    // Job Result key ID.
-	Key *string
-}
-
-func (s Result) GetType__() bindings.BindingType {
-	return ResultBindingType()
-}
-
-func (s Result) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Result._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 type RouteTableInfo struct {
     // route table name
 	Name *string
@@ -4767,29 +2585,6 @@ func (s RouteTableInfo) GetDataValue__() (data.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		log.Errorf("Error in ConvertToVapi for RouteTableInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type ScopeInfo struct {
-	ObjectTypeName *string
-	Id *string
-	Name *string
-}
-
-func (s ScopeInfo) GetType__() bindings.BindingType {
-	return ScopeInfoBindingType()
-}
-
-func (s ScopeInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ScopeInfo._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -4876,32 +2671,9 @@ func (s Sddc) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-type SddcAllocatePublicIpSpec struct {
-	Count int64
-    // List of workload VM private IPs to be assigned the public IP just allocated.
-	PrivateIps []string
-    // List of names for the workload VM public IP assignment.
-	Names []string
-}
-
-func (s SddcAllocatePublicIpSpec) GetType__() bindings.BindingType {
-	return SddcAllocatePublicIpSpecBindingType()
-}
-
-func (s SddcAllocatePublicIpSpec) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for SddcAllocatePublicIpSpec._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 type SddcConfig struct {
+    // Indicates the desired licensing support, if any, of Microsoft software.
+	MsftLicenseConfig *MsftLicensingConfig
     // AWS VPC IP range. Only prefix of 16 or 20 is currently supported.
 	VpcCidr *string
     // The instance type for the esx hosts in the primary cluster of the SDDC.
@@ -5082,137 +2854,6 @@ func (s SddcManifest) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Logical network.
-type SddcNetwork struct {
-    // Network address groups for routed logical networks.
-	Subnets *SddcNetworkAddressGroups
-    // Name of the compute gateway to which the logical network is attached.
-	CgwName *string
-    // Name of logical network. Length needs to be between 1-35 characters.
-	Name string
-    // Layer 2 extension for extended logical networks.
-	L2Extension *L2Extension
-    // ID of the compute gateway edge to which the logical network is attached.
-	CgwId string
-    // DHCP configuration for routed logical networks.
-	DhcpConfigs *SddcNetworkDhcpConfig
-    // ID of logical network.
-	Id *string
-}
-
-func (s SddcNetwork) GetType__() bindings.BindingType {
-	return SddcNetworkBindingType()
-}
-
-func (s SddcNetwork) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for SddcNetwork._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Logical Network address group.
-type SddcNetworkAddressGroup struct {
-    // Prefix length of logical network.
-	PrefixLength *string
-    // Primary address for logical network.
-	PrimaryAddress *string
-}
-
-func (s SddcNetworkAddressGroup) GetType__() bindings.BindingType {
-	return SddcNetworkAddressGroupBindingType()
-}
-
-func (s SddcNetworkAddressGroup) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for SddcNetworkAddressGroup._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Logical network address groups.
-type SddcNetworkAddressGroups struct {
-    // List of logical network address groups.
-	AddressGroups []SddcNetworkAddressGroup
-}
-
-func (s SddcNetworkAddressGroups) GetType__() bindings.BindingType {
-	return SddcNetworkAddressGroupsBindingType()
-}
-
-func (s SddcNetworkAddressGroups) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for SddcNetworkAddressGroups._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// DHCP configuration for the logical network.
-type SddcNetworkDhcpConfig struct {
-    // List of IP pools in DHCP configuration.
-	IpPools []SddcNetworkDhcpIpPool
-}
-
-func (s SddcNetworkDhcpConfig) GetType__() bindings.BindingType {
-	return SddcNetworkDhcpConfigBindingType()
-}
-
-func (s SddcNetworkDhcpConfig) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for SddcNetworkDhcpConfig._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// DHCP IP pool for logical network.
-type SddcNetworkDhcpIpPool struct {
-    // IP range for DHCP IP pool.
-	IpRange *string
-    // DNS domain name.
-	DomainName *string
-}
-
-func (s SddcNetworkDhcpIpPool) GetType__() bindings.BindingType {
-	return SddcNetworkDhcpIpPoolBindingType()
-}
-
-func (s SddcNetworkDhcpIpPool) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for SddcNetworkDhcpIpPool._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 // Patch request body for SDDC
 type SddcPatchRequest struct {
     // The new name of the SDDC to be changed to.
@@ -5339,6 +2980,8 @@ type SddcResourceConfig struct {
     //
     //  Denotes if this is a SingleAZ SDDC or a MultiAZ SDDC.
 	DeploymentType *string
+    // The Microsoft license status of this SDDC.
+	MsftLicenseConfig *MsftLicensingConfig
 	NsxtAddons *NsxtAddons
     // if true, use the private IP addresses to register DNS records for the management VMs
 	DnsWithManagementVmPrivateIp *bool
@@ -5508,30 +3151,6 @@ func (s SddcTemplate) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Secondary IP addresses of the NSX Edge vnic address group. These are used for NAT, LB, VPN etc. Optional.
-type SecondaryAddresses struct {
-	Type_ *string
-    // List of IP addresses.
-	IpAddress []string
-}
-
-func (s SecondaryAddresses) GetType__() bindings.BindingType {
-	return SecondaryAddressesBindingType()
-}
-
-func (s SecondaryAddresses) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for SecondaryAddresses._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 // Detailed service errors associated with a task.
 type ServiceError struct {
     // Error message in English.
@@ -5605,124 +3224,6 @@ func (s Site) GetDataValue__() (data.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		log.Errorf("Error in ConvertToVapi for Site._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// L2 VPN sites.
-type Sites struct {
-	Sites []Nsxsite
-}
-
-func (s Sites) GetType__() bindings.BindingType {
-	return SitesBindingType()
-}
-
-func (s Sites) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Sites._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Dashboard Statistics data for SSL VPN.
-type SslvpnDashboardStats struct {
-    // Number of active clients.
-	ActiveClients []DashboardStat
-    // Rx bytes received for SSL VPN.
-	SslvpnBytesIn []DashboardStat
-    // Number of authentication failures.
-	AuthFailures []DashboardStat
-    // Number of SSL VPN sessions created.
-	SessionsCreated []DashboardStat
-    // Tx bytes transmitted for SSL VPN.
-	SslvpnBytesOut []DashboardStat
-}
-
-func (s SslvpnDashboardStats) GetType__() bindings.BindingType {
-	return SslvpnDashboardStatsBindingType()
-}
-
-func (s SslvpnDashboardStats) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for SslvpnDashboardStats._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// NSX Edge sub interface configuration details. Sub interfaces are created on a trunk interface.
-type SubInterface struct {
-    // Index of the sub interface assigned by NSX Manager. Min value is 10 and max value is 4103. format: int32
-	Index *int64
-    // Valid values for tunnel ID are min 1 to max 4093. Required. format: int32
-	TunnelId int64
-    // Name of the sub interface. Required.
-	Name *string
-    // Address group configuration of the sub interface.
-	AddressGroups *EdgeVnicAddressGroups
-    // VLAN ID of the virtual LAN used by this sub interface. VLAN IDs can range from 0 to 4094. format: int32
-	VlanId *int64
-    // Sub interface label of format vNic_{index} provided by NSX Manager. Read only.
-	Label *string
-    // Name of the logical switch connected to this sub interface.
-	LogicalSwitchName *string
-    // Value is true if the sub interface is connected to a logical switch, standard portgroup or distributed portgroup.
-	IsConnected *bool
-    // MTU value of the sub interface. This value would be the least mtu for all the trunk interfaces of the NSX Edge. Default is 1500. format: int32
-	Mtu *int64
-    // ID of the logical switch connected to this sub interface.
-	LogicalSwitchId *string
-    // Value is true if send redirects is enabled. Enable ICMP redirect to convey routing information to hosts.
-	EnableSendRedirects *bool
-}
-
-func (s SubInterface) GetType__() bindings.BindingType {
-	return SubInterfaceBindingType()
-}
-
-func (s SubInterface) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for SubInterface._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type SubInterfaces struct {
-    // List of sub interfaces.
-	SubInterfaces []SubInterface
-}
-
-func (s SubInterfaces) GetType__() bindings.BindingType {
-	return SubInterfacesBindingType()
-}
-
-func (s SubInterfaces) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for SubInterfaces._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -5817,28 +3318,6 @@ func (s SubnetRouteTableInfo) GetDataValue__() (data.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		log.Errorf("Error in ConvertToVapi for SubnetRouteTableInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type Subnets struct {
-    // List of subnets for which IPsec VPN is configured. Subnets should be network address specified in CIDR format and can accept '0.0.0.0/0' (any)
-	Subnets []string
-}
-
-func (s Subnets) GetType__() bindings.BindingType {
-	return SubnetsBindingType()
-}
-
-func (s Subnets) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Subnets._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -6203,31 +3682,6 @@ func (s TermOfferInstance) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-type TrafficShapingPolicy struct {
-	BurstSize *int64
-	AverageBandwidth *int64
-	PeakBandwidth *int64
-	Enabled *bool
-	Inherited *bool
-}
-
-func (s TrafficShapingPolicy) GetType__() bindings.BindingType {
-	return TrafficShapingPolicyBindingType()
-}
-
-func (s TrafficShapingPolicy) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for TrafficShapingPolicy._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 type UpdateCredentials struct {
     // Username of the credentials
 	Username string
@@ -6267,81 +3721,6 @@ func (s VmcLocale) GetDataValue__() (data.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		log.Errorf("Error in ConvertToVapi for VmcLocale._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// NSX Edge vnic configuration details.
-type Vnic struct {
-    // List of sub interfaces. Sub interfaces can be created only on a trunk interface.
-	SubInterfaces *SubInterfaces
-    // Address group configuration of the interface.
-	AddressGroups *EdgeVnicAddressGroups
-    // Value is true if the vnic is connected to a logical switch, standard portgroup or distributed portgroup.
-	IsConnected *bool
-    // Value is true if send redirects is enabled. Enable ICMP redirect to convey routing information to hosts.
-	EnableSendRedirects *bool
-	InShapingPolicy *TrafficShapingPolicy
-    // Interface label of format vNic_{vnicIndex} provided by NSX Manager. Read only.
-	Label *string
-    // Value is true if proxy arp is enabled. Enable proxy ARP if you want to allow the NSX Edge of type 'gatewayServices' to answer ARP requests intended for other machines.
-	EnableProxyArp *bool
-    // Index of the vnic. Min value is 0 and max value is 9. format: int32
-	Index int64
-    // Name of the interface. Optional.
-	Name *string
-    // MTU of the interface, with default as 1500. Min is 68, Max is 9000. Optional. format: int32
-	Mtu *int64
-	FenceParameters []KeyValueAttributes
-    // Distinct MAC addresses configured for the vnic. Optional.
-	MacAddresses []MacAddress
-	OutShapingPolicy *TrafficShapingPolicy
-    // Name of the port group or logical switch.
-	PortgroupName *string
-    // Value is true if bridge mode is enabled.
-	EnableBridgeMode *bool
-    // Type of the vnic. Values are uplink, internal, trunk. At least one internal interface must be configured for NSX Edge HA to work.
-	Type_ *string
-    // Value are port group ID (standard portgroup or distributed portgroup) or virtual wire ID (logical switch). Logical switch cannot be used for a TRUNK vnic. Portgroup cannot be shared among vnics/LIFs. Required when isConnected is specified as true. Example 'network-17' (standard portgroup), 'dvportgroup-34' (distributed portgroup) or 'virtualwire-2' (logical switch).
-	PortgroupId *string
-}
-
-func (s Vnic) GetType__() bindings.BindingType {
-	return VnicBindingType()
-}
-
-func (s Vnic) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Vnic._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Ordered list of NSX Edge vnics. Until one connected vnic is configured, none of the configured features will serve the network.
-type Vnics struct {
-    // Ordered list of NSX Edge vnics.
-	Vnics []Vnic
-}
-
-func (s Vnics) GetType__() bindings.BindingType {
-	return VnicsBindingType()
-}
-
-func (s Vnics) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Vnics._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -6806,21 +4185,6 @@ func AccountLinkSddcConfigBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.account_link_sddc_config", fields, reflect.TypeOf(AccountLinkSddcConfig{}), fieldNameMap, validators)
 }
 
-func AddressFWSourceDestinationBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["exclude"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["exclude"] = "Exclude"
-	fields["ipAddress"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["ipAddress"] = "IpAddress"
-	fields["groupingObjectId"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["groupingObjectId"] = "GroupingObjectId"
-	fields["vnicGroupId"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["vnicGroupId"] = "VnicGroupId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.address_FW_source_destination", fields, reflect.TypeOf(AddressFWSourceDestination{}), fieldNameMap, validators)
-}
-
 func AgentBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -6861,60 +4225,6 @@ func AmiInfoBindingType() bindings.BindingType {
 	fieldNameMap["name"] = "Name"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.ami_info", fields, reflect.TypeOf(AmiInfo{}), fieldNameMap, validators)
-}
-
-func AppliancesSummaryBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["dataStoreMoidOfActiveVse"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["dataStoreMoidOfActiveVse"] = "DataStoreMoidOfActiveVse"
-	fields["enableFips"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enableFips"] = "EnableFips"
-	fields["hostNameOfActiveVse"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["hostNameOfActiveVse"] = "HostNameOfActiveVse"
-	fields["vmBuildInfo"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["vmBuildInfo"] = "VmBuildInfo"
-	fields["deployAppliances"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["deployAppliances"] = "DeployAppliances"
-	fields["communicationChannel"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["communicationChannel"] = "CommunicationChannel"
-	fields["vmNameOfActiveVse"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["vmNameOfActiveVse"] = "VmNameOfActiveVse"
-	fields["numberOfDeployedVms"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["numberOfDeployedVms"] = "NumberOfDeployedVms"
-	fields["resourcePoolMoidOfActiveVse"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["resourcePoolMoidOfActiveVse"] = "ResourcePoolMoidOfActiveVse"
-	fields["dataStoreNameOfActiveVse"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["dataStoreNameOfActiveVse"] = "DataStoreNameOfActiveVse"
-	fields["vmMoidOfActiveVse"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["vmMoidOfActiveVse"] = "VmMoidOfActiveVse"
-	fields["statusFromVseUpdatedOn"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["statusFromVseUpdatedOn"] = "StatusFromVseUpdatedOn"
-	fields["fqdn"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["fqdn"] = "Fqdn"
-	fields["applianceSize"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["applianceSize"] = "ApplianceSize"
-	fields["resourcePoolNameOfActiveVse"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["resourcePoolNameOfActiveVse"] = "ResourcePoolNameOfActiveVse"
-	fields["activeVseHaIndex"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["activeVseHaIndex"] = "ActiveVseHaIndex"
-	fields["vmVersion"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["vmVersion"] = "VmVersion"
-	fields["hostMoidOfActiveVse"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["hostMoidOfActiveVse"] = "HostMoidOfActiveVse"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.appliances_summary", fields, reflect.TypeOf(AppliancesSummary{}), fieldNameMap, validators)
-}
-
-func ApplicationBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["applicationId"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["applicationId"] = "ApplicationId"
-	fields["service"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(NsxfirewallserviceBindingType), reflect.TypeOf([]Nsxfirewallservice{})))
-	fieldNameMap["service"] = "Service"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.application", fields, reflect.TypeOf(Application{}), fieldNameMap, validators)
 }
 
 func AvailableZoneInfoBindingType() bindings.BindingType {
@@ -7076,6 +4386,8 @@ func AwsSddcConfigBindingType() bindings.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["region"] = bindings.NewStringType()
 	fieldNameMap["region"] = "Region"
+	fields["msft_license_config"] = bindings.NewOptionalType(bindings.NewReferenceType(MsftLicensingConfigBindingType))
+	fieldNameMap["msft_license_config"] = "MsftLicenseConfig"
 	fields["vpc_cidr"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vpc_cidr"] = "VpcCidr"
 	fields["host_instance_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vmc.model.host_instance_types", reflect.TypeOf(HostInstanceTypes(HostInstanceTypes_I3_METAL))))
@@ -7256,6 +4568,8 @@ func AwsSddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["sso_domain"] = "SsoDomain"
 	fields["deployment_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["deployment_type"] = "DeploymentType"
+	fields["msft_license_config"] = bindings.NewOptionalType(bindings.NewReferenceType(MsftLicensingConfigBindingType))
+	fieldNameMap["msft_license_config"] = "MsftLicenseConfig"
 	fields["nsxt_addons"] = bindings.NewOptionalType(bindings.NewReferenceType(NsxtAddonsBindingType))
 	fieldNameMap["nsxt_addons"] = "NsxtAddons"
 	fields["dns_with_management_vm_private_ip"] = bindings.NewOptionalType(bindings.NewBooleanType())
@@ -7289,68 +4603,6 @@ func AwsSubnetBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.aws_subnet", fields, reflect.TypeOf(AwsSubnet{}), fieldNameMap, validators)
 }
 
-func CaCertificatesBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["caCertificate"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["caCertificate"] = "CaCertificate"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.ca_certificates", fields, reflect.TypeOf(CaCertificates{}), fieldNameMap, validators)
-}
-
-func CbmStatisticBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["vnic"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["vnic"] = "Vnic"
-	fields["timestamp"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["timestamp"] = "Timestamp"
-	fields["out"] = bindings.NewOptionalType(bindings.NewDoubleType())
-	fieldNameMap["out"] = "Out"
-	fields["in"] = bindings.NewOptionalType(bindings.NewDoubleType())
-	fieldNameMap["in"] = "In"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.cbm_statistic", fields, reflect.TypeOf(CbmStatistic{}), fieldNameMap, validators)
-}
-
-func CbmStatisticsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["dataDto"] = bindings.NewOptionalType(bindings.NewReferenceType(CbmStatsDataBindingType))
-	fieldNameMap["dataDto"] = "DataDto"
-	fields["metaDto"] = bindings.NewOptionalType(bindings.NewReferenceType(MetaDashboardStatsBindingType))
-	fieldNameMap["metaDto"] = "MetaDto"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.cbm_statistics", fields, reflect.TypeOf(CbmStatistics{}), fieldNameMap, validators)
-}
-
-func CbmStatsDataBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["vnic_9"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(CbmStatisticBindingType), reflect.TypeOf([]CbmStatistic{})))
-	fieldNameMap["vnic_9"] = "Vnic9"
-	fields["vnic_8"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(CbmStatisticBindingType), reflect.TypeOf([]CbmStatistic{})))
-	fieldNameMap["vnic_8"] = "Vnic8"
-	fields["vnic_7"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(CbmStatisticBindingType), reflect.TypeOf([]CbmStatistic{})))
-	fieldNameMap["vnic_7"] = "Vnic7"
-	fields["vnic_6"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(CbmStatisticBindingType), reflect.TypeOf([]CbmStatistic{})))
-	fieldNameMap["vnic_6"] = "Vnic6"
-	fields["vnic_5"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(CbmStatisticBindingType), reflect.TypeOf([]CbmStatistic{})))
-	fieldNameMap["vnic_5"] = "Vnic5"
-	fields["vnic_4"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(CbmStatisticBindingType), reflect.TypeOf([]CbmStatistic{})))
-	fieldNameMap["vnic_4"] = "Vnic4"
-	fields["vnic_3"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(CbmStatisticBindingType), reflect.TypeOf([]CbmStatistic{})))
-	fieldNameMap["vnic_3"] = "Vnic3"
-	fields["vnic_2"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(CbmStatisticBindingType), reflect.TypeOf([]CbmStatistic{})))
-	fieldNameMap["vnic_2"] = "Vnic2"
-	fields["vnic_1"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(CbmStatisticBindingType), reflect.TypeOf([]CbmStatistic{})))
-	fieldNameMap["vnic_1"] = "Vnic1"
-	fields["vnic_0"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(CbmStatisticBindingType), reflect.TypeOf([]CbmStatistic{})))
-	fieldNameMap["vnic_0"] = "Vnic0"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.cbm_stats_data", fields, reflect.TypeOf(CbmStatsData{}), fieldNameMap, validators)
-}
-
 func CloudProviderBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -7365,16 +4617,18 @@ func ClusterBindingType() bindings.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["esx_host_list"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(AwsEsxHostBindingType), reflect.TypeOf([]AwsEsxHost{})))
 	fieldNameMap["esx_host_list"] = "EsxHostList"
+	fields["msft_license_config"] = bindings.NewOptionalType(bindings.NewReferenceType(MsftLicensingConfigBindingType))
+	fieldNameMap["msft_license_config"] = "MsftLicenseConfig"
 	fields["cluster_state"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["cluster_state"] = "ClusterState"
 	fields["aws_kms_info"] = bindings.NewOptionalType(bindings.NewReferenceType(AwsKmsInfoBindingType))
 	fieldNameMap["aws_kms_info"] = "AwsKmsInfo"
+	fields["cluster_capacity"] = bindings.NewOptionalType(bindings.NewReferenceType(EntityCapacityBindingType))
+	fieldNameMap["cluster_capacity"] = "ClusterCapacity"
 	fields["esx_host_info"] = bindings.NewOptionalType(bindings.NewReferenceType(EsxHostInfoBindingType))
 	fieldNameMap["esx_host_info"] = "EsxHostInfo"
 	fields["host_cpu_cores_count"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["host_cpu_cores_count"] = "HostCpuCoresCount"
-	fields["cluster_capacity"] = bindings.NewOptionalType(bindings.NewReferenceType(EntityCapacityBindingType))
-	fieldNameMap["cluster_capacity"] = "ClusterCapacity"
 	fields["cluster_id"] = bindings.NewStringType()
 	fieldNameMap["cluster_id"] = "ClusterId"
 	fields["cluster_name"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -7392,6 +4646,8 @@ func ClusterConfigBindingType() bindings.BindingType {
 	fieldNameMap["host_instance_type"] = "HostInstanceType"
 	fields["storage_capacity"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["storage_capacity"] = "StorageCapacity"
+	fields["msft_license_config"] = bindings.NewOptionalType(bindings.NewReferenceType(MsftLicensingConfigBindingType))
+	fieldNameMap["msft_license_config"] = "MsftLicenseConfig"
 	fields["num_hosts"] = bindings.NewIntegerType()
 	fieldNameMap["num_hosts"] = "NumHosts"
 	var validators = []bindings.Validator{}
@@ -7514,15 +4770,6 @@ func ConnectivityValidationSubGroupBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.connectivity_validation_sub_group", fields, reflect.TypeOf(ConnectivityValidationSubGroup{}), fieldNameMap, validators)
 }
 
-func CrlCertificatesBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["crlCertificate"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["crlCertificate"] = "CrlCertificate"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.crl_certificates", fields, reflect.TypeOf(CrlCertificates{}), fieldNameMap, validators)
-}
-
 func CustomerEniInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -7536,222 +4783,6 @@ func CustomerEniInfoBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.customer_eni_info", fields, reflect.TypeOf(CustomerEniInfo{}), fieldNameMap, validators)
 }
 
-func DashboardDataBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["firewall"] = bindings.NewOptionalType(bindings.NewReferenceType(FirewallDashboardStatsBindingType))
-	fieldNameMap["firewall"] = "Firewall"
-	fields["sslvpn"] = bindings.NewOptionalType(bindings.NewReferenceType(SslvpnDashboardStatsBindingType))
-	fieldNameMap["sslvpn"] = "Sslvpn"
-	fields["interfaces"] = bindings.NewOptionalType(bindings.NewReferenceType(InterfacesDashboardStatsBindingType))
-	fieldNameMap["interfaces"] = "Interfaces"
-	fields["loadBalancer"] = bindings.NewOptionalType(bindings.NewReferenceType(LoadBalancerDashboardStatsBindingType))
-	fieldNameMap["loadBalancer"] = "LoadBalancer"
-	fields["ipsec"] = bindings.NewOptionalType(bindings.NewReferenceType(IpsecDashboardStatsBindingType))
-	fieldNameMap["ipsec"] = "Ipsec"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.dashboard_data", fields, reflect.TypeOf(DashboardData{}), fieldNameMap, validators)
-}
-
-func DashboardStatBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["timestamp"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["timestamp"] = "Timestamp"
-	fields["value"] = bindings.NewOptionalType(bindings.NewDoubleType())
-	fieldNameMap["value"] = "Value"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.dashboard_stat", fields, reflect.TypeOf(DashboardStat{}), fieldNameMap, validators)
-}
-
-func DashboardStatisticsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["dataDto"] = bindings.NewOptionalType(bindings.NewReferenceType(DashboardDataBindingType))
-	fieldNameMap["dataDto"] = "DataDto"
-	fields["metaDto"] = bindings.NewOptionalType(bindings.NewReferenceType(MetaDashboardStatsBindingType))
-	fieldNameMap["metaDto"] = "MetaDto"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.dashboard_statistics", fields, reflect.TypeOf(DashboardStatistics{}), fieldNameMap, validators)
-}
-
-func DataPageEdgeSummaryBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["pagingInfo"] = bindings.NewOptionalType(bindings.NewReferenceType(PagingInfoBindingType))
-	fieldNameMap["pagingInfo"] = "PagingInfo"
-	fields["data"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(EdgeSummaryBindingType), reflect.TypeOf([]EdgeSummary{})))
-	fieldNameMap["data"] = "Data"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.data_page_edge_summary", fields, reflect.TypeOf(DataPageEdgeSummary{}), fieldNameMap, validators)
-}
-
-func DataPageSddcNetworkBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["pagingInfo"] = bindings.NewOptionalType(bindings.NewReferenceType(PagingInfoBindingType))
-	fieldNameMap["pagingInfo"] = "PagingInfo"
-	fields["data"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(SddcNetworkBindingType), reflect.TypeOf([]SddcNetwork{})))
-	fieldNameMap["data"] = "Data"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.data_page_sddc_network", fields, reflect.TypeOf(DataPageSddcNetwork{}), fieldNameMap, validators)
-}
-
-func DataPermissionsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["savePermission"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["savePermission"] = "SavePermission"
-	fields["publishPermission"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["publishPermission"] = "PublishPermission"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.data_permissions", fields, reflect.TypeOf(DataPermissions{}), fieldNameMap, validators)
-}
-
-func DhcpLeaseInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["hostLeaseInfoDtos"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(HostLeaseInfoBindingType), reflect.TypeOf([]HostLeaseInfo{})))
-	fieldNameMap["hostLeaseInfoDtos"] = "HostLeaseInfoDtos"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.dhcp_lease_info", fields, reflect.TypeOf(DhcpLeaseInfo{}), fieldNameMap, validators)
-}
-
-func DhcpLeasesBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["timeStamp"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["timeStamp"] = "TimeStamp"
-	fields["hostLeaseInfosDto"] = bindings.NewOptionalType(bindings.NewReferenceType(DhcpLeaseInfoBindingType))
-	fieldNameMap["hostLeaseInfosDto"] = "HostLeaseInfosDto"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.dhcp_leases", fields, reflect.TypeOf(DhcpLeases{}), fieldNameMap, validators)
-}
-
-func DnsConfigBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["featureType"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["featureType"] = "FeatureType"
-	fields["logging"] = bindings.NewOptionalType(bindings.NewReferenceType(LoggingBindingType))
-	fieldNameMap["logging"] = "Logging"
-	fields["enabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enabled"] = "Enabled"
-	fields["dnsViews"] = bindings.NewOptionalType(bindings.NewReferenceType(DnsViewsBindingType))
-	fieldNameMap["dnsViews"] = "DnsViews"
-	fields["listeners"] = bindings.NewOptionalType(bindings.NewReferenceType(DnsListenersBindingType))
-	fieldNameMap["listeners"] = "Listeners"
-	fields["version"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["version"] = "Version"
-	fields["template"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["template"] = "Template"
-	fields["cacheSize"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["cacheSize"] = "CacheSize"
-	fields["dnsServers"] = bindings.NewOptionalType(bindings.NewReferenceType(IpAddressesBindingType))
-	fieldNameMap["dnsServers"] = "DnsServers"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.dns_config", fields, reflect.TypeOf(DnsConfig{}), fieldNameMap, validators)
-}
-
-func DnsForwardersBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["ipAddress"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["ipAddress"] = "IpAddress"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.dns_forwarders", fields, reflect.TypeOf(DnsForwarders{}), fieldNameMap, validators)
-}
-
-func DnsListenersBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["ipAddress"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["ipAddress"] = "IpAddress"
-	fields["vnic"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["vnic"] = "Vnic"
-	fields["type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["type"] = "Type_"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.dns_listeners", fields, reflect.TypeOf(DnsListeners{}), fieldNameMap, validators)
-}
-
-func DnsResponseStatsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["total"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["total"] = "Total"
-	fields["formErr"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["formErr"] = "FormErr"
-	fields["nxDomain"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["nxDomain"] = "NxDomain"
-	fields["success"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["success"] = "Success"
-	fields["serverFail"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["serverFail"] = "ServerFail"
-	fields["nxrrset"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["nxrrset"] = "Nxrrset"
-	fields["others"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["others"] = "Others"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.dns_response_stats", fields, reflect.TypeOf(DnsResponseStats{}), fieldNameMap, validators)
-}
-
-func DnsStatusAndStatsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["timeStamp"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["timeStamp"] = "TimeStamp"
-	fields["requests"] = bindings.NewOptionalType(bindings.NewReferenceType(RequestsBindingType))
-	fieldNameMap["requests"] = "Requests"
-	fields["responses"] = bindings.NewOptionalType(bindings.NewReferenceType(DnsResponseStatsBindingType))
-	fieldNameMap["responses"] = "Responses"
-	fields["cachedDBRRSet"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["cachedDBRRSet"] = "CachedDBRRSet"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.dns_status_and_stats", fields, reflect.TypeOf(DnsStatusAndStats{}), fieldNameMap, validators)
-}
-
-func DnsViewBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["name"] = bindings.NewStringType()
-	fieldNameMap["name"] = "Name"
-	fields["viewMatch"] = bindings.NewOptionalType(bindings.NewReferenceType(DnsViewMatchBindingType))
-	fieldNameMap["viewMatch"] = "ViewMatch"
-	fields["recursion"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["recursion"] = "Recursion"
-	fields["viewId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["viewId"] = "ViewId"
-	fields["forwarders"] = bindings.NewOptionalType(bindings.NewReferenceType(DnsForwardersBindingType))
-	fieldNameMap["forwarders"] = "Forwarders"
-	fields["enabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enabled"] = "Enabled"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.dns_view", fields, reflect.TypeOf(DnsView{}), fieldNameMap, validators)
-}
-
-func DnsViewMatchBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["vnic"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["vnic"] = "Vnic"
-	fields["ipSet"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["ipSet"] = "IpSet"
-	fields["ipAddress"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["ipAddress"] = "IpAddress"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.dns_view_match", fields, reflect.TypeOf(DnsViewMatch{}), fieldNameMap, validators)
-}
-
-func DnsViewsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["dnsView"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DnsViewBindingType), reflect.TypeOf([]DnsView{})))
-	fieldNameMap["dnsView"] = "DnsView"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.dns_views", fields, reflect.TypeOf(DnsViews{}), fieldNameMap, validators)
-}
-
 func EbsBackedVsanConfigBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -7759,176 +4790,6 @@ func EbsBackedVsanConfigBindingType() bindings.BindingType {
 	fieldNameMap["instance_type"] = "InstanceType"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.ebs_backed_vsan_config", fields, reflect.TypeOf(EbsBackedVsanConfig{}), fieldNameMap, validators)
-}
-
-func EdgeJobBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["status"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["status"] = "Status"
-	fields["edgeId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["edgeId"] = "EdgeId"
-	fields["module"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["module"] = "Module"
-	fields["jobId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["jobId"] = "JobId"
-	fields["errorCode"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["errorCode"] = "ErrorCode"
-	fields["result"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResultBindingType), reflect.TypeOf([]Result{})))
-	fieldNameMap["result"] = "Result"
-	fields["startTime"] = bindings.NewOptionalType(bindings.NewDateTimeType())
-	fieldNameMap["startTime"] = "StartTime"
-	fields["message"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["message"] = "Message"
-	fields["endTime"] = bindings.NewOptionalType(bindings.NewDateTimeType())
-	fieldNameMap["endTime"] = "EndTime"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.edge_job", fields, reflect.TypeOf(EdgeJob{}), fieldNameMap, validators)
-}
-
-func EdgeStatusBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["preRulesExists"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["preRulesExists"] = "PreRulesExists"
-	fields["featureStatuses"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(FeatureStatusBindingType), reflect.TypeOf([]FeatureStatus{})))
-	fieldNameMap["featureStatuses"] = "FeatureStatuses"
-	fields["timestamp"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["timestamp"] = "Timestamp"
-	fields["publishStatus"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["publishStatus"] = "PublishStatus"
-	fields["lastPublishedPreRulesGenerationNumber"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["lastPublishedPreRulesGenerationNumber"] = "LastPublishedPreRulesGenerationNumber"
-	fields["version"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["version"] = "Version"
-	fields["edgeVmStatus"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(EdgeVmStatusBindingType), reflect.TypeOf([]EdgeVmStatus{})))
-	fieldNameMap["edgeVmStatus"] = "EdgeVmStatus"
-	fields["activeVseHaIndex"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["activeVseHaIndex"] = "ActiveVseHaIndex"
-	fields["systemStatus"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["systemStatus"] = "SystemStatus"
-	fields["haVnicInUse"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["haVnicInUse"] = "HaVnicInUse"
-	fields["edgeStatus"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["edgeStatus"] = "EdgeStatus"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.edge_status", fields, reflect.TypeOf(EdgeStatus{}), fieldNameMap, validators)
-}
-
-func EdgeSummaryBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["featureCapabilities"] = bindings.NewOptionalType(bindings.NewReferenceType(FeatureCapabilitiesBindingType))
-	fieldNameMap["featureCapabilities"] = "FeatureCapabilities"
-	fields["edgeType"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["edgeType"] = "EdgeType"
-	fields["logicalRouterScopes"] = bindings.NewOptionalType(bindings.NewReferenceType(LogicalRouterScopesBindingType))
-	fieldNameMap["logicalRouterScopes"] = "LogicalRouterScopes"
-	fields["recentJobInfo"] = bindings.NewOptionalType(bindings.NewReferenceType(EdgeJobBindingType))
-	fieldNameMap["recentJobInfo"] = "RecentJobInfo"
-	fields["hypervisorAssist"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["hypervisorAssist"] = "HypervisorAssist"
-	fields["edgeAssistId"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["edgeAssistId"] = "EdgeAssistId"
-	fields["edgeStatus"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["edgeStatus"] = "EdgeStatus"
-	fields["edgeAssistInstanceName"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["edgeAssistInstanceName"] = "EdgeAssistInstanceName"
-	fields["objectId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["objectId"] = "ObjectId"
-	fields["nodeId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["nodeId"] = "NodeId"
-	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["id"] = "Id"
-	fields["datacenterName"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["datacenterName"] = "DatacenterName"
-	fields["state"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["state"] = "State"
-	fields["clientHandle"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["clientHandle"] = "ClientHandle"
-	fields["scope"] = bindings.NewOptionalType(bindings.NewReferenceType(ScopeInfoBindingType))
-	fieldNameMap["scope"] = "Scope"
-	fields["type"] = bindings.NewOptionalType(bindings.NewReferenceType(ObjectTypeBindingType))
-	fieldNameMap["type"] = "Type_"
-	fields["revision"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["revision"] = "Revision"
-	fields["vsmUuid"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["vsmUuid"] = "VsmUuid"
-	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["description"] = "Description"
-	fields["extendedAttributes"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ExtendedAttributeBindingType), reflect.TypeOf([]ExtendedAttribute{})))
-	fieldNameMap["extendedAttributes"] = "ExtendedAttributes"
-	fields["localEgressEnabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["localEgressEnabled"] = "LocalEgressEnabled"
-	fields["universalRevision"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["universalRevision"] = "UniversalRevision"
-	fields["allowedActions"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["allowedActions"] = "AllowedActions"
-	fields["objectTypeName"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["objectTypeName"] = "ObjectTypeName"
-	fields["isUpgradeAvailable"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["isUpgradeAvailable"] = "IsUpgradeAvailable"
-	fields["isUniversal"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["isUniversal"] = "IsUniversal"
-	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["name"] = "Name"
-	fields["lrouterUuid"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["lrouterUuid"] = "LrouterUuid"
-	fields["appliancesSummary"] = bindings.NewOptionalType(bindings.NewReferenceType(AppliancesSummaryBindingType))
-	fieldNameMap["appliancesSummary"] = "AppliancesSummary"
-	fields["apiVersion"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["apiVersion"] = "ApiVersion"
-	fields["tenantId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["tenantId"] = "TenantId"
-	fields["datacenterMoid"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["datacenterMoid"] = "DatacenterMoid"
-	fields["numberOfConnectedVnics"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["numberOfConnectedVnics"] = "NumberOfConnectedVnics"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.edge_summary", fields, reflect.TypeOf(EdgeSummary{}), fieldNameMap, validators)
-}
-
-func EdgeVmStatusBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["index"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["index"] = "Index"
-	fields["haState"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["haState"] = "HaState"
-	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["name"] = "Name"
-	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["id"] = "Id"
-	fields["edgeVMStatus"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["edgeVMStatus"] = "EdgeVMStatus"
-	fields["preRulesGenerationNumber"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["preRulesGenerationNumber"] = "PreRulesGenerationNumber"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.edge_vm_status", fields, reflect.TypeOf(EdgeVmStatus{}), fieldNameMap, validators)
-}
-
-func EdgeVnicAddressGroupBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["subnetPrefixLength"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["subnetPrefixLength"] = "SubnetPrefixLength"
-	fields["secondaryAddresses"] = bindings.NewOptionalType(bindings.NewReferenceType(SecondaryAddressesBindingType))
-	fieldNameMap["secondaryAddresses"] = "SecondaryAddresses"
-	fields["primaryAddress"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["primaryAddress"] = "PrimaryAddress"
-	fields["subnetMask"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["subnetMask"] = "SubnetMask"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.edge_vnic_address_group", fields, reflect.TypeOf(EdgeVnicAddressGroup{}), fieldNameMap, validators)
-}
-
-func EdgeVnicAddressGroupsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["addressGroups"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(EdgeVnicAddressGroupBindingType), reflect.TypeOf([]EdgeVnicAddressGroup{})))
-	fieldNameMap["addressGroups"] = "AddressGroups"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.edge_vnic_address_groups", fields, reflect.TypeOf(EdgeVnicAddressGroups{}), fieldNameMap, validators)
 }
 
 func EniInfoBindingType() bindings.BindingType {
@@ -7989,10 +4850,12 @@ func EsxConfigBindingType() bindings.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["availability_zone"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["availability_zone"] = "AvailabilityZone"
-	fields["esxs"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["esxs"] = "Esxs"
+	fields["strict_placement"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["strict_placement"] = "StrictPlacement"
 	fields["cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["cluster_id"] = "ClusterId"
+	fields["esxs"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["esxs"] = "Esxs"
 	fields["num_hosts"] = bindings.NewIntegerType()
 	fieldNameMap["num_hosts"] = "NumHosts"
 	var validators = []bindings.Validator{}
@@ -8031,138 +4894,6 @@ func EsxHostInfoBindingType() bindings.BindingType {
 	fieldNameMap["instance_type"] = "InstanceType"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.esx_host_info", fields, reflect.TypeOf(EsxHostInfo{}), fieldNameMap, validators)
-}
-
-func ExtendedAttributeBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["name"] = "Name"
-	fields["value"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["value"] = "Value"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.extended_attribute", fields, reflect.TypeOf(ExtendedAttribute{}), fieldNameMap, validators)
-}
-
-func FeatureCapabilitiesBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["timestamp"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["timestamp"] = "Timestamp"
-	fields["featureCapabilities"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(FeatureCapabilityBindingType), reflect.TypeOf([]FeatureCapability{})))
-	fieldNameMap["featureCapabilities"] = "FeatureCapabilities"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.feature_capabilities", fields, reflect.TypeOf(FeatureCapabilities{}), fieldNameMap, validators)
-}
-
-func FeatureCapabilityBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["configurationLimits"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(KeyValueAttributesBindingType), reflect.TypeOf([]KeyValueAttributes{})))
-	fieldNameMap["configurationLimits"] = "ConfigurationLimits"
-	fields["isSupported"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["isSupported"] = "IsSupported"
-	fields["service"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["service"] = "Service"
-	fields["permission"] = bindings.NewOptionalType(bindings.NewReferenceType(LicenceAclPermissionsBindingType))
-	fieldNameMap["permission"] = "Permission"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.feature_capability", fields, reflect.TypeOf(FeatureCapability{}), fieldNameMap, validators)
-}
-
-func FeatureStatusBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["status"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["status"] = "Status"
-	fields["configured"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["configured"] = "Configured"
-	fields["serverStatus"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["serverStatus"] = "ServerStatus"
-	fields["publishStatus"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["publishStatus"] = "PublishStatus"
-	fields["service"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["service"] = "Service"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.feature_status", fields, reflect.TypeOf(FeatureStatus{}), fieldNameMap, validators)
-}
-
-func FirewallConfigBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["firewallRules"] = bindings.NewOptionalType(bindings.NewReferenceType(FirewallRulesBindingType))
-	fieldNameMap["firewallRules"] = "FirewallRules"
-	fields["featureType"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["featureType"] = "FeatureType"
-	fields["version"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["version"] = "Version"
-	fields["template"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["template"] = "Template"
-	fields["globalConfig"] = bindings.NewOptionalType(bindings.NewReferenceType(FirewallGlobalConfigBindingType))
-	fieldNameMap["globalConfig"] = "GlobalConfig"
-	fields["enabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enabled"] = "Enabled"
-	fields["defaultPolicy"] = bindings.NewOptionalType(bindings.NewReferenceType(FirewallDefaultPolicyBindingType))
-	fieldNameMap["defaultPolicy"] = "DefaultPolicy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.firewall_config", fields, reflect.TypeOf(FirewallConfig{}), fieldNameMap, validators)
-}
-
-func FirewallDashboardStatsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["connections"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["connections"] = "Connections"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.firewall_dashboard_stats", fields, reflect.TypeOf(FirewallDashboardStats{}), fieldNameMap, validators)
-}
-
-func FirewallDefaultPolicyBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["action"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["action"] = "Action"
-	fields["loggingEnabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["loggingEnabled"] = "LoggingEnabled"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.firewall_default_policy", fields, reflect.TypeOf(FirewallDefaultPolicy{}), fieldNameMap, validators)
-}
-
-func FirewallGlobalConfigBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["tcpAllowOutOfWindowPackets"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["tcpAllowOutOfWindowPackets"] = "TcpAllowOutOfWindowPackets"
-	fields["udpTimeout"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["udpTimeout"] = "UdpTimeout"
-	fields["ipGenericTimeout"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["ipGenericTimeout"] = "IpGenericTimeout"
-	fields["tcpPickOngoingConnections"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["tcpPickOngoingConnections"] = "TcpPickOngoingConnections"
-	fields["tcpTimeoutOpen"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["tcpTimeoutOpen"] = "TcpTimeoutOpen"
-	fields["tcpTimeoutClose"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["tcpTimeoutClose"] = "TcpTimeoutClose"
-	fields["icmp6Timeout"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["icmp6Timeout"] = "Icmp6Timeout"
-	fields["dropIcmpReplays"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["dropIcmpReplays"] = "DropIcmpReplays"
-	fields["logIcmpErrors"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["logIcmpErrors"] = "LogIcmpErrors"
-	fields["tcpSendResetForClosedVsePorts"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["tcpSendResetForClosedVsePorts"] = "TcpSendResetForClosedVsePorts"
-	fields["dropInvalidTraffic"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["dropInvalidTraffic"] = "DropInvalidTraffic"
-	fields["enableSynFloodProtection"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enableSynFloodProtection"] = "EnableSynFloodProtection"
-	fields["icmpTimeout"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["icmpTimeout"] = "IcmpTimeout"
-	fields["tcpTimeoutEstablished"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["tcpTimeoutEstablished"] = "TcpTimeoutEstablished"
-	fields["logInvalidTraffic"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["logInvalidTraffic"] = "LogInvalidTraffic"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.firewall_global_config", fields, reflect.TypeOf(FirewallGlobalConfig{}), fieldNameMap, validators)
 }
 
 func FirewallRuleBindingType() bindings.BindingType {
@@ -8207,30 +4938,6 @@ func FirewallRuleScopeBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.firewall_rule_scope", fields, reflect.TypeOf(FirewallRuleScope{}), fieldNameMap, validators)
 }
 
-func FirewallRuleStatsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["timestamp"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["timestamp"] = "Timestamp"
-	fields["connectionCount"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["connectionCount"] = "ConnectionCount"
-	fields["byteCount"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["byteCount"] = "ByteCount"
-	fields["packetCount"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["packetCount"] = "PacketCount"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.firewall_rule_stats", fields, reflect.TypeOf(FirewallRuleStats{}), fieldNameMap, validators)
-}
-
-func FirewallRulesBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["firewallRules"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(NsxfirewallruleBindingType), reflect.TypeOf([]Nsxfirewallrule{})))
-	fieldNameMap["firewallRules"] = "FirewallRules"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.firewall_rules", fields, reflect.TypeOf(FirewallRules{}), fieldNameMap, validators)
-}
-
 func FirewallServiceBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -8270,39 +4977,6 @@ func GlcmBundleBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.glcm_bundle", fields, reflect.TypeOf(GlcmBundle{}), fieldNameMap, validators)
 }
 
-func HostLeaseInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["macAddress"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["macAddress"] = "MacAddress"
-	fields["ends"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["ends"] = "Ends"
-	fields["abandoned"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["abandoned"] = "Abandoned"
-	fields["cltt"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["cltt"] = "Cltt"
-	fields["clientHostname"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["clientHostname"] = "ClientHostname"
-	fields["starts"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["starts"] = "Starts"
-	fields["bindingState"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["bindingState"] = "BindingState"
-	fields["hardwareType"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["hardwareType"] = "HardwareType"
-	fields["tsfp"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["tsfp"] = "Tsfp"
-	fields["uid"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["uid"] = "Uid"
-	fields["nextBindingState"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["nextBindingState"] = "NextBindingState"
-	fields["ipAddress"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["ipAddress"] = "IpAddress"
-	fields["tstp"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["tstp"] = "Tstp"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.host_lease_info", fields, reflect.TypeOf(HostLeaseInfo{}), fieldNameMap, validators)
-}
-
 func InstanceTypeConfigBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -8318,313 +4992,6 @@ func InstanceTypeConfigBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.instance_type_config", fields, reflect.TypeOf(InstanceTypeConfig{}), fieldNameMap, validators)
 }
 
-func InteractionPermissionsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["managePermission"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["managePermission"] = "ManagePermission"
-	fields["viewPermission"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["viewPermission"] = "ViewPermission"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.interaction_permissions", fields, reflect.TypeOf(InteractionPermissions{}), fieldNameMap, validators)
-}
-
-func InterfacesDashboardStatsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["vnic_7_in_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_7_in_pkt"] = "Vnic7InPkt"
-	fields["vnic_0_in_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_0_in_byte"] = "Vnic0InByte"
-	fields["vnic_8_out_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_8_out_pkt"] = "Vnic8OutPkt"
-	fields["vnic_5_in_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_5_in_byte"] = "Vnic5InByte"
-	fields["vnic_2_in_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_2_in_pkt"] = "Vnic2InPkt"
-	fields["vnic_3_in_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_3_in_pkt"] = "Vnic3InPkt"
-	fields["vnic_6_out_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_6_out_byte"] = "Vnic6OutByte"
-	fields["vnic_3_in_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_3_in_byte"] = "Vnic3InByte"
-	fields["vnic_8_in_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_8_in_pkt"] = "Vnic8InPkt"
-	fields["vnic_1_in_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_1_in_byte"] = "Vnic1InByte"
-	fields["vnic_1_out_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_1_out_pkt"] = "Vnic1OutPkt"
-	fields["vnic_5_out_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_5_out_byte"] = "Vnic5OutByte"
-	fields["vnic_0_out_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_0_out_pkt"] = "Vnic0OutPkt"
-	fields["vnic_0_out_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_0_out_byte"] = "Vnic0OutByte"
-	fields["vnic_6_out_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_6_out_pkt"] = "Vnic6OutPkt"
-	fields["vnic_3_out_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_3_out_byte"] = "Vnic3OutByte"
-	fields["vnic_7_in_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_7_in_byte"] = "Vnic7InByte"
-	fields["vnic_1_out_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_1_out_byte"] = "Vnic1OutByte"
-	fields["vnic_9_out_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_9_out_pkt"] = "Vnic9OutPkt"
-	fields["vnic_9_in_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_9_in_pkt"] = "Vnic9InPkt"
-	fields["vnic_4_in_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_4_in_byte"] = "Vnic4InByte"
-	fields["vnic_5_out_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_5_out_pkt"] = "Vnic5OutPkt"
-	fields["vnic_2_out_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_2_out_pkt"] = "Vnic2OutPkt"
-	fields["vnic_2_in_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_2_in_byte"] = "Vnic2InByte"
-	fields["vnic_5_in_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_5_in_pkt"] = "Vnic5InPkt"
-	fields["vnic_7_out_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_7_out_pkt"] = "Vnic7OutPkt"
-	fields["vnic_3_out_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_3_out_pkt"] = "Vnic3OutPkt"
-	fields["vnic_4_out_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_4_out_pkt"] = "Vnic4OutPkt"
-	fields["vnic_4_out_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_4_out_byte"] = "Vnic4OutByte"
-	fields["vnic_1_in_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_1_in_pkt"] = "Vnic1InPkt"
-	fields["vnic_2_out_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_2_out_byte"] = "Vnic2OutByte"
-	fields["vnic_6_in_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_6_in_byte"] = "Vnic6InByte"
-	fields["vnic_0_in_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_0_in_pkt"] = "Vnic0InPkt"
-	fields["vnic_9_in_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_9_in_byte"] = "Vnic9InByte"
-	fields["vnic_7_out_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_7_out_byte"] = "Vnic7OutByte"
-	fields["vnic_4_in_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_4_in_pkt"] = "Vnic4InPkt"
-	fields["vnic_9_out_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_9_out_byte"] = "Vnic9OutByte"
-	fields["vnic_8_out_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_8_out_byte"] = "Vnic8OutByte"
-	fields["vnic_8_in_byte"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_8_in_byte"] = "Vnic8InByte"
-	fields["vnic_6_in_pkt"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["vnic_6_in_pkt"] = "Vnic6InPkt"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.interfaces_dashboard_stats", fields, reflect.TypeOf(InterfacesDashboardStats{}), fieldNameMap, validators)
-}
-
-func IpAddressesBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["ipAddress"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["ipAddress"] = "IpAddress"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.ip_addresses", fields, reflect.TypeOf(IpAddresses{}), fieldNameMap, validators)
-}
-
-func IpsecBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["featureType"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["featureType"] = "FeatureType"
-	fields["logging"] = bindings.NewOptionalType(bindings.NewReferenceType(LoggingBindingType))
-	fieldNameMap["logging"] = "Logging"
-	fields["global"] = bindings.NewOptionalType(bindings.NewReferenceType(IpsecGlobalConfigBindingType))
-	fieldNameMap["global"] = "Global"
-	fields["enabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enabled"] = "Enabled"
-	fields["sites"] = bindings.NewOptionalType(bindings.NewReferenceType(IpsecSitesBindingType))
-	fieldNameMap["sites"] = "Sites"
-	fields["disableEvent"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["disableEvent"] = "DisableEvent"
-	fields["version"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["version"] = "Version"
-	fields["template"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["template"] = "Template"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.ipsec", fields, reflect.TypeOf(Ipsec{}), fieldNameMap, validators)
-}
-
-func IpsecDashboardStatsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["ipsecBytesOut"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["ipsecBytesOut"] = "IpsecBytesOut"
-	fields["ipsecBytesIn"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["ipsecBytesIn"] = "IpsecBytesIn"
-	fields["ipsecTunnels"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["ipsecTunnels"] = "IpsecTunnels"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.ipsec_dashboard_stats", fields, reflect.TypeOf(IpsecDashboardStats{}), fieldNameMap, validators)
-}
-
-func IpsecGlobalConfigBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["psk"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["psk"] = "Psk"
-	fields["caCertificates"] = bindings.NewOptionalType(bindings.NewReferenceType(CaCertificatesBindingType))
-	fieldNameMap["caCertificates"] = "CaCertificates"
-	fields["serviceCertificate"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["serviceCertificate"] = "ServiceCertificate"
-	fields["crlCertificates"] = bindings.NewOptionalType(bindings.NewReferenceType(CrlCertificatesBindingType))
-	fieldNameMap["crlCertificates"] = "CrlCertificates"
-	fields["extension"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["extension"] = "Extension"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.ipsec_global_config", fields, reflect.TypeOf(IpsecGlobalConfig{}), fieldNameMap, validators)
-}
-
-func IpsecSiteBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["psk"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["psk"] = "Psk"
-	fields["localId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["localId"] = "LocalId"
-	fields["enablePfs"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enablePfs"] = "EnablePfs"
-	fields["authenticationMode"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["authenticationMode"] = "AuthenticationMode"
-	fields["peerSubnets"] = bindings.NewOptionalType(bindings.NewReferenceType(SubnetsBindingType))
-	fieldNameMap["peerSubnets"] = "PeerSubnets"
-	fields["dhGroup"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["dhGroup"] = "DhGroup"
-	fields["siteId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["siteId"] = "SiteId"
-	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["description"] = "Description"
-	fields["peerIp"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["peerIp"] = "PeerIp"
-	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["name"] = "Name"
-	fields["certificate"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["certificate"] = "Certificate"
-	fields["localIp"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["localIp"] = "LocalIp"
-	fields["encryptionAlgorithm"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["encryptionAlgorithm"] = "EncryptionAlgorithm"
-	fields["enabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enabled"] = "Enabled"
-	fields["mtu"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["mtu"] = "Mtu"
-	fields["extension"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["extension"] = "Extension"
-	fields["peerId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["peerId"] = "PeerId"
-	fields["localSubnets"] = bindings.NewOptionalType(bindings.NewReferenceType(SubnetsBindingType))
-	fieldNameMap["localSubnets"] = "LocalSubnets"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.ipsec_site", fields, reflect.TypeOf(IpsecSite{}), fieldNameMap, validators)
-}
-
-func IpsecSiteIKEStatusBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["channelStatus"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["channelStatus"] = "ChannelStatus"
-	fields["channelState"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["channelState"] = "ChannelState"
-	fields["peerIpAddress"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["peerIpAddress"] = "PeerIpAddress"
-	fields["localIpAddress"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["localIpAddress"] = "LocalIpAddress"
-	fields["peerSubnets"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["peerSubnets"] = "PeerSubnets"
-	fields["peerId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["peerId"] = "PeerId"
-	fields["lastInformationalMessage"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["lastInformationalMessage"] = "LastInformationalMessage"
-	fields["localSubnets"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["localSubnets"] = "LocalSubnets"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.ipsec_site_IKE_status", fields, reflect.TypeOf(IpsecSiteIKEStatus{}), fieldNameMap, validators)
-}
-
-func IpsecSiteStatsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["rxBytesOnSite"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["rxBytesOnSite"] = "RxBytesOnSite"
-	fields["tunnelStats"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(IpsecTunnelStatsBindingType), reflect.TypeOf([]IpsecTunnelStats{})))
-	fieldNameMap["tunnelStats"] = "TunnelStats"
-	fields["ikeStatus"] = bindings.NewOptionalType(bindings.NewReferenceType(IpsecSiteIKEStatusBindingType))
-	fieldNameMap["ikeStatus"] = "IkeStatus"
-	fields["siteStatus"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["siteStatus"] = "SiteStatus"
-	fields["txBytesFromSite"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["txBytesFromSite"] = "TxBytesFromSite"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.ipsec_site_stats", fields, reflect.TypeOf(IpsecSiteStats{}), fieldNameMap, validators)
-}
-
-func IpsecSitesBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["sites"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(IpsecSiteBindingType), reflect.TypeOf([]IpsecSite{})))
-	fieldNameMap["sites"] = "Sites"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.ipsec_sites", fields, reflect.TypeOf(IpsecSites{}), fieldNameMap, validators)
-}
-
-func IpsecStatusAndStatsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["timeStamp"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["timeStamp"] = "TimeStamp"
-	fields["serverStatus"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["serverStatus"] = "ServerStatus"
-	fields["siteStatistics"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(IpsecSiteStatsBindingType), reflect.TypeOf([]IpsecSiteStats{})))
-	fieldNameMap["siteStatistics"] = "SiteStatistics"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.ipsec_status_and_stats", fields, reflect.TypeOf(IpsecStatusAndStats{}), fieldNameMap, validators)
-}
-
-func IpsecTunnelStatsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["tunnelStatus"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["tunnelStatus"] = "TunnelStatus"
-	fields["peerSPI"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["peerSPI"] = "PeerSPI"
-	fields["rxBytesOnLocalSubnet"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["rxBytesOnLocalSubnet"] = "RxBytesOnLocalSubnet"
-	fields["establishedDate"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["establishedDate"] = "EstablishedDate"
-	fields["peerSubnet"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["peerSubnet"] = "PeerSubnet"
-	fields["authenticationAlgorithm"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["authenticationAlgorithm"] = "AuthenticationAlgorithm"
-	fields["tunnelState"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["tunnelState"] = "TunnelState"
-	fields["txBytesFromLocalSubnet"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["txBytesFromLocalSubnet"] = "TxBytesFromLocalSubnet"
-	fields["lastInformationalMessage"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["lastInformationalMessage"] = "LastInformationalMessage"
-	fields["localSPI"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["localSPI"] = "LocalSPI"
-	fields["encryptionAlgorithm"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["encryptionAlgorithm"] = "EncryptionAlgorithm"
-	fields["localSubnet"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["localSubnet"] = "LocalSubnet"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.ipsec_tunnel_stats", fields, reflect.TypeOf(IpsecTunnelStats{}), fieldNameMap, validators)
-}
-
-func KeyValueAttributesBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["value"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["value"] = "Value"
-	fields["key"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["key"] = "Key"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.key_value_attributes", fields, reflect.TypeOf(KeyValueAttributes{}), fieldNameMap, validators)
-}
-
 func KmsVpcEndpointBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -8634,15 +5001,6 @@ func KmsVpcEndpointBindingType() bindings.BindingType {
 	fieldNameMap["network_interface_ids"] = "NetworkInterfaceIds"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.kms_vpc_endpoint", fields, reflect.TypeOf(KmsVpcEndpoint{}), fieldNameMap, validators)
-}
-
-func L2ExtensionBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["tunnelId"] = bindings.NewIntegerType()
-	fieldNameMap["tunnelId"] = "TunnelId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.l2_extension", fields, reflect.TypeOf(L2Extension{}), fieldNameMap, validators)
 }
 
 func L2VpnBindingType() bindings.BindingType {
@@ -8656,85 +5014,6 @@ func L2VpnBindingType() bindings.BindingType {
 	fieldNameMap["listener_ip"] = "ListenerIp"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.l2_vpn", fields, reflect.TypeOf(L2Vpn{}), fieldNameMap, validators)
-}
-
-func L2vpnStatsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["tunnelStatus"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["tunnelStatus"] = "TunnelStatus"
-	fields["establishedDate"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["establishedDate"] = "EstablishedDate"
-	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["name"] = "Name"
-	fields["droppedRxPackets"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["droppedRxPackets"] = "DroppedRxPackets"
-	fields["encryptionAlgorithm"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["encryptionAlgorithm"] = "EncryptionAlgorithm"
-	fields["failureMessage"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["failureMessage"] = "FailureMessage"
-	fields["txBytesFromLocalSubnet"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["txBytesFromLocalSubnet"] = "TxBytesFromLocalSubnet"
-	fields["rxBytesOnLocalSubnet"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["rxBytesOnLocalSubnet"] = "RxBytesOnLocalSubnet"
-	fields["droppedTxPackets"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["droppedTxPackets"] = "DroppedTxPackets"
-	fields["lastUpdatedTime"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["lastUpdatedTime"] = "LastUpdatedTime"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.l2vpn_stats", fields, reflect.TypeOf(L2vpnStats{}), fieldNameMap, validators)
-}
-
-func L2vpnStatusAndStatsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["timeStamp"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["timeStamp"] = "TimeStamp"
-	fields["serverStatus"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["serverStatus"] = "ServerStatus"
-	fields["siteStats"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(L2vpnStatsBindingType), reflect.TypeOf([]L2vpnStats{})))
-	fieldNameMap["siteStats"] = "SiteStats"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.l2vpn_status_and_stats", fields, reflect.TypeOf(L2vpnStatusAndStats{}), fieldNameMap, validators)
-}
-
-func LicenceAclPermissionsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["dataPermission"] = bindings.NewOptionalType(bindings.NewReferenceType(DataPermissionsBindingType))
-	fieldNameMap["dataPermission"] = "DataPermission"
-	fields["isLicensed"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["isLicensed"] = "IsLicensed"
-	fields["accessPermission"] = bindings.NewOptionalType(bindings.NewReferenceType(InteractionPermissionsBindingType))
-	fieldNameMap["accessPermission"] = "AccessPermission"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.licence_acl_permissions", fields, reflect.TypeOf(LicenceAclPermissions{}), fieldNameMap, validators)
-}
-
-func LoadBalancerDashboardStatsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["lbBpsIn"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["lbBpsIn"] = "LbBpsIn"
-	fields["lbHttpReqs"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["lbHttpReqs"] = "LbHttpReqs"
-	fields["lbBpsOut"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["lbBpsOut"] = "LbBpsOut"
-	fields["lbSessions"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["lbSessions"] = "LbSessions"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.load_balancer_dashboard_stats", fields, reflect.TypeOf(LoadBalancerDashboardStats{}), fieldNameMap, validators)
-}
-
-func LoggingBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["logLevel"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["logLevel"] = "LogLevel"
-	fields["enable"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enable"] = "Enable"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.logging", fields, reflect.TypeOf(Logging{}), fieldNameMap, validators)
 }
 
 func LogicalNetworkBindingType() bindings.BindingType {
@@ -8758,37 +5037,6 @@ func LogicalNetworkBindingType() bindings.BindingType {
 	fieldNameMap["network_type"] = "NetworkType"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.logical_network", fields, reflect.TypeOf(LogicalNetwork{}), fieldNameMap, validators)
-}
-
-func LogicalRouterScopeBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["type"] = "Type_"
-	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["id"] = "Id"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.logical_router_scope", fields, reflect.TypeOf(LogicalRouterScope{}), fieldNameMap, validators)
-}
-
-func LogicalRouterScopesBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["logicalRouterScope"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(LogicalRouterScopeBindingType), reflect.TypeOf([]LogicalRouterScope{})))
-	fieldNameMap["logicalRouterScope"] = "LogicalRouterScope"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.logical_router_scopes", fields, reflect.TypeOf(LogicalRouterScopes{}), fieldNameMap, validators)
-}
-
-func MacAddressBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["edgeVmHaIndex"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["edgeVmHaIndex"] = "EdgeVmHaIndex"
-	fields["value"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["value"] = "Value"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.mac_address", fields, reflect.TypeOf(MacAddress{}), fieldNameMap, validators)
 }
 
 func MaintenanceWindowBindingType() bindings.BindingType {
@@ -8866,21 +5114,6 @@ func MapZonesRequestBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.map_zones_request", fields, reflect.TypeOf(MapZonesRequest{}), fieldNameMap, validators)
 }
 
-func MetaDashboardStatsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["vnics"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(VnicBindingType), reflect.TypeOf([]Vnic{})))
-	fieldNameMap["vnics"] = "Vnics"
-	fields["endTime"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["endTime"] = "EndTime"
-	fields["startTime"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["startTime"] = "StartTime"
-	fields["interval"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["interval"] = "Interval"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.meta_dashboard_stats", fields, reflect.TypeOf(MetaDashboardStats{}), fieldNameMap, validators)
-}
-
 func MetadataBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -8892,21 +5125,15 @@ func MetadataBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.metadata", fields, reflect.TypeOf(Metadata{}), fieldNameMap, validators)
 }
 
-func NatBindingType() bindings.BindingType {
+func MsftLicensingConfigBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["rules"] = bindings.NewOptionalType(bindings.NewReferenceType(NatRulesBindingType))
-	fieldNameMap["rules"] = "Rules"
-	fields["featureType"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["featureType"] = "FeatureType"
-	fields["version"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["version"] = "Version"
-	fields["enabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enabled"] = "Enabled"
-	fields["template"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["template"] = "Template"
+	fields["mssql_licensing"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["mssql_licensing"] = "MssqlLicensing"
+	fields["windows_licensing"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["windows_licensing"] = "WindowsLicensing"
 	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.nat", fields, reflect.TypeOf(Nat{}), fieldNameMap, validators)
+	return bindings.NewStructType("com.vmware.vmc.model.msft_licensing_config", fields, reflect.TypeOf(MsftLicensingConfig{}), fieldNameMap, validators)
 }
 
 func NatRuleBindingType() bindings.BindingType {
@@ -8936,15 +5163,6 @@ func NatRuleBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.nat_rule", fields, reflect.TypeOf(NatRule{}), fieldNameMap, validators)
 }
 
-func NatRulesBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["natRulesDtos"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(NsxnatruleBindingType), reflect.TypeOf([]Nsxnatrule{})))
-	fieldNameMap["natRulesDtos"] = "NatRulesDtos"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.nat_rules", fields, reflect.TypeOf(NatRules{}), fieldNameMap, validators)
-}
-
 func NetworkTemplateBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -8969,137 +5187,6 @@ func NewCredentialsBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.new_credentials", fields, reflect.TypeOf(NewCredentials{}), fieldNameMap, validators)
 }
 
-func NsxfirewallruleBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["ruleType"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["ruleType"] = "RuleType"
-	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["description"] = "Description"
-	fields["ruleId"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["ruleId"] = "RuleId"
-	fields["matchTranslated"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["matchTranslated"] = "MatchTranslated"
-	fields["invalidApplication"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["invalidApplication"] = "InvalidApplication"
-	fields["direction"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["direction"] = "Direction"
-	fields["statistics"] = bindings.NewOptionalType(bindings.NewReferenceType(FirewallRuleStatsBindingType))
-	fieldNameMap["statistics"] = "Statistics"
-	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["name"] = "Name"
-	fields["invalidSource"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["invalidSource"] = "InvalidSource"
-	fields["loggingEnabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["loggingEnabled"] = "LoggingEnabled"
-	fields["destination"] = bindings.NewOptionalType(bindings.NewReferenceType(AddressFWSourceDestinationBindingType))
-	fieldNameMap["destination"] = "Destination"
-	fields["enabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enabled"] = "Enabled"
-	fields["application"] = bindings.NewOptionalType(bindings.NewReferenceType(ApplicationBindingType))
-	fieldNameMap["application"] = "Application"
-	fields["source"] = bindings.NewOptionalType(bindings.NewReferenceType(AddressFWSourceDestinationBindingType))
-	fieldNameMap["source"] = "Source"
-	fields["action"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["action"] = "Action"
-	fields["invalidDestination"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["invalidDestination"] = "InvalidDestination"
-	fields["ruleTag"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["ruleTag"] = "RuleTag"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.nsxfirewallrule", fields, reflect.TypeOf(Nsxfirewallrule{}), fieldNameMap, validators)
-}
-
-func NsxfirewallserviceBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["sourcePort"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["sourcePort"] = "SourcePort"
-	fields["protocol"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["protocol"] = "Protocol"
-	fields["port"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["port"] = "Port"
-	fields["icmpType"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["icmpType"] = "IcmpType"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.nsxfirewallservice", fields, reflect.TypeOf(Nsxfirewallservice{}), fieldNameMap, validators)
-}
-
-func Nsxl2vpnBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["listenerIps"] = bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{}))
-	fieldNameMap["listenerIps"] = "ListenerIps"
-	fields["enabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enabled"] = "Enabled"
-	fields["sites"] = bindings.NewReferenceType(SitesBindingType)
-	fieldNameMap["sites"] = "Sites"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.nsxl2vpn", fields, reflect.TypeOf(Nsxl2vpn{}), fieldNameMap, validators)
-}
-
-func NsxnatruleBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["vnic"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["vnic"] = "Vnic"
-	fields["ruleType"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["ruleType"] = "RuleType"
-	fields["protocol"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["protocol"] = "Protocol"
-	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["description"] = "Description"
-	fields["ruleId"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["ruleId"] = "RuleId"
-	fields["snatMatchDestinationPort"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["snatMatchDestinationPort"] = "SnatMatchDestinationPort"
-	fields["originalAddress"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["originalAddress"] = "OriginalAddress"
-	fields["dnatMatchSourceAddress"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["dnatMatchSourceAddress"] = "DnatMatchSourceAddress"
-	fields["dnatMatchSourcePort"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["dnatMatchSourcePort"] = "DnatMatchSourcePort"
-	fields["snatMatchDestinationAddress"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["snatMatchDestinationAddress"] = "SnatMatchDestinationAddress"
-	fields["originalPort"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["originalPort"] = "OriginalPort"
-	fields["loggingEnabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["loggingEnabled"] = "LoggingEnabled"
-	fields["translatedAddress"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["translatedAddress"] = "TranslatedAddress"
-	fields["enabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enabled"] = "Enabled"
-	fields["icmpType"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["icmpType"] = "IcmpType"
-	fields["translatedPort"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["translatedPort"] = "TranslatedPort"
-	fields["action"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["action"] = "Action"
-	fields["ruleTag"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["ruleTag"] = "RuleTag"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.nsxnatrule", fields, reflect.TypeOf(Nsxnatrule{}), fieldNameMap, validators)
-}
-
-func NsxsiteBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["secureTraffic"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["secureTraffic"] = "SecureTraffic"
-	fields["siteId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["siteId"] = "SiteId"
-	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["name"] = "Name"
-	fields["password"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["password"] = "Password"
-	fields["userId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["userId"] = "UserId"
-	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["description"] = "Description"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.nsxsite", fields, reflect.TypeOf(Nsxsite{}), fieldNameMap, validators)
-}
-
 func NsxtAddonsBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -9107,15 +5194,6 @@ func NsxtAddonsBindingType() bindings.BindingType {
 	fieldNameMap["enable_nsx_advanced_addon"] = "EnableNsxAdvancedAddon"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.nsxt_addons", fields, reflect.TypeOf(NsxtAddons{}), fieldNameMap, validators)
-}
-
-func ObjectTypeBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["name"] = "Name"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.object_type", fields, reflect.TypeOf(ObjectType{}), fieldNameMap, validators)
 }
 
 func OfferInstancesHolderBindingType() bindings.BindingType {
@@ -9165,6 +5243,17 @@ func OrgPropertiesBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.org_properties", fields, reflect.TypeOf(OrgProperties{}), fieldNameMap, validators)
 }
 
+func OrgSellerInfoBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["seller_account_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["seller_account_id"] = "SellerAccountId"
+	fields["seller"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["seller"] = "Seller"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.org_seller_info", fields, reflect.TypeOf(OrgSellerInfo{}), fieldNameMap, validators)
+}
+
 func OrganizationBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -9190,38 +5279,14 @@ func OrganizationBindingType() bindings.BindingType {
 	fieldNameMap["display_name"] = "DisplayName"
 	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["name"] = "Name"
+	fields["org_seller_info"] = bindings.NewOptionalType(bindings.NewReferenceType(OrgSellerInfoBindingType))
+	fieldNameMap["org_seller_info"] = "OrgSellerInfo"
 	fields["project_state"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["project_state"] = "ProjectState"
 	fields["properties"] = bindings.NewOptionalType(bindings.NewReferenceType(OrgPropertiesBindingType))
 	fieldNameMap["properties"] = "Properties"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.organization", fields, reflect.TypeOf(Organization{}), fieldNameMap, validators)
-}
-
-func PagedEdgeListBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["edgePage"] = bindings.NewOptionalType(bindings.NewReferenceType(DataPageEdgeSummaryBindingType))
-	fieldNameMap["edgePage"] = "EdgePage"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.paged_edge_list", fields, reflect.TypeOf(PagedEdgeList{}), fieldNameMap, validators)
-}
-
-func PagingInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["sortOrderAscending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["sortOrderAscending"] = "SortOrderAscending"
-	fields["totalCount"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["totalCount"] = "TotalCount"
-	fields["startIndex"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["startIndex"] = "StartIndex"
-	fields["sortBy"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["sortBy"] = "SortBy"
-	fields["pageSize"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["pageSize"] = "PageSize"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.paging_info", fields, reflect.TypeOf(PagingInfo{}), fieldNameMap, validators)
 }
 
 func PaymentMethodInfoBindingType() bindings.BindingType {
@@ -9304,17 +5369,6 @@ func ProvisionSpecBindingType() bindings.BindingType {
 	fieldNameMap["provider"] = "Provider"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.provision_spec", fields, reflect.TypeOf(ProvisionSpec{}), fieldNameMap, validators)
-}
-
-func RequestsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["total"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["total"] = "Total"
-	fields["queries"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["queries"] = "Queries"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.requests", fields, reflect.TypeOf(Requests{}), fieldNameMap, validators)
 }
 
 func ReservationBindingType() bindings.BindingType {
@@ -9404,17 +5458,6 @@ func ReservationWindowMaintenancePropertiesBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.reservation_window_maintenance_properties", fields, reflect.TypeOf(ReservationWindowMaintenanceProperties{}), fieldNameMap, validators)
 }
 
-func ResultBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["value"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["value"] = "Value"
-	fields["key"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["key"] = "Key"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.result", fields, reflect.TypeOf(Result{}), fieldNameMap, validators)
-}
-
 func RouteTableInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -9424,19 +5467,6 @@ func RouteTableInfoBindingType() bindings.BindingType {
 	fieldNameMap["id"] = "Id"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.route_table_info", fields, reflect.TypeOf(RouteTableInfo{}), fieldNameMap, validators)
-}
-
-func ScopeInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["objectTypeName"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["objectTypeName"] = "ObjectTypeName"
-	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["id"] = "Id"
-	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["name"] = "Name"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.scope_info", fields, reflect.TypeOf(ScopeInfo{}), fieldNameMap, validators)
 }
 
 func SddcBindingType() bindings.BindingType {
@@ -9480,22 +5510,11 @@ func SddcBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.sddc", fields, reflect.TypeOf(Sddc{}), fieldNameMap, validators)
 }
 
-func SddcAllocatePublicIpSpecBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["count"] = bindings.NewIntegerType()
-	fieldNameMap["count"] = "Count"
-	fields["private_ips"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["private_ips"] = "PrivateIps"
-	fields["names"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["names"] = "Names"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.sddc_allocate_public_ip_spec", fields, reflect.TypeOf(SddcAllocatePublicIpSpec{}), fieldNameMap, validators)
-}
-
 func SddcConfigBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["msft_license_config"] = bindings.NewOptionalType(bindings.NewReferenceType(MsftLicensingConfigBindingType))
+	fieldNameMap["msft_license_config"] = "MsftLicenseConfig"
 	fields["vpc_cidr"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vpc_cidr"] = "VpcCidr"
 	fields["host_instance_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vmc.model.host_instance_types", reflect.TypeOf(HostInstanceTypes(HostInstanceTypes_I3_METAL))))
@@ -9586,67 +5605,6 @@ func SddcManifestBindingType() bindings.BindingType {
 	fieldNameMap["metadata"] = "Metadata"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.sddc_manifest", fields, reflect.TypeOf(SddcManifest{}), fieldNameMap, validators)
-}
-
-func SddcNetworkBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["subnets"] = bindings.NewOptionalType(bindings.NewReferenceType(SddcNetworkAddressGroupsBindingType))
-	fieldNameMap["subnets"] = "Subnets"
-	fields["cgwName"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["cgwName"] = "CgwName"
-	fields["name"] = bindings.NewStringType()
-	fieldNameMap["name"] = "Name"
-	fields["l2Extension"] = bindings.NewOptionalType(bindings.NewReferenceType(L2ExtensionBindingType))
-	fieldNameMap["l2Extension"] = "L2Extension"
-	fields["cgwId"] = bindings.NewStringType()
-	fieldNameMap["cgwId"] = "CgwId"
-	fields["dhcpConfigs"] = bindings.NewOptionalType(bindings.NewReferenceType(SddcNetworkDhcpConfigBindingType))
-	fieldNameMap["dhcpConfigs"] = "DhcpConfigs"
-	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["id"] = "Id"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.sddc_network", fields, reflect.TypeOf(SddcNetwork{}), fieldNameMap, validators)
-}
-
-func SddcNetworkAddressGroupBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["prefixLength"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["prefixLength"] = "PrefixLength"
-	fields["primaryAddress"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["primaryAddress"] = "PrimaryAddress"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.sddc_network_address_group", fields, reflect.TypeOf(SddcNetworkAddressGroup{}), fieldNameMap, validators)
-}
-
-func SddcNetworkAddressGroupsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["addressGroups"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(SddcNetworkAddressGroupBindingType), reflect.TypeOf([]SddcNetworkAddressGroup{})))
-	fieldNameMap["addressGroups"] = "AddressGroups"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.sddc_network_address_groups", fields, reflect.TypeOf(SddcNetworkAddressGroups{}), fieldNameMap, validators)
-}
-
-func SddcNetworkDhcpConfigBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["ipPools"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(SddcNetworkDhcpIpPoolBindingType), reflect.TypeOf([]SddcNetworkDhcpIpPool{})))
-	fieldNameMap["ipPools"] = "IpPools"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.sddc_network_dhcp_config", fields, reflect.TypeOf(SddcNetworkDhcpConfig{}), fieldNameMap, validators)
-}
-
-func SddcNetworkDhcpIpPoolBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["ipRange"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["ipRange"] = "IpRange"
-	fields["domainName"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["domainName"] = "DomainName"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.sddc_network_dhcp_ip_pool", fields, reflect.TypeOf(SddcNetworkDhcpIpPool{}), fieldNameMap, validators)
 }
 
 func SddcPatchRequestBindingType() bindings.BindingType {
@@ -9754,6 +5712,8 @@ func SddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["sso_domain"] = "SsoDomain"
 	fields["deployment_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["deployment_type"] = "DeploymentType"
+	fields["msft_license_config"] = bindings.NewOptionalType(bindings.NewReferenceType(MsftLicensingConfigBindingType))
+	fieldNameMap["msft_license_config"] = "MsftLicenseConfig"
 	fields["nsxt_addons"] = bindings.NewOptionalType(bindings.NewReferenceType(NsxtAddonsBindingType))
 	fieldNameMap["nsxt_addons"] = "NsxtAddons"
 	fields["dns_with_management_vm_private_ip"] = bindings.NewOptionalType(bindings.NewBooleanType())
@@ -9823,17 +5783,6 @@ func SddcTemplateBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.sddc_template", fields, reflect.TypeOf(SddcTemplate{}), fieldNameMap, validators)
 }
 
-func SecondaryAddressesBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["type"] = "Type_"
-	fields["ipAddress"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["ipAddress"] = "IpAddress"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.secondary_addresses", fields, reflect.TypeOf(SecondaryAddresses{}), fieldNameMap, validators)
-}
-
 func ServiceErrorBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -9876,70 +5825,6 @@ func SiteBindingType() bindings.BindingType {
 	fieldNameMap["tx_bytes_from_local_subnet"] = "TxBytesFromLocalSubnet"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.site", fields, reflect.TypeOf(Site{}), fieldNameMap, validators)
-}
-
-func SitesBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["sites"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(NsxsiteBindingType), reflect.TypeOf([]Nsxsite{})))
-	fieldNameMap["sites"] = "Sites"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.sites", fields, reflect.TypeOf(Sites{}), fieldNameMap, validators)
-}
-
-func SslvpnDashboardStatsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["activeClients"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["activeClients"] = "ActiveClients"
-	fields["sslvpnBytesIn"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["sslvpnBytesIn"] = "SslvpnBytesIn"
-	fields["authFailures"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["authFailures"] = "AuthFailures"
-	fields["sessionsCreated"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["sessionsCreated"] = "SessionsCreated"
-	fields["sslvpnBytesOut"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(DashboardStatBindingType), reflect.TypeOf([]DashboardStat{})))
-	fieldNameMap["sslvpnBytesOut"] = "SslvpnBytesOut"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.sslvpn_dashboard_stats", fields, reflect.TypeOf(SslvpnDashboardStats{}), fieldNameMap, validators)
-}
-
-func SubInterfaceBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["index"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["index"] = "Index"
-	fields["tunnelId"] = bindings.NewIntegerType()
-	fieldNameMap["tunnelId"] = "TunnelId"
-	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["name"] = "Name"
-	fields["addressGroups"] = bindings.NewOptionalType(bindings.NewReferenceType(EdgeVnicAddressGroupsBindingType))
-	fieldNameMap["addressGroups"] = "AddressGroups"
-	fields["vlanId"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["vlanId"] = "VlanId"
-	fields["label"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["label"] = "Label"
-	fields["logicalSwitchName"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["logicalSwitchName"] = "LogicalSwitchName"
-	fields["isConnected"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["isConnected"] = "IsConnected"
-	fields["mtu"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["mtu"] = "Mtu"
-	fields["logicalSwitchId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["logicalSwitchId"] = "LogicalSwitchId"
-	fields["enableSendRedirects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enableSendRedirects"] = "EnableSendRedirects"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.sub_interface", fields, reflect.TypeOf(SubInterface{}), fieldNameMap, validators)
-}
-
-func SubInterfacesBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["subInterfaces"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(SubInterfaceBindingType), reflect.TypeOf([]SubInterface{})))
-	fieldNameMap["subInterfaces"] = "SubInterfaces"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.sub_interfaces", fields, reflect.TypeOf(SubInterfaces{}), fieldNameMap, validators)
 }
 
 func SubnetBindingType() bindings.BindingType {
@@ -9995,15 +5880,6 @@ func SubnetRouteTableInfoBindingType() bindings.BindingType {
 	fieldNameMap["routetable_id"] = "RoutetableId"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.subnet_route_table_info", fields, reflect.TypeOf(SubnetRouteTableInfo{}), fieldNameMap, validators)
-}
-
-func SubnetsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["subnets"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["subnets"] = "Subnets"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.subnets", fields, reflect.TypeOf(Subnets{}), fieldNameMap, validators)
 }
 
 func SubscriptionDetailsBindingType() bindings.BindingType {
@@ -10249,23 +6125,6 @@ func TermOfferInstanceBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.term_offer_instance", fields, reflect.TypeOf(TermOfferInstance{}), fieldNameMap, validators)
 }
 
-func TrafficShapingPolicyBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["burstSize"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["burstSize"] = "BurstSize"
-	fields["averageBandwidth"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["averageBandwidth"] = "AverageBandwidth"
-	fields["peakBandwidth"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["peakBandwidth"] = "PeakBandwidth"
-	fields["enabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enabled"] = "Enabled"
-	fields["inherited"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["inherited"] = "Inherited"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.traffic_shaping_policy", fields, reflect.TypeOf(TrafficShapingPolicy{}), fieldNameMap, validators)
-}
-
 func UpdateCredentialsBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -10284,56 +6143,6 @@ func VmcLocaleBindingType() bindings.BindingType {
 	fieldNameMap["locale"] = "Locale"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.vmc_locale", fields, reflect.TypeOf(VmcLocale{}), fieldNameMap, validators)
-}
-
-func VnicBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["subInterfaces"] = bindings.NewOptionalType(bindings.NewReferenceType(SubInterfacesBindingType))
-	fieldNameMap["subInterfaces"] = "SubInterfaces"
-	fields["addressGroups"] = bindings.NewOptionalType(bindings.NewReferenceType(EdgeVnicAddressGroupsBindingType))
-	fieldNameMap["addressGroups"] = "AddressGroups"
-	fields["isConnected"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["isConnected"] = "IsConnected"
-	fields["enableSendRedirects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enableSendRedirects"] = "EnableSendRedirects"
-	fields["inShapingPolicy"] = bindings.NewOptionalType(bindings.NewReferenceType(TrafficShapingPolicyBindingType))
-	fieldNameMap["inShapingPolicy"] = "InShapingPolicy"
-	fields["label"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["label"] = "Label"
-	fields["enableProxyArp"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enableProxyArp"] = "EnableProxyArp"
-	fields["index"] = bindings.NewIntegerType()
-	fieldNameMap["index"] = "Index"
-	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["name"] = "Name"
-	fields["mtu"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["mtu"] = "Mtu"
-	fields["fenceParameters"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(KeyValueAttributesBindingType), reflect.TypeOf([]KeyValueAttributes{})))
-	fieldNameMap["fenceParameters"] = "FenceParameters"
-	fields["macAddresses"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(MacAddressBindingType), reflect.TypeOf([]MacAddress{})))
-	fieldNameMap["macAddresses"] = "MacAddresses"
-	fields["outShapingPolicy"] = bindings.NewOptionalType(bindings.NewReferenceType(TrafficShapingPolicyBindingType))
-	fieldNameMap["outShapingPolicy"] = "OutShapingPolicy"
-	fields["portgroupName"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["portgroupName"] = "PortgroupName"
-	fields["enableBridgeMode"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["enableBridgeMode"] = "EnableBridgeMode"
-	fields["type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["type"] = "Type_"
-	fields["portgroupId"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["portgroupId"] = "PortgroupId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.vnic", fields, reflect.TypeOf(Vnic{}), fieldNameMap, validators)
-}
-
-func VnicsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["vnics"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(VnicBindingType), reflect.TypeOf([]Vnic{})))
-	fieldNameMap["vnics"] = "Vnics"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vmc.model.vnics", fields, reflect.TypeOf(Vnics{}), fieldNameMap, validators)
 }
 
 func VpcInfoBindingType() bindings.BindingType {
