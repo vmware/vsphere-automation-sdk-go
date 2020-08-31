@@ -18,7 +18,7 @@ type SubscriptionsClient interface {
 
     // Initiates the creation of a subscription
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param subscriptionRequestParam subscriptionRequest (required)
     // @return com.vmware.vmc.model.Task
     // @throws Unauthenticated  Unauthorized
@@ -28,7 +28,7 @@ type SubscriptionsClient interface {
 
     // Get subscription details for a given subscription id
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param subscriptionParam SubscriptionId for an sddc. (required)
     // @return com.vmware.vmc.model.SubscriptionDetails
     // @throws InternalServerError  Server error. Check retryable flag to see if request should be retried.
@@ -37,7 +37,7 @@ type SubscriptionsClient interface {
 
     // Returns all subscriptions for a given org id
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param offerTypeParam Offer Type \* \\\\`ON_DEMAND\\\\` - on-demand subscription \* \\\\`TERM\\\\` - term subscription \* All subscriptions if not specified (optional)
     // @throws Unauthenticated  Unauthorized
     // @throws InternalServerError  Server error. Check retryable flag to see if request should be retried.

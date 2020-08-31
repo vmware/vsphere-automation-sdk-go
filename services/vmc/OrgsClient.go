@@ -18,7 +18,7 @@ type OrgsClient interface {
 
     // Get details of organization
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @return com.vmware.vmc.model.Organization
     // @throws Unauthenticated  Unauthorized
     // @throws Unauthorized  Forbidden

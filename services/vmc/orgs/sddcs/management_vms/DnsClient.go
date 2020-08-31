@@ -18,8 +18,8 @@ type DnsClient interface {
 
     // Update the DNS records of management VMs to use public or private IP addresses
     //
-    // @param orgParam Organization identifier. (required)
-    // @param sddcParam Sddc Identifier. (required)
+    // @param orgParam Organization identifier (required)
+    // @param sddcParam Sddc identifier (required)
     // @param managementVmIdParam the management VM ID (required)
     // @param ipTypeParam the ip type to associate with FQDN in DNS (required)
     // @return com.vmware.vmc.model.Task

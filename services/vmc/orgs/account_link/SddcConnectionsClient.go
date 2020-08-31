@@ -18,7 +18,7 @@ type SddcConnectionsClient interface {
 
     // Get a list of SDDC connections currently setup for the customer's organization.
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param sddcParam sddc (optional)
     // @throws Unauthenticated  Unauthorized
     // @throws Unauthorized  Forbidden

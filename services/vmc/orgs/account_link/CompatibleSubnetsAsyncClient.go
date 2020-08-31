@@ -18,7 +18,7 @@ type CompatibleSubnetsAsyncClient interface {
 
     // Gets a customer's compatible subnets for account linking via a task. The information is returned as a member of the task (found in task.params['subnet_list_result'] when you are notified it is complete), and it's documented under ref /definitions/AwsCompatibleSubnets
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param linkedAccountIdParam The linked connected account identifier (required)
     // @param regionParam The region of the cloud resources to work in (optional)
     // @param sddcParam sddc (optional)
@@ -33,7 +33,7 @@ type CompatibleSubnetsAsyncClient interface {
     // Sets which subnet to use to link accounts and finishes the linking process via a task
     //
     // @param awsSubnetParam The subnet chosen by the customer (required)
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @return com.vmware.vmc.model.Task
     // @throws Unauthenticated  Unauthorized
     // @throws Unauthorized  Forbidden

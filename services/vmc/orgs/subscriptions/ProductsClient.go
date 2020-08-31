@@ -18,7 +18,7 @@ type ProductsClient interface {
 
     // List of all the products that are available for purchase.
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @throws Unauthenticated  Unauthorized
     // @throws Unauthorized  Forbidden
     // @throws InternalServerError  Internal server error

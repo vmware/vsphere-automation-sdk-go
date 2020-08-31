@@ -18,8 +18,8 @@ type ReconfigureClient interface {
 
     // This reconfiguration will handle changing both the number of hosts and the cluster storage capacity.
     //
-    // @param orgParam Organization identifier. (required)
-    // @param sddcParam Sddc Identifier. (required)
+    // @param orgParam Organization identifier (required)
+    // @param sddcParam Sddc identifier (required)
     // @param clusterParam cluster identifier (required)
     // @param clusterReconfigureParamsParam clusterReconfigureParams (required)
     // @return com.vmware.vmc.model.Task

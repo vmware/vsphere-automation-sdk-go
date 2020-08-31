@@ -18,8 +18,8 @@ type ConvertClient interface {
 
     // This API converts a one host SDDC to a four node DEFAULT SDDC. It takes care of configuring and upgrading the vCenter configurations on the SDDC for high availability and data redundancy.
     //
-    // @param orgParam Organization identifier. (required)
-    // @param sddcParam Sddc Identifier. (required)
+    // @param orgParam Organization identifier (required)
+    // @param sddcParam Sddc identifier (required)
     // @return com.vmware.vmc.model.Task
     // @throws Unauthenticated  Unauthorized
     // @throws InvalidRequest  The sddc is not in a state that's valid for updates, Method not allowed

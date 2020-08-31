@@ -16,7 +16,7 @@ import (
 
 type ProvidersClient interface {
 
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @throws Unauthenticated  Unauthorized
     // @throws Unauthorized  Forbidden
     // @throws NotFound  Organization doesn't exist

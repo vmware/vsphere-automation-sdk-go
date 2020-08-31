@@ -18,7 +18,7 @@ type ConnectedAccountsClient interface {
 
     // Delete a particular connected (linked) account.
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param linkedAccountPathIdParam The linked connected account identifier (required)
     // @param forceEvenWhenSddcPresentParam When true, forcibly removes a connected account even when SDDC's are still linked to it. (optional)
     // @return com.vmware.vmc.model.AwsCustomerConnectedAccount
@@ -29,7 +29,7 @@ type ConnectedAccountsClient interface {
 
     // Get a list of connected accounts
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param providerParam The cloud provider of the SDDC (AWS or ZeroCloud). Default value is AWS. (optional)
     // @throws Unauthenticated  Unauthorized
     // @throws Unauthorized  Forbidden

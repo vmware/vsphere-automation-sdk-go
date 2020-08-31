@@ -18,7 +18,7 @@ type SupportWindowClient interface {
 
     // Get all available support windows
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param minimumSeatsAvailableParam minimum seats available (used as a filter) (optional)
     // @param createdByParam user name which was used to create the support window (used as a filter) (optional)
     // @throws Unauthenticated  Unauthorized
@@ -29,7 +29,7 @@ type SupportWindowClient interface {
 
     // Move Sddc to new support window
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param idParam Target Support Window ID (required)
     // @param sddcIdParam SDDC to move (required)
     // @return com.vmware.vmc.model.SupportWindowId

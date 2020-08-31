@@ -15,7 +15,7 @@ type AccountLinkClient interface {
 
     // Gets a link that can be used on a customer's account to start the linking process.
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @throws Error  Generic Error
 	Get(orgParam string) error
 }

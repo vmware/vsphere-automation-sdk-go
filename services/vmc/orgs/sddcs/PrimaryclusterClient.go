@@ -18,8 +18,8 @@ type PrimaryclusterClient interface {
 
     // Retrieves the primary cluster in provided customer sddc UUID
     //
-    // @param orgParam Organization identifier. (required)
-    // @param sddcParam Sddc Identifier. (required)
+    // @param orgParam Organization identifier (required)
+    // @param sddcParam Sddc identifier (required)
     // @return com.vmware.vmc.model.Cluster
     // @throws Unauthenticated  Unauthorized
     // @throws InvalidRequest  The sddc is not in a state that's valid for fetching the primary cluster.

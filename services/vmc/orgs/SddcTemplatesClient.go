@@ -18,7 +18,7 @@ type SddcTemplatesClient interface {
 
     // Delete SDDC template identified by given id.
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param templateIdParam SDDC Template identifier (required)
     // @return com.vmware.vmc.model.Task
     // @throws Unauthenticated  Unauthorized
@@ -27,7 +27,7 @@ type SddcTemplatesClient interface {
 
     // Get configuration template by given template id.
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param templateIdParam SDDC Template identifier (required)
     // @return com.vmware.vmc.model.SddcTemplate
     // @throws Unauthenticated  Unauthorized
@@ -37,7 +37,7 @@ type SddcTemplatesClient interface {
 
     // List all available SDDC configuration templates in an organization
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @throws Unauthenticated  Unauthorized
     // @throws Unauthorized  Forbidden
 	List(orgParam string) ([]model.SddcTemplate, error)

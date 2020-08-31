@@ -18,7 +18,7 @@ type ClusterConstraintsClient interface {
 
     // Get constraints on cluster storage size for EBS-backed clusters.
     //
-    // @param orgParam Organization identifier. (required)
+    // @param orgParam Organization identifier (required)
     // @param providerParam Cloud storage provider ID (example AWS) (required)
     // @param numHostsParam Number of hosts in cluster (required)
     // @return com.vmware.vmc.model.VsanConfigConstraints
