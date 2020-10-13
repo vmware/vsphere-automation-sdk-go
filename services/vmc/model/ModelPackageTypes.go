@@ -233,8 +233,8 @@ func (s AmiInfo) GetDataValue__() (data.DataValue, []error) {
 
 type AvailableZoneInfo struct {
 	Subnets []Subnet
-    // available zone name
-	Name *string
+    // available zone id
+	Id *string
 }
 
 func (s AvailableZoneInfo) GetType__() bindings.BindingType {
@@ -2405,6 +2405,52 @@ func (s ProvisionSpec) GetDataValue__() (data.DataValue, []error) {
 }
 
 
+type RequestDetail struct {
+    // AWS quota increase request id
+	AwsQuotaRequestId *string
+    // Possible values are: 
+    //
+    // * RequestDetail#RequestDetail_DETAIL_STATUS_NEW
+    // * RequestDetail#RequestDetail_DETAIL_STATUS_PENDINGSUBMIT
+    // * RequestDetail#RequestDetail_DETAIL_STATUS_SUBMITTED
+    // * RequestDetail#RequestDetail_DETAIL_STATUS_PENDINGVERFICATION
+    // * RequestDetail#RequestDetail_DETAIL_STATUS_RESOLVED
+    // * RequestDetail#RequestDetail_DETAIL_STATUS_DENIED
+    // * RequestDetail#RequestDetail_DETAIL_STATUS_ERROR
+	DetailStatus *string
+	ResolvedAt *time.Time
+    // desired value for the quota increase request
+	DesiredValue *int64
+    // AWS support case status
+	AwsSupportCaseStatus *string
+    // AWS support caes id
+	AwsSupportCaseId *string
+}
+const RequestDetail_DETAIL_STATUS_NEW = "NEW"
+const RequestDetail_DETAIL_STATUS_PENDINGSUBMIT = "PENDINGSUBMIT"
+const RequestDetail_DETAIL_STATUS_SUBMITTED = "SUBMITTED"
+const RequestDetail_DETAIL_STATUS_PENDINGVERFICATION = "PENDINGVERFICATION"
+const RequestDetail_DETAIL_STATUS_RESOLVED = "RESOLVED"
+const RequestDetail_DETAIL_STATUS_DENIED = "DENIED"
+const RequestDetail_DETAIL_STATUS_ERROR = "ERROR"
+
+func (s RequestDetail) GetType__() bindings.BindingType {
+	return RequestDetailBindingType()
+}
+
+func (s RequestDetail) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for RequestDetail._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 type Reservation struct {
     // Duration - required for reservation in maintenance window format: int64
 	Duration *int64
@@ -3180,6 +3226,65 @@ func (s ServiceError) GetDataValue__() (data.DataValue, []error) {
 }
 
 
+type ServiceQuotaRequest struct {
+	Updated time.Time
+    // User id that last updated this record
+	UserId string
+    // User id that last updated this record
+	UpdatedByUserId string
+	Created time.Time
+    // Version of this entity format: int32
+	Version int64
+    // User name that last updated this record
+	UpdatedByUserName *string
+    // User name that last updated this record
+	UserName string
+    // Unique ID for this entity
+	Id string
+	RequesterEmail *string
+    // The task for running the service quota request.
+	TaskId *string
+    // Region for the service quota
+	Region *string
+	AwsAccountNumber *string
+    // The org ID for this request. This is a standard UUID.
+	OrgId *string
+    // Reason for this quota increase
+	Reason *string
+    // Possible values are: 
+    //
+    // * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_NEW
+    // * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_PENDING
+    // * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_RESOLVED
+    // * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_DENIED
+    // * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_ERROR
+	RequestStatus *string
+    // service quota request item details
+	RequestDetails map[string]RequestDetail
+}
+const ServiceQuotaRequest_REQUEST_STATUS_NEW = "NEW"
+const ServiceQuotaRequest_REQUEST_STATUS_PENDING = "PENDING"
+const ServiceQuotaRequest_REQUEST_STATUS_RESOLVED = "RESOLVED"
+const ServiceQuotaRequest_REQUEST_STATUS_DENIED = "DENIED"
+const ServiceQuotaRequest_REQUEST_STATUS_ERROR = "ERROR"
+
+func (s ServiceQuotaRequest) GetType__() bindings.BindingType {
+	return ServiceQuotaRequestBindingType()
+}
+
+func (s ServiceQuotaRequest) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ServiceQuotaRequest._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 type Site struct {
     // Site password.
 	Password *string
@@ -3682,6 +3787,30 @@ func (s TermOfferInstance) GetDataValue__() (data.DataValue, []error) {
 }
 
 
+type TermsOfServiceResult struct {
+    // The terms of service ID requested.
+	TermsId *string
+    // Wehther or not the terms requested have been signed.
+	Signed *bool
+}
+
+func (s TermsOfServiceResult) GetType__() bindings.BindingType {
+	return TermsOfServiceResultBindingType()
+}
+
+func (s TermsOfServiceResult) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for TermsOfServiceResult._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 type UpdateCredentials struct {
     // Username of the credentials
 	Username string
@@ -3735,8 +3864,6 @@ type VpcInfo struct {
     // set of virtual interfaces attached to the sddc
 	VifIds []string
 	VmSecurityGroupId *string
-    // Mapping from AZ to a list of IP addresses assigned to TGW ENI that's connected with Vpc
-	TgwIps map[string][]string
     // (deprecated)
 	RouteTableId *string
     // Id of the NSX edge associated with this VPC (deprecated)
@@ -3760,9 +3887,13 @@ type VpcInfo struct {
 	AssociationId *string
     // Route table which contains the route to VGW (deprecated)
 	VgwRouteTableId *string
+    // List of edge vm Ips of traffic gourps added during scale-out
+	TrafficGroupEdgeVmIps []string
     // Id of the association between edge subnet and route-table (deprecated)
 	EdgeAssociationId *string
 	Provider *string
+    // Mapping from AZ to a list of IP addresses assigned to TGW ENI that's connected with Vpc
+	TgwIps map[string][]string
     // (deprecated)
 	PeeringConnectionId *string
 	NetworkType *string
@@ -4232,8 +4363,8 @@ func AvailableZoneInfoBindingType() bindings.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["subnets"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(SubnetBindingType), reflect.TypeOf([]Subnet{})))
 	fieldNameMap["subnets"] = "Subnets"
-	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["name"] = "Name"
+	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["id"] = "Id"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.available_zone_info", fields, reflect.TypeOf(AvailableZoneInfo{}), fieldNameMap, validators)
 }
@@ -5371,6 +5502,25 @@ func ProvisionSpecBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.provision_spec", fields, reflect.TypeOf(ProvisionSpec{}), fieldNameMap, validators)
 }
 
+func RequestDetailBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["aws_quota_request_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["aws_quota_request_id"] = "AwsQuotaRequestId"
+	fields["detail_status"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["detail_status"] = "DetailStatus"
+	fields["resolved_at"] = bindings.NewOptionalType(bindings.NewDateTimeType())
+	fieldNameMap["resolved_at"] = "ResolvedAt"
+	fields["desired_value"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["desired_value"] = "DesiredValue"
+	fields["aws_support_case_status"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["aws_support_case_status"] = "AwsSupportCaseStatus"
+	fields["aws_support_case_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["aws_support_case_id"] = "AwsSupportCaseId"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.request_detail", fields, reflect.TypeOf(RequestDetail{}), fieldNameMap, validators)
+}
+
 func ReservationBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -5798,6 +5948,45 @@ func ServiceErrorBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.service_error", fields, reflect.TypeOf(ServiceError{}), fieldNameMap, validators)
 }
 
+func ServiceQuotaRequestBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["updated"] = bindings.NewDateTimeType()
+	fieldNameMap["updated"] = "Updated"
+	fields["user_id"] = bindings.NewStringType()
+	fieldNameMap["user_id"] = "UserId"
+	fields["updated_by_user_id"] = bindings.NewStringType()
+	fieldNameMap["updated_by_user_id"] = "UpdatedByUserId"
+	fields["created"] = bindings.NewDateTimeType()
+	fieldNameMap["created"] = "Created"
+	fields["version"] = bindings.NewIntegerType()
+	fieldNameMap["version"] = "Version"
+	fields["updated_by_user_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
+	fields["user_name"] = bindings.NewStringType()
+	fieldNameMap["user_name"] = "UserName"
+	fields["id"] = bindings.NewStringType()
+	fieldNameMap["id"] = "Id"
+	fields["requester_email"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["requester_email"] = "RequesterEmail"
+	fields["task_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["task_id"] = "TaskId"
+	fields["region"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["region"] = "Region"
+	fields["aws_account_number"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["aws_account_number"] = "AwsAccountNumber"
+	fields["org_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["org_id"] = "OrgId"
+	fields["reason"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["reason"] = "Reason"
+	fields["request_status"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["request_status"] = "RequestStatus"
+	fields["request_details"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(RequestDetailBindingType),reflect.TypeOf(map[string]RequestDetail{})))
+	fieldNameMap["request_details"] = "RequestDetails"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.service_quota_request", fields, reflect.TypeOf(ServiceQuotaRequest{}), fieldNameMap, validators)
+}
+
 func SiteBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -6125,6 +6314,17 @@ func TermOfferInstanceBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.term_offer_instance", fields, reflect.TypeOf(TermOfferInstance{}), fieldNameMap, validators)
 }
 
+func TermsOfServiceResultBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["terms_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["terms_id"] = "TermsId"
+	fields["signed"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["signed"] = "Signed"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.terms_of_service_result", fields, reflect.TypeOf(TermsOfServiceResult{}), fieldNameMap, validators)
+}
+
 func UpdateCredentialsBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -6158,8 +6358,6 @@ func VpcInfoBindingType() bindings.BindingType {
 	fieldNameMap["vif_ids"] = "VifIds"
 	fields["vm_security_group_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vm_security_group_id"] = "VmSecurityGroupId"
-	fields["tgwIps"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})),reflect.TypeOf(map[string][]string{})))
-	fieldNameMap["tgwIps"] = "TgwIps"
 	fields["route_table_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["route_table_id"] = "RouteTableId"
 	fields["edge_subnet_id"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -6186,10 +6384,14 @@ func VpcInfoBindingType() bindings.BindingType {
 	fieldNameMap["association_id"] = "AssociationId"
 	fields["vgw_route_table_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vgw_route_table_id"] = "VgwRouteTableId"
+	fields["traffic_group_edge_vm_ips"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["traffic_group_edge_vm_ips"] = "TrafficGroupEdgeVmIps"
 	fields["edge_association_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["edge_association_id"] = "EdgeAssociationId"
 	fields["provider"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["provider"] = "Provider"
+	fields["tgw_ips"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})),reflect.TypeOf(map[string][]string{})))
+	fieldNameMap["tgw_ips"] = "TgwIps"
 	fields["peering_connection_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["peering_connection_id"] = "PeeringConnectionId"
 	fields["network_type"] = bindings.NewOptionalType(bindings.NewStringType())
