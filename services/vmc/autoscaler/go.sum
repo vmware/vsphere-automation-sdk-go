@@ -5,7 +5,6 @@ github.com/gibson042/canonicaljson-go v1.0.3/go.mod h1:DsLpJTThXyGNO+KZlI85C1/KD
 github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/gorilla/mux v1.7.4/go.mod h1:DVbg23sWSpFRCP0SfiEN6jmj59UnW/n46BH5rLB71So=
-gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go v0.0.0-20200723220254-350b631133a2 h1:7Faex4ZJ62dEq5RhkyIfdfoN7fpt/KR+hQG1D0CmLWM=
 gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib v0.4.0 h1:UOVK9ZtJrywpW7ZGiiVG5xow/1IO8xV1WFr7YsnrWFg=
 gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib v0.4.0/go.mod h1:FQI4Kd8FBBTb6Z5rQ+Xi+9M3vLFWM0lYKeQM1NagMlU=
 gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime v0.4.0 h1:qEXCwt4KbB66eG8PLie3/zEMdqZfrrrHRV262TTPXik=
