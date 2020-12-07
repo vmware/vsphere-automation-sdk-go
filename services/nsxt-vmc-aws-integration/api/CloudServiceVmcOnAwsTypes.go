@@ -4,13 +4,13 @@
 // Code generated. DO NOT EDIT.
 
 /*
- * Data type definitions file for service: EdrsPolicy.
+ * Data type definitions file for service: CloudServiceVmcOnAws.
  * Includes binding types of a structures and enumerations defined in the service.
  * Shared by client-side stubs and server-side skeletons to ensure type
  * compatibility.
  */
 
-package sddcs
+package api
 
 import (
 	"reflect"
@@ -24,22 +24,18 @@ import (
 
 
 
-func edrsPolicyGetInputType() bindings.StructType {
+func cloudServiceVmcOnAwsListAccountsInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fieldNameMap["org"] = "Org"
-	fieldNameMap["sddc"] = "Sddc"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func edrsPolicyGetOutputType() bindings.BindingType {
-	return bindings.NewListType(bindings.NewReferenceType(model.EdrsClusterInfoBindingType), reflect.TypeOf([]model.EdrsClusterInfo{}))
+func cloudServiceVmcOnAwsListAccountsOutputType() bindings.BindingType {
+	return bindings.NewReferenceType(model.VMCAccountsBindingType)
 }
 
-func edrsPolicyGetRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVmcOnAwsListAccountsRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -48,20 +44,8 @@ func edrsPolicyGetRestMetadata() protocol.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fieldNameMap["org"] = "Org"
-	fieldNameMap["sddc"] = "Sddc"
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	pathParams["org"] = "org"
-	pathParams["sddc"] = "sddc"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
-	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
 	return protocol.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
@@ -74,13 +58,13 @@ func edrsPolicyGetRestMetadata() protocol.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/vmc/autoscaler/api/orgs/{org}/sddcs/{sddc}/edrs-policy",
+		"/cloud-service/api/v1/infra/accounts",
 		"",
 		resultHeaders,
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 

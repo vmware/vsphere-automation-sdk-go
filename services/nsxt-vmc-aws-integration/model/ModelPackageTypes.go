@@ -17,33 +17,24 @@ import (
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
-	"time"
 )
 
 
-type AbstractEntity struct {
-	Updated time.Time
-    // User id that last updated this record
-	UserId string
-    // User name that last updated this record
-	UpdatedByUserName string
-    // User id that last updated this record
-	UpdatedByUserId string
-    // User name that last updated this record
-	UserName string
-	Created time.Time
+type ActionMessage struct {
+    // Optional message for action
+	Message *string
 }
 
-func (s AbstractEntity) GetType__() bindings.BindingType {
-	return AbstractEntityBindingType()
+func (s ActionMessage) GetType__() bindings.BindingType {
+	return ActionMessageBindingType()
 }
 
-func (s AbstractEntity) GetDataValue__() (data.DataValue, []error) {
+func (s ActionMessage) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for AbstractEntity._GetDataValue method - %s",
+		log.Errorf("Error in ConvertToVapi for ActionMessage._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -116,33 +107,191 @@ func (s ApiError) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-type AwsEvent struct {
-    // AWS instance id of the host.
-	InstanceId string
-    // The date & time when the AWS event for the host is scheduled. format: date-time
-	StartTime time.Time
-    // Type of the scheduled event (retirement, reboot, ...)
-	Type_ string
-    // Customer account id the instance belongs to.
-	AccountId string
-    // Description of the AWS scheduled event.
+// Base abstract associated Group connection infomation for the local SDDC.
+type AssociatedBaseGroupConnectionInfo struct {
+    // Link to this resource
+	Self *SelfResourceLink
+    // The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+    // Schema for this resource
+	Schema *string
+    // The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+    // Indicates system owned resource
+	SystemOwned *bool
+    // Defaults to ID if not set
+	DisplayName *string
+    // SDDC Group description
 	Description *string
+    // Opaque identifiers meaningful to the API user
+	Tags []Tag
+    // ID of the user who created this resource
+	CreateUser *string
+    // Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+    // Timestamp of resource creation format: int64
+	CreateTime *int64
+    // Timestamp of last modification format: int64
+	LastModifiedTime *int64
+    // ID of the user who last modified this resource
+	LastModifiedUser *string
+    // SDDC Group ID
+	Id string
+    // Possible values are: 
+    //
+    // * AssociatedBaseGroupConnectionInfo#AssociatedBaseGroupConnectionInfo_RESOURCE_TYPE_ASSOCIATEDTGWGROUPCONNECTIONINFO
+    //
+    //  Group connection type
+	ResourceType string
+    // Absolute path of this object
+	Path *string
+    // Path relative from its parent
+	RelativePath *string
+    // Path of its parent
+	ParentPath *string
+    // marked for delete identifier
+	MarkedForDelete *bool
+    // SDDC Group name
+	Name *string
 }
 // Identifier denoting this class, when it is used in polymorphic context. 
 //
 // This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
-const AwsEvent__TYPE_IDENTIFIER = "AwsEvent"
+const AssociatedBaseGroupConnectionInfo__TYPE_IDENTIFIER = "AssociatedBaseGroupConnectionInfo"
+const AssociatedBaseGroupConnectionInfo_RESOURCE_TYPE_ASSOCIATEDTGWGROUPCONNECTIONINFO = "AssociatedTgwGroupConnectionInfo"
 
-func (s AwsEvent) GetType__() bindings.BindingType {
-	return AwsEventBindingType()
+func (s AssociatedBaseGroupConnectionInfo) GetType__() bindings.BindingType {
+	return AssociatedBaseGroupConnectionInfoBindingType()
 }
 
-func (s AwsEvent) GetDataValue__() (data.DataValue, []error) {
+func (s AssociatedBaseGroupConnectionInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for AwsEvent._GetDataValue method - %s",
+		log.Errorf("Error in ConvertToVapi for AssociatedBaseGroupConnectionInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
+// Associated Group connection list result
+type AssociatedGroupConnectionInfosListResult struct {
+    // Link to this resource
+	Self *SelfResourceLink
+    // The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+    // Schema for this resource
+	Schema *string
+    // Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+    // If true, results are sorted in ascending order
+	SortAscending *bool
+    // Field by which records are sorted
+	SortBy *string
+    // Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	Results []*data.StructValue
+}
+
+func (s AssociatedGroupConnectionInfosListResult) GetType__() bindings.BindingType {
+	return AssociatedGroupConnectionInfosListResultBindingType()
+}
+
+func (s AssociatedGroupConnectionInfosListResult) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for AssociatedGroupConnectionInfosListResult._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
+// Associated Group connection infomation for the local SDDC by using AWS TGW as a connector.
+type AssociatedTgwGroupConnectionInfo struct {
+    // TGW ID for the local SDDC in the Group
+	TgwId string
+    // TGW external route table ID used for external customers VPCs association
+	ExternalRouteTableId string
+    // Possible values are: 
+    //
+    // * AssociatedTgwGroupConnectionInfo#AssociatedTgwGroupConnectionInfo_STATE_CONNECTED
+    // * AssociatedTgwGroupConnectionInfo#AssociatedTgwGroupConnectionInfo_STATE_DISCONNECTED
+    //
+    //  The TGW attachment state of the SDDC in the Group
+	State *string
+    // TGW SDDCs route table ID used for SDDCs association
+	SddcsRouteTableId string
+    // TGW attachment ID for the local SDDC in the Group
+	TgwAttachmentId string
+    // Link to this resource
+	Self *SelfResourceLink
+    // The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+    // Schema for this resource
+	Schema *string
+    // The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+    // Indicates system owned resource
+	SystemOwned *bool
+    // Defaults to ID if not set
+	DisplayName *string
+    // SDDC Group description
+	Description *string
+    // Opaque identifiers meaningful to the API user
+	Tags []Tag
+    // ID of the user who created this resource
+	CreateUser *string
+    // Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+    // Timestamp of resource creation format: int64
+	CreateTime *int64
+    // Timestamp of last modification format: int64
+	LastModifiedTime *int64
+    // ID of the user who last modified this resource
+	LastModifiedUser *string
+    // SDDC Group ID
+	Id string
+    // Possible values are: 
+    //
+    // * AssociatedBaseGroupConnectionInfo#AssociatedBaseGroupConnectionInfo_RESOURCE_TYPE_ASSOCIATEDTGWGROUPCONNECTIONINFO
+    //
+    //  Group connection type
+	ResourceType string
+    // Absolute path of this object
+	Path *string
+    // Path relative from its parent
+	RelativePath *string
+    // Path of its parent
+	ParentPath *string
+    // marked for delete identifier
+	MarkedForDelete *bool
+    // SDDC Group name
+	Name *string
+}
+// Identifier denoting this class, when it is used in polymorphic context. 
+//
+// This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
+const AssociatedTgwGroupConnectionInfo__TYPE_IDENTIFIER = "AssociatedTgwGroupConnectionInfo"
+const AssociatedTgwGroupConnectionInfo_STATE_CONNECTED = "CONNECTED"
+const AssociatedTgwGroupConnectionInfo_STATE_DISCONNECTED = "DISCONNECTED"
+
+func (s AssociatedTgwGroupConnectionInfo) GetType__() bindings.BindingType {
+	return AssociatedTgwGroupConnectionInfoBindingType()
+}
+
+func (s AssociatedTgwGroupConnectionInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for AssociatedTgwGroupConnectionInfo._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -237,6 +386,44 @@ func (s ConnectedServiceListResult) GetDataValue__() (data.DataValue, []error) {
 
 // Status of 'Enabled/Disabled' for a service connected to a linked vpc
 type ConnectedServiceStatus struct {
+    // Link to this resource
+	Self *SelfResourceLink
+    // The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+    // Schema for this resource
+	Schema *string
+    // The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+    // Indicates system owned resource
+	SystemOwned *bool
+    // Defaults to ID if not set
+	DisplayName *string
+    // Description of this resource
+	Description *string
+    // Opaque identifiers meaningful to the API user
+	Tags []Tag
+    // ID of the user who created this resource
+	CreateUser *string
+    // Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+    // Timestamp of resource creation format: int64
+	CreateTime *int64
+    // Timestamp of last modification format: int64
+	LastModifiedTime *int64
+    // ID of the user who last modified this resource
+	LastModifiedUser *string
+    // Unique identifier of this resource
+	Id *string
+    // The type of this resource.
+	ResourceType *string
+    // Absolute path of this object
+	Path *string
+    // Path relative from its parent
+	RelativePath *string
+    // Path of its parent
+	ParentPath *string
+    // marked for delete identifier
+	MarkedForDelete *bool
     // status of service
 	Enabled *bool
     // service name
@@ -260,22 +447,104 @@ func (s ConnectedServiceStatus) GetDataValue__() (data.DataValue, []error) {
 }
 
 
+// Base type for CSV result.
+type CsvListResult struct {
+    // File name set by HTTP server if API returns CSV result as a file.
+	FileName *string
+}
+
+func (s CsvListResult) GetType__() bindings.BindingType {
+	return CsvListResultBindingType()
+}
+
+func (s CsvListResult) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for CsvListResult._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
+// Base type for CSV records.
+type CsvRecord struct {
+}
+
+func (s CsvRecord) GetType__() bindings.BindingType {
+	return CsvRecordBindingType()
+}
+
+func (s CsvRecord) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for CsvRecord._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Direct Connect BGP related information
 type DirectConnectBgpInfo struct {
+    // Link to this resource
+	Self *SelfResourceLink
+    // The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+    // Schema for this resource
+	Schema *string
+    // The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+    // Indicates system owned resource
+	SystemOwned *bool
+    // Defaults to ID if not set
+	DisplayName *string
+    // Description of this resource
+	Description *string
+    // Opaque identifiers meaningful to the API user
+	Tags []Tag
+    // ID of the user who created this resource
+	CreateUser *string
+    // Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+    // Timestamp of resource creation format: int64
+	CreateTime *int64
+    // Timestamp of last modification format: int64
+	LastModifiedTime *int64
+    // ID of the user who last modified this resource
+	LastModifiedUser *string
+    // Unique identifier of this resource
+	Id *string
+    // The type of this resource.
+	ResourceType *string
+    // Absolute path of this object
+	Path *string
+    // Path relative from its parent
+	RelativePath *string
+    // Path of its parent
+	ParentPath *string
+    // marked for delete identifier
+	MarkedForDelete *bool
     // The ASN paired with the VGW attached to the VPC. AWS allowed private BGP ASN range - [64512, 65534] and [4200000000, 4294967294]. If omitted in the payload, BGP ASN will not be modified.
 	LocalAsNum *string
     // Possible values are: 
     //
-    // * DirectConnectBgpInfo#DirectConnectBgpInfo_ROUTE_PREFERENCE_DX_PREFERED_OVER_VPN
-    // * DirectConnectBgpInfo#DirectConnectBgpInfo_ROUTE_PREFERENCE_VPN_PREFERED_OVER_DX
+    // * DirectConnectBgpInfo#DirectConnectBgpInfo_ROUTE_PREFERENCE_DIRECT_CONNECT_PREFERRED_OVER_VPN
+    // * DirectConnectBgpInfo#DirectConnectBgpInfo_ROUTE_PREFERENCE_VPN_PREFERRED_OVER_DIRECT_CONNECT
     //
     //  Direct connect route preference over VPN routes. If omitted in the payload, route preference will not be modified.
 	RoutePreference *string
     // Maximum transmission unit allowed by the VIF format: int32
 	Mtu *int64
 }
-const DirectConnectBgpInfo_ROUTE_PREFERENCE_DX_PREFERED_OVER_VPN = "DX_PREFERED_OVER_VPN"
-const DirectConnectBgpInfo_ROUTE_PREFERENCE_VPN_PREFERED_OVER_DX = "VPN_PREFERED_OVER_DX"
+const DirectConnectBgpInfo_ROUTE_PREFERENCE_DIRECT_CONNECT_PREFERRED_OVER_VPN = "DIRECT_CONNECT_PREFERRED_OVER_VPN"
+const DirectConnectBgpInfo_ROUTE_PREFERENCE_VPN_PREFERRED_OVER_DIRECT_CONNECT = "VPN_PREFERRED_OVER_DIRECT_CONNECT"
 
 func (s DirectConnectBgpInfo) GetType__() bindings.BindingType {
 	return DirectConnectBgpInfoBindingType()
@@ -294,120 +563,8 @@ func (s DirectConnectBgpInfo) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Base class for resources that are discovered and automatically updated
-type DiscoveredResource struct {
-    // Link to this resource
-	Self *SelfResourceLink
-    // The server will populate this field when returing the resource. Ignored on PUT and POST.
-	Links []ResourceLink
-    // Schema for this resource
-	Schema *string
-    // Timestamp of last modification format: int64
-	LastSyncTime *int64
-    // Defaults to ID if not set
-	DisplayName *string
-    // Description of this resource
-	Description *string
-    // The type of this resource.
-	ResourceType *string
-    // Opaque identifiers meaningful to the API user
-	Tags []Tag
-}
-
-func (s DiscoveredResource) GetType__() bindings.BindingType {
-	return DiscoveredResourceBindingType()
-}
-
-func (s DiscoveredResource) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for DiscoveredResource._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type EdrsClusterInfo struct {
-    // Possible values are: 
-    //
-    // * EdrsClusterInfo#EdrsClusterInfo_STATUS_KEY_MIN_HOSTS
-    // * EdrsClusterInfo#EdrsClusterInfo_STATUS_KEY_MAX_HOSTS
-    // * EdrsClusterInfo#EdrsClusterInfo_STATUS_KEY_FAILED_HOSTS
-    //
-    //  Key identifying the status type
-	StatusKey *string
-    // The cluster identifier
-	ClusterId string
-    // The status description
-	StatusMessage *string
-	EdrsPolicy EdrsPolicy
-}
-const EdrsClusterInfo_STATUS_KEY_MIN_HOSTS = "skyscraper.autoscaler.elastic.drs.min.hosts"
-const EdrsClusterInfo_STATUS_KEY_MAX_HOSTS = "skyscraper.autoscaler.elastic.drs.max.hosts"
-const EdrsClusterInfo_STATUS_KEY_FAILED_HOSTS = "skyscraper.autoscaler.elastic.drs.failed.hosts"
-
-func (s EdrsClusterInfo) GetType__() bindings.BindingType {
-	return EdrsClusterInfoBindingType()
-}
-
-func (s EdrsClusterInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for EdrsClusterInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-type EdrsPolicy struct {
-    // True if EDRS is enabled
-	EnableEdrs bool
-    // The minimum number of hosts that the cluster can scale in to.
-	MinHosts *int64
-    // Possible values are: 
-    //
-    // * EdrsPolicy#EdrsPolicy_POLICY_TYPE_COST
-    // * EdrsPolicy#EdrsPolicy_POLICY_TYPE_PERFORMANCE
-    // * EdrsPolicy#EdrsPolicy_POLICY_TYPE_STORAGE_SCALEUP
-    // * EdrsPolicy#EdrsPolicy_POLICY_TYPE_RAPID_SCALEUP
-    //
-    //  The EDRS policy type. This can either be 'cost', 'performance', 'storage-scaleup' or 'rapid-scaleup'.
-	PolicyType *string
-    // The maximum number of hosts that the cluster can scale out to.
-	MaxHosts *int64
-}
-const EdrsPolicy_POLICY_TYPE_COST = "cost"
-const EdrsPolicy_POLICY_TYPE_PERFORMANCE = "performance"
-const EdrsPolicy_POLICY_TYPE_STORAGE_SCALEUP = "storage-scaleup"
-const EdrsPolicy_POLICY_TYPE_RAPID_SCALEUP = "rapid-scaleup"
-
-func (s EdrsPolicy) GetType__() bindings.BindingType {
-	return EdrsPolicyBindingType()
-}
-
-func (s EdrsPolicy) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for EdrsPolicy._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Base class for resources that are embedded in other resources
-type EmbeddedResource struct {
+// External Connectivity configuration for north-south traffic. For eg., in AWS case, this would refer to Direct Connect config. For Dimension, this would refer to the config at Upstream Intranet interface to Tor.
+type ExternalConnectivityConfig struct {
     // Link to this resource
 	Self *SelfResourceLink
     // The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -416,28 +573,54 @@ type EmbeddedResource struct {
 	Schema *string
     // The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
 	Revision *int64
-    // Owner of this resource
-	Owner *OwnerResourceLink
+    // Indicates system owned resource
+	SystemOwned *bool
     // Defaults to ID if not set
 	DisplayName *string
-    // Identifier of the resource
+    // Description of this resource
+	Description *string
+    // Opaque identifiers meaningful to the API user
+	Tags []Tag
+    // ID of the user who created this resource
+	CreateUser *string
+    // Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+    // Timestamp of resource creation format: int64
+	CreateTime *int64
+    // Timestamp of last modification format: int64
+	LastModifiedTime *int64
+    // ID of the user who last modified this resource
+	LastModifiedUser *string
+    // Unique identifier of this resource
 	Id *string
     // The type of this resource.
 	ResourceType *string
-    // Description of this resource
-	Description *string
+    // Absolute path of this object
+	Path *string
+    // Path relative from its parent
+	RelativePath *string
+    // Path of its parent
+	ParentPath *string
+    // marked for delete identifier
+	MarkedForDelete *bool
+    // Uplink MTU of direct connect, sddc-grouping and outposts traffic in edge tier-0 router port. format: int32
+	IntranetMtu int64
+    // Uplink MTU of connected VPC traffic in edge tier-0 router port. format: int32
+	ServicesMtu *int64
+    // Uplink MTU of internet traffic in edge tier-0 router port. format: int32
+	InternetMtu *int64
 }
 
-func (s EmbeddedResource) GetType__() bindings.BindingType {
-	return EmbeddedResourceBindingType()
+func (s ExternalConnectivityConfig) GetType__() bindings.BindingType {
+	return ExternalConnectivityConfigBindingType()
 }
 
-func (s EmbeddedResource) GetDataValue__() (data.DataValue, []error) {
+func (s ExternalConnectivityConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for EmbeddedResource._GetDataValue method - %s",
+		log.Errorf("Error in ConvertToVapi for ExternalConnectivityConfig._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -445,106 +628,51 @@ func (s EmbeddedResource) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-type ErrorResponse struct {
-    // HTTP status code
-	Status int64
-    // Originating request URI
-	Path string
-    // If true, client should retry operation
-	Retryable bool
-    // unique error code
-	ErrorCode string
-    // localized error messages
-	ErrorMessages []string
-}
-
-func (s ErrorResponse) GetType__() bindings.BindingType {
-	return ErrorResponseBindingType()
-}
-
-func (s ErrorResponse) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ErrorResponse._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Host elastic network interface (ENI)
-type HostEni struct {
-    // Interface mac
-	InterfaceMac *string
-    // List of associated public IPs. format: ipv4
-	AssociatedPublicIps []string
-    // Primary IP format: ipv4
-	PrimaryIp *string
-    // Description
-	Description *string
-    // Subnet ID
-	SubnetId *string
-    // Virtual distributed router (VDR) type
-	VdrType *string
-    // Interface id
-	InterfaceId *string
-}
-
-func (s HostEni) GetType__() bindings.BindingType {
-	return HostEniBindingType()
-}
-
-func (s HostEni) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for HostEni._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Host status
-type HostStatus struct {
-    // List of VDRs
-	Vdr []HostVdr
-    // Host UUID
-	HostId *string
+// External SDDC connectivity
+type ExternalSddcConnectivity struct {
     // Possible values are: 
     //
-    // * HostStatus#HostStatus_VMCD_STATUS_GREEN
-    // * HostStatus#HostStatus_VMCD_STATUS_RED
-    // * HostStatus#HostStatus_VMCD_STATUS_UNKNOWN
+    // * ExternalSddcConnectivity#ExternalSddcConnectivity_STATUS_SUCCEEDED
+    // * ExternalSddcConnectivity#ExternalSddcConnectivity_STATUS_FAILED
     //
-    //  Status of vmcd, a service running on host
-	VmcdStatus *string
-    // List of ENIs
-	Eni []HostEni
-    // Host ip format: ipv4
-	HostIp *string
-    // issues with the host
-	Issues []string
+    //  The status of the route for the connectivity
+	Status *string
+    // Possible values are: 
+    //
+    // * ExternalSddcConnectivity#ExternalSddcConnectivity_CONNECTIVITY_TYPE_DIRECT_CONNECT
+    // * ExternalSddcConnectivity#ExternalSddcConnectivity_CONNECTIVITY_TYPE_DEPLOYMENT_CONNECTIVITY_GROUP
+    //
+    //  The external SDDC connectivity type is used by the SDDC for the L3 connectivity. DIRECT_CONNECT means that the external SDDC connectivity is through AWS Direct Connect. DEPLOYMENT_CONNECTIVITY_GROUP means that the external SDDC connectivity is through AWS TGW.
+	ConnectivityType string
+    // Possible values are: 
+    //
+    // * ExternalSddcConnectivity#ExternalSddcConnectivity_ROUTE_TYPE_PROPAGATED
+    // * ExternalSddcConnectivity#ExternalSddcConnectivity_ROUTE_TYPE_STATIC
+    //
+    //  The type of the route for the connectivity
+	RouteType *string
+    // The error message if the status is FAILED, the optional warning message if the status is SUCCEEDED.
+	StatusMessage *string
+    // The source of the route for the connectivity
+	Source *string
 }
-const HostStatus_VMCD_STATUS_GREEN = "GREEN"
-const HostStatus_VMCD_STATUS_RED = "RED"
-const HostStatus_VMCD_STATUS_UNKNOWN = "UNKNOWN"
+const ExternalSddcConnectivity_STATUS_SUCCEEDED = "SUCCEEDED"
+const ExternalSddcConnectivity_STATUS_FAILED = "FAILED"
+const ExternalSddcConnectivity_CONNECTIVITY_TYPE_DIRECT_CONNECT = "DIRECT_CONNECT"
+const ExternalSddcConnectivity_CONNECTIVITY_TYPE_DEPLOYMENT_CONNECTIVITY_GROUP = "DEPLOYMENT_CONNECTIVITY_GROUP"
+const ExternalSddcConnectivity_ROUTE_TYPE_PROPAGATED = "PROPAGATED"
+const ExternalSddcConnectivity_ROUTE_TYPE_STATIC = "STATIC"
 
-func (s HostStatus) GetType__() bindings.BindingType {
-	return HostStatusBindingType()
+func (s ExternalSddcConnectivity) GetType__() bindings.BindingType {
+	return ExternalSddcConnectivityBindingType()
 }
 
-func (s HostStatus) GetDataValue__() (data.DataValue, []error) {
+func (s ExternalSddcConnectivity) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for HostStatus._GetDataValue method - %s",
+		log.Errorf("Error in ConvertToVapi for ExternalSddcConnectivity._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -552,8 +680,96 @@ func (s HostStatus) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Host status list result
-type HostStatusListResult struct {
+// External SDDC route
+type ExternalSddcRoute struct {
+    // Link to this resource
+	Self *SelfResourceLink
+    // The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+    // Schema for this resource
+	Schema *string
+    // The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+    // Indicates system owned resource
+	SystemOwned *bool
+    // Defaults to ID if not set
+	DisplayName *string
+    // Description of this resource
+	Description *string
+    // Opaque identifiers meaningful to the API user
+	Tags []Tag
+    // ID of the user who created this resource
+	CreateUser *string
+    // Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+    // Timestamp of resource creation format: int64
+	CreateTime *int64
+    // Timestamp of last modification format: int64
+	LastModifiedTime *int64
+    // ID of the user who last modified this resource
+	LastModifiedUser *string
+    // Unique identifier of this resource
+	Id *string
+    // The type of this resource.
+	ResourceType *string
+    // Absolute path of this object
+	Path *string
+    // Path relative from its parent
+	RelativePath *string
+    // Path of its parent
+	ParentPath *string
+    // marked for delete identifier
+	MarkedForDelete *bool
+    // Destination IP CIDR Block format: ipv4-cidr-block
+	Destination string
+    // The route used for what kind of connectivities
+	Connectivities []ExternalSddcConnectivity
+}
+
+func (s ExternalSddcRoute) GetType__() bindings.BindingType {
+	return ExternalSddcRouteBindingType()
+}
+
+func (s ExternalSddcRoute) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ExternalSddcRoute._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
+// CSV record for External SDDC route
+type ExternalSddcRouteCsvRecord struct {
+    // Destination IP CIDR Block format: ipv4-cidr-block
+	Destination string
+    // The connectivity datails contains status of route, source of the route, connectivity type
+	ConnectivityDetails string
+}
+
+func (s ExternalSddcRouteCsvRecord) GetType__() bindings.BindingType {
+	return ExternalSddcRouteCsvRecordBindingType()
+}
+
+func (s ExternalSddcRouteCsvRecord) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for ExternalSddcRouteCsvRecord._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
+// External SDDC routes list result
+type ExternalSddcRoutesListResult struct {
     // Link to this resource
 	Self *SelfResourceLink
     // The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -568,20 +784,19 @@ type HostStatusListResult struct {
 	SortBy *string
     // Count of results found (across all pages), set only on first page format: int64
 	ResultCount *int64
-    // Connected service status list
-	Results []HostStatus
+	Routes []ExternalSddcRoute
 }
 
-func (s HostStatusListResult) GetType__() bindings.BindingType {
-	return HostStatusListResultBindingType()
+func (s ExternalSddcRoutesListResult) GetType__() bindings.BindingType {
+	return ExternalSddcRoutesListResultBindingType()
 }
 
-func (s HostStatusListResult) GetDataValue__() (data.DataValue, []error) {
+func (s ExternalSddcRoutesListResult) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for HostStatusListResult._GetDataValue method - %s",
+		log.Errorf("Error in ConvertToVapi for ExternalSddcRoutesListResult._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -589,26 +804,23 @@ func (s HostStatusListResult) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Host virtual distributed router (VDR)
-type HostVdr struct {
-    // List of VDR routes
-	Routes []VdrRoute
-    // List of VDR lifs
-	Lifs []VdrLif
-    // VDR type
-	Type_ *string
+// External SDDC routes list result in CSV format
+type ExternalSddcRoutesListResultInCsvFormat struct {
+    // File name set by HTTP server if API returns CSV result as a file.
+	FileName *string
+	Results []ExternalSddcRouteCsvRecord
 }
 
-func (s HostVdr) GetType__() bindings.BindingType {
-	return HostVdrBindingType()
+func (s ExternalSddcRoutesListResultInCsvFormat) GetType__() bindings.BindingType {
+	return ExternalSddcRoutesListResultInCsvFormatBindingType()
 }
 
-func (s HostVdr) GetDataValue__() (data.DataValue, []error) {
+func (s ExternalSddcRoutesListResultInCsvFormat) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for HostVdr._GetDataValue method - %s",
+		log.Errorf("Error in ConvertToVapi for ExternalSddcRoutesListResultInCsvFormat._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -616,38 +828,22 @@ func (s HostVdr) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Statistics for a network interface
-type InterfaceStatistics struct {
-    // Link to this resource
-	Self *SelfResourceLink
-    // The server will populate this field when returing the resource. Ignored on PUT and POST.
-	Links []ResourceLink
-    // Schema for this resource
-	Schema *string
-    // Count of packets received on this port format: int64
-	RxPackets *int64
-    // Count of receive errors occurring on this port format: int64
-	RxErrors *int64
-    // Count of bytes received on this port format: int64
-	RxBytes *int64
-    // Count of transmit errors occurring on this port format: int64
-	TxErrors *int64
-    // Count of bytes transmitted on this port format: int64
-	TxBytes *int64
-    // Count of packets transmitted on this port format: int64
-	TxPackets *int64
+// A list of fields to include in query results
+type IncludedFieldsParameters struct {
+    // Comma separated list of fields that should be included in query result
+	IncludedFields *string
 }
 
-func (s InterfaceStatistics) GetType__() bindings.BindingType {
-	return InterfaceStatisticsBindingType()
+func (s IncludedFieldsParameters) GetType__() bindings.BindingType {
+	return IncludedFieldsParametersBindingType()
 }
 
-func (s InterfaceStatistics) GetDataValue__() (data.DataValue, []error) {
+func (s IncludedFieldsParameters) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for InterfaceStatistics._GetDataValue method - %s",
+		log.Errorf("Error in ConvertToVapi for IncludedFieldsParameters._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -708,6 +904,44 @@ func (s LinkedSubnetInfo) GetDataValue__() (data.DataValue, []error) {
 
 // Linked VPC info
 type LinkedVpcInfo struct {
+    // Link to this resource
+	Self *SelfResourceLink
+    // The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+    // Schema for this resource
+	Schema *string
+    // The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+    // Indicates system owned resource
+	SystemOwned *bool
+    // Defaults to ID if not set
+	DisplayName *string
+    // Description of this resource
+	Description *string
+    // Opaque identifiers meaningful to the API user
+	Tags []Tag
+    // ID of the user who created this resource
+	CreateUser *string
+    // Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+    // Timestamp of resource creation format: int64
+	CreateTime *int64
+    // Timestamp of last modification format: int64
+	LastModifiedTime *int64
+    // ID of the user who last modified this resource
+	LastModifiedUser *string
+    // Unique identifier of this resource
+	Id *string
+    // The type of this resource.
+	ResourceType *string
+    // Absolute path of this object
+	Path *string
+    // Path relative from its parent
+	RelativePath *string
+    // Path of its parent
+	ParentPath *string
+    // marked for delete identifier
+	MarkedForDelete *bool
     // ARN role for linked VPC operations
 	ArnRole string
     // Active network interface used for linked vpc traffic
@@ -897,18 +1131,52 @@ func (s MgmtServiceEntry) GetDataValue__() (data.DataValue, []error) {
 
 // Management VM access information
 type MgmtVmInfo struct {
-    // Local IPs of a management VM format: address-or-block-or-range
-	Ips []string
+    // Link to this resource
+	Self *SelfResourceLink
+    // The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+    // Schema for this resource
+	Schema *string
+    // The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+    // Indicates system owned resource
+	SystemOwned *bool
     // Management VM name
 	DisplayName *string
+    // Description of this resource
+	Description *string
+    // Opaque identifiers meaningful to the API user
+	Tags []Tag
+    // ID of the user who created this resource
+	CreateUser *string
+    // Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+    // Timestamp of resource creation format: int64
+	CreateTime *int64
+    // Timestamp of last modification format: int64
+	LastModifiedTime *int64
+    // ID of the user who last modified this resource
+	LastModifiedUser *string
+    // Management VM identifier
+	Id *string
+    // The type of this resource.
+	ResourceType *string
+    // Absolute path of this object
+	Path *string
+    // Path relative from its parent
+	RelativePath *string
+    // Path of its parent
+	ParentPath *string
+    // marked for delete identifier
+	MarkedForDelete *bool
+    // Local IPs of a management VM format: address-or-block-or-range
+	Ips []string
     // Details services path and display name.
 	Services []MgmtServiceEntry
     // For each management VM, a dedicated policy group will be created. This property will reflect its group path.
 	GroupPath *string
     // IP address and attachment id pairs for tagging managment VM
 	IpAttachmentPairs []IpAttachmentPair
-    // Management VM identifier
-	Id *string
 }
 
 func (s MgmtVmInfo) GetType__() bindings.BindingType {
@@ -965,28 +1233,24 @@ func (s MgmtVmsListResult) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Network status entry
-type NetworkStatusEntry struct {
-    // Indicate whether issues is a non-empty array
-	IssuesFound *bool
-    // IP address programmed with the entry format: ipv4
-	IpAddress *string
-    // IPs of hosts that store this entry format: ipv4
-	HostIps []string
-    // Known issues detected with the entry
-	Issues []string
+// Interface information (Label)
+type ModelInterface struct {
+    // Name of the Interface label
+	Name *string
+    // Identifier of the Interface label
+	Id string
 }
 
-func (s NetworkStatusEntry) GetType__() bindings.BindingType {
-	return NetworkStatusEntryBindingType()
+func (s ModelInterface) GetType__() bindings.BindingType {
+	return ModelInterfaceBindingType()
 }
 
-func (s NetworkStatusEntry) GetDataValue__() (data.DataValue, []error) {
+func (s ModelInterface) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for NetworkStatusEntry._GetDataValue method - %s",
+		log.Errorf("Error in ConvertToVapi for ModelInterface._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -994,52 +1258,26 @@ func (s NetworkStatusEntry) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Key used to group network status inquiry results.
-type NetworkStatusKey struct {
-    // Possible values are: 
-    //
-    // * NetworkStatusKey#NetworkStatusKey_NETWORK_TYPE_DNS
-    // * NetworkStatusKey#NetworkStatusKey_NETWORK_TYPE_VPN
-    // * NetworkStatusKey#NetworkStatusKey_NETWORK_TYPE_MANAGEMENT
-    // * NetworkStatusKey#NetworkStatusKey_NETWORK_TYPE_NAT
-    // * NetworkStatusKey#NetworkStatusKey_NETWORK_TYPE_LOGICAL
-    // * NetworkStatusKey#NetworkStatusKey_NETWORK_TYPE_INFRA
-    //
-    //  Network type in the network status pair.
-	NetworkType string
-    // Possible values are: 
-    //
-    // * NetworkStatusKey#NetworkStatusKey_CONTEXT_INVALID_NETWORK
-    // * NetworkStatusKey#NetworkStatusKey_CONTEXT_MANAGEMENT
-    // * NetworkStatusKey#NetworkStatusKey_CONTEXT_PUBLIC
-    // * NetworkStatusKey#NetworkStatusKey_CONTEXT_CONNECTED_VPC
-    // * NetworkStatusKey#NetworkStatusKey_CONTEXT_DIRECT_CONNECT
-    //
-    //  The context that the entry is used in
-	Context string
-}
-const NetworkStatusKey_NETWORK_TYPE_DNS = "DNS"
-const NetworkStatusKey_NETWORK_TYPE_VPN = "VPN"
-const NetworkStatusKey_NETWORK_TYPE_MANAGEMENT = "MANAGEMENT"
-const NetworkStatusKey_NETWORK_TYPE_NAT = "NAT"
-const NetworkStatusKey_NETWORK_TYPE_LOGICAL = "LOGICAL"
-const NetworkStatusKey_NETWORK_TYPE_INFRA = "INFRA"
-const NetworkStatusKey_CONTEXT_INVALID_NETWORK = "INVALID_NETWORK"
-const NetworkStatusKey_CONTEXT_MANAGEMENT = "MANAGEMENT"
-const NetworkStatusKey_CONTEXT_PUBLIC = "PUBLIC"
-const NetworkStatusKey_CONTEXT_CONNECTED_VPC = "CONNECTED_VPC"
-const NetworkStatusKey_CONTEXT_DIRECT_CONNECT = "DIRECT_CONNECT"
-
-func (s NetworkStatusKey) GetType__() bindings.BindingType {
-	return NetworkStatusKeyBindingType()
+// Prefix lists used by certain features, like Intranet NAT.
+type PrefixListInfo struct {
+    // Prefix List URL
+	Url string
+    // Relative Prefix List path
+	Path string
+    // Prefix List name
+	Name string
 }
 
-func (s NetworkStatusKey) GetDataValue__() (data.DataValue, []error) {
+func (s PrefixListInfo) GetType__() bindings.BindingType {
+	return PrefixListInfoBindingType()
+}
+
+func (s PrefixListInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for NetworkStatusKey._GetDataValue method - %s",
+		log.Errorf("Error in ConvertToVapi for PrefixListInfo._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -1047,24 +1285,24 @@ func (s NetworkStatusKey) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// List of network status
-type NetworkStatusKeyValuePair struct {
-    // Network status value
-	Values []NetworkStatusEntry
-    // Network status key
-	Key *NetworkStatusKey
+// A list for provider gateways
+type ProviderGatewayKeyValuePairs struct {
+    // Value
+	Value []ProviderObject
+    // Key
+	Key string
 }
 
-func (s NetworkStatusKeyValuePair) GetType__() bindings.BindingType {
-	return NetworkStatusKeyValuePairBindingType()
+func (s ProviderGatewayKeyValuePairs) GetType__() bindings.BindingType {
+	return ProviderGatewayKeyValuePairsBindingType()
 }
 
-func (s NetworkStatusKeyValuePair) GetDataValue__() (data.DataValue, []error) {
+func (s ProviderGatewayKeyValuePairs) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for NetworkStatusKeyValuePair._GetDataValue method - %s",
+		log.Errorf("Error in ConvertToVapi for ProviderGatewayKeyValuePairs._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -1072,127 +1310,30 @@ func (s NetworkStatusKeyValuePair) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// List of network status
-type NetworkStatusListResult struct {
-    // Link to this resource
-	Self *SelfResourceLink
-    // The server will populate this field when returing the resource. Ignored on PUT and POST.
-	Links []ResourceLink
-    // Schema for this resource
-	Schema *string
-    // Opaque cursor to be used for getting next page of records (supplied by current result page)
-	Cursor *string
-    // If true, results are sorted in ascending order
-	SortAscending *bool
-    // Field by which records are sorted
-	SortBy *string
-    // Count of results found (across all pages), set only on first page format: int64
-	ResultCount *int64
-    // List of network status key value pairs.
-	Results []NetworkStatusKeyValuePair
-    // List of overall issues encountered during the inquiry
-	Issues []string
-}
-
-func (s NetworkStatusListResult) GetType__() bindings.BindingType {
-	return NetworkStatusListResultBindingType()
-}
-
-func (s NetworkStatusListResult) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for NetworkStatusListResult._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// The server will populate this field when returing the resource. Ignored on PUT and POST.
-type OwnerResourceLink struct {
-    // Optional action
-	Action *string
-    // Link to resource
-	Href *string
-    // Custom relation type (follows RFC 5988 where appropriate definitions exist)
-	Rel *string
-}
-
-func (s OwnerResourceLink) GetType__() bindings.BindingType {
-	return OwnerResourceLinkBindingType()
-}
-
-func (s OwnerResourceLink) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for OwnerResourceLink._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Service IP prefixes information
-type PrefixInfo struct {
-    // Service IP prefixes format: ipv4-cidr-block
-	Prefixes []string
+// Basic properties of SDDC User Config.
+type ProviderObject struct {
+    // Should start with \"/policy/api/v1/\".
+	Url *string
+    // Path
+	Path *string
     // Display name
 	DisplayName *string
+    // ID
+	Id *string
+    // Optional field, used to identify the object.
+	Type_ *string
 }
 
-func (s PrefixInfo) GetType__() bindings.BindingType {
-	return PrefixInfoBindingType()
+func (s ProviderObject) GetType__() bindings.BindingType {
+	return ProviderObjectBindingType()
 }
 
-func (s PrefixInfo) GetDataValue__() (data.DataValue, []error) {
+func (s ProviderObject) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for PrefixInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Service Prefix list query result
-type PrefixesListResult struct {
-    // Link to this resource
-	Self *SelfResourceLink
-    // The server will populate this field when returing the resource. Ignored on PUT and POST.
-	Links []ResourceLink
-    // Schema for this resource
-	Schema *string
-    // Opaque cursor to be used for getting next page of records (supplied by current result page)
-	Cursor *string
-    // If true, results are sorted in ascending order
-	SortAscending *bool
-    // Field by which records are sorted
-	SortBy *string
-    // Count of results found (across all pages), set only on first page format: int64
-	ResultCount *int64
-    // Service Prefixes list
-	Results []PrefixInfo
-}
-
-func (s PrefixesListResult) GetType__() bindings.BindingType {
-	return PrefixesListResultBindingType()
-}
-
-func (s PrefixesListResult) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for PrefixesListResult._GetDataValue method - %s",
+		log.Errorf("Error in ConvertToVapi for ProviderObject._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -1201,11 +1342,45 @@ func (s PrefixesListResult) GetDataValue__() (data.DataValue, []error) {
 
 
 type PublicIp struct {
-    // IPv4 address format: ipv4
-	Ip *string
+    // Link to this resource
+	Self *SelfResourceLink
+    // The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+    // Schema for this resource
+	Schema *string
+    // The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+    // Indicates system owned resource
+	SystemOwned *bool
 	DisplayName *string
+    // Description of this resource
+	Description *string
+    // Opaque identifiers meaningful to the API user
+	Tags []Tag
+    // ID of the user who created this resource
+	CreateUser *string
+    // Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+    // Timestamp of resource creation format: int64
+	CreateTime *int64
+    // Timestamp of last modification format: int64
+	LastModifiedTime *int64
+    // ID of the user who last modified this resource
+	LastModifiedUser *string
     // Public IP identifier
 	Id *string
+    // The type of this resource.
+	ResourceType *string
+    // Absolute path of this object
+	Path *string
+    // Path relative from its parent
+	RelativePath *string
+    // Path of its parent
+	ParentPath *string
+    // marked for delete identifier
+	MarkedForDelete *bool
+    // IPv4 address format: ipv4
+	Ip *string
 }
 
 func (s PublicIp) GetType__() bindings.BindingType {
@@ -1378,36 +1553,62 @@ func (s RevisionedResource) GetDataValue__() (data.DataValue, []error) {
 
 // SDDC configuration parameters for users. User-level addresses/CIDRs are provided.
 type SddcUserConfiguration struct {
-    // Public IPs for VPN tunnel over internet format: ipv4
-	VpnInternetIps []string
-    // MGW SNAT ip address format: ipv4
+    // Prefix lists used by certain features, like Intranet NAT.
+	ProviderPrefixLists []PrefixListInfo
+    // Management gateway SNAT IP address. format: ipv4
 	MgwSnatIp *string
-    // Compute gateway name
-	ComputeGateway string
-    // All VPN interfaces label name
-	AllVpnInterfaceLabel string
-    // Local IPs for VPN tunnel over Direct Connect format: ipv4
-	VpnDxIps []string
-    // All uplink interfaces label name
-	AllUplinkInterfaceLabel string
-    // DirectConnect interface label name
-	DxInterfaceLabel string
-    // SDDC Infra CIDRs format: ipv4-cidr-block
+    // Compute domain ID. Deprecated, please use domains.
+	ComputeDomain *string
+    // Interfaces (labels) including public interface, direct connect interface, linked vpc interface, etc. Deprecated, please use labels.
+	Interfaces []ModelInterface
+    // Interfaces (labels) including internet, intranet and services.
+	Labels []ProviderObject
+    // All VPN interfaces label name. Deprecated, please use labels.
+	AllVpnInterfaceLabel *string
+    // All uplink interfaces label name. Deprecated, please use labels.
+	AllUplinkInterfaceLabel *string
+    // Domain information for management gateway and compute gateway.
+	Domains []ProviderObject
+    // SDDC infra subnet CIDRs. Deprecated, please use infra_subnets. format: ipv4-cidr-block
 	SddcInfraSubnet []string
-    // Management gateway name
-	ManagementGateway string
-    // Linked VPC interface label name
-	LinkedVpcInterfaceLabel string
-    // Public interface label name
-	PublicInterfaceLabel string
-    // CGW SNAT ip address format: ipv4
-	CgwSnatIp *string
-    // Provider Name
-	ProviderName string
-    // Management VMs CIDRs format: ipv4-cidr-block
+    // SDDC infra subnet CIDRs. format: ipv4-cidr-block
+	InfraSubnets []string
+    // Management gateway label name. Deprecated, please use labels.
+	ManagementGatewayLabel *string
+    // Public IPs for VPN tunnel over internet. Deprecated. Please use vpn_endpoints instead of vpn_internet_ips. format: ipv4
+	VpnInternetIps []string
+    // Management subnet CIDRs. format: ipv4-cidr-block
+	MgmtSubnets []string
+    // Policy enforcement point object paths.
+	EnforcementPoints []ProviderObject
+    // Compute gateway name. Deprecated, please use gateways.
+	ComputeGateway *string
+    // Local IPs for VPN tunnel over Direct Connect. Deprecated. Please use vpn_endpoints instead of vpn_dx_ips. format: ipv4
+	VpnDxIps []string
+    // Linked VPC interface label name. Deprecated, please use labels.
+	LinkedVpcInterfaceLabel *string
+    // DirectConnect interface label name. Deprecated, please use labels.
+	DxInterfaceLabel *string
+    // Management subnet CIDRs. Deprecated, please use mgmt_subnets. format: ipv4-cidr-block
 	MgmtSubnet []string
-    // Management gateway label name
-	ManagementGatewayLabel string
+    // Management gateway name. Deprecated, please use gateways.
+	ManagementGateway *string
+    // Provider gateway list. Including both tier-0 gateways and tier-1 gateways.
+	Gateways []ProviderGatewayKeyValuePairs
+    // Public interface label name. Deprecated, please use labels.
+	PublicInterfaceLabel *string
+    // Compute gateway SNAT IP address. format: ipv4
+	CgwSnatIp *string
+    // VPN tunnel endpoints. Currently containing public IPs for VPN over internet and local IPs for VPN over intranet.
+	VpnEndpoints []VpnEndpoint
+    // Management domain ID. Deprecated, please use domains.
+	ManagementDomain *string
+    // Service provider name. Deprecated, please use gateways.
+	ProviderName *string
+    // Provider gateway list. Including both tier-0 gateways and tier-1 gateways. Deprecated, please use gateways.
+	ProviderGateways []ProviderGatewayKeyValuePairs
+    // Management gateway default DNS zone
+	ManagementGatewayDefaultDnsZone ProviderObject
 }
 
 func (s SddcUserConfiguration) GetType__() bindings.BindingType {
@@ -1454,44 +1655,11 @@ func (s SelfResourceLink) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// Detailed service errors associated with a task.
-type ServiceError struct {
-    // The original service name of the error.
-	OriginalService string
-    // The parameters of the service error.
-	Params []string
-    // Error message in English.
-	DefaultMessage *string
-    // The original error code of the service.
-	OriginalServiceErrorCode string
-    // Localizable error code.
-	ErrorCode string
-    // The localized message.
-	LocalizedMessage *string
-}
-
-func (s ServiceError) GetType__() bindings.BindingType {
-	return ServiceErrorBindingType()
-}
-
-func (s ServiceError) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ServiceError._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
 // Arbitrary key-value pairs that may be attached to an entity
 type Tag struct {
     // Tag searches may optionally be restricted by scope
 	Scope *string
-    // Identifier meaningful to user
+    // Identifier meaningful to user with maximum length of 256 characters
 	Tag *string
 }
 
@@ -1512,204 +1680,79 @@ func (s Tag) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-type Task struct {
-	Updated time.Time
-    // User id that last updated this record
-	UserId string
-    // User name that last updated this record
-	UpdatedByUserName string
-    // User id that last updated this record
-	UpdatedByUserId string
-    // User name that last updated this record
-	UserName string
-	Created time.Time
-    // Possible values are: 
-    //
-    // * Task#Task_STATUS_STARTED
-    // * Task#Task_STATUS_CANCELING
-    // * Task#Task_STATUS_FINISHED
-    // * Task#Task_STATUS_FAILED
-    // * Task#Task_STATUS_CANCELED
-	Status *string
-    // UUID of resources task is acting upon
-	ResourceId *string
-	StartTime *time.Time
-    // Service errors returned from SDDC services.
-	ServiceErrors []ServiceError
-	SubStatus *string
-	TaskType *string
-    // Task progress phases involved in current task execution
-	TaskProgressPhases []TaskProgressPhase
-	ErrorMessage *string
-	OrgId *string
-    // Estimated progress percentage the task executed format: int32
-	ProgressPercent *int64
-    // Estimated remaining time in minute of the task execution, < 0 means no estimation for the task. format: int32
-	EstimatedRemainingMinutes *int64
-	Params *data.StructValue
-	EndTime *time.Time
-    // The current in progress phase ID in the task execution, if none in progress, empty string returned.
-	PhaseInProgress *string
-	TaskVersion *string
-    // Type of resource being acted upon
-	ResourceType *string
-}
-const Task_STATUS_STARTED = "STARTED"
-const Task_STATUS_CANCELING = "CANCELING"
-const Task_STATUS_FINISHED = "FINISHED"
-const Task_STATUS_FAILED = "FAILED"
-const Task_STATUS_CANCELED = "CANCELED"
-
-func (s Task) GetType__() bindings.BindingType {
-	return TaskBindingType()
-}
-
-func (s Task) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Task._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// A task progress can be (but does NOT have to be) divided to more meaningful progress phases.
-type TaskProgressPhase struct {
-    // The identifier of the task progress phase
-	Id string
-    // The display name of the task progress phase
-	Name string
-    // The percentage of the phase that has completed format: int32
-	ProgressPercent int64
-}
-
-func (s TaskProgressPhase) GetType__() bindings.BindingType {
-	return TaskProgressPhaseBindingType()
-}
-
-func (s TaskProgressPhase) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for TaskProgressPhase._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Task properties
-type TaskProperties struct {
+// Traffic group configuration. A traffic group indicates dedicated bandwidth and computation for a given list of subnets. Creating a traffic group will reserve resources and associating it with desired prefix lists will use the resources for the traffic of the prefix lists. Besides traffic group ID and name, realized state and detailed association maps info of this traffic group are included if verbose info is requested.
+type TrafficGroup struct {
     // Link to this resource
 	Self *SelfResourceLink
     // The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
     // Schema for this resource
 	Schema *string
-    // Possible values are: 
-    //
-    // * TaskProperties#TaskProperties_STATUS_RUNNING
-    // * TaskProperties#TaskProperties_STATUS_ERROR
-    // * TaskProperties#TaskProperties_STATUS_SUCCESS
-    // * TaskProperties#TaskProperties_STATUS_CANCELING
-    // * TaskProperties#TaskProperties_STATUS_CANCELED
-    // * TaskProperties#TaskProperties_STATUS_KILLED
-    //
-    //  Current status of the task
-	Status *string
-    // True if response for asynchronous request is available
-	AsyncResponseAvailable *bool
-    // Description of the task
+    // The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+    // Indicates system owned resource
+	SystemOwned *bool
+    // A description field for the traffic group.
+	DisplayName *string
+    // Description of this resource
 	Description *string
-    // The start time of the task in epoch milliseconds format: int64
-	StartTime *int64
-    // True if this task can be canceled
-	Cancelable *bool
-    // HTTP request method
-	RequestMethod *string
-    // Name of the user who created this task
-	User *string
-    // Task progress if known, from 0 to 100 format: int64
-	Progress *int64
-    // A message describing the disposition of the task
-	Message *string
-    // URI of the method invocation that spawned this task
-	RequestUri *string
-    // Identifier for this task
+    // Opaque identifiers meaningful to the API user
+	Tags []Tag
+    // ID of the user who created this resource
+	CreateUser *string
+    // Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+    // Timestamp of resource creation format: int64
+	CreateTime *int64
+    // Timestamp of last modification format: int64
+	LastModifiedTime *int64
+    // ID of the user who last modified this resource
+	LastModifiedUser *string
+    // Unique identifier for a traffic group.
 	Id *string
-    // The end time of the task in epoch milliseconds format: int64
-	EndTime *int64
-}
-const TaskProperties_STATUS_RUNNING = "running"
-const TaskProperties_STATUS_ERROR = "error"
-const TaskProperties_STATUS_SUCCESS = "success"
-const TaskProperties_STATUS_CANCELING = "canceling"
-const TaskProperties_STATUS_CANCELED = "canceled"
-const TaskProperties_STATUS_KILLED = "killed"
-
-func (s TaskProperties) GetType__() bindings.BindingType {
-	return TaskPropertiesBindingType()
-}
-
-func (s TaskProperties) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for TaskProperties._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// A component that processed the packet injected by traceflow
-type TraceflowAction struct {
-    // Reason to drop or reject packet if it is not forwarded
-	Reason *string
-    // Name of a component instance
-	ComponentName *string
-    // Action taken by the component to process the packet
+    // The type of this resource.
 	ResourceType *string
+    // Absolute path of this object
+	Path *string
+    // Path relative from its parent
+	RelativePath *string
+    // Path of its parent
+	ParentPath *string
+    // marked for delete identifier
+	MarkedForDelete *bool
+    // Information on the current state. Mostly error messages on failure states.
+	StateMessage *string
+    // Association maps in the traffic group.
+	AssociationMaps []TrafficGroupAssociationMap
+    // Unique resource identifier for a traffic group. This identifier is used in the traffic group's related resource allocation and naming. format: int32
+	ResourceId *int64
     // Possible values are: 
     //
-    // * TraceflowAction#TraceflowAction_COMPONENT_TYPE_VMC
+    // * TrafficGroup#TrafficGroup_STATE_IN_PROGRESS
+    // * TrafficGroup#TrafficGroup_STATE_SUCCESS
+    // * TrafficGroup#TrafficGroup_STATE_FAILURE
+    // * TrafficGroup#TrafficGroup_STATE_UNAVAILABLE
+    // * TrafficGroup#TrafficGroup_STATE_PENDING
     //
-    //  Type of component
-	ComponentType *string
-    // Possible values are: 
-    //
-    // * TraceflowAction#TraceflowAction_COMPONENT_SUB_TYPE_EDGE_UPLINK
-    // * TraceflowAction#TraceflowAction_COMPONENT_SUB_TYPE_VDR
-    // * TraceflowAction#TraceflowAction_COMPONENT_SUB_TYPE_ENI
-    // * TraceflowAction#TraceflowAction_COMPONENT_SUB_TYPE_AWS_GATEWAY
-    //
-    //  Subtype of component
-	ComponentSubType *string
+    //  Realized state of the traffic group. This matches the realized state (VmcConsolidatedStatus) of the traffic group.
+	State *string
 }
-const TraceflowAction_COMPONENT_TYPE_VMC = "VMC"
-const TraceflowAction_COMPONENT_SUB_TYPE_EDGE_UPLINK = "EDGE_UPLINK"
-const TraceflowAction_COMPONENT_SUB_TYPE_VDR = "VDR"
-const TraceflowAction_COMPONENT_SUB_TYPE_ENI = "ENI"
-const TraceflowAction_COMPONENT_SUB_TYPE_AWS_GATEWAY = "AWS_GATEWAY"
+const TrafficGroup_STATE_IN_PROGRESS = "IN_PROGRESS"
+const TrafficGroup_STATE_SUCCESS = "SUCCESS"
+const TrafficGroup_STATE_FAILURE = "FAILURE"
+const TrafficGroup_STATE_UNAVAILABLE = "UNAVAILABLE"
+const TrafficGroup_STATE_PENDING = "PENDING"
 
-func (s TraceflowAction) GetType__() bindings.BindingType {
-	return TraceflowActionBindingType()
+func (s TrafficGroup) GetType__() bindings.BindingType {
+	return TrafficGroupBindingType()
 }
 
-func (s TraceflowAction) GetDataValue__() (data.DataValue, []error) {
+func (s TrafficGroup) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for TraceflowAction._GetDataValue method - %s",
+		log.Errorf("Error in ConvertToVapi for TrafficGroup._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -1717,8 +1760,95 @@ func (s TraceflowAction) GetDataValue__() (data.DataValue, []error) {
 }
 
 
-// A list containing all traceflow actions that have been taken to process the packet
-type TraceflowActionListResults struct {
+// An association map of a traffic group. It describes the association of prefix lists and logical routers with the traffic group. To make use of dedicated traffic resources through traffic groups, prefix lists need to be linked to the desired traffic group and an association with the target logical router (scope) is required. The scope is for declaring which logical router the prefix lists are associated under a particular traffic group. The scope is not required input.
+type TrafficGroupAssociationMap struct {
+    // Link to this resource
+	Self *SelfResourceLink
+    // The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+    // Schema for this resource
+	Schema *string
+    // The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+    // Indicates system owned resource
+	SystemOwned *bool
+    // A description field for Traffic group association map。
+	DisplayName *string
+    // Description of this resource
+	Description *string
+    // Opaque identifiers meaningful to the API user
+	Tags []Tag
+    // ID of the user who created this resource
+	CreateUser *string
+    // Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+    // Timestamp of resource creation format: int64
+	CreateTime *int64
+    // Timestamp of last modification format: int64
+	LastModifiedTime *int64
+    // ID of the user who last modified this resource
+	LastModifiedUser *string
+    // The association map id.
+	Id *string
+    // The type of this resource.
+	ResourceType *string
+    // Absolute path of this object
+	Path *string
+    // Path relative from its parent
+	RelativePath *string
+    // Path of its parent
+	ParentPath *string
+    // marked for delete identifier
+	MarkedForDelete *bool
+    // Information on the current state. Mostly error messages on failure states.
+	StateMessage *string
+    // Possible values are: 
+    //
+    // * TrafficGroupAssociationMap#TrafficGroupAssociationMap_SCOPE_1S_CGW
+    // * TrafficGroupAssociationMap#TrafficGroupAssociationMap_SCOPE_0S_VMC
+    //
+    //  The targeted logical router (scope) of prefix lists. Non admin users are not allowed to create, update, delete an association map with scope as /infra/tier-0s/vmc.
+	Scope *string
+    // The list of prefix lists to be associated.
+	PrefixLists []string
+    // Possible values are: 
+    //
+    // * TrafficGroupAssociationMap#TrafficGroupAssociationMap_STATE_IN_PROGRESS
+    // * TrafficGroupAssociationMap#TrafficGroupAssociationMap_STATE_SUCCESS
+    // * TrafficGroupAssociationMap#TrafficGroupAssociationMap_STATE_FAILURE
+    // * TrafficGroupAssociationMap#TrafficGroupAssociationMap_STATE_UNAVAILABLE
+    // * TrafficGroupAssociationMap#TrafficGroupAssociationMap_STATE_PENDING
+    //
+    //  Realized state of the traffic group. This matches the realized state (VmcConsolidatedStatus) of the traffic group.
+	State *string
+}
+const TrafficGroupAssociationMap_SCOPE_1S_CGW = "/infra/tier-1s/cgw"
+const TrafficGroupAssociationMap_SCOPE_0S_VMC = "/infra/tier-0s/vmc"
+const TrafficGroupAssociationMap_STATE_IN_PROGRESS = "IN_PROGRESS"
+const TrafficGroupAssociationMap_STATE_SUCCESS = "SUCCESS"
+const TrafficGroupAssociationMap_STATE_FAILURE = "FAILURE"
+const TrafficGroupAssociationMap_STATE_UNAVAILABLE = "UNAVAILABLE"
+const TrafficGroupAssociationMap_STATE_PENDING = "PENDING"
+
+func (s TrafficGroupAssociationMap) GetType__() bindings.BindingType {
+	return TrafficGroupAssociationMapBindingType()
+}
+
+func (s TrafficGroupAssociationMap) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for TrafficGroupAssociationMap._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
+// List result for traffic group association maps.
+type TrafficGroupAssociationMapsListResult struct {
     // Link to this resource
 	Self *SelfResourceLink
     // The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -1733,20 +1863,57 @@ type TraceflowActionListResults struct {
 	SortBy *string
     // Count of results found (across all pages), set only on first page format: int64
 	ResultCount *int64
-    // Result containing all traceflow actions that have processed the packet
-	Results []TraceflowAction
+    // Traffic group association map list
+	Results []TrafficGroupAssociationMap
 }
 
-func (s TraceflowActionListResults) GetType__() bindings.BindingType {
-	return TraceflowActionListResultsBindingType()
+func (s TrafficGroupAssociationMapsListResult) GetType__() bindings.BindingType {
+	return TrafficGroupAssociationMapsListResultBindingType()
 }
 
-func (s TraceflowActionListResults) GetDataValue__() (data.DataValue, []error) {
+func (s TrafficGroupAssociationMapsListResult) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for TraceflowActionListResults._GetDataValue method - %s",
+		log.Errorf("Error in ConvertToVapi for TrafficGroupAssociationMapsListResult._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
+// List result for traffic groups.
+type TrafficGroupsListResult struct {
+    // Link to this resource
+	Self *SelfResourceLink
+    // The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+    // Schema for this resource
+	Schema *string
+    // Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+    // If true, results are sorted in ascending order
+	SortAscending *bool
+    // Field by which records are sorted
+	SortBy *string
+    // Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+    // Traffic group list
+	Results []TrafficGroup
+}
+
+func (s TrafficGroupsListResult) GetType__() bindings.BindingType {
+	return TrafficGroupsListResultBindingType()
+}
+
+func (s TrafficGroupsListResult) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for TrafficGroupsListResult._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -1772,62 +1939,6 @@ func (s VMCAccounts) GetDataValue__() (data.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		log.Errorf("Error in ConvertToVapi for VMCAccounts._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Virtual distributed router (VDR) LIF
-type VdrLif struct {
-    // VDR LIF IP format: ipv4
-	Ip *string
-    // VDR LIF subnet mask format: ipv4
-	Netmask *string
-    // VDR LIF ID
-	Id *string
-    // VDR LIF VLAN ID format: int64
-	VlanId *int64
-}
-
-func (s VdrLif) GetType__() bindings.BindingType {
-	return VdrLifBindingType()
-}
-
-func (s VdrLif) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for VdrLif._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-
-// Virtual Distributed Router (VDR) route entry
-type VdrRoute struct {
-    // Destination IP CIDR Block format: ipv4-cidr-block
-	Destination *string
-    // Outgoing gateway
-	Gateway *string
-    // Outgoing Lif ID
-	LifId *string
-}
-
-func (s VdrRoute) GetType__() bindings.BindingType {
-	return VdrRouteBindingType()
-}
-
-func (s VdrRoute) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		log.Errorf("Error in ConvertToVapi for VdrRoute._GetDataValue method - %s",
 			bindings.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -1942,6 +2053,65 @@ func (s VirtualInterface) GetDataValue__() (data.DataValue, []error) {
 }
 
 
+// Abstract base class for all the VmcApp objects.
+type VmcAppBaseInfo struct {
+    // Link to this resource
+	Self *SelfResourceLink
+    // The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+    // Schema for this resource
+	Schema *string
+    // The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+    // Indicates system owned resource
+	SystemOwned *bool
+    // Defaults to ID if not set
+	DisplayName *string
+    // Description of this resource
+	Description *string
+    // Opaque identifiers meaningful to the API user
+	Tags []Tag
+    // ID of the user who created this resource
+	CreateUser *string
+    // Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+    // Timestamp of resource creation format: int64
+	CreateTime *int64
+    // Timestamp of last modification format: int64
+	LastModifiedTime *int64
+    // ID of the user who last modified this resource
+	LastModifiedUser *string
+    // Unique identifier of this resource
+	Id *string
+    // The type of this resource.
+	ResourceType *string
+    // Absolute path of this object
+	Path *string
+    // Path relative from its parent
+	RelativePath *string
+    // Path of its parent
+	ParentPath *string
+    // marked for delete identifier
+	MarkedForDelete *bool
+}
+
+func (s VmcAppBaseInfo) GetType__() bindings.BindingType {
+	return VmcAppBaseInfoBindingType()
+}
+
+func (s VmcAppBaseInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VmcAppBaseInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
 // Represents aggregated realized status for intent entity across associated realized entities.
 type VmcConsolidatedRealizedStatus struct {
     // Consolidated state of objects for a given intent entity.
@@ -1977,16 +2147,18 @@ type VmcConsolidatedStatus struct {
     //
     // * VmcConsolidatedStatus#VmcConsolidatedStatus_CONSOLIDATED_STATUS_IN_PROGRESS
     // * VmcConsolidatedStatus#VmcConsolidatedStatus_CONSOLIDATED_STATUS_SUCCESS
-    // * VmcConsolidatedStatus#VmcConsolidatedStatus_CONSOLIDATED_STATUS_ERROR
+    // * VmcConsolidatedStatus#VmcConsolidatedStatus_CONSOLIDATED_STATUS_FAILURE
     // * VmcConsolidatedStatus#VmcConsolidatedStatus_CONSOLIDATED_STATUS_UNAVAILABLE
+    // * VmcConsolidatedStatus#VmcConsolidatedStatus_CONSOLIDATED_STATUS_PENDING
     //
-    //  Possible values could be IN_PROGRESS, SUCCESS, ERROR, UNAVAILABLE. IN_PROGRESS - The object realization is in progress. ERROR - The object realization fails or is caught in an error. SUCCESS - The realization succeeds. UNAVAILABLE - The object realization status is unavailable.
+    //  Realized state of consolidation.
 	ConsolidatedStatus *string
 }
 const VmcConsolidatedStatus_CONSOLIDATED_STATUS_IN_PROGRESS = "IN_PROGRESS"
 const VmcConsolidatedStatus_CONSOLIDATED_STATUS_SUCCESS = "SUCCESS"
-const VmcConsolidatedStatus_CONSOLIDATED_STATUS_ERROR = "ERROR"
+const VmcConsolidatedStatus_CONSOLIDATED_STATUS_FAILURE = "FAILURE"
 const VmcConsolidatedStatus_CONSOLIDATED_STATUS_UNAVAILABLE = "UNAVAILABLE"
+const VmcConsolidatedStatus_CONSOLIDATED_STATUS_PENDING = "PENDING"
 
 func (s VmcConsolidatedStatus) GetType__() bindings.BindingType {
 	return VmcConsolidatedStatusBindingType()
@@ -2030,26 +2202,231 @@ func (s VmcConsolidatedStatusPerObject) GetDataValue__() (data.DataValue, []erro
 }
 
 
+// VMC Feature Flag
+type VmcFeatureFlagInfo struct {
+    // Link to this resource
+	Self *SelfResourceLink
+    // The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+    // Schema for this resource
+	Schema *string
+    // The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+    // Indicates system owned resource
+	SystemOwned *bool
+    // Defaults to ID if not set
+	DisplayName *string
+    // Description of this resource
+	Description *string
+    // Opaque identifiers meaningful to the API user
+	Tags []Tag
+    // ID of the user who created this resource
+	CreateUser *string
+    // Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+    // Timestamp of resource creation format: int64
+	CreateTime *int64
+    // Timestamp of last modification format: int64
+	LastModifiedTime *int64
+    // ID of the user who last modified this resource
+	LastModifiedUser *string
+    // Unique identifier of this resource
+	Id *string
+    // The type of this resource.
+	ResourceType *string
+    // Absolute path of this object
+	Path *string
+    // Path relative from its parent
+	RelativePath *string
+    // Path of its parent
+	ParentPath *string
+    // marked for delete identifier
+	MarkedForDelete *bool
+    // Possible values are: 
+    //
+    // * VmcFeatureFlagInfo#VmcFeatureFlagInfo_STATE_ENABLED
+    // * VmcFeatureFlagInfo#VmcFeatureFlagInfo_STATE_DISABLED
+    // * VmcFeatureFlagInfo#VmcFeatureFlagInfo_STATE_INACTIVE
+    //
+    //  state
+	State string
+    // Message
+	Message *string
+    // Internal Name
+	InternalName *string
+    // Feature Name
+	Name string
+}
+const VmcFeatureFlagInfo_STATE_ENABLED = "enabled"
+const VmcFeatureFlagInfo_STATE_DISABLED = "disabled"
+const VmcFeatureFlagInfo_STATE_INACTIVE = "inactive"
+
+func (s VmcFeatureFlagInfo) GetType__() bindings.BindingType {
+	return VmcFeatureFlagInfoBindingType()
+}
+
+func (s VmcFeatureFlagInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VmcFeatureFlagInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
+// VMC Feature flags
+type VmcFeatureFlags struct {
+	Features []VmcFeatureFlagInfo
+}
+
+func (s VmcFeatureFlags) GetType__() bindings.BindingType {
+	return VmcFeatureFlagsBindingType()
+}
+
+func (s VmcFeatureFlags) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VmcFeatureFlags._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
+// A consolidated object of realized entities given an intent path. This accounts for resources / entities which are realized under the intent path.
+type VmcRealizedEntities struct {
+    // Detailed realized entities list.
+	RealizedEntities []VmcRealizedEntity
+    // Possible values are: 
+    //
+    // * VmcRealizedEntities#VmcRealizedEntities_REALIZED_STATE_IN_PROGRESS
+    // * VmcRealizedEntities#VmcRealizedEntities_REALIZED_STATE_SUCCESS
+    // * VmcRealizedEntities#VmcRealizedEntities_REALIZED_STATE_FAILURE
+    // * VmcRealizedEntities#VmcRealizedEntities_REALIZED_STATE_UNAVAILABLE
+    // * VmcRealizedEntities#VmcRealizedEntities_REALIZED_STATE_PENDING
+    //
+    //  Realized state
+	RealizedState *string
+    // Realized entities id
+	RealizedEntitiesId *string
+    // Intent path
+	IntentPath *string
+}
+const VmcRealizedEntities_REALIZED_STATE_IN_PROGRESS = "IN_PROGRESS"
+const VmcRealizedEntities_REALIZED_STATE_SUCCESS = "SUCCESS"
+const VmcRealizedEntities_REALIZED_STATE_FAILURE = "FAILURE"
+const VmcRealizedEntities_REALIZED_STATE_UNAVAILABLE = "UNAVAILABLE"
+const VmcRealizedEntities_REALIZED_STATE_PENDING = "PENDING"
+
+func (s VmcRealizedEntities) GetType__() bindings.BindingType {
+	return VmcRealizedEntitiesBindingType()
+}
+
+func (s VmcRealizedEntities) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VmcRealizedEntities._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
+// Realized entity object. This accounts for an resource / entity which is realized within cloud service.
+type VmcRealizedEntity struct {
+    // Resource realization id. This can differ from realized_entity_id as this can be an external id.
+	RealizationId *string
+    // Resource realization API path
+	RealizationApi *string
+    // Realized entity id
+	RealizedEntityId *string
+    // Possible values are: 
+    //
+    // * VmcRealizedEntity#VmcRealizedEntity_REALIZED_STATE_IN_PROGRESS
+    // * VmcRealizedEntity#VmcRealizedEntity_REALIZED_STATE_SUCCESS
+    // * VmcRealizedEntity#VmcRealizedEntity_REALIZED_STATE_FAILURE
+    // * VmcRealizedEntity#VmcRealizedEntity_REALIZED_STATE_UNAVAILABLE
+    // * VmcRealizedEntity#VmcRealizedEntity_REALIZED_STATE_PENDING
+    //
+    //  Realized state
+	RealizedState *string
+    // The path for the realization of an entity. This can be an URI, etc. Some resources are identified by their paths.
+	RealizationPath *string
+    // Realized entity type
+	RealizedEntityType *string
+}
+const VmcRealizedEntity_REALIZED_STATE_IN_PROGRESS = "IN_PROGRESS"
+const VmcRealizedEntity_REALIZED_STATE_SUCCESS = "SUCCESS"
+const VmcRealizedEntity_REALIZED_STATE_FAILURE = "FAILURE"
+const VmcRealizedEntity_REALIZED_STATE_UNAVAILABLE = "UNAVAILABLE"
+const VmcRealizedEntity_REALIZED_STATE_PENDING = "PENDING"
+
+func (s VmcRealizedEntity) GetType__() bindings.BindingType {
+	return VmcRealizedEntityBindingType()
+}
+
+func (s VmcRealizedEntity) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VmcRealizedEntity._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+
+// VPN endpoint information
+type VpnEndpoint struct {
+    // IP address of the VPN endpoint format: ipv4
+	Ip string
+    // Type of the VPN endpoint
+	Type_ string
+    // Name of the VPN endpoint
+	Name string
+    // Interface label of the VPN endpoint
+	InterfaceLabel string
+}
+
+func (s VpnEndpoint) GetType__() bindings.BindingType {
+	return VpnEndpointBindingType()
+}
+
+func (s VpnEndpoint) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VpnEndpoint._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
 
 
 
-func AbstractEntityBindingType() bindings.BindingType {
+
+
+func ActionMessageBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["updated"] = bindings.NewDateTimeType()
-	fieldNameMap["updated"] = "Updated"
-	fields["user_id"] = bindings.NewStringType()
-	fieldNameMap["user_id"] = "UserId"
-	fields["updated_by_user_name"] = bindings.NewStringType()
-	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
-	fields["updated_by_user_id"] = bindings.NewStringType()
-	fieldNameMap["updated_by_user_id"] = "UpdatedByUserId"
-	fields["user_name"] = bindings.NewStringType()
-	fieldNameMap["user_name"] = "UserName"
-	fields["created"] = bindings.NewDateTimeType()
-	fieldNameMap["created"] = "Created"
+	fields["message"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["message"] = "Message"
 	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.abstract_entity", fields, reflect.TypeOf(AbstractEntity{}), fieldNameMap, validators)
+	return bindings.NewStructType("com.vmware.model.action_message", fields, reflect.TypeOf(ActionMessage{}), fieldNameMap, validators)
 }
 
 func AdvertisedRouteBindingType() bindings.BindingType {
@@ -2082,21 +2459,131 @@ func ApiErrorBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.model.api_error", fields, reflect.TypeOf(ApiError{}), fieldNameMap, validators)
 }
 
-func AwsEventBindingType() bindings.BindingType {
+func AssociatedBaseGroupConnectionInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["instance_id"] = bindings.NewStringType()
-	fieldNameMap["instance_id"] = "InstanceId"
-	fields["start_time"] = bindings.NewDateTimeType()
-	fieldNameMap["start_time"] = "StartTime"
-	fields["type"] = bindings.NewStringType()
-	fieldNameMap["type"] = "Type_"
-	fields["account_id"] = bindings.NewStringType()
-	fieldNameMap["account_id"] = "AccountId"
+	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_revision"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
 	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["description"] = "Description"
+	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["_create_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_protection"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_create_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_last_modified_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["id"] = bindings.NewStringType()
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = bindings.NewStringType()
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["relative_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["parent_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["marked_for_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["name"] = "Name"
 	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.aws_event", fields, reflect.TypeOf(AwsEvent{}), fieldNameMap, validators)
+	return bindings.NewStructType("com.vmware.model.associated_base_group_connection_info", fields, reflect.TypeOf(AssociatedBaseGroupConnectionInfo{}), fieldNameMap, validators)
+}
+
+func AssociatedGroupConnectionInfosListResultBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["result_count"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["results"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(AssociatedBaseGroupConnectionInfoBindingType),}, bindings.JSONRPC), reflect.TypeOf([]*data.StructValue{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.associated_group_connection_infos_list_result", fields, reflect.TypeOf(AssociatedGroupConnectionInfosListResult{}), fieldNameMap, validators)
+}
+
+func AssociatedTgwGroupConnectionInfoBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["tgw_id"] = bindings.NewStringType()
+	fieldNameMap["tgw_id"] = "TgwId"
+	fields["external_route_table_id"] = bindings.NewStringType()
+	fieldNameMap["external_route_table_id"] = "ExternalRouteTableId"
+	fields["state"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["state"] = "State"
+	fields["sddcs_route_table_id"] = bindings.NewStringType()
+	fieldNameMap["sddcs_route_table_id"] = "SddcsRouteTableId"
+	fields["tgw_attachment_id"] = bindings.NewStringType()
+	fieldNameMap["tgw_attachment_id"] = "TgwAttachmentId"
+	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_revision"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["_create_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_protection"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_create_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_last_modified_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["id"] = bindings.NewStringType()
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = bindings.NewStringType()
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["relative_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["parent_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["marked_for_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["name"] = "Name"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.associated_tgw_group_connection_info", fields, reflect.TypeOf(AssociatedTgwGroupConnectionInfo{}), fieldNameMap, validators)
 }
 
 func BGPAdvertisedRoutesBindingType() bindings.BindingType {
@@ -2145,6 +2632,44 @@ func ConnectedServiceListResultBindingType() bindings.BindingType {
 func ConnectedServiceStatusBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_revision"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["_create_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_protection"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_create_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_last_modified_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["relative_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["parent_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["marked_for_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
 	fields["enabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["enabled"] = "Enabled"
 	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -2153,73 +2678,23 @@ func ConnectedServiceStatusBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.model.connected_service_status", fields, reflect.TypeOf(ConnectedServiceStatus{}), fieldNameMap, validators)
 }
 
+func CsvListResultBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["file_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["file_name"] = "FileName"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.csv_list_result", fields, reflect.TypeOf(CsvListResult{}), fieldNameMap, validators)
+}
+
+func CsvRecordBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.csv_record", fields, reflect.TypeOf(CsvRecord{}), fieldNameMap, validators)
+}
+
 func DirectConnectBgpInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["local_as_num"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["local_as_num"] = "LocalAsNum"
-	fields["route_preference"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["route_preference"] = "RoutePreference"
-	fields["mtu"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["mtu"] = "Mtu"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.direct_connect_bgp_info", fields, reflect.TypeOf(DirectConnectBgpInfo{}), fieldNameMap, validators)
-}
-
-func DiscoveredResourceBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
-	fieldNameMap["_self"] = "Self"
-	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
-	fieldNameMap["_links"] = "Links"
-	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["_schema"] = "Schema"
-	fields["_last_sync_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["_last_sync_time"] = "LastSyncTime"
-	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["display_name"] = "DisplayName"
-	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["description"] = "Description"
-	fields["resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["resource_type"] = "ResourceType"
-	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
-	fieldNameMap["tags"] = "Tags"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.discovered_resource", fields, reflect.TypeOf(DiscoveredResource{}), fieldNameMap, validators)
-}
-
-func EdrsClusterInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["status_key"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["status_key"] = "StatusKey"
-	fields["cluster_id"] = bindings.NewStringType()
-	fieldNameMap["cluster_id"] = "ClusterId"
-	fields["status_message"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["status_message"] = "StatusMessage"
-	fields["edrs_policy"] = bindings.NewReferenceType(EdrsPolicyBindingType)
-	fieldNameMap["edrs_policy"] = "EdrsPolicy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.edrs_cluster_info", fields, reflect.TypeOf(EdrsClusterInfo{}), fieldNameMap, validators)
-}
-
-func EdrsPolicyBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["enable_edrs"] = bindings.NewBooleanType()
-	fieldNameMap["enable_edrs"] = "EnableEdrs"
-	fields["min_hosts"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["min_hosts"] = "MinHosts"
-	fields["policy_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["policy_type"] = "PolicyType"
-	fields["max_hosts"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["max_hosts"] = "MaxHosts"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.edrs_policy", fields, reflect.TypeOf(EdrsPolicy{}), fieldNameMap, validators)
-}
-
-func EmbeddedResourceBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
@@ -2230,78 +2705,175 @@ func EmbeddedResourceBindingType() bindings.BindingType {
 	fieldNameMap["_schema"] = "Schema"
 	fields["_revision"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["_revision"] = "Revision"
-	fields["_owner"] = bindings.NewOptionalType(bindings.NewReferenceType(OwnerResourceLinkBindingType))
-	fieldNameMap["_owner"] = "Owner"
+	fields["_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
 	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["display_name"] = "DisplayName"
+	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["_create_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_protection"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_create_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_last_modified_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
 	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["id"] = "Id"
 	fields["resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["resource_type"] = "ResourceType"
-	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["description"] = "Description"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.embedded_resource", fields, reflect.TypeOf(EmbeddedResource{}), fieldNameMap, validators)
-}
-
-func ErrorResponseBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["status"] = bindings.NewIntegerType()
-	fieldNameMap["status"] = "Status"
-	fields["path"] = bindings.NewStringType()
+	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["path"] = "Path"
-	fields["retryable"] = bindings.NewBooleanType()
-	fieldNameMap["retryable"] = "Retryable"
-	fields["error_code"] = bindings.NewStringType()
-	fieldNameMap["error_code"] = "ErrorCode"
-	fields["error_messages"] = bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{}))
-	fieldNameMap["error_messages"] = "ErrorMessages"
+	fields["relative_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["parent_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["marked_for_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["local_as_num"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["local_as_num"] = "LocalAsNum"
+	fields["route_preference"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["route_preference"] = "RoutePreference"
+	fields["mtu"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["mtu"] = "Mtu"
 	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.error_response", fields, reflect.TypeOf(ErrorResponse{}), fieldNameMap, validators)
+	return bindings.NewStructType("com.vmware.model.direct_connect_bgp_info", fields, reflect.TypeOf(DirectConnectBgpInfo{}), fieldNameMap, validators)
 }
 
-func HostEniBindingType() bindings.BindingType {
+func ExternalConnectivityConfigBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["interface_mac"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["interface_mac"] = "InterfaceMac"
-	fields["associated_public_ips"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["associated_public_ips"] = "AssociatedPublicIps"
-	fields["primary_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["primary_ip"] = "PrimaryIp"
+	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_revision"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
 	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["description"] = "Description"
-	fields["subnet_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["subnet_id"] = "SubnetId"
-	fields["vdr_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["vdr_type"] = "VdrType"
-	fields["interface_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["interface_id"] = "InterfaceId"
+	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["_create_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_protection"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_create_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_last_modified_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["relative_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["parent_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["marked_for_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["intranet_mtu"] = bindings.NewIntegerType()
+	fieldNameMap["intranet_mtu"] = "IntranetMtu"
+	fields["services_mtu"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["services_mtu"] = "ServicesMtu"
+	fields["internet_mtu"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["internet_mtu"] = "InternetMtu"
 	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.host_eni", fields, reflect.TypeOf(HostEni{}), fieldNameMap, validators)
+	return bindings.NewStructType("com.vmware.model.external_connectivity_config", fields, reflect.TypeOf(ExternalConnectivityConfig{}), fieldNameMap, validators)
 }
 
-func HostStatusBindingType() bindings.BindingType {
+func ExternalSddcConnectivityBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["vdr"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(HostVdrBindingType), reflect.TypeOf([]HostVdr{})))
-	fieldNameMap["vdr"] = "Vdr"
-	fields["host_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["host_id"] = "HostId"
-	fields["vmcd_status"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["vmcd_status"] = "VmcdStatus"
-	fields["eni"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(HostEniBindingType), reflect.TypeOf([]HostEni{})))
-	fieldNameMap["eni"] = "Eni"
-	fields["host_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["host_ip"] = "HostIp"
-	fields["issues"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["issues"] = "Issues"
+	fields["status"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["status"] = "Status"
+	fields["connectivity_type"] = bindings.NewStringType()
+	fieldNameMap["connectivity_type"] = "ConnectivityType"
+	fields["route_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["route_type"] = "RouteType"
+	fields["status_message"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["status_message"] = "StatusMessage"
+	fields["source"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["source"] = "Source"
 	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.host_status", fields, reflect.TypeOf(HostStatus{}), fieldNameMap, validators)
+	return bindings.NewStructType("com.vmware.model.external_sddc_connectivity", fields, reflect.TypeOf(ExternalSddcConnectivity{}), fieldNameMap, validators)
 }
 
-func HostStatusListResultBindingType() bindings.BindingType {
+func ExternalSddcRouteBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_revision"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["_create_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_protection"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_create_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_last_modified_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["relative_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["parent_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["marked_for_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["destination"] = bindings.NewStringType()
+	fieldNameMap["destination"] = "Destination"
+	fields["connectivities"] = bindings.NewListType(bindings.NewReferenceType(ExternalSddcConnectivityBindingType), reflect.TypeOf([]ExternalSddcConnectivity{}))
+	fieldNameMap["connectivities"] = "Connectivities"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.external_sddc_route", fields, reflect.TypeOf(ExternalSddcRoute{}), fieldNameMap, validators)
+}
+
+func ExternalSddcRouteCsvRecordBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["destination"] = bindings.NewStringType()
+	fieldNameMap["destination"] = "Destination"
+	fields["connectivity_details"] = bindings.NewStringType()
+	fieldNameMap["connectivity_details"] = "ConnectivityDetails"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.external_sddc_route_csv_record", fields, reflect.TypeOf(ExternalSddcRouteCsvRecord{}), fieldNameMap, validators)
+}
+
+func ExternalSddcRoutesListResultBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
@@ -2318,48 +2890,30 @@ func HostStatusListResultBindingType() bindings.BindingType {
 	fieldNameMap["sort_by"] = "SortBy"
 	fields["result_count"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["result_count"] = "ResultCount"
-	fields["results"] = bindings.NewListType(bindings.NewReferenceType(HostStatusBindingType), reflect.TypeOf([]HostStatus{}))
+	fields["routes"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ExternalSddcRouteBindingType), reflect.TypeOf([]ExternalSddcRoute{})))
+	fieldNameMap["routes"] = "Routes"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.external_sddc_routes_list_result", fields, reflect.TypeOf(ExternalSddcRoutesListResult{}), fieldNameMap, validators)
+}
+
+func ExternalSddcRoutesListResultInCsvFormatBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["file_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["file_name"] = "FileName"
+	fields["results"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ExternalSddcRouteCsvRecordBindingType), reflect.TypeOf([]ExternalSddcRouteCsvRecord{})))
 	fieldNameMap["results"] = "Results"
 	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.host_status_list_result", fields, reflect.TypeOf(HostStatusListResult{}), fieldNameMap, validators)
+	return bindings.NewStructType("com.vmware.model.external_sddc_routes_list_result_in_csv_format", fields, reflect.TypeOf(ExternalSddcRoutesListResultInCsvFormat{}), fieldNameMap, validators)
 }
 
-func HostVdrBindingType() bindings.BindingType {
+func IncludedFieldsParametersBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["routes"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(VdrRouteBindingType), reflect.TypeOf([]VdrRoute{})))
-	fieldNameMap["routes"] = "Routes"
-	fields["lifs"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(VdrLifBindingType), reflect.TypeOf([]VdrLif{})))
-	fieldNameMap["lifs"] = "Lifs"
-	fields["type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["type"] = "Type_"
+	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["included_fields"] = "IncludedFields"
 	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.host_vdr", fields, reflect.TypeOf(HostVdr{}), fieldNameMap, validators)
-}
-
-func InterfaceStatisticsBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
-	fieldNameMap["_self"] = "Self"
-	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
-	fieldNameMap["_links"] = "Links"
-	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["_schema"] = "Schema"
-	fields["rx_packets"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["rx_packets"] = "RxPackets"
-	fields["rx_errors"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["rx_errors"] = "RxErrors"
-	fields["rx_bytes"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["rx_bytes"] = "RxBytes"
-	fields["tx_errors"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["tx_errors"] = "TxErrors"
-	fields["tx_bytes"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["tx_bytes"] = "TxBytes"
-	fields["tx_packets"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["tx_packets"] = "TxPackets"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.interface_statistics", fields, reflect.TypeOf(InterfaceStatistics{}), fieldNameMap, validators)
+	return bindings.NewStructType("com.vmware.model.included_fields_parameters", fields, reflect.TypeOf(IncludedFieldsParameters{}), fieldNameMap, validators)
 }
 
 func IpAttachmentPairBindingType() bindings.BindingType {
@@ -2389,6 +2943,44 @@ func LinkedSubnetInfoBindingType() bindings.BindingType {
 func LinkedVpcInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_revision"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["_create_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_protection"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_create_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_last_modified_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["relative_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["parent_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["marked_for_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
 	fields["arn_role"] = bindings.NewStringType()
 	fieldNameMap["arn_role"] = "ArnRole"
 	fields["active_eni"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -2508,18 +3100,52 @@ func MgmtServiceEntryBindingType() bindings.BindingType {
 func MgmtVmInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["ips"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["ips"] = "Ips"
+	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_revision"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
 	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["display_name"] = "DisplayName"
+	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["_create_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_protection"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_create_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_last_modified_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["relative_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["parent_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["marked_for_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["ips"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["ips"] = "Ips"
 	fields["services"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(MgmtServiceEntryBindingType), reflect.TypeOf([]MgmtServiceEntry{})))
 	fieldNameMap["services"] = "Services"
 	fields["group_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["group_path"] = "GroupPath"
 	fields["ip_attachment_pairs"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(IpAttachmentPairBindingType), reflect.TypeOf([]IpAttachmentPair{})))
 	fieldNameMap["ip_attachment_pairs"] = "IpAttachmentPairs"
-	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["id"] = "Id"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.model.mgmt_vm_info", fields, reflect.TypeOf(MgmtVmInfo{}), fieldNameMap, validators)
 }
@@ -2547,124 +3173,101 @@ func MgmtVmsListResultBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.model.mgmt_vms_list_result", fields, reflect.TypeOf(MgmtVmsListResult{}), fieldNameMap, validators)
 }
 
-func NetworkStatusEntryBindingType() bindings.BindingType {
+func ModelInterfaceBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["issues_found"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["issues_found"] = "IssuesFound"
-	fields["ip_address"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["ip_address"] = "IpAddress"
-	fields["host_ips"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["host_ips"] = "HostIps"
-	fields["issues"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["issues"] = "Issues"
+	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["name"] = "Name"
+	fields["id"] = bindings.NewStringType()
+	fieldNameMap["id"] = "Id"
 	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.network_status_entry", fields, reflect.TypeOf(NetworkStatusEntry{}), fieldNameMap, validators)
+	return bindings.NewStructType("com.vmware.model.model_interface", fields, reflect.TypeOf(ModelInterface{}), fieldNameMap, validators)
 }
 
-func NetworkStatusKeyBindingType() bindings.BindingType {
+func PrefixListInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["network_type"] = bindings.NewStringType()
-	fieldNameMap["network_type"] = "NetworkType"
-	fields["context"] = bindings.NewStringType()
-	fieldNameMap["context"] = "Context"
+	fields["url"] = bindings.NewStringType()
+	fieldNameMap["url"] = "Url"
+	fields["path"] = bindings.NewStringType()
+	fieldNameMap["path"] = "Path"
+	fields["name"] = bindings.NewStringType()
+	fieldNameMap["name"] = "Name"
 	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.network_status_key", fields, reflect.TypeOf(NetworkStatusKey{}), fieldNameMap, validators)
+	return bindings.NewStructType("com.vmware.model.prefix_list_info", fields, reflect.TypeOf(PrefixListInfo{}), fieldNameMap, validators)
 }
 
-func NetworkStatusKeyValuePairBindingType() bindings.BindingType {
+func ProviderGatewayKeyValuePairsBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["values"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(NetworkStatusEntryBindingType), reflect.TypeOf([]NetworkStatusEntry{})))
-	fieldNameMap["values"] = "Values"
-	fields["key"] = bindings.NewOptionalType(bindings.NewReferenceType(NetworkStatusKeyBindingType))
+	fields["value"] = bindings.NewListType(bindings.NewReferenceType(ProviderObjectBindingType), reflect.TypeOf([]ProviderObject{}))
+	fieldNameMap["value"] = "Value"
+	fields["key"] = bindings.NewStringType()
 	fieldNameMap["key"] = "Key"
 	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.network_status_key_value_pair", fields, reflect.TypeOf(NetworkStatusKeyValuePair{}), fieldNameMap, validators)
+	return bindings.NewStructType("com.vmware.model.provider_gateway_key_value_pairs", fields, reflect.TypeOf(ProviderGatewayKeyValuePairs{}), fieldNameMap, validators)
 }
 
-func NetworkStatusListResultBindingType() bindings.BindingType {
+func ProviderObjectBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
-	fieldNameMap["_self"] = "Self"
-	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
-	fieldNameMap["_links"] = "Links"
-	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["_schema"] = "Schema"
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["cursor"] = "Cursor"
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["sort_ascending"] = "SortAscending"
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["sort_by"] = "SortBy"
-	fields["result_count"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["result_count"] = "ResultCount"
-	fields["results"] = bindings.NewListType(bindings.NewReferenceType(NetworkStatusKeyValuePairBindingType), reflect.TypeOf([]NetworkStatusKeyValuePair{}))
-	fieldNameMap["results"] = "Results"
-	fields["issues"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["issues"] = "Issues"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.network_status_list_result", fields, reflect.TypeOf(NetworkStatusListResult{}), fieldNameMap, validators)
-}
-
-func OwnerResourceLinkBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["action"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["action"] = "Action"
-	fields["href"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["href"] = "Href"
-	fields["rel"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["rel"] = "Rel"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.owner_resource_link", fields, reflect.TypeOf(OwnerResourceLink{}), fieldNameMap, validators)
-}
-
-func PrefixInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["prefixes"] = bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{}))
-	fieldNameMap["prefixes"] = "Prefixes"
+	fields["url"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["url"] = "Url"
+	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["path"] = "Path"
 	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["type"] = "Type_"
 	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.prefix_info", fields, reflect.TypeOf(PrefixInfo{}), fieldNameMap, validators)
-}
-
-func PrefixesListResultBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
-	fieldNameMap["_self"] = "Self"
-	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
-	fieldNameMap["_links"] = "Links"
-	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["_schema"] = "Schema"
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["cursor"] = "Cursor"
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["sort_ascending"] = "SortAscending"
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["sort_by"] = "SortBy"
-	fields["result_count"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["result_count"] = "ResultCount"
-	fields["results"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(PrefixInfoBindingType), reflect.TypeOf([]PrefixInfo{})))
-	fieldNameMap["results"] = "Results"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.prefixes_list_result", fields, reflect.TypeOf(PrefixesListResult{}), fieldNameMap, validators)
+	return bindings.NewStructType("com.vmware.model.provider_object", fields, reflect.TypeOf(ProviderObject{}), fieldNameMap, validators)
 }
 
 func PublicIpBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["ip"] = "Ip"
+	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_revision"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
 	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["display_name"] = "DisplayName"
+	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["_create_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_protection"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_create_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_last_modified_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
 	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["relative_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["parent_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["marked_for_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["ip"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["ip"] = "Ip"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.model.public_ip", fields, reflect.TypeOf(PublicIp{}), fieldNameMap, validators)
 }
@@ -2753,36 +3356,62 @@ func RevisionedResourceBindingType() bindings.BindingType {
 func SddcUserConfigurationBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["vpn_internet_ips"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["vpn_internet_ips"] = "VpnInternetIps"
+	fields["provider_prefix_lists"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(PrefixListInfoBindingType), reflect.TypeOf([]PrefixListInfo{})))
+	fieldNameMap["provider_prefix_lists"] = "ProviderPrefixLists"
 	fields["mgw_snat_ip"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["mgw_snat_ip"] = "MgwSnatIp"
-	fields["compute_gateway"] = bindings.NewStringType()
-	fieldNameMap["compute_gateway"] = "ComputeGateway"
-	fields["all_vpn_interface_label"] = bindings.NewStringType()
+	fields["compute_domain"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["compute_domain"] = "ComputeDomain"
+	fields["interfaces"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ModelInterfaceBindingType), reflect.TypeOf([]ModelInterface{})))
+	fieldNameMap["interfaces"] = "Interfaces"
+	fields["labels"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ProviderObjectBindingType), reflect.TypeOf([]ProviderObject{})))
+	fieldNameMap["labels"] = "Labels"
+	fields["all_vpn_interface_label"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["all_vpn_interface_label"] = "AllVpnInterfaceLabel"
-	fields["vpn_dx_ips"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["vpn_dx_ips"] = "VpnDxIps"
-	fields["all_uplink_interface_label"] = bindings.NewStringType()
+	fields["all_uplink_interface_label"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["all_uplink_interface_label"] = "AllUplinkInterfaceLabel"
-	fields["dx_interface_label"] = bindings.NewStringType()
-	fieldNameMap["dx_interface_label"] = "DxInterfaceLabel"
+	fields["domains"] = bindings.NewListType(bindings.NewReferenceType(ProviderObjectBindingType), reflect.TypeOf([]ProviderObject{}))
+	fieldNameMap["domains"] = "Domains"
 	fields["sddc_infra_subnet"] = bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{}))
 	fieldNameMap["sddc_infra_subnet"] = "SddcInfraSubnet"
-	fields["management_gateway"] = bindings.NewStringType()
-	fieldNameMap["management_gateway"] = "ManagementGateway"
-	fields["linked_vpc_interface_label"] = bindings.NewStringType()
+	fields["infra_subnets"] = bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{}))
+	fieldNameMap["infra_subnets"] = "InfraSubnets"
+	fields["management_gateway_label"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["management_gateway_label"] = "ManagementGatewayLabel"
+	fields["vpn_internet_ips"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["vpn_internet_ips"] = "VpnInternetIps"
+	fields["mgmt_subnets"] = bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{}))
+	fieldNameMap["mgmt_subnets"] = "MgmtSubnets"
+	fields["enforcement_points"] = bindings.NewListType(bindings.NewReferenceType(ProviderObjectBindingType), reflect.TypeOf([]ProviderObject{}))
+	fieldNameMap["enforcement_points"] = "EnforcementPoints"
+	fields["compute_gateway"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["compute_gateway"] = "ComputeGateway"
+	fields["vpn_dx_ips"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["vpn_dx_ips"] = "VpnDxIps"
+	fields["linked_vpc_interface_label"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["linked_vpc_interface_label"] = "LinkedVpcInterfaceLabel"
-	fields["public_interface_label"] = bindings.NewStringType()
+	fields["dx_interface_label"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["dx_interface_label"] = "DxInterfaceLabel"
+	fields["mgmt_subnet"] = bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{}))
+	fieldNameMap["mgmt_subnet"] = "MgmtSubnet"
+	fields["management_gateway"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["management_gateway"] = "ManagementGateway"
+	fields["gateways"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ProviderGatewayKeyValuePairsBindingType), reflect.TypeOf([]ProviderGatewayKeyValuePairs{})))
+	fieldNameMap["gateways"] = "Gateways"
+	fields["public_interface_label"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["public_interface_label"] = "PublicInterfaceLabel"
 	fields["cgw_snat_ip"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["cgw_snat_ip"] = "CgwSnatIp"
-	fields["provider_name"] = bindings.NewStringType()
+	fields["vpn_endpoints"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(VpnEndpointBindingType), reflect.TypeOf([]VpnEndpoint{})))
+	fieldNameMap["vpn_endpoints"] = "VpnEndpoints"
+	fields["management_domain"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["management_domain"] = "ManagementDomain"
+	fields["provider_name"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["provider_name"] = "ProviderName"
-	fields["mgmt_subnet"] = bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{}))
-	fieldNameMap["mgmt_subnet"] = "MgmtSubnet"
-	fields["management_gateway_label"] = bindings.NewStringType()
-	fieldNameMap["management_gateway_label"] = "ManagementGatewayLabel"
+	fields["provider_gateways"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ProviderGatewayKeyValuePairsBindingType), reflect.TypeOf([]ProviderGatewayKeyValuePairs{})))
+	fieldNameMap["provider_gateways"] = "ProviderGateways"
+	fields["management_gateway_default_dns_zone"] = bindings.NewReferenceType(ProviderObjectBindingType)
+	fieldNameMap["management_gateway_default_dns_zone"] = "ManagementGatewayDefaultDnsZone"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.model.sddc_user_configuration", fields, reflect.TypeOf(SddcUserConfiguration{}), fieldNameMap, validators)
 }
@@ -2800,25 +3429,6 @@ func SelfResourceLinkBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.model.self_resource_link", fields, reflect.TypeOf(SelfResourceLink{}), fieldNameMap, validators)
 }
 
-func ServiceErrorBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["original_service"] = bindings.NewStringType()
-	fieldNameMap["original_service"] = "OriginalService"
-	fields["params"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["params"] = "Params"
-	fields["default_message"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["default_message"] = "DefaultMessage"
-	fields["original_service_error_code"] = bindings.NewStringType()
-	fieldNameMap["original_service_error_code"] = "OriginalServiceErrorCode"
-	fields["error_code"] = bindings.NewStringType()
-	fieldNameMap["error_code"] = "ErrorCode"
-	fields["localized_message"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["localized_message"] = "LocalizedMessage"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.service_error", fields, reflect.TypeOf(ServiceError{}), fieldNameMap, validators)
-}
-
 func TagBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -2830,71 +3440,7 @@ func TagBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.model.tag", fields, reflect.TypeOf(Tag{}), fieldNameMap, validators)
 }
 
-func TaskBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["updated"] = bindings.NewDateTimeType()
-	fieldNameMap["updated"] = "Updated"
-	fields["user_id"] = bindings.NewStringType()
-	fieldNameMap["user_id"] = "UserId"
-	fields["updated_by_user_name"] = bindings.NewStringType()
-	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
-	fields["updated_by_user_id"] = bindings.NewStringType()
-	fieldNameMap["updated_by_user_id"] = "UpdatedByUserId"
-	fields["user_name"] = bindings.NewStringType()
-	fieldNameMap["user_name"] = "UserName"
-	fields["created"] = bindings.NewDateTimeType()
-	fieldNameMap["created"] = "Created"
-	fields["status"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["status"] = "Status"
-	fields["resource_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["resource_id"] = "ResourceId"
-	fields["start_time"] = bindings.NewOptionalType(bindings.NewDateTimeType())
-	fieldNameMap["start_time"] = "StartTime"
-	fields["service_errors"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ServiceErrorBindingType), reflect.TypeOf([]ServiceError{})))
-	fieldNameMap["service_errors"] = "ServiceErrors"
-	fields["sub_status"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["sub_status"] = "SubStatus"
-	fields["task_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["task_type"] = "TaskType"
-	fields["task_progress_phases"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TaskProgressPhaseBindingType), reflect.TypeOf([]TaskProgressPhase{})))
-	fieldNameMap["task_progress_phases"] = "TaskProgressPhases"
-	fields["error_message"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["error_message"] = "ErrorMessage"
-	fields["org_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["org_id"] = "OrgId"
-	fields["progress_percent"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["progress_percent"] = "ProgressPercent"
-	fields["estimated_remaining_minutes"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["estimated_remaining_minutes"] = "EstimatedRemainingMinutes"
-	fields["params"] = bindings.NewOptionalType(bindings.NewDynamicStructType(nil, bindings.JSONRPC))
-	fieldNameMap["params"] = "Params"
-	fields["end_time"] = bindings.NewOptionalType(bindings.NewDateTimeType())
-	fieldNameMap["end_time"] = "EndTime"
-	fields["phase_in_progress"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["phase_in_progress"] = "PhaseInProgress"
-	fields["task_version"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["task_version"] = "TaskVersion"
-	fields["resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["resource_type"] = "ResourceType"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.task", fields, reflect.TypeOf(Task{}), fieldNameMap, validators)
-}
-
-func TaskProgressPhaseBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["id"] = bindings.NewStringType()
-	fieldNameMap["id"] = "Id"
-	fields["name"] = bindings.NewStringType()
-	fieldNameMap["name"] = "Name"
-	fields["progress_percent"] = bindings.NewIntegerType()
-	fieldNameMap["progress_percent"] = "ProgressPercent"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.task_progress_phase", fields, reflect.TypeOf(TaskProgressPhase{}), fieldNameMap, validators)
-}
-
-func TaskPropertiesBindingType() bindings.BindingType {
+func TrafficGroupBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
@@ -2903,52 +3449,104 @@ func TaskPropertiesBindingType() bindings.BindingType {
 	fieldNameMap["_links"] = "Links"
 	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["_schema"] = "Schema"
-	fields["status"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["status"] = "Status"
-	fields["async_response_available"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["async_response_available"] = "AsyncResponseAvailable"
+	fields["_revision"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
 	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["description"] = "Description"
-	fields["start_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["start_time"] = "StartTime"
-	fields["cancelable"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["cancelable"] = "Cancelable"
-	fields["request_method"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["request_method"] = "RequestMethod"
-	fields["user"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["user"] = "User"
-	fields["progress"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["progress"] = "Progress"
-	fields["message"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["message"] = "Message"
-	fields["request_uri"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["request_uri"] = "RequestUri"
+	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["_create_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_protection"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_create_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_last_modified_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
 	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["id"] = "Id"
-	fields["end_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["end_time"] = "EndTime"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.task_properties", fields, reflect.TypeOf(TaskProperties{}), fieldNameMap, validators)
-}
-
-func TraceflowActionBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["reason"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["reason"] = "Reason"
-	fields["component_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["component_name"] = "ComponentName"
 	fields["resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["resource_type"] = "ResourceType"
-	fields["component_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["component_type"] = "ComponentType"
-	fields["component_sub_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["component_sub_type"] = "ComponentSubType"
+	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["relative_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["parent_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["marked_for_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["state_message"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["state_message"] = "StateMessage"
+	fields["association_maps"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TrafficGroupAssociationMapBindingType), reflect.TypeOf([]TrafficGroupAssociationMap{})))
+	fieldNameMap["association_maps"] = "AssociationMaps"
+	fields["resource_id"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["resource_id"] = "ResourceId"
+	fields["state"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["state"] = "State"
 	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.traceflow_action", fields, reflect.TypeOf(TraceflowAction{}), fieldNameMap, validators)
+	return bindings.NewStructType("com.vmware.model.traffic_group", fields, reflect.TypeOf(TrafficGroup{}), fieldNameMap, validators)
 }
 
-func TraceflowActionListResultsBindingType() bindings.BindingType {
+func TrafficGroupAssociationMapBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_revision"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["_create_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_protection"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_create_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_last_modified_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["relative_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["parent_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["marked_for_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["state_message"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["state_message"] = "StateMessage"
+	fields["scope"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["scope"] = "Scope"
+	fields["prefix_lists"] = bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{}))
+	fieldNameMap["prefix_lists"] = "PrefixLists"
+	fields["state"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["state"] = "State"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.traffic_group_association_map", fields, reflect.TypeOf(TrafficGroupAssociationMap{}), fieldNameMap, validators)
+}
+
+func TrafficGroupAssociationMapsListResultBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
@@ -2965,10 +3563,33 @@ func TraceflowActionListResultsBindingType() bindings.BindingType {
 	fieldNameMap["sort_by"] = "SortBy"
 	fields["result_count"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["result_count"] = "ResultCount"
-	fields["results"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TraceflowActionBindingType), reflect.TypeOf([]TraceflowAction{})))
+	fields["results"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TrafficGroupAssociationMapBindingType), reflect.TypeOf([]TrafficGroupAssociationMap{})))
 	fieldNameMap["results"] = "Results"
 	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.traceflow_action_list_results", fields, reflect.TypeOf(TraceflowActionListResults{}), fieldNameMap, validators)
+	return bindings.NewStructType("com.vmware.model.traffic_group_association_maps_list_result", fields, reflect.TypeOf(TrafficGroupAssociationMapsListResult{}), fieldNameMap, validators)
+}
+
+func TrafficGroupsListResultBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["result_count"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["results"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TrafficGroupBindingType), reflect.TypeOf([]TrafficGroup{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.traffic_groups_list_result", fields, reflect.TypeOf(TrafficGroupsListResult{}), fieldNameMap, validators)
 }
 
 func VMCAccountsBindingType() bindings.BindingType {
@@ -2980,34 +3601,6 @@ func VMCAccountsBindingType() bindings.BindingType {
 	fieldNameMap["shadow_account"] = "ShadowAccount"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.model.VMC_accounts", fields, reflect.TypeOf(VMCAccounts{}), fieldNameMap, validators)
-}
-
-func VdrLifBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["ip"] = "Ip"
-	fields["netmask"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["netmask"] = "Netmask"
-	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["id"] = "Id"
-	fields["vlan_id"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["vlan_id"] = "VlanId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.vdr_lif", fields, reflect.TypeOf(VdrLif{}), fieldNameMap, validators)
-}
-
-func VdrRouteBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["destination"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["destination"] = "Destination"
-	fields["gateway"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["gateway"] = "Gateway"
-	fields["lif_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["lif_id"] = "LifId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.model.vdr_route", fields, reflect.TypeOf(VdrRoute{}), fieldNameMap, validators)
 }
 
 func VifsListResultBindingType() bindings.BindingType {
@@ -3058,6 +3651,51 @@ func VirtualInterfaceBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.model.virtual_interface", fields, reflect.TypeOf(VirtualInterface{}), fieldNameMap, validators)
 }
 
+func VmcAppBaseInfoBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_revision"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["_create_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_protection"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_create_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_last_modified_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["relative_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["parent_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["marked_for_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.vmc_app_base_info", fields, reflect.TypeOf(VmcAppBaseInfo{}), fieldNameMap, validators)
+}
+
 func VmcConsolidatedRealizedStatusBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -3091,6 +3729,117 @@ func VmcConsolidatedStatusPerObjectBindingType() bindings.BindingType {
 	fieldNameMap["object_id"] = "ObjectId"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.model.vmc_consolidated_status_per_object", fields, reflect.TypeOf(VmcConsolidatedStatusPerObject{}), fieldNameMap, validators)
+}
+
+func VmcFeatureFlagInfoBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_self"] = bindings.NewOptionalType(bindings.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_links"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_revision"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["_create_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_protection"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_create_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_last_modified_time"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["relative_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["parent_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["marked_for_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["state"] = bindings.NewStringType()
+	fieldNameMap["state"] = "State"
+	fields["message"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["message"] = "Message"
+	fields["internal_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["internal_name"] = "InternalName"
+	fields["name"] = bindings.NewStringType()
+	fieldNameMap["name"] = "Name"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.vmc_feature_flag_info", fields, reflect.TypeOf(VmcFeatureFlagInfo{}), fieldNameMap, validators)
+}
+
+func VmcFeatureFlagsBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["features"] = bindings.NewListType(bindings.NewReferenceType(VmcFeatureFlagInfoBindingType), reflect.TypeOf([]VmcFeatureFlagInfo{}))
+	fieldNameMap["features"] = "Features"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.vmc_feature_flags", fields, reflect.TypeOf(VmcFeatureFlags{}), fieldNameMap, validators)
+}
+
+func VmcRealizedEntitiesBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["realized_entities"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(VmcRealizedEntityBindingType), reflect.TypeOf([]VmcRealizedEntity{})))
+	fieldNameMap["realized_entities"] = "RealizedEntities"
+	fields["realized_state"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["realized_state"] = "RealizedState"
+	fields["realized_entities_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["realized_entities_id"] = "RealizedEntitiesId"
+	fields["intent_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["intent_path"] = "IntentPath"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.vmc_realized_entities", fields, reflect.TypeOf(VmcRealizedEntities{}), fieldNameMap, validators)
+}
+
+func VmcRealizedEntityBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["realization_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["realization_id"] = "RealizationId"
+	fields["realization_api"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["realization_api"] = "RealizationApi"
+	fields["realized_entity_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["realized_entity_id"] = "RealizedEntityId"
+	fields["realized_state"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["realized_state"] = "RealizedState"
+	fields["realization_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["realization_path"] = "RealizationPath"
+	fields["realized_entity_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["realized_entity_type"] = "RealizedEntityType"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.vmc_realized_entity", fields, reflect.TypeOf(VmcRealizedEntity{}), fieldNameMap, validators)
+}
+
+func VpnEndpointBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["ip"] = bindings.NewStringType()
+	fieldNameMap["ip"] = "Ip"
+	fields["type"] = bindings.NewStringType()
+	fieldNameMap["type"] = "Type_"
+	fields["name"] = bindings.NewStringType()
+	fieldNameMap["name"] = "Name"
+	fields["interface_label"] = bindings.NewStringType()
+	fieldNameMap["interface_label"] = "InterfaceLabel"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.model.vpn_endpoint", fields, reflect.TypeOf(VpnEndpoint{}), fieldNameMap, validators)
 }
 
 
