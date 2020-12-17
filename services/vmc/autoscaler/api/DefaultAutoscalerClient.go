@@ -39,8 +39,10 @@ func NewDefaultAutoscalerClient(connector client.Connector) *DefaultAutoscalerCl
 	methodIdentifiers := []core.MethodIdentifier{
 		core.NewMethodIdentifier(interfaceIdentifier, "analysis"),
 		core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		core.NewMethodIdentifier(interfaceIdentifier, "list"),
 		core.NewMethodIdentifier(interfaceIdentifier, "run"),
 		core.NewMethodIdentifier(interfaceIdentifier, "stop"),
+		core.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorBindingMap := make(map[string]bindings.BindingType)
@@ -75,8 +77,10 @@ func NewDefaultAutoscalerClient(connector client.Connector) *DefaultAutoscalerCl
 	aIface.methodNameToDefMap = make(map[string]*core.MethodDefinition)
 	aIface.methodNameToDefMap["analysis"] = aIface.analysisMethodDefinition()
 	aIface.methodNameToDefMap["get"] = aIface.getMethodDefinition()
+	aIface.methodNameToDefMap["list"] = aIface.listMethodDefinition()
 	aIface.methodNameToDefMap["run"] = aIface.runMethodDefinition()
 	aIface.methodNameToDefMap["stop"] = aIface.stopMethodDefinition()
+	aIface.methodNameToDefMap["update"] = aIface.updateMethodDefinition()
 	return &aIface
 }
 
@@ -147,6 +151,39 @@ func (aIface *DefaultAutoscalerClient) Get(orgParam string, taskParam string) (m
 	}
 }
 
+func (aIface *DefaultAutoscalerClient) List(orgParam string, filterParam *string) ([]model.Task, error) {
+	typeConverter := aIface.connector.TypeConverter()
+	methodIdentifier := core.NewMethodIdentifier(aIface.interfaceIdentifier, "list")
+	sv := bindings.NewStructValueBuilder(autoscalerListInputType(), typeConverter)
+	sv.AddStructField("Org", orgParam)
+	sv.AddStructField("Filter", filterParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput []model.Task
+		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+	}
+	operationRestMetaData := autoscalerListRestMetadata()
+	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
+	aIface.connector.SetConnectionMetadata(connectionMetadata)
+	executionContext := aIface.connector.NewExecutionContext()
+	methodResult := aIface.Invoke(executionContext, methodIdentifier, inputDataValue)
+	var emptyOutput []model.Task
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), autoscalerListOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+		}
+		return output.([]model.Task), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), aIface.errorBindingMap[methodResult.Error().Name()])
+		if errorInError != nil {
+			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
 func (aIface *DefaultAutoscalerClient) Run(orgParam string, sddcParam string) (model.Task, error) {
 	typeConverter := aIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(aIface.interfaceIdentifier, "run")
@@ -200,6 +237,40 @@ func (aIface *DefaultAutoscalerClient) Stop(orgParam string, sddcParam string) (
 	var emptyOutput model.Task
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), autoscalerStopOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(model.Task), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), aIface.errorBindingMap[methodResult.Error().Name()])
+		if errorInError != nil {
+			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (aIface *DefaultAutoscalerClient) Update(orgParam string, taskParam string, actionParam *string) (model.Task, error) {
+	typeConverter := aIface.connector.TypeConverter()
+	methodIdentifier := core.NewMethodIdentifier(aIface.interfaceIdentifier, "update")
+	sv := bindings.NewStructValueBuilder(autoscalerUpdateInputType(), typeConverter)
+	sv.AddStructField("Org", orgParam)
+	sv.AddStructField("Task", taskParam)
+	sv.AddStructField("Action", actionParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput model.Task
+		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+	}
+	operationRestMetaData := autoscalerUpdateRestMetadata()
+	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
+	aIface.connector.SetConnectionMetadata(connectionMetadata)
+	executionContext := aIface.connector.NewExecutionContext()
+	methodResult := aIface.Invoke(executionContext, methodIdentifier, inputDataValue)
+	var emptyOutput model.Task
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), autoscalerUpdateOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
@@ -314,6 +385,45 @@ func (aIface *DefaultAutoscalerClient) getMethodDefinition() *core.MethodDefinit
 	return &methodDefinition
 }
 
+func (aIface *DefaultAutoscalerClient) listMethodDefinition() *core.MethodDefinition {
+	interfaceIdentifier := core.NewInterfaceIdentifier(aIface.interfaceName)
+	typeConverter := aIface.connector.TypeConverter()
+
+	input, inputError := typeConverter.ConvertToDataDefinition(autoscalerListInputType())
+	output, outputError := typeConverter.ConvertToDataDefinition(autoscalerListOutputType())
+	if inputError != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultAutoscalerClient.list method's input - %s",
+			bindings.VAPIerrorsToError(inputError).Error())
+		return nil
+	}
+	if outputError != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultAutoscalerClient.list method's output - %s",
+			bindings.VAPIerrorsToError(outputError).Error())
+		return nil
+	}
+	methodIdentifier := core.NewMethodIdentifier(interfaceIdentifier, "list")
+	errorDefinitions := make([]data.ErrorDefinition, 0)
+	aIface.errorBindingMap[errors.Unauthenticated{}.Error()] = errors.UnauthenticatedBindingType()
+	errDef1, errError1 := typeConverter.ConvertToDataDefinition(errors.UnauthenticatedBindingType())
+	if errError1 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultAutoscalerClient.list method's errors.Unauthenticated error - %s",
+			bindings.VAPIerrorsToError(errError1).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef1.(data.ErrorDefinition))
+	aIface.errorBindingMap[errors.Unauthorized{}.Error()] = errors.UnauthorizedBindingType()
+	errDef2, errError2 := typeConverter.ConvertToDataDefinition(errors.UnauthorizedBindingType())
+	if errError2 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultAutoscalerClient.list method's errors.Unauthorized error - %s",
+			bindings.VAPIerrorsToError(errError2).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef2.(data.ErrorDefinition))
+
+	methodDefinition := core.NewMethodDefinition(methodIdentifier, input, output, errorDefinitions)
+	return &methodDefinition
+}
+
 func (aIface *DefaultAutoscalerClient) runMethodDefinition() *core.MethodDefinition {
 	interfaceIdentifier := core.NewInterfaceIdentifier(aIface.interfaceName)
 	typeConverter := aIface.connector.TypeConverter()
@@ -403,6 +513,61 @@ func (aIface *DefaultAutoscalerClient) stopMethodDefinition() *core.MethodDefini
 		return nil
 	}
 	errorDefinitions = append(errorDefinitions, errDef3.(data.ErrorDefinition))
+
+	methodDefinition := core.NewMethodDefinition(methodIdentifier, input, output, errorDefinitions)
+	return &methodDefinition
+}
+
+func (aIface *DefaultAutoscalerClient) updateMethodDefinition() *core.MethodDefinition {
+	interfaceIdentifier := core.NewInterfaceIdentifier(aIface.interfaceName)
+	typeConverter := aIface.connector.TypeConverter()
+
+	input, inputError := typeConverter.ConvertToDataDefinition(autoscalerUpdateInputType())
+	output, outputError := typeConverter.ConvertToDataDefinition(autoscalerUpdateOutputType())
+	if inputError != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultAutoscalerClient.update method's input - %s",
+			bindings.VAPIerrorsToError(inputError).Error())
+		return nil
+	}
+	if outputError != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultAutoscalerClient.update method's output - %s",
+			bindings.VAPIerrorsToError(outputError).Error())
+		return nil
+	}
+	methodIdentifier := core.NewMethodIdentifier(interfaceIdentifier, "update")
+	errorDefinitions := make([]data.ErrorDefinition, 0)
+	aIface.errorBindingMap[errors.Unauthenticated{}.Error()] = errors.UnauthenticatedBindingType()
+	errDef1, errError1 := typeConverter.ConvertToDataDefinition(errors.UnauthenticatedBindingType())
+	if errError1 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultAutoscalerClient.update method's errors.Unauthenticated error - %s",
+			bindings.VAPIerrorsToError(errError1).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef1.(data.ErrorDefinition))
+	aIface.errorBindingMap[errors.InvalidRequest{}.Error()] = errors.InvalidRequestBindingType()
+	errDef2, errError2 := typeConverter.ConvertToDataDefinition(errors.InvalidRequestBindingType())
+	if errError2 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultAutoscalerClient.update method's errors.InvalidRequest error - %s",
+			bindings.VAPIerrorsToError(errError2).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef2.(data.ErrorDefinition))
+	aIface.errorBindingMap[errors.Unauthorized{}.Error()] = errors.UnauthorizedBindingType()
+	errDef3, errError3 := typeConverter.ConvertToDataDefinition(errors.UnauthorizedBindingType())
+	if errError3 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultAutoscalerClient.update method's errors.Unauthorized error - %s",
+			bindings.VAPIerrorsToError(errError3).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef3.(data.ErrorDefinition))
+	aIface.errorBindingMap[errors.NotFound{}.Error()] = errors.NotFoundBindingType()
+	errDef4, errError4 := typeConverter.ConvertToDataDefinition(errors.NotFoundBindingType())
+	if errError4 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultAutoscalerClient.update method's errors.NotFound error - %s",
+			bindings.VAPIerrorsToError(errError4).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef4.(data.ErrorDefinition))
 
 	methodDefinition := core.NewMethodDefinition(methodIdentifier, input, output, errorDefinitions)
 	return &methodDefinition
