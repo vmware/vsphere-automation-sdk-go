@@ -26,17 +26,6 @@ type CpuMemThresholdsProfileBindingMapsClient interface {
     // @throws NotFound  Not Found
 	Delete(cpuMemThresholdsProfileBindingMapIdParam string) error
 
-    // API will get Firewall CPU Memory Thresholds Profile Binding Map.
-    //
-    // @param cpuMemThresholdsProfileBindingMapIdParam Firewall CPU Memory Thresholds Profile Binding Map ID (required)
-    // @return com.vmware.nsx_global_policy.model.PolicyFirewallCPUMemThresholdsProfileBindingMap
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
-	Get(cpuMemThresholdsProfileBindingMapIdParam string) (model.PolicyFirewallCPUMemThresholdsProfileBindingMap, error)
-
     // API will list all Firewall CPU Memory Thresholds Profile Binding Maps.
     //
     // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
@@ -52,27 +41,4 @@ type CpuMemThresholdsProfileBindingMapsClient interface {
     // @throws InternalServerError  Internal Server Error
     // @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PolicyFirewallCPUMemThresholdsProfileBindingMapListResult, error)
-
-    // API will create or update Firewall CPU Memory Thresholds Profile binding map.
-    //
-    // @param cpuMemThresholdsProfileBindingMapIdParam Firewall CPU Memory Thresholds Profile Binding Map ID (required)
-    // @param policyFirewallCPUMemThresholdsProfileBindingMapParam (required)
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
-	Patch(cpuMemThresholdsProfileBindingMapIdParam string, policyFirewallCPUMemThresholdsProfileBindingMapParam model.PolicyFirewallCPUMemThresholdsProfileBindingMap) error
-
-    // API will update Firewall CPU Memory Thresholds Profile Binding Map.
-    //
-    // @param cpuMemThresholdsProfileBindingMapIdParam Firewall CPU Memory Thresholds Profile Binding Map ID (required)
-    // @param policyFirewallCPUMemThresholdsProfileBindingMapParam (required)
-    // @return com.vmware.nsx_global_policy.model.PolicyFirewallCPUMemThresholdsProfileBindingMap
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
-	Update(cpuMemThresholdsProfileBindingMapIdParam string, policyFirewallCPUMemThresholdsProfileBindingMapParam model.PolicyFirewallCPUMemThresholdsProfileBindingMap) (model.PolicyFirewallCPUMemThresholdsProfileBindingMap, error)
 }
