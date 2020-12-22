@@ -58,7 +58,7 @@ type PortQosProfileBindingMapsClient interface {
     // @throws NotFound  Not Found
 	List(segmentIdParam string, portIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PortQosProfileBindingMapListResult, error)
 
-    // API will create Port QoS Profile Binding Map.
+    // API will create Port QoS Profile Binding Map. For objects with no binding maps, default profile is applied.
     //
     // @param segmentIdParam Segment ID (required)
     // @param portIdParam Port ID (required)
@@ -71,7 +71,7 @@ type PortQosProfileBindingMapsClient interface {
     // @throws NotFound  Not Found
 	Patch(segmentIdParam string, portIdParam string, portQosProfileBindingMapIdParam string, portQosProfileBindingMapParam model.PortQosProfileBindingMap) error
 
-    // API will update Port QoS Profile Binding Map.
+    // API will update Port QoS Profile Binding Map. For objects with no binding maps, default profile is applied.
     //
     // @param segmentIdParam Segment ID (required)
     // @param portIdParam Port ID (required)

@@ -58,7 +58,7 @@ type SegmentSecurityProfileBindingMapsClient interface {
     // @throws NotFound  Not Found
 	List(tier1IdParam string, segmentIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.SegmentSecurityProfileBindingMapListResult, error)
 
-    // Create a new segment security profile binding map if the given security profile binding map does not exist. Otherwise, patch the existing segment security profile binding map.
+    // Create a new segment security profile binding map if the given security profile binding map does not exist. Otherwise, patch the existing segment security profile binding map. For objects with no binding maps, default profile is applied.
     //
     // @param tier1IdParam tier-1 gateway id (required)
     // @param segmentIdParam segment id (required)
@@ -71,7 +71,7 @@ type SegmentSecurityProfileBindingMapsClient interface {
     // @throws NotFound  Not Found
 	Patch(tier1IdParam string, segmentIdParam string, segmentSecurityProfileBindingMapIdParam string, segmentSecurityProfileBindingMapParam model.SegmentSecurityProfileBindingMap) error
 
-    // API will create or replace segment security profile binding map.
+    // API will create or replace segment security profile binding map. For objects with no binding maps, default profile is applied.
     //
     // @param tier1IdParam tier-1 gateway id (required)
     // @param segmentIdParam segment id (required)

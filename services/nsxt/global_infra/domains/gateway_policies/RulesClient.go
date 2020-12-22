@@ -59,7 +59,7 @@ type RulesClient interface {
     // @throws NotFound  Not Found
 	List(domainIdParam string, gatewayPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.RuleListResult, error)
 
-    // Update the gateway rule. Create new rule if a rule with the rule-id is not already present.
+    //
     //
     // @param domainIdParam (required)
     // @param gatewayPolicyIdParam (required)
@@ -88,7 +88,7 @@ type RulesClient interface {
     // @throws NotFound  Not Found
 	Revise(domainIdParam string, gatewayPolicyIdParam string, ruleIdParam string, ruleParam model.Rule, anchorPathParam *string, operationParam *string) (model.Rule, error)
 
-    // Update the gateway rule. Create new rule if a rule with the rule-id is not already present.
+    //
     //
     // @param domainIdParam (required)
     // @param gatewayPolicyIdParam (required)

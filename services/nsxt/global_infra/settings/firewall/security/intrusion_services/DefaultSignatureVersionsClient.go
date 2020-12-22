@@ -76,11 +76,12 @@ func NewDefaultSignatureVersionsClient(connector client.Connector) *DefaultSigna
 	return &sIface
 }
 
-func (sIface *DefaultSignatureVersionsClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IdsSignatureVersionListResult, error) {
+func (sIface *DefaultSignatureVersionsClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IdsSignatureVersionListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(sIface.interfaceIdentifier, "list")
 	sv := bindings.NewStructValueBuilder(signatureVersionsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)

@@ -62,7 +62,7 @@ type PortDiscoveryProfileBindingMapsClient interface {
     // @throws NotFound  Not Found
 	List(tier1IdParam string, segmentIdParam string, portIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PortDiscoveryProfileBindingMapListResult, error)
 
-    // API will create Port Discovery Profile Binding Map
+    // API will create Port Discovery Profile Binding Map. For objects with no binding maps, default profile is applied.
     //
     // @param tier1IdParam Tier-1 ID (required)
     // @param segmentIdParam Segment ID (required)
@@ -76,7 +76,7 @@ type PortDiscoveryProfileBindingMapsClient interface {
     // @throws NotFound  Not Found
 	Patch(tier1IdParam string, segmentIdParam string, portIdParam string, portDiscoveryProfileBindingMapIdParam string, portDiscoveryProfileBindingMapParam model.PortDiscoveryProfileBindingMap) error
 
-    // API will update Port Discovery Profile Binding Map
+    // API will update Port Discovery Profile Binding Map. For objects with no binding maps, default profile is applied.
     //
     // @param tier1IdParam Tier-1 ID (required)
     // @param segmentIdParam Segment ID (required)

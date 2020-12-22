@@ -16,7 +16,7 @@ import (
 
 type ServiceInstanceEndpointsClient interface {
 
-    // Delete policy service instance endpoint
+    // Delete service instance endpoint
     //
     // @param tier0IdParam Tier-0 id (required)
     // @param localeServiceIdParam Locale service id (required)

@@ -59,7 +59,7 @@ type RulesClient interface {
     // @throws NotFound  Not Found
 	List(domainIdParam string, redirectionPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.RedirectionRuleListResult, error)
 
-    // Create a rule with the rule-id is not already present, otherwise update the rule.
+    //
     //
     // @param domainIdParam Domain id (required)
     // @param redirectionPolicyIdParam RedirectionPolicy id (required)
@@ -72,7 +72,7 @@ type RulesClient interface {
     // @throws NotFound  Not Found
 	Patch(domainIdParam string, redirectionPolicyIdParam string, ruleIdParam string, redirectionRuleParam model.RedirectionRule) error
 
-    // Create a rule with the rule-id is not already present, otherwise update the rule.
+    //
     //
     // @param domainIdParam Domain id (required)
     // @param redirectionPolicyIdParam Redirection map id (required)

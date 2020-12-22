@@ -82,11 +82,12 @@ func NewDefaultCpuMemThresholdsProfilesClient(connector client.Connector) *Defau
 	return &cIface
 }
 
-func (cIface *DefaultCpuMemThresholdsProfilesClient) Delete(profileIdParam string) error {
+func (cIface *DefaultCpuMemThresholdsProfilesClient) Delete(profileIdParam string, overrideParam *bool) error {
 	typeConverter := cIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(cIface.interfaceIdentifier, "delete")
 	sv := bindings.NewStructValueBuilder(cpuMemThresholdsProfilesDeleteInputType(), typeConverter)
 	sv.AddStructField("ProfileId", profileIdParam)
+	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return bindings.VAPIerrorsToError(inputError)
@@ -177,12 +178,13 @@ func (cIface *DefaultCpuMemThresholdsProfilesClient) List(cursorParam *string, i
 	}
 }
 
-func (cIface *DefaultCpuMemThresholdsProfilesClient) Patch(profileIdParam string, policyFirewallCpuMemThresholdsProfileParam model.PolicyFirewallCpuMemThresholdsProfile) error {
+func (cIface *DefaultCpuMemThresholdsProfilesClient) Patch(profileIdParam string, policyFirewallCpuMemThresholdsProfileParam model.PolicyFirewallCpuMemThresholdsProfile, overrideParam *bool) error {
 	typeConverter := cIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(cIface.interfaceIdentifier, "patch")
 	sv := bindings.NewStructValueBuilder(cpuMemThresholdsProfilesPatchInputType(), typeConverter)
 	sv.AddStructField("ProfileId", profileIdParam)
 	sv.AddStructField("PolicyFirewallCpuMemThresholdsProfile", policyFirewallCpuMemThresholdsProfileParam)
+	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return bindings.VAPIerrorsToError(inputError)
@@ -204,12 +206,13 @@ func (cIface *DefaultCpuMemThresholdsProfilesClient) Patch(profileIdParam string
 	}
 }
 
-func (cIface *DefaultCpuMemThresholdsProfilesClient) Update(profileIdParam string, policyFirewallCpuMemThresholdsProfileParam model.PolicyFirewallCpuMemThresholdsProfile) (model.PolicyFirewallCpuMemThresholdsProfile, error) {
+func (cIface *DefaultCpuMemThresholdsProfilesClient) Update(profileIdParam string, policyFirewallCpuMemThresholdsProfileParam model.PolicyFirewallCpuMemThresholdsProfile, overrideParam *bool) (model.PolicyFirewallCpuMemThresholdsProfile, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(cIface.interfaceIdentifier, "update")
 	sv := bindings.NewStructValueBuilder(cpuMemThresholdsProfilesUpdateInputType(), typeConverter)
 	sv.AddStructField("ProfileId", profileIdParam)
 	sv.AddStructField("PolicyFirewallCpuMemThresholdsProfile", policyFirewallCpuMemThresholdsProfileParam)
+	sv.AddStructField("Override", overrideParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.PolicyFirewallCpuMemThresholdsProfile

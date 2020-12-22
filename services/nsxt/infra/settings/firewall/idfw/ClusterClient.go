@@ -16,6 +16,16 @@ import (
 
 type ClusterClient interface {
 
+    // Delete compute cluster identity firewall configuration.
+    //
+    // @param clusterIdParam Cluster ID (required)
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
+	Delete(clusterIdParam string) error
+
     // Read compute cluster identity firewall configuration
     //
     // @param clusterIdParam Cluster ID (required)

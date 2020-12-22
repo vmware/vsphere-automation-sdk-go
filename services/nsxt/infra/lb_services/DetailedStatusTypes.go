@@ -33,10 +33,14 @@ func detailedStatusGetInputType() bindings.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["lb_service_id"] = bindings.NewStringType()
 	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["include_instance_details"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["source"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["transport_node_ids"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["lb_service_id"] = "LbServiceId"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
+	fieldNameMap["include_instance_details"] = "IncludeInstanceDetails"
 	fieldNameMap["source"] = "Source"
+	fieldNameMap["transport_node_ids"] = "TransportNodeIds"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
@@ -56,15 +60,23 @@ func detailedStatusGetRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["lb_service_id"] = bindings.NewStringType()
 	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["include_instance_details"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["source"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["transport_node_ids"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["lb_service_id"] = "LbServiceId"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
+	fieldNameMap["include_instance_details"] = "IncludeInstanceDetails"
 	fieldNameMap["source"] = "Source"
+	fieldNameMap["transport_node_ids"] = "TransportNodeIds"
 	paramsTypeMap["source"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["lb_service_id"] = bindings.NewStringType()
+	paramsTypeMap["transport_node_ids"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["include_instance_details"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	paramsTypeMap["lbServiceId"] = bindings.NewStringType()
 	pathParams["lb_service_id"] = "lbServiceId"
+	queryParams["include_instance_details"] = "include_instance_details"
+	queryParams["transport_node_ids"] = "transport_node_ids"
 	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	queryParams["source"] = "source"
 	resultHeaders := map[string]string{}
