@@ -59,7 +59,7 @@ type SegmentDiscoveryProfileBindingMapsClient interface {
     // @throws NotFound  Not Found
 	List(tier1IdParam string, segmentIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.SegmentDiscoveryProfileBindingMapListResult, error)
 
-    // API will create Segment Discovery Profile Binding Map
+    // API will create Segment Discovery Profile Binding Map. For objects with no binding maps, default profile is applied.
     //
     // @param tier1IdParam Tier-1 ID (required)
     // @param segmentIdParam Segment ID (required)
@@ -72,7 +72,7 @@ type SegmentDiscoveryProfileBindingMapsClient interface {
     // @throws NotFound  Not Found
 	Patch(tier1IdParam string, segmentIdParam string, segmentDiscoveryProfileBindingMapIdParam string, segmentDiscoveryProfileBindingMapParam model.SegmentDiscoveryProfileBindingMap) error
 
-    // API will update Segment Discovery Profile Binding Map
+    // API will update Segment Discovery Profile Binding Map. For objects with no binding maps, default profile is applied.
     //
     // @param tier1IdParam Tier-1 ID (required)
     // @param segmentIdParam Segment ID (required)

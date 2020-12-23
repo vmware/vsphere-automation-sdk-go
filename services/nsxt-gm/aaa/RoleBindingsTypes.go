@@ -24,6 +24,8 @@ import (
 const RoleBindings_LIST_IDENTITY_SOURCE_TYPE_VIDM = "VIDM"
 // Possible value for ``identitySourceType`` of method RoleBindings#list.
 const RoleBindings_LIST_IDENTITY_SOURCE_TYPE_LDAP = "LDAP"
+// Possible value for ``identitySourceType`` of method RoleBindings#list.
+const RoleBindings_LIST_IDENTITY_SOURCE_TYPE_OIDC = "OIDC"
 // Possible value for ``type`` of method RoleBindings#list.
 const RoleBindings_LIST_TYPE_REMOTE_USER = "remote_user"
 // Possible value for ``type`` of method RoleBindings#list.

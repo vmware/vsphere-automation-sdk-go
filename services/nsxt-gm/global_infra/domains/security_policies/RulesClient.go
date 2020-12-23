@@ -59,7 +59,7 @@ type RulesClient interface {
     // @throws NotFound  Not Found
 	List(domainIdParam string, securityPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.RuleListResult, error)
 
-    // Patch the rule. If Rule corresponding to the the given rule-id is not present, the object will get created and if it is present it will be updated. This is a full replace
+    //
     //
     // @param domainIdParam (required)
     // @param securityPolicyIdParam (required)
@@ -88,7 +88,7 @@ type RulesClient interface {
     // @throws NotFound  Not Found
 	Revise(domainIdParam string, securityPolicyIdParam string, ruleIdParam string, ruleParam model.Rule, anchorPathParam *string, operationParam *string) (model.Rule, error)
 
-    // Update the rule. Create new rule if a rule with the rule-id is not already present.
+    //
     //
     // @param domainIdParam (required)
     // @param securityPolicyIdParam (required)

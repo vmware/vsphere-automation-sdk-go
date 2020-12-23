@@ -16,19 +16,6 @@ import (
 
 type PortQosProfileBindingMapsClient interface {
 
-    // API will delete Port QoS Profile Binding Profile.
-    //
-    // @param tier1IdParam Tier-1 ID (required)
-    // @param segmentIdParam Segment ID (required)
-    // @param portIdParam Port ID (required)
-    // @param portQosProfileBindingMapIdParam Port QoS Profile Binding Map ID (required)
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
-	Delete(tier1IdParam string, segmentIdParam string, portIdParam string, portQosProfileBindingMapIdParam string) error
-
     // API will get Port QoS Profile Binding Map.
     //
     // @param tier1IdParam Tier-1 ID (required)
@@ -60,33 +47,4 @@ type PortQosProfileBindingMapsClient interface {
     // @throws InternalServerError  Internal Server Error
     // @throws NotFound  Not Found
 	List(tier1IdParam string, segmentIdParam string, portIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PortQosProfileBindingMapListResult, error)
-
-    // API will create Port QoS Profile Binding Map.
-    //
-    // @param tier1IdParam Tier-1 ID (required)
-    // @param segmentIdParam Segment ID (required)
-    // @param portIdParam Port ID (required)
-    // @param portQosProfileBindingMapIdParam Port QoS Profile Binding Map ID (required)
-    // @param portQosProfileBindingMapParam (required)
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
-	Patch(tier1IdParam string, segmentIdParam string, portIdParam string, portQosProfileBindingMapIdParam string, portQosProfileBindingMapParam model.PortQosProfileBindingMap) error
-
-    // API will update Port QoS Profile Binding Map.
-    //
-    // @param tier1IdParam Tier-1 ID (required)
-    // @param segmentIdParam Segment ID (required)
-    // @param portIdParam Port ID (required)
-    // @param portQosProfileBindingMapIdParam Port QoS Profile Binding Map ID (required)
-    // @param portQosProfileBindingMapParam (required)
-    // @return com.vmware.nsx_global_policy.model.PortQoSProfileBindingMap
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
-	Update(tier1IdParam string, segmentIdParam string, portIdParam string, portQosProfileBindingMapIdParam string, portQosProfileBindingMapParam model.PortQosProfileBindingMap) (model.PortQosProfileBindingMap, error)
 }
