@@ -61,7 +61,7 @@ type PortSecurityProfileBindingMapsClient interface {
     // @throws NotFound  Not Found
 	List(tier1IdParam string, segmentIdParam string, portIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PortSecurityProfileBindingMapListResult, error)
 
-    // Create a new port security profile binding map if the given security profile binding map does not exist. Otherwise, patch the existing port security profile binding map.
+    // Create a new port security profile binding map if the given security profile binding map does not exist. Otherwise, patch the existing port security profile binding map. For objects with no binding maps, default profile is applied.
     //
     // @param tier1IdParam tier-1 gateway id (required)
     // @param segmentIdParam segment id (required)
@@ -75,7 +75,7 @@ type PortSecurityProfileBindingMapsClient interface {
     // @throws NotFound  Not Found
 	Patch(tier1IdParam string, segmentIdParam string, portIdParam string, portSecurityProfileBindingMapIdParam string, portSecurityProfileBindingMapParam model.PortSecurityProfileBindingMap) error
 
-    // API will create or replace the port security profile binding map.
+    // API will create or replace the port security profile binding map. For objects with no binding maps, default profile is applied.
     //
     // @param tier1IdParam tier-1 gateway id (required)
     // @param segmentIdParam segment id (required)

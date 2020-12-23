@@ -24,6 +24,56 @@ import (
 
 
 
+func clusterDeleteInputType() bindings.StructType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["cluster_id"] = bindings.NewStringType()
+	fieldNameMap["cluster_id"] = "ClusterId"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+}
+
+func clusterDeleteOutputType() bindings.BindingType {
+	return bindings.NewVoidType()
+}
+
+func clusterDeleteRestMetadata() protocol.OperationRestMetadata {
+	fields := map[string]bindings.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]bindings.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["cluster_id"] = bindings.NewStringType()
+	fieldNameMap["cluster_id"] = "ClusterId"
+	paramsTypeMap["cluster_id"] = bindings.NewStringType()
+	paramsTypeMap["clusterId"] = bindings.NewStringType()
+	pathParams["cluster_id"] = "clusterId"
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return protocol.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"",
+		"",
+		"DELETE",
+		"/policy/api/v1/infra/settings/firewall/idfw/cluster/{clusterId}",
+		"",
+		resultHeaders,
+		204,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+}
+
 func clusterGetInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)

@@ -59,7 +59,7 @@ type PortDiscoveryProfileBindingMapsClient interface {
     // @throws NotFound  Not Found
 	List(infraSegmentIdParam string, infraPortIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PortDiscoveryProfileBindingMapListResult, error)
 
-    // API will create Infra Port Discovery Profile Binding Map
+    // API will create Infra Port Discovery Profile Binding Map. For objects with no binding maps, default profile is applied.
     //
     // @param infraSegmentIdParam Infra Segment ID (required)
     // @param infraPortIdParam Port ID (required)
@@ -72,7 +72,7 @@ type PortDiscoveryProfileBindingMapsClient interface {
     // @throws NotFound  Not Found
 	Patch(infraSegmentIdParam string, infraPortIdParam string, portDiscoveryProfileBindingMapIdParam string, portDiscoveryProfileBindingMapParam model.PortDiscoveryProfileBindingMap) error
 
-    // API will update Infra Port Discovery Profile Binding Map
+    // API will update Infra Port Discovery Profile Binding Map. For objects with no binding maps, default profile is applied.
     //
     // @param infraSegmentIdParam Infra Segment ID (required)
     // @param infraPortIdParam Infra Port ID (required)

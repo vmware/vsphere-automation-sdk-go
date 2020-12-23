@@ -74,13 +74,15 @@ func NewDefaultDetailedStatusClient(connector client.Connector) *DefaultDetailed
 	return &dIface
 }
 
-func (dIface *DefaultDetailedStatusClient) Get(lbServiceIdParam string, enforcementPointPathParam *string, sourceParam *string) (model.AggregateLBServiceStatus, error) {
+func (dIface *DefaultDetailedStatusClient) Get(lbServiceIdParam string, enforcementPointPathParam *string, includeInstanceDetailsParam *bool, sourceParam *string, transportNodeIdsParam *string) (model.AggregateLBServiceStatus, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	methodIdentifier := core.NewMethodIdentifier(dIface.interfaceIdentifier, "get")
 	sv := bindings.NewStructValueBuilder(detailedStatusGetInputType(), typeConverter)
 	sv.AddStructField("LbServiceId", lbServiceIdParam)
 	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
+	sv.AddStructField("IncludeInstanceDetails", includeInstanceDetailsParam)
 	sv.AddStructField("Source", sourceParam)
+	sv.AddStructField("TransportNodeIds", transportNodeIdsParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.AggregateLBServiceStatus

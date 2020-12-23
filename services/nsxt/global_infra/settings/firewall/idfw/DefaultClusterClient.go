@@ -37,6 +37,7 @@ func NewDefaultClusterClient(connector client.Connector) *DefaultClusterClient {
 	interfaceName := "com.vmware.nsx_policy.global_infra.settings.firewall.idfw.cluster"
 	interfaceIdentifier := core.NewInterfaceIdentifier(interfaceName)
 	methodIdentifiers := []core.MethodIdentifier{
+		core.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		core.NewMethodIdentifier(interfaceIdentifier, "get"),
 		core.NewMethodIdentifier(interfaceIdentifier, "list"),
 		core.NewMethodIdentifier(interfaceIdentifier, "patch"),
@@ -73,11 +74,38 @@ func NewDefaultClusterClient(connector client.Connector) *DefaultClusterClient {
 
 	cIface := DefaultClusterClient{interfaceName: interfaceName, methodIdentifiers: methodIdentifiers, interfaceDefinition: interfaceDefinition, errorBindingMap: errorBindingMap, interfaceIdentifier: interfaceIdentifier, connector: connector}
 	cIface.methodNameToDefMap = make(map[string]*core.MethodDefinition)
+	cIface.methodNameToDefMap["delete"] = cIface.deleteMethodDefinition()
 	cIface.methodNameToDefMap["get"] = cIface.getMethodDefinition()
 	cIface.methodNameToDefMap["list"] = cIface.listMethodDefinition()
 	cIface.methodNameToDefMap["patch"] = cIface.patchMethodDefinition()
 	cIface.methodNameToDefMap["update"] = cIface.updateMethodDefinition()
 	return &cIface
+}
+
+func (cIface *DefaultClusterClient) Delete(clusterIdParam string) error {
+	typeConverter := cIface.connector.TypeConverter()
+	methodIdentifier := core.NewMethodIdentifier(cIface.interfaceIdentifier, "delete")
+	sv := bindings.NewStructValueBuilder(clusterDeleteInputType(), typeConverter)
+	sv.AddStructField("ClusterId", clusterIdParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return bindings.VAPIerrorsToError(inputError)
+	}
+	operationRestMetaData := clusterDeleteRestMetadata()
+	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
+	cIface.connector.SetConnectionMetadata(connectionMetadata)
+	executionContext := cIface.connector.NewExecutionContext()
+	methodResult := cIface.Invoke(executionContext, methodIdentifier, inputDataValue)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.errorBindingMap[methodResult.Error().Name()])
+		if errorInError != nil {
+			return bindings.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
 }
 
 func (cIface *DefaultClusterClient) Get(clusterIdParam string) (model.ComputeClusterIdfwConfiguration, error) {
@@ -214,6 +242,69 @@ func (cIface *DefaultClusterClient) Invoke(ctx *core.ExecutionContext, methodId 
 	return methodResult
 }
 
+
+func (cIface *DefaultClusterClient) deleteMethodDefinition() *core.MethodDefinition {
+	interfaceIdentifier := core.NewInterfaceIdentifier(cIface.interfaceName)
+	typeConverter := cIface.connector.TypeConverter()
+
+	input, inputError := typeConverter.ConvertToDataDefinition(clusterDeleteInputType())
+	output, outputError := typeConverter.ConvertToDataDefinition(clusterDeleteOutputType())
+	if inputError != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultClusterClient.delete method's input - %s",
+			bindings.VAPIerrorsToError(inputError).Error())
+		return nil
+	}
+	if outputError != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultClusterClient.delete method's output - %s",
+			bindings.VAPIerrorsToError(outputError).Error())
+		return nil
+	}
+	methodIdentifier := core.NewMethodIdentifier(interfaceIdentifier, "delete")
+	errorDefinitions := make([]data.ErrorDefinition, 0)
+	cIface.errorBindingMap[errors.InvalidRequest{}.Error()] = errors.InvalidRequestBindingType()
+	errDef1, errError1 := typeConverter.ConvertToDataDefinition(errors.InvalidRequestBindingType())
+	if errError1 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultClusterClient.delete method's errors.InvalidRequest error - %s",
+			bindings.VAPIerrorsToError(errError1).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef1.(data.ErrorDefinition))
+	cIface.errorBindingMap[errors.Unauthorized{}.Error()] = errors.UnauthorizedBindingType()
+	errDef2, errError2 := typeConverter.ConvertToDataDefinition(errors.UnauthorizedBindingType())
+	if errError2 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultClusterClient.delete method's errors.Unauthorized error - %s",
+			bindings.VAPIerrorsToError(errError2).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef2.(data.ErrorDefinition))
+	cIface.errorBindingMap[errors.ServiceUnavailable{}.Error()] = errors.ServiceUnavailableBindingType()
+	errDef3, errError3 := typeConverter.ConvertToDataDefinition(errors.ServiceUnavailableBindingType())
+	if errError3 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultClusterClient.delete method's errors.ServiceUnavailable error - %s",
+			bindings.VAPIerrorsToError(errError3).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef3.(data.ErrorDefinition))
+	cIface.errorBindingMap[errors.InternalServerError{}.Error()] = errors.InternalServerErrorBindingType()
+	errDef4, errError4 := typeConverter.ConvertToDataDefinition(errors.InternalServerErrorBindingType())
+	if errError4 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultClusterClient.delete method's errors.InternalServerError error - %s",
+			bindings.VAPIerrorsToError(errError4).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef4.(data.ErrorDefinition))
+	cIface.errorBindingMap[errors.NotFound{}.Error()] = errors.NotFoundBindingType()
+	errDef5, errError5 := typeConverter.ConvertToDataDefinition(errors.NotFoundBindingType())
+	if errError5 != nil {
+		log.Errorf("Error in ConvertToDataDefinition for DefaultClusterClient.delete method's errors.NotFound error - %s",
+			bindings.VAPIerrorsToError(errError5).Error())
+		return nil
+	}
+	errorDefinitions = append(errorDefinitions, errDef5.(data.ErrorDefinition))
+
+	methodDefinition := core.NewMethodDefinition(methodIdentifier, input, output, errorDefinitions)
+	return &methodDefinition
+}
 
 func (cIface *DefaultClusterClient) getMethodDefinition() *core.MethodDefinition {
 	interfaceIdentifier := core.NewInterfaceIdentifier(cIface.interfaceName)

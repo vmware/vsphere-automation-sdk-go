@@ -23,7 +23,7 @@ type OverviewClient interface {
     // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
     // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
     // @param showBackupsListParam Need a list of backups (optional, default to true)
-    // @param siteIdParam Site ID (optional, default to localhost)
+    // @param siteIdParam UUID of the site (optional, default to localhost)
     // @param sortAscendingParam (optional)
     // @param sortByParam Field by which records are sorted (optional)
     // @return com.vmware.nsx_policy.model.BackupOverview
