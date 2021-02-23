@@ -1,0 +1,48 @@
+image: vmcswaggers-docker-local.artifactory.eng.vmware.com/infra_sdk_go:0.4-SNAPSHOT
+
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE != "web"'
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+
+before_script:
+  - git config --global user.name "dx-sdk-team automation"
+  - git config --global user.email "dx-sdk-team@vmware.com"
+
+stages:
+  - prepare
+  - build
+  - publish
+
+prepare:
+  stage: prepare
+  tags: [new-docker-runner]
+  script:
+    - echo $CI_COMMIT_TAG
+    - echo $CI_COMMIT_REF_NAME
+    - bash scripts/prepare.sh
+  artifacts:
+    untracked: true
+    expire_in: 1 days
+    when: on_success
+    paths:
+      - "${CI_PROJECT_DIR}/${DEST_DIR}"
+
+build:
+  stage: build
+  tags: [docker-runner]
+  script:
+    - bash scripts/build.sh
+  artifacts:
+    untracked: true
+    expire_in: 1 days
+    when: on_success
+    paths:
+      - "${CI_PROJECT_DIR}/${DEST_DIR}"
+
+publish:
+  stage: publish
+  tags: [new-docker-runner]
+  script:
+    - bash scripts/publish.sh

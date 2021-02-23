@@ -1,0 +1,11 @@
+def baseDir = System.getenv('CI_PROJECT_DIR')
+def destRepo = System.getenv('DEST_REPO')
+
+task prepareGithubBindings(type: Copy) {
+    from "$baseDir/$modulePath"
+    into "$baseDir/$destRepo/$modulePath"
+    include '**/*'
+    filter { line -> line.replaceAll("gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go", destRepo) }
+}
+
+defaultTasks 'prepareGithubBindings'
