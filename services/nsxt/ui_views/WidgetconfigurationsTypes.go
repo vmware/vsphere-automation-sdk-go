@@ -1,34 +1,28 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for service: Widgetconfigurations.
- * Includes binding types of a structures and enumerations defined in the service.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for service: Widgetconfigurations.
+// Includes binding types of a structures and enumerations defined in the service.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package ui_views
 
 import (
-	"reflect"
-	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt/model"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt/model"
+	"reflect"
 )
-
-
-
-
 
 func widgetconfigurationsCreateInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["view_id"] = bindings.NewStringType()
-	fields["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType),}, bindings.REST)
+	fields["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widget_configuration"] = "WidgetConfiguration"
 	var validators = []bindings.Validator{}
@@ -36,7 +30,7 @@ func widgetconfigurationsCreateInputType() bindings.StructType {
 }
 
 func widgetconfigurationsCreateOutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType),}, bindings.REST)
+	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
 }
 
 func widgetconfigurationsCreateRestMetadata() protocol.OperationRestMetadata {
@@ -49,11 +43,11 @@ func widgetconfigurationsCreateRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["view_id"] = bindings.NewStringType()
-	fields["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType),}, bindings.REST)
+	fields["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widget_configuration"] = "WidgetConfiguration"
 	paramsTypeMap["view_id"] = bindings.NewStringType()
-	paramsTypeMap["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType),}, bindings.REST)
+	paramsTypeMap["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
 	paramsTypeMap["viewId"] = bindings.NewStringType()
 	pathParams["view_id"] = "viewId"
 	resultHeaders := map[string]string{}
@@ -76,7 +70,7 @@ func widgetconfigurationsCreateRestMetadata() protocol.OperationRestMetadata {
 		201,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func widgetconfigurationsDeleteInputType() bindings.StructType {
@@ -133,7 +127,7 @@ func widgetconfigurationsDeleteRestMetadata() protocol.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func widgetconfigurationsGetInputType() bindings.StructType {
@@ -195,7 +189,7 @@ func widgetconfigurationsGetRestMetadata() protocol.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func widgetconfigurationsGet0InputType() bindings.StructType {
@@ -210,7 +204,7 @@ func widgetconfigurationsGet0InputType() bindings.StructType {
 }
 
 func widgetconfigurationsGet0OutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType),}, bindings.REST)
+	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
 }
 
 func widgetconfigurationsGet0RestMetadata() protocol.OperationRestMetadata {
@@ -252,7 +246,7 @@ func widgetconfigurationsGet0RestMetadata() protocol.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func widgetconfigurationsUpdateInputType() bindings.StructType {
@@ -260,7 +254,7 @@ func widgetconfigurationsUpdateInputType() bindings.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["view_id"] = bindings.NewStringType()
 	fields["widgetconfiguration_id"] = bindings.NewStringType()
-	fields["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType),}, bindings.REST)
+	fields["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widgetconfiguration_id"] = "WidgetconfigurationId"
 	fieldNameMap["widget_configuration"] = "WidgetConfiguration"
@@ -269,7 +263,7 @@ func widgetconfigurationsUpdateInputType() bindings.StructType {
 }
 
 func widgetconfigurationsUpdateOutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType),}, bindings.REST)
+	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
 }
 
 func widgetconfigurationsUpdateRestMetadata() protocol.OperationRestMetadata {
@@ -283,13 +277,13 @@ func widgetconfigurationsUpdateRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["view_id"] = bindings.NewStringType()
 	fields["widgetconfiguration_id"] = bindings.NewStringType()
-	fields["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType),}, bindings.REST)
+	fields["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widgetconfiguration_id"] = "WidgetconfigurationId"
 	fieldNameMap["widget_configuration"] = "WidgetConfiguration"
 	paramsTypeMap["widgetconfiguration_id"] = bindings.NewStringType()
 	paramsTypeMap["view_id"] = bindings.NewStringType()
-	paramsTypeMap["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType),}, bindings.REST)
+	paramsTypeMap["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
 	paramsTypeMap["viewId"] = bindings.NewStringType()
 	paramsTypeMap["widgetconfigurationId"] = bindings.NewStringType()
 	pathParams["view_id"] = "viewId"
@@ -314,7 +308,5 @@ func widgetconfigurationsUpdateRestMetadata() protocol.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-

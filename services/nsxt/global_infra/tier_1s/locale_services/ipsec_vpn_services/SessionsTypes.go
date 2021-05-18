@@ -1,28 +1,22 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for service: Sessions.
- * Includes binding types of a structures and enumerations defined in the service.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for service: Sessions.
+// Includes binding types of a structures and enumerations defined in the service.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package ipsec_vpn_services
 
 import (
-	"reflect"
-	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt/model"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt/model"
+	"reflect"
 )
-
-
-
-
 
 func sessionsDeleteInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
@@ -92,7 +86,7 @@ func sessionsDeleteRestMetadata() protocol.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsGetInputType() bindings.StructType {
@@ -111,7 +105,7 @@ func sessionsGetInputType() bindings.StructType {
 }
 
 func sessionsGetOutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType),}, bindings.REST)
+	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType)}, bindings.REST)
 }
 
 func sessionsGetRestMetadata() protocol.OperationRestMetadata {
@@ -163,7 +157,7 @@ func sessionsGetRestMetadata() protocol.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsListInputType() bindings.StructType {
@@ -263,7 +257,7 @@ func sessionsListRestMetadata() protocol.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsPatchInputType() bindings.StructType {
@@ -273,7 +267,7 @@ func sessionsPatchInputType() bindings.StructType {
 	fields["locale_service_id"] = bindings.NewStringType()
 	fields["service_id"] = bindings.NewStringType()
 	fields["session_id"] = bindings.NewStringType()
-	fields["ip_sec_vpn_session"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType),}, bindings.REST)
+	fields["ip_sec_vpn_session"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType)}, bindings.REST)
 	fieldNameMap["tier1_id"] = "Tier1Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_id"] = "ServiceId"
@@ -300,7 +294,7 @@ func sessionsPatchRestMetadata() protocol.OperationRestMetadata {
 	fields["locale_service_id"] = bindings.NewStringType()
 	fields["service_id"] = bindings.NewStringType()
 	fields["session_id"] = bindings.NewStringType()
-	fields["ip_sec_vpn_session"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType),}, bindings.REST)
+	fields["ip_sec_vpn_session"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType)}, bindings.REST)
 	fieldNameMap["tier1_id"] = "Tier1Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_id"] = "ServiceId"
@@ -310,7 +304,7 @@ func sessionsPatchRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["tier1_id"] = bindings.NewStringType()
 	paramsTypeMap["service_id"] = bindings.NewStringType()
 	paramsTypeMap["session_id"] = bindings.NewStringType()
-	paramsTypeMap["ip_sec_vpn_session"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType),}, bindings.REST)
+	paramsTypeMap["ip_sec_vpn_session"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType)}, bindings.REST)
 	paramsTypeMap["tier1Id"] = bindings.NewStringType()
 	paramsTypeMap["localeServiceId"] = bindings.NewStringType()
 	paramsTypeMap["serviceId"] = bindings.NewStringType()
@@ -339,7 +333,7 @@ func sessionsPatchRestMetadata() protocol.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsShowsensitivedataInputType() bindings.StructType {
@@ -358,7 +352,7 @@ func sessionsShowsensitivedataInputType() bindings.StructType {
 }
 
 func sessionsShowsensitivedataOutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType),}, bindings.REST)
+	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType)}, bindings.REST)
 }
 
 func sessionsShowsensitivedataRestMetadata() protocol.OperationRestMetadata {
@@ -410,7 +404,7 @@ func sessionsShowsensitivedataRestMetadata() protocol.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsUpdateInputType() bindings.StructType {
@@ -420,7 +414,7 @@ func sessionsUpdateInputType() bindings.StructType {
 	fields["locale_service_id"] = bindings.NewStringType()
 	fields["service_id"] = bindings.NewStringType()
 	fields["session_id"] = bindings.NewStringType()
-	fields["ip_sec_vpn_session"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType),}, bindings.REST)
+	fields["ip_sec_vpn_session"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType)}, bindings.REST)
 	fieldNameMap["tier1_id"] = "Tier1Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_id"] = "ServiceId"
@@ -431,7 +425,7 @@ func sessionsUpdateInputType() bindings.StructType {
 }
 
 func sessionsUpdateOutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType),}, bindings.REST)
+	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType)}, bindings.REST)
 }
 
 func sessionsUpdateRestMetadata() protocol.OperationRestMetadata {
@@ -447,7 +441,7 @@ func sessionsUpdateRestMetadata() protocol.OperationRestMetadata {
 	fields["locale_service_id"] = bindings.NewStringType()
 	fields["service_id"] = bindings.NewStringType()
 	fields["session_id"] = bindings.NewStringType()
-	fields["ip_sec_vpn_session"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType),}, bindings.REST)
+	fields["ip_sec_vpn_session"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType)}, bindings.REST)
 	fieldNameMap["tier1_id"] = "Tier1Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_id"] = "ServiceId"
@@ -457,7 +451,7 @@ func sessionsUpdateRestMetadata() protocol.OperationRestMetadata {
 	paramsTypeMap["tier1_id"] = bindings.NewStringType()
 	paramsTypeMap["service_id"] = bindings.NewStringType()
 	paramsTypeMap["session_id"] = bindings.NewStringType()
-	paramsTypeMap["ip_sec_vpn_session"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType),}, bindings.REST)
+	paramsTypeMap["ip_sec_vpn_session"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IPSecVpnSessionBindingType)}, bindings.REST)
 	paramsTypeMap["tier1Id"] = bindings.NewStringType()
 	paramsTypeMap["localeServiceId"] = bindings.NewStringType()
 	paramsTypeMap["serviceId"] = bindings.NewStringType()
@@ -486,7 +480,5 @@ func sessionsUpdateRestMetadata() protocol.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-
