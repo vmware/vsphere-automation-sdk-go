@@ -81,11 +81,11 @@ func (providerIntrospectionApiInterface *ProviderApiInterface) Identifier() core
 
 func (providerIntrospectionApiInterface *ProviderApiInterface) Definition() core.InterfaceDefinition {
 	//refactor this
-	var methodIdList = make([]core.MethodIdentifier, len(providerIntrospectionApiInterface.methodDefs))
+	var methodIdentifiers = make(map[string]core.MethodIdentifier)
 	for key, _ := range providerIntrospectionApiInterface.methodDefs {
-		methodIdList = append(methodIdList, key)
+		methodIdentifiers[key.Name()] = key
 	}
-	var interfaceDefinition = core.NewInterfaceDefinition(providerIntrospectionApiInterface.interfaceId, methodIdList)
+	var interfaceDefinition = core.NewInterfaceDefinition(providerIntrospectionApiInterface.interfaceId, methodIdentifiers)
 	return interfaceDefinition
 }
 
