@@ -1,38 +1,51 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for service: CloudServiceVmcOnAwsTrafficGroup.
- * Includes binding types of a structures and enumerations defined in the service.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for service: CloudServiceVMCOnAWSTrafficGroup.
+// Includes binding types of a structures and enumerations defined in the service.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package api
 
 import (
-	"reflect"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-vmc-aws-integration/model"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-vmc-aws-integration/model"
+	"reflect"
 )
 
-// Possible value for ``action`` of method CloudServiceVmcOnAwsTrafficGroup#triggerTrafficGroupAction.
-const CloudServiceVmcOnAwsTrafficGroup_TRIGGER_TRAFFIC_GROUP_ACTION_ACTION_END_RESTORE = "END_RESTORE"
-// Possible value for ``action`` of method CloudServiceVmcOnAwsTrafficGroup#triggerTrafficGroupAction.
-const CloudServiceVmcOnAwsTrafficGroup_TRIGGER_TRAFFIC_GROUP_ACTION_ACTION_START_RESTORE = "START_RESTORE"
-// Possible value for ``action`` of method CloudServiceVmcOnAwsTrafficGroup#triggerTrafficGroupAction.
-const CloudServiceVmcOnAwsTrafficGroup_TRIGGER_TRAFFIC_GROUP_ACTION_ACTION_SET_RESOURCE_STATUS_SUCCESS = "SET_RESOURCE_STATUS_SUCCESS"
-// Possible value for ``action`` of method CloudServiceVmcOnAwsTrafficGroup#triggerTrafficGroupAction.
-const CloudServiceVmcOnAwsTrafficGroup_TRIGGER_TRAFFIC_GROUP_ACTION_ACTION_SET_RESOURCE_STATUS_FAILURE = "SET_RESOURCE_STATUS_FAILURE"
+// Possible value for ``state`` of method CloudServiceVMCOnAWSTrafficGroup#listTrafficGroups.
+const CloudServiceVMCOnAWSTrafficGroup_LIST_TRAFFIC_GROUPS_STATE_FAILURE = "FAILURE"
 
+// Possible value for ``state`` of method CloudServiceVMCOnAWSTrafficGroup#listTrafficGroups.
+const CloudServiceVMCOnAWSTrafficGroup_LIST_TRAFFIC_GROUPS_STATE_UNAVAILABLE = "UNAVAILABLE"
 
+// Possible value for ``state`` of method CloudServiceVMCOnAWSTrafficGroup#listTrafficGroups.
+const CloudServiceVMCOnAWSTrafficGroup_LIST_TRAFFIC_GROUPS_STATE_SUCCESS = "SUCCESS"
 
+// Possible value for ``state`` of method CloudServiceVMCOnAWSTrafficGroup#listTrafficGroups.
+const CloudServiceVMCOnAWSTrafficGroup_LIST_TRAFFIC_GROUPS_STATE_PENDING = "PENDING"
 
-func cloudServiceVmcOnAwsTrafficGroupDeleteTrafficGroupInputType() bindings.StructType {
+// Possible value for ``state`` of method CloudServiceVMCOnAWSTrafficGroup#listTrafficGroups.
+const CloudServiceVMCOnAWSTrafficGroup_LIST_TRAFFIC_GROUPS_STATE_IN_PROGRESS = "IN_PROGRESS"
+
+// Possible value for ``action`` of method CloudServiceVMCOnAWSTrafficGroup#triggerTrafficGroupAction.
+const CloudServiceVMCOnAWSTrafficGroup_TRIGGER_TRAFFIC_GROUP_ACTION_ACTION_END_RESTORE = "END_RESTORE"
+
+// Possible value for ``action`` of method CloudServiceVMCOnAWSTrafficGroup#triggerTrafficGroupAction.
+const CloudServiceVMCOnAWSTrafficGroup_TRIGGER_TRAFFIC_GROUP_ACTION_ACTION_START_RESTORE = "START_RESTORE"
+
+// Possible value for ``action`` of method CloudServiceVMCOnAWSTrafficGroup#triggerTrafficGroupAction.
+const CloudServiceVMCOnAWSTrafficGroup_TRIGGER_TRAFFIC_GROUP_ACTION_ACTION_SET_RESOURCE_STATUS_SUCCESS = "SET_RESOURCE_STATUS_SUCCESS"
+
+// Possible value for ``action`` of method CloudServiceVMCOnAWSTrafficGroup#triggerTrafficGroupAction.
+const CloudServiceVMCOnAWSTrafficGroup_TRIGGER_TRAFFIC_GROUP_ACTION_ACTION_SET_RESOURCE_STATUS_FAILURE = "SET_RESOURCE_STATUS_FAILURE"
+
+func cloudServiceVMCOnAWSTrafficGroupDeleteTrafficGroupInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["traffic_group_id"] = bindings.NewStringType()
@@ -41,11 +54,11 @@ func cloudServiceVmcOnAwsTrafficGroupDeleteTrafficGroupInputType() bindings.Stru
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupDeleteTrafficGroupOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSTrafficGroupDeleteTrafficGroupOutputType() bindings.BindingType {
 	return bindings.NewVoidType()
 }
 
-func cloudServiceVmcOnAwsTrafficGroupDeleteTrafficGroupRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSTrafficGroupDeleteTrafficGroupRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -79,25 +92,27 @@ func cloudServiceVmcOnAwsTrafficGroupDeleteTrafficGroupRestMetadata() protocol.O
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsTrafficGroupDeleteTrafficGroupAssociationMapInputType() bindings.StructType {
+func cloudServiceVMCOnAWSTrafficGroupDeleteTrafficGroupAssociationMapInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["traffic_group_id"] = bindings.NewStringType()
 	fields["map_id"] = bindings.NewStringType()
+	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["traffic_group_id"] = "TrafficGroupId"
 	fieldNameMap["map_id"] = "MapId"
+	fieldNameMap["force"] = "Force"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupDeleteTrafficGroupAssociationMapOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSTrafficGroupDeleteTrafficGroupAssociationMapOutputType() bindings.BindingType {
 	return bindings.NewVoidType()
 }
 
-func cloudServiceVmcOnAwsTrafficGroupDeleteTrafficGroupAssociationMapRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSTrafficGroupDeleteTrafficGroupAssociationMapRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -108,14 +123,18 @@ func cloudServiceVmcOnAwsTrafficGroupDeleteTrafficGroupAssociationMapRestMetadat
 	bodyFieldsMap := map[string]string{}
 	fields["traffic_group_id"] = bindings.NewStringType()
 	fields["map_id"] = bindings.NewStringType()
+	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["traffic_group_id"] = "TrafficGroupId"
 	fieldNameMap["map_id"] = "MapId"
+	fieldNameMap["force"] = "Force"
+	paramsTypeMap["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	paramsTypeMap["map_id"] = bindings.NewStringType()
 	paramsTypeMap["traffic_group_id"] = bindings.NewStringType()
 	paramsTypeMap["trafficGroupId"] = bindings.NewStringType()
 	paramsTypeMap["mapId"] = bindings.NewStringType()
 	pathParams["map_id"] = "mapId"
 	pathParams["traffic_group_id"] = "trafficGroupId"
+	queryParams["force"] = "force"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -136,10 +155,10 @@ func cloudServiceVmcOnAwsTrafficGroupDeleteTrafficGroupAssociationMapRestMetadat
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsTrafficGroupGetTrafficGroupInputType() bindings.StructType {
+func cloudServiceVMCOnAWSTrafficGroupGetTrafficGroupInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["traffic_group_id"] = bindings.NewStringType()
@@ -148,11 +167,11 @@ func cloudServiceVmcOnAwsTrafficGroupGetTrafficGroupInputType() bindings.StructT
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupGetTrafficGroupOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSTrafficGroupGetTrafficGroupOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.TrafficGroupBindingType)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupGetTrafficGroupRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSTrafficGroupGetTrafficGroupRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -186,10 +205,10 @@ func cloudServiceVmcOnAwsTrafficGroupGetTrafficGroupRestMetadata() protocol.Oper
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsTrafficGroupGetTrafficGroupAssociationMapInputType() bindings.StructType {
+func cloudServiceVMCOnAWSTrafficGroupGetTrafficGroupAssociationMapInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["traffic_group_id"] = bindings.NewStringType()
@@ -200,11 +219,11 @@ func cloudServiceVmcOnAwsTrafficGroupGetTrafficGroupAssociationMapInputType() bi
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupGetTrafficGroupAssociationMapOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSTrafficGroupGetTrafficGroupAssociationMapOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.TrafficGroupAssociationMapBindingType)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupGetTrafficGroupAssociationMapRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSTrafficGroupGetTrafficGroupAssociationMapRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -243,10 +262,10 @@ func cloudServiceVmcOnAwsTrafficGroupGetTrafficGroupAssociationMapRestMetadata()
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsTrafficGroupListTrafficGroupAssociationMapsInputType() bindings.StructType {
+func cloudServiceVMCOnAWSTrafficGroupListTrafficGroupAssociationMapsInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["traffic_group_id"] = bindings.NewStringType()
@@ -255,11 +274,11 @@ func cloudServiceVmcOnAwsTrafficGroupListTrafficGroupAssociationMapsInputType() 
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupListTrafficGroupAssociationMapsOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSTrafficGroupListTrafficGroupAssociationMapsOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.TrafficGroupAssociationMapsListResultBindingType)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupListTrafficGroupAssociationMapsRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSTrafficGroupListTrafficGroupAssociationMapsRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -293,23 +312,35 @@ func cloudServiceVmcOnAwsTrafficGroupListTrafficGroupAssociationMapsRestMetadata
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsTrafficGroupListTrafficGroupsInputType() bindings.StructType {
+func cloudServiceVMCOnAWSTrafficGroupListTrafficGroupsInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["state"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["verbose"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fieldNameMap["sort_by"] = "SortBy"
+	fieldNameMap["state"] = "State"
 	fieldNameMap["verbose"] = "Verbose"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupListTrafficGroupsOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSTrafficGroupListTrafficGroupsOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.TrafficGroupsListResultBindingType)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupListTrafficGroupsRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSTrafficGroupListTrafficGroupsRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -318,9 +349,33 @@ func cloudServiceVmcOnAwsTrafficGroupListTrafficGroupsRestMetadata() protocol.Op
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
+	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["state"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["verbose"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fieldNameMap["sort_by"] = "SortBy"
+	fieldNameMap["state"] = "State"
 	fieldNameMap["verbose"] = "Verbose"
+	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	paramsTypeMap["verbose"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["state"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	queryParams["cursor"] = "cursor"
+	queryParams["sort_ascending"] = "sort_ascending"
+	queryParams["included_fields"] = "included_fields"
+	queryParams["sort_by"] = "sort_by"
+	queryParams["state"] = "state"
+	queryParams["page_size"] = "page_size"
 	queryParams["verbose"] = "verbose"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
@@ -342,10 +397,10 @@ func cloudServiceVmcOnAwsTrafficGroupListTrafficGroupsRestMetadata() protocol.Op
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsTrafficGroupTriggerTrafficGroupActionInputType() bindings.StructType {
+func cloudServiceVMCOnAWSTrafficGroupTriggerTrafficGroupActionInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["traffic_group_id"] = bindings.NewStringType()
@@ -358,11 +413,11 @@ func cloudServiceVmcOnAwsTrafficGroupTriggerTrafficGroupActionInputType() bindin
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupTriggerTrafficGroupActionOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSTrafficGroupTriggerTrafficGroupActionOutputType() bindings.BindingType {
 	return bindings.NewVoidType()
 }
 
-func cloudServiceVmcOnAwsTrafficGroupTriggerTrafficGroupActionRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSTrafficGroupTriggerTrafficGroupActionRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -403,10 +458,10 @@ func cloudServiceVmcOnAwsTrafficGroupTriggerTrafficGroupActionRestMetadata() pro
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsTrafficGroupUpdateTrafficGroupInputType() bindings.StructType {
+func cloudServiceVMCOnAWSTrafficGroupUpdateTrafficGroupInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["traffic_group_id"] = bindings.NewStringType()
@@ -417,11 +472,11 @@ func cloudServiceVmcOnAwsTrafficGroupUpdateTrafficGroupInputType() bindings.Stru
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupUpdateTrafficGroupOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSTrafficGroupUpdateTrafficGroupOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.TrafficGroupBindingType)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupUpdateTrafficGroupRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSTrafficGroupUpdateTrafficGroupRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -458,10 +513,10 @@ func cloudServiceVmcOnAwsTrafficGroupUpdateTrafficGroupRestMetadata() protocol.O
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsTrafficGroupUpdateTrafficGroupAssociationMapInputType() bindings.StructType {
+func cloudServiceVMCOnAWSTrafficGroupUpdateTrafficGroupAssociationMapInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["traffic_group_id"] = bindings.NewStringType()
@@ -474,11 +529,11 @@ func cloudServiceVmcOnAwsTrafficGroupUpdateTrafficGroupAssociationMapInputType()
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupUpdateTrafficGroupAssociationMapOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSTrafficGroupUpdateTrafficGroupAssociationMapOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.TrafficGroupAssociationMapBindingType)
 }
 
-func cloudServiceVmcOnAwsTrafficGroupUpdateTrafficGroupAssociationMapRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSTrafficGroupUpdateTrafficGroupAssociationMapRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -520,7 +575,5 @@ func cloudServiceVmcOnAwsTrafficGroupUpdateTrafficGroupAssociationMapRestMetadat
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-

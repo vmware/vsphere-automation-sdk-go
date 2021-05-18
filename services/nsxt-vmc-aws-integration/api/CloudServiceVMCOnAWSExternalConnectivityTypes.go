@@ -1,48 +1,51 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for service: CloudServiceVmcOnAwsExternalConnectivity.
- * Includes binding types of a structures and enumerations defined in the service.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for service: CloudServiceVMCOnAWSExternalConnectivity.
+// Includes binding types of a structures and enumerations defined in the service.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package api
 
 import (
-	"reflect"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-vmc-aws-integration/model"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-vmc-aws-integration/model"
+	"reflect"
 )
 
-// Possible value for ``action`` of method CloudServiceVmcOnAwsExternalConnectivity#attachVif.
-const CloudServiceVmcOnAwsExternalConnectivity_ATTACH_VIF_ACTION_ATTACH = "ATTACH"
-// Possible value for ``connectivityType`` of method CloudServiceVmcOnAwsExternalConnectivity#listAdvertisedExternalRoutes.
-const CloudServiceVmcOnAwsExternalConnectivity_LIST_ADVERTISED_EXTERNAL_ROUTES_CONNECTIVITY_TYPE_DIRECT_CONNECT = "DIRECT_CONNECT"
-// Possible value for ``connectivityType`` of method CloudServiceVmcOnAwsExternalConnectivity#listAdvertisedExternalRoutes.
-const CloudServiceVmcOnAwsExternalConnectivity_LIST_ADVERTISED_EXTERNAL_ROUTES_CONNECTIVITY_TYPE_DEPLOYMENT_CONNECTIVITY_GROUP = "DEPLOYMENT_CONNECTIVITY_GROUP"
-// Possible value for ``connectivityType`` of method CloudServiceVmcOnAwsExternalConnectivity#listAdvertisedExternalRoutesInCsvFormatCsv.
-const CloudServiceVmcOnAwsExternalConnectivity_LIST_ADVERTISED_EXTERNAL_ROUTES_IN_CSV_FORMAT_CSV_CONNECTIVITY_TYPE_DIRECT_CONNECT = "DIRECT_CONNECT"
-// Possible value for ``connectivityType`` of method CloudServiceVmcOnAwsExternalConnectivity#listAdvertisedExternalRoutesInCsvFormatCsv.
-const CloudServiceVmcOnAwsExternalConnectivity_LIST_ADVERTISED_EXTERNAL_ROUTES_IN_CSV_FORMAT_CSV_CONNECTIVITY_TYPE_DEPLOYMENT_CONNECTIVITY_GROUP = "DEPLOYMENT_CONNECTIVITY_GROUP"
-// Possible value for ``connectivityType`` of method CloudServiceVmcOnAwsExternalConnectivity#listLearnedExternalRoutes.
-const CloudServiceVmcOnAwsExternalConnectivity_LIST_LEARNED_EXTERNAL_ROUTES_CONNECTIVITY_TYPE_DIRECT_CONNECT = "DIRECT_CONNECT"
-// Possible value for ``connectivityType`` of method CloudServiceVmcOnAwsExternalConnectivity#listLearnedExternalRoutes.
-const CloudServiceVmcOnAwsExternalConnectivity_LIST_LEARNED_EXTERNAL_ROUTES_CONNECTIVITY_TYPE_DEPLOYMENT_CONNECTIVITY_GROUP = "DEPLOYMENT_CONNECTIVITY_GROUP"
-// Possible value for ``connectivityType`` of method CloudServiceVmcOnAwsExternalConnectivity#listLearnedExternalRoutesInCsvFormatCsv.
-const CloudServiceVmcOnAwsExternalConnectivity_LIST_LEARNED_EXTERNAL_ROUTES_IN_CSV_FORMAT_CSV_CONNECTIVITY_TYPE_DIRECT_CONNECT = "DIRECT_CONNECT"
-// Possible value for ``connectivityType`` of method CloudServiceVmcOnAwsExternalConnectivity#listLearnedExternalRoutesInCsvFormatCsv.
-const CloudServiceVmcOnAwsExternalConnectivity_LIST_LEARNED_EXTERNAL_ROUTES_IN_CSV_FORMAT_CSV_CONNECTIVITY_TYPE_DEPLOYMENT_CONNECTIVITY_GROUP = "DEPLOYMENT_CONNECTIVITY_GROUP"
+// Possible value for ``action`` of method CloudServiceVMCOnAWSExternalConnectivity#attachVif.
+const CloudServiceVMCOnAWSExternalConnectivity_ATTACH_VIF_ACTION_ATTACH = "ATTACH"
 
+// Possible value for ``connectivityType`` of method CloudServiceVMCOnAWSExternalConnectivity#listAdvertisedExternalRoutes.
+const CloudServiceVMCOnAWSExternalConnectivity_LIST_ADVERTISED_EXTERNAL_ROUTES_CONNECTIVITY_TYPE_DIRECT_CONNECT = "DIRECT_CONNECT"
 
+// Possible value for ``connectivityType`` of method CloudServiceVMCOnAWSExternalConnectivity#listAdvertisedExternalRoutes.
+const CloudServiceVMCOnAWSExternalConnectivity_LIST_ADVERTISED_EXTERNAL_ROUTES_CONNECTIVITY_TYPE_DEPLOYMENT_CONNECTIVITY_GROUP = "DEPLOYMENT_CONNECTIVITY_GROUP"
 
+// Possible value for ``connectivityType`` of method CloudServiceVMCOnAWSExternalConnectivity#listAdvertisedExternalRoutesInCsvFormatCsv.
+const CloudServiceVMCOnAWSExternalConnectivity_LIST_ADVERTISED_EXTERNAL_ROUTES_IN_CSV_FORMAT_CSV_CONNECTIVITY_TYPE_DIRECT_CONNECT = "DIRECT_CONNECT"
 
-func cloudServiceVmcOnAwsExternalConnectivityAttachVifInputType() bindings.StructType {
+// Possible value for ``connectivityType`` of method CloudServiceVMCOnAWSExternalConnectivity#listAdvertisedExternalRoutesInCsvFormatCsv.
+const CloudServiceVMCOnAWSExternalConnectivity_LIST_ADVERTISED_EXTERNAL_ROUTES_IN_CSV_FORMAT_CSV_CONNECTIVITY_TYPE_DEPLOYMENT_CONNECTIVITY_GROUP = "DEPLOYMENT_CONNECTIVITY_GROUP"
+
+// Possible value for ``connectivityType`` of method CloudServiceVMCOnAWSExternalConnectivity#listLearnedExternalRoutes.
+const CloudServiceVMCOnAWSExternalConnectivity_LIST_LEARNED_EXTERNAL_ROUTES_CONNECTIVITY_TYPE_DIRECT_CONNECT = "DIRECT_CONNECT"
+
+// Possible value for ``connectivityType`` of method CloudServiceVMCOnAWSExternalConnectivity#listLearnedExternalRoutes.
+const CloudServiceVMCOnAWSExternalConnectivity_LIST_LEARNED_EXTERNAL_ROUTES_CONNECTIVITY_TYPE_DEPLOYMENT_CONNECTIVITY_GROUP = "DEPLOYMENT_CONNECTIVITY_GROUP"
+
+// Possible value for ``connectivityType`` of method CloudServiceVMCOnAWSExternalConnectivity#listLearnedExternalRoutesInCsvFormatCsv.
+const CloudServiceVMCOnAWSExternalConnectivity_LIST_LEARNED_EXTERNAL_ROUTES_IN_CSV_FORMAT_CSV_CONNECTIVITY_TYPE_DIRECT_CONNECT = "DIRECT_CONNECT"
+
+// Possible value for ``connectivityType`` of method CloudServiceVMCOnAWSExternalConnectivity#listLearnedExternalRoutesInCsvFormatCsv.
+const CloudServiceVMCOnAWSExternalConnectivity_LIST_LEARNED_EXTERNAL_ROUTES_IN_CSV_FORMAT_CSV_CONNECTIVITY_TYPE_DEPLOYMENT_CONNECTIVITY_GROUP = "DEPLOYMENT_CONNECTIVITY_GROUP"
+
+func cloudServiceVMCOnAWSExternalConnectivityAttachVifInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["vif_id"] = bindings.NewStringType()
@@ -53,11 +56,11 @@ func cloudServiceVmcOnAwsExternalConnectivityAttachVifInputType() bindings.Struc
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityAttachVifOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSExternalConnectivityAttachVifOutputType() bindings.BindingType {
 	return bindings.NewVoidType()
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityAttachVifRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityAttachVifRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -95,25 +98,25 @@ func cloudServiceVmcOnAwsExternalConnectivityAttachVifRestMetadata() protocol.Op
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityCreateAssociatedGroupConnectionInfoInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityCreateAssociatedGroupConnectionInfoInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["sddc_group_id"] = bindings.NewStringType()
-	fields["associated_base_group_connection_info"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.AssociatedBaseGroupConnectionInfoBindingType),}, bindings.REST)
+	fields["associated_base_group_connection_info"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.AssociatedBaseGroupConnectionInfoBindingType)}, bindings.REST)
 	fieldNameMap["sddc_group_id"] = "SddcGroupId"
 	fieldNameMap["associated_base_group_connection_info"] = "AssociatedBaseGroupConnectionInfo"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityCreateAssociatedGroupConnectionInfoOutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.AssociatedBaseGroupConnectionInfoBindingType),}, bindings.REST)
+func cloudServiceVMCOnAWSExternalConnectivityCreateAssociatedGroupConnectionInfoOutputType() bindings.BindingType {
+	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.AssociatedBaseGroupConnectionInfoBindingType)}, bindings.REST)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityCreateAssociatedGroupConnectionInfoRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityCreateAssociatedGroupConnectionInfoRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -123,11 +126,11 @@ func cloudServiceVmcOnAwsExternalConnectivityCreateAssociatedGroupConnectionInfo
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["sddc_group_id"] = bindings.NewStringType()
-	fields["associated_base_group_connection_info"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.AssociatedBaseGroupConnectionInfoBindingType),}, bindings.REST)
+	fields["associated_base_group_connection_info"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.AssociatedBaseGroupConnectionInfoBindingType)}, bindings.REST)
 	fieldNameMap["sddc_group_id"] = "SddcGroupId"
 	fieldNameMap["associated_base_group_connection_info"] = "AssociatedBaseGroupConnectionInfo"
 	paramsTypeMap["sddc_group_id"] = bindings.NewStringType()
-	paramsTypeMap["associated_base_group_connection_info"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.AssociatedBaseGroupConnectionInfoBindingType),}, bindings.REST)
+	paramsTypeMap["associated_base_group_connection_info"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.AssociatedBaseGroupConnectionInfoBindingType)}, bindings.REST)
 	paramsTypeMap["sddcGroupId"] = bindings.NewStringType()
 	pathParams["sddc_group_id"] = "sddcGroupId"
 	resultHeaders := map[string]string{}
@@ -150,10 +153,10 @@ func cloudServiceVmcOnAwsExternalConnectivityCreateAssociatedGroupConnectionInfo
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityCreateDxBgpInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityCreateDxBgpInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["direct_connect_bgp_info"] = bindings.NewReferenceType(model.DirectConnectBgpInfoBindingType)
@@ -162,11 +165,11 @@ func cloudServiceVmcOnAwsExternalConnectivityCreateDxBgpInputType() bindings.Str
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityCreateDxBgpOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSExternalConnectivityCreateDxBgpOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.DirectConnectBgpInfoBindingType)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityCreateDxBgpRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityCreateDxBgpRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -198,10 +201,10 @@ func cloudServiceVmcOnAwsExternalConnectivityCreateDxBgpRestMetadata() protocol.
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityDeleteAssociatedGroupConnectionInfoInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityDeleteAssociatedGroupConnectionInfoInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["sddc_group_id"] = bindings.NewStringType()
@@ -210,11 +213,11 @@ func cloudServiceVmcOnAwsExternalConnectivityDeleteAssociatedGroupConnectionInfo
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityDeleteAssociatedGroupConnectionInfoOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSExternalConnectivityDeleteAssociatedGroupConnectionInfoOutputType() bindings.BindingType {
 	return bindings.NewVoidType()
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityDeleteAssociatedGroupConnectionInfoRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityDeleteAssociatedGroupConnectionInfoRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -248,10 +251,10 @@ func cloudServiceVmcOnAwsExternalConnectivityDeleteAssociatedGroupConnectionInfo
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityDeleteVifByIdInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityDeleteVifByIdInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["vif_id"] = bindings.NewStringType()
@@ -260,11 +263,11 @@ func cloudServiceVmcOnAwsExternalConnectivityDeleteVifByIdInputType() bindings.S
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityDeleteVifByIdOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSExternalConnectivityDeleteVifByIdOutputType() bindings.BindingType {
 	return bindings.NewVoidType()
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityDeleteVifByIdRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityDeleteVifByIdRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -298,10 +301,10 @@ func cloudServiceVmcOnAwsExternalConnectivityDeleteVifByIdRestMetadata() protoco
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityGetAssociatedGroupConnectionInfoInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityGetAssociatedGroupConnectionInfoInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["sddc_group_id"] = bindings.NewStringType()
@@ -310,11 +313,11 @@ func cloudServiceVmcOnAwsExternalConnectivityGetAssociatedGroupConnectionInfoInp
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityGetAssociatedGroupConnectionInfoOutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.AssociatedBaseGroupConnectionInfoBindingType),}, bindings.REST)
+func cloudServiceVMCOnAWSExternalConnectivityGetAssociatedGroupConnectionInfoOutputType() bindings.BindingType {
+	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.AssociatedBaseGroupConnectionInfoBindingType)}, bindings.REST)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityGetAssociatedGroupConnectionInfoRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityGetAssociatedGroupConnectionInfoRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -348,21 +351,21 @@ func cloudServiceVmcOnAwsExternalConnectivityGetAssociatedGroupConnectionInfoRes
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityGetDxBgpInfoInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityGetDxBgpInfoInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityGetDxBgpInfoOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSExternalConnectivityGetDxBgpInfoOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.DirectConnectBgpInfoBindingType)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityGetDxBgpInfoRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityGetDxBgpInfoRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -391,10 +394,10 @@ func cloudServiceVmcOnAwsExternalConnectivityGetDxBgpInfoRestMetadata() protocol
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListAdvertisedExternalRoutesInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityListAdvertisedExternalRoutesInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["connectivity_type"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -413,11 +416,11 @@ func cloudServiceVmcOnAwsExternalConnectivityListAdvertisedExternalRoutesInputTy
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListAdvertisedExternalRoutesOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSExternalConnectivityListAdvertisedExternalRoutesOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.ExternalSddcRoutesListResultBindingType)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListAdvertisedExternalRoutesRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityListAdvertisedExternalRoutesRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -470,10 +473,10 @@ func cloudServiceVmcOnAwsExternalConnectivityListAdvertisedExternalRoutesRestMet
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListAdvertisedExternalRoutesInCsvFormatCsvInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityListAdvertisedExternalRoutesInCsvFormatCsvInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["connectivity_type"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -492,11 +495,11 @@ func cloudServiceVmcOnAwsExternalConnectivityListAdvertisedExternalRoutesInCsvFo
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListAdvertisedExternalRoutesInCsvFormatCsvOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSExternalConnectivityListAdvertisedExternalRoutesInCsvFormatCsvOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.ExternalSddcRoutesListResultInCsvFormatBindingType)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListAdvertisedExternalRoutesInCsvFormatCsvRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityListAdvertisedExternalRoutesInCsvFormatCsvRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -549,21 +552,21 @@ func cloudServiceVmcOnAwsExternalConnectivityListAdvertisedExternalRoutesInCsvFo
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListAdvertisedRoutesInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityListAdvertisedRoutesInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListAdvertisedRoutesOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSExternalConnectivityListAdvertisedRoutesOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.BGPAdvertisedRoutesBindingType)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListAdvertisedRoutesRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityListAdvertisedRoutesRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -592,21 +595,21 @@ func cloudServiceVmcOnAwsExternalConnectivityListAdvertisedRoutesRestMetadata() 
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListAssociatedGroupConnectionInfosInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityListAssociatedGroupConnectionInfosInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListAssociatedGroupConnectionInfosOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSExternalConnectivityListAssociatedGroupConnectionInfosOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.AssociatedGroupConnectionInfosListResultBindingType)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListAssociatedGroupConnectionInfosRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityListAssociatedGroupConnectionInfosRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -635,21 +638,21 @@ func cloudServiceVmcOnAwsExternalConnectivityListAssociatedGroupConnectionInfosR
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListDirectConnectVifsInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityListDirectConnectVifsInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListDirectConnectVifsOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSExternalConnectivityListDirectConnectVifsOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.VifsListResultBindingType)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListDirectConnectVifsRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityListDirectConnectVifsRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -678,10 +681,10 @@ func cloudServiceVmcOnAwsExternalConnectivityListDirectConnectVifsRestMetadata()
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListLearnedExternalRoutesInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityListLearnedExternalRoutesInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["connectivity_type"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -700,11 +703,11 @@ func cloudServiceVmcOnAwsExternalConnectivityListLearnedExternalRoutesInputType(
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListLearnedExternalRoutesOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSExternalConnectivityListLearnedExternalRoutesOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.ExternalSddcRoutesListResultBindingType)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListLearnedExternalRoutesRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityListLearnedExternalRoutesRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -757,10 +760,10 @@ func cloudServiceVmcOnAwsExternalConnectivityListLearnedExternalRoutesRestMetada
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListLearnedExternalRoutesInCsvFormatCsvInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityListLearnedExternalRoutesInCsvFormatCsvInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["connectivity_type"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -779,11 +782,11 @@ func cloudServiceVmcOnAwsExternalConnectivityListLearnedExternalRoutesInCsvForma
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListLearnedExternalRoutesInCsvFormatCsvOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSExternalConnectivityListLearnedExternalRoutesInCsvFormatCsvOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.ExternalSddcRoutesListResultInCsvFormatBindingType)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListLearnedExternalRoutesInCsvFormatCsvRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityListLearnedExternalRoutesInCsvFormatCsvRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -836,21 +839,21 @@ func cloudServiceVmcOnAwsExternalConnectivityListLearnedExternalRoutesInCsvForma
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListLearnedRoutesInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityListLearnedRoutesInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListLearnedRoutesOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSExternalConnectivityListLearnedRoutesOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.BGPLearnedRoutesBindingType)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityListLearnedRoutesRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityListLearnedRoutesRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -879,10 +882,10 @@ func cloudServiceVmcOnAwsExternalConnectivityListLearnedRoutesRestMetadata() pro
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityUpdateDxBgpInfoInputType() bindings.StructType {
+func cloudServiceVMCOnAWSExternalConnectivityUpdateDxBgpInfoInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["direct_connect_bgp_info"] = bindings.NewReferenceType(model.DirectConnectBgpInfoBindingType)
@@ -891,11 +894,11 @@ func cloudServiceVmcOnAwsExternalConnectivityUpdateDxBgpInfoInputType() bindings
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityUpdateDxBgpInfoOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSExternalConnectivityUpdateDxBgpInfoOutputType() bindings.BindingType {
 	return bindings.NewVoidType()
 }
 
-func cloudServiceVmcOnAwsExternalConnectivityUpdateDxBgpInfoRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSExternalConnectivityUpdateDxBgpInfoRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -927,7 +930,5 @@ func cloudServiceVmcOnAwsExternalConnectivityUpdateDxBgpInfoRestMetadata() proto
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-
