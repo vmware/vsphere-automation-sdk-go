@@ -1,30 +1,24 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for service: CloudServiceVmcOnAwsLinkedVpc.
- * Includes binding types of a structures and enumerations defined in the service.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for service: CloudServiceVMCOnAWSLinkedVPC.
+// Includes binding types of a structures and enumerations defined in the service.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package api
 
 import (
-	"reflect"
-	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt-vmc-aws-integration/model"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt-vmc-aws-integration/model"
+	"reflect"
 )
 
-
-
-
-
-func cloudServiceVmcOnAwsLinkedVpcGetLinkedVpcInputType() bindings.StructType {
+func cloudServiceVMCOnAWSLinkedVPCGetLinkedVpcInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["linked_vpc_id"] = bindings.NewStringType()
@@ -33,11 +27,11 @@ func cloudServiceVmcOnAwsLinkedVpcGetLinkedVpcInputType() bindings.StructType {
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsLinkedVpcGetLinkedVpcOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSLinkedVPCGetLinkedVpcOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.LinkedVpcInfoBindingType)
 }
 
-func cloudServiceVmcOnAwsLinkedVpcGetLinkedVpcRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSLinkedVPCGetLinkedVpcRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -71,10 +65,10 @@ func cloudServiceVmcOnAwsLinkedVpcGetLinkedVpcRestMetadata() protocol.OperationR
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsLinkedVpcListConnectedServicesInputType() bindings.StructType {
+func cloudServiceVMCOnAWSLinkedVPCListConnectedServicesInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["linked_vpc_id"] = bindings.NewStringType()
@@ -83,11 +77,11 @@ func cloudServiceVmcOnAwsLinkedVpcListConnectedServicesInputType() bindings.Stru
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsLinkedVpcListConnectedServicesOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSLinkedVPCListConnectedServicesOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.ConnectedServiceListResultBindingType)
 }
 
-func cloudServiceVmcOnAwsLinkedVpcListConnectedServicesRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSLinkedVPCListConnectedServicesRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -121,21 +115,21 @@ func cloudServiceVmcOnAwsLinkedVpcListConnectedServicesRestMetadata() protocol.O
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsLinkedVpcListLinkedVpcsInputType() bindings.StructType {
+func cloudServiceVMCOnAWSLinkedVPCListLinkedVpcsInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsLinkedVpcListLinkedVpcsOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSLinkedVPCListLinkedVpcsOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.LinkedVpcsListResultBindingType)
 }
 
-func cloudServiceVmcOnAwsLinkedVpcListLinkedVpcsRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSLinkedVPCListLinkedVpcsRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -164,10 +158,10 @@ func cloudServiceVmcOnAwsLinkedVpcListLinkedVpcsRestMetadata() protocol.Operatio
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsLinkedVpcUpdateConnectedServiceInputType() bindings.StructType {
+func cloudServiceVMCOnAWSLinkedVPCUpdateConnectedServiceInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["linked_vpc_id"] = bindings.NewStringType()
@@ -180,11 +174,11 @@ func cloudServiceVmcOnAwsLinkedVpcUpdateConnectedServiceInputType() bindings.Str
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsLinkedVpcUpdateConnectedServiceOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSLinkedVPCUpdateConnectedServiceOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.ConnectedServiceStatusBindingType)
 }
 
-func cloudServiceVmcOnAwsLinkedVpcUpdateConnectedServiceRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSLinkedVPCUpdateConnectedServiceRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -226,7 +220,5 @@ func cloudServiceVmcOnAwsLinkedVpcUpdateConnectedServiceRestMetadata() protocol.
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-

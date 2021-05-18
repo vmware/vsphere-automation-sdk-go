@@ -1,30 +1,24 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for service: CloudServiceVmcOnAwsPublicIp.
- * Includes binding types of a structures and enumerations defined in the service.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for service: CloudServiceVMCOnAWSPublicIP.
+// Includes binding types of a structures and enumerations defined in the service.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package api
 
 import (
-	"reflect"
-	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt-vmc-aws-integration/model"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt-vmc-aws-integration/model"
+	"reflect"
 )
 
-
-
-
-
-func cloudServiceVmcOnAwsPublicIpCreatePublicIpInputType() bindings.StructType {
+func cloudServiceVMCOnAWSPublicIPCreatePublicIpInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["public_ip_id"] = bindings.NewStringType()
@@ -35,11 +29,11 @@ func cloudServiceVmcOnAwsPublicIpCreatePublicIpInputType() bindings.StructType {
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsPublicIpCreatePublicIpOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSPublicIPCreatePublicIpOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.PublicIpBindingType)
 }
 
-func cloudServiceVmcOnAwsPublicIpCreatePublicIpRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSPublicIPCreatePublicIpRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -76,10 +70,10 @@ func cloudServiceVmcOnAwsPublicIpCreatePublicIpRestMetadata() protocol.Operation
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsPublicIpDeletePublicIpInputType() bindings.StructType {
+func cloudServiceVMCOnAWSPublicIPDeletePublicIpInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["public_ip_id"] = bindings.NewStringType()
@@ -90,11 +84,11 @@ func cloudServiceVmcOnAwsPublicIpDeletePublicIpInputType() bindings.StructType {
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsPublicIpDeletePublicIpOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSPublicIPDeletePublicIpOutputType() bindings.BindingType {
 	return bindings.NewVoidType()
 }
 
-func cloudServiceVmcOnAwsPublicIpDeletePublicIpRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSPublicIPDeletePublicIpRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -132,10 +126,10 @@ func cloudServiceVmcOnAwsPublicIpDeletePublicIpRestMetadata() protocol.Operation
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsPublicIpGetPublicIpInputType() bindings.StructType {
+func cloudServiceVMCOnAWSPublicIPGetPublicIpInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["public_ip_id"] = bindings.NewStringType()
@@ -144,11 +138,11 @@ func cloudServiceVmcOnAwsPublicIpGetPublicIpInputType() bindings.StructType {
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsPublicIpGetPublicIpOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSPublicIPGetPublicIpOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.PublicIpBindingType)
 }
 
-func cloudServiceVmcOnAwsPublicIpGetPublicIpRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSPublicIPGetPublicIpRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -182,10 +176,10 @@ func cloudServiceVmcOnAwsPublicIpGetPublicIpRestMetadata() protocol.OperationRes
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func cloudServiceVmcOnAwsPublicIpListPublicIpsInputType() bindings.StructType {
+func cloudServiceVMCOnAWSPublicIPListPublicIpsInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -202,11 +196,11 @@ func cloudServiceVmcOnAwsPublicIpListPublicIpsInputType() bindings.StructType {
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func cloudServiceVmcOnAwsPublicIpListPublicIpsOutputType() bindings.BindingType {
+func cloudServiceVMCOnAWSPublicIPListPublicIpsOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.PublicIpsListResultBindingType)
 }
 
-func cloudServiceVmcOnAwsPublicIpListPublicIpsRestMetadata() protocol.OperationRestMetadata {
+func cloudServiceVMCOnAWSPublicIPListPublicIpsRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -255,7 +249,5 @@ func cloudServiceVmcOnAwsPublicIpListPublicIpsRestMetadata() protocol.OperationR
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-
