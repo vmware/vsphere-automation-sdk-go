@@ -1,36 +1,34 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for service: Credentials.
- * Includes binding types of a structures and enumerations defined in the service.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for service: Credentials.
+// Includes binding types of a structures and enumerations defined in the service.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package addons
 
 import (
-	"reflect"
-	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/vmc/model"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/vmc/model"
+	"reflect"
 )
 
 // Possible value for ``addonType`` of method Credentials#create.
 const Credentials_CREATE_ADDON_TYPE_HCX = "HCX"
+
 // Possible value for ``addonType`` of method Credentials#get.
 const Credentials_GET_ADDON_TYPE_HCX = "HCX"
+
 // Possible value for ``addonType`` of method Credentials#list.
 const Credentials_LIST_ADDON_TYPE_HCX = "HCX"
+
 // Possible value for ``addonType`` of method Credentials#update.
 const Credentials_UPDATE_ADDON_TYPE_HCX = "HCX"
-
-
-
 
 func credentialsCreateInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
@@ -98,7 +96,7 @@ func credentialsCreateRestMetadata() protocol.OperationRestMetadata {
 		201,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409,"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
 func credentialsGetInputType() bindings.StructType {
@@ -309,7 +307,5 @@ func credentialsUpdateRestMetadata() protocol.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403})
 }
-
-

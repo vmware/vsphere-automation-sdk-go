@@ -1,35 +1,32 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for package: com.vmware.vmc.model.
- * Includes binding types of a top level structures and enumerations.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for package: com.vmware.vmc.model.
+// Includes binding types of a top level structures and enumerations.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package model
 
 import (
-	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
+	"reflect"
 	"time"
 )
 
-
-type HostInstanceTypes string
+type HostInstanceTypesEnum string
 
 const (
-	HostInstanceTypes_I3_METAL HostInstanceTypes = "I3_METAL"
-	HostInstanceTypes_R5_METAL HostInstanceTypes = "R5_METAL"
-	HostInstanceTypes_I3EN_METAL HostInstanceTypes = "I3EN_METAL"
+	HostInstanceTypes_I3_METAL   HostInstanceTypesEnum = "I3_METAL"
+	HostInstanceTypes_R5_METAL   HostInstanceTypesEnum = "R5_METAL"
+	HostInstanceTypes_I3EN_METAL HostInstanceTypesEnum = "I3EN_METAL"
 )
 
-func (h HostInstanceTypes) HostInstanceTypes() bool {
+func (h HostInstanceTypesEnum) HostInstanceTypesEnum() bool {
 	switch h {
 	case HostInstanceTypes_I3_METAL:
 		return true
@@ -42,15 +39,14 @@ func (h HostInstanceTypes) HostInstanceTypes() bool {
 	}
 }
 
-
-type OfferType string
+type OfferTypeEnum string
 
 const (
-	OfferType_TERM OfferType = "TERM"
-	OfferType_ON_DEMAND OfferType = "ON_DEMAND"
+	OfferType_TERM      OfferTypeEnum = "TERM"
+	OfferType_ON_DEMAND OfferTypeEnum = "ON_DEMAND"
 )
 
-func (o OfferType) OfferType() bool {
+func (o OfferTypeEnum) OfferTypeEnum() bool {
 	switch o {
 	case OfferType_TERM:
 		return true
@@ -61,29 +57,28 @@ func (o OfferType) OfferType() bool {
 	}
 }
 
-
 type AbstractEntity struct {
 	Updated time.Time
-    // User id that last updated this record
+	// User id that last updated this record
 	UserId string
-    // User id that last updated this record
+	// User id that last updated this record
 	UpdatedByUserId string
-	Created time.Time
-    // Version of this entity format: int32
+	Created         time.Time
+	// Version of this entity format: int32
 	Version int64
-    // User name that last updated this record
+	// User name that last updated this record
 	UpdatedByUserName *string
-    // User name that last updated this record
+	// User name that last updated this record
 	UserName string
-    // Unique ID for this entity
+	// Unique ID for this entity
 	Id string
 }
 
-func (s AbstractEntity) GetType__() bindings.BindingType {
+func (s *AbstractEntity) GetType__() bindings.BindingType {
 	return AbstractEntityBindingType()
 }
 
-func (s AbstractEntity) GetDataValue__() (data.DataValue, []error) {
+func (s *AbstractEntity) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -95,17 +90,16 @@ func (s AbstractEntity) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type AccountLinkConfig struct {
-    // Boolean flag identifying whether account linking should be delayed or not for the SDDC.
+	// Boolean flag identifying whether account linking should be delayed or not for the SDDC.
 	DelayAccountLink *bool
 }
 
-func (s AccountLinkConfig) GetType__() bindings.BindingType {
+func (s *AccountLinkConfig) GetType__() bindings.BindingType {
 	return AccountLinkConfigBindingType()
 }
 
-func (s AccountLinkConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *AccountLinkConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -117,18 +111,17 @@ func (s AccountLinkConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type AccountLinkSddcConfig struct {
 	CustomerSubnetIds []string
-    // The ID of the customer connected account to work with.
+	// The ID of the customer connected account to work with.
 	ConnectedAccountId *string
 }
 
-func (s AccountLinkSddcConfig) GetType__() bindings.BindingType {
+func (s *AccountLinkSddcConfig) GetType__() bindings.BindingType {
 	return AccountLinkSddcConfigBindingType()
 }
 
-func (s AccountLinkSddcConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *AccountLinkSddcConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -140,40 +133,41 @@ func (s AccountLinkSddcConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type Agent struct {
-    // The internal IP address of the agent which is provided by the underlying cloud provider
+	CustomProperties map[string]string
+	// The internal IP address of the agent which is provided by the underlying cloud provider
 	InternalIp *string
-    // The accessible URL of the agent service, it is resolved to public IP address from the Internet and private IP address within SDDC
+	// The accessible URL of the agent service, it is resolved to public IP address from the Internet and private IP address within SDDC
 	AgentUrl *string
-    // The internal management IP address of the agent exposed to the SDDC, which might be different from the internal IP
+	// The internal management IP address of the agent exposed to the SDDC, which might be different from the internal IP
 	ManagementIp *string
-    // Boolean flag to indicate if the agent is using FQDN in the certificate
+	// Boolean flag to indicate if the agent is using FQDN in the certificate
 	HostnameVerifierEnabled *bool
-    // Boolean flag to indicate if the agent is the master, only the master Agent is accessible
+	// Boolean flag to indicate if the agent is the master, only the master Agent is accessible
 	Master *bool
-    // Network netmask of the agent
+	// Network netmask of the agent
 	NetworkNetmask *string
-    // Network gateway of the agent
+	// Network gateway of the agent
 	NetworkGateway *string
-    // The cloud provider
+	// The cloud provider
 	Provider string
-    // Boolean flag to indicate if the agent is using CA signed certificate
+	// Boolean flag to indicate if the agent is using CA signed certificate
 	CertEnabled *bool
-    // Possible values are: 
-    //
-    // * Agent#Agent_AGENT_STATE_NOT_READY
-    // * Agent#Agent_AGENT_STATE_DEPLOYING
-    // * Agent#Agent_AGENT_STATE_CUSTOMIZING
-    // * Agent#Agent_AGENT_STATE_READY
-    // * Agent#Agent_AGENT_STATE_DELETING
-    // * Agent#Agent_AGENT_STATE_DELETED
-    // * Agent#Agent_AGENT_STATE_FAILED
-    //
-    //  Agent state
+	// Possible values are:
+	//
+	// * Agent#Agent_AGENT_STATE_NOT_READY
+	// * Agent#Agent_AGENT_STATE_DEPLOYING
+	// * Agent#Agent_AGENT_STATE_CUSTOMIZING
+	// * Agent#Agent_AGENT_STATE_READY
+	// * Agent#Agent_AGENT_STATE_DELETING
+	// * Agent#Agent_AGENT_STATE_DELETED
+	// * Agent#Agent_AGENT_STATE_FAILED
+	//
+	//  Agent state
 	AgentState *string
 }
-// Identifier denoting this class, when it is used in polymorphic context. 
+
+// Identifier denoting this class, when it is used in polymorphic context.
 //
 // This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
 const Agent__TYPE_IDENTIFIER = "Agent"
@@ -185,11 +179,11 @@ const Agent_AGENT_STATE_DELETING = "DELETING"
 const Agent_AGENT_STATE_DELETED = "DELETED"
 const Agent_AGENT_STATE_FAILED = "FAILED"
 
-func (s Agent) GetType__() bindings.BindingType {
+func (s *Agent) GetType__() bindings.BindingType {
 	return AgentBindingType()
 }
 
-func (s Agent) GetDataValue__() (data.DataValue, []error) {
+func (s *Agent) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -201,24 +195,23 @@ func (s Agent) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // the AmiInfo used for deploying esx of the sddc
 type AmiInfo struct {
-    // instance type of the esx ami
+	// instance type of the esx ami
 	InstanceType *string
-    // the region of the esx ami
+	// the region of the esx ami
 	Region *string
-    // the ami id for the esx
+	// the ami id for the esx
 	Id *string
-    // the name of the esx ami
+	// the name of the esx ami
 	Name *string
 }
 
-func (s AmiInfo) GetType__() bindings.BindingType {
+func (s *AmiInfo) GetType__() bindings.BindingType {
 	return AmiInfoBindingType()
 }
 
-func (s AmiInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *AmiInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -230,18 +223,17 @@ func (s AmiInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type AvailableZoneInfo struct {
 	Subnets []Subnet
-    // available zone id
+	// available zone id
 	Id *string
 }
 
-func (s AvailableZoneInfo) GetType__() bindings.BindingType {
+func (s *AvailableZoneInfo) GetType__() bindings.BindingType {
 	return AvailableZoneInfoBindingType()
 }
 
-func (s AvailableZoneInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *AvailableZoneInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -253,51 +245,52 @@ func (s AvailableZoneInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type AwsAgent struct {
-	InstanceId *string
-	KeyPair *AwsKeyPair
-    // The internal IP address of the agent which is provided by the underlying cloud provider
+	InstanceId       *string
+	KeyPair          *AwsKeyPair
+	CustomProperties map[string]string
+	// The internal IP address of the agent which is provided by the underlying cloud provider
 	InternalIp *string
-    // The accessible URL of the agent service, it is resolved to public IP address from the Internet and private IP address within SDDC
+	// The accessible URL of the agent service, it is resolved to public IP address from the Internet and private IP address within SDDC
 	AgentUrl *string
-    // The internal management IP address of the agent exposed to the SDDC, which might be different from the internal IP
+	// The internal management IP address of the agent exposed to the SDDC, which might be different from the internal IP
 	ManagementIp *string
-    // Boolean flag to indicate if the agent is using FQDN in the certificate
+	// Boolean flag to indicate if the agent is using FQDN in the certificate
 	HostnameVerifierEnabled *bool
-    // Boolean flag to indicate if the agent is the master, only the master Agent is accessible
+	// Boolean flag to indicate if the agent is the master, only the master Agent is accessible
 	Master *bool
-    // Network netmask of the agent
+	// Network netmask of the agent
 	NetworkNetmask *string
-    // Network gateway of the agent
+	// Network gateway of the agent
 	NetworkGateway *string
-    // The cloud provider
+	// The cloud provider
 	Provider string
-    // Boolean flag to indicate if the agent is using CA signed certificate
+	// Boolean flag to indicate if the agent is using CA signed certificate
 	CertEnabled *bool
-    // Possible values are: 
-    //
-    // * Agent#Agent_AGENT_STATE_NOT_READY
-    // * Agent#Agent_AGENT_STATE_DEPLOYING
-    // * Agent#Agent_AGENT_STATE_CUSTOMIZING
-    // * Agent#Agent_AGENT_STATE_READY
-    // * Agent#Agent_AGENT_STATE_DELETING
-    // * Agent#Agent_AGENT_STATE_DELETED
-    // * Agent#Agent_AGENT_STATE_FAILED
-    //
-    //  Agent state
+	// Possible values are:
+	//
+	// * Agent#Agent_AGENT_STATE_NOT_READY
+	// * Agent#Agent_AGENT_STATE_DEPLOYING
+	// * Agent#Agent_AGENT_STATE_CUSTOMIZING
+	// * Agent#Agent_AGENT_STATE_READY
+	// * Agent#Agent_AGENT_STATE_DELETING
+	// * Agent#Agent_AGENT_STATE_DELETED
+	// * Agent#Agent_AGENT_STATE_FAILED
+	//
+	//  Agent state
 	AgentState *string
 }
-// Identifier denoting this class, when it is used in polymorphic context. 
+
+// Identifier denoting this class, when it is used in polymorphic context.
 //
 // This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
 const AwsAgent__TYPE_IDENTIFIER = "AWS"
 
-func (s AwsAgent) GetType__() bindings.BindingType {
+func (s *AwsAgent) GetType__() bindings.BindingType {
 	return AwsAgentBindingType()
 }
 
-func (s AwsAgent) GetDataValue__() (data.DataValue, []error) {
+func (s *AwsAgent) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -309,22 +302,22 @@ func (s AwsAgent) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type AwsCloudProvider struct {
 	Regions []string
-    // Name of the Cloud Provider
+	// Name of the Cloud Provider
 	Provider string
 }
-// Identifier denoting this class, when it is used in polymorphic context. 
+
+// Identifier denoting this class, when it is used in polymorphic context.
 //
 // This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
 const AwsCloudProvider__TYPE_IDENTIFIER = "AWS"
 
-func (s AwsCloudProvider) GetType__() bindings.BindingType {
+func (s *AwsCloudProvider) GetType__() bindings.BindingType {
 	return AwsCloudProviderBindingType()
 }
 
-func (s AwsCloudProvider) GetDataValue__() (data.DataValue, []error) {
+func (s *AwsCloudProvider) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -336,17 +329,16 @@ func (s AwsCloudProvider) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type AwsCompatibleSubnets struct {
 	CustomerAvailableZones []string
-	VpcMap map[string]VpcInfoSubnets
+	VpcMap                 map[string]VpcInfoSubnets
 }
 
-func (s AwsCompatibleSubnets) GetType__() bindings.BindingType {
+func (s *AwsCompatibleSubnets) GetType__() bindings.BindingType {
 	return AwsCompatibleSubnetsBindingType()
 }
 
-func (s AwsCompatibleSubnets) GetDataValue__() (data.DataValue, []error) {
+func (s *AwsCompatibleSubnets) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -358,47 +350,47 @@ func (s AwsCompatibleSubnets) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type AwsCustomerConnectedAccount struct {
 	Updated time.Time
-    // User id that last updated this record
+	// User id that last updated this record
 	UserId string
-    // User id that last updated this record
+	// User id that last updated this record
 	UpdatedByUserId string
-	Created time.Time
-    // Version of this entity format: int32
+	Created         time.Time
+	// Version of this entity format: int32
 	Version int64
-    // User name that last updated this record
+	// User name that last updated this record
 	UpdatedByUserName *string
-    // User name that last updated this record
+	// User name that last updated this record
 	UserName string
-    // Unique ID for this entity
-	Id string
+	// Unique ID for this entity
+	Id             string
 	PolicyPayerArn *string
-    // Provides a map of regions to availability zones from the shadow account's perspective
+	// Provides a map of regions to availability zones from the shadow account's perspective
 	RegionToAzToShadowMapping map[string]map[string]string
-	OrgId *string
-	CfStackName *string
-    // Possible values are: 
-    //
-    // * AwsCustomerConnectedAccount#AwsCustomerConnectedAccount_STATE_ACTIVE
-    // * AwsCustomerConnectedAccount#AwsCustomerConnectedAccount_STATE_BROKEN
-    // * AwsCustomerConnectedAccount#AwsCustomerConnectedAccount_STATE_DELETED
-	State *string
-	AccountNumber *string
-	PolicyServiceArn *string
-	PolicyExternalId *string
+	OrgId                     *string
+	CfStackName               *string
+	// Possible values are:
+	//
+	// * AwsCustomerConnectedAccount#AwsCustomerConnectedAccount_STATE_ACTIVE
+	// * AwsCustomerConnectedAccount#AwsCustomerConnectedAccount_STATE_BROKEN
+	// * AwsCustomerConnectedAccount#AwsCustomerConnectedAccount_STATE_DELETED
+	State                *string
+	AccountNumber        *string
+	PolicyServiceArn     *string
+	PolicyExternalId     *string
 	PolicyPayerLinkedArn *string
 }
+
 const AwsCustomerConnectedAccount_STATE_ACTIVE = "ACTIVE"
 const AwsCustomerConnectedAccount_STATE_BROKEN = "BROKEN"
 const AwsCustomerConnectedAccount_STATE_DELETED = "DELETED"
 
-func (s AwsCustomerConnectedAccount) GetType__() bindings.BindingType {
+func (s *AwsCustomerConnectedAccount) GetType__() bindings.BindingType {
 	return AwsCustomerConnectedAccountBindingType()
 }
 
-func (s AwsCustomerConnectedAccount) GetDataValue__() (data.DataValue, []error) {
+func (s *AwsCustomerConnectedAccount) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -410,43 +402,43 @@ func (s AwsCustomerConnectedAccount) GetDataValue__() (data.DataValue, []error) 
 	return dataVal, nil
 }
 
-
 type AwsEsxHost struct {
 	InternalPublicIpPool []SddcPublicIp
-	Name *string
-    // Availability zone where the host is provisioned.
+	Name                 *string
+	// Availability zone where the host is provisioned.
 	AvailabilityZone *string
-	EsxId *string
-	Hostname *string
-	Provider string
-    // Backing cloud provider instance type for host.
-	InstanceType *string
-	MacAddress *string
+	EsxId            *string
+	Hostname         *string
+	Provider         string
+	// Backing cloud provider instance type for host.
+	InstanceType     *string
+	MacAddress       *string
 	CustomProperties map[string]string
-    // Possible values are: 
-    //
-    // * EsxHost#EsxHost_ESX_STATE_DEPLOYING
-    // * EsxHost#EsxHost_ESX_STATE_INITIALIZING
-    // * EsxHost#EsxHost_ESX_STATE_PROVISIONED
-    // * EsxHost#EsxHost_ESX_STATE_READY
-    // * EsxHost#EsxHost_ESX_STATE_DELETING
-    // * EsxHost#EsxHost_ESX_STATE_DELETED
-    // * EsxHost#EsxHost_ESX_STATE_FAILED
-    // * EsxHost#EsxHost_ESX_STATE_ADDING_TO_VCENTER
-    // * EsxHost#EsxHost_ESX_STATE_DELETING_FROM_VCENTER
-    // * EsxHost#EsxHost_ESX_STATE_PENDING_CLOUD_DELETION
+	// Possible values are:
+	//
+	// * EsxHost#EsxHost_ESX_STATE_DEPLOYING
+	// * EsxHost#EsxHost_ESX_STATE_INITIALIZING
+	// * EsxHost#EsxHost_ESX_STATE_PROVISIONED
+	// * EsxHost#EsxHost_ESX_STATE_READY
+	// * EsxHost#EsxHost_ESX_STATE_DELETING
+	// * EsxHost#EsxHost_ESX_STATE_DELETED
+	// * EsxHost#EsxHost_ESX_STATE_FAILED
+	// * EsxHost#EsxHost_ESX_STATE_ADDING_TO_VCENTER
+	// * EsxHost#EsxHost_ESX_STATE_DELETING_FROM_VCENTER
+	// * EsxHost#EsxHost_ESX_STATE_PENDING_CLOUD_DELETION
 	EsxState *string
 }
-// Identifier denoting this class, when it is used in polymorphic context. 
+
+// Identifier denoting this class, when it is used in polymorphic context.
 //
 // This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
 const AwsEsxHost__TYPE_IDENTIFIER = "AWS"
 
-func (s AwsEsxHost) GetType__() bindings.BindingType {
+func (s *AwsEsxHost) GetType__() bindings.BindingType {
 	return AwsEsxHostBindingType()
 }
 
-func (s AwsEsxHost) GetDataValue__() (data.DataValue, []error) {
+func (s *AwsEsxHost) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -458,18 +450,17 @@ func (s AwsEsxHost) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type AwsKeyPair struct {
-	KeyName *string
+	KeyName        *string
 	KeyFingerprint *string
-	KeyMaterial *string
+	KeyMaterial    *string
 }
 
-func (s AwsKeyPair) GetType__() bindings.BindingType {
+func (s *AwsKeyPair) GetType__() bindings.BindingType {
 	return AwsKeyPairBindingType()
 }
 
-func (s AwsKeyPair) GetDataValue__() (data.DataValue, []error) {
+func (s *AwsKeyPair) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -481,17 +472,16 @@ func (s AwsKeyPair) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type AwsKmsInfo struct {
-    // The ARN associated with the customer master key for this cluster.
+	// The ARN associated with the customer master key for this cluster.
 	AmazonResourceName string
 }
 
-func (s AwsKmsInfo) GetType__() bindings.BindingType {
+func (s *AwsKmsInfo) GetType__() bindings.BindingType {
 	return AwsKmsInfoBindingType()
 }
 
-func (s AwsKmsInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *AwsKmsInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -503,69 +493,71 @@ func (s AwsKmsInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type AwsSddcConfig struct {
 	Region string
-    // Indicates the desired licensing support, if any, of Microsoft software.
+	// Indicates the desired licensing support, if any, of Microsoft software.
 	MsftLicenseConfig *MsftLicensingConfig
-    // AWS VPC IP range. Only prefix of 16 or 20 is currently supported.
+	// AWS VPC IP range. Only prefix of 16 or 20 is currently supported.
 	VpcCidr *string
-    // The instance type for the esx hosts in the primary cluster of the SDDC.
-	HostInstanceType *HostInstanceTypes
-    // skip creating vxlan for compute gateway for SDDC provisioning
+	// The instance type for the esx hosts in the primary cluster of the SDDC.
+	HostInstanceType *HostInstanceTypesEnum
+	// skip creating vxlan for compute gateway for SDDC provisioning
 	SkipCreatingVxlan *bool
-    // VXLAN IP subnet in CIDR for compute gateway
+	// VXLAN IP subnet in CIDR for compute gateway
 	VxlanSubnet *string
-    // Possible values are: 
-    //
-    // * SddcConfig#SddcConfig_SIZE_NSX_SMALL
-    // * SddcConfig#SddcConfig_SIZE_MEDIUM
-    // * SddcConfig#SddcConfig_SIZE_LARGE
-    // * SddcConfig#SddcConfig_SIZE_NSX_LARGE
-    //
-    //  The size of the vCenter and NSX appliances. \"large\" sddcSize corresponds to a 'large' vCenter appliance and 'large' NSX appliance. 'medium' sddcSize corresponds to 'medium' vCenter appliance and 'medium' NSX appliance. Value defaults to 'medium'.
+	// Possible values are:
+	//
+	// * SddcConfig#SddcConfig_SIZE_NSX_SMALL
+	// * SddcConfig#SddcConfig_SIZE_MEDIUM
+	// * SddcConfig#SddcConfig_SIZE_LARGE
+	// * SddcConfig#SddcConfig_SIZE_NSX_LARGE
+	//
+	//  The size of the vCenter and NSX appliances. \"large\" sddcSize corresponds to a 'large' vCenter appliance and 'large' NSX appliance. 'medium' sddcSize corresponds to 'medium' vCenter appliance and 'medium' NSX appliance. Value defaults to 'medium'.
 	Size *string
-    // The storage capacity value to be requested for the sddc primary cluster, in GiBs. If provided, instead of using the direct-attached storage, a capacity value amount of seperable storage will be used. format: int64
+	// Outpost ID of the SDDC. Used only for outpost deployments.
+	OutpostId *string
+	// The storage capacity value to be requested for the sddc primary cluster, in GiBs. If provided, instead of using the direct-attached storage, a capacity value amount of seperable storage will be used. format: int64
 	StorageCapacity *int64
-	Name string
-    // A list of the SDDC linking configurations to use.
+	Name            string
+	// A list of the SDDC linking configurations to use.
 	AccountLinkSddcConfig []AccountLinkSddcConfig
-    // If provided, will be assigned as SDDC id of the provisioned SDDC. format: UUID
-	SddcId *string
+	// If provided, will be assigned as SDDC id of the provisioned SDDC. format: UUID
+	SddcId   *string
 	NumHosts int64
-    // Denotes the sddc type , if the value is null or empty, the type is considered as default.
+	// Denotes the sddc type , if the value is null or empty, the type is considered as default.
 	SddcType *string
-    // The account linking configuration, we will keep this one and remove accountLinkSddcConfig finally.
+	// The account linking configuration, we will keep this one and remove accountLinkSddcConfig finally.
 	AccountLinkConfig *AccountLinkConfig
-    // Possible values are: 
-    //
-    // * SddcConfig#SddcConfig_PROVIDER_AWS
-    // * SddcConfig#SddcConfig_PROVIDER_ZEROCLOUD
-    //
-    //  Determines what additional properties are available based on cloud provider.
+	// Possible values are:
+	//
+	// * SddcConfig#SddcConfig_PROVIDER_AWS
+	// * SddcConfig#SddcConfig_PROVIDER_ZEROCLOUD
+	//
+	//  Determines what additional properties are available based on cloud provider.
 	Provider string
-    // The SSO domain name to use for vSphere users. If not specified, vmc.local will be used.
+	// The SSO domain name to use for vSphere users. If not specified, vmc.local will be used.
 	SsoDomain *string
-    // If provided, configuration from the template will applied to the provisioned SDDC. format: UUID
+	// If provided, configuration from the template will applied to the provisioned SDDC. format: UUID
 	SddcTemplateId *string
-    // Possible values are: 
-    //
-    // * SddcConfig#SddcConfig_DEPLOYMENT_TYPE_SINGLEAZ
-    // * SddcConfig#SddcConfig_DEPLOYMENT_TYPE_MULTIAZ
-    //
-    //  Denotes if request is for a SingleAZ or a MultiAZ SDDC. Default is SingleAZ.
+	// Possible values are:
+	//
+	// * SddcConfig#SddcConfig_DEPLOYMENT_TYPE_SINGLEAZ
+	// * SddcConfig#SddcConfig_DEPLOYMENT_TYPE_MULTIAZ
+	//
+	//  Denotes if request is for a SingleAZ or a MultiAZ SDDC. Default is SingleAZ.
 	DeploymentType *string
 }
-// Identifier denoting this class, when it is used in polymorphic context. 
+
+// Identifier denoting this class, when it is used in polymorphic context.
 //
 // This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
 const AwsSddcConfig__TYPE_IDENTIFIER = "AWS"
 
-func (s AwsSddcConfig) GetType__() bindings.BindingType {
+func (s *AwsSddcConfig) GetType__() bindings.BindingType {
 	return AwsSddcConfigBindingType()
 }
 
-func (s AwsSddcConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *AwsSddcConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -577,66 +569,66 @@ func (s AwsSddcConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type AwsSddcConnection struct {
 	Updated time.Time
-    // User id that last updated this record
+	// User id that last updated this record
 	UserId string
-    // User id that last updated this record
+	// User id that last updated this record
 	UpdatedByUserId string
-	Created time.Time
-    // Version of this entity format: int32
+	Created         time.Time
+	// Version of this entity format: int32
 	Version int64
-    // User name that last updated this record
+	// User name that last updated this record
 	UpdatedByUserName *string
-    // User name that last updated this record
+	// User name that last updated this record
 	UserName string
-    // Unique ID for this entity
+	// Unique ID for this entity
 	Id string
-    // The CIDR block of the customer's subnet this link is in.
+	// The CIDR block of the customer's subnet this link is in.
 	CidrBlockSubnet *string
-    // The corresponding connected (customer) account UUID this connection is attached to.
+	// The corresponding connected (customer) account UUID this connection is attached to.
 	ConnectedAccountId *string
-    // Which group the ENIs belongs to. (deprecated)
+	// Which group the ENIs belongs to. (deprecated)
 	EniGroup *string
-    // The ID of the subnet this link is to.
+	// The ID of the subnet this link is to.
 	SubnetId *string
-    // Determines whether the CGW is present in this connection set or not. Used for multi-az deployments.
+	// Determines whether the CGW is present in this connection set or not. Used for multi-az deployments.
 	CgwPresent *bool
-    // The org this link belongs to.
+	// The org this link belongs to.
 	OrgId *string
-    // The SDDC this link is used for.
+	// The SDDC this link is used for.
 	SddcId *string
-    // The CIDR block of the customer's VPC.
+	// The CIDR block of the customer's VPC.
 	CidrBlockVpc *string
-    // The order of the connection
+	// The order of the connection
 	ConnectionOrder *int64
-    // Possible values are: 
-    //
-    // * AwsSddcConnection#AwsSddcConnection_STATE_ACTIVE
-    // * AwsSddcConnection#AwsSddcConnection_STATE_BROKEN
-    // * AwsSddcConnection#AwsSddcConnection_STATE_DELETED
-    //
-    //  The state of the connection.
+	// Possible values are:
+	//
+	// * AwsSddcConnection#AwsSddcConnection_STATE_ACTIVE
+	// * AwsSddcConnection#AwsSddcConnection_STATE_BROKEN
+	// * AwsSddcConnection#AwsSddcConnection_STATE_DELETED
+	//
+	//  The state of the connection.
 	State *string
-    // Which availability zone is this connection in?
+	// Which availability zone is this connection in?
 	SubnetAvailabilityZone *string
-    // The VPC ID of the subnet this link is to.
+	// The VPC ID of the subnet this link is to.
 	VpcId *string
-    // A list of all ENIs used for this connection.
+	// A list of all ENIs used for this connection.
 	CustomerEniInfos []CustomerEniInfo
-    // The default routing table in the customer's VPC.
+	// The default routing table in the customer's VPC.
 	DefaultRouteTable *string
 }
+
 const AwsSddcConnection_STATE_ACTIVE = "ACTIVE"
 const AwsSddcConnection_STATE_BROKEN = "BROKEN"
 const AwsSddcConnection_STATE_DELETED = "DELETED"
 
-func (s AwsSddcConnection) GetType__() bindings.BindingType {
+func (s *AwsSddcConnection) GetType__() bindings.BindingType {
 	return AwsSddcConnectionBindingType()
 }
 
-func (s AwsSddcConnection) GetDataValue__() (data.DataValue, []error) {
+func (s *AwsSddcConnection) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -648,109 +640,122 @@ func (s AwsSddcConnection) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type AwsSddcResourceConfig struct {
 	BackupRestoreBucket *string
-	PublicIpPool []SddcPublicIp
-	VpcInfo *VpcInfo
-	KmsVpcEndpoint *KmsVpcEndpoint
-    // maximum number of public IP that user can allocate.
-	MaxNumPublicIp *int64
+	PublicIpPool        []SddcPublicIp
+	VpcInfo             *VpcInfo
+	KmsVpcEndpoint      *KmsVpcEndpoint
+	// maximum number of public IP that user can allocate.
+	MaxNumPublicIp        *int64
 	AccountLinkSddcConfig []SddcLinkConfig
-	VsanEncryptionConfig *VsanEncryptionConfig
-	VpcInfoPeeredAgent *VpcInfo
-    // Name for management appliance network.
+	VsanEncryptionConfig  *VsanEncryptionConfig
+	VpcInfoPeeredAgent    *VpcInfo
+	// Name for management appliance network.
 	MgmtApplianceNetworkName *string
-    // if true, NSX-T UI is enabled.
-	Nsxt *bool
-    // Management Gateway Id
+	// Management Gateway Id
 	MgwId *string
-    // URL of the NSX Manager
+	// URL of the NSX Manager
 	NsxMgrUrl *string
-    // PSC internal management IP
-	PscManagementIp *string
-    // URL of the PSC server
-	PscUrl *string
-	Cgws []string
-    // Availability zones over which esx hosts are provisioned. MultiAZ SDDCs will have hosts provisioned over two availability zones while SingleAZ SDDCs will provision over one.
-	AvailabilityZones []string
-    // The ManagedObjectReference of the management Datastore
+	// NSX cloud audit Password
+	NsxCloudAuditPassword *string
+	// The ManagedObjectReference of the management Datastore
 	ManagementDs *string
-    // nsx api entire base url
+	// nsx api entire base url
 	NsxApiPublicEndpointUrl *string
-	CustomProperties map[string]string
-    // Password for vCenter SDDC administrator
-	CloudPassword *string
-    // Possible values are: 
-    //
-    // * SddcResourceConfig#SddcResourceConfig_PROVIDER_AWS
-    // * SddcResourceConfig#SddcResourceConfig_PROVIDER_ZEROCLOUD
-    //
-    //  Discriminator for additional properties
-	Provider string
-    // List of clusters in the SDDC.
+	SddcNetworks            []string
+	// List of clusters in the SDDC.
 	Clusters []Cluster
-    // vCenter internal management IP
-	VcManagementIp *string
-	SddcNetworks []string
-    // Username for vCenter SDDC administrator
-	CloudUsername *string
-	EsxHosts []AwsEsxHost
-    // NSX Manager internal management IP
+	// NSX Manager internal management IP
 	NsxMgrManagementIp *string
-    // unique id of the vCenter server
-	VcInstanceId *string
-    // Cluster Id to add ESX workflow
+	// NSX cloud audit user name
+	NsxCloudAudit *string
+	// Cluster Id to add ESX workflow
 	EsxClusterId *string
-    // vCenter public IP
+	// vCenter public IP
 	VcPublicIp *string
-    // skip creating vxlan for compute gateway for SDDC provisioning
-	SkipCreatingVxlan *bool
-    // URL of the vCenter server
-	VcUrl *string
-	SddcManifest *SddcManifest
-    // VXLAN IP subnet
-	VxlanSubnet *string
-    // Group name for vCenter SDDC administrator
-	CloudUserGroup *string
-	ManagementRp *string
-    // region in which sddc is deployed
-	Region *string
-    // Availability zone where the witness node is provisioned for a MultiAZ SDDC. This is null for a SingleAZ SDDC.
+	// URL of the vCenter server
+	VcUrl    *string
+	EsxHosts []AwsEsxHost
+	// vCenter internal management IP
+	VcManagementIp *string
+	ManagementRp   *string
+	// Availability zone where the witness node is provisioned for a MultiAZ SDDC. This is null for a SingleAZ SDDC.
 	WitnessAvailabilityZone *string
-    // sddc identifier
-	SddcId *string
-	PopAgentXeniConnection *PopAgentXeniConnection
-	SddcSize *SddcSize
-    // List of Controller IPs
+	SddcSize                *SddcSize
+	// List of Controller IPs
 	NsxControllerIps []string
-    // ESX host subnet
+	// ESX host subnet
 	EsxHostSubnet *string
-    // The SSO domain name to use for vSphere users
+	// The SSO domain name to use for vSphere users
 	SsoDomain *string
-    // Possible values are: 
-    //
-    // * SddcResourceConfig#SddcResourceConfig_DEPLOYMENT_TYPE_SINGLE_AZ
-    // * SddcResourceConfig#SddcResourceConfig_DEPLOYMENT_TYPE_MULTI_AZ
-    //
-    //  Denotes if this is a SingleAZ SDDC or a MultiAZ SDDC.
+	// Possible values are:
+	//
+	// * SddcResourceConfig#SddcResourceConfig_DEPLOYMENT_TYPE_SINGLE_AZ
+	// * SddcResourceConfig#SddcResourceConfig_DEPLOYMENT_TYPE_MULTI_AZ
+	//
+	//  Denotes if this is a SingleAZ SDDC or a MultiAZ SDDC.
 	DeploymentType *string
-    // The Microsoft license status of this SDDC.
+	// The Microsoft license status of this SDDC.
 	MsftLicenseConfig *MsftLicensingConfig
-	NsxtAddons *NsxtAddons
-    // if true, use the private IP addresses to register DNS records for the management VMs
+	// region in which sddc is deployed
+	Region *string
+	// Outpost configuration of this SDDC.
+	OutpostConfig *OutpostConfig
+	// if true, NSX-T UI is enabled.
+	Nsxt *bool
+	// PSC internal management IP
+	PscManagementIp *string
+	// URL of the PSC server
+	PscUrl *string
+	Cgws   []string
+	// Availability zones over which esx hosts are provisioned. MultiAZ SDDCs will have hosts provisioned over two availability zones while SingleAZ SDDCs will provision over one.
+	AvailabilityZones []string
+	CustomProperties  map[string]string
+	// Password for vCenter SDDC administrator
+	CloudPassword *string
+	// Possible values are:
+	//
+	// * SddcResourceConfig#SddcResourceConfig_PROVIDER_AWS
+	// * SddcResourceConfig#SddcResourceConfig_PROVIDER_ZEROCLOUD
+	//
+	//  Discriminator for additional properties
+	Provider string
+	// NSX cloud admin password
+	NsxCloudAdminPassword *string
+	// Username for vCenter SDDC administrator
+	CloudUsername *string
+	// unique id of the vCenter server
+	VcInstanceId *string
+	// Group name for vCenter SDDC administrator
+	CloudUserGroup *string
+	// skip creating vxlan for compute gateway for SDDC provisioning
+	SkipCreatingVxlan *bool
+	SddcManifest      *SddcManifest
+	// VXLAN IP subnet
+	VxlanSubnet  *string
+	SddcSecurity *SddcSecurity
+	// sddc identifier
+	SddcId                 *string
+	PopAgentXeniConnection *PopAgentXeniConnection
+	// URL of the NSX Manager UI login for local user access
+	NsxMgrLoginUrl *string
+	// if true, use the private IP addresses to register DNS records for the management VMs
 	DnsWithManagementVmPrivateIp *bool
+	// NSX cloud admin user name
+	NsxCloudAdmin *string
+	NsxtAddons    *NsxtAddons
 }
-// Identifier denoting this class, when it is used in polymorphic context. 
+
+// Identifier denoting this class, when it is used in polymorphic context.
 //
 // This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
 const AwsSddcResourceConfig__TYPE_IDENTIFIER = "AWS"
 
-func (s AwsSddcResourceConfig) GetType__() bindings.BindingType {
+func (s *AwsSddcResourceConfig) GetType__() bindings.BindingType {
 	return AwsSddcResourceConfigBindingType()
 }
 
-func (s AwsSddcResourceConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *AwsSddcResourceConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -762,33 +767,32 @@ func (s AwsSddcResourceConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type AwsSubnet struct {
-    // The connected account ID this subnet is accessible through. This is an internal ID formatted as a UUID specific to Skyscraper.
+	// The connected account ID this subnet is accessible through. This is an internal ID formatted as a UUID specific to Skyscraper.
 	ConnectedAccountId *string
-    // The region this subnet is in, usually in the form of country code, general location, and a number (ex. us-west-2).
+	// The region this subnet is in, usually in the form of country code, general location, and a number (ex. us-west-2).
 	RegionName *string
-    // The availability zone this subnet is in, which should be the region name plus one extra letter (ex. us-west-2a).
+	// The availability zone this subnet is in, which should be the region name plus one extra letter (ex. us-west-2a).
 	AvailabilityZone *string
-    // The subnet ID in AWS, provided in the form 'subnet-######'.
+	// The subnet ID in AWS, provided in the form 'subnet-######'.
 	SubnetId *string
-    // The CIDR block of the subnet, in the form of '#.#.#.#/#'.
+	// The CIDR block of the subnet, in the form of '#.#.#.#/#'.
 	SubnetCidrBlock *string
-    // Flag indicating whether this subnet is compatible. If true, this is a valid choice for the customer to deploy a SDDC in.
+	// Flag indicating whether this subnet is compatible. If true, this is a valid choice for the customer to deploy a SDDC in.
 	IsCompatible *bool
-    // The VPC ID the subnet resides in within AWS. Tends to be 'vpc-#######'.
+	// The VPC ID the subnet resides in within AWS. Tends to be 'vpc-#######'.
 	VpcId *string
-    // The CIDR block of the VPC, in the form of '#.#.#.#/#'.
+	// The CIDR block of the VPC, in the form of '#.#.#.#/#'.
 	VpcCidrBlock *string
-    // Optional field (may not be provided by AWS), indicates the found name tag for the subnet.
+	// Optional field (may not be provided by AWS), indicates the found name tag for the subnet.
 	Name *string
 }
 
-func (s AwsSubnet) GetType__() bindings.BindingType {
+func (s *AwsSubnet) GetType__() bindings.BindingType {
 	return AwsSubnetBindingType()
 }
 
-func (s AwsSubnet) GetDataValue__() (data.DataValue, []error) {
+func (s *AwsSubnet) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -800,21 +804,21 @@ func (s AwsSubnet) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type CloudProvider struct {
-    // Name of the Cloud Provider
+	// Name of the Cloud Provider
 	Provider string
 }
-// Identifier denoting this class, when it is used in polymorphic context. 
+
+// Identifier denoting this class, when it is used in polymorphic context.
 //
 // This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
 const CloudProvider__TYPE_IDENTIFIER = "CloudProvider"
 
-func (s CloudProvider) GetType__() bindings.BindingType {
+func (s *CloudProvider) GetType__() bindings.BindingType {
 	return CloudProviderBindingType()
 }
 
-func (s CloudProvider) GetDataValue__() (data.DataValue, []error) {
+func (s *CloudProvider) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -826,39 +830,41 @@ func (s CloudProvider) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type Cluster struct {
 	EsxHostList []AwsEsxHost
-    // The Microsoft license configuration of this cluster.
+	// WCP details for a given cluster
+	WcpDetails *WcpDetails
+	// The Microsoft license configuration of this cluster.
 	MsftLicenseConfig *MsftLicensingConfig
-    // Possible values are: 
-    //
-    // * Cluster#Cluster_CLUSTER_STATE_DEPLOYING
-    // * Cluster#Cluster_CLUSTER_STATE_ADDING_HOSTS
-    // * Cluster#Cluster_CLUSTER_STATE_READY
-    // * Cluster#Cluster_CLUSTER_STATE_FAILED
+	// Possible values are:
+	//
+	// * Cluster#Cluster_CLUSTER_STATE_DEPLOYING
+	// * Cluster#Cluster_CLUSTER_STATE_ADDING_HOSTS
+	// * Cluster#Cluster_CLUSTER_STATE_READY
+	// * Cluster#Cluster_CLUSTER_STATE_FAILED
 	ClusterState *string
-    // AWS Key Management Service information associated with this cluster
-	AwsKmsInfo *AwsKmsInfo
-    // The capacity of this cluster.
-	ClusterCapacity *EntityCapacity
-    // Information of the hosts added to this cluster
+	// Information of the hosts added to this cluster
 	EsxHostInfo *EsxHostInfo
-    // Number of cores enabled on ESX hosts added to this cluster format: int32
+	// Number of cores enabled on ESX hosts added to this cluster format: int32
 	HostCpuCoresCount *int64
-	ClusterId string
-	ClusterName *string
+	ClusterId         string
+	ClusterName       *string
+	// AWS Key Management Service information associated with this cluster
+	AwsKmsInfo *AwsKmsInfo
+	// The capacity of this cluster.
+	ClusterCapacity *EntityCapacity
 }
+
 const Cluster_CLUSTER_STATE_DEPLOYING = "DEPLOYING"
 const Cluster_CLUSTER_STATE_ADDING_HOSTS = "ADDING_HOSTS"
 const Cluster_CLUSTER_STATE_READY = "READY"
 const Cluster_CLUSTER_STATE_FAILED = "FAILED"
 
-func (s Cluster) GetType__() bindings.BindingType {
+func (s *Cluster) GetType__() bindings.BindingType {
 	return ClusterBindingType()
 }
 
-func (s Cluster) GetDataValue__() (data.DataValue, []error) {
+func (s *Cluster) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -870,24 +876,23 @@ func (s Cluster) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type ClusterConfig struct {
-    // Customize CPU cores on hosts in a cluster. Specify number of cores to be enabled on hosts in a cluster. format: int32
+	// Customize CPU cores on hosts in a cluster. Specify number of cores to be enabled on hosts in a cluster. format: int32
 	HostCpuCoresCount *int64
-    // The instance type for the esx hosts added to this cluster.
-	HostInstanceType *HostInstanceTypes
-    // For EBS-backed instances only, the requested storage capacity in GiB. format: int64
+	// The instance type for the esx hosts added to this cluster.
+	HostInstanceType *HostInstanceTypesEnum
+	// For EBS-backed instances only, the requested storage capacity in GiB. format: int64
 	StorageCapacity *int64
-    // The desired Microsoft license status to apply to this cluster.
+	// The desired Microsoft license status to apply to this cluster.
 	MsftLicenseConfig *MsftLicensingConfig
-	NumHosts int64
+	NumHosts          int64
 }
 
-func (s ClusterConfig) GetType__() bindings.BindingType {
+func (s *ClusterConfig) GetType__() bindings.BindingType {
 	return ClusterConfigBindingType()
 }
 
-func (s ClusterConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *ClusterConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -899,21 +904,20 @@ func (s ClusterConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type ClusterReconfigureParams struct {
-    // The final desired storage capacity after reconfiguring the cluster in GiB. format: int64
+	// The final desired storage capacity after reconfiguring the cluster in GiB. format: int64
 	StorageCapacity *int64
-    // Bias value as obtained from the storage constraints call.
+	// Bias value as obtained from the storage constraints call.
 	Bias *string
-    // Number of hosts in the cluster after reconfiguring. format: int32
+	// Number of hosts in the cluster after reconfiguring. format: int32
 	NumHosts int64
 }
 
-func (s ClusterReconfigureParams) GetType__() bindings.BindingType {
+func (s *ClusterReconfigureParams) GetType__() bindings.BindingType {
 	return ClusterReconfigureParamsBindingType()
 }
 
-func (s ClusterReconfigureParams) GetDataValue__() (data.DataValue, []error) {
+func (s *ClusterReconfigureParams) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -925,23 +929,22 @@ func (s ClusterReconfigureParams) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type ComputeGatewayTemplate struct {
-	PublicIp *SddcPublicIp
-	PrimaryDns *string
-	SecondaryDns *string
-	FirewallRules []FirewallRule
-	Vpns []Vpn
+	PublicIp        *SddcPublicIp
+	PrimaryDns      *string
+	SecondaryDns    *string
+	FirewallRules   []FirewallRule
+	Vpns            []Vpn
 	LogicalNetworks []LogicalNetwork
-	NatRules []NatRule
-	L2Vpn *data.StructValue
+	NatRules        []NatRule
+	L2Vpn           *data.StructValue
 }
 
-func (s ComputeGatewayTemplate) GetType__() bindings.BindingType {
+func (s *ComputeGatewayTemplate) GetType__() bindings.BindingType {
 	return ComputeGatewayTemplateBindingType()
 }
 
-func (s ComputeGatewayTemplate) GetDataValue__() (data.DataValue, []error) {
+func (s *ComputeGatewayTemplate) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -953,21 +956,24 @@ func (s ComputeGatewayTemplate) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Represents a configuration spec for any sddc provision operation.
 type ConfigSpec struct {
-    // Indicates after how many days the sddc should expire
-	ExpiryInDays *int64
-    // Map of region to instance types available in that region
-	Availability map[string][]InstanceTypeConfig
 	SddcSizes []string
+	// Indicates if this org supports deployments that are powered by VMC on outposts
+	IsPoweredByOutpostAvailable *bool
+	// Indicates after how many days the sddc should expire
+	ExpiryInDays *int64
+	// Map of region to instance types available in that region
+	Availability map[string][]InstanceTypeConfig
+	// Map of region to instance types available for the powered by type.
+	PoweredBy map[string][]PoweredByInstanceTypeConfig
 }
 
-func (s ConfigSpec) GetType__() bindings.BindingType {
+func (s *ConfigSpec) GetType__() bindings.BindingType {
 	return ConfigSpecBindingType()
 }
 
-func (s ConfigSpec) GetDataValue__() (data.DataValue, []error) {
+func (s *ConfigSpec) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -979,31 +985,31 @@ func (s ConfigSpec) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type ConnectivityAgentValidation struct {
-    // Possible values are: 
-    //
-    // * ConnectivityAgentValidation#ConnectivityAgentValidation_SOURCE_VCENTER
-    // * ConnectivityAgentValidation#ConnectivityAgentValidation_SOURCE_SRM
-    // * ConnectivityAgentValidation#ConnectivityAgentValidation_SOURCE_VR
-    //
-    //  source appliance of connectivity test, i.e. VCENTER, SRM, VR.
+	// Possible values are:
+	//
+	// * ConnectivityAgentValidation#ConnectivityAgentValidation_SOURCE_VCENTER
+	// * ConnectivityAgentValidation#ConnectivityAgentValidation_SOURCE_SRM
+	// * ConnectivityAgentValidation#ConnectivityAgentValidation_SOURCE_VR
+	//
+	//  source appliance of connectivity test, i.e. VCENTER, SRM, VR.
 	Source *string
-    // Possible values are: 
-    //
-    // * ConnectivityAgentValidation#ConnectivityAgentValidation_TYPE_PING
-    // * ConnectivityAgentValidation#ConnectivityAgentValidation_TYPE_TRACEROUTE
-    // * ConnectivityAgentValidation#ConnectivityAgentValidation_TYPE_DNS
-    // * ConnectivityAgentValidation#ConnectivityAgentValidation_TYPE_CONNECTIVITY
-    // * ConnectivityAgentValidation#ConnectivityAgentValidation_TYPE_CURL
-    //
-    //  type of connectivity test, i.e. PING, TRACEROUTE, DNS, CONNECTIVITY, CURL. For CONNECTIVITY and CURL tests only, please specify the ports to be tested against.
+	// Possible values are:
+	//
+	// * ConnectivityAgentValidation#ConnectivityAgentValidation_TYPE_PING
+	// * ConnectivityAgentValidation#ConnectivityAgentValidation_TYPE_TRACEROUTE
+	// * ConnectivityAgentValidation#ConnectivityAgentValidation_TYPE_DNS
+	// * ConnectivityAgentValidation#ConnectivityAgentValidation_TYPE_CONNECTIVITY
+	// * ConnectivityAgentValidation#ConnectivityAgentValidation_TYPE_CURL
+	//
+	//  type of connectivity test, i.e. PING, TRACEROUTE, DNS, CONNECTIVITY, CURL. For CONNECTIVITY and CURL tests only, please specify the ports to be tested against.
 	Type_ *string
-    // TCP ports ONLY for CONNECTIVITY and CURL tests.
+	// TCP ports ONLY for CONNECTIVITY and CURL tests.
 	Ports []string
-    // URL path ONLY for CURL tests.
+	// URL path ONLY for CURL tests.
 	Path *string
 }
+
 const ConnectivityAgentValidation_SOURCE_VCENTER = "VCENTER"
 const ConnectivityAgentValidation_SOURCE_SRM = "SRM"
 const ConnectivityAgentValidation_SOURCE_VR = "VR"
@@ -1013,11 +1019,11 @@ const ConnectivityAgentValidation_TYPE_DNS = "DNS"
 const ConnectivityAgentValidation_TYPE_CONNECTIVITY = "CONNECTIVITY"
 const ConnectivityAgentValidation_TYPE_CURL = "CURL"
 
-func (s ConnectivityAgentValidation) GetType__() bindings.BindingType {
+func (s *ConnectivityAgentValidation) GetType__() bindings.BindingType {
 	return ConnectivityAgentValidationBindingType()
 }
 
-func (s ConnectivityAgentValidation) GetDataValue__() (data.DataValue, []error) {
+func (s *ConnectivityAgentValidation) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1029,28 +1035,28 @@ func (s ConnectivityAgentValidation) GetDataValue__() (data.DataValue, []error) 
 	return dataVal, nil
 }
 
-
 type ConnectivityValidationGroup struct {
-    // Possible values are: 
-    //
-    // * ConnectivityValidationGroup#ConnectivityValidationGroup_ID_HLM
-    // * ConnectivityValidationGroup#ConnectivityValidationGroup_ID_DRAAS
-    //
-    //  test group id, currently, only HLM.
+	// Possible values are:
+	//
+	// * ConnectivityValidationGroup#ConnectivityValidationGroup_ID_HLM
+	// * ConnectivityValidationGroup#ConnectivityValidationGroup_ID_DRAAS
+	//
+	//  test group id, currently, only HLM.
 	Id *string
-    // Name of the test group.
+	// Name of the test group.
 	Name *string
-    // List of sub groups.
+	// List of sub groups.
 	SubGroups []ConnectivityValidationSubGroup
 }
+
 const ConnectivityValidationGroup_ID_HLM = "HLM"
 const ConnectivityValidationGroup_ID_DRAAS = "DRAAS"
 
-func (s ConnectivityValidationGroup) GetType__() bindings.BindingType {
+func (s *ConnectivityValidationGroup) GetType__() bindings.BindingType {
 	return ConnectivityValidationGroupBindingType()
 }
 
-func (s ConnectivityValidationGroup) GetDataValue__() (data.DataValue, []error) {
+func (s *ConnectivityValidationGroup) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1062,17 +1068,16 @@ func (s ConnectivityValidationGroup) GetDataValue__() (data.DataValue, []error) 
 	return dataVal, nil
 }
 
-
 type ConnectivityValidationGroups struct {
-    // List of groups.
+	// List of groups.
 	Groups []ConnectivityValidationGroup
 }
 
-func (s ConnectivityValidationGroups) GetType__() bindings.BindingType {
+func (s *ConnectivityValidationGroups) GetType__() bindings.BindingType {
 	return ConnectivityValidationGroupsBindingType()
 }
 
-func (s ConnectivityValidationGroups) GetDataValue__() (data.DataValue, []error) {
+func (s *ConnectivityValidationGroups) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1084,30 +1089,30 @@ func (s ConnectivityValidationGroups) GetDataValue__() (data.DataValue, []error)
 	return dataVal, nil
 }
 
-
 type ConnectivityValidationInput struct {
-    // Possible values are: 
-    //
-    // * ConnectivityValidationInput#ConnectivityValidationInput_ID_HOSTNAME
-    // * ConnectivityValidationInput#ConnectivityValidationInput_ID_HOST_IP
-    // * ConnectivityValidationInput#ConnectivityValidationInput_ID_HOSTNAME_OR_IP
-    //
-    //  input value type, i.e. HOSTNAME_OR_IP, HOST_IP, HOSTNAME. Accept FQDN or IP address as input value when id = HOSTNAME_OR_IP, accept FQDN ONLY when id = HOSTNAME, accept IP address ONLY when id = HOST_IP.
+	// Possible values are:
+	//
+	// * ConnectivityValidationInput#ConnectivityValidationInput_ID_HOSTNAME
+	// * ConnectivityValidationInput#ConnectivityValidationInput_ID_HOST_IP
+	// * ConnectivityValidationInput#ConnectivityValidationInput_ID_HOSTNAME_OR_IP
+	//
+	//  input value type, i.e. HOSTNAME_OR_IP, HOST_IP, HOSTNAME. Accept FQDN or IP address as input value when id = HOSTNAME_OR_IP, accept FQDN ONLY when id = HOSTNAME, accept IP address ONLY when id = HOST_IP.
 	Id *string
-    // the FQDN or IP address to run the test against, use \\#primary-dns or \\#secondary-dns as the on-prem primary/secondary DNS server IP.
+	// the FQDN or IP address to run the test against, use \\#primary-dns or \\#secondary-dns as the on-prem primary/secondary DNS server IP.
 	Value *string
-    // (Optional, for UI display only) input value label.
+	// (Optional, for UI display only) input value label.
 	Label *string
 }
+
 const ConnectivityValidationInput_ID_HOSTNAME = "HOSTNAME"
 const ConnectivityValidationInput_ID_HOST_IP = "HOST_IP"
 const ConnectivityValidationInput_ID_HOSTNAME_OR_IP = "HOSTNAME_OR_IP"
 
-func (s ConnectivityValidationInput) GetType__() bindings.BindingType {
+func (s *ConnectivityValidationInput) GetType__() bindings.BindingType {
 	return ConnectivityValidationInputBindingType()
 }
 
-func (s ConnectivityValidationInput) GetDataValue__() (data.DataValue, []error) {
+func (s *ConnectivityValidationInput) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1119,32 +1124,32 @@ func (s ConnectivityValidationInput) GetDataValue__() (data.DataValue, []error) 
 	return dataVal, nil
 }
 
-
 type ConnectivityValidationSubGroup struct {
-    // List of user inputs for the sub group.
+	// List of user inputs for the sub group.
 	Inputs []ConnectivityValidationInput
-    // List of connectivity tests.
+	// List of connectivity tests.
 	Tests []ConnectivityAgentValidation
-    // Name of the sub-group.
+	// Name of the sub-group.
 	Label *string
-    // Help text.
+	// Help text.
 	Help *string
-    // Possible values are: 
-    //
-    // * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_PRIMARY_DNS
-    // * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_SECONDARY_DNS
-    // * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_ONPREM_VCENTER
-    // * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_ONPREM_PSC
-    // * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_ACTIVE_DIRECTORY
-    // * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_ONPREM_ESX
-    // * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_DRAAS_ONPREM_VCENTER
-    // * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_DRAAS_ONPREM_PSC
-    // * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_DRAAS_ONPREM_SRM
-    // * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_DRAAS_ONPREM_VR
-    //
-    //  subGroup id, i.e. PRIMARY_DNS, SECONDARY_DNS, ONPREM_VCENTER, ONPREM_PSC, ACTIVE_DIRECTORY, ONPREM_ESX, DRAAS_ONPREM_VCENTER, DRAAS_ONPREM_PSC, DRAAS_ONPREM_SRM and DRAAS_ONPREM_VR.
+	// Possible values are:
+	//
+	// * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_PRIMARY_DNS
+	// * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_SECONDARY_DNS
+	// * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_ONPREM_VCENTER
+	// * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_ONPREM_PSC
+	// * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_ACTIVE_DIRECTORY
+	// * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_ONPREM_ESX
+	// * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_DRAAS_ONPREM_VCENTER
+	// * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_DRAAS_ONPREM_PSC
+	// * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_DRAAS_ONPREM_SRM
+	// * ConnectivityValidationSubGroup#ConnectivityValidationSubGroup_ID_DRAAS_ONPREM_VR
+	//
+	//  subGroup id, i.e. PRIMARY_DNS, SECONDARY_DNS, ONPREM_VCENTER, ONPREM_PSC, ACTIVE_DIRECTORY, ONPREM_ESX, DRAAS_ONPREM_VCENTER, DRAAS_ONPREM_PSC, DRAAS_ONPREM_SRM and DRAAS_ONPREM_VR.
 	Id *string
 }
+
 const ConnectivityValidationSubGroup_ID_PRIMARY_DNS = "PRIMARY_DNS"
 const ConnectivityValidationSubGroup_ID_SECONDARY_DNS = "SECONDARY_DNS"
 const ConnectivityValidationSubGroup_ID_ONPREM_VCENTER = "ONPREM_VCENTER"
@@ -1156,11 +1161,11 @@ const ConnectivityValidationSubGroup_ID_DRAAS_ONPREM_PSC = "DRAAS_ONPREM_PSC"
 const ConnectivityValidationSubGroup_ID_DRAAS_ONPREM_SRM = "DRAAS_ONPREM_SRM"
 const ConnectivityValidationSubGroup_ID_DRAAS_ONPREM_VR = "DRAAS_ONPREM_VR"
 
-func (s ConnectivityValidationSubGroup) GetType__() bindings.BindingType {
+func (s *ConnectivityValidationSubGroup) GetType__() bindings.BindingType {
 	return ConnectivityValidationSubGroupBindingType()
 }
 
-func (s ConnectivityValidationSubGroup) GetDataValue__() (data.DataValue, []error) {
+func (s *ConnectivityValidationSubGroup) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1172,22 +1177,21 @@ func (s ConnectivityValidationSubGroup) GetDataValue__() (data.DataValue, []erro
 	return dataVal, nil
 }
 
-
 // Indicates a single cross-account ENI and its characteristics.
 type CustomerEniInfo struct {
-    // Indicates list of secondary IP created for this ENI.
+	// Indicates list of secondary IP created for this ENI.
 	SecondaryIpAddresses []string
-    // Interface ID on customer account.
+	// Interface ID on customer account.
 	EniId *string
-    // Indicates primary address of the ENI.
+	// Indicates primary address of the ENI.
 	PrimaryIpAddress *string
 }
 
-func (s CustomerEniInfo) GetType__() bindings.BindingType {
+func (s *CustomerEniInfo) GetType__() bindings.BindingType {
 	return CustomerEniInfoBindingType()
 }
 
-func (s CustomerEniInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *CustomerEniInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1199,18 +1203,17 @@ func (s CustomerEniInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // information for EBS-backed VSAN configuration
 type EbsBackedVsanConfig struct {
-    // instance type for EBS-backed VSAN configuration
+	// instance type for EBS-backed VSAN configuration
 	InstanceType *string
 }
 
-func (s EbsBackedVsanConfig) GetType__() bindings.BindingType {
+func (s *EbsBackedVsanConfig) GetType__() bindings.BindingType {
 	return EbsBackedVsanConfigBindingType()
 }
 
-func (s EbsBackedVsanConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *EbsBackedVsanConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1222,26 +1225,47 @@ func (s EbsBackedVsanConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+type EnablementInfo struct {
+	Enabled bool
+	// Add-on name, for example \"hcx\", \"drass\", skynet\". If it is \"default\", the value of enabled is for default settings of future add-ons.
+	Name string
+}
+
+func (s *EnablementInfo) GetType__() bindings.BindingType {
+	return EnablementInfoBindingType()
+}
+
+func (s *EnablementInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for EnablementInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
 
 // Information of the x-eni created.
 type EniInfo struct {
-    // Subnet it belongs to.
+	// Subnet it belongs to.
 	SubnetId *string
-    // Interface ID.
+	// Interface ID.
 	Id *string
-    // Security Group of Eni.
+	// Security Group of Eni.
 	SecurityGroupId *string
-    // Private ip of eni.
+	// Private ip of eni.
 	PrivateIp *string
-    // Mac address of nic.
+	// Mac address of nic.
 	MacAddress *string
 }
 
-func (s EniInfo) GetType__() bindings.BindingType {
+func (s *EniInfo) GetType__() bindings.BindingType {
 	return EniInfoBindingType()
 }
 
-func (s EniInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *EniInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1253,28 +1277,27 @@ func (s EniInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Decribes the capacity of a given entity.
 type EntityCapacity struct {
-    // The storage capacity for the given entity in GiB.
+	// The storage capacity for the given entity in GiB.
 	StorageCapacityGib *int64
-    // The memory capacity for the given entity in GiB.
+	// The memory capacity for the given entity in GiB.
 	MemoryCapacityGib *int64
-    // The number of CPU cores for the given entity.
+	// The number of CPU cores for the given entity.
 	TotalNumberOfCores *int64
-    // The number of SSDs for the given entity.
+	// The number of SSDs for the given entity.
 	NumberOfSsds *int64
-    // The CPU capacity for the given entity in Ghz.
+	// The CPU capacity for the given entity in Ghz.
 	CpuCapacityGhz *float64
-    // The number of sockets for the given entity.
+	// The number of sockets for the given entity.
 	NumberOfSockets *int64
 }
 
-func (s EntityCapacity) GetType__() bindings.BindingType {
+func (s *EntityCapacity) GetType__() bindings.BindingType {
 	return EntityCapacityBindingType()
 }
 
-func (s EntityCapacity) GetDataValue__() (data.DataValue, []error) {
+func (s *EntityCapacity) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1286,25 +1309,24 @@ func (s EntityCapacity) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type ErrorResponse struct {
-    // HTTP status code
+	// HTTP status code
 	Status int64
-    // Originating request URI
+	// Originating request URI
 	Path string
-    // If true, client should retry operation
+	// If true, client should retry operation
 	Retryable bool
-    // unique error code
+	// unique error code
 	ErrorCode string
-    // localized error messages
+	// localized error messages
 	ErrorMessages []string
 }
 
-func (s ErrorResponse) GetType__() bindings.BindingType {
+func (s *ErrorResponse) GetType__() bindings.BindingType {
 	return ErrorResponseBindingType()
 }
 
-func (s ErrorResponse) GetDataValue__() (data.DataValue, []error) {
+func (s *ErrorResponse) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1316,24 +1338,23 @@ func (s ErrorResponse) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type EsxConfig struct {
-    // Availability zone where the hosts should be provisioned. (Can be specified only for privileged host operations).
+	// Availability zone where the hosts should be provisioned. (Can be specified only for privileged host operations).
 	AvailabilityZone *string
-    // An option to indicate if the host needs to be strictly placed in a placement group. Fail the operation otherwise.
+	// An option to indicate if the host needs to be strictly placed in a placement group. Fail the operation otherwise.
 	StrictPlacement *bool
-    // An optional cluster id if the esxs operation has to be on a specific cluster.
+	// An optional cluster id if the esxs operation has to be on a specific cluster.
 	ClusterId *string
-    // An optional list of ESX IDs to remove. format: UUID
-	Esxs []string
+	// An optional list of ESX IDs to remove. format: UUID
+	Esxs     []string
 	NumHosts int64
 }
 
-func (s EsxConfig) GetType__() bindings.BindingType {
+func (s *EsxConfig) GetType__() bindings.BindingType {
 	return EsxConfigBindingType()
 }
 
-func (s EsxConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *EsxConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1345,33 +1366,33 @@ func (s EsxConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type EsxHost struct {
 	Name *string
-    // Availability zone where the host is provisioned.
+	// Availability zone where the host is provisioned.
 	AvailabilityZone *string
-	EsxId *string
-	Hostname *string
-	Provider string
-    // Backing cloud provider instance type for host.
-	InstanceType *string
-	MacAddress *string
+	EsxId            *string
+	Hostname         *string
+	Provider         string
+	// Backing cloud provider instance type for host.
+	InstanceType     *string
+	MacAddress       *string
 	CustomProperties map[string]string
-    // Possible values are: 
-    //
-    // * EsxHost#EsxHost_ESX_STATE_DEPLOYING
-    // * EsxHost#EsxHost_ESX_STATE_INITIALIZING
-    // * EsxHost#EsxHost_ESX_STATE_PROVISIONED
-    // * EsxHost#EsxHost_ESX_STATE_READY
-    // * EsxHost#EsxHost_ESX_STATE_DELETING
-    // * EsxHost#EsxHost_ESX_STATE_DELETED
-    // * EsxHost#EsxHost_ESX_STATE_FAILED
-    // * EsxHost#EsxHost_ESX_STATE_ADDING_TO_VCENTER
-    // * EsxHost#EsxHost_ESX_STATE_DELETING_FROM_VCENTER
-    // * EsxHost#EsxHost_ESX_STATE_PENDING_CLOUD_DELETION
+	// Possible values are:
+	//
+	// * EsxHost#EsxHost_ESX_STATE_DEPLOYING
+	// * EsxHost#EsxHost_ESX_STATE_INITIALIZING
+	// * EsxHost#EsxHost_ESX_STATE_PROVISIONED
+	// * EsxHost#EsxHost_ESX_STATE_READY
+	// * EsxHost#EsxHost_ESX_STATE_DELETING
+	// * EsxHost#EsxHost_ESX_STATE_DELETED
+	// * EsxHost#EsxHost_ESX_STATE_FAILED
+	// * EsxHost#EsxHost_ESX_STATE_ADDING_TO_VCENTER
+	// * EsxHost#EsxHost_ESX_STATE_DELETING_FROM_VCENTER
+	// * EsxHost#EsxHost_ESX_STATE_PENDING_CLOUD_DELETION
 	EsxState *string
 }
-// Identifier denoting this class, when it is used in polymorphic context. 
+
+// Identifier denoting this class, when it is used in polymorphic context.
 //
 // This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
 const EsxHost__TYPE_IDENTIFIER = "EsxHost"
@@ -1386,11 +1407,11 @@ const EsxHost_ESX_STATE_ADDING_TO_VCENTER = "ADDING_TO_VCENTER"
 const EsxHost_ESX_STATE_DELETING_FROM_VCENTER = "DELETING_FROM_VCENTER"
 const EsxHost_ESX_STATE_PENDING_CLOUD_DELETION = "PENDING_CLOUD_DELETION"
 
-func (s EsxHost) GetType__() bindings.BindingType {
+func (s *EsxHost) GetType__() bindings.BindingType {
 	return EsxHostBindingType()
 }
 
-func (s EsxHost) GetDataValue__() (data.DataValue, []error) {
+func (s *EsxHost) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1402,17 +1423,16 @@ func (s EsxHost) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type EsxHostInfo struct {
-    // Backing cloud provider instance type for cluster.
+	// Backing cloud provider instance type for cluster.
 	InstanceType *string
 }
 
-func (s EsxHostInfo) GetType__() bindings.BindingType {
+func (s *EsxHostInfo) GetType__() bindings.BindingType {
 	return EsxHostInfoBindingType()
 }
 
-func (s EsxHostInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *EsxHostInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1424,44 +1444,44 @@ func (s EsxHostInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type FirewallRule struct {
-    // Possible values are: 
-    //
-    // * FirewallRule#FirewallRule_RULE_TYPE_USER
-    // * FirewallRule#FirewallRule_RULE_TYPE_DEFAULT
-	RuleType *string
+	// Possible values are:
+	//
+	// * FirewallRule#FirewallRule_RULE_TYPE_USER
+	// * FirewallRule#FirewallRule_RULE_TYPE_DEFAULT
+	RuleType       *string
 	ApplicationIds []string
-	Name *string
-    // Deprecated, left for backwards compatibility. Remove once UI stops using it.
+	Name           *string
+	// Deprecated, left for backwards compatibility. Remove once UI stops using it.
 	RuleInterface *string
-    // Optional. Possible formats are IP, IP1-IPn, CIDR or comma separated list of those entries. If not specified, defaults to 'any'.
-	Destination *string
-	Id *string
+	// Optional. Possible formats are IP, IP1-IPn, CIDR or comma separated list of those entries. If not specified, defaults to 'any'.
+	Destination      *string
+	Id               *string
 	DestinationScope *FirewallRuleScope
-    // Optional. Possible formats are IP, IP1-IPn, CIDR or comma separated list of those entries. If not specified, defaults to 'any'.
-	Source *string
+	// Optional. Possible formats are IP, IP1-IPn, CIDR or comma separated list of those entries. If not specified, defaults to 'any'.
+	Source      *string
 	SourceScope *FirewallRuleScope
-    // list of protocols and ports for this firewall rule
+	// list of protocols and ports for this firewall rule
 	Services []FirewallService
-    // Possible values are: 
-    //
-    // * FirewallRule#FirewallRule_ACTION_ALLOW
-    // * FirewallRule#FirewallRule_ACTION_DENY
+	// Possible values are:
+	//
+	// * FirewallRule#FirewallRule_ACTION_ALLOW
+	// * FirewallRule#FirewallRule_ACTION_DENY
 	Action *string
-    // current revision of the list of firewall rules, used to protect against concurrent modification (first writer wins) format: int32
+	// current revision of the list of firewall rules, used to protect against concurrent modification (first writer wins) format: int32
 	Revision *int64
 }
+
 const FirewallRule_RULE_TYPE_USER = "USER"
 const FirewallRule_RULE_TYPE_DEFAULT = "DEFAULT"
 const FirewallRule_ACTION_ALLOW = "ALLOW"
 const FirewallRule_ACTION_DENY = "DENY"
 
-func (s FirewallRule) GetType__() bindings.BindingType {
+func (s *FirewallRule) GetType__() bindings.BindingType {
 	return FirewallRuleBindingType()
 }
 
-func (s FirewallRule) GetDataValue__() (data.DataValue, []error) {
+func (s *FirewallRule) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1473,27 +1493,27 @@ func (s FirewallRule) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Optional for FirewallRule. If not specified, defaults to 'any'.
 type FirewallRuleScope struct {
 	GroupingObjectIds []string
-    // Possible values are: 
-    //
-    // * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VSE
-    // * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_INTERNAL
-    // * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_EXTERNAL
-    // * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_0
-    // * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_1
-    // * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_2
-    // * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_3
-    // * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_4
-    // * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_5
-    // * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_6
-    // * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_7
-    // * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_8
-    // * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_9
+	// Possible values are:
+	//
+	// * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VSE
+	// * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_INTERNAL
+	// * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_EXTERNAL
+	// * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_0
+	// * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_1
+	// * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_2
+	// * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_3
+	// * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_4
+	// * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_5
+	// * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_6
+	// * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_7
+	// * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_8
+	// * FirewallRuleScope#FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_9
 	VnicGroupIds []string
 }
+
 const FirewallRuleScope_VNIC_GROUP_IDS_VSE = "vse"
 const FirewallRuleScope_VNIC_GROUP_IDS_INTERNAL = "internal"
 const FirewallRuleScope_VNIC_GROUP_IDS_EXTERNAL = "external"
@@ -1508,11 +1528,11 @@ const FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_7 = "vnic-index-7"
 const FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_8 = "vnic-index-8"
 const FirewallRuleScope_VNIC_GROUP_IDS_VNIC_INDEX_9 = "vnic-index-9"
 
-func (s FirewallRuleScope) GetType__() bindings.BindingType {
+func (s *FirewallRuleScope) GetType__() bindings.BindingType {
 	return FirewallRuleScopeBindingType()
 }
 
-func (s FirewallRuleScope) GetDataValue__() (data.DataValue, []error) {
+func (s *FirewallRuleScope) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1524,19 +1544,18 @@ func (s FirewallRuleScope) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type FirewallService struct {
-    // protocol name, such as 'tcp', 'udp' etc.
+	// protocol name, such as 'tcp', 'udp' etc.
 	Protocol *string
-    // a list of port numbers and port ranges, such as {80, 91-95, 99}. If not specified, defaults to 'any'.
+	// a list of port numbers and port ranges, such as {80, 91-95, 99}. If not specified, defaults to 'any'.
 	Ports []string
 }
 
-func (s FirewallService) GetType__() bindings.BindingType {
+func (s *FirewallService) GetType__() bindings.BindingType {
 	return FirewallServiceBindingType()
 }
 
-func (s FirewallService) GetDataValue__() (data.DataValue, []error) {
+func (s *FirewallService) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1548,21 +1567,20 @@ func (s FirewallService) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Describes common properties for MGW and CGW configuration templates
 type GatewayTemplate struct {
-	PublicIp *SddcPublicIp
-	PrimaryDns *string
-	SecondaryDns *string
+	PublicIp      *SddcPublicIp
+	PrimaryDns    *string
+	SecondaryDns  *string
 	FirewallRules []FirewallRule
-	Vpns []Vpn
+	Vpns          []Vpn
 }
 
-func (s GatewayTemplate) GetType__() bindings.BindingType {
+func (s *GatewayTemplate) GetType__() bindings.BindingType {
 	return GatewayTemplateBindingType()
 }
 
-func (s GatewayTemplate) GetDataValue__() (data.DataValue, []error) {
+func (s *GatewayTemplate) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1574,20 +1592,19 @@ func (s GatewayTemplate) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // the GlcmBundle used for deploying the sddc
 type GlcmBundle struct {
-    // the glcmbundle's s3 bucket
+	// the glcmbundle's s3 bucket
 	S3Bucket *string
-    // the glcmbundle's id
+	// the glcmbundle's id
 	Id *string
 }
 
-func (s GlcmBundle) GetType__() bindings.BindingType {
+func (s *GlcmBundle) GetType__() bindings.BindingType {
 	return GlcmBundleBindingType()
 }
 
-func (s GlcmBundle) GetDataValue__() (data.DataValue, []error) {
+func (s *GlcmBundle) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1599,24 +1616,23 @@ func (s GlcmBundle) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Represents a structure for instance type config
 type InstanceTypeConfig struct {
-    // Instance type name.
+	// Instance type name.
 	InstanceType *string
-    // Array of number of hosts allowed for this operation. Range of hosts user can select for sddc provision
+	// Array of number of hosts allowed for this operation. Range of hosts user can select for sddc provision
 	Hosts []int64
-    // Display name of instance_type.
+	// Display name of instance_type.
 	DisplayName *string
-    // The capacity of the given instance type.
+	// The capacity of the given instance type.
 	EntityCapacity *EntityCapacity
 }
 
-func (s InstanceTypeConfig) GetType__() bindings.BindingType {
+func (s *InstanceTypeConfig) GetType__() bindings.BindingType {
 	return InstanceTypeConfigBindingType()
 }
 
-func (s InstanceTypeConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *InstanceTypeConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1628,18 +1644,17 @@ func (s InstanceTypeConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type KmsVpcEndpoint struct {
-    // The identifier of the VPC endpoint created to AWS Key Management Service
-	VpcEndpointId *string
+	// The identifier of the VPC endpoint created to AWS Key Management Service
+	VpcEndpointId       *string
 	NetworkInterfaceIds []string
 }
 
-func (s KmsVpcEndpoint) GetType__() bindings.BindingType {
+func (s *KmsVpcEndpoint) GetType__() bindings.BindingType {
 	return KmsVpcEndpointBindingType()
 }
 
-func (s KmsVpcEndpoint) GetDataValue__() (data.DataValue, []error) {
+func (s *KmsVpcEndpoint) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1651,21 +1666,20 @@ func (s KmsVpcEndpoint) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type L2Vpn struct {
-    // Enable (true) or disable (false) L2 VPN.
+	// Enable (true) or disable (false) L2 VPN.
 	Enabled *bool
-    // Array of L2 vpn site config.
+	// Array of L2 vpn site config.
 	Sites []Site
-    // Public uplink ip address. IP of external interface on which L2VPN service listens to.
+	// Public uplink ip address. IP of external interface on which L2VPN service listens to.
 	ListenerIp *string
 }
 
-func (s L2Vpn) GetType__() bindings.BindingType {
+func (s *L2Vpn) GetType__() bindings.BindingType {
 	return L2VpnBindingType()
 }
 
-func (s L2Vpn) GetDataValue__() (data.DataValue, []error) {
+func (s *L2Vpn) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1677,37 +1691,37 @@ func (s L2Vpn) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type LogicalNetwork struct {
-    // the subnet cidr
+	// the subnet cidr
 	SubnetCidr *string
-    // name of the network
+	// name of the network
 	Name *string
-    // gateway ip of the logical network
+	// gateway ip of the logical network
 	GatewayIp *string
-    // if 'true' - enabled; if 'false' - disabled
+	// if 'true' - enabled; if 'false' - disabled
 	DhcpEnabled *string
-    // ip range within the subnet mask, range delimiter is '-' (example 10.118.10.130-10.118.10.140)
+	// ip range within the subnet mask, range delimiter is '-' (example 10.118.10.130-10.118.10.140)
 	DhcpIpRange *string
-    // tunnel id of extended network format: int32
+	// tunnel id of extended network format: int32
 	TunnelId *int64
-	Id *string
-    // Possible values are: 
-    //
-    // * LogicalNetwork#LogicalNetwork_NETWORK_TYPE_HOSTED
-    // * LogicalNetwork#LogicalNetwork_NETWORK_TYPE_ROUTED
-    // * LogicalNetwork#LogicalNetwork_NETWORK_TYPE_EXTENDED
+	Id       *string
+	// Possible values are:
+	//
+	// * LogicalNetwork#LogicalNetwork_NETWORK_TYPE_HOSTED
+	// * LogicalNetwork#LogicalNetwork_NETWORK_TYPE_ROUTED
+	// * LogicalNetwork#LogicalNetwork_NETWORK_TYPE_EXTENDED
 	NetworkType *string
 }
+
 const LogicalNetwork_NETWORK_TYPE_HOSTED = "HOSTED"
 const LogicalNetwork_NETWORK_TYPE_ROUTED = "ROUTED"
 const LogicalNetwork_NETWORK_TYPE_EXTENDED = "EXTENDED"
 
-func (s LogicalNetwork) GetType__() bindings.BindingType {
+func (s *LogicalNetwork) GetType__() bindings.BindingType {
 	return LogicalNetworkBindingType()
 }
 
-func (s LogicalNetwork) GetDataValue__() (data.DataValue, []error) {
+func (s *LogicalNetwork) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1719,20 +1733,20 @@ func (s LogicalNetwork) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type MaintenanceWindow struct {
-    // Possible values are: 
-    //
-    // * MaintenanceWindow#MaintenanceWindow_DAY_OF_WEEK_SUNDAY
-    // * MaintenanceWindow#MaintenanceWindow_DAY_OF_WEEK_MONDAY
-    // * MaintenanceWindow#MaintenanceWindow_DAY_OF_WEEK_TUESDAY
-    // * MaintenanceWindow#MaintenanceWindow_DAY_OF_WEEK_WEDNESDAY
-    // * MaintenanceWindow#MaintenanceWindow_DAY_OF_WEEK_THURSDAY
-    // * MaintenanceWindow#MaintenanceWindow_DAY_OF_WEEK_FRIDAY
-    // * MaintenanceWindow#MaintenanceWindow_DAY_OF_WEEK_SATURDAY
+	// Possible values are:
+	//
+	// * MaintenanceWindow#MaintenanceWindow_DAY_OF_WEEK_SUNDAY
+	// * MaintenanceWindow#MaintenanceWindow_DAY_OF_WEEK_MONDAY
+	// * MaintenanceWindow#MaintenanceWindow_DAY_OF_WEEK_TUESDAY
+	// * MaintenanceWindow#MaintenanceWindow_DAY_OF_WEEK_WEDNESDAY
+	// * MaintenanceWindow#MaintenanceWindow_DAY_OF_WEEK_THURSDAY
+	// * MaintenanceWindow#MaintenanceWindow_DAY_OF_WEEK_FRIDAY
+	// * MaintenanceWindow#MaintenanceWindow_DAY_OF_WEEK_SATURDAY
 	DayOfWeek *string
 	HourOfDay *int64
 }
+
 const MaintenanceWindow_DAY_OF_WEEK_SUNDAY = "SUNDAY"
 const MaintenanceWindow_DAY_OF_WEEK_MONDAY = "MONDAY"
 const MaintenanceWindow_DAY_OF_WEEK_TUESDAY = "TUESDAY"
@@ -1741,11 +1755,11 @@ const MaintenanceWindow_DAY_OF_WEEK_THURSDAY = "THURSDAY"
 const MaintenanceWindow_DAY_OF_WEEK_FRIDAY = "FRIDAY"
 const MaintenanceWindow_DAY_OF_WEEK_SATURDAY = "SATURDAY"
 
-func (s MaintenanceWindow) GetType__() bindings.BindingType {
+func (s *MaintenanceWindow) GetType__() bindings.BindingType {
 	return MaintenanceWindowBindingType()
 }
 
-func (s MaintenanceWindow) GetDataValue__() (data.DataValue, []error) {
+func (s *MaintenanceWindow) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1757,24 +1771,23 @@ func (s MaintenanceWindow) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type MaintenanceWindowEntry struct {
-    // true if the SDDC is in the defined Mainentance Window
+	// true if the SDDC is in the defined Mainentance Window
 	InMaintenanceWindow *bool
 	ReservationSchedule *ReservationSchedule
-    // ID for reservation format: uuid
+	// ID for reservation format: uuid
 	ReservationId *string
-    // true if the SDDC is currently undergoing maintenance
+	// true if the SDDC is currently undergoing maintenance
 	InMaintenanceMode *bool
-    // SDDC ID for this reservation format: uuid
+	// SDDC ID for this reservation format: uuid
 	SddcId *string
 }
 
-func (s MaintenanceWindowEntry) GetType__() bindings.BindingType {
+func (s *MaintenanceWindowEntry) GetType__() bindings.BindingType {
 	return MaintenanceWindowEntryBindingType()
 }
 
-func (s MaintenanceWindowEntry) GetDataValue__() (data.DataValue, []error) {
+func (s *MaintenanceWindowEntry) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1786,22 +1799,22 @@ func (s MaintenanceWindowEntry) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type MaintenanceWindowGet struct {
-    // Possible values are: 
-    //
-    // * MaintenanceWindowGet#MaintenanceWindowGet_DAY_OF_WEEK_SUNDAY
-    // * MaintenanceWindowGet#MaintenanceWindowGet_DAY_OF_WEEK_MONDAY
-    // * MaintenanceWindowGet#MaintenanceWindowGet_DAY_OF_WEEK_TUESDAY
-    // * MaintenanceWindowGet#MaintenanceWindowGet_DAY_OF_WEEK_WEDNESDAY
-    // * MaintenanceWindowGet#MaintenanceWindowGet_DAY_OF_WEEK_THURSDAY
-    // * MaintenanceWindowGet#MaintenanceWindowGet_DAY_OF_WEEK_FRIDAY
-    // * MaintenanceWindowGet#MaintenanceWindowGet_DAY_OF_WEEK_SATURDAY
-	DayOfWeek *string
-	HourOfDay *int64
+	// Possible values are:
+	//
+	// * MaintenanceWindowGet#MaintenanceWindowGet_DAY_OF_WEEK_SUNDAY
+	// * MaintenanceWindowGet#MaintenanceWindowGet_DAY_OF_WEEK_MONDAY
+	// * MaintenanceWindowGet#MaintenanceWindowGet_DAY_OF_WEEK_TUESDAY
+	// * MaintenanceWindowGet#MaintenanceWindowGet_DAY_OF_WEEK_WEDNESDAY
+	// * MaintenanceWindowGet#MaintenanceWindowGet_DAY_OF_WEEK_THURSDAY
+	// * MaintenanceWindowGet#MaintenanceWindowGet_DAY_OF_WEEK_FRIDAY
+	// * MaintenanceWindowGet#MaintenanceWindowGet_DAY_OF_WEEK_SATURDAY
+	DayOfWeek   *string
+	HourOfDay   *int64
 	DurationMin *int64
-	Version *int64
+	Version     *int64
 }
+
 const MaintenanceWindowGet_DAY_OF_WEEK_SUNDAY = "SUNDAY"
 const MaintenanceWindowGet_DAY_OF_WEEK_MONDAY = "MONDAY"
 const MaintenanceWindowGet_DAY_OF_WEEK_TUESDAY = "TUESDAY"
@@ -1810,11 +1823,11 @@ const MaintenanceWindowGet_DAY_OF_WEEK_THURSDAY = "THURSDAY"
 const MaintenanceWindowGet_DAY_OF_WEEK_FRIDAY = "FRIDAY"
 const MaintenanceWindowGet_DAY_OF_WEEK_SATURDAY = "SATURDAY"
 
-func (s MaintenanceWindowGet) GetType__() bindings.BindingType {
+func (s *MaintenanceWindowGet) GetType__() bindings.BindingType {
 	return MaintenanceWindowGetBindingType()
 }
 
-func (s MaintenanceWindowGet) GetDataValue__() (data.DataValue, []error) {
+func (s *MaintenanceWindowGet) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1826,22 +1839,21 @@ func (s MaintenanceWindowGet) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type ManagementGatewayTemplate struct {
-	PublicIp *SddcPublicIp
-	PrimaryDns *string
-	SecondaryDns *string
+	PublicIp      *SddcPublicIp
+	PrimaryDns    *string
+	SecondaryDns  *string
 	FirewallRules []FirewallRule
-	Vpns []Vpn
-    // mgw network subnet cidr
+	Vpns          []Vpn
+	// mgw network subnet cidr
 	SubnetCidr *string
 }
 
-func (s ManagementGatewayTemplate) GetType__() bindings.BindingType {
+func (s *ManagementGatewayTemplate) GetType__() bindings.BindingType {
 	return ManagementGatewayTemplateBindingType()
 }
 
-func (s ManagementGatewayTemplate) GetDataValue__() (data.DataValue, []error) {
+func (s *ManagementGatewayTemplate) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1853,21 +1865,20 @@ func (s ManagementGatewayTemplate) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type MapZonesRequest struct {
-    // The connected account ID to remap. This is a standard UUID.
+	// The connected account ID to remap. This is a standard UUID.
 	ConnectedAccountId *string
-    // The org ID to remap in. This is a standard UUID.
+	// The org ID to remap in. This is a standard UUID.
 	OrgId *string
-    // A list of Petronas regions to map.
+	// A list of Petronas regions to map.
 	PetronasRegionsToMap []string
 }
 
-func (s MapZonesRequest) GetType__() bindings.BindingType {
+func (s *MapZonesRequest) GetType__() bindings.BindingType {
 	return MapZonesRequestBindingType()
 }
 
-func (s MapZonesRequest) GetDataValue__() (data.DataValue, []error) {
+func (s *MapZonesRequest) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1879,20 +1890,19 @@ func (s MapZonesRequest) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // metadata of the sddc manifest
 type Metadata struct {
-    // the timestamp for the bundle
+	// the timestamp for the bundle
 	Timestamp *string
-    // the cycle id
+	// the cycle id
 	CycleId *string
 }
 
-func (s Metadata) GetType__() bindings.BindingType {
+func (s *Metadata) GetType__() bindings.BindingType {
 	return MetadataBindingType()
 }
 
-func (s Metadata) GetDataValue__() (data.DataValue, []error) {
+func (s *Metadata) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1904,25 +1914,25 @@ func (s Metadata) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type MsftLicensingConfig struct {
-    // Possible values are: 
-    //
-    // * MsftLicensingConfig#MsftLicensingConfig_MSSQL_LICENSING_DISABLED
-    // * MsftLicensingConfig#MsftLicensingConfig_MSSQL_LICENSING_CUSTOMER_SUPPLIED
-    // * MsftLicensingConfig#MsftLicensingConfig_MSSQL_LICENSING_ENABLED
-    //
-    //  The status MSSQL licensing for this SDDC's clusters.
+	// Possible values are:
+	//
+	// * MsftLicensingConfig#MsftLicensingConfig_MSSQL_LICENSING_DISABLED
+	// * MsftLicensingConfig#MsftLicensingConfig_MSSQL_LICENSING_CUSTOMER_SUPPLIED
+	// * MsftLicensingConfig#MsftLicensingConfig_MSSQL_LICENSING_ENABLED
+	//
+	//  The status MSSQL licensing for this SDDC's clusters.
 	MssqlLicensing *string
-    // Possible values are: 
-    //
-    // * MsftLicensingConfig#MsftLicensingConfig_WINDOWS_LICENSING_DISABLED
-    // * MsftLicensingConfig#MsftLicensingConfig_WINDOWS_LICENSING_CUSTOMER_SUPPLIED
-    // * MsftLicensingConfig#MsftLicensingConfig_WINDOWS_LICENSING_ENABLED
-    //
-    //  The status of Windows licensing for this SDDC's clusters. Can be enabled, disabled, or customer's.
+	// Possible values are:
+	//
+	// * MsftLicensingConfig#MsftLicensingConfig_WINDOWS_LICENSING_DISABLED
+	// * MsftLicensingConfig#MsftLicensingConfig_WINDOWS_LICENSING_CUSTOMER_SUPPLIED
+	// * MsftLicensingConfig#MsftLicensingConfig_WINDOWS_LICENSING_ENABLED
+	//
+	//  The status of Windows licensing for this SDDC's clusters. Can be enabled, disabled, or customer's.
 	WindowsLicensing *string
 }
+
 const MsftLicensingConfig_MSSQL_LICENSING_DISABLED = "DISABLED"
 const MsftLicensingConfig_MSSQL_LICENSING_CUSTOMER_SUPPLIED = "CUSTOMER_SUPPLIED"
 const MsftLicensingConfig_MSSQL_LICENSING_ENABLED = "ENABLED"
@@ -1930,11 +1940,11 @@ const MsftLicensingConfig_WINDOWS_LICENSING_DISABLED = "DISABLED"
 const MsftLicensingConfig_WINDOWS_LICENSING_CUSTOMER_SUPPLIED = "CUSTOMER_SUPPLIED"
 const MsftLicensingConfig_WINDOWS_LICENSING_ENABLED = "ENABLED"
 
-func (s MsftLicensingConfig) GetType__() bindings.BindingType {
+func (s *MsftLicensingConfig) GetType__() bindings.BindingType {
 	return MsftLicensingConfigBindingType()
 }
 
-func (s MsftLicensingConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *MsftLicensingConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1946,32 +1956,32 @@ func (s MsftLicensingConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type NatRule struct {
-	RuleType *string
-	Protocol *string
-	Name *string
+	RuleType      *string
+	Protocol      *string
+	Name          *string
 	InternalPorts *string
-	PublicPorts *string
-	PublicIp *string
-	InternalIp *string
-    // Possible values are: 
-    //
-    // * NatRule#NatRule_ACTION_DNAT
-    // * NatRule#NatRule_ACTION_SNAT
+	PublicPorts   *string
+	PublicIp      *string
+	InternalIp    *string
+	// Possible values are:
+	//
+	// * NatRule#NatRule_ACTION_DNAT
+	// * NatRule#NatRule_ACTION_SNAT
 	Action *string
-	Id *string
-    // current revision of the list of nat rules, used to protect against concurrent modification (first writer wins) format: int32
+	Id     *string
+	// current revision of the list of nat rules, used to protect against concurrent modification (first writer wins) format: int32
 	Revision *int64
 }
+
 const NatRule_ACTION_DNAT = "dnat"
 const NatRule_ACTION_SNAT = "snat"
 
-func (s NatRule) GetType__() bindings.BindingType {
+func (s *NatRule) GetType__() bindings.BindingType {
 	return NatRuleBindingType()
 }
 
-func (s NatRule) GetDataValue__() (data.DataValue, []error) {
+func (s *NatRule) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -1983,17 +1993,16 @@ func (s NatRule) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type NetworkTemplate struct {
 	ManagementGatewayTemplates []ManagementGatewayTemplate
-	ComputeGatewayTemplates []ComputeGatewayTemplate
+	ComputeGatewayTemplates    []ComputeGatewayTemplate
 }
 
-func (s NetworkTemplate) GetType__() bindings.BindingType {
+func (s *NetworkTemplate) GetType__() bindings.BindingType {
 	return NetworkTemplateBindingType()
 }
 
-func (s NetworkTemplate) GetDataValue__() (data.DataValue, []error) {
+func (s *NetworkTemplate) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2005,21 +2014,20 @@ func (s NetworkTemplate) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type NewCredentials struct {
-    // Username of the credentials
+	// Username of the credentials
 	Username string
-    // Password associated with the credentials
+	// Password associated with the credentials
 	Password string
-    // Name of the credentials
+	// Name of the credentials
 	Name string
 }
 
-func (s NewCredentials) GetType__() bindings.BindingType {
+func (s *NewCredentials) GetType__() bindings.BindingType {
 	return NewCredentialsBindingType()
 }
 
-func (s NewCredentials) GetDataValue__() (data.DataValue, []error) {
+func (s *NewCredentials) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2031,18 +2039,17 @@ func (s NewCredentials) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Details the state of different NSX add-ons.
 type NsxtAddons struct {
-    // Indicates whether NSX Advanced addon is enabled or disabled.
+	// Indicates whether NSX Advanced addon is enabled or disabled.
 	EnableNsxAdvancedAddon *bool
 }
 
-func (s NsxtAddons) GetType__() bindings.BindingType {
+func (s *NsxtAddons) GetType__() bindings.BindingType {
 	return NsxtAddonsBindingType()
 }
 
-func (s NsxtAddons) GetDataValue__() (data.DataValue, []error) {
+func (s *NsxtAddons) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2054,18 +2061,17 @@ func (s NsxtAddons) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Holder for the offer instances.
 type OfferInstancesHolder struct {
 	OnDemand OnDemandOfferInstance
-	Offers []TermOfferInstance
+	Offers   []TermOfferInstance
 }
 
-func (s OfferInstancesHolder) GetType__() bindings.BindingType {
+func (s *OfferInstancesHolder) GetType__() bindings.BindingType {
 	return OfferInstancesHolderBindingType()
 }
 
-func (s OfferInstancesHolder) GetDataValue__() (data.DataValue, []error) {
+func (s *OfferInstancesHolder) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2077,27 +2083,26 @@ func (s OfferInstancesHolder) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Holder for the on-demand offer instance.
 type OnDemandOfferInstance struct {
 	Product string
-    // Deprecated. Please use product and type fields instead.
+	// Deprecated. Please use product and type fields instead.
 	ProductType *string
-	Name string
-	Currency string
-	Region string
-	UnitPrice string
+	Name        string
+	Currency    string
+	Region      string
+	UnitPrice   string
 	MonthlyCost string
-	Version string
-	Type_ string
+	Version     string
+	Type_       string
 	Description string
 }
 
-func (s OnDemandOfferInstance) GetType__() bindings.BindingType {
+func (s *OnDemandOfferInstance) GetType__() bindings.BindingType {
 	return OnDemandOfferInstanceBindingType()
 }
 
-func (s OnDemandOfferInstance) GetDataValue__() (data.DataValue, []error) {
+func (s *OnDemandOfferInstance) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2109,17 +2114,16 @@ func (s OnDemandOfferInstance) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type OrgProperties struct {
-    // A map of string properties to values.
+	// A map of string properties to values.
 	Values map[string]string
 }
 
-func (s OrgProperties) GetType__() bindings.BindingType {
+func (s *OrgProperties) GetType__() bindings.BindingType {
 	return OrgPropertiesBindingType()
 }
 
-func (s OrgProperties) GetDataValue__() (data.DataValue, []error) {
+func (s *OrgProperties) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2131,19 +2135,18 @@ func (s OrgProperties) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type OrgSellerInfo struct {
-    // The accountid for this org for the seller-of-record. NILLABLE.
+	// The accountid for this org for the seller-of-record. NILLABLE.
 	SellerAccountId *string
-    // The seller-of-record for the current organization. For example AWS or VMWARE
+	// The seller-of-record for the current organization. For example AWS or VMWARE
 	Seller *string
 }
 
-func (s OrgSellerInfo) GetType__() bindings.BindingType {
+func (s *OrgSellerInfo) GetType__() bindings.BindingType {
 	return OrgSellerInfoBindingType()
 }
 
-func (s OrgSellerInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *OrgSellerInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2155,42 +2158,42 @@ func (s OrgSellerInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type Organization struct {
 	Updated time.Time
-    // User id that last updated this record
+	// User id that last updated this record
 	UserId string
-    // User id that last updated this record
+	// User id that last updated this record
 	UpdatedByUserId string
-	Created time.Time
-    // Version of this entity format: int32
+	Created         time.Time
+	// Version of this entity format: int32
 	Version int64
-    // User name that last updated this record
+	// User name that last updated this record
 	UpdatedByUserName *string
-    // User name that last updated this record
+	// User name that last updated this record
 	UserName string
-    // Unique ID for this entity
+	// Unique ID for this entity
 	Id string
-    // ORG_TYPE to be associated with the org
-	OrgType *string
-	DisplayName *string
-	Name *string
+	// ORG_TYPE to be associated with the org
+	OrgType       *string
+	DisplayName   *string
+	Name          *string
 	OrgSellerInfo *OrgSellerInfo
-    // Possible values are: 
-    //
-    // * Organization#Organization_PROJECT_STATE_CREATED
-    // * Organization#Organization_PROJECT_STATE_DELETED
+	// Possible values are:
+	//
+	// * Organization#Organization_PROJECT_STATE_CREATED
+	// * Organization#Organization_PROJECT_STATE_DELETED
 	ProjectState *string
-	Properties *OrgProperties
+	Properties   *OrgProperties
 }
+
 const Organization_PROJECT_STATE_CREATED = "CREATED"
 const Organization_PROJECT_STATE_DELETED = "DELETED"
 
-func (s Organization) GetType__() bindings.BindingType {
+func (s *Organization) GetType__() bindings.BindingType {
 	return OrganizationBindingType()
 }
 
-func (s Organization) GetDataValue__() (data.DataValue, []error) {
+func (s *Organization) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2202,18 +2205,50 @@ func (s Organization) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+type OutpostConfig struct {
+	// Outpost ID
+	OutpostId *string
+	// Possible values are:
+	//
+	// * OutpostConfig#OutpostConfig_OUTPOST_STATUS_DEPLOYING
+	// * OutpostConfig#OutpostConfig_OUTPOST_STATUS_CONNECTED
+	// * OutpostConfig#OutpostConfig_OUTPOST_STATUS_DISCONNECTED
+	//
+	//  Status of the outpost rack
+	OutpostStatus *string
+}
+
+const OutpostConfig_OUTPOST_STATUS_DEPLOYING = "DEPLOYING"
+const OutpostConfig_OUTPOST_STATUS_CONNECTED = "CONNECTED"
+const OutpostConfig_OUTPOST_STATUS_DISCONNECTED = "DISCONNECTED"
+
+func (s *OutpostConfig) GetType__() bindings.BindingType {
+	return OutpostConfigBindingType()
+}
+
+func (s *OutpostConfig) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for OutpostConfig._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
 
 type PaymentMethodInfo struct {
-	Type_ *string
-	DefaultFlag *bool
+	Type_           *string
+	DefaultFlag     *bool
 	PaymentMethodId *string
 }
 
-func (s PaymentMethodInfo) GetType__() bindings.BindingType {
+func (s *PaymentMethodInfo) GetType__() bindings.BindingType {
 	return PaymentMethodInfoBindingType()
 }
 
-func (s PaymentMethodInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *PaymentMethodInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2225,18 +2260,17 @@ func (s PaymentMethodInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type PopAgentXeniConnection struct {
-    // The gateway route ip fo the subnet.
+	// The gateway route ip fo the subnet.
 	DefaultSubnetRoute *string
-	EniInfo *EniInfo
+	EniInfo            *EniInfo
 }
 
-func (s PopAgentXeniConnection) GetType__() bindings.BindingType {
+func (s *PopAgentXeniConnection) GetType__() bindings.BindingType {
 	return PopAgentXeniConnectionBindingType()
 }
 
-func (s PopAgentXeniConnection) GetDataValue__() (data.DataValue, []error) {
+func (s *PopAgentXeniConnection) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2248,32 +2282,32 @@ func (s PopAgentXeniConnection) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type PopAmiInfo struct {
-    // instance type of the esx ami
+	// instance type of the esx ami
 	InstanceType *string
-    // the region of the esx ami
+	// the region of the esx ami
 	Region *string
-    // the ami id for the esx
+	// the ami id for the esx
 	Id *string
-    // the name of the esx ami
+	// the name of the esx ami
 	Name *string
-    // Possible values are: 
-    //
-    // * PopAmiInfo#PopAmiInfo_TYPE_CENTOS
-    // * PopAmiInfo#PopAmiInfo_TYPE_POP
-    //
-    //  PoP AMI type. CENTOS: a Centos AMI; POP: a PoP AMI.
+	// Possible values are:
+	//
+	// * PopAmiInfo#PopAmiInfo_TYPE_CENTOS
+	// * PopAmiInfo#PopAmiInfo_TYPE_POP
+	//
+	//  PoP AMI type. CENTOS: a Centos AMI; POP: a PoP AMI.
 	Type_ *string
 }
+
 const PopAmiInfo_TYPE_CENTOS = "CENTOS"
 const PopAmiInfo_TYPE_POP = "POP"
 
-func (s PopAmiInfo) GetType__() bindings.BindingType {
+func (s *PopAmiInfo) GetType__() bindings.BindingType {
 	return PopAmiInfoBindingType()
 }
 
-func (s PopAmiInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *PopAmiInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2285,26 +2319,25 @@ func (s PopAmiInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Present a SDDC PoP information.
 type PopInfo struct {
-    // A map of [region name of PoP / PoP-AMI]:[PopAmiInfo].
+	// A map of [region name of PoP / PoP-AMI]:[PopAmiInfo].
 	AmiInfos map[string]PopAmiInfo
-    // The PopInfo (or PoP AMI) created time. Using ISO 8601 date-time pattern. format: date-time
+	// The PopInfo (or PoP AMI) created time. Using ISO 8601 date-time pattern. format: date-time
 	CreatedAt *time.Time
-    // A map of [service type]:[PopServiceInfo]
+	// A map of [service type]:[PopServiceInfo]
 	ServiceInfos map[string]PopServiceInfo
-    // UUID of the PopInfo format: UUID
+	// UUID of the PopInfo format: UUID
 	Id *string
-    // version of the manifest.
+	// version of the manifest.
 	ManifestVersion *string
 }
 
-func (s PopInfo) GetType__() bindings.BindingType {
+func (s *PopInfo) GetType__() bindings.BindingType {
 	return PopInfoBindingType()
 }
 
-func (s PopInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *PopInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2316,37 +2349,37 @@ func (s PopInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type PopServiceInfo struct {
-    // The service change set number.
+	// The service change set number.
 	Cln *string
-    // The service API version.
+	// The service API version.
 	Version *string
-    // The service build number.
+	// The service build number.
 	Build *string
-    // Possible values are: 
-    //
-    // * PopServiceInfo#PopServiceInfo_SERVICE_OS
-    // * PopServiceInfo#PopServiceInfo_SERVICE_AGENT
-    // * PopServiceInfo#PopServiceInfo_SERVICE_GLCM
-    // * PopServiceInfo#PopServiceInfo_SERVICE_S3_ADAPTER
-    // * PopServiceInfo#PopServiceInfo_SERVICE_JRE
-    // * PopServiceInfo#PopServiceInfo_SERVICE_DOCKER
-    // * PopServiceInfo#PopServiceInfo_SERVICE_AIDE
-    // * PopServiceInfo#PopServiceInfo_SERVICE_RTS
-    // * PopServiceInfo#PopServiceInfo_SERVICE_FM_LOG_COLLECTOR
-    // * PopServiceInfo#PopServiceInfo_SERVICE_FM_METRICS_COLLECTOR
-    // * PopServiceInfo#PopServiceInfo_SERVICE_BRE
-    // * PopServiceInfo#PopServiceInfo_SERVICE_BRF
-    // * PopServiceInfo#PopServiceInfo_SERVICE_REVERSE_PROXY
-    // * PopServiceInfo#PopServiceInfo_SERVICE_FORWARD_PROXY
-    // * PopServiceInfo#PopServiceInfo_SERVICE_DNS
-    // * PopServiceInfo#PopServiceInfo_SERVICE_NTP
-    // * PopServiceInfo#PopServiceInfo_SERVICE_LOGZ_LOG_COLLECTOR
-    //
-    //  An enum of PoP related services (including os platform and JRE).
+	// Possible values are:
+	//
+	// * PopServiceInfo#PopServiceInfo_SERVICE_OS
+	// * PopServiceInfo#PopServiceInfo_SERVICE_AGENT
+	// * PopServiceInfo#PopServiceInfo_SERVICE_GLCM
+	// * PopServiceInfo#PopServiceInfo_SERVICE_S3_ADAPTER
+	// * PopServiceInfo#PopServiceInfo_SERVICE_JRE
+	// * PopServiceInfo#PopServiceInfo_SERVICE_DOCKER
+	// * PopServiceInfo#PopServiceInfo_SERVICE_AIDE
+	// * PopServiceInfo#PopServiceInfo_SERVICE_RTS
+	// * PopServiceInfo#PopServiceInfo_SERVICE_FM_LOG_COLLECTOR
+	// * PopServiceInfo#PopServiceInfo_SERVICE_FM_METRICS_COLLECTOR
+	// * PopServiceInfo#PopServiceInfo_SERVICE_BRE
+	// * PopServiceInfo#PopServiceInfo_SERVICE_BRF
+	// * PopServiceInfo#PopServiceInfo_SERVICE_REVERSE_PROXY
+	// * PopServiceInfo#PopServiceInfo_SERVICE_FORWARD_PROXY
+	// * PopServiceInfo#PopServiceInfo_SERVICE_DNS
+	// * PopServiceInfo#PopServiceInfo_SERVICE_NTP
+	// * PopServiceInfo#PopServiceInfo_SERVICE_LOGZ_LOG_COLLECTOR
+	//
+	//  An enum of PoP related services (including os platform and JRE).
 	Service *string
 }
+
 const PopServiceInfo_SERVICE_OS = "OS"
 const PopServiceInfo_SERVICE_AGENT = "AGENT"
 const PopServiceInfo_SERVICE_GLCM = "GLCM"
@@ -2365,11 +2398,11 @@ const PopServiceInfo_SERVICE_DNS = "DNS"
 const PopServiceInfo_SERVICE_NTP = "NTP"
 const PopServiceInfo_SERVICE_LOGZ_LOG_COLLECTOR = "LOGZ_LOG_COLLECTOR"
 
-func (s PopServiceInfo) GetType__() bindings.BindingType {
+func (s *PopServiceInfo) GetType__() bindings.BindingType {
 	return PopServiceInfoBindingType()
 }
 
-func (s PopServiceInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *PopServiceInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2381,18 +2414,55 @@ func (s PopServiceInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Represents a structure for powered by instance type configuration.
+type PoweredByInstanceTypeConfig struct {
+	// Instance type name.
+	InstanceType *string
+	// Array of number of hosts allowed for this operation. Range of hosts user can select for sddc provision
+	Hosts []int64
+	// Display name of instance_type.
+	DisplayName *string
+	// The capacity of the given instance type.
+	EntityCapacity *EntityCapacity
+	// ID of the powered by configuration.
+	PoweredById *string
+	// Possible values are:
+	//
+	// * PoweredByInstanceTypeConfig#PoweredByInstanceTypeConfig_POWERED_BY_TYPE_OUTPOST
+	//
+	//  Represents the type of powered by instance type configuration.
+	PoweredByType *string
+}
+
+const PoweredByInstanceTypeConfig_POWERED_BY_TYPE_OUTPOST = "OUTPOST"
+
+func (s *PoweredByInstanceTypeConfig) GetType__() bindings.BindingType {
+	return PoweredByInstanceTypeConfigBindingType()
+}
+
+func (s *PoweredByInstanceTypeConfig) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for PoweredByInstanceTypeConfig._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
 
 // Represents a provisioning spec for a sddc
 type ProvisionSpec struct {
-    // Map of provider to sddc config spec
+	// Map of provider to sddc config spec
 	Provider map[string]SddcConfigSpec
 }
 
-func (s ProvisionSpec) GetType__() bindings.BindingType {
+func (s *ProvisionSpec) GetType__() bindings.BindingType {
 	return ProvisionSpecBindingType()
 }
 
-func (s ProvisionSpec) GetDataValue__() (data.DataValue, []error) {
+func (s *ProvisionSpec) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2404,28 +2474,28 @@ func (s ProvisionSpec) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type RequestDetail struct {
-    // AWS quota increase request id
+	// AWS quota increase request id
 	AwsQuotaRequestId *string
-    // Possible values are: 
-    //
-    // * RequestDetail#RequestDetail_DETAIL_STATUS_NEW
-    // * RequestDetail#RequestDetail_DETAIL_STATUS_PENDINGSUBMIT
-    // * RequestDetail#RequestDetail_DETAIL_STATUS_SUBMITTED
-    // * RequestDetail#RequestDetail_DETAIL_STATUS_PENDINGVERFICATION
-    // * RequestDetail#RequestDetail_DETAIL_STATUS_RESOLVED
-    // * RequestDetail#RequestDetail_DETAIL_STATUS_DENIED
-    // * RequestDetail#RequestDetail_DETAIL_STATUS_ERROR
+	// Possible values are:
+	//
+	// * RequestDetail#RequestDetail_DETAIL_STATUS_NEW
+	// * RequestDetail#RequestDetail_DETAIL_STATUS_PENDINGSUBMIT
+	// * RequestDetail#RequestDetail_DETAIL_STATUS_SUBMITTED
+	// * RequestDetail#RequestDetail_DETAIL_STATUS_PENDINGVERFICATION
+	// * RequestDetail#RequestDetail_DETAIL_STATUS_RESOLVED
+	// * RequestDetail#RequestDetail_DETAIL_STATUS_DENIED
+	// * RequestDetail#RequestDetail_DETAIL_STATUS_ERROR
 	DetailStatus *string
-	ResolvedAt *time.Time
-    // desired value for the quota increase request
+	ResolvedAt   *time.Time
+	// desired value for the quota increase request
 	DesiredValue *int64
-    // AWS support case status
+	// AWS support case status
 	AwsSupportCaseStatus *string
-    // AWS support caes id
+	// AWS support caes id
 	AwsSupportCaseId *string
 }
+
 const RequestDetail_DETAIL_STATUS_NEW = "NEW"
 const RequestDetail_DETAIL_STATUS_PENDINGSUBMIT = "PENDINGSUBMIT"
 const RequestDetail_DETAIL_STATUS_SUBMITTED = "SUBMITTED"
@@ -2434,11 +2504,11 @@ const RequestDetail_DETAIL_STATUS_RESOLVED = "RESOLVED"
 const RequestDetail_DETAIL_STATUS_DENIED = "DENIED"
 const RequestDetail_DETAIL_STATUS_ERROR = "ERROR"
 
-func (s RequestDetail) GetType__() bindings.BindingType {
+func (s *RequestDetail) GetType__() bindings.BindingType {
 	return RequestDetailBindingType()
 }
 
-func (s RequestDetail) GetDataValue__() (data.DataValue, []error) {
+func (s *RequestDetail) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2450,25 +2520,24 @@ func (s RequestDetail) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type Reservation struct {
-    // Duration - required for reservation in maintenance window format: int64
+	// Duration - required for reservation in maintenance window format: int64
 	Duration *int64
-    // Reservation ID format: uuid
+	// Reservation ID format: uuid
 	Rid *string
-    // Optional
+	// Optional
 	CreateTime *string
-    // Start time of a reservation format: date-time
+	// Start time of a reservation format: date-time
 	StartTime *time.Time
-    // Optional
+	// Optional
 	Metadata map[string]string
 }
 
-func (s Reservation) GetType__() bindings.BindingType {
+func (s *Reservation) GetType__() bindings.BindingType {
 	return ReservationBindingType()
 }
 
-func (s Reservation) GetDataValue__() (data.DataValue, []error) {
+func (s *Reservation) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2480,23 +2549,22 @@ func (s Reservation) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type ReservationInMw struct {
-    // Reservation ID format: uuid
+	// Reservation ID format: uuid
 	Rid *string
-    // SUNDAY of the week that maintenance is scheduled, ISO format date
+	// SUNDAY of the week that maintenance is scheduled, ISO format date
 	WeekOf *string
-    // Optional format: date-time
+	// Optional format: date-time
 	CreateTime *time.Time
-    // Optional
+	// Optional
 	Metadata map[string]string
 }
 
-func (s ReservationInMw) GetType__() bindings.BindingType {
+func (s *ReservationInMw) GetType__() bindings.BindingType {
 	return ReservationInMwBindingType()
 }
 
-func (s ReservationInMw) GetDataValue__() (data.DataValue, []error) {
+func (s *ReservationInMw) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2508,24 +2576,24 @@ func (s ReservationInMw) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type ReservationSchedule struct {
-    // Possible values are: 
-    //
-    // * ReservationSchedule#ReservationSchedule_DAY_OF_WEEK_SUNDAY
-    // * ReservationSchedule#ReservationSchedule_DAY_OF_WEEK_MONDAY
-    // * ReservationSchedule#ReservationSchedule_DAY_OF_WEEK_TUESDAY
-    // * ReservationSchedule#ReservationSchedule_DAY_OF_WEEK_WEDNESDAY
-    // * ReservationSchedule#ReservationSchedule_DAY_OF_WEEK_THURSDAY
-    // * ReservationSchedule#ReservationSchedule_DAY_OF_WEEK_FRIDAY
-    // * ReservationSchedule#ReservationSchedule_DAY_OF_WEEK_SATURDAY
-	DayOfWeek *string
-	HourOfDay *int64
-	DurationMin *int64
-	Version *int64
-	Reservations []Reservation
+	// Possible values are:
+	//
+	// * ReservationSchedule#ReservationSchedule_DAY_OF_WEEK_SUNDAY
+	// * ReservationSchedule#ReservationSchedule_DAY_OF_WEEK_MONDAY
+	// * ReservationSchedule#ReservationSchedule_DAY_OF_WEEK_TUESDAY
+	// * ReservationSchedule#ReservationSchedule_DAY_OF_WEEK_WEDNESDAY
+	// * ReservationSchedule#ReservationSchedule_DAY_OF_WEEK_THURSDAY
+	// * ReservationSchedule#ReservationSchedule_DAY_OF_WEEK_FRIDAY
+	// * ReservationSchedule#ReservationSchedule_DAY_OF_WEEK_SATURDAY
+	DayOfWeek      *string
+	HourOfDay      *int64
+	DurationMin    *int64
+	Version        *int64
+	Reservations   []Reservation
 	ReservationsMw []ReservationInMw
 }
+
 const ReservationSchedule_DAY_OF_WEEK_SUNDAY = "SUNDAY"
 const ReservationSchedule_DAY_OF_WEEK_MONDAY = "MONDAY"
 const ReservationSchedule_DAY_OF_WEEK_TUESDAY = "TUESDAY"
@@ -2534,11 +2602,11 @@ const ReservationSchedule_DAY_OF_WEEK_THURSDAY = "THURSDAY"
 const ReservationSchedule_DAY_OF_WEEK_FRIDAY = "FRIDAY"
 const ReservationSchedule_DAY_OF_WEEK_SATURDAY = "SATURDAY"
 
-func (s ReservationSchedule) GetType__() bindings.BindingType {
+func (s *ReservationSchedule) GetType__() bindings.BindingType {
 	return ReservationScheduleBindingType()
 }
 
-func (s ReservationSchedule) GetDataValue__() (data.DataValue, []error) {
+func (s *ReservationSchedule) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2550,36 +2618,36 @@ func (s ReservationSchedule) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type ReservationWindow struct {
-    // Possible values are: 
-    //
-    // * ReservationWindow#ReservationWindow_RESERVATION_STATE_SCHEDULED
-    // * ReservationWindow#ReservationWindow_RESERVATION_STATE_RUNNING
-    // * ReservationWindow#ReservationWindow_RESERVATION_STATE_CANCELED
-    // * ReservationWindow#ReservationWindow_RESERVATION_STATE_COMPLETED
-	ReservationState *string
-	Emergency *bool
+	// Possible values are:
+	//
+	// * ReservationWindow#ReservationWindow_RESERVATION_STATE_SCHEDULED
+	// * ReservationWindow#ReservationWindow_RESERVATION_STATE_RUNNING
+	// * ReservationWindow#ReservationWindow_RESERVATION_STATE_CANCELED
+	// * ReservationWindow#ReservationWindow_RESERVATION_STATE_COMPLETED
+	ReservationState      *string
+	Emergency             *bool
 	MaintenanceProperties *ReservationWindowMaintenanceProperties
-	ReserveId *string
-	StartHour *int64
-	SddcId *string
-	ManifestId *string
-	DurationHours *int64
-	StartDate *string
-    // Metadata for reservation window, in key-value form
+	ReserveId             *string
+	StartHour             *int64
+	SddcId                *string
+	ManifestId            *string
+	DurationHours         *int64
+	StartDate             *string
+	// Metadata for reservation window, in key-value form
 	Metadata map[string]string
 }
+
 const ReservationWindow_RESERVATION_STATE_SCHEDULED = "SCHEDULED"
 const ReservationWindow_RESERVATION_STATE_RUNNING = "RUNNING"
 const ReservationWindow_RESERVATION_STATE_CANCELED = "CANCELED"
 const ReservationWindow_RESERVATION_STATE_COMPLETED = "COMPLETED"
 
-func (s ReservationWindow) GetType__() bindings.BindingType {
+func (s *ReservationWindow) GetType__() bindings.BindingType {
 	return ReservationWindowBindingType()
 }
 
-func (s ReservationWindow) GetDataValue__() (data.DataValue, []error) {
+func (s *ReservationWindow) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2591,17 +2659,16 @@ func (s ReservationWindow) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type ReservationWindowMaintenanceProperties struct {
-    // Status of upgrade, if any
+	// Status of upgrade, if any
 	Status *string
 }
 
-func (s ReservationWindowMaintenanceProperties) GetType__() bindings.BindingType {
+func (s *ReservationWindowMaintenanceProperties) GetType__() bindings.BindingType {
 	return ReservationWindowMaintenancePropertiesBindingType()
 }
 
-func (s ReservationWindowMaintenanceProperties) GetDataValue__() (data.DataValue, []error) {
+func (s *ReservationWindowMaintenanceProperties) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2613,19 +2680,18 @@ func (s ReservationWindowMaintenanceProperties) GetDataValue__() (data.DataValue
 	return dataVal, nil
 }
 
-
 type RouteTableInfo struct {
-    // route table name
+	// route table name
 	Name *string
-    // route table id
+	// route table id
 	Id *string
 }
 
-func (s RouteTableInfo) GetType__() bindings.BindingType {
+func (s *RouteTableInfo) GetType__() bindings.BindingType {
 	return RouteTableInfoBindingType()
 }
 
-func (s RouteTableInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *RouteTableInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2637,56 +2703,56 @@ func (s RouteTableInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type Sddc struct {
 	Updated time.Time
-    // User id that last updated this record
+	// User id that last updated this record
 	UserId string
-    // User id that last updated this record
+	// User id that last updated this record
 	UpdatedByUserId string
-	Created time.Time
-    // Version of this entity format: int32
+	Created         time.Time
+	// Version of this entity format: int32
 	Version int64
-    // User name that last updated this record
+	// User name that last updated this record
 	UpdatedByUserName *string
-    // User name that last updated this record
+	// User name that last updated this record
 	UserName string
-    // Unique ID for this entity
+	// Unique ID for this entity
 	Id string
-    // name for SDDC
+	// name for SDDC
 	Name *string
-    // Possible values are: 
-    //
-    // * Sddc#Sddc_SDDC_STATE_DEPLOYING
-    // * Sddc#Sddc_SDDC_STATE_READY
-    // * Sddc#Sddc_SDDC_STATE_DELETING
-    // * Sddc#Sddc_SDDC_STATE_DELETED
-    // * Sddc#Sddc_SDDC_STATE_FAILED
-    // * Sddc#Sddc_SDDC_STATE_CANCELED
-    // * Sddc#Sddc_SDDC_STATE_READY_FOR_GLCM_BRINGUP
+	// Possible values are:
+	//
+	// * Sddc#Sddc_SDDC_STATE_DEPLOYING
+	// * Sddc#Sddc_SDDC_STATE_READY
+	// * Sddc#Sddc_SDDC_STATE_DELETING
+	// * Sddc#Sddc_SDDC_STATE_DELETED
+	// * Sddc#Sddc_SDDC_STATE_FAILED
+	// * Sddc#Sddc_SDDC_STATE_CANCELED
+	// * Sddc#Sddc_SDDC_STATE_READY_FOR_GLCM_BRINGUP
 	SddcState *string
-    // Expiration date of a sddc in UTC (will be set if its applicable) format: date-time
+	// Expiration date of a sddc in UTC (will be set if its applicable) format: date-time
 	ExpirationDate *time.Time
-	OrgId *string
-    // Type of the sddc
+	OrgId          *string
+	// Type of the sddc
 	SddcType *string
-    // Possible values are: 
-    //
-    // * Sddc#Sddc_PROVIDER_AWS
-    // * Sddc#Sddc_PROVIDER_ZEROCLOUD
+	// Possible values are:
+	//
+	// * Sddc#Sddc_PROVIDER_AWS
+	// * Sddc#Sddc_PROVIDER_ZEROCLOUD
 	Provider *string
-    // Possible values are: 
-    //
-    // * Sddc#Sddc_ACCOUNT_LINK_STATE_DELAYED
-    // * Sddc#Sddc_ACCOUNT_LINK_STATE_LINKED
-    // * Sddc#Sddc_ACCOUNT_LINK_STATE_UNLINKED
-    //
-    //  Account linking state of the sddc
+	// Possible values are:
+	//
+	// * Sddc#Sddc_ACCOUNT_LINK_STATE_DELAYED
+	// * Sddc#Sddc_ACCOUNT_LINK_STATE_LINKED
+	// * Sddc#Sddc_ACCOUNT_LINK_STATE_UNLINKED
+	//
+	//  Account linking state of the sddc
 	AccountLinkState *string
-    // Describes the access state of sddc, valid state is DISABLED or ENABLED
+	// Describes the access state of sddc, valid state is DISABLED or ENABLED
 	SddcAccessState *string
-	ResourceConfig *AwsSddcResourceConfig
+	ResourceConfig  *AwsSddcResourceConfig
 }
+
 const Sddc_SDDC_STATE_DEPLOYING = "DEPLOYING"
 const Sddc_SDDC_STATE_READY = "READY"
 const Sddc_SDDC_STATE_DELETING = "DELETING"
@@ -2700,11 +2766,11 @@ const Sddc_ACCOUNT_LINK_STATE_DELAYED = "DELAYED"
 const Sddc_ACCOUNT_LINK_STATE_LINKED = "LINKED"
 const Sddc_ACCOUNT_LINK_STATE_UNLINKED = "UNLINKED"
 
-func (s Sddc) GetType__() bindings.BindingType {
+func (s *Sddc) GetType__() bindings.BindingType {
 	return SddcBindingType()
 }
 
-func (s Sddc) GetDataValue__() (data.DataValue, []error) {
+func (s *Sddc) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2716,59 +2782,84 @@ func (s Sddc) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+type SddcChoice struct {
+	// SDDC display name
+	DisplayText *string
+	// SDDC id
+	Value *string
+}
+
+func (s *SddcChoice) GetType__() bindings.BindingType {
+	return SddcChoiceBindingType()
+}
+
+func (s *SddcChoice) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SddcChoice._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
 
 type SddcConfig struct {
-    // Indicates the desired licensing support, if any, of Microsoft software.
+	// Indicates the desired licensing support, if any, of Microsoft software.
 	MsftLicenseConfig *MsftLicensingConfig
-    // AWS VPC IP range. Only prefix of 16 or 20 is currently supported.
+	// AWS VPC IP range. Only prefix of 16 or 20 is currently supported.
 	VpcCidr *string
-    // The instance type for the esx hosts in the primary cluster of the SDDC.
-	HostInstanceType *HostInstanceTypes
-    // skip creating vxlan for compute gateway for SDDC provisioning
+	// The instance type for the esx hosts in the primary cluster of the SDDC.
+	HostInstanceType *HostInstanceTypesEnum
+	// skip creating vxlan for compute gateway for SDDC provisioning
 	SkipCreatingVxlan *bool
-    // VXLAN IP subnet in CIDR for compute gateway
+	// VXLAN IP subnet in CIDR for compute gateway
 	VxlanSubnet *string
-    // Possible values are: 
-    //
-    // * SddcConfig#SddcConfig_SIZE_NSX_SMALL
-    // * SddcConfig#SddcConfig_SIZE_MEDIUM
-    // * SddcConfig#SddcConfig_SIZE_LARGE
-    // * SddcConfig#SddcConfig_SIZE_NSX_LARGE
-    //
-    //  The size of the vCenter and NSX appliances. \"large\" sddcSize corresponds to a 'large' vCenter appliance and 'large' NSX appliance. 'medium' sddcSize corresponds to 'medium' vCenter appliance and 'medium' NSX appliance. Value defaults to 'medium'.
+	// Possible values are:
+	//
+	// * SddcConfig#SddcConfig_SIZE_NSX_SMALL
+	// * SddcConfig#SddcConfig_SIZE_MEDIUM
+	// * SddcConfig#SddcConfig_SIZE_LARGE
+	// * SddcConfig#SddcConfig_SIZE_NSX_LARGE
+	//
+	//  The size of the vCenter and NSX appliances. \"large\" sddcSize corresponds to a 'large' vCenter appliance and 'large' NSX appliance. 'medium' sddcSize corresponds to 'medium' vCenter appliance and 'medium' NSX appliance. Value defaults to 'medium'.
 	Size *string
-    // The storage capacity value to be requested for the sddc primary cluster, in GiBs. If provided, instead of using the direct-attached storage, a capacity value amount of seperable storage will be used. format: int64
+	// Outpost ID of the SDDC. Used only for outpost deployments.
+	OutpostId *string
+	// The storage capacity value to be requested for the sddc primary cluster, in GiBs. If provided, instead of using the direct-attached storage, a capacity value amount of seperable storage will be used. format: int64
 	StorageCapacity *int64
-	Name string
-    // A list of the SDDC linking configurations to use.
+	Name            string
+	// A list of the SDDC linking configurations to use.
 	AccountLinkSddcConfig []AccountLinkSddcConfig
-    // If provided, will be assigned as SDDC id of the provisioned SDDC. format: UUID
-	SddcId *string
+	// If provided, will be assigned as SDDC id of the provisioned SDDC. format: UUID
+	SddcId   *string
 	NumHosts int64
-    // Denotes the sddc type , if the value is null or empty, the type is considered as default.
+	// Denotes the sddc type , if the value is null or empty, the type is considered as default.
 	SddcType *string
-    // The account linking configuration, we will keep this one and remove accountLinkSddcConfig finally.
+	// The account linking configuration, we will keep this one and remove accountLinkSddcConfig finally.
 	AccountLinkConfig *AccountLinkConfig
-    // Possible values are: 
-    //
-    // * SddcConfig#SddcConfig_PROVIDER_AWS
-    // * SddcConfig#SddcConfig_PROVIDER_ZEROCLOUD
-    //
-    //  Determines what additional properties are available based on cloud provider.
+	// Possible values are:
+	//
+	// * SddcConfig#SddcConfig_PROVIDER_AWS
+	// * SddcConfig#SddcConfig_PROVIDER_ZEROCLOUD
+	//
+	//  Determines what additional properties are available based on cloud provider.
 	Provider string
-    // The SSO domain name to use for vSphere users. If not specified, vmc.local will be used.
+	// The SSO domain name to use for vSphere users. If not specified, vmc.local will be used.
 	SsoDomain *string
-    // If provided, configuration from the template will applied to the provisioned SDDC. format: UUID
+	// If provided, configuration from the template will applied to the provisioned SDDC. format: UUID
 	SddcTemplateId *string
-    // Possible values are: 
-    //
-    // * SddcConfig#SddcConfig_DEPLOYMENT_TYPE_SINGLEAZ
-    // * SddcConfig#SddcConfig_DEPLOYMENT_TYPE_MULTIAZ
-    //
-    //  Denotes if request is for a SingleAZ or a MultiAZ SDDC. Default is SingleAZ.
+	// Possible values are:
+	//
+	// * SddcConfig#SddcConfig_DEPLOYMENT_TYPE_SINGLEAZ
+	// * SddcConfig#SddcConfig_DEPLOYMENT_TYPE_MULTIAZ
+	//
+	//  Denotes if request is for a SingleAZ or a MultiAZ SDDC. Default is SingleAZ.
 	DeploymentType *string
 }
-// Identifier denoting this class, when it is used in polymorphic context. 
+
+// Identifier denoting this class, when it is used in polymorphic context.
 //
 // This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
 const SddcConfig__TYPE_IDENTIFIER = "SddcConfig"
@@ -2781,11 +2872,11 @@ const SddcConfig_PROVIDER_ZEROCLOUD = "ZEROCLOUD"
 const SddcConfig_DEPLOYMENT_TYPE_SINGLEAZ = "SingleAZ"
 const SddcConfig_DEPLOYMENT_TYPE_MULTIAZ = "MultiAZ"
 
-func (s SddcConfig) GetType__() bindings.BindingType {
+func (s *SddcConfig) GetType__() bindings.BindingType {
 	return SddcConfigBindingType()
 }
 
-func (s SddcConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *SddcConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2797,20 +2888,19 @@ func (s SddcConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Represents a configuration spec for a sddc
 type SddcConfigSpec struct {
-    // Map of sddc type to config spec
+	// Map of sddc type to config spec
 	SddcTypeConfigSpec map[string]ConfigSpec
-    // The region name to display names mapping
+	// The region name to display names mapping
 	RegionDisplayNames map[string]string
 }
 
-func (s SddcConfigSpec) GetType__() bindings.BindingType {
+func (s *SddcConfigSpec) GetType__() bindings.BindingType {
 	return SddcConfigSpecBindingType()
 }
 
-func (s SddcConfigSpec) GetDataValue__() (data.DataValue, []error) {
+func (s *SddcConfigSpec) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2822,17 +2912,79 @@ func (s SddcConfigSpec) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Convert request body for SDDC
+type SddcConvertRequest struct {
+	// The total number of hosts in the SDDC after conversion.
+	NumHosts *int64
+}
+
+func (s *SddcConvertRequest) GetType__() bindings.BindingType {
+	return SddcConvertRequestBindingType()
+}
+
+func (s *SddcConvertRequest) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SddcConvertRequest._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type SddcCustomAttribute struct {
+	Name  *string
+	Value *string
+}
+
+func (s *SddcCustomAttribute) GetType__() bindings.BindingType {
+	return SddcCustomAttributeBindingType()
+}
+
+func (s *SddcCustomAttribute) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SddcCustomAttribute._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type SddcCustomAttributes struct {
+	CustomAttributes []SddcCustomAttribute
+}
+
+func (s *SddcCustomAttributes) GetType__() bindings.BindingType {
+	return SddcCustomAttributesBindingType()
+}
+
+func (s *SddcCustomAttributes) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SddcCustomAttributes._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
 
 type SddcId struct {
-    // Sddc ID
+	// Sddc ID
 	SddcId *string
 }
 
-func (s SddcId) GetType__() bindings.BindingType {
+func (s *SddcId) GetType__() bindings.BindingType {
 	return SddcIdBindingType()
 }
 
-func (s SddcId) GetDataValue__() (data.DataValue, []error) {
+func (s *SddcId) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2844,18 +2996,37 @@ func (s SddcId) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+type SddcInput struct {
+	Inputs []SddcList
+}
+
+func (s *SddcInput) GetType__() bindings.BindingType {
+	return SddcInputBindingType()
+}
+
+func (s *SddcInput) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SddcInput._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
 
 type SddcLinkConfig struct {
 	CustomerSubnetIds []string
-    // Determines which connected customer account to link to
+	// Determines which connected customer account to link to
 	ConnectedAccountId *string
 }
 
-func (s SddcLinkConfig) GetType__() bindings.BindingType {
+func (s *SddcLinkConfig) GetType__() bindings.BindingType {
 	return SddcLinkConfigBindingType()
 }
 
-func (s SddcLinkConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *SddcLinkConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2867,27 +3038,50 @@ func (s SddcLinkConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+type SddcList struct {
+	Label       *string
+	Required    *bool
+	Placeholder *string
+	Name        *string
+	Choice      []SddcChoice
+}
+
+func (s *SddcList) GetType__() bindings.BindingType {
+	return SddcListBindingType()
+}
+
+func (s *SddcList) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SddcList._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
 
 // Describes software components of the installed SDDC
 type SddcManifest struct {
-    // the vmcVersion of the sddc for display
+	// the vmcVersion of the sddc for display
 	VmcVersion *string
 	GlcmBundle *GlcmBundle
-	PopInfo *PopInfo
-    // the vmcInternalVersion of the sddc for internal use
-	VmcInternalVersion *string
+	PopInfo    *PopInfo
+	// the vmcInternalVersion of the sddc for internal use
+	VmcInternalVersion  *string
 	EbsBackedVsanConfig *EbsBackedVsanConfig
-	VsanWitnessAmi *AmiInfo
-	EsxAmi *AmiInfo
-	EsxNsxtAmi *AmiInfo
-	Metadata *Metadata
+	VsanWitnessAmi      *AmiInfo
+	EsxAmi              *AmiInfo
+	EsxNsxtAmi          *AmiInfo
+	Metadata            *Metadata
 }
 
-func (s SddcManifest) GetType__() bindings.BindingType {
+func (s *SddcManifest) GetType__() bindings.BindingType {
 	return SddcManifestBindingType()
 }
 
-func (s SddcManifest) GetDataValue__() (data.DataValue, []error) {
+func (s *SddcManifest) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2899,18 +3093,17 @@ func (s SddcManifest) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Patch request body for SDDC
 type SddcPatchRequest struct {
-    // The new name of the SDDC to be changed to.
+	// The new name of the SDDC to be changed to.
 	Name *string
 }
 
-func (s SddcPatchRequest) GetType__() bindings.BindingType {
+func (s *SddcPatchRequest) GetType__() bindings.BindingType {
 	return SddcPatchRequestBindingType()
 }
 
-func (s SddcPatchRequest) GetDataValue__() (data.DataValue, []error) {
+func (s *SddcPatchRequest) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2922,21 +3115,20 @@ func (s SddcPatchRequest) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type SddcPublicIp struct {
-	PublicIp string
-	Name *string
-	AllocationId *string
-	DnatRuleId *string
+	PublicIp            string
+	Name                *string
+	AllocationId        *string
+	DnatRuleId          *string
 	AssociatedPrivateIp *string
-	SnatRuleId *string
+	SnatRuleId          *string
 }
 
-func (s SddcPublicIp) GetType__() bindings.BindingType {
+func (s *SddcPublicIp) GetType__() bindings.BindingType {
 	return SddcPublicIpBindingType()
 }
 
-func (s SddcPublicIp) GetDataValue__() (data.DataValue, []error) {
+func (s *SddcPublicIp) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -2948,104 +3140,117 @@ func (s SddcPublicIp) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type SddcResourceConfig struct {
-    // Name for management appliance network.
+	// Name for management appliance network.
 	MgmtApplianceNetworkName *string
-    // if true, NSX-T UI is enabled.
-	Nsxt *bool
-    // Management Gateway Id
+	// Management Gateway Id
 	MgwId *string
-    // URL of the NSX Manager
+	// URL of the NSX Manager
 	NsxMgrUrl *string
-    // PSC internal management IP
-	PscManagementIp *string
-    // URL of the PSC server
-	PscUrl *string
-	Cgws []string
-    // Availability zones over which esx hosts are provisioned. MultiAZ SDDCs will have hosts provisioned over two availability zones while SingleAZ SDDCs will provision over one.
-	AvailabilityZones []string
-    // The ManagedObjectReference of the management Datastore
+	// NSX cloud audit Password
+	NsxCloudAuditPassword *string
+	// The ManagedObjectReference of the management Datastore
 	ManagementDs *string
-    // nsx api entire base url
+	// nsx api entire base url
 	NsxApiPublicEndpointUrl *string
-	CustomProperties map[string]string
-    // Password for vCenter SDDC administrator
-	CloudPassword *string
-    // Possible values are: 
-    //
-    // * SddcResourceConfig#SddcResourceConfig_PROVIDER_AWS
-    // * SddcResourceConfig#SddcResourceConfig_PROVIDER_ZEROCLOUD
-    //
-    //  Discriminator for additional properties
-	Provider string
-    // List of clusters in the SDDC.
+	SddcNetworks            []string
+	// List of clusters in the SDDC.
 	Clusters []Cluster
-    // vCenter internal management IP
-	VcManagementIp *string
-	SddcNetworks []string
-    // Username for vCenter SDDC administrator
-	CloudUsername *string
-	EsxHosts []AwsEsxHost
-    // NSX Manager internal management IP
+	// NSX Manager internal management IP
 	NsxMgrManagementIp *string
-    // unique id of the vCenter server
-	VcInstanceId *string
-    // Cluster Id to add ESX workflow
+	// NSX cloud audit user name
+	NsxCloudAudit *string
+	// Cluster Id to add ESX workflow
 	EsxClusterId *string
-    // vCenter public IP
+	// vCenter public IP
 	VcPublicIp *string
-    // skip creating vxlan for compute gateway for SDDC provisioning
-	SkipCreatingVxlan *bool
-    // URL of the vCenter server
-	VcUrl *string
-	SddcManifest *SddcManifest
-    // VXLAN IP subnet
-	VxlanSubnet *string
-    // Group name for vCenter SDDC administrator
-	CloudUserGroup *string
-	ManagementRp *string
-    // region in which sddc is deployed
-	Region *string
-    // Availability zone where the witness node is provisioned for a MultiAZ SDDC. This is null for a SingleAZ SDDC.
+	// URL of the vCenter server
+	VcUrl    *string
+	EsxHosts []AwsEsxHost
+	// vCenter internal management IP
+	VcManagementIp *string
+	ManagementRp   *string
+	// Availability zone where the witness node is provisioned for a MultiAZ SDDC. This is null for a SingleAZ SDDC.
 	WitnessAvailabilityZone *string
-    // sddc identifier
-	SddcId *string
-	PopAgentXeniConnection *PopAgentXeniConnection
-	SddcSize *SddcSize
-    // List of Controller IPs
+	SddcSize                *SddcSize
+	// List of Controller IPs
 	NsxControllerIps []string
-    // ESX host subnet
+	// ESX host subnet
 	EsxHostSubnet *string
-    // The SSO domain name to use for vSphere users
+	// The SSO domain name to use for vSphere users
 	SsoDomain *string
-    // Possible values are: 
-    //
-    // * SddcResourceConfig#SddcResourceConfig_DEPLOYMENT_TYPE_SINGLE_AZ
-    // * SddcResourceConfig#SddcResourceConfig_DEPLOYMENT_TYPE_MULTI_AZ
-    //
-    //  Denotes if this is a SingleAZ SDDC or a MultiAZ SDDC.
+	// Possible values are:
+	//
+	// * SddcResourceConfig#SddcResourceConfig_DEPLOYMENT_TYPE_SINGLE_AZ
+	// * SddcResourceConfig#SddcResourceConfig_DEPLOYMENT_TYPE_MULTI_AZ
+	//
+	//  Denotes if this is a SingleAZ SDDC or a MultiAZ SDDC.
 	DeploymentType *string
-    // The Microsoft license status of this SDDC.
+	// The Microsoft license status of this SDDC.
 	MsftLicenseConfig *MsftLicensingConfig
-	NsxtAddons *NsxtAddons
-    // if true, use the private IP addresses to register DNS records for the management VMs
+	// region in which sddc is deployed
+	Region *string
+	// Outpost configuration of this SDDC.
+	OutpostConfig *OutpostConfig
+	// if true, NSX-T UI is enabled.
+	Nsxt *bool
+	// PSC internal management IP
+	PscManagementIp *string
+	// URL of the PSC server
+	PscUrl *string
+	Cgws   []string
+	// Availability zones over which esx hosts are provisioned. MultiAZ SDDCs will have hosts provisioned over two availability zones while SingleAZ SDDCs will provision over one.
+	AvailabilityZones []string
+	CustomProperties  map[string]string
+	// Password for vCenter SDDC administrator
+	CloudPassword *string
+	// Possible values are:
+	//
+	// * SddcResourceConfig#SddcResourceConfig_PROVIDER_AWS
+	// * SddcResourceConfig#SddcResourceConfig_PROVIDER_ZEROCLOUD
+	//
+	//  Discriminator for additional properties
+	Provider string
+	// NSX cloud admin password
+	NsxCloudAdminPassword *string
+	// Username for vCenter SDDC administrator
+	CloudUsername *string
+	// unique id of the vCenter server
+	VcInstanceId *string
+	// Group name for vCenter SDDC administrator
+	CloudUserGroup *string
+	// skip creating vxlan for compute gateway for SDDC provisioning
+	SkipCreatingVxlan *bool
+	SddcManifest      *SddcManifest
+	// VXLAN IP subnet
+	VxlanSubnet  *string
+	SddcSecurity *SddcSecurity
+	// sddc identifier
+	SddcId                 *string
+	PopAgentXeniConnection *PopAgentXeniConnection
+	// URL of the NSX Manager UI login for local user access
+	NsxMgrLoginUrl *string
+	// if true, use the private IP addresses to register DNS records for the management VMs
 	DnsWithManagementVmPrivateIp *bool
+	// NSX cloud admin user name
+	NsxCloudAdmin *string
+	NsxtAddons    *NsxtAddons
 }
-// Identifier denoting this class, when it is used in polymorphic context. 
+
+// Identifier denoting this class, when it is used in polymorphic context.
 //
 // This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
 const SddcResourceConfig__TYPE_IDENTIFIER = "SddcResourceConfig"
-const SddcResourceConfig_PROVIDER_AWS = "AWS"
-const SddcResourceConfig_PROVIDER_ZEROCLOUD = "ZEROCLOUD"
 const SddcResourceConfig_DEPLOYMENT_TYPE_SINGLE_AZ = "SINGLE_AZ"
 const SddcResourceConfig_DEPLOYMENT_TYPE_MULTI_AZ = "MULTI_AZ"
+const SddcResourceConfig_PROVIDER_AWS = "AWS"
+const SddcResourceConfig_PROVIDER_ZEROCLOUD = "ZEROCLOUD"
 
-func (s SddcResourceConfig) GetType__() bindings.BindingType {
+func (s *SddcResourceConfig) GetType__() bindings.BindingType {
 	return SddcResourceConfigBindingType()
 }
 
-func (s SddcResourceConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *SddcResourceConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3057,28 +3262,60 @@ func (s SddcResourceConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Details the sddc securtity profiles and Harden state.
+type SddcSecurity struct {
+	// Possible values are:
+	//
+	// * SddcSecurity#SddcSecurity_PROFILE_DEFAULT
+	// * SddcSecurity#SddcSecurity_PROFILE_PCI_COMMERCIAL
+	//
+	//  Security Profiles for SDDC Hardening.
+	Profile *string
+	// Indicates whether SDDC is hardened or not.
+	IsHardened *bool
+}
+
+const SddcSecurity_PROFILE_DEFAULT = "PROFILE_DEFAULT"
+const SddcSecurity_PROFILE_PCI_COMMERCIAL = "PROFILE_PCI_COMMERCIAL"
+
+func (s *SddcSecurity) GetType__() bindings.BindingType {
+	return SddcSecurityBindingType()
+}
+
+func (s *SddcSecurity) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SddcSecurity._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
 
 // Size of the SDDC
 type SddcSize struct {
-    // Possible values are: 
-    //
-    // * SddcSize#SddcSize_VC_SIZE_MEDIUM
-    // * SddcSize#SddcSize_VC_SIZE_LARGE
+	// Possible values are:
+	//
+	// * SddcSize#SddcSize_VC_SIZE_MEDIUM
+	// * SddcSize#SddcSize_VC_SIZE_LARGE
 	VcSize *string
-    // Possible values are: 
-    //
-    // * SddcSize#SddcSize_NSX_SIZE_SMALL
-    // * SddcSize#SddcSize_NSX_SIZE_MEDIUM
-    // * SddcSize#SddcSize_NSX_SIZE_LARGE
+	// Possible values are:
+	//
+	// * SddcSize#SddcSize_NSX_SIZE_SMALL
+	// * SddcSize#SddcSize_NSX_SIZE_MEDIUM
+	// * SddcSize#SddcSize_NSX_SIZE_LARGE
 	NsxSize *string
-    // Possible values are: 
-    //
-    // * SddcSize#SddcSize_SIZE_NSX_SMALL
-    // * SddcSize#SddcSize_SIZE_MEDIUM
-    // * SddcSize#SddcSize_SIZE_LARGE
-    // * SddcSize#SddcSize_SIZE_NSX_LARGE
+	// Possible values are:
+	//
+	// * SddcSize#SddcSize_SIZE_NSX_SMALL
+	// * SddcSize#SddcSize_SIZE_MEDIUM
+	// * SddcSize#SddcSize_SIZE_LARGE
+	// * SddcSize#SddcSize_SIZE_NSX_LARGE
 	Size *string
 }
+
 const SddcSize_VC_SIZE_MEDIUM = "medium"
 const SddcSize_VC_SIZE_LARGE = "large"
 const SddcSize_NSX_SIZE_SMALL = "small"
@@ -3089,11 +3326,11 @@ const SddcSize_SIZE_MEDIUM = "MEDIUM"
 const SddcSize_SIZE_LARGE = "LARGE"
 const SddcSize_SIZE_NSX_LARGE = "NSX_LARGE"
 
-func (s SddcSize) GetType__() bindings.BindingType {
+func (s *SddcSize) GetType__() bindings.BindingType {
 	return SddcSizeBindingType()
 }
 
-func (s SddcSize) GetDataValue__() (data.DataValue, []error) {
+func (s *SddcSize) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3105,27 +3342,27 @@ func (s SddcSize) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type SddcStateRequest struct {
 	Sddcs []string
-    // Possible values are: 
-    //
-    // * SddcStateRequest#SddcStateRequest_STATES_SCHEDULED
-    // * SddcStateRequest#SddcStateRequest_STATES_RUNNING
-    // * SddcStateRequest#SddcStateRequest_STATES_CANCELED
-    // * SddcStateRequest#SddcStateRequest_STATES_COMPLETED
+	// Possible values are:
+	//
+	// * SddcStateRequest#SddcStateRequest_STATES_SCHEDULED
+	// * SddcStateRequest#SddcStateRequest_STATES_RUNNING
+	// * SddcStateRequest#SddcStateRequest_STATES_CANCELED
+	// * SddcStateRequest#SddcStateRequest_STATES_COMPLETED
 	States []string
 }
+
 const SddcStateRequest_STATES_SCHEDULED = "SCHEDULED"
 const SddcStateRequest_STATES_RUNNING = "RUNNING"
 const SddcStateRequest_STATES_CANCELED = "CANCELED"
 const SddcStateRequest_STATES_COMPLETED = "COMPLETED"
 
-func (s SddcStateRequest) GetType__() bindings.BindingType {
+func (s *SddcStateRequest) GetType__() bindings.BindingType {
 	return SddcStateRequestBindingType()
 }
 
-func (s SddcStateRequest) GetDataValue__() (data.DataValue, []error) {
+func (s *SddcStateRequest) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3137,41 +3374,41 @@ func (s SddcStateRequest) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type SddcTemplate struct {
 	Updated time.Time
-    // User id that last updated this record
+	// User id that last updated this record
 	UserId string
-    // User id that last updated this record
+	// User id that last updated this record
 	UpdatedByUserId string
-	Created time.Time
-    // Version of this entity format: int32
+	Created         time.Time
+	// Version of this entity format: int32
 	Version int64
-    // User name that last updated this record
+	// User name that last updated this record
 	UpdatedByUserName *string
-    // User name that last updated this record
+	// User name that last updated this record
 	UserName string
-    // Unique ID for this entity
+	// Unique ID for this entity
 	Id string
-    // A list of the SDDC linking configurations to use.
+	// A list of the SDDC linking configurations to use.
 	AccountLinkSddcConfigs []AccountLinkSddcConfig
-    // Possible values are: 
-    //
-    // * SddcTemplate#SddcTemplate_STATE_INITIALIZATION
-    // * SddcTemplate#SddcTemplate_STATE_AVAILABLE
-    // * SddcTemplate#SddcTemplate_STATE_INUSE
-    // * SddcTemplate#SddcTemplate_STATE_APPLIED
-    // * SddcTemplate#SddcTemplate_STATE_DELETING
-    // * SddcTemplate#SddcTemplate_STATE_DELETED
-    // * SddcTemplate#SddcTemplate_STATE_FAILED
-	State *string
+	// Possible values are:
+	//
+	// * SddcTemplate#SddcTemplate_STATE_INITIALIZATION
+	// * SddcTemplate#SddcTemplate_STATE_AVAILABLE
+	// * SddcTemplate#SddcTemplate_STATE_INUSE
+	// * SddcTemplate#SddcTemplate_STATE_APPLIED
+	// * SddcTemplate#SddcTemplate_STATE_DELETING
+	// * SddcTemplate#SddcTemplate_STATE_DELETED
+	// * SddcTemplate#SddcTemplate_STATE_FAILED
+	State           *string
 	NetworkTemplate *NetworkTemplate
-    // name for SDDC configuration template
-	Name *string
+	// name for SDDC configuration template
+	Name         *string
 	SourceSddcId *string
-	OrgId *string
-	Sddc *Sddc
+	OrgId        *string
+	Sddc         *Sddc
 }
+
 const SddcTemplate_STATE_INITIALIZATION = "INITIALIZATION"
 const SddcTemplate_STATE_AVAILABLE = "AVAILABLE"
 const SddcTemplate_STATE_INUSE = "INUSE"
@@ -3180,11 +3417,11 @@ const SddcTemplate_STATE_DELETING = "DELETING"
 const SddcTemplate_STATE_DELETED = "DELETED"
 const SddcTemplate_STATE_FAILED = "FAILED"
 
-func (s SddcTemplate) GetType__() bindings.BindingType {
+func (s *SddcTemplate) GetType__() bindings.BindingType {
 	return SddcTemplateBindingType()
 }
 
-func (s SddcTemplate) GetDataValue__() (data.DataValue, []error) {
+func (s *SddcTemplate) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3196,24 +3433,23 @@ func (s SddcTemplate) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Detailed service errors associated with a task.
 type ServiceError struct {
-    // Error message in English.
+	// Error message in English.
 	DefaultMessage *string
-    // The original service name of the error.
+	// The original service name of the error.
 	OriginalService *string
-    // The localized message.
+	// The localized message.
 	LocalizedMessage *string
-    // The original error code of the service.
+	// The original error code of the service.
 	OriginalServiceErrorCode *string
 }
 
-func (s ServiceError) GetType__() bindings.BindingType {
+func (s *ServiceError) GetType__() bindings.BindingType {
 	return ServiceErrorBindingType()
 }
 
-func (s ServiceError) GetDataValue__() (data.DataValue, []error) {
+func (s *ServiceError) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3225,54 +3461,54 @@ func (s ServiceError) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type ServiceQuotaRequest struct {
 	Updated time.Time
-    // User id that last updated this record
+	// User id that last updated this record
 	UserId string
-    // User id that last updated this record
+	// User id that last updated this record
 	UpdatedByUserId string
-	Created time.Time
-    // Version of this entity format: int32
+	Created         time.Time
+	// Version of this entity format: int32
 	Version int64
-    // User name that last updated this record
+	// User name that last updated this record
 	UpdatedByUserName *string
-    // User name that last updated this record
+	// User name that last updated this record
 	UserName string
-    // Unique ID for this entity
-	Id string
+	// Unique ID for this entity
+	Id             string
 	RequesterEmail *string
-    // The task for running the service quota request.
+	// The task for running the service quota request.
 	TaskId *string
-    // Region for the service quota
-	Region *string
+	// Region for the service quota
+	Region           *string
 	AwsAccountNumber *string
-    // The org ID for this request. This is a standard UUID.
+	// The org ID for this request. This is a standard UUID.
 	OrgId *string
-    // Reason for this quota increase
+	// Reason for this quota increase
 	Reason *string
-    // Possible values are: 
-    //
-    // * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_NEW
-    // * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_PENDING
-    // * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_RESOLVED
-    // * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_DENIED
-    // * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_ERROR
+	// Possible values are:
+	//
+	// * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_NEW
+	// * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_PENDING
+	// * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_RESOLVED
+	// * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_DENIED
+	// * ServiceQuotaRequest#ServiceQuotaRequest_REQUEST_STATUS_ERROR
 	RequestStatus *string
-    // service quota request item details
+	// service quota request item details
 	RequestDetails map[string]RequestDetail
 }
+
 const ServiceQuotaRequest_REQUEST_STATUS_NEW = "NEW"
 const ServiceQuotaRequest_REQUEST_STATUS_PENDING = "PENDING"
 const ServiceQuotaRequest_REQUEST_STATUS_RESOLVED = "RESOLVED"
 const ServiceQuotaRequest_REQUEST_STATUS_DENIED = "DENIED"
 const ServiceQuotaRequest_REQUEST_STATUS_ERROR = "ERROR"
 
-func (s ServiceQuotaRequest) GetType__() bindings.BindingType {
+func (s *ServiceQuotaRequest) GetType__() bindings.BindingType {
 	return ServiceQuotaRequestBindingType()
 }
 
-func (s ServiceQuotaRequest) GetDataValue__() (data.DataValue, []error) {
+func (s *ServiceQuotaRequest) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3284,46 +3520,46 @@ func (s ServiceQuotaRequest) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type Site struct {
-    // Site password.
+	// Site password.
 	Password *string
-    // Site user id.
+	// Site user id.
 	UserId *string
-    // Unique name for the site getting configured.
+	// Unique name for the site getting configured.
 	Name *string
-    // Bytes received on local network. format: int64
+	// Bytes received on local network. format: int64
 	RxBytesOnLocalSubnet *int64
-    // Enable/disable encription.
+	// Enable/disable encription.
 	SecureTraffic *bool
-    // Date tunnel was established.
+	// Date tunnel was established.
 	EstablishedDate *string
-    // failure message.
+	// failure message.
 	FailureMessage *string
-    // Number of transmitted packets dropped.
+	// Number of transmitted packets dropped.
 	DroppedTxPackets *string
-    // Number of received packets dropped.
+	// Number of received packets dropped.
 	DroppedRxPackets *string
-    // Possible values are: 
-    //
-    // * Site#Site_TUNNEL_STATUS_CONNECTED
-    // * Site#Site_TUNNEL_STATUS_DISCONNECTED
-    // * Site#Site_TUNNEL_STATUS_UNKNOWN
-    //
-    //  Site tunnel status.
+	// Possible values are:
+	//
+	// * Site#Site_TUNNEL_STATUS_CONNECTED
+	// * Site#Site_TUNNEL_STATUS_DISCONNECTED
+	// * Site#Site_TUNNEL_STATUS_UNKNOWN
+	//
+	//  Site tunnel status.
 	TunnelStatus *string
-    // Bytes transmitted from local subnet. format: int64
+	// Bytes transmitted from local subnet. format: int64
 	TxBytesFromLocalSubnet *int64
 }
+
 const Site_TUNNEL_STATUS_CONNECTED = "CONNECTED"
 const Site_TUNNEL_STATUS_DISCONNECTED = "DISCONNECTED"
 const Site_TUNNEL_STATUS_UNKNOWN = "UNKNOWN"
 
-func (s Site) GetType__() bindings.BindingType {
+func (s *Site) GetType__() bindings.BindingType {
 	return SiteBindingType()
 }
 
-func (s Site) GetDataValue__() (data.DataValue, []error) {
+func (s *Site) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3335,21 +3571,20 @@ func (s Site) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // (as there's already one SubnetInfo, use Subnet instead)
 type Subnet struct {
-    // subnet id
+	// subnet id
 	SubnetId *string
-    // subnet name
-	Name *string
+	// subnet name
+	Name        *string
 	RouteTables []SubnetRouteTableInfo
 }
 
-func (s Subnet) GetType__() bindings.BindingType {
+func (s *Subnet) GetType__() bindings.BindingType {
 	return SubnetBindingType()
 }
 
-func (s Subnet) GetDataValue__() (data.DataValue, []error) {
+func (s *Subnet) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3361,37 +3596,36 @@ func (s Subnet) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type SubnetInfo struct {
-    // Is this customer subnet compatible with the SDDC?
+	// Is this customer subnet compatible with the SDDC?
 	Compatible *bool
-    // The ID of the connected account this subnet is from.
+	// The ID of the connected account this subnet is from.
 	ConnectedAccountId *string
-    // The region this subnet is from.
+	// The region this subnet is from.
 	RegionName *string
-    // The availability zone (customer-centric) this subnet is in.
+	// The availability zone (customer-centric) this subnet is in.
 	AvailabilityZone *string
-    // The ID of the subnet.
+	// The ID of the subnet.
 	SubnetId *string
-    // The availability zone id (customer-centric) this subnet is in.
+	// The availability zone id (customer-centric) this subnet is in.
 	AvailabilityZoneId *string
-    // The CIDR block of the subnet.
+	// The CIDR block of the subnet.
 	SubnetCidrBlock *string
-    // Why a subnet is marked as not compatible. May be blank if compatible.
+	// Why a subnet is marked as not compatible. May be blank if compatible.
 	Note *string
-    // The ID of the VPC this subnet resides in.
+	// The ID of the VPC this subnet resides in.
 	VpcId *string
-    // The CIDR block of the VPC containing this subnet.
+	// The CIDR block of the VPC containing this subnet.
 	VpcCidrBlock *string
-    // The name of the subnet. This is either the tagged name or the default AWS id it was given.
+	// The name of the subnet. This is either the tagged name or the default AWS id it was given.
 	Name *string
 }
 
-func (s SubnetInfo) GetType__() bindings.BindingType {
+func (s *SubnetInfo) GetType__() bindings.BindingType {
 	return SubnetInfoBindingType()
 }
 
-func (s SubnetInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *SubnetInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3403,21 +3637,20 @@ func (s SubnetInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type SubnetRouteTableInfo struct {
-    // subnet id
+	// subnet id
 	SubnetId *string
-    // subnet - route table association id
+	// subnet - route table association id
 	AssociationId *string
-    // route table id
+	// route table id
 	RoutetableId *string
 }
 
-func (s SubnetRouteTableInfo) GetType__() bindings.BindingType {
+func (s *SubnetRouteTableInfo) GetType__() bindings.BindingType {
 	return SubnetRouteTableInfoBindingType()
 }
 
-func (s SubnetRouteTableInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *SubnetRouteTableInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3429,42 +3662,42 @@ func (s SubnetRouteTableInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // details of a subscription
 type SubscriptionDetails struct {
-    // Possible values are: 
-    //
-    // * SubscriptionDetails#SubscriptionDetails_STATUS_CREATED
-    // * SubscriptionDetails#SubscriptionDetails_STATUS_ACTIVATED
-    // * SubscriptionDetails#SubscriptionDetails_STATUS_FAILED
-    // * SubscriptionDetails#SubscriptionDetails_STATUS_CANCELLED
-    // * SubscriptionDetails#SubscriptionDetails_STATUS_EXPIRED
-    // * SubscriptionDetails#SubscriptionDetails_STATUS_PENDING_PROVISIONING
-    // * SubscriptionDetails#SubscriptionDetails_STATUS_ORDER_SUBMITTED
-    // * SubscriptionDetails#SubscriptionDetails_STATUS_SUSPENDED
-    // * SubscriptionDetails#SubscriptionDetails_STATUS_TERMINATED
-    // * SubscriptionDetails#SubscriptionDetails_STATUS_UKNOWN
-	Status *string
+	// Possible values are:
+	//
+	// * SubscriptionDetails#SubscriptionDetails_STATUS_CREATED
+	// * SubscriptionDetails#SubscriptionDetails_STATUS_ACTIVATED
+	// * SubscriptionDetails#SubscriptionDetails_STATUS_FAILED
+	// * SubscriptionDetails#SubscriptionDetails_STATUS_CANCELLED
+	// * SubscriptionDetails#SubscriptionDetails_STATUS_EXPIRED
+	// * SubscriptionDetails#SubscriptionDetails_STATUS_PENDING_PROVISIONING
+	// * SubscriptionDetails#SubscriptionDetails_STATUS_ORDER_SUBMITTED
+	// * SubscriptionDetails#SubscriptionDetails_STATUS_SUSPENDED
+	// * SubscriptionDetails#SubscriptionDetails_STATUS_TERMINATED
+	// * SubscriptionDetails#SubscriptionDetails_STATUS_UKNOWN
+	Status                 *string
 	AnniversaryBillingDate *string
-	EndDate *string
-    // The frequency at which the customer is billed. Currently supported values are \"Upfront\" and \"Monthly\"
-	BillingFrequency *string
-	AutoRenewedAllowed *string
-	CommitmentTerm *string
-	CspSubscriptionId *string
+	EndDate                *string
+	// The frequency at which the customer is billed. Currently supported values are \"Upfront\" and \"Monthly\"
+	BillingFrequency      *string
+	AutoRenewedAllowed    *string
+	CommitmentTerm        *string
+	CspSubscriptionId     *string
 	BillingSubscriptionId *string
-	OfferVersion *string
-	OfferType *OfferType
-	Description *string
-	ProductId *string
-	Region *string
-	ProductName *string
-	OfferName *string
-    // unit of measurment for commitment term
+	OfferVersion          *string
+	OfferType             *OfferTypeEnum
+	Description           *string
+	ProductId             *string
+	Region                *string
+	ProductName           *string
+	OfferName             *string
+	// unit of measurment for commitment term
 	CommitmentTermUom *string
-	StartDate *string
-	Quantity *string
+	StartDate         *string
+	Quantity          *string
 }
+
 const SubscriptionDetails_STATUS_CREATED = "CREATED"
 const SubscriptionDetails_STATUS_ACTIVATED = "ACTIVATED"
 const SubscriptionDetails_STATUS_FAILED = "FAILED"
@@ -3476,11 +3709,11 @@ const SubscriptionDetails_STATUS_SUSPENDED = "SUSPENDED"
 const SubscriptionDetails_STATUS_TERMINATED = "TERMINATED"
 const SubscriptionDetails_STATUS_UKNOWN = "UKNOWN"
 
-func (s SubscriptionDetails) GetType__() bindings.BindingType {
+func (s *SubscriptionDetails) GetType__() bindings.BindingType {
 	return SubscriptionDetailsBindingType()
 }
 
-func (s SubscriptionDetails) GetDataValue__() (data.DataValue, []error) {
+func (s *SubscriptionDetails) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3492,20 +3725,19 @@ func (s SubscriptionDetails) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Details of products that are available for purchase.
 type SubscriptionProducts struct {
-    // The name of the product
+	// The name of the product
 	Product *string
-    // A list of different types/version for the product.
+	// A list of different types/version for the product.
 	Types []string
 }
 
-func (s SubscriptionProducts) GetType__() bindings.BindingType {
+func (s *SubscriptionProducts) GetType__() bindings.BindingType {
 	return SubscriptionProductsBindingType()
 }
 
-func (s SubscriptionProducts) GetDataValue__() (data.DataValue, []error) {
+func (s *SubscriptionProducts) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3517,32 +3749,31 @@ func (s SubscriptionProducts) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type SubscriptionRequest struct {
-    // The product for which subscription needs to be created. Refer /vmc/api/orgs/{orgId}/products.
+	// The product for which subscription needs to be created. Refer /vmc/api/orgs/{orgId}/products.
 	Product *string
-    // Old identifier for product. \*Deprecarted\*. See product and type
+	// Old identifier for product. \*Deprecarted\*. See product and type
 	ProductType string
-	ProductId *string
-    // Frequency of the billing.
+	ProductId   *string
+	// Frequency of the billing.
 	BillingFrequency *string
-	Region string
-	CommitmentTerm string
-	OfferContextId *string
-	OfferVersion string
-	OfferName string
-	Quantity int64
-    // The type of the product for which the subscription needs to be created.
-	Type_ *string
-	Price *int64
+	Region           string
+	CommitmentTerm   string
+	OfferContextId   *string
+	OfferVersion     string
+	OfferName        string
+	Quantity         int64
+	// The type of the product for which the subscription needs to be created.
+	Type_           *string
+	Price           *int64
 	ProductChargeId *string
 }
 
-func (s SubscriptionRequest) GetType__() bindings.BindingType {
+func (s *SubscriptionRequest) GetType__() bindings.BindingType {
 	return SubscriptionRequestBindingType()
 }
 
-func (s SubscriptionRequest) GetDataValue__() (data.DataValue, []error) {
+func (s *SubscriptionRequest) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3554,26 +3785,26 @@ func (s SubscriptionRequest) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type SupportWindow struct {
-    // Possible values are: 
-    //
-    // * SupportWindow#SupportWindow_START_DAY_MONDAY
-    // * SupportWindow#SupportWindow_START_DAY_TUESDAY
-    // * SupportWindow#SupportWindow_START_DAY_WEDNESDAY
-    // * SupportWindow#SupportWindow_START_DAY_THURSDAY
-    // * SupportWindow#SupportWindow_START_DAY_FRIDAY
-    // * SupportWindow#SupportWindow_START_DAY_SATURDAY
-    // * SupportWindow#SupportWindow_START_DAY_SUNDAY
+	// Possible values are:
+	//
+	// * SupportWindow#SupportWindow_START_DAY_MONDAY
+	// * SupportWindow#SupportWindow_START_DAY_TUESDAY
+	// * SupportWindow#SupportWindow_START_DAY_WEDNESDAY
+	// * SupportWindow#SupportWindow_START_DAY_THURSDAY
+	// * SupportWindow#SupportWindow_START_DAY_FRIDAY
+	// * SupportWindow#SupportWindow_START_DAY_SATURDAY
+	// * SupportWindow#SupportWindow_START_DAY_SUNDAY
 	StartDay *string
-	Seats *int64
-    // SDDCs in this window format: UUID
-	Sddcs []string
-	DurationHours *int64
-	StartHour *int64
+	Seats    *int64
+	// SDDCs in this window format: UUID
+	Sddcs           []string
+	DurationHours   *int64
+	StartHour       *int64
 	SupportWindowId *string
-	Metadata *data.StructValue
+	Metadata        *data.StructValue
 }
+
 const SupportWindow_START_DAY_MONDAY = "MONDAY"
 const SupportWindow_START_DAY_TUESDAY = "TUESDAY"
 const SupportWindow_START_DAY_WEDNESDAY = "WEDNESDAY"
@@ -3582,11 +3813,11 @@ const SupportWindow_START_DAY_FRIDAY = "FRIDAY"
 const SupportWindow_START_DAY_SATURDAY = "SATURDAY"
 const SupportWindow_START_DAY_SUNDAY = "SUNDAY"
 
-func (s SupportWindow) GetType__() bindings.BindingType {
+func (s *SupportWindow) GetType__() bindings.BindingType {
 	return SupportWindowBindingType()
 }
 
-func (s SupportWindow) GetDataValue__() (data.DataValue, []error) {
+func (s *SupportWindow) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3598,17 +3829,16 @@ func (s SupportWindow) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type SupportWindowId struct {
-    // Support Window ID
+	// Support Window ID
 	WindowId *string
 }
 
-func (s SupportWindowId) GetType__() bindings.BindingType {
+func (s *SupportWindowId) GetType__() bindings.BindingType {
 	return SupportWindowIdBindingType()
 }
 
-func (s SupportWindowId) GetDataValue__() (data.DataValue, []error) {
+func (s *SupportWindowId) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3620,74 +3850,75 @@ func (s SupportWindowId) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type Task struct {
 	Updated time.Time
-    // User id that last updated this record
+	// User id that last updated this record
 	UserId string
-    // User id that last updated this record
+	// User id that last updated this record
 	UpdatedByUserId string
-	Created time.Time
-    // Version of this entity format: int32
+	Created         time.Time
+	// Version of this entity format: int32
 	Version int64
-    // User name that last updated this record
+	// User name that last updated this record
 	UpdatedByUserName *string
-    // User name that last updated this record
+	// User name that last updated this record
 	UserName string
-    // Unique ID for this entity
+	// Unique ID for this entity
 	Id string
-    // Possible values are: 
-    //
-    // * Task#Task_STATUS_STARTED
-    // * Task#Task_STATUS_CANCELING
-    // * Task#Task_STATUS_FINISHED
-    // * Task#Task_STATUS_FAILED
-    // * Task#Task_STATUS_CANCELED
-	Status *string
+	// Possible values are:
+	//
+	// * Task#Task_STATUS_STARTED
+	// * Task#Task_STATUS_CANCELING
+	// * Task#Task_STATUS_FINISHED
+	// * Task#Task_STATUS_FAILED
+	// * Task#Task_STATUS_CANCELED
+	Status                *string
 	LocalizedErrorMessage *string
-    // UUID of the resource the task is acting upon
+	// UUID of the resource the task is acting upon
 	ResourceId *string
-    // If this task was created by another task - this provides the linkage. Mostly for debugging.
+	// If this task was created by another task - this provides the linkage. Mostly for debugging.
 	ParentTaskId *string
-	TaskVersion *string
-    // (Optional) Client provided uniqifier to make task creation idempotent. Be aware not all tasks support this. For tasks that do - supplying the same correlation Id, for the same task type, within a predefined window will ensure the operation happens at most once.
+	TaskVersion  *string
+	// (Optional) Client provided uniqifier to make task creation idempotent. Be aware not all tasks support this. For tasks that do - supplying the same correlation Id, for the same task type, within a predefined window will ensure the operation happens at most once.
 	CorrelationId *string
-    // Entity version of the resource at the start of the task. This is only set for some task types. format: int32
+	// Entity version of the resource at the start of the task. This is only set for some task types. format: int32
 	StartResourceEntityVersion *int64
-	SubStatus *string
-	TaskType *string
-	StartTime *time.Time
-    // Task progress phases involved in current task execution
+	CustomerErrorMessage       *string
+	SubStatus                  *string
+	TaskType                   *string
+	StartTime                  *time.Time
+	// Task progress phases involved in current task execution
 	TaskProgressPhases []TaskProgressPhase
-	ErrorMessage *string
-	OrgId *string
-    // Entity version of the resource at the end of the task. This is only set for some task types. format: int32
+	ErrorMessage       *string
+	OrgId              *string
+	// Entity version of the resource at the end of the task. This is only set for some task types. format: int32
 	EndResourceEntityVersion *int64
-    // Service errors returned from SDDC services.
+	// Service errors returned from SDDC services.
 	ServiceErrors []ServiceError
-	OrgType *string
-    // Estimated remaining time in minute of the task execution, < 0 means no estimation for the task. format: int32
+	OrgType       *string
+	// Estimated remaining time in minute of the task execution, < 0 means no estimation for the task. format: int32
 	EstimatedRemainingMinutes *int64
-	Params *data.StructValue
-    // Estimated progress percentage the task executed format: int32
+	Params                    *data.StructValue
+	// Estimated progress percentage the task executed format: int32
 	ProgressPercent *int64
-    // The current in progress phase ID in the task execution, if none in progress, empty string returned.
+	// The current in progress phase ID in the task execution, if none in progress, empty string returned.
 	PhaseInProgress *string
-    // Type of resource being acted upon
+	// Type of resource being acted upon
 	ResourceType *string
-	EndTime *time.Time
+	EndTime      *time.Time
 }
+
 const Task_STATUS_STARTED = "STARTED"
 const Task_STATUS_CANCELING = "CANCELING"
 const Task_STATUS_FINISHED = "FINISHED"
 const Task_STATUS_FAILED = "FAILED"
 const Task_STATUS_CANCELED = "CANCELED"
 
-func (s Task) GetType__() bindings.BindingType {
+func (s *Task) GetType__() bindings.BindingType {
 	return TaskBindingType()
 }
 
-func (s Task) GetDataValue__() (data.DataValue, []error) {
+func (s *Task) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3699,22 +3930,21 @@ func (s Task) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // A task progress can be (but does NOT have to be) divided to more meaningful progress phases.
 type TaskProgressPhase struct {
-    // The identifier of the task progress phase
+	// The identifier of the task progress phase
 	Id string
-    // The display name of the task progress phase
+	// The display name of the task progress phase
 	Name string
-    // The percentage of the phase that has completed format: int32
+	// The percentage of the phase that has completed format: int32
 	ProgressPercent int64
 }
 
-func (s TaskProgressPhase) GetType__() bindings.BindingType {
+func (s *TaskProgressPhase) GetType__() bindings.BindingType {
 	return TaskProgressPhaseBindingType()
 }
 
-func (s TaskProgressPhase) GetDataValue__() (data.DataValue, []error) {
+func (s *TaskProgressPhase) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3726,18 +3956,17 @@ func (s TaskProgressPhase) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Holder for term billing options.
 type TermBillingOptions struct {
-	UnitPrice *string
+	UnitPrice        *string
 	BillingFrequency *string
 }
 
-func (s TermBillingOptions) GetType__() bindings.BindingType {
+func (s *TermBillingOptions) GetType__() bindings.BindingType {
 	return TermBillingOptionsBindingType()
 }
 
-func (s TermBillingOptions) GetDataValue__() (data.DataValue, []error) {
+func (s *TermBillingOptions) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3749,32 +3978,31 @@ func (s TermBillingOptions) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Holder for the term offer instances.
 type TermOfferInstance struct {
 	Description string
-	Product string
-    // Deprecated. Please use product and type fields instead.
-	ProductType *string
-	Name string
-	Currency string
-	Region string
+	Product     string
+	// Deprecated. Please use product and type fields instead.
+	ProductType    *string
+	Name           string
+	Currency       string
+	Region         string
 	CommitmentTerm int64
-    // (deprecated. unit_price is moved into TermBillingOptions. For backward compatibility, this field reflect \"Prepaid\" price at the offer level.)
-	UnitPrice string
-	BillingOptions []TermBillingOptions
-	Version string
-	OfferContextId *string
+	// (deprecated. unit_price is moved into TermBillingOptions. For backward compatibility, this field reflect \"Prepaid\" price at the offer level.)
+	UnitPrice       string
+	BillingOptions  []TermBillingOptions
+	Version         string
+	OfferContextId  *string
 	ProductChargeId *string
-	Type_ string
-	ProductId *string
+	Type_           string
+	ProductId       *string
 }
 
-func (s TermOfferInstance) GetType__() bindings.BindingType {
+func (s *TermOfferInstance) GetType__() bindings.BindingType {
 	return TermOfferInstanceBindingType()
 }
 
-func (s TermOfferInstance) GetDataValue__() (data.DataValue, []error) {
+func (s *TermOfferInstance) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3786,19 +4014,18 @@ func (s TermOfferInstance) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type TermsOfServiceResult struct {
-    // The terms of service ID requested.
+	// The terms of service ID requested.
 	TermsId *string
-    // Wehther or not the terms requested have been signed.
+	// Whether or not the terms requested have been signed.
 	Signed *bool
 }
 
-func (s TermsOfServiceResult) GetType__() bindings.BindingType {
+func (s *TermsOfServiceResult) GetType__() bindings.BindingType {
 	return TermsOfServiceResultBindingType()
 }
 
-func (s TermsOfServiceResult) GetDataValue__() (data.DataValue, []error) {
+func (s *TermsOfServiceResult) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3810,19 +4037,18 @@ func (s TermsOfServiceResult) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type UpdateCredentials struct {
-    // Username of the credentials
+	// Username of the credentials
 	Username string
-    // Password associated with the credentials
+	// Password associated with the credentials
 	Password string
 }
 
-func (s UpdateCredentials) GetType__() bindings.BindingType {
+func (s *UpdateCredentials) GetType__() bindings.BindingType {
 	return UpdateCredentialsBindingType()
 }
 
-func (s UpdateCredentials) GetDataValue__() (data.DataValue, []error) {
+func (s *UpdateCredentials) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3834,17 +4060,16 @@ func (s UpdateCredentials) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type VmcLocale struct {
-    // The locale to be used for translating responses for the session
+	// The locale to be used for translating responses for the session
 	Locale *string
 }
 
-func (s VmcLocale) GetType__() bindings.BindingType {
+func (s *VmcLocale) GetType__() bindings.BindingType {
 	return VmcLocaleBindingType()
 }
 
-func (s VmcLocale) GetDataValue__() (data.DataValue, []error) {
+func (s *VmcLocale) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3856,57 +4081,58 @@ func (s VmcLocale) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type VpcInfo struct {
-	VpcCidr *string
-	VgwId *string
+	EsxSecurityGroupId       *string
+	VpcCidr                  *string
+	VgwId                    *string
 	EsxPublicSecurityGroupId *string
-    // set of virtual interfaces attached to the sddc
-	VifIds []string
+	// set of virtual interfaces attached to the sddc
+	VifIds            []string
 	VmSecurityGroupId *string
-    // (deprecated)
+	// (deprecated)
 	RouteTableId *string
-    // Id of the NSX edge associated with this VPC (deprecated)
+	// Id of the NSX edge associated with this VPC (deprecated)
 	EdgeSubnetId *string
-    // vpc id
+	// vpc id
 	Id *string
-    // Id of the association between subnet and route-table (deprecated)
+	// Id of the association between subnet and route-table (deprecated)
 	ApiAssociationId *string
-    // Id associated with this VPC (deprecated)
+	// Id associated with this VPC (deprecated)
 	ApiSubnetId *string
-    // (deprecated)
+	// (deprecated)
 	PrivateSubnetId *string
-    // (deprecated)
+	// (deprecated)
 	PrivateAssociationId *string
-	EsxSecurityGroupId *string
-    // (deprecated)
-	SubnetId *string
+	// Set of VCDR (VMware Cloud Disaster Recovery) ENIs
+	VcdrEnis []EniInfo
+	// (deprecated)
+	SubnetId          *string
 	InternetGatewayId *string
-	SecurityGroupId *string
-    // (deprecated)
+	SecurityGroupId   *string
+	// (deprecated)
 	AssociationId *string
-    // Route table which contains the route to VGW (deprecated)
+	// Route table which contains the route to VGW (deprecated)
 	VgwRouteTableId *string
-    // List of edge vm Ips of traffic gourps added during scale-out
+	// List of edge vm Ips of traffic gourps added during scale-out
 	TrafficGroupEdgeVmIps []string
-    // Id of the association between edge subnet and route-table (deprecated)
+	// Id of the association between edge subnet and route-table (deprecated)
 	EdgeAssociationId *string
-	Provider *string
-    // Mapping from AZ to a list of IP addresses assigned to TGW ENI that's connected with Vpc
+	Provider          *string
+	// Mapping from AZ to a list of IP addresses assigned to TGW ENI that's connected with Vpc
 	TgwIps map[string][]string
-    // (deprecated)
+	// (deprecated)
 	PeeringConnectionId *string
-	NetworkType *string
-	AvailableZones []AvailableZoneInfo
-    // map from routeTableName to routeTableInfo
+	NetworkType         *string
+	AvailableZones      []AvailableZoneInfo
+	// map from routeTableName to routeTableInfo
 	Routetables map[string]RouteTableInfo
 }
 
-func (s VpcInfo) GetType__() bindings.BindingType {
+func (s *VpcInfo) GetType__() bindings.BindingType {
 	return VpcInfoBindingType()
 }
 
-func (s VpcInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *VpcInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3918,22 +4144,21 @@ func (s VpcInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type VpcInfoSubnets struct {
-    // The ID of the VPC these subnets belong to.
+	// The ID of the VPC these subnets belong to.
 	VpcId *string
-    // The overall CIDR block of the VPC. This is the AWS primary CIDR block.
+	// The overall CIDR block of the VPC. This is the AWS primary CIDR block.
 	CidrBlock *string
-    // The description of the VPC; usually it's name or id.
+	// The description of the VPC; usually it's name or id.
 	Description *string
-	Subnets []SubnetInfo
+	Subnets     []SubnetInfo
 }
 
-func (s VpcInfoSubnets) GetType__() bindings.BindingType {
+func (s *VpcInfoSubnets) GetType__() bindings.BindingType {
 	return VpcInfoSubnetsBindingType()
 }
 
-func (s VpcInfoSubnets) GetDataValue__() (data.DataValue, []error) {
+func (s *VpcInfoSubnets) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -3945,60 +4170,60 @@ func (s VpcInfoSubnets) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type Vpn struct {
-	Version *string
-	OnPremGatewayIp *string
-	OnPremNetworkCidr *string
-	PfsEnabled *bool
-	Id *string
-	ChannelStatus *VpnChannelStatus
-	OnPremNatIp *string
-	Name *string
+	Version            *string
+	OnPremGatewayIp    *string
+	OnPremNetworkCidr  *string
+	PfsEnabled         *bool
+	Id                 *string
+	ChannelStatus      *VpnChannelStatus
+	OnPremNatIp        *string
+	Name               *string
 	InternalNetworkIds []string
-	TunnelStatuses []VpnTunnelStatus
-    // Possible values are: 
-    //
-    // * Vpn#Vpn_ENCRYPTION_AES
-    // * Vpn#Vpn_ENCRYPTION_AES256
-    // * Vpn#Vpn_ENCRYPTION_AES_GCM
-    // * Vpn#Vpn_ENCRYPTION_TRIPLE_DES
-    // * Vpn#Vpn_ENCRYPTION_UNKNOWN
+	TunnelStatuses     []VpnTunnelStatus
+	// Possible values are:
+	//
+	// * Vpn#Vpn_ENCRYPTION_AES
+	// * Vpn#Vpn_ENCRYPTION_AES256
+	// * Vpn#Vpn_ENCRYPTION_AES_GCM
+	// * Vpn#Vpn_ENCRYPTION_TRIPLE_DES
+	// * Vpn#Vpn_ENCRYPTION_UNKNOWN
 	Encryption *string
-	Enabled *bool
-    // Possible values are: 
-    //
-    // * Vpn#Vpn_STATE_CONNECTED
-    // * Vpn#Vpn_STATE_DISCONNECTED
-    // * Vpn#Vpn_STATE_PARTIALLY_CONNECTED
-    // * Vpn#Vpn_STATE_UNKNOWN
+	Enabled    *bool
+	// Possible values are:
+	//
+	// * Vpn#Vpn_STATE_CONNECTED
+	// * Vpn#Vpn_STATE_DISCONNECTED
+	// * Vpn#Vpn_STATE_PARTIALLY_CONNECTED
+	// * Vpn#Vpn_STATE_UNKNOWN
 	State *string
-    // Possible values are: 
-    //
-    // * Vpn#Vpn_DH_GROUP_DH2
-    // * Vpn#Vpn_DH_GROUP_DH5
-    // * Vpn#Vpn_DH_GROUP_DH14
-    // * Vpn#Vpn_DH_GROUP_DH15
-    // * Vpn#Vpn_DH_GROUP_DH16
-    // * Vpn#Vpn_DH_GROUP_UNKNOWN
+	// Possible values are:
+	//
+	// * Vpn#Vpn_DH_GROUP_DH2
+	// * Vpn#Vpn_DH_GROUP_DH5
+	// * Vpn#Vpn_DH_GROUP_DH14
+	// * Vpn#Vpn_DH_GROUP_DH15
+	// * Vpn#Vpn_DH_GROUP_DH16
+	// * Vpn#Vpn_DH_GROUP_UNKNOWN
 	DhGroup *string
-    // Possible values are: 
-    //
-    // * Vpn#Vpn_AUTHENTICATION_PSK
-    // * Vpn#Vpn_AUTHENTICATION_UNKNOWN
+	// Possible values are:
+	//
+	// * Vpn#Vpn_AUTHENTICATION_PSK
+	// * Vpn#Vpn_AUTHENTICATION_UNKNOWN
 	Authentication *string
-	PreSharedKey *string
-    // Possible values are: 
-    //
-    // * Vpn#Vpn_IKE_OPTION_IKEV1
-    // * Vpn#Vpn_IKE_OPTION_IKEV2
+	PreSharedKey   *string
+	// Possible values are:
+	//
+	// * Vpn#Vpn_IKE_OPTION_IKEV1
+	// * Vpn#Vpn_IKE_OPTION_IKEV2
 	IkeOption *string
-    // Possible values are: 
-    //
-    // * Vpn#Vpn_DIGEST_ALGORITHM_SHA1
-    // * Vpn#Vpn_DIGEST_ALGORITHM_SHA_256
+	// Possible values are:
+	//
+	// * Vpn#Vpn_DIGEST_ALGORITHM_SHA1
+	// * Vpn#Vpn_DIGEST_ALGORITHM_SHA_256
 	DigestAlgorithm *string
 }
+
 const Vpn_ENCRYPTION_AES = "AES"
 const Vpn_ENCRYPTION_AES256 = "AES256"
 const Vpn_ENCRYPTION_AES_GCM = "AES_GCM"
@@ -4021,11 +4246,11 @@ const Vpn_IKE_OPTION_IKEV2 = "IKEV2"
 const Vpn_DIGEST_ALGORITHM_SHA1 = "SHA1"
 const Vpn_DIGEST_ALGORITHM_SHA_256 = "SHA_256"
 
-func (s Vpn) GetType__() bindings.BindingType {
+func (s *Vpn) GetType__() bindings.BindingType {
 	return VpnBindingType()
 }
 
-func (s Vpn) GetDataValue__() (data.DataValue, []error) {
+func (s *Vpn) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -4037,27 +4262,27 @@ func (s Vpn) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type VpnChannelStatus struct {
-    // Possible values are: 
-    //
-    // * VpnChannelStatus#VpnChannelStatus_CHANNEL_STATUS_CONNECTED
-    // * VpnChannelStatus#VpnChannelStatus_CHANNEL_STATUS_DISCONNECTED
-    // * VpnChannelStatus#VpnChannelStatus_CHANNEL_STATUS_UNKNOWN
-	ChannelStatus *string
-	ChannelState *string
+	// Possible values are:
+	//
+	// * VpnChannelStatus#VpnChannelStatus_CHANNEL_STATUS_CONNECTED
+	// * VpnChannelStatus#VpnChannelStatus_CHANNEL_STATUS_DISCONNECTED
+	// * VpnChannelStatus#VpnChannelStatus_CHANNEL_STATUS_UNKNOWN
+	ChannelStatus   *string
+	ChannelState    *string
 	LastInfoMessage *string
-	FailureMessage *string
+	FailureMessage  *string
 }
+
 const VpnChannelStatus_CHANNEL_STATUS_CONNECTED = "CONNECTED"
 const VpnChannelStatus_CHANNEL_STATUS_DISCONNECTED = "DISCONNECTED"
 const VpnChannelStatus_CHANNEL_STATUS_UNKNOWN = "UNKNOWN"
 
-func (s VpnChannelStatus) GetType__() bindings.BindingType {
+func (s *VpnChannelStatus) GetType__() bindings.BindingType {
 	return VpnChannelStatusBindingType()
 }
 
-func (s VpnChannelStatus) GetDataValue__() (data.DataValue, []error) {
+func (s *VpnChannelStatus) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -4069,30 +4294,30 @@ func (s VpnChannelStatus) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type VpnTunnelStatus struct {
-	OnPremSubnet *string
-	TrafficStats *VpnTunnelTrafficStats
+	OnPremSubnet    *string
+	TrafficStats    *VpnTunnelTrafficStats
 	LastInfoMessage *string
-	LocalSubnet *string
-	TunnelState *string
-	FailureMessage *string
-    // Possible values are: 
-    //
-    // * VpnTunnelStatus#VpnTunnelStatus_TUNNEL_STATUS_CONNECTED
-    // * VpnTunnelStatus#VpnTunnelStatus_TUNNEL_STATUS_DISCONNECTED
-    // * VpnTunnelStatus#VpnTunnelStatus_TUNNEL_STATUS_UNKNOWN
+	LocalSubnet     *string
+	TunnelState     *string
+	FailureMessage  *string
+	// Possible values are:
+	//
+	// * VpnTunnelStatus#VpnTunnelStatus_TUNNEL_STATUS_CONNECTED
+	// * VpnTunnelStatus#VpnTunnelStatus_TUNNEL_STATUS_DISCONNECTED
+	// * VpnTunnelStatus#VpnTunnelStatus_TUNNEL_STATUS_UNKNOWN
 	TunnelStatus *string
 }
+
 const VpnTunnelStatus_TUNNEL_STATUS_CONNECTED = "CONNECTED"
 const VpnTunnelStatus_TUNNEL_STATUS_DISCONNECTED = "DISCONNECTED"
 const VpnTunnelStatus_TUNNEL_STATUS_UNKNOWN = "UNKNOWN"
 
-func (s VpnTunnelStatus) GetType__() bindings.BindingType {
+func (s *VpnTunnelStatus) GetType__() bindings.BindingType {
 	return VpnTunnelStatusBindingType()
 }
 
-func (s VpnTunnelStatus) GetDataValue__() (data.DataValue, []error) {
+func (s *VpnTunnelStatus) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -4104,26 +4329,25 @@ func (s VpnTunnelStatus) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type VpnTunnelTrafficStats struct {
-	PacketsOut *string
-	PacketReceivedErrors *string
-	RxBytesOnLocalSubnet *string
-	ReplayErrors *string
+	PacketsOut                   *string
+	PacketReceivedErrors         *string
+	RxBytesOnLocalSubnet         *string
+	ReplayErrors                 *string
 	SequenceNumberOverFlowErrors *string
-	EncryptionFailures *string
-	IntegrityErrors *string
-	PacketSentErrors *string
-	DecryptionFailures *string
-	PacketsIn *string
-	TxBytesFromLocalSubnet *string
+	EncryptionFailures           *string
+	IntegrityErrors              *string
+	PacketSentErrors             *string
+	DecryptionFailures           *string
+	PacketsIn                    *string
+	TxBytesFromLocalSubnet       *string
 }
 
-func (s VpnTunnelTrafficStats) GetType__() bindings.BindingType {
+func (s *VpnTunnelTrafficStats) GetType__() bindings.BindingType {
 	return VpnTunnelTrafficStatsBindingType()
 }
 
-func (s VpnTunnelTrafficStats) GetDataValue__() (data.DataValue, []error) {
+func (s *VpnTunnelTrafficStats) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -4135,19 +4359,18 @@ func (s VpnTunnelTrafficStats) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Infomation about an available vSAN capacity in a cluster.
 type VsanAvailableCapacity struct {
-	Cost string
+	Cost    string
 	Quality string
-	Size int64
+	Size    int64
 }
 
-func (s VsanAvailableCapacity) GetType__() bindings.BindingType {
+func (s *VsanAvailableCapacity) GetType__() bindings.BindingType {
 	return VsanAvailableCapacityBindingType()
 }
 
-func (s VsanAvailableCapacity) GetDataValue__() (data.DataValue, []error) {
+func (s *VsanAvailableCapacity) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -4159,19 +4382,18 @@ func (s VsanAvailableCapacity) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Bias for reconfiguring vSAN in a cluster.
 type VsanClusterReconfigBias struct {
 	ShortDescription string
-	FullDescription string
-	Id string
+	FullDescription  string
+	Id               string
 }
 
-func (s VsanClusterReconfigBias) GetType__() bindings.BindingType {
+func (s *VsanClusterReconfigBias) GetType__() bindings.BindingType {
 	return VsanClusterReconfigBiasBindingType()
 }
 
-func (s VsanClusterReconfigBias) GetDataValue__() (data.DataValue, []error) {
+func (s *VsanClusterReconfigBias) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -4183,26 +4405,25 @@ func (s VsanClusterReconfigBias) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Storage constraint information for reconfiguring vSAN in existing cluster.
 type VsanClusterReconfigConstraints struct {
-    // Biases to reconfigure vSAN in an existing cluster.
+	// Biases to reconfigure vSAN in an existing cluster.
 	ReconfigBiases []VsanClusterReconfigBias
-    // A map of VsanClusterReconfigBias id to the list of VsanAvailableCapacity. It gives all of available vSAN capacities for each of reconfiguration biases.
+	// A map of VsanClusterReconfigBias id to the list of VsanAvailableCapacity. It gives all of available vSAN capacities for each of reconfiguration biases.
 	AvailableCapacities map[string][]VsanAvailableCapacity
-    // A map of VsanClusterReconfigBias id to a VsanAvailableCapacity. It gives the default VsanAvailableCapacity for each of reconfiguration biases.
+	// A map of VsanClusterReconfigBias id to a VsanAvailableCapacity. It gives the default VsanAvailableCapacity for each of reconfiguration biases.
 	DefaultCapacities map[string]VsanAvailableCapacity
-    // The number of hosts in a cluster for the constraints. format: int32
+	// The number of hosts in a cluster for the constraints. format: int32
 	Hosts int64
-    // The id of default VsanClusterReconfigBias for this constraints.
+	// The id of default VsanClusterReconfigBias for this constraints.
 	DefaultReconfigBiasId string
 }
 
-func (s VsanClusterReconfigConstraints) GetType__() bindings.BindingType {
+func (s *VsanClusterReconfigConstraints) GetType__() bindings.BindingType {
 	return VsanClusterReconfigConstraintsBindingType()
 }
 
-func (s VsanClusterReconfigConstraints) GetDataValue__() (data.DataValue, []error) {
+func (s *VsanClusterReconfigConstraints) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -4214,26 +4435,25 @@ func (s VsanClusterReconfigConstraints) GetDataValue__() (data.DataValue, []erro
 	return dataVal, nil
 }
 
-
 // This describes the possible physical storage capacity choices for use with a given VsanStorageDesigner implementation. These choices are specific to a customer-defined number of hosts per cluster.
 type VsanConfigConstraints struct {
-    // Maximum capacity supported for cluster (GiB). format: int64
+	// Maximum capacity supported for cluster (GiB). format: int64
 	MaxCapacity int64
-    // List of supported capacities which may offer preferable performance (GiB). format: int64
+	// List of supported capacities which may offer preferable performance (GiB). format: int64
 	RecommendedCapacities []int64
-    // Increment to be added to min_capacity to result in a supported capacity (GiB). format: int64
+	// Increment to be added to min_capacity to result in a supported capacity (GiB). format: int64
 	SupportedCapacityIncrement *int64
-    // Minimum capacity supported for cluster (GiB). format: int64
+	// Minimum capacity supported for cluster (GiB). format: int64
 	MinCapacity int64
-    // Number of hosts in cluster. format: int64
+	// Number of hosts in cluster. format: int64
 	NumHosts int64
 }
 
-func (s VsanConfigConstraints) GetType__() bindings.BindingType {
+func (s *VsanConfigConstraints) GetType__() bindings.BindingType {
 	return VsanConfigConstraintsBindingType()
 }
 
-func (s VsanConfigConstraints) GetDataValue__() (data.DataValue, []error) {
+func (s *VsanConfigConstraints) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -4245,19 +4465,48 @@ func (s VsanConfigConstraints) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Polymorphic object representing host storage spec.
+type VsanDiskgroupMapping struct {
+	// Possible values are:
+	//
+	// * VsanDiskgroupMapping#VsanDiskgroupMapping_MAPPING_TYPE_SERIAL
+	// * VsanDiskgroupMapping#VsanDiskgroupMapping_MAPPING_TYPE_CANONICAL
+	// * VsanDiskgroupMapping#VsanDiskgroupMapping_MAPPING_TYPE_SYMMETRIC
+	MappingType string
+}
+
+const VsanDiskgroupMapping_MAPPING_TYPE_SERIAL = "SERIAL"
+const VsanDiskgroupMapping_MAPPING_TYPE_CANONICAL = "CANONICAL"
+const VsanDiskgroupMapping_MAPPING_TYPE_SYMMETRIC = "SYMMETRIC"
+
+func (s *VsanDiskgroupMapping) GetType__() bindings.BindingType {
+	return VsanDiskgroupMappingBindingType()
+}
+
+func (s *VsanDiskgroupMapping) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for VsanDiskgroupMapping._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
 
 type VsanEncryptionConfig struct {
-    // Port to connect to AWS Key Management Service
+	// Port to connect to AWS Key Management Service
 	Port *int64
-    // Public certificate used to connect to AWS Key Management Service
+	// Public certificate used to connect to AWS Key Management Service
 	Certificate *string
 }
 
-func (s VsanEncryptionConfig) GetType__() bindings.BindingType {
+func (s *VsanEncryptionConfig) GetType__() bindings.BindingType {
 	return VsanEncryptionConfigBindingType()
 }
 
-func (s VsanEncryptionConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *VsanEncryptionConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -4269,9 +4518,40 @@ func (s VsanEncryptionConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+type WcpDetails struct {
+	// Possible values are:
+	//
+	// * WcpDetails#WcpDetails_WCP_STATUS_DISABLED
+	// * WcpDetails#WcpDetails_WCP_STATUS_ENABLE_IN_PROGRESS
+	// * WcpDetails#WcpDetails_WCP_STATUS_ENABLE_FAILED
+	// * WcpDetails#WcpDetails_WCP_STATUS_ENABLED
+	// * WcpDetails#WcpDetails_WCP_STATUS_DISABLE_IN_PROGRESS
+	// * WcpDetails#WcpDetails_WCP_STATUS_DISABLE_FAILED
+	WcpStatus *string
+}
 
+const WcpDetails_WCP_STATUS_DISABLED = "DISABLED"
+const WcpDetails_WCP_STATUS_ENABLE_IN_PROGRESS = "ENABLE_IN_PROGRESS"
+const WcpDetails_WCP_STATUS_ENABLE_FAILED = "ENABLE_FAILED"
+const WcpDetails_WCP_STATUS_ENABLED = "ENABLED"
+const WcpDetails_WCP_STATUS_DISABLE_IN_PROGRESS = "DISABLE_IN_PROGRESS"
+const WcpDetails_WCP_STATUS_DISABLE_FAILED = "DISABLE_FAILED"
 
+func (s *WcpDetails) GetType__() bindings.BindingType {
+	return WcpDetailsBindingType()
+}
 
+func (s *WcpDetails) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for WcpDetails._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
 
 func AbstractEntityBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
@@ -4319,6 +4599,8 @@ func AccountLinkSddcConfigBindingType() bindings.BindingType {
 func AgentBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
+	fieldNameMap["custom_properties"] = "CustomProperties"
 	fields["internal_ip"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["internal_ip"] = "InternalIp"
 	fields["agent_url"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -4376,6 +4658,8 @@ func AwsAgentBindingType() bindings.BindingType {
 	fieldNameMap["instance_id"] = "InstanceId"
 	fields["key_pair"] = bindings.NewOptionalType(bindings.NewReferenceType(AwsKeyPairBindingType))
 	fieldNameMap["key_pair"] = "KeyPair"
+	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
+	fieldNameMap["custom_properties"] = "CustomProperties"
 	fields["internal_ip"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["internal_ip"] = "InternalIp"
 	fields["agent_url"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -4416,7 +4700,7 @@ func AwsCompatibleSubnetsBindingType() bindings.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["customer_available_zones"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["customer_available_zones"] = "CustomerAvailableZones"
-	fields["vpc_map"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(VpcInfoSubnetsBindingType),reflect.TypeOf(map[string]VpcInfoSubnets{})))
+	fields["vpc_map"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(VpcInfoSubnetsBindingType), reflect.TypeOf(map[string]VpcInfoSubnets{})))
 	fieldNameMap["vpc_map"] = "VpcMap"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.aws_compatible_subnets", fields, reflect.TypeOf(AwsCompatibleSubnets{}), fieldNameMap, validators)
@@ -4443,7 +4727,7 @@ func AwsCustomerConnectedAccountBindingType() bindings.BindingType {
 	fieldNameMap["id"] = "Id"
 	fields["policy_payer_arn"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["policy_payer_arn"] = "PolicyPayerArn"
-	fields["region_to_az_to_shadow_mapping"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(),reflect.TypeOf(map[string]string{})),reflect.TypeOf(map[string]map[string]string{})))
+	fields["region_to_az_to_shadow_mapping"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})), reflect.TypeOf(map[string]map[string]string{})))
 	fieldNameMap["region_to_az_to_shadow_mapping"] = "RegionToAzToShadowMapping"
 	fields["org_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
@@ -4482,7 +4766,7 @@ func AwsEsxHostBindingType() bindings.BindingType {
 	fieldNameMap["instance_type"] = "InstanceType"
 	fields["mac_address"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["mac_address"] = "MacAddress"
-	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(),reflect.TypeOf(map[string]string{})))
+	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
 	fieldNameMap["custom_properties"] = "CustomProperties"
 	fields["esx_state"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["esx_state"] = "EsxState"
@@ -4521,7 +4805,7 @@ func AwsSddcConfigBindingType() bindings.BindingType {
 	fieldNameMap["msft_license_config"] = "MsftLicenseConfig"
 	fields["vpc_cidr"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vpc_cidr"] = "VpcCidr"
-	fields["host_instance_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vmc.model.host_instance_types", reflect.TypeOf(HostInstanceTypes(HostInstanceTypes_I3_METAL))))
+	fields["host_instance_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vmc.model.host_instance_types", reflect.TypeOf(HostInstanceTypesEnum(HostInstanceTypes_I3_METAL))))
 	fieldNameMap["host_instance_type"] = "HostInstanceType"
 	fields["skip_creating_vxlan"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["skip_creating_vxlan"] = "SkipCreatingVxlan"
@@ -4529,6 +4813,8 @@ func AwsSddcConfigBindingType() bindings.BindingType {
 	fieldNameMap["vxlan_subnet"] = "VxlanSubnet"
 	fields["size"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["size"] = "Size"
+	fields["outpost_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["outpost_id"] = "OutpostId"
 	fields["storage_capacity"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["storage_capacity"] = "StorageCapacity"
 	fields["name"] = bindings.NewStringType()
@@ -4627,68 +4913,38 @@ func AwsSddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["vpc_info_peered_agent"] = "VpcInfoPeeredAgent"
 	fields["mgmt_appliance_network_name"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["mgmt_appliance_network_name"] = "MgmtApplianceNetworkName"
-	fields["nsxt"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["nsxt"] = "Nsxt"
 	fields["mgw_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["mgw_id"] = "MgwId"
 	fields["nsx_mgr_url"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["nsx_mgr_url"] = "NsxMgrUrl"
-	fields["psc_management_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["psc_management_ip"] = "PscManagementIp"
-	fields["psc_url"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["psc_url"] = "PscUrl"
-	fields["cgws"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["cgws"] = "Cgws"
-	fields["availability_zones"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["availability_zones"] = "AvailabilityZones"
+	fields["nsx_cloud_audit_password"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["nsx_cloud_audit_password"] = "NsxCloudAuditPassword"
 	fields["management_ds"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["management_ds"] = "ManagementDs"
 	fields["nsx_api_public_endpoint_url"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["nsx_api_public_endpoint_url"] = "NsxApiPublicEndpointUrl"
-	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(),reflect.TypeOf(map[string]string{})))
-	fieldNameMap["custom_properties"] = "CustomProperties"
-	fields["cloud_password"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["cloud_password"] = "CloudPassword"
-	fields["provider"] = bindings.NewStringType()
-	fieldNameMap["provider"] = "Provider"
-	fields["clusters"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ClusterBindingType), reflect.TypeOf([]Cluster{})))
-	fieldNameMap["clusters"] = "Clusters"
-	fields["vc_management_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["vc_management_ip"] = "VcManagementIp"
 	fields["sddc_networks"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["sddc_networks"] = "SddcNetworks"
-	fields["cloud_username"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["cloud_username"] = "CloudUsername"
-	fields["esx_hosts"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(AwsEsxHostBindingType), reflect.TypeOf([]AwsEsxHost{})))
-	fieldNameMap["esx_hosts"] = "EsxHosts"
+	fields["clusters"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ClusterBindingType), reflect.TypeOf([]Cluster{})))
+	fieldNameMap["clusters"] = "Clusters"
 	fields["nsx_mgr_management_ip"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["nsx_mgr_management_ip"] = "NsxMgrManagementIp"
-	fields["vc_instance_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["vc_instance_id"] = "VcInstanceId"
+	fields["nsx_cloud_audit"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["nsx_cloud_audit"] = "NsxCloudAudit"
 	fields["esx_cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["esx_cluster_id"] = "EsxClusterId"
 	fields["vc_public_ip"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vc_public_ip"] = "VcPublicIp"
-	fields["skip_creating_vxlan"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["skip_creating_vxlan"] = "SkipCreatingVxlan"
 	fields["vc_url"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vc_url"] = "VcUrl"
-	fields["sddc_manifest"] = bindings.NewOptionalType(bindings.NewReferenceType(SddcManifestBindingType))
-	fieldNameMap["sddc_manifest"] = "SddcManifest"
-	fields["vxlan_subnet"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["vxlan_subnet"] = "VxlanSubnet"
-	fields["cloud_user_group"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["cloud_user_group"] = "CloudUserGroup"
+	fields["esx_hosts"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(AwsEsxHostBindingType), reflect.TypeOf([]AwsEsxHost{})))
+	fieldNameMap["esx_hosts"] = "EsxHosts"
+	fields["vc_management_ip"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["vc_management_ip"] = "VcManagementIp"
 	fields["management_rp"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["management_rp"] = "ManagementRp"
-	fields["region"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["region"] = "Region"
 	fields["witness_availability_zone"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["witness_availability_zone"] = "WitnessAvailabilityZone"
-	fields["sddc_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["sddc_id"] = "SddcId"
-	fields["pop_agent_xeni_connection"] = bindings.NewOptionalType(bindings.NewReferenceType(PopAgentXeniConnectionBindingType))
-	fieldNameMap["pop_agent_xeni_connection"] = "PopAgentXeniConnection"
 	fields["sddc_size"] = bindings.NewOptionalType(bindings.NewReferenceType(SddcSizeBindingType))
 	fieldNameMap["sddc_size"] = "SddcSize"
 	fields["nsx_controller_ips"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
@@ -4701,10 +4957,54 @@ func AwsSddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["deployment_type"] = "DeploymentType"
 	fields["msft_license_config"] = bindings.NewOptionalType(bindings.NewReferenceType(MsftLicensingConfigBindingType))
 	fieldNameMap["msft_license_config"] = "MsftLicenseConfig"
-	fields["nsxt_addons"] = bindings.NewOptionalType(bindings.NewReferenceType(NsxtAddonsBindingType))
-	fieldNameMap["nsxt_addons"] = "NsxtAddons"
+	fields["region"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["region"] = "Region"
+	fields["outpost_config"] = bindings.NewOptionalType(bindings.NewReferenceType(OutpostConfigBindingType))
+	fieldNameMap["outpost_config"] = "OutpostConfig"
+	fields["nsxt"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["nsxt"] = "Nsxt"
+	fields["psc_management_ip"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["psc_management_ip"] = "PscManagementIp"
+	fields["psc_url"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["psc_url"] = "PscUrl"
+	fields["cgws"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["cgws"] = "Cgws"
+	fields["availability_zones"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["availability_zones"] = "AvailabilityZones"
+	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
+	fieldNameMap["custom_properties"] = "CustomProperties"
+	fields["cloud_password"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["cloud_password"] = "CloudPassword"
+	fields["provider"] = bindings.NewStringType()
+	fieldNameMap["provider"] = "Provider"
+	fields["nsx_cloud_admin_password"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["nsx_cloud_admin_password"] = "NsxCloudAdminPassword"
+	fields["cloud_username"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["cloud_username"] = "CloudUsername"
+	fields["vc_instance_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["vc_instance_id"] = "VcInstanceId"
+	fields["cloud_user_group"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["cloud_user_group"] = "CloudUserGroup"
+	fields["skip_creating_vxlan"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["skip_creating_vxlan"] = "SkipCreatingVxlan"
+	fields["sddc_manifest"] = bindings.NewOptionalType(bindings.NewReferenceType(SddcManifestBindingType))
+	fieldNameMap["sddc_manifest"] = "SddcManifest"
+	fields["vxlan_subnet"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["vxlan_subnet"] = "VxlanSubnet"
+	fields["sddc_security"] = bindings.NewOptionalType(bindings.NewReferenceType(SddcSecurityBindingType))
+	fieldNameMap["sddc_security"] = "SddcSecurity"
+	fields["sddc_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["sddc_id"] = "SddcId"
+	fields["pop_agent_xeni_connection"] = bindings.NewOptionalType(bindings.NewReferenceType(PopAgentXeniConnectionBindingType))
+	fieldNameMap["pop_agent_xeni_connection"] = "PopAgentXeniConnection"
+	fields["nsx_mgr_login_url"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["nsx_mgr_login_url"] = "NsxMgrLoginUrl"
 	fields["dns_with_management_vm_private_ip"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["dns_with_management_vm_private_ip"] = "DnsWithManagementVmPrivateIp"
+	fields["nsx_cloud_admin"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["nsx_cloud_admin"] = "NsxCloudAdmin"
+	fields["nsxt_addons"] = bindings.NewOptionalType(bindings.NewReferenceType(NsxtAddonsBindingType))
+	fieldNameMap["nsxt_addons"] = "NsxtAddons"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.aws_sddc_resource_config", fields, reflect.TypeOf(AwsSddcResourceConfig{}), fieldNameMap, validators)
 }
@@ -4748,14 +5048,12 @@ func ClusterBindingType() bindings.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["esx_host_list"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(AwsEsxHostBindingType), reflect.TypeOf([]AwsEsxHost{})))
 	fieldNameMap["esx_host_list"] = "EsxHostList"
+	fields["wcp_details"] = bindings.NewOptionalType(bindings.NewReferenceType(WcpDetailsBindingType))
+	fieldNameMap["wcp_details"] = "WcpDetails"
 	fields["msft_license_config"] = bindings.NewOptionalType(bindings.NewReferenceType(MsftLicensingConfigBindingType))
 	fieldNameMap["msft_license_config"] = "MsftLicenseConfig"
 	fields["cluster_state"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["cluster_state"] = "ClusterState"
-	fields["aws_kms_info"] = bindings.NewOptionalType(bindings.NewReferenceType(AwsKmsInfoBindingType))
-	fieldNameMap["aws_kms_info"] = "AwsKmsInfo"
-	fields["cluster_capacity"] = bindings.NewOptionalType(bindings.NewReferenceType(EntityCapacityBindingType))
-	fieldNameMap["cluster_capacity"] = "ClusterCapacity"
 	fields["esx_host_info"] = bindings.NewOptionalType(bindings.NewReferenceType(EsxHostInfoBindingType))
 	fieldNameMap["esx_host_info"] = "EsxHostInfo"
 	fields["host_cpu_cores_count"] = bindings.NewOptionalType(bindings.NewIntegerType())
@@ -4764,6 +5062,10 @@ func ClusterBindingType() bindings.BindingType {
 	fieldNameMap["cluster_id"] = "ClusterId"
 	fields["cluster_name"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["cluster_name"] = "ClusterName"
+	fields["aws_kms_info"] = bindings.NewOptionalType(bindings.NewReferenceType(AwsKmsInfoBindingType))
+	fieldNameMap["aws_kms_info"] = "AwsKmsInfo"
+	fields["cluster_capacity"] = bindings.NewOptionalType(bindings.NewReferenceType(EntityCapacityBindingType))
+	fieldNameMap["cluster_capacity"] = "ClusterCapacity"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.cluster", fields, reflect.TypeOf(Cluster{}), fieldNameMap, validators)
 }
@@ -4773,7 +5075,7 @@ func ClusterConfigBindingType() bindings.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["host_cpu_cores_count"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["host_cpu_cores_count"] = "HostCpuCoresCount"
-	fields["host_instance_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vmc.model.host_instance_types", reflect.TypeOf(HostInstanceTypes(HostInstanceTypes_I3_METAL))))
+	fields["host_instance_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vmc.model.host_instance_types", reflect.TypeOf(HostInstanceTypesEnum(HostInstanceTypes_I3_METAL))))
 	fieldNameMap["host_instance_type"] = "HostInstanceType"
 	fields["storage_capacity"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["storage_capacity"] = "StorageCapacity"
@@ -4824,12 +5126,16 @@ func ComputeGatewayTemplateBindingType() bindings.BindingType {
 func ConfigSpecBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["expiry_in_days"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fieldNameMap["expiry_in_days"] = "ExpiryInDays"
-	fields["availability"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewListType(bindings.NewReferenceType(InstanceTypeConfigBindingType), reflect.TypeOf([]InstanceTypeConfig{})),reflect.TypeOf(map[string][]InstanceTypeConfig{})))
-	fieldNameMap["availability"] = "Availability"
 	fields["sddc_sizes"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["sddc_sizes"] = "SddcSizes"
+	fields["is_powered_by_outpost_available"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["is_powered_by_outpost_available"] = "IsPoweredByOutpostAvailable"
+	fields["expiry_in_days"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["expiry_in_days"] = "ExpiryInDays"
+	fields["availability"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewListType(bindings.NewReferenceType(InstanceTypeConfigBindingType), reflect.TypeOf([]InstanceTypeConfig{})), reflect.TypeOf(map[string][]InstanceTypeConfig{})))
+	fieldNameMap["availability"] = "Availability"
+	fields["powered_by"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewListType(bindings.NewReferenceType(PoweredByInstanceTypeConfigBindingType), reflect.TypeOf([]PoweredByInstanceTypeConfig{})), reflect.TypeOf(map[string][]PoweredByInstanceTypeConfig{})))
+	fieldNameMap["powered_by"] = "PoweredBy"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.config_spec", fields, reflect.TypeOf(ConfigSpec{}), fieldNameMap, validators)
 }
@@ -4923,6 +5229,17 @@ func EbsBackedVsanConfigBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.ebs_backed_vsan_config", fields, reflect.TypeOf(EbsBackedVsanConfig{}), fieldNameMap, validators)
 }
 
+func EnablementInfoBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["enabled"] = bindings.NewBooleanType()
+	fieldNameMap["enabled"] = "Enabled"
+	fields["name"] = bindings.NewStringType()
+	fieldNameMap["name"] = "Name"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.enablement_info", fields, reflect.TypeOf(EnablementInfo{}), fieldNameMap, validators)
+}
+
 func EniInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -5010,7 +5327,7 @@ func EsxHostBindingType() bindings.BindingType {
 	fieldNameMap["instance_type"] = "InstanceType"
 	fields["mac_address"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["mac_address"] = "MacAddress"
-	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(),reflect.TypeOf(map[string]string{})))
+	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
 	fieldNameMap["custom_properties"] = "CustomProperties"
 	fields["esx_state"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["esx_state"] = "EsxState"
@@ -5368,7 +5685,7 @@ func OnDemandOfferInstanceBindingType() bindings.BindingType {
 func OrgPropertiesBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["values"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(),reflect.TypeOf(map[string]string{})))
+	fields["values"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
 	fieldNameMap["values"] = "Values"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.org_properties", fields, reflect.TypeOf(OrgProperties{}), fieldNameMap, validators)
@@ -5420,6 +5737,17 @@ func OrganizationBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.organization", fields, reflect.TypeOf(Organization{}), fieldNameMap, validators)
 }
 
+func OutpostConfigBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["outpost_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["outpost_id"] = "OutpostId"
+	fields["outpost_status"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["outpost_status"] = "OutpostStatus"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.outpost_config", fields, reflect.TypeOf(OutpostConfig{}), fieldNameMap, validators)
+}
+
 func PaymentMethodInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -5464,11 +5792,11 @@ func PopAmiInfoBindingType() bindings.BindingType {
 func PopInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["ami_infos"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(PopAmiInfoBindingType),reflect.TypeOf(map[string]PopAmiInfo{}))
+	fields["ami_infos"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(PopAmiInfoBindingType), reflect.TypeOf(map[string]PopAmiInfo{}))
 	fieldNameMap["ami_infos"] = "AmiInfos"
 	fields["created_at"] = bindings.NewOptionalType(bindings.NewDateTimeType())
 	fieldNameMap["created_at"] = "CreatedAt"
-	fields["service_infos"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(PopServiceInfoBindingType),reflect.TypeOf(map[string]PopServiceInfo{})))
+	fields["service_infos"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(PopServiceInfoBindingType), reflect.TypeOf(map[string]PopServiceInfo{})))
 	fieldNameMap["service_infos"] = "ServiceInfos"
 	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["id"] = "Id"
@@ -5493,10 +5821,29 @@ func PopServiceInfoBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.pop_service_info", fields, reflect.TypeOf(PopServiceInfo{}), fieldNameMap, validators)
 }
 
+func PoweredByInstanceTypeConfigBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["instance_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["instance_type"] = "InstanceType"
+	fields["hosts"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewIntegerType(), reflect.TypeOf([]int64{})))
+	fieldNameMap["hosts"] = "Hosts"
+	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["entity_capacity"] = bindings.NewOptionalType(bindings.NewReferenceType(EntityCapacityBindingType))
+	fieldNameMap["entity_capacity"] = "EntityCapacity"
+	fields["powered_by_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["powered_by_id"] = "PoweredById"
+	fields["powered_by_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["powered_by_type"] = "PoweredByType"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.powered_by_instance_type_config", fields, reflect.TypeOf(PoweredByInstanceTypeConfig{}), fieldNameMap, validators)
+}
+
 func ProvisionSpecBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["provider"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(SddcConfigSpecBindingType),reflect.TypeOf(map[string]SddcConfigSpec{})))
+	fields["provider"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(SddcConfigSpecBindingType), reflect.TypeOf(map[string]SddcConfigSpec{})))
 	fieldNameMap["provider"] = "Provider"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.provision_spec", fields, reflect.TypeOf(ProvisionSpec{}), fieldNameMap, validators)
@@ -5532,7 +5879,7 @@ func ReservationBindingType() bindings.BindingType {
 	fieldNameMap["create_time"] = "CreateTime"
 	fields["start_time"] = bindings.NewOptionalType(bindings.NewDateTimeType())
 	fieldNameMap["start_time"] = "StartTime"
-	fields["metadata"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(),reflect.TypeOf(map[string]string{})))
+	fields["metadata"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
 	fieldNameMap["metadata"] = "Metadata"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.reservation", fields, reflect.TypeOf(Reservation{}), fieldNameMap, validators)
@@ -5547,7 +5894,7 @@ func ReservationInMwBindingType() bindings.BindingType {
 	fieldNameMap["week_of"] = "WeekOf"
 	fields["create_time"] = bindings.NewOptionalType(bindings.NewDateTimeType())
 	fieldNameMap["create_time"] = "CreateTime"
-	fields["metadata"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(),reflect.TypeOf(map[string]string{})))
+	fields["metadata"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
 	fieldNameMap["metadata"] = "Metadata"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.reservation_in_mw", fields, reflect.TypeOf(ReservationInMw{}), fieldNameMap, validators)
@@ -5593,7 +5940,7 @@ func ReservationWindowBindingType() bindings.BindingType {
 	fieldNameMap["duration_hours"] = "DurationHours"
 	fields["start_date"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["start_date"] = "StartDate"
-	fields["metadata"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(),reflect.TypeOf(map[string]string{})))
+	fields["metadata"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
 	fieldNameMap["metadata"] = "Metadata"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.reservation_window", fields, reflect.TypeOf(ReservationWindow{}), fieldNameMap, validators)
@@ -5660,6 +6007,17 @@ func SddcBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.sddc", fields, reflect.TypeOf(Sddc{}), fieldNameMap, validators)
 }
 
+func SddcChoiceBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["displayText"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["displayText"] = "DisplayText"
+	fields["value"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["value"] = "Value"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.sddc_choice", fields, reflect.TypeOf(SddcChoice{}), fieldNameMap, validators)
+}
+
 func SddcConfigBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -5667,7 +6025,7 @@ func SddcConfigBindingType() bindings.BindingType {
 	fieldNameMap["msft_license_config"] = "MsftLicenseConfig"
 	fields["vpc_cidr"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vpc_cidr"] = "VpcCidr"
-	fields["host_instance_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vmc.model.host_instance_types", reflect.TypeOf(HostInstanceTypes(HostInstanceTypes_I3_METAL))))
+	fields["host_instance_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vmc.model.host_instance_types", reflect.TypeOf(HostInstanceTypesEnum(HostInstanceTypes_I3_METAL))))
 	fieldNameMap["host_instance_type"] = "HostInstanceType"
 	fields["skip_creating_vxlan"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["skip_creating_vxlan"] = "SkipCreatingVxlan"
@@ -5675,6 +6033,8 @@ func SddcConfigBindingType() bindings.BindingType {
 	fieldNameMap["vxlan_subnet"] = "VxlanSubnet"
 	fields["size"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["size"] = "Size"
+	fields["outpost_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["outpost_id"] = "OutpostId"
 	fields["storage_capacity"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["storage_capacity"] = "StorageCapacity"
 	fields["name"] = bindings.NewStringType()
@@ -5704,12 +6064,41 @@ func SddcConfigBindingType() bindings.BindingType {
 func SddcConfigSpecBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["sddc_type_config_spec"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(ConfigSpecBindingType),reflect.TypeOf(map[string]ConfigSpec{})))
+	fields["sddc_type_config_spec"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(ConfigSpecBindingType), reflect.TypeOf(map[string]ConfigSpec{})))
 	fieldNameMap["sddc_type_config_spec"] = "SddcTypeConfigSpec"
-	fields["region_display_names"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(),reflect.TypeOf(map[string]string{})))
+	fields["region_display_names"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
 	fieldNameMap["region_display_names"] = "RegionDisplayNames"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.sddc_config_spec", fields, reflect.TypeOf(SddcConfigSpec{}), fieldNameMap, validators)
+}
+
+func SddcConvertRequestBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["num_hosts"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["num_hosts"] = "NumHosts"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.sddc_convert_request", fields, reflect.TypeOf(SddcConvertRequest{}), fieldNameMap, validators)
+}
+
+func SddcCustomAttributeBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["name"] = "Name"
+	fields["value"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["value"] = "Value"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.sddc_custom_attribute", fields, reflect.TypeOf(SddcCustomAttribute{}), fieldNameMap, validators)
+}
+
+func SddcCustomAttributesBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["customAttributes"] = bindings.NewListType(bindings.NewReferenceType(SddcCustomAttributeBindingType), reflect.TypeOf([]SddcCustomAttribute{}))
+	fieldNameMap["customAttributes"] = "CustomAttributes"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.sddc_custom_attributes", fields, reflect.TypeOf(SddcCustomAttributes{}), fieldNameMap, validators)
 }
 
 func SddcIdBindingType() bindings.BindingType {
@@ -5721,6 +6110,15 @@ func SddcIdBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.sddc_id", fields, reflect.TypeOf(SddcId{}), fieldNameMap, validators)
 }
 
+func SddcInputBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["inputs"] = bindings.NewListType(bindings.NewReferenceType(SddcListBindingType), reflect.TypeOf([]SddcList{}))
+	fieldNameMap["inputs"] = "Inputs"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.sddc_input", fields, reflect.TypeOf(SddcInput{}), fieldNameMap, validators)
+}
+
 func SddcLinkConfigBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -5730,6 +6128,23 @@ func SddcLinkConfigBindingType() bindings.BindingType {
 	fieldNameMap["connected_account_id"] = "ConnectedAccountId"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.sddc_link_config", fields, reflect.TypeOf(SddcLinkConfig{}), fieldNameMap, validators)
+}
+
+func SddcListBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["label"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["label"] = "Label"
+	fields["required"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["required"] = "Required"
+	fields["placeholder"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["placeholder"] = "Placeholder"
+	fields["name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["name"] = "Name"
+	fields["choice"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(SddcChoiceBindingType), reflect.TypeOf([]SddcChoice{})))
+	fieldNameMap["choice"] = "Choice"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.sddc_list", fields, reflect.TypeOf(SddcList{}), fieldNameMap, validators)
 }
 
 func SddcManifestBindingType() bindings.BindingType {
@@ -5790,68 +6205,38 @@ func SddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["mgmt_appliance_network_name"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["mgmt_appliance_network_name"] = "MgmtApplianceNetworkName"
-	fields["nsxt"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["nsxt"] = "Nsxt"
 	fields["mgw_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["mgw_id"] = "MgwId"
 	fields["nsx_mgr_url"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["nsx_mgr_url"] = "NsxMgrUrl"
-	fields["psc_management_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["psc_management_ip"] = "PscManagementIp"
-	fields["psc_url"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["psc_url"] = "PscUrl"
-	fields["cgws"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["cgws"] = "Cgws"
-	fields["availability_zones"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["availability_zones"] = "AvailabilityZones"
+	fields["nsx_cloud_audit_password"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["nsx_cloud_audit_password"] = "NsxCloudAuditPassword"
 	fields["management_ds"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["management_ds"] = "ManagementDs"
 	fields["nsx_api_public_endpoint_url"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["nsx_api_public_endpoint_url"] = "NsxApiPublicEndpointUrl"
-	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(),reflect.TypeOf(map[string]string{})))
-	fieldNameMap["custom_properties"] = "CustomProperties"
-	fields["cloud_password"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["cloud_password"] = "CloudPassword"
-	fields["provider"] = bindings.NewStringType()
-	fieldNameMap["provider"] = "Provider"
-	fields["clusters"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ClusterBindingType), reflect.TypeOf([]Cluster{})))
-	fieldNameMap["clusters"] = "Clusters"
-	fields["vc_management_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["vc_management_ip"] = "VcManagementIp"
 	fields["sddc_networks"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["sddc_networks"] = "SddcNetworks"
-	fields["cloud_username"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["cloud_username"] = "CloudUsername"
-	fields["esx_hosts"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(AwsEsxHostBindingType), reflect.TypeOf([]AwsEsxHost{})))
-	fieldNameMap["esx_hosts"] = "EsxHosts"
+	fields["clusters"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ClusterBindingType), reflect.TypeOf([]Cluster{})))
+	fieldNameMap["clusters"] = "Clusters"
 	fields["nsx_mgr_management_ip"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["nsx_mgr_management_ip"] = "NsxMgrManagementIp"
-	fields["vc_instance_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["vc_instance_id"] = "VcInstanceId"
+	fields["nsx_cloud_audit"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["nsx_cloud_audit"] = "NsxCloudAudit"
 	fields["esx_cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["esx_cluster_id"] = "EsxClusterId"
 	fields["vc_public_ip"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vc_public_ip"] = "VcPublicIp"
-	fields["skip_creating_vxlan"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["skip_creating_vxlan"] = "SkipCreatingVxlan"
 	fields["vc_url"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vc_url"] = "VcUrl"
-	fields["sddc_manifest"] = bindings.NewOptionalType(bindings.NewReferenceType(SddcManifestBindingType))
-	fieldNameMap["sddc_manifest"] = "SddcManifest"
-	fields["vxlan_subnet"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["vxlan_subnet"] = "VxlanSubnet"
-	fields["cloud_user_group"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["cloud_user_group"] = "CloudUserGroup"
+	fields["esx_hosts"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(AwsEsxHostBindingType), reflect.TypeOf([]AwsEsxHost{})))
+	fieldNameMap["esx_hosts"] = "EsxHosts"
+	fields["vc_management_ip"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["vc_management_ip"] = "VcManagementIp"
 	fields["management_rp"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["management_rp"] = "ManagementRp"
-	fields["region"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["region"] = "Region"
 	fields["witness_availability_zone"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["witness_availability_zone"] = "WitnessAvailabilityZone"
-	fields["sddc_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["sddc_id"] = "SddcId"
-	fields["pop_agent_xeni_connection"] = bindings.NewOptionalType(bindings.NewReferenceType(PopAgentXeniConnectionBindingType))
-	fieldNameMap["pop_agent_xeni_connection"] = "PopAgentXeniConnection"
 	fields["sddc_size"] = bindings.NewOptionalType(bindings.NewReferenceType(SddcSizeBindingType))
 	fieldNameMap["sddc_size"] = "SddcSize"
 	fields["nsx_controller_ips"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
@@ -5864,12 +6249,67 @@ func SddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["deployment_type"] = "DeploymentType"
 	fields["msft_license_config"] = bindings.NewOptionalType(bindings.NewReferenceType(MsftLicensingConfigBindingType))
 	fieldNameMap["msft_license_config"] = "MsftLicenseConfig"
-	fields["nsxt_addons"] = bindings.NewOptionalType(bindings.NewReferenceType(NsxtAddonsBindingType))
-	fieldNameMap["nsxt_addons"] = "NsxtAddons"
+	fields["region"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["region"] = "Region"
+	fields["outpost_config"] = bindings.NewOptionalType(bindings.NewReferenceType(OutpostConfigBindingType))
+	fieldNameMap["outpost_config"] = "OutpostConfig"
+	fields["nsxt"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["nsxt"] = "Nsxt"
+	fields["psc_management_ip"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["psc_management_ip"] = "PscManagementIp"
+	fields["psc_url"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["psc_url"] = "PscUrl"
+	fields["cgws"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["cgws"] = "Cgws"
+	fields["availability_zones"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["availability_zones"] = "AvailabilityZones"
+	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
+	fieldNameMap["custom_properties"] = "CustomProperties"
+	fields["cloud_password"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["cloud_password"] = "CloudPassword"
+	fields["provider"] = bindings.NewStringType()
+	fieldNameMap["provider"] = "Provider"
+	fields["nsx_cloud_admin_password"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["nsx_cloud_admin_password"] = "NsxCloudAdminPassword"
+	fields["cloud_username"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["cloud_username"] = "CloudUsername"
+	fields["vc_instance_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["vc_instance_id"] = "VcInstanceId"
+	fields["cloud_user_group"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["cloud_user_group"] = "CloudUserGroup"
+	fields["skip_creating_vxlan"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["skip_creating_vxlan"] = "SkipCreatingVxlan"
+	fields["sddc_manifest"] = bindings.NewOptionalType(bindings.NewReferenceType(SddcManifestBindingType))
+	fieldNameMap["sddc_manifest"] = "SddcManifest"
+	fields["vxlan_subnet"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["vxlan_subnet"] = "VxlanSubnet"
+	fields["sddc_security"] = bindings.NewOptionalType(bindings.NewReferenceType(SddcSecurityBindingType))
+	fieldNameMap["sddc_security"] = "SddcSecurity"
+	fields["sddc_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["sddc_id"] = "SddcId"
+	fields["pop_agent_xeni_connection"] = bindings.NewOptionalType(bindings.NewReferenceType(PopAgentXeniConnectionBindingType))
+	fieldNameMap["pop_agent_xeni_connection"] = "PopAgentXeniConnection"
+	fields["nsx_mgr_login_url"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["nsx_mgr_login_url"] = "NsxMgrLoginUrl"
 	fields["dns_with_management_vm_private_ip"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["dns_with_management_vm_private_ip"] = "DnsWithManagementVmPrivateIp"
+	fields["nsx_cloud_admin"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["nsx_cloud_admin"] = "NsxCloudAdmin"
+	fields["nsxt_addons"] = bindings.NewOptionalType(bindings.NewReferenceType(NsxtAddonsBindingType))
+	fieldNameMap["nsxt_addons"] = "NsxtAddons"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.sddc_resource_config", fields, reflect.TypeOf(SddcResourceConfig{}), fieldNameMap, validators)
+}
+
+func SddcSecurityBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["profile"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["profile"] = "Profile"
+	fields["is_hardened"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["is_hardened"] = "IsHardened"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.sddc_security", fields, reflect.TypeOf(SddcSecurity{}), fieldNameMap, validators)
 }
 
 func SddcSizeBindingType() bindings.BindingType {
@@ -5981,7 +6421,7 @@ func ServiceQuotaRequestBindingType() bindings.BindingType {
 	fieldNameMap["reason"] = "Reason"
 	fields["request_status"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["request_status"] = "RequestStatus"
-	fields["request_details"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(RequestDetailBindingType),reflect.TypeOf(map[string]RequestDetail{})))
+	fields["request_details"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(RequestDetailBindingType), reflect.TypeOf(map[string]RequestDetail{})))
 	fieldNameMap["request_details"] = "RequestDetails"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.service_quota_request", fields, reflect.TypeOf(ServiceQuotaRequest{}), fieldNameMap, validators)
@@ -6092,7 +6532,7 @@ func SubscriptionDetailsBindingType() bindings.BindingType {
 	fieldNameMap["billing_subscription_id"] = "BillingSubscriptionId"
 	fields["offer_version"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["offer_version"] = "OfferVersion"
-	fields["offer_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vmc.model.offer_type", reflect.TypeOf(OfferType(OfferType_TERM))))
+	fields["offer_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vmc.model.offer_type", reflect.TypeOf(OfferTypeEnum(OfferType_TERM))))
 	fieldNameMap["offer_type"] = "OfferType"
 	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["description"] = "Description"
@@ -6221,6 +6661,8 @@ func TaskBindingType() bindings.BindingType {
 	fieldNameMap["correlation_id"] = "CorrelationId"
 	fields["start_resource_entity_version"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["start_resource_entity_version"] = "StartResourceEntityVersion"
+	fields["customer_error_message"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["customer_error_message"] = "CustomerErrorMessage"
 	fields["sub_status"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["sub_status"] = "SubStatus"
 	fields["task_type"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -6348,6 +6790,8 @@ func VmcLocaleBindingType() bindings.BindingType {
 func VpcInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["esx_security_group_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["esx_security_group_id"] = "EsxSecurityGroupId"
 	fields["vpc_cidr"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vpc_cidr"] = "VpcCidr"
 	fields["vgw_id"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -6372,8 +6816,8 @@ func VpcInfoBindingType() bindings.BindingType {
 	fieldNameMap["private_subnet_id"] = "PrivateSubnetId"
 	fields["private_association_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["private_association_id"] = "PrivateAssociationId"
-	fields["esx_security_group_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["esx_security_group_id"] = "EsxSecurityGroupId"
+	fields["vcdr_enis"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(EniInfoBindingType), reflect.TypeOf([]EniInfo{})))
+	fieldNameMap["vcdr_enis"] = "VcdrEnis"
 	fields["subnet_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["subnet_id"] = "SubnetId"
 	fields["internet_gateway_id"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -6390,7 +6834,7 @@ func VpcInfoBindingType() bindings.BindingType {
 	fieldNameMap["edge_association_id"] = "EdgeAssociationId"
 	fields["provider"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["provider"] = "Provider"
-	fields["tgw_ips"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})),reflect.TypeOf(map[string][]string{})))
+	fields["tgw_ips"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})), reflect.TypeOf(map[string][]string{})))
 	fieldNameMap["tgw_ips"] = "TgwIps"
 	fields["peering_connection_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["peering_connection_id"] = "PeeringConnectionId"
@@ -6398,7 +6842,7 @@ func VpcInfoBindingType() bindings.BindingType {
 	fieldNameMap["network_type"] = "NetworkType"
 	fields["available_zones"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(AvailableZoneInfoBindingType), reflect.TypeOf([]AvailableZoneInfo{})))
 	fieldNameMap["available_zones"] = "AvailableZones"
-	fields["routetables"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(RouteTableInfoBindingType),reflect.TypeOf(map[string]RouteTableInfo{})))
+	fields["routetables"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(RouteTableInfoBindingType), reflect.TypeOf(map[string]RouteTableInfo{})))
 	fieldNameMap["routetables"] = "Routetables"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.vpc_info", fields, reflect.TypeOf(VpcInfo{}), fieldNameMap, validators)
@@ -6558,9 +7002,9 @@ func VsanClusterReconfigConstraintsBindingType() bindings.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["reconfig_biases"] = bindings.NewListType(bindings.NewReferenceType(VsanClusterReconfigBiasBindingType), reflect.TypeOf([]VsanClusterReconfigBias{}))
 	fieldNameMap["reconfig_biases"] = "ReconfigBiases"
-	fields["available_capacities"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewListType(bindings.NewReferenceType(VsanAvailableCapacityBindingType), reflect.TypeOf([]VsanAvailableCapacity{})),reflect.TypeOf(map[string][]VsanAvailableCapacity{}))
+	fields["available_capacities"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewListType(bindings.NewReferenceType(VsanAvailableCapacityBindingType), reflect.TypeOf([]VsanAvailableCapacity{})), reflect.TypeOf(map[string][]VsanAvailableCapacity{}))
 	fieldNameMap["available_capacities"] = "AvailableCapacities"
-	fields["default_capacities"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(VsanAvailableCapacityBindingType),reflect.TypeOf(map[string]VsanAvailableCapacity{}))
+	fields["default_capacities"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(VsanAvailableCapacityBindingType), reflect.TypeOf(map[string]VsanAvailableCapacity{}))
 	fieldNameMap["default_capacities"] = "DefaultCapacities"
 	fields["hosts"] = bindings.NewIntegerType()
 	fieldNameMap["hosts"] = "Hosts"
@@ -6587,6 +7031,15 @@ func VsanConfigConstraintsBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.vsan_config_constraints", fields, reflect.TypeOf(VsanConfigConstraints{}), fieldNameMap, validators)
 }
 
+func VsanDiskgroupMappingBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["mapping_type"] = bindings.NewStringType()
+	fieldNameMap["mapping_type"] = "MappingType"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.vsan_diskgroup_mapping", fields, reflect.TypeOf(VsanDiskgroupMapping{}), fieldNameMap, validators)
+}
+
 func VsanEncryptionConfigBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -6598,4 +7051,11 @@ func VsanEncryptionConfigBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.vsan_encryption_config", fields, reflect.TypeOf(VsanEncryptionConfig{}), fieldNameMap, validators)
 }
 
-
+func WcpDetailsBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["wcp_status"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["wcp_status"] = "WcpStatus"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.wcp_details", fields, reflect.TypeOf(WcpDetails{}), fieldNameMap, validators)
+}
