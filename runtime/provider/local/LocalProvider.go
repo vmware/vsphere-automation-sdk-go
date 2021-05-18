@@ -1,4 +1,4 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+/* Copyright © 2019-2020 VMware, Inc. All Rights Reserved.
    SPDX-License-Identifier: BSD-2-Clause */
 
 package local
@@ -32,9 +32,9 @@ func NewLocalProvider(name string, loadIntrospection bool) (*LocalProvider, erro
 	var emptyMap = make(map[string]core.ApiInterface)
 
 	//load introspection
-	var introspector, error = introspection.NewLocalProviderIntrospector(name)
-	if error != nil {
-		return nil, error
+	var introspector, err = introspection.NewLocalProviderIntrospector(name)
+	if err != nil {
+		return nil, err
 	}
 	var localProvider = &LocalProvider{name: name, serviceMap: emptyMap, introspector: introspector}
 
@@ -96,9 +96,24 @@ func (localProvider *LocalProvider) AddInterfaces(apiInterfaces []core.ApiInterf
 		return errors.New("interfaces cannot be nil")
 	}
 	for _, apiInterface := range apiInterfaces {
-		var error = localProvider.AddInterface(apiInterface)
-		if error != nil {
-			return error
+		var err = localProvider.AddInterface(apiInterface)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// RegisterInterfaces adds a set of interfaces to a local provider. Using the
+// DualInterface allows to handle REST enabled bindings.
+func (localProvider *LocalProvider) RegisterInterfaces(apiInterfaces []DualInterface) error {
+	if apiInterfaces == nil {
+		return errors.New("interfaces cannot be nil")
+	}
+	for _, apiInterface := range apiInterfaces {
+		var err = localProvider.AddInterface(apiInterface)
+		if err != nil {
+			return err
 		}
 	}
 	return nil
@@ -144,7 +159,7 @@ func (localProvider *LocalProvider) Invoke(serviceID string, operationID string,
 		return core.NewMethodResult(nil, errorValue)
 	}
 	log.Debug("Validating input")
-	//Step 0: Verify input
+	//Step 1: Verify input
 	if input == nil || input.Type() != data.STRUCTURE {
 		log.Errorf("Expected input of type STRUCTURE but found nil")
 		var errorValue = bindings.CreateErrorValueFromMessageId(bindings.INVALID_ARGUMENT_ERROR_DEF,
@@ -159,24 +174,12 @@ func (localProvider *LocalProvider) Invoke(serviceID string, operationID string,
 			"vapi.method.input.invalid.definition", methodIdArgs)
 		return core.NewMethodResult(nil, errorValue)
 	}
-	//Not necessary to validate outputdef because compiler makes sure output is of type DataDefinition
 
-	//Step 2: Validate input with input def
-	inputDef.CompleteValue(input)
-	var messages = inputDef.Validate(input)
-
-	if len(messages) != 0 {
-		log.Errorf("Input validation failed for method %s", methodID.Name())
-		var errorValue = bindings.CreateErrorValueFromMessages(bindings.INVALID_ARGUMENT_ERROR_DEF, messages)
-		return core.NewMethodResult(nil, errorValue)
-	}
-
-	//Step 3: Execute method
-
+	//Step 2: Execute method
 	log.Debug("Invoking operation")
 	methodResult := apiInterface.Invoke(ctx, methodID, input)
 
-	//Step 4: Validate output
+	//Step 3: Validate output
 	log.Debug("Validating output")
 	var outputDef = methodDef.OutputDefinition()
 	if methodResult.IsResponseStream() {

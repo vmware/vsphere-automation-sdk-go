@@ -1,10 +1,10 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+/* Copyright © 2019-2020 VMware, Inc. All Rights Reserved.
    SPDX-License-Identifier: BSD-2-Clause */
 
 package introspection
 
 import (
-	"crypto/md5"
+	"crypto/sha512"
 	"encoding/hex"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/core"
@@ -56,32 +56,31 @@ func NewLocalProviderIntrospector(name string) (*LocalProviderIntrospector, erro
 }
 
 func (localProviderIntrospector *LocalProviderIntrospector) GetCheckSum() string {
-	hash := md5.New()
+	hash := sha512.New()
 
 	// Directly iterating over the map is not guaranteed to be sequential.
 	// Which will result in non-unique checkSums
 	apiInterfaceNames := make([]string, 0)
-	for apiIfaceName, _ := range localProviderIntrospector.serviceData {
-		apiInterfaceNames = append(apiInterfaceNames, apiIfaceName)
+	for _, apiInterface := range localProviderIntrospector.serviceData {
+		apiInterfaceNames = append(apiInterfaceNames, apiInterface.Identifier().Name())
 	}
 	sort.Strings(apiInterfaceNames)
 	for _, apiInterfaceName := range apiInterfaceNames {
 		apiInterface := localProviderIntrospector.serviceData[apiInterfaceName]
 		hash.Write([]byte(apiInterface.Identifier().Name()))
 		methodIdentifiers := apiInterface.Definition().MethodIdentifiers()
-		// sort method identifiers by their name
-		// to prevent non-unique checksums due to ordering of method names or method definitiions
-		sort.Slice(methodIdentifiers, func(i, j int) bool {
-			if methodIdentifiers[i].Name() < methodIdentifiers[j].Name() {
-				return true
-			}
-			return false
-		})
-		for i := 0; i < len(methodIdentifiers); i++ {
-			hash.Write([]byte(methodIdentifiers[i].Name()))
-			var methodDef = apiInterface.MethodDefinition(methodIdentifiers[i])
-			if methodDef != nil {
-				hash.Write([]byte(methodDef.String()))
+		// Directly iterating over the map is not guaranteed to be sequential.
+		// Which will result in non-unique checkSums
+		methodNames := make([]string, len(methodIdentifiers))
+		for _, methodIdentifier := range methodIdentifiers {
+			methodNames = append(methodNames, methodIdentifier.Name())
+		}
+		sort.Strings(methodNames)
+		for _, methodName := range methodNames {
+			hash.Write([]byte(methodName))
+			methodDefinition := apiInterface.MethodDefinition(methodIdentifiers[methodName])
+			if methodDefinition != nil {
+				hash.Write([]byte(methodDefinition.String()))
 			}
 		}
 	}

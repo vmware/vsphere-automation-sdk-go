@@ -1,4 +1,4 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+/* Copyright © 2019-2020 VMware, Inc. All Rights Reserved.
    SPDX-License-Identifier: BSD-2-Clause */
 
 package rest
@@ -12,9 +12,7 @@ import (
 	"net/textproto"
 	"net/url"
 	"reflect"
-	"strconv"
 	"strings"
-	"time"
 
 	"github.com/gorilla/mux"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
@@ -70,9 +68,18 @@ func PathDataValueMap(request *http.Request,
 	// construct pathParamMap with type map[string][]string in order
 	// to use the same generateParamDataValueMap() method
 	for k, v := range pathStringMap {
+		// if router is initialized with UseEncodedPath, we'd need to
+		// decode parameter value first
+
+		v = PrepareVAPIQuery(v)
+		v, err := url.QueryUnescape(v)
+		if err != nil {
+			return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_value",
+				map[string]string{"errMsg": err.Error()})}
+		}
 		pathParamMap[k] = []string{v}
 	}
-	return generateParamDataValueMap(pathParamMap,
+	return generateParamDataValueMap(converToSliceOfPointers(pathParamMap),
 		metadata.PathParamsNameMap(),
 		metadata.ParamsTypeMap(),
 		pathParamsType)
@@ -116,7 +123,7 @@ func HeaderDataValueMap(request *http.Request,
 
 	// Get map of header param name to its value (slice)
 	headerParamMap := request.Header
-	return generateParamDataValueMap(headerParamMap,
+	return generateParamDataValueMap(converToSliceOfPointers(headerParamMap),
 		canonicalizeFieldNames(reverseMap(metadata.HeaderParamsNameMap())),
 		metadata.ParamsTypeMap(),
 		headerParamsType)
@@ -146,7 +153,7 @@ func ParseQueryParams(
 	return nil
 }
 
-/** Parses dispatch params string avaiable in generated rest metadata
+/** Parses dispatch params string available in generated rest metadata
  * and returns query field Map value accepted in http standards
  * input : dispatchParam:"a=3&b&c=5&a=2"
  * output : { a:[3,2], b:[], c:[5]}
@@ -227,7 +234,7 @@ func QueryDataValueMap(request *http.Request,
 	metadata protocol.OperationRestMetadata) (map[string]data.DataValue, []error) {
 
 	// Get map of query param name to its value (slice)
-	queryParamMap := request.URL.Query()
+	queryParamMap := GetQuery(request)
 	requestKeys := []string{}
 	for k := range queryParamMap {
 		requestKeys = append(requestKeys, k)
@@ -251,7 +258,7 @@ func QueryDataValueMap(request *http.Request,
 
 	// Validation: Add check, To see if extra arguments/properties were passed
 	if val, ok := checkExtraRequestKeys(requestKeys, requiredKeys); ok {
-		return nil, []error{l10n.NewRuntimeError("com.vmware.vapi.rest.unsupported_property",
+		return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.unsupported_property",
 			map[string]string{"arg": strings.Join(val, ",")})}
 	}
 
@@ -292,51 +299,40 @@ func reverseMap(mapvalue map[string]string) map[string]string {
 // This is an unspecified scenario in spec
 func convertRequestParamToDataValue(
 	name string,
-	pValue []string,
+	pValue []*string,
 	pType bindings.BindingType,
 	paramsType ParamsType,
 	insideOptional bool) (data.DataValue, []error) {
 
+	if paramsType == headerParamsType {
+		mergedValue, err := mergeHeaderValues(pValue)
+		if err != nil {
+			return nil, err
+		}
+		pValue = mergedValue
+	}
+
+	if ok, err := checkParam(pValue, pType); !ok {
+		return nil, err
+	}
+
 	switch reflect.TypeOf(pType) {
 	case bindings.StringBindingType:
-		// If multiple headers are provided for String Binding then we need to merge them
-		if paramsType == headerParamsType {
-			return data.NewStringValue(strings.Join(pValue, ",")), nil
-		}
-		// In query type:
-		// 1. If multiple values are provided for query then we fail.
-		// 2. If a string value that is passed is empty and it wasn't optional then we propagate empty string forwards. https://opengrok.eng.vmware.com/source/xref/vapi-main.perforce.1666/vapi-core/integration-tests/vapi-verb-integration/src/test/java/com/vmware/vapi/rest/integration/verb/JsonQueryMappingTest.java#176
-		// 3. If a string value that is passed is empty and it is optional then we propagate it as null. https://opengrok.eng.vmware.com/source/xref/vapi-main.perforce.1666/vapi-core/integration-tests/vapi-verb-integration/src/test/java/com/vmware/vapi/rest/integration/verb/JsonQueryMappingTest.java#192
-		if len(pValue) > 1 {
-			return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_value",
-				map[string]string{"errMsg": "Expected type STRING but got 'LIST'"})}
-		}
-		if paramsType == queryParamsType && pValue[0] == "" && insideOptional {
-			return nil, nil
-		}
-		return data.NewStringValue(pValue[0]), nil
+		return data.NewStringValue(*pValue[0]), nil
 	case bindings.IdBindingType:
-		if len(pValue) > 1 {
-			return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_value",
-				map[string]string{"errMsg": "Expected type ID but got 'LIST'"})}
-		}
-		return data.NewStringValue(pValue[0]), nil
+		return data.NewStringValue(*pValue[0]), nil
 	case bindings.SecretBindingType:
-		return data.NewSecretValue(pValue[0]), nil
+		return data.NewSecretValue(*pValue[0]), nil
 	case bindings.BlobBindingType:
-		if len(pValue) == 1 && string(pValue[0]) == "" {
-			return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_value",
-				map[string]string{"errMsg": "Empty string passed for Blob type"})}
-		}
 		var temp []byte
 		var err error
-		temp, err = base64.StdEncoding.DecodeString(pValue[0])
+		temp, err = base64.StdEncoding.DecodeString(*pValue[0])
 		if err != nil && paramsType == headerParamsType {
 			log.Errorf("Error ignored; Header param return valid prefix data: " + err.Error())
 		} else if err != nil && insideOptional {
 			log.Errorf("Error ignored; BLOB inside Optional: " + err.Error())
 		} else if err != nil {
-			temp, err = base64.URLEncoding.DecodeString(pValue[0])
+			temp, err = base64.URLEncoding.DecodeString(*pValue[0])
 			if err != nil {
 				return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_value",
 					map[string]string{"errMsg": err.Error()})}
@@ -344,30 +340,35 @@ func convertRequestParamToDataValue(
 		}
 		return data.NewBlobValue(temp), nil
 	case bindings.BooleanBindingType:
-		b, err := strconv.ParseBool(strings.ToLower(pValue[0]))
+		var boolVal bool
+		var reqVal string
+		if paramsType != pathParamsType {
+			reqVal = strings.ToLower(*pValue[0])
+		} else {
+			reqVal = *pValue[0]
+		}
+		err := json.Unmarshal([]byte(reqVal), &boolVal)
 		if err != nil {
 			return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_type",
 				map[string]string{"paramName": name, "expectedType": "Bool", "errMsg": err.Error()})}
 		}
-		return data.NewBooleanValue(b), nil
+		return data.NewBooleanValue(boolVal), nil
 	case bindings.DoubleBindingType:
-		i, err := strconv.ParseFloat(pValue[0], 64)
+		var floatVal float64
+		err := json.Unmarshal([]byte(*pValue[0]), &floatVal)
 		if err != nil {
 			return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_type",
 				map[string]string{"paramName": name, "expectedType": "Float", "errMsg": err.Error()})}
 		}
-		return data.NewDoubleValue(i), nil
+		return data.NewDoubleValue(floatVal), nil
 	case bindings.IntegerBindingType:
-		if len(pValue) > 1 {
-			return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_value",
-				map[string]string{"errMsg": "Expected type Integer but got 'LIST'"})}
-		}
-		i, err := strconv.ParseInt(pValue[0], 10, 64)
+		var intVal int64
+		err := json.Unmarshal([]byte(*pValue[0]), &intVal)
 		if err != nil {
 			return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_type",
 				map[string]string{"paramName": name, "expectedType": "Int", "errMsg": err.Error()})}
 		}
-		return data.NewIntegerValue(i), nil
+		return data.NewIntegerValue(intVal), nil
 	case bindings.ListBindingType:
 		eType := pType.(bindings.ListType).ElementType()
 		return convertListParamElementsToDataValue(name, pValue, eType, paramsType, insideOptional)
@@ -376,18 +377,21 @@ func convertRequestParamToDataValue(
 		return convertListParamElementsToDataValue(name, pValue, eType, paramsType, insideOptional)
 	case bindings.OptionalBindingType:
 		eType := pType.(bindings.OptionalType).ElementType()
+		if pValue == nil || pValue[0] == nil {
+			return data.NewOptionalValue(nil), nil
+		}
 		dv, err := convertRequestParamToDataValue(name, pValue, eType, paramsType, true)
 		if err != nil {
 			return nil, err
 		}
 		return data.NewOptionalValue(dv), nil
 	case bindings.EnumBindingType:
-		if paramsType == headerParamsType && pValue[0] == "" && insideOptional {
+		if paramsType == headerParamsType && *pValue[0] == "" && insideOptional {
 			return nil, nil
 		}
-		return data.NewStringValue(pValue[0]), nil
+		return data.NewStringValue(*pValue[0]), nil
 	case bindings.DateTimeBindingType:
-		return data.NewStringValue(pValue[0]), nil
+		return data.NewStringValue(*pValue[0]), nil
 	default:
 		// Note: Spec state that Map is not supported as query/header parameter
 		dataType := fmt.Sprintf("%v", pType)
@@ -396,16 +400,57 @@ func convertRequestParamToDataValue(
 	}
 }
 
+func mergeHeaderValues(value []*string) ([]*string, []error) {
+	if value == nil || value[0] == nil {
+		return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_value",
+			map[string]string{"errMsg": "Expected type different from 'nil'"})}
+	}
+
+	var headerValues []string
+	for _, val := range value {
+		valStr := *val
+		if val == nil {
+			// this should actually never occur but let's put default behavior for just in case
+			valStr = ""
+		}
+		headerValues = append(headerValues, valStr)
+	}
+	newHeaderValue := strings.Join(headerValues, ",")
+	value = []*string{&newHeaderValue}
+	return value, nil
+}
+
+func checkParam(value []*string, paramType bindings.BindingType) (bool, []error) {
+	switch reflect.TypeOf(paramType) {
+	case bindings.ListBindingType:
+		fallthrough
+	case bindings.SetBindingType:
+		fallthrough
+	case bindings.OptionalBindingType:
+		return true, nil
+	}
+
+	if value == nil || value[0] == nil {
+		return false, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_value",
+			map[string]string{"errMsg": "Expected type different from 'nil'"})}
+	} else if len(value) > 1 {
+		return false, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_value",
+			map[string]string{"errMsg": "Expected type different from 'LIST'"})}
+	}
+
+	return true, nil
+}
+
 // Convert List/Set's element value to a DataValue
 func convertListParamElementsToDataValue(
 	name string,
-	pValue []string,
+	pValue []*string,
 	eType bindings.BindingType,
 	paramsType ParamsType,
 	insideOptional bool) (data.DataValue, []error) {
 	result := data.NewListValue()
 	for _, value := range pValue {
-		dv, err := convertRequestParamToDataValue(name, []string{value}, eType, paramsType, insideOptional)
+		dv, err := convertRequestParamToDataValue(name, []*string{value}, eType, paramsType, insideOptional)
 		if err != nil {
 			return nil, err
 		} else if dv != nil {
@@ -419,13 +464,13 @@ func convertListParamElementsToDataValue(
 }
 
 // Create param name to its data value mapping
-func generateParamDataValueMap(paramStringMap map[string][]string,
+func generateParamDataValueMap(paramStringMap map[string][]*string,
 	paramNameMap map[string]string,
 	paramTypeMap map[string]bindings.BindingType, paramsType ParamsType) (map[string]data.DataValue, []error) {
 
 	paramValueMap := map[string]data.DataValue{}
 
-	for annotationName, valuelist := range paramStringMap {
+	for annotationName, valueList := range paramStringMap {
 
 		_, found := paramNameMap[annotationName]
 		if !found {
@@ -438,13 +483,26 @@ func generateParamDataValueMap(paramStringMap map[string][]string,
 			paramTypeMap)
 
 		if errIn == nil {
-			paramValueMap[name], errIn = convertRequestParamToDataValue(annotationName, valuelist, ptype, paramsType, false)
+			paramValueMap[name], errIn = convertRequestParamToDataValue(annotationName, valueList, ptype, paramsType, false)
 		}
 		if errIn != nil {
 			return nil, errIn
 		}
 	}
 	return paramValueMap, nil
+}
+
+func converToSliceOfPointers(values map[string][]string) map[string][]*string {
+	result := make(map[string][]*string)
+	for k, v := range values {
+		list := make([]*string, len(v), len(v))
+		for index, item := range v {
+			itemPtr := item
+			list[index] = &itemPtr
+		}
+		result[k] = list
+	}
+	return result
 }
 
 /*
@@ -455,30 +513,18 @@ func ParseBodyFieldParams(
 	r *http.Request,
 	metadata protocol.OperationRestMetadata,
 	inputDataVal *data.StructValue) []error {
-	var err error
 
 	bodyFieldsMap := metadata.BodyFieldsMap()
 	if len(bodyFieldsMap) == 0 {
 		return nil
 	}
 
-	bodyReader := r.Body
-	if bodyReader == nil {
-		return []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body_parse_error",
-			map[string]string{"errMsg": "http request body is not present"})}
-	}
-
-	bodyByte, err := ioutil.ReadAll(bodyReader)
-	if err != nil {
-		return []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body_parse_error",
-			map[string]string{"errMsg": err.Error()})}
-	}
-
-	if len(bodyByte) == 0 {
+	if r.ContentLength == 0 {
 		return nil
 	}
 
-	val, errs := getContentAsPerContentType(bodyByte, r)
+	contentType := r.Header.Get(lib.HTTP_CONTENT_TYPE_HEADER)
+	val, errs := getContentAsPerContentType(contentType, r)
 	if errs != nil {
 		return errs
 	}
@@ -502,13 +548,13 @@ func ParseBodyFieldParams(
 
 	for fieldName, fieldValue := range valMap {
 		if paramName, ok := bodyFieldsMap[fieldName]; ok {
-			tempData, err := requestBodyToDataValue(fieldValue, fieldsBindingMap[paramName], jsonToDataValueDecoder)
+			tempData, err := requestBodyToDataValue(fieldValue, fieldsBindingMap[paramName], jsonToDataValueDecoder, contentType)
 			if err != nil {
 				return err
 			}
 			inputDataVal.SetField(paramName, tempData)
 		} else if fieldValue != nil {
-			return []error{l10n.NewRuntimeError("com.vmware.vapi.rest.unsupported_property",
+			return []error{l10n.NewRuntimeError("vapi.protocol.server.rest.unsupported_property",
 				map[string]string{"arg": fieldName})}
 		}
 	}
@@ -534,28 +580,21 @@ func ParseBodyParams(
 			map[string]string{"errMsg": "http request body is nil"})}
 	}
 
-	var bodyByte []byte
-	bodyByte, err := ioutil.ReadAll(bodyReader)
-	if err != nil {
-		return []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body_parse_error",
-			map[string]string{"errMsg": err.Error()})}
-	}
-
 	tokens := strings.Split(bodyParamName, ".")
 	bodyBindingType := metadata.ParamsTypeMap()[bodyParamName]
 	if len(tokens) > 1 {
 		var bodyDataVal data.DataValue
-		if len(bodyByte) == 0 && resolveToCheckIfOptional(metadata.Fields()[tokens[0]], tokens[1:]) {
+		if r.ContentLength == 0 && resolveToCheckIfOptional(metadata.Fields()[tokens[0]], tokens[1:]) {
 			return nil
 		}
 		var er []error
-		bodyDataVal, er = convertRequestBodyToDataValue(bodyByte, bodyParamName, bodyBindingType, r)
+		bodyDataVal, er = convertRequestBodyToDataValue(r, bodyParamName, bodyBindingType)
 		if er != nil {
 			return er
 		}
 		ConvertToDataValueIfNested(inputDataVal, tokens, bodyDataVal, metadata.Fields()[tokens[0]])
 	} else {
-		bodyDataVal, er := convertRequestBodyToDataValue(bodyByte, bodyParamName, bodyBindingType, r)
+		bodyDataVal, er := convertRequestBodyToDataValue(r, bodyParamName, bodyBindingType)
 		if er != nil {
 			return er
 		}
@@ -565,41 +604,34 @@ func ParseBodyParams(
 }
 
 func getContentAsPerContentType(
-	body []byte,
+	contentType string,
 	r *http.Request) (interface{}, []error) {
 
-	contentType := r.Header.Get(lib.HTTP_CONTENT_TYPE_HEADER)
 	if contentType == lib.JSON_CONTENT_TYPE {
-		return getContentAppJSON(body)
-	} else if contentType == lib.TEXT_PLAIN_CONTENT_TYPE {
-		return getContentTextPlain(body)
+		return getContentAppJSON(r)
 	} else if contentType == lib.FORM_URL_CONTENT_TYPE {
-		return getContentAppFormURLEncoded(body)
+		return getContentAppFormURLEncoded(r)
 	}
-	return nil, []error{l10n.NewRuntimeErrorNoParam("com.vmware.vapi.rest.unsupported_media_type")}
+	return nil, []error{l10n.NewRuntimeErrorNoParam("vapi.protocol.server.rest.unsupported_media_type")}
 }
 
-func getContentAppJSON(body []byte) (interface{}, []error) {
+func getContentAppJSON(r *http.Request) (interface{}, []error) {
+
+	body, err := getBodyContent(r)
+	if err != nil {
+		return nil, err
+	}
 
 	// Validate: Check if its valid Json body
 	// Note: json Unmarshal is not sufficient to cover all inputs cases hence only use it to validate
 	// the body, json.NewDecoder can even decode non json structures hence can't be used for validation.
 	var dummyHolder interface{}
-	err := json.Unmarshal(body, &dummyHolder)
-	if err != nil {
-		return nil, []error{l10n.NewRuntimeErrorNoParam("com.vmware.vapi.rest.unsupported_media_type")}
+	jsonErr := json.Unmarshal(body, &dummyHolder)
+	if jsonErr != nil {
+		return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.invalid_json_content",
+			map[string]string{"errMsg": jsonErr.Error()})}
 	}
 
-	return jdecoderBody(body)
-}
-
-func getContentTextPlain(body []byte) (interface{}, []error) {
-
-	// TODO: Find more elegant way to parse datetimes
-	// json Decode doesn't work with datetime, it parses incomplete information example: 1878-03-04T12:06:07Z is parsed to 1878
-	if _, err := time.Parse(bindings.RFC3339Nano_DATETIME_LAYOUT, string(body)); err == nil {
-		return string(body), nil
-	}
 	return jdecoderBody(body)
 }
 
@@ -615,16 +647,30 @@ func jdecoderBody(body []byte) (interface{}, []error) {
 	return val, nil
 }
 
-func getContentAppFormURLEncoded(body []byte) (interface{}, []error) {
+func getBodyContent(r *http.Request) ([]byte, []error) {
+	if r.Body == nil {
+		return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body_parse_error",
+			map[string]string{"errMsg": "http request body is not present"})}
+	}
 
-	formURLBody, err := url.ParseQuery(string(body))
+	var bodyByte []byte
+	bodyByte, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body_parse_error",
+			map[string]string{"errMsg": err.Error()})}
+	}
+	return bodyByte, nil
+}
+
+func getContentAppFormURLEncoded(r *http.Request) (interface{}, []error) {
+	err := r.ParseForm()
 	if err != nil {
 		return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body_parse_error",
 			map[string]string{"errMsg": err.Error()})}
 	}
 
 	formURLMap := make(map[string]interface{})
-	for key, value := range formURLBody {
+	for key, value := range r.Form {
 		if key == "" {
 			return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body_parse_error",
 				map[string]string{"errMsg": "Form URL encoded body contained key-value pair with no key."})}
@@ -644,16 +690,16 @@ func getContentAppFormURLEncoded(body []byte) (interface{}, []error) {
 
 // Convert request body byte to value in DataValue type
 func convertRequestBodyToDataValue(
-	bodyByte []byte,
+	r *http.Request,
 	bodyParamName string,
-	bindingType bindings.BindingType,
-	r *http.Request) (data.DataValue, []error) {
+	bindingType bindings.BindingType) (data.DataValue, []error) {
 
-	if len(bodyByte) == 0 && reflect.TypeOf(bindingType) == bindings.OptionalBindingType {
+	if r.ContentLength == 0 && reflect.TypeOf(bindingType) == bindings.OptionalBindingType {
 		return data.NewOptionalValue(nil), nil
 	}
 
-	val, errs := getContentAsPerContentType(bodyByte, r)
+	contentType := r.Header.Get(lib.HTTP_CONTENT_TYPE_HEADER)
+	val, errs := getContentAsPerContentType(contentType, r)
 	if errs != nil {
 		return nil, errs
 	}
@@ -661,10 +707,10 @@ func convertRequestBodyToDataValue(
 	if reflect.TypeOf(bindingType) == bindings.ReferenceBindingType {
 		refVal, valid := val.(map[string]interface{})
 		if data, ok := refVal[bodyParamName]; ok && valid {
-			return requestBodyToDataValue(data, bindingType, jsonToDataValueDecoder)
+			return requestBodyToDataValue(data, bindingType, jsonToDataValueDecoder, contentType)
 		}
 	}
-	return requestBodyToDataValue(val, bindingType, jsonToDataValueDecoder)
+	return requestBodyToDataValue(val, bindingType, jsonToDataValueDecoder, contentType)
 }
 
 func resolveToCheckIfOptional(bindingType bindings.BindingType, tokens []string) bool {
@@ -682,49 +728,77 @@ func resolveToCheckIfOptional(bindingType bindings.BindingType, tokens []string)
 func requestBodyToDataValue(
 	val interface{},
 	bindingType bindings.BindingType,
-	jsonToDataValueDecoder *cleanjson.JsonToDataValueDecoder) (data.DataValue, []error) {
+	jsonToDataValueDecoder *cleanjson.JsonToDataValueDecoder,
+	contentType string) (data.DataValue, []error) {
 
 	switch reflect.TypeOf(bindingType) {
 	case bindings.IntegerBindingType:
-		if intStr, ok := val.(string); ok {
-			i, err := strconv.ParseInt(intStr, 10, 64)
-			if err != nil {
-				return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_type",
-					map[string]string{"paramName": "INTEGER", "expectedType": "Int", "errMsg": err.Error()})}
-			}
-			return data.NewIntegerValue(i), nil
-		} else if jsonNum, ok := val.(json.Number); ok {
-			intVal, err := jsonNum.Int64()
-			if err != nil {
+		if contentType == lib.JSON_CONTENT_TYPE {
+			if _, ok := val.(json.Number); !ok {
 				return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body.unexpected",
-					map[string]string{"required": "INTEGER", "type": reflect.TypeOf(jsonNum).Name()})}
+					map[string]string{"required": "INTEGER", "type": reflect.TypeOf(val).Name()})}
 			}
-			return data.NewIntegerValue(intVal), nil
+		} else {
+			if intStr, ok := val.(string); ok {
+				var intVal int64
+				err := json.Unmarshal([]byte(intStr), &intVal)
+				if err != nil {
+					return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_type",
+						map[string]string{"paramName": "INTEGER", "expectedType": "Int", "errMsg": err.Error()})}
+				}
+				return data.NewIntegerValue(intVal), nil
+			} else if jsonNum, ok := val.(json.Number); ok {
+				intVal, err := jsonNum.Int64()
+				if err != nil {
+					return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body.unexpected",
+						map[string]string{"required": "INTEGER", "type": reflect.TypeOf(jsonNum).Name()})}
+				}
+				return data.NewIntegerValue(intVal), nil
+			}
 		}
 	case bindings.DoubleBindingType:
-		if floatStr, ok := val.(string); ok {
-			i, err := strconv.ParseFloat(floatStr, 64)
-			if err != nil {
+		if contentType == lib.JSON_CONTENT_TYPE {
+			if _, ok := val.(json.Number); !ok {
 				return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body.unexpected",
-					map[string]string{"required": "FlOAT", "type": reflect.TypeOf(val).Name()})}
+					map[string]string{"required": "FLOAT", "type": reflect.TypeOf(val).Name()})}
 			}
-			return data.NewDoubleValue(i), nil
-		} else if jsonNum, ok := val.(json.Number); ok {
-			floatVal, err := jsonNum.Float64()
-			if err != nil {
-				return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body.unexpected",
-					map[string]string{"required": "FlOAT", "type": reflect.TypeOf(jsonNum).Name()})}
+		} else {
+			if floatStr, ok := val.(string); ok {
+				var floatVal float64
+				err := json.Unmarshal([]byte(floatStr), &floatVal)
+				if err != nil {
+					return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body.unexpected",
+						map[string]string{"required": "FLOAT", "type": reflect.TypeOf(val).Name()})}
+				}
+				return data.NewDoubleValue(floatVal), nil
+			} else if jsonNum, ok := val.(json.Number); ok {
+				floatVal, err := jsonNum.Float64()
+				if err != nil {
+					return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body.unexpected",
+						map[string]string{"required": "FLOAT", "type": reflect.TypeOf(jsonNum).Name()})}
+				}
+				return data.NewDoubleValue(floatVal), nil
 			}
-			return data.NewDoubleValue(floatVal), nil
 		}
 	case bindings.BooleanBindingType:
-		if boolStr, ok := val.(string); ok {
-			b, err := strconv.ParseBool(strings.ToLower(boolStr))
-			if err != nil {
+		if contentType == lib.JSON_CONTENT_TYPE {
+			if _, ok := val.(bool); !ok {
 				return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body.unexpected",
 					map[string]string{"required": "BOOLEAN", "type": reflect.TypeOf(val).Name()})}
 			}
-			return data.NewBooleanValue(b), nil
+		} else {
+			if strVal, ok := val.(string); ok {
+				var boolVal bool
+				strVal = strings.ToLower(strVal)
+				err := json.Unmarshal([]byte(strVal), &boolVal)
+				if err != nil {
+					return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_type",
+						map[string]string{"paramName": "BOOLEAN", "expectedType": "Int", "errMsg": err.Error()})}
+				}
+				return data.NewBooleanValue(boolVal), nil
+			} else if boolVal, ok := val.(bool); ok {
+				return data.NewBooleanValue(boolVal), nil
+			}
 		}
 	case bindings.SecretBindingType:
 		if val == nil {
@@ -752,7 +826,7 @@ func requestBodyToDataValue(
 			return data.NewOptionalValue(nil), nil
 		}
 		eType := bindingType.(bindings.OptionalType).ElementType()
-		dv, err := requestBodyToDataValue(val, eType, jsonToDataValueDecoder)
+		dv, err := requestBodyToDataValue(val, eType, jsonToDataValueDecoder, contentType)
 		if err != nil {
 			return nil, err
 		}
@@ -772,7 +846,7 @@ func requestBodyToDataValue(
 		result := data.NewListValue()
 
 		for _, value := range val.([]interface{}) {
-			dv, err := requestBodyToDataValue(value, eType, jsonToDataValueDecoder)
+			dv, err := requestBodyToDataValue(value, eType, jsonToDataValueDecoder, contentType)
 			if err != nil {
 				return nil, err
 			}
@@ -800,12 +874,12 @@ func requestBodyToDataValue(
 			// Validate: If all values are unique, if not throw a internal server error
 			keyStr := fmt.Sprintf("%v", value)
 			if _, ok := setMap[keyStr]; ok {
-				return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.internal_server_error",
+				return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_argument",
 					map[string]string{"msg": "Invalid SET value passed"})}
 			}
 			setMap[keyStr] = 1
 
-			dv, err := requestBodyToDataValue(value, eType, jsonToDataValueDecoder)
+			dv, err := requestBodyToDataValue(value, eType, jsonToDataValueDecoder, contentType)
 			if err != nil {
 				return nil, err
 			}
@@ -822,7 +896,7 @@ func requestBodyToDataValue(
 					return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_value",
 						map[string]string{"errMsg": "Invalid Map value was provided"})}
 				}
-				dv, err := requestBodyToDataValue(value, eType, jsonToDataValueDecoder)
+				dv, err := requestBodyToDataValue(value, eType, jsonToDataValueDecoder, contentType)
 				if err != nil {
 					return nil, err
 				}
@@ -833,7 +907,7 @@ func requestBodyToDataValue(
 		return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.invalid_value",
 			map[string]string{"errMsg": "Invalid MAP key/value was provided"})}
 	case bindings.ReferenceBindingType:
-		return requestBodyToDataValue(val, bindingType.(bindings.ReferenceType).Resolve(), jsonToDataValueDecoder)
+		return requestBodyToDataValue(val, bindingType.(bindings.ReferenceType).Resolve(), jsonToDataValueDecoder, contentType)
 	case bindings.StructBindingType:
 		if _, ok := val.(map[string]interface{}); !ok {
 			return nil, []error{l10n.NewRuntimeError("vapi.protocol.server.rest.param.body.unexpected",
@@ -844,7 +918,7 @@ func requestBodyToDataValue(
 
 		for _, fieldName := range bindingType.(bindings.StructType).FieldNames() {
 			if fieldValue, ok := structVal[fieldName]; ok {
-				dv, err := requestBodyToDataValue(fieldValue, bindingType.(bindings.StructType).Field(fieldName), jsonToDataValueDecoder)
+				dv, err := requestBodyToDataValue(fieldValue, bindingType.(bindings.StructType).Field(fieldName), jsonToDataValueDecoder, contentType)
 				if err != nil {
 					return nil, err
 				}

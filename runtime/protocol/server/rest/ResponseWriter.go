@@ -1,4 +1,4 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+/* Copyright © 2019-2020 VMware, Inc. All Rights Reserved.
    SPDX-License-Identifier: BSD-2-Clause */
 
 package rest
@@ -7,11 +7,13 @@ import (
 	"encoding/base64"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/core"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data/serializers/cleanjson"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/l10n"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/lib"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/lib/rest"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
 )
@@ -82,6 +84,19 @@ func SetResponseHeader(result core.MethodResult,
 	resultToHeaderMap map[string]string,
 	errorToHeaderMap map[string]map[string]string,
 	header http.Header) []error {
+
+	// we're expecting runtime result to be always application/json
+	defer func() {
+		var contentTypeHeader []string
+		if header.Get(lib.HTTP_CONTENT_TYPE_HEADER) == "" {
+			contentTypeHeader = []string{""}
+		} else {
+			contentTypeHeader = header[lib.HTTP_CONTENT_TYPE_HEADER]
+		}
+		if !strings.Contains(strings.Join(contentTypeHeader, ","), lib.JSON_CONTENT_TYPE) {
+			header.Add(lib.HTTP_CONTENT_TYPE_HEADER, lib.JSON_CONTENT_TYPE)
+		}
+	}()
 
 	if !result.IsSuccess() {
 		for errName, errorHeadersMap := range errorToHeaderMap {

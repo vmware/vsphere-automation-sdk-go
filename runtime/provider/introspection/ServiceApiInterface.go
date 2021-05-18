@@ -50,12 +50,12 @@ func (serviceApiInterface *ServiceApiInterface) Invoke(ctx *core.ExecutionContex
 	return method(ctx, *methodDefinition, input)
 }
 
-func (serviceApiInterface *ServiceApiInterface) getListOfMethodIds() []core.MethodIdentifier {
-	var methodIds = make([]core.MethodIdentifier, 0)
+func (serviceApiInterface *ServiceApiInterface) getListOfMethodIds() map[string]core.MethodIdentifier {
+	var methodIdentifiers = make(map[string]core.MethodIdentifier)
 	for key, _ := range serviceApiInterface.methods {
-		methodIds = append(methodIds, key)
+		methodIdentifiers[key.Name()] = key
 	}
-	return methodIds
+	return methodIdentifiers
 }
 
 func (serviceApiInterface *ServiceApiInterface) registerGetMethod() {

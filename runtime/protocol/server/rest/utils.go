@@ -1,10 +1,12 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+/* Copyright © 2019-2020 VMware, Inc. All Rights Reserved.
    SPDX-License-Identifier: BSD-2-Clause */
 
 package rest
 
 import (
 	"net/http"
+	"net/url"
+	"strings"
 
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
@@ -14,9 +16,10 @@ import (
 )
 
 var runtimePropertiesToVapiErrorMap = map[string]string{
-	"com.vmware.vapi.rest.unsupported_media_type":           "com.vmware.vapi.std.errors.invalid_request",
-	"vapi.protocol.server.rest.param.internal_server_error": "com.vmware.vapi.std.errors.internal_server_error",
-	"vapi.protocol.server.rest.response.not_structure":      "com.vmware.vapi.std.errors.internal_server_error",
+	"vapi.protocol.server.rest.invalid_json_content":   "com.vmware.vapi.std.errors.invalid_argument",
+	"vapi.protocol.server.rest.unsupported_media_type": "com.vmware.vapi.std.errors.invalid_request",
+	"vapi.protocol.server.rest.param.invalid_argument": "com.vmware.vapi.std.errors.invalid_argument",
+	"vapi.protocol.server.rest.response.not_structure": "com.vmware.vapi.std.errors.internal_server_error",
 }
 
 func returnError(err []error, rw http.ResponseWriter) {
@@ -41,4 +44,60 @@ func returnBadRequest(errorStr string, rw http.ResponseWriter, dataErr []error) 
 	}
 	rw.WriteHeader(status)
 	rw.Write([]byte(responseBody))
+}
+
+func GetQuery(request *http.Request) map[string][]*string {
+	v, _ := ParseVAPIQuery(request.URL.RawQuery)
+	return v
+}
+
+func ParseVAPIQuery(query string) (m map[string][]*string, err error) {
+	m = make(map[string][]*string)
+	query = PrepareVAPIQuery(query)
+	for query != "" {
+		key := query
+		if i := strings.Index(key, "&"); i >= 0 {
+			key, query = key[:i], key[i+1:]
+		} else {
+			query = ""
+		}
+		if key == "" {
+			continue
+		}
+		var value *string
+		value = nil
+		if i := strings.Index(key, "="); i >= 0 {
+			valueStr := key[i+1:]
+			key = key[:i]
+			value = &valueStr
+		}
+		key, err1 := url.QueryUnescape(key)
+		if err != nil {
+			if err == nil {
+				err = err1
+			}
+			continue
+		}
+		if value != nil {
+			var strValue string
+			strValue, err1 = url.QueryUnescape(*value)
+			if err1 != nil {
+				if err == nil {
+					err = err1
+				}
+				continue
+			}
+			value = &strValue
+		}
+		m[key] = append(m[key], value)
+	}
+	return m, err
+}
+
+func PrepareVAPIQuery(query string) string {
+	// Since + char in Go query parser is QueryUnescape-d to space char ' '
+	// we URL encode it here to suppress that behavior
+	// once parsed query keys and values are QueryDecoded so they get converted back
+	query = strings.ReplaceAll(query, "+", "%2B")
+	return query
 }

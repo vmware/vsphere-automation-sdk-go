@@ -20,4 +20,3 @@ package introspection
 //	result := provider.Info{Id:"com.vmware.std.introspection.provider.info", Checksum:"xyz"}
 //    return result
 //}
-
