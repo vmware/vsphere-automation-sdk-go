@@ -1,27 +1,21 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for service: Hidden.
- * Includes binding types of a structures and enumerations defined in the service.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for service: Hidden.
+// Includes binding types of a structures and enumerations defined in the service.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package service
 
 import (
-	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
+	"reflect"
 )
-
-
-
-
 
 func hiddenListInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
@@ -56,14 +50,12 @@ func hiddenListRestMetadata() protocol.OperationRestMetadata {
 		bodyFieldsMap,
 		"",
 		"",
-		"null",
-		"",
+		"GET",
+		"/vapi/metadata/metamodel/service-hidden",
 		"",
 		resultHeaders,
-		0,
+		200,
 		"",
 		errorHeaders,
 		map[string]int{})
 }
-
-

@@ -1,30 +1,25 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for service: Operation.
- * Includes binding types of a structures and enumerations defined in the service.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for service: Operation.
+// Includes binding types of a structures and enumerations defined in the service.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package service
 
 import (
-	"reflect"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/vapi/metadata/metamodel"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
-	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/vapi/metadata/metamodel"
+	"reflect"
 )
 
 // Resource type for operation element.
 const Operation_RESOURCE_TYPE = "com.vmware.vapi.operation"
-
-
-
 
 func operationListInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
@@ -50,6 +45,9 @@ func operationListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["service_id"] = bindings.NewIdType([]string{"com.vmware.vapi.service"}, "")
 	fieldNameMap["service_id"] = "ServiceId"
+	paramsTypeMap["service_id"] = bindings.NewIdType([]string{"com.vmware.vapi.service"}, "")
+	paramsTypeMap["serviceId"] = bindings.NewIdType([]string{"com.vmware.vapi.service"}, "")
+	pathParams["service_id"] = "serviceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -63,11 +61,11 @@ func operationListRestMetadata() protocol.OperationRestMetadata {
 		bodyFieldsMap,
 		"",
 		"",
-		"null",
-		"",
+		"GET",
+		"/vapi/metadata/metamodel/service/{serviceId}/operation",
 		"",
 		resultHeaders,
-		0,
+		200,
 		"",
 		errorHeaders,
 		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
@@ -101,6 +99,12 @@ func operationGetRestMetadata() protocol.OperationRestMetadata {
 	fields["operation_id"] = bindings.NewIdType([]string{"com.vmware.vapi.operation"}, "")
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["operation_id"] = "OperationId"
+	paramsTypeMap["service_id"] = bindings.NewIdType([]string{"com.vmware.vapi.service"}, "")
+	paramsTypeMap["operation_id"] = bindings.NewIdType([]string{"com.vmware.vapi.operation"}, "")
+	paramsTypeMap["serviceId"] = bindings.NewIdType([]string{"com.vmware.vapi.service"}, "")
+	paramsTypeMap["operationId"] = bindings.NewIdType([]string{"com.vmware.vapi.operation"}, "")
+	pathParams["operation_id"] = "operationId"
+	pathParams["service_id"] = "serviceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -114,14 +118,12 @@ func operationGetRestMetadata() protocol.OperationRestMetadata {
 		bodyFieldsMap,
 		"",
 		"",
-		"null",
-		"",
+		"GET",
+		"/vapi/metadata/metamodel/service/{serviceId}/operation/{operationId}",
 		"",
 		resultHeaders,
-		0,
+		200,
 		"",
 		errorHeaders,
 		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
 }
-
-

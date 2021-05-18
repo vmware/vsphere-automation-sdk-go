@@ -1,39 +1,36 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for package: com.vmware.vapi.metadata.
- * Includes binding types of a top level structures and enumerations.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for package: com.vmware.vapi.metadata.
+// Includes binding types of a top level structures and enumerations.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package metadata
 
 import (
-	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
 	"net/url"
+	"reflect"
 )
-
 
 // The ``SourceType`` enumeration class defines the types of sources for API metadata. You specify the type of source when adding a metadata source to a metadata service.
 //
 // <p> See {@link com.vmware.vapi.bindings.ApiEnumeration enumerated types description}.
-type SourceType string
+type SourceTypeEnum string
 
 const (
-    // Indicates the metadata source is a JSON file.
-	SourceType_FILE SourceType = "FILE"
-    // Indicates the metadata source is a remote server.
-	SourceType_REMOTE SourceType = "REMOTE"
+	// Indicates the metadata source is a JSON file.
+	SourceType_FILE SourceTypeEnum = "FILE"
+	// Indicates the metadata source is a remote server.
+	SourceType_REMOTE SourceTypeEnum = "REMOTE"
 )
 
-func (s SourceType) SourceType() bool {
+func (s SourceTypeEnum) SourceTypeEnum() bool {
 	switch s {
 	case SourceType_FILE:
 		return true
@@ -44,26 +41,25 @@ func (s SourceType) SourceType() bool {
 	}
 }
 
-
 // The ``SourceCreateSpec`` class contains the registration information for a metadata source.
 type SourceCreateSpec struct {
-    // English language human readable description of the source.
+	// English language human readable description of the source.
 	Description string
-    // Type of the metadata source.
-	Type_ SourceType
-    // Absolute file path of the metamodel metadata file that has the metamodel information about one component element.
+	// Type of the metadata source.
+	Type_ SourceTypeEnum
+	// Absolute file path of the metamodel metadata file that has the metamodel information about one component element.
 	Filepath *string
-    // Connection information of the remote server. This should be of the format http(s)://IP:port/namespace. 
-    //
-    //  The remote server should contain the interfaces in com.vmware.vapi.metadata.metamodel package. It could expose metamodel information of one or more components.
+	// Connection information of the remote server. This should be of the format http(s)://IP:port/namespace.
+	//
+	//  The remote server should contain the interfaces in com.vmware.vapi.metadata.metamodel package. It could expose metamodel information of one or more components.
 	Address *url.URL
 }
 
-func (s SourceCreateSpec) GetType__() bindings.BindingType {
+func (s *SourceCreateSpec) GetType__() bindings.BindingType {
 	return SourceCreateSpecBindingType()
 }
 
-func (s SourceCreateSpec) GetDataValue__() (data.DataValue, []error) {
+func (s *SourceCreateSpec) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -75,24 +71,23 @@ func (s SourceCreateSpec) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // Metadata source info
 type SourceInfo struct {
-    // Type of the metadata source
-	Type_ SourceType
-    // Name of the metadata source file
+	// Type of the metadata source
+	Type_ SourceTypeEnum
+	// Name of the metadata source file
 	FileName *string
-    // Address of the remote metadata source
+	// Address of the remote metadata source
 	RemoteAddr *string
-    // Message protocol to be used
+	// Message protocol to be used
 	MsgProtocol *string
 }
 
-func (s SourceInfo) GetType__() bindings.BindingType {
+func (s *SourceInfo) GetType__() bindings.BindingType {
 	return SourceInfoBindingType()
 }
 
-func (s SourceInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *SourceInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -104,16 +99,12 @@ func (s SourceInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
-
-
-
 func SourceCreateSpecBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["description"] = bindings.NewStringType()
 	fieldNameMap["description"] = "Description"
-	fields["type"] = bindings.NewEnumType("com.vmware.vapi.metadata.source_type", reflect.TypeOf(SourceType(SourceType_FILE)))
+	fields["type"] = bindings.NewEnumType("com.vmware.vapi.metadata.source_type", reflect.TypeOf(SourceTypeEnum(SourceType_FILE)))
 	fieldNameMap["type"] = "Type_"
 	fields["filepath"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["filepath"] = "Filepath"
@@ -137,7 +128,7 @@ func SourceCreateSpecBindingType() bindings.BindingType {
 func SourceInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["type"] = bindings.NewEnumType("com.vmware.vapi.metadata.source_type", reflect.TypeOf(SourceType(SourceType_FILE)))
+	fields["type"] = bindings.NewEnumType("com.vmware.vapi.metadata.source_type", reflect.TypeOf(SourceTypeEnum(SourceType_FILE)))
 	fieldNameMap["type"] = "Type_"
 	fields["file_name"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["file_name"] = "FileName"
@@ -160,5 +151,3 @@ func SourceInfoBindingType() bindings.BindingType {
 	validators = append(validators, uv1)
 	return bindings.NewStructType("com.vmware.vapi.metadata.source_info", fields, reflect.TypeOf(SourceInfo{}), fieldNameMap, validators)
 }
-
-

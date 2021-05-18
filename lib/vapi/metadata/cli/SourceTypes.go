@@ -1,48 +1,44 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for service: Source.
- * Includes binding types of a structures and enumerations defined in the service.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for service: Source.
+// Includes binding types of a structures and enumerations defined in the service.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package cli
 
 import (
-	"reflect"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/vapi/metadata"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
-	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/vapi/metadata"
 	"net/url"
+	"reflect"
 )
-
-
 
 // The ``Info`` class contains the metadata source information.
 type SourceInfo struct {
-    // English language human readable description of the source.
+	// English language human readable description of the source.
 	Description string
-    // The type (FILE, REMOTE) of the metadata source.
-	Type_ metadata.SourceType
-    // Absolute file path of the CLI metadata file that has the CLI information about one component. The ``filepath`` is the path to the file in the server's filesystem.
+	// The type (FILE, REMOTE) of the metadata source.
+	Type_ metadata.SourceTypeEnum
+	// Absolute file path of the CLI metadata file that has the CLI information about one component. The ``filepath`` is the path to the file in the server's filesystem.
 	Filepath *string
-    // Connection information for the remote server. This should be in the format http(s)://IP:port/namespace. 
-    //
-    //  The remote server must contain the interfaces in the com.vmware.vapi.metadata.cli package. It must expose CLI information of one or more components.
+	// Connection information for the remote server. This should be in the format http(s)://IP:port/namespace.
+	//
+	//  The remote server must contain the interfaces in the com.vmware.vapi.metadata.cli package. It must expose CLI information of one or more components.
 	Address *url.URL
 }
 
-func (s SourceInfo) GetType__() bindings.BindingType {
+func (s *SourceInfo) GetType__() bindings.BindingType {
 	return SourceInfoBindingType()
 }
 
-func (s SourceInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *SourceInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -54,26 +50,25 @@ func (s SourceInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // The ``CreateSpec`` class contains the registration information of a CLI source.
 type SourceCreateSpec struct {
-    // English language human readable description of the source.
+	// English language human readable description of the source.
 	Description string
-    // Type of the metadata source.
-	Type_ metadata.SourceType
-    // Absolute file path of the metamodel metadata file that has the metamodel information about one component element.
+	// Type of the metadata source.
+	Type_ metadata.SourceTypeEnum
+	// Absolute file path of the metamodel metadata file that has the metamodel information about one component element.
 	Filepath *string
-    // Connection information of the remote server. This should be of the format http(s)://IP:port/namespace. 
-    //
-    //  The remote server should contain the interfaces in com.vmware.vapi.metadata.metamodel package. It could expose metamodel information of one or more components.
+	// Connection information of the remote server. This should be of the format http(s)://IP:port/namespace.
+	//
+	//  The remote server should contain the interfaces in com.vmware.vapi.metadata.metamodel package. It could expose metamodel information of one or more components.
 	Address *url.URL
 }
 
-func (s SourceCreateSpec) GetType__() bindings.BindingType {
+func (s *SourceCreateSpec) GetType__() bindings.BindingType {
 	return SourceCreateSpecBindingType()
 }
 
-func (s SourceCreateSpec) GetDataValue__() (data.DataValue, []error) {
+func (s *SourceCreateSpec) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -84,9 +79,6 @@ func (s SourceCreateSpec) GetDataValue__() (data.DataValue, []error) {
 	}
 	return dataVal, nil
 }
-
-
-
 
 func sourceCreateInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
@@ -116,6 +108,8 @@ func sourceCreateRestMetadata() protocol.OperationRestMetadata {
 	fields["spec"] = bindings.NewReferenceType(SourceCreateSpecBindingType)
 	fieldNameMap["source_id"] = "SourceId"
 	fieldNameMap["spec"] = "Spec"
+	bodyFieldsMap["source_id"] = "source_id"
+	bodyFieldsMap["spec"] = "spec"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -129,14 +123,14 @@ func sourceCreateRestMetadata() protocol.OperationRestMetadata {
 		bodyFieldsMap,
 		"",
 		"",
-		"null",
-		"",
+		"POST",
+		"/vapi/metadata/cli/source",
 		"",
 		resultHeaders,
-		0,
+		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.already_exists": 400,"com.vmware.vapi.std.errors.invalid_argument": 400,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.already_exists": 400, "com.vmware.vapi.std.errors.invalid_argument": 400, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sourceDeleteInputType() bindings.StructType {
@@ -163,6 +157,9 @@ func sourceDeleteRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["source_id"] = bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, "")
 	fieldNameMap["source_id"] = "SourceId"
+	paramsTypeMap["source_id"] = bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, "")
+	paramsTypeMap["sourceId"] = bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, "")
+	pathParams["source_id"] = "sourceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -176,11 +173,11 @@ func sourceDeleteRestMetadata() protocol.OperationRestMetadata {
 		bodyFieldsMap,
 		"",
 		"",
-		"null",
-		"",
+		"DELETE",
+		"/vapi/metadata/cli/source/{sourceId}",
 		"",
 		resultHeaders,
-		0,
+		204,
 		"",
 		errorHeaders,
 		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
@@ -210,6 +207,9 @@ func sourceGetRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["source_id"] = bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, "")
 	fieldNameMap["source_id"] = "SourceId"
+	paramsTypeMap["source_id"] = bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, "")
+	paramsTypeMap["sourceId"] = bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, "")
+	pathParams["source_id"] = "sourceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -223,11 +223,11 @@ func sourceGetRestMetadata() protocol.OperationRestMetadata {
 		bodyFieldsMap,
 		"",
 		"",
-		"null",
-		"",
+		"GET",
+		"/vapi/metadata/cli/source/{sourceId}",
 		"",
 		resultHeaders,
-		0,
+		200,
 		"",
 		errorHeaders,
 		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
@@ -266,11 +266,11 @@ func sourceListRestMetadata() protocol.OperationRestMetadata {
 		bodyFieldsMap,
 		"",
 		"",
-		"null",
-		"",
+		"GET",
+		"/vapi/metadata/cli/source",
 		"",
 		resultHeaders,
-		0,
+		200,
 		"",
 		errorHeaders,
 		map[string]int{})
@@ -300,6 +300,7 @@ func sourceReloadRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["source_id"] = bindings.NewOptionalType(bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, ""))
 	fieldNameMap["source_id"] = "SourceId"
+	bodyFieldsMap["source_id"] = "source_id"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -311,13 +312,13 @@ func sourceReloadRestMetadata() protocol.OperationRestMetadata {
 		headerParams,
 		dispatchHeaderParams,
 		bodyFieldsMap,
+		"action=reload",
 		"",
-		"",
-		"null",
-		"",
+		"POST",
+		"/vapi/metadata/cli/source",
 		"",
 		resultHeaders,
-		0,
+		204,
 		"",
 		errorHeaders,
 		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
@@ -347,6 +348,7 @@ func sourceFingerprintRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["source_id"] = bindings.NewOptionalType(bindings.NewIdType([]string{"com.vmware.vapi.metadata.source"}, ""))
 	fieldNameMap["source_id"] = "SourceId"
+	bodyFieldsMap["source_id"] = "source_id"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return protocol.NewOperationRestMetadata(
@@ -358,25 +360,24 @@ func sourceFingerprintRestMetadata() protocol.OperationRestMetadata {
 		headerParams,
 		dispatchHeaderParams,
 		bodyFieldsMap,
+		"action=fingerprint",
 		"",
-		"",
-		"null",
-		"",
+		"POST",
+		"/vapi/metadata/cli/source",
 		"",
 		resultHeaders,
-		0,
+		200,
 		"",
 		errorHeaders,
 		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
 }
-
 
 func SourceInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["description"] = bindings.NewStringType()
 	fieldNameMap["description"] = "Description"
-	fields["type"] = bindings.NewEnumType("com.vmware.vapi.metadata.source_type", reflect.TypeOf(metadata.SourceType(metadata.SourceType_FILE)))
+	fields["type"] = bindings.NewEnumType("com.vmware.vapi.metadata.source_type", reflect.TypeOf(metadata.SourceTypeEnum(metadata.SourceType_FILE)))
 	fieldNameMap["type"] = "Type_"
 	fields["filepath"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["filepath"] = "Filepath"
@@ -402,7 +403,7 @@ func SourceCreateSpecBindingType() bindings.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["description"] = bindings.NewStringType()
 	fieldNameMap["description"] = "Description"
-	fields["type"] = bindings.NewEnumType("com.vmware.vapi.metadata.source_type", reflect.TypeOf(metadata.SourceType(metadata.SourceType_FILE)))
+	fields["type"] = bindings.NewEnumType("com.vmware.vapi.metadata.source_type", reflect.TypeOf(metadata.SourceTypeEnum(metadata.SourceType_FILE)))
 	fieldNameMap["type"] = "Type_"
 	fields["filepath"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["filepath"] = "Filepath"
@@ -422,4 +423,3 @@ func SourceCreateSpecBindingType() bindings.BindingType {
 	validators = append(validators, uv1)
 	return bindings.NewStructType("com.vmware.vapi.metadata.cli.source.create_spec", fields, reflect.TypeOf(SourceCreateSpec{}), fieldNameMap, validators)
 }
-

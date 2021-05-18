@@ -1,38 +1,35 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for package: com.vmware.vapi.metadata.cli.
- * Includes binding types of a top level structures and enumerations.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for package: com.vmware.vapi.metadata.cli.
+// Includes binding types of a top level structures and enumerations.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package cli
 
 import (
-	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
+	"reflect"
 )
-
 
 // The ``ComponentInfo`` is an aggregated class for CLI commands and namespaces information.
 type ComponentInfo struct {
-    // Information for all CLI namespaces of a component
+	// Information for all CLI namespaces of a component
 	Namespaces []NamespaceInfo
-    // Information for all CLI commands of a component
+	// Information for all CLI commands of a component
 	Commands []CommandInfo
 }
 
-func (s ComponentInfo) GetType__() bindings.BindingType {
+func (s *ComponentInfo) GetType__() bindings.BindingType {
 	return ComponentInfoBindingType()
 }
 
-func (s ComponentInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *ComponentInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -44,10 +41,6 @@ func (s ComponentInfo) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
-
-
-
 func ComponentInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -58,5 +51,3 @@ func ComponentInfoBindingType() bindings.BindingType {
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vapi.metadata.cli.component_info", fields, reflect.TypeOf(ComponentInfo{}), fieldNameMap, validators)
 }
-
-

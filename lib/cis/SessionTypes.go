@@ -1,43 +1,39 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for service: Session.
- * Includes binding types of a structures and enumerations defined in the service.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for service: Session.
+// Includes binding types of a structures and enumerations defined in the service.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package cis
 
 import (
-	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
+	"reflect"
 	"time"
 )
 
-
-
 // Represents data associated with an API session.
 type SessionInfo struct {
-    // Fully qualified name of the end user that created the session, for example Administrator\\\\@vsphere.local. A typical use case for this information is in Graphical User Interfaces (GUI) or logging systems to visualize the identity of the current user.
+	// Fully qualified name of the end user that created the session, for example Administrator\\\\@vsphere.local. A typical use case for this information is in Graphical User Interfaces (GUI) or logging systems to visualize the identity of the current user.
 	User string
-    // Time when the session was created.
+	// Time when the session was created.
 	CreatedTime time.Time
-    // Last time this session was used by passing the session key for invoking an API.
+	// Last time this session was used by passing the session token for invoking an API.
 	LastAccessedTime time.Time
 }
 
-func (s SessionInfo) GetType__() bindings.BindingType {
+func (s *SessionInfo) GetType__() bindings.BindingType {
 	return SessionInfoBindingType()
 }
 
-func (s SessionInfo) GetDataValue__() (data.DataValue, []error) {
+func (s *SessionInfo) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -48,9 +44,6 @@ func (s SessionInfo) GetDataValue__() (data.DataValue, []error) {
 	}
 	return dataVal, nil
 }
-
-
-
 
 func sessionCreateInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
@@ -87,14 +80,14 @@ func sessionCreateRestMetadata() protocol.OperationRestMetadata {
 		bodyFieldsMap,
 		"",
 		"",
-		"null",
-		"",
+		"POST",
+		"/session",
 		"",
 		resultHeaders,
-		0,
+		201,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.service_unavailable": 503})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.service_unavailable": 503})
 }
 
 func sessionDeleteInputType() bindings.StructType {
@@ -132,14 +125,14 @@ func sessionDeleteRestMetadata() protocol.OperationRestMetadata {
 		bodyFieldsMap,
 		"",
 		"",
-		"null",
-		"",
+		"DELETE",
+		"/session",
 		"",
 		resultHeaders,
-		0,
+		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.service_unavailable": 503})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.service_unavailable": 503})
 }
 
 func sessionGetInputType() bindings.StructType {
@@ -177,16 +170,15 @@ func sessionGetRestMetadata() protocol.OperationRestMetadata {
 		bodyFieldsMap,
 		"",
 		"",
-		"null",
-		"",
+		"GET",
+		"/session",
 		"",
 		resultHeaders,
-		0,
+		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401,"com.vmware.vapi.std.errors.service_unavailable": 503})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.service_unavailable": 503})
 }
-
 
 func SessionInfoBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
@@ -200,4 +192,3 @@ func SessionInfoBindingType() bindings.BindingType {
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.cis.session.info", fields, reflect.TypeOf(SessionInfo{}), fieldNameMap, validators)
 }
-

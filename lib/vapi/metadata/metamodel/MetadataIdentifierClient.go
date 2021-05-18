@@ -1,18 +1,47 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Interface file for service: MetadataIdentifier
- * Used by client-side stubs.
- */
+// Interface file for service: MetadataIdentifier
+// Used by client-side stubs.
 
 package metamodel
 
+import (
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/core"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol/client"
+)
 
-// The ``MetadataIdentifier`` interface provides string constants that can be used as identifiers for the metadata elements. 
+const _ = core.SupportedByRuntimeVersion1
+
+// The ``MetadataIdentifier`` interface provides string constants that can be used as identifiers for the metadata elements.
 //
 //  Most of the types in com.vmware.vapi.metadata.metamodel package has a metadata field whose type is ``Map<String, ElementMap>``. MetadataIdentifier contains the identifiers used in the keys of the above Map type.
 type MetadataIdentifierClient interface {
+}
+
+type metadataIdentifierClient struct {
+	connector           client.Connector
+	interfaceDefinition core.InterfaceDefinition
+	errorsBindingMap    map[string]bindings.BindingType
+}
+
+func NewMetadataIdentifierClient(connector client.Connector) *metadataIdentifierClient {
+	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vapi.metadata.metamodel.metadata_identifier")
+	methodIdentifiers := map[string]core.MethodIdentifier{}
+	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]bindings.BindingType)
+
+	mIface := metadataIdentifierClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &mIface
+}
+
+func (mIface *metadataIdentifierClient) GetErrorBindingType(errorName string) bindings.BindingType {
+	if entry, ok := mIface.errorsBindingMap[errorName]; ok {
+		return entry
+	}
+	return errors.ERROR_BINDINGS_MAP[errorName]
 }
