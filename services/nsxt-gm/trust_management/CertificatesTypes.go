@@ -1,56 +1,64 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for service: Certificates.
- * Includes binding types of a structures and enumerations defined in the service.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for service: Certificates.
+// Includes binding types of a structures and enumerations defined in the service.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package trust_management
 
 import (
-	"reflect"
-	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	"reflect"
 )
 
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_MGMT_CLUSTER = "MGMT_CLUSTER"
+
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_MGMT_PLANE = "MGMT_PLANE"
+
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_API = "API"
+
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_NOTIFICATION_COLLECTOR = "NOTIFICATION_COLLECTOR"
+
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_SYSLOG_SERVER = "SYSLOG_SERVER"
+
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_RSYSLOG_CLIENT = "RSYSLOG_CLIENT"
+
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_APH = "APH"
+
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_GLOBAL_MANAGER = "GLOBAL_MANAGER"
+
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_LOCAL_MANAGER = "LOCAL_MANAGER"
+
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_CLIENT_AUTH = "CLIENT_AUTH"
+
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_RMQ = "RMQ"
+
 // Possible value for ``type`` of method Certificates#list.
 const Certificates_LIST_TYPE_CERTIFICATE = "cluster_api_certificate"
+
 // Possible value for ``usage`` of method Certificates#validate.
 const Certificates_VALIDATE_USAGE_SERVER = "SERVER"
+
 // Possible value for ``usage`` of method Certificates#validate.
 const Certificates_VALIDATE_USAGE_CLIENT = "CLIENT"
-
-
-
 
 func certificatesApplycertificateInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
@@ -111,7 +119,7 @@ func certificatesApplycertificateRestMetadata() protocol.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesDeleteInputType() bindings.StructType {
@@ -161,7 +169,7 @@ func certificatesDeleteRestMetadata() protocol.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesGetInputType() bindings.StructType {
@@ -217,7 +225,7 @@ func certificatesGetRestMetadata() protocol.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesImportcertificateInputType() bindings.StructType {
@@ -265,7 +273,7 @@ func certificatesImportcertificateRestMetadata() protocol.OperationRestMetadata 
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesListInputType() bindings.StructType {
@@ -350,7 +358,7 @@ func certificatesListRestMetadata() protocol.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesSetapplianceproxycertificateforintersitecommunicationInputType() bindings.StructType {
@@ -398,7 +406,7 @@ func certificatesSetapplianceproxycertificateforintersitecommunicationRestMetada
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesSetpicertificateforfederationInputType() bindings.StructType {
@@ -446,7 +454,7 @@ func certificatesSetpicertificateforfederationRestMetadata() protocol.OperationR
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesValidateInputType() bindings.StructType {
@@ -502,7 +510,5 @@ func certificatesValidateRestMetadata() protocol.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-

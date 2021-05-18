@@ -1,28 +1,22 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for service: ServiceEntries.
- * Includes binding types of a structures and enumerations defined in the service.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for service: ServiceEntries.
+// Includes binding types of a structures and enumerations defined in the service.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package services
 
 import (
-	"reflect"
-	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/protocol"
+	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	"reflect"
 )
-
-
-
-
 
 func serviceEntriesDeleteInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
@@ -78,7 +72,7 @@ func serviceEntriesDeleteRestMetadata() protocol.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func serviceEntriesGetInputType() bindings.StructType {
@@ -93,7 +87,7 @@ func serviceEntriesGetInputType() bindings.StructType {
 }
 
 func serviceEntriesGetOutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType),}, bindings.REST)
+	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType)}, bindings.REST)
 }
 
 func serviceEntriesGetRestMetadata() protocol.OperationRestMetadata {
@@ -135,7 +129,7 @@ func serviceEntriesGetRestMetadata() protocol.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func serviceEntriesListInputType() bindings.StructType {
@@ -221,7 +215,7 @@ func serviceEntriesListRestMetadata() protocol.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func serviceEntriesPatchInputType() bindings.StructType {
@@ -229,7 +223,7 @@ func serviceEntriesPatchInputType() bindings.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["service_id"] = bindings.NewStringType()
 	fields["service_entry_id"] = bindings.NewStringType()
-	fields["service_entry"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType),}, bindings.REST)
+	fields["service_entry"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType)}, bindings.REST)
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["service_entry_id"] = "ServiceEntryId"
 	fieldNameMap["service_entry"] = "ServiceEntry"
@@ -252,12 +246,12 @@ func serviceEntriesPatchRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["service_id"] = bindings.NewStringType()
 	fields["service_entry_id"] = bindings.NewStringType()
-	fields["service_entry"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType),}, bindings.REST)
+	fields["service_entry"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType)}, bindings.REST)
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["service_entry_id"] = "ServiceEntryId"
 	fieldNameMap["service_entry"] = "ServiceEntry"
 	paramsTypeMap["service_entry_id"] = bindings.NewStringType()
-	paramsTypeMap["service_entry"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType),}, bindings.REST)
+	paramsTypeMap["service_entry"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType)}, bindings.REST)
 	paramsTypeMap["service_id"] = bindings.NewStringType()
 	paramsTypeMap["serviceId"] = bindings.NewStringType()
 	paramsTypeMap["serviceEntryId"] = bindings.NewStringType()
@@ -283,7 +277,7 @@ func serviceEntriesPatchRestMetadata() protocol.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func serviceEntriesUpdateInputType() bindings.StructType {
@@ -291,7 +285,7 @@ func serviceEntriesUpdateInputType() bindings.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["service_id"] = bindings.NewStringType()
 	fields["service_entry_id"] = bindings.NewStringType()
-	fields["service_entry"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType),}, bindings.REST)
+	fields["service_entry"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType)}, bindings.REST)
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["service_entry_id"] = "ServiceEntryId"
 	fieldNameMap["service_entry"] = "ServiceEntry"
@@ -300,7 +294,7 @@ func serviceEntriesUpdateInputType() bindings.StructType {
 }
 
 func serviceEntriesUpdateOutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType),}, bindings.REST)
+	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType)}, bindings.REST)
 }
 
 func serviceEntriesUpdateRestMetadata() protocol.OperationRestMetadata {
@@ -314,12 +308,12 @@ func serviceEntriesUpdateRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["service_id"] = bindings.NewStringType()
 	fields["service_entry_id"] = bindings.NewStringType()
-	fields["service_entry"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType),}, bindings.REST)
+	fields["service_entry"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType)}, bindings.REST)
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["service_entry_id"] = "ServiceEntryId"
 	fieldNameMap["service_entry"] = "ServiceEntry"
 	paramsTypeMap["service_entry_id"] = bindings.NewStringType()
-	paramsTypeMap["service_entry"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType),}, bindings.REST)
+	paramsTypeMap["service_entry"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.ServiceEntryBindingType)}, bindings.REST)
 	paramsTypeMap["service_id"] = bindings.NewStringType()
 	paramsTypeMap["serviceId"] = bindings.NewStringType()
 	paramsTypeMap["serviceEntryId"] = bindings.NewStringType()
@@ -345,7 +339,5 @@ func serviceEntriesUpdateRestMetadata() protocol.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-
