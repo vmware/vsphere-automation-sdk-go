@@ -3,12 +3,12 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: EdrsPolicy.
+// Data type definitions file for service: RemediationPolicy.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package clusters
+package sddcs
 
 import (
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
@@ -18,24 +18,22 @@ import (
 	"reflect"
 )
 
-func edrsPolicyGetInputType() bindings.StructType {
+func remediationPolicyGetInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
-	fields["cluster"] = bindings.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
-	fieldNameMap["cluster"] = "Cluster"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func edrsPolicyGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.EdrsPolicyBindingType)
+func remediationPolicyGetOutputType() bindings.BindingType {
+	return bindings.NewListType(bindings.NewReferenceType(model.RemediationClusterInfoBindingType), reflect.TypeOf([]model.RemediationClusterInfo{}))
 }
 
-func edrsPolicyGetRestMetadata() protocol.OperationRestMetadata {
+func remediationPolicyGetRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -46,17 +44,12 @@ func edrsPolicyGetRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
-	fields["cluster"] = bindings.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
-	fieldNameMap["cluster"] = "Cluster"
-	paramsTypeMap["cluster"] = bindings.NewStringType()
 	paramsTypeMap["org"] = bindings.NewStringType()
 	paramsTypeMap["sddc"] = bindings.NewStringType()
 	paramsTypeMap["org"] = bindings.NewStringType()
 	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["cluster"] = bindings.NewStringType()
-	pathParams["cluster"] = "cluster"
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
 	resultHeaders := map[string]string{}
@@ -75,7 +68,7 @@ func edrsPolicyGetRestMetadata() protocol.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/vmc/autoscaler/api/orgs/{org}/sddcs/{sddc}/clusters/{cluster}/edrs-policy",
+		"/vmc/autoscaler/api/orgs/{org}/sddcs/{sddc}/remediation-policy",
 		"",
 		resultHeaders,
 		200,
@@ -84,26 +77,24 @@ func edrsPolicyGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
-func edrsPolicyPostInputType() bindings.StructType {
+func remediationPolicyPatchInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
-	fields["cluster"] = bindings.NewStringType()
-	fields["edrs_policy"] = bindings.NewReferenceType(model.EdrsPolicyBindingType)
+	fields["remediation_policy_patch"] = bindings.NewReferenceType(model.RemediationPolicyPatchBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
-	fieldNameMap["cluster"] = "Cluster"
-	fieldNameMap["edrs_policy"] = "EdrsPolicy"
+	fieldNameMap["remediation_policy_patch"] = "RemediationPolicyPatch"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func edrsPolicyPostOutputType() bindings.BindingType {
+func remediationPolicyPatchOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.TaskBindingType)
 }
 
-func edrsPolicyPostRestMetadata() protocol.OperationRestMetadata {
+func remediationPolicyPatchRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}
@@ -114,20 +105,15 @@ func edrsPolicyPostRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
-	fields["cluster"] = bindings.NewStringType()
-	fields["edrs_policy"] = bindings.NewReferenceType(model.EdrsPolicyBindingType)
+	fields["remediation_policy_patch"] = bindings.NewReferenceType(model.RemediationPolicyPatchBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
-	fieldNameMap["cluster"] = "Cluster"
-	fieldNameMap["edrs_policy"] = "EdrsPolicy"
-	paramsTypeMap["cluster"] = bindings.NewStringType()
+	fieldNameMap["remediation_policy_patch"] = "RemediationPolicyPatch"
 	paramsTypeMap["org"] = bindings.NewStringType()
 	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["edrs_policy"] = bindings.NewReferenceType(model.EdrsPolicyBindingType)
+	paramsTypeMap["remediation_policy_patch"] = bindings.NewReferenceType(model.RemediationPolicyPatchBindingType)
 	paramsTypeMap["org"] = bindings.NewStringType()
 	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["cluster"] = bindings.NewStringType()
-	pathParams["cluster"] = "cluster"
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
 	resultHeaders := map[string]string{}
@@ -144,9 +130,9 @@ func edrsPolicyPostRestMetadata() protocol.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"edrs_policy",
-		"POST",
-		"/vmc/autoscaler/api/orgs/{org}/sddcs/{sddc}/clusters/{cluster}/edrs-policy",
+		"remediation_policy_patch",
+		"PATCH",
+		"/vmc/autoscaler/api/orgs/{org}/sddcs/{sddc}/remediation-policy",
 		"",
 		resultHeaders,
 		200,
