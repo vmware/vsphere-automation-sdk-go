@@ -1,47 +1,44 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
 
-// Code generated. DO NOT EDIT.
+// Auto generated code. DO NOT EDIT.
 
-/*
- * Data type definitions file for package: com.vmware.vmc.draas.model.
- * Includes binding types of a top level structures and enumerations.
- * Shared by client-side stubs and server-side skeletons to ensure type
- * compatibility.
- */
+// Data type definitions file for package: com.vmware.vmc.draas.model.
+// Includes binding types of a top level structures and enumerations.
+// Shared by client-side stubs and server-side skeletons to ensure type
+// compatibility.
 
 package model
 
 import (
-	"reflect"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/bindings"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/data"
 	"gitlab.eng.vmware.com/vapi-sdk/vsphere-automation-sdk-go/runtime/log"
+	"reflect"
 	"time"
 )
 
-
 type AbstractEntity struct {
 	Updated time.Time
-    // User id that last updated this record
-	UserId string
+	// User id that last updated this record
+	UserId  string
 	Created time.Time
-    // User id that last updated this record
+	// User id that last updated this record
 	UpdatedByUserId string
-    // Version of this entity format: int32
+	// Version of this entity format: int32
 	Version int64
-    // User name that last updated this record
+	// User name that last updated this record
 	UpdatedByUserName string
-    // User name that last updated this record
+	// User name that last updated this record
 	UserName string
-	Id string
+	Id       string
 }
 
-func (s AbstractEntity) GetType__() bindings.BindingType {
+func (s *AbstractEntity) GetType__() bindings.BindingType {
 	return AbstractEntityBindingType()
 }
 
-func (s AbstractEntity) GetDataValue__() (data.DataValue, []error) {
+func (s *AbstractEntity) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -53,17 +50,16 @@ func (s AbstractEntity) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type ActivateSiteRecoveryConfig struct {
-    // Optional custom extension key suffix for SRM. If not specified, default extension key will be used. The custom extension suffix must contain 13 characters or less, be composed of letters, numbers, ., -, and _ characters. The extension suffix must begin and end with a letter or number. The suffix is appended to com.vmware.vcDr- to form the full extension key.
+	// Optional custom extension key suffix for SRM. If not specified, default extension key will be used. The custom extension suffix must contain 13 characters or less, be composed of letters, numbers, ., -, and _ characters. The extension suffix must begin and end with a letter or number. The suffix is appended to com.vmware.vcDr- to form the full extension key.
 	SrmExtensionKeySuffix *string
 }
 
-func (s ActivateSiteRecoveryConfig) GetType__() bindings.BindingType {
+func (s *ActivateSiteRecoveryConfig) GetType__() bindings.BindingType {
 	return ActivateSiteRecoveryConfigBindingType()
 }
 
-func (s ActivateSiteRecoveryConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *ActivateSiteRecoveryConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -75,25 +71,46 @@ func (s ActivateSiteRecoveryConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+// The build version.
+type BuildVersion struct {
+	Version     *string
+	BuildNumber *string
+}
+
+func (s *BuildVersion) GetType__() bindings.BindingType {
+	return BuildVersionBindingType()
+}
+
+func (s *BuildVersion) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for BuildVersion._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
 
 type ErrorResponse struct {
-    // HTTP status code
+	// HTTP status code
 	Status int64
-    // Originating request URI
+	// Originating request URI
 	Path string
-    // If true, client should retry operation
+	// If true, client should retry operation
 	Retryable bool
-    // unique error code
+	// unique error code
 	ErrorCode string
-    // localized error messages
+	// localized error messages
 	ErrorMessages []string
 }
 
-func (s ErrorResponse) GetType__() bindings.BindingType {
+func (s *ErrorResponse) GetType__() bindings.BindingType {
 	return ErrorResponseBindingType()
 }
 
-func (s ErrorResponse) GetDataValue__() (data.DataValue, []error) {
+func (s *ErrorResponse) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -105,17 +122,115 @@ func (s ErrorResponse) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+type Fault struct {
+	Message *string
+	Cause   *data.StructValue
+}
+
+func (s *Fault) GetType__() bindings.BindingType {
+	return FaultBindingType()
+}
+
+func (s *Fault) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for Fault._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type HmsIssueInfo struct {
+	TargetObjectMoId string
+	Severity         string
+	IssueType        string
+	TargetObjectName *string
+	Fault            *Fault
+	TriggeredTime    time.Time
+}
+
+func (s *HmsIssueInfo) GetType__() bindings.BindingType {
+	return HmsIssueInfoBindingType()
+}
+
+func (s *HmsIssueInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for HmsIssueInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type HmsReplicationIssueInfo struct {
+	TargetObjectMoId    string
+	Severity            string
+	IssueType           string
+	TargetObjectName    *string
+	Fault               *Fault
+	TriggeredTime       time.Time
+	Direction           *string
+	SourceSiteUuid      *string
+	DestinationSiteUuid *string
+}
+
+func (s *HmsReplicationIssueInfo) GetType__() bindings.BindingType {
+	return HmsReplicationIssueInfoBindingType()
+}
+
+func (s *HmsReplicationIssueInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for HmsReplicationIssueInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type HmsSiteIssueInfo struct {
+	TargetObjectMoId string
+	Severity         string
+	IssueType        string
+	TargetObjectName *string
+	Fault            *Fault
+	TriggeredTime    time.Time
+}
+
+func (s *HmsSiteIssueInfo) GetType__() bindings.BindingType {
+	return HmsSiteIssueInfoBindingType()
+}
+
+func (s *HmsSiteIssueInfo) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for HmsSiteIssueInfo._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
 
 type ProvisionSrmConfig struct {
-    // Optional custom extension key suffix for SRM. If not specified, default extension key will be used.
+	// Optional custom extension key suffix for SRM. If not specified, default extension key will be used.
 	SrmExtensionKeySuffix *string
 }
 
-func (s ProvisionSrmConfig) GetType__() bindings.BindingType {
+func (s *ProvisionSrmConfig) GetType__() bindings.BindingType {
 	return ProvisionSrmConfigBindingType()
 }
 
-func (s ProvisionSrmConfig) GetDataValue__() (data.DataValue, []error) {
+func (s *ProvisionSrmConfig) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -127,22 +242,21 @@ func (s ProvisionSrmConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type ReplicaDisk struct {
-	SpaceRequirement *float64
-	Name *string
-	CollectionId *string
+	SpaceRequirement            *float64
+	Name                        *string
+	CollectionId                *string
 	DatastoresForSingleHostMove []*data.StructValue
-	Movable *bool
-	DiskId *string
-	DatastoreMoId *string
+	Movable                     *bool
+	DiskId                      *string
+	DatastoreMoId               *string
 }
 
-func (s ReplicaDisk) GetType__() bindings.BindingType {
+func (s *ReplicaDisk) GetType__() bindings.BindingType {
 	return ReplicaDiskBindingType()
 }
 
-func (s ReplicaDisk) GetDataValue__() (data.DataValue, []error) {
+func (s *ReplicaDisk) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -154,20 +268,19 @@ func (s ReplicaDisk) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type ReplicaDiskCollection struct {
-	CollectionId *string
-	Generated *time.Time
-	Disks []ReplicaDisk
+	CollectionId      *string
+	Generated         *time.Time
+	Disks             []ReplicaDisk
 	PlaceholderVmMoId *string
-	Name *string
+	Name              *string
 }
 
-func (s ReplicaDiskCollection) GetType__() bindings.BindingType {
+func (s *ReplicaDiskCollection) GetType__() bindings.BindingType {
 	return ReplicaDiskCollectionBindingType()
 }
 
-func (s ReplicaDiskCollection) GetDataValue__() (data.DataValue, []error) {
+func (s *ReplicaDiskCollection) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -179,36 +292,36 @@ func (s ReplicaDiskCollection) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type SiteRecovery struct {
 	Updated time.Time
-    // User id that last updated this record
-	UserId string
+	// User id that last updated this record
+	UserId  string
 	Created time.Time
-    // User id that last updated this record
+	// User id that last updated this record
 	UpdatedByUserId string
-    // Version of this entity format: int32
+	// Version of this entity format: int32
 	Version int64
-    // User name that last updated this record
+	// User name that last updated this record
 	UpdatedByUserName string
-    // User name that last updated this record
+	// User name that last updated this record
 	UserName string
-	Id string
-    // Possible values are: 
-    //
-    // * SiteRecovery#SiteRecovery_SITE_RECOVERY_STATE_ACTIVATING
-    // * SiteRecovery#SiteRecovery_SITE_RECOVERY_STATE_ACTIVATED
-    // * SiteRecovery#SiteRecovery_SITE_RECOVERY_STATE_DEACTIVATING
-    // * SiteRecovery#SiteRecovery_SITE_RECOVERY_STATE_DEACTIVATED
-    // * SiteRecovery#SiteRecovery_SITE_RECOVERY_STATE_FAILED
-    // * SiteRecovery#SiteRecovery_SITE_RECOVERY_STATE_CANCELED
-    // * SiteRecovery#SiteRecovery_SITE_RECOVERY_STATE_DELETED
+	Id       string
+	// Possible values are:
+	//
+	// * SiteRecovery#SiteRecovery_SITE_RECOVERY_STATE_ACTIVATING
+	// * SiteRecovery#SiteRecovery_SITE_RECOVERY_STATE_ACTIVATED
+	// * SiteRecovery#SiteRecovery_SITE_RECOVERY_STATE_DEACTIVATING
+	// * SiteRecovery#SiteRecovery_SITE_RECOVERY_STATE_DEACTIVATED
+	// * SiteRecovery#SiteRecovery_SITE_RECOVERY_STATE_FAILED
+	// * SiteRecovery#SiteRecovery_SITE_RECOVERY_STATE_CANCELED
+	// * SiteRecovery#SiteRecovery_SITE_RECOVERY_STATE_DELETED
 	SiteRecoveryState *string
-	VrNode *SiteRecoveryNode
-	SrmNodes []SiteRecoveryNode
-	SddcId *string
-	DraasH5Url *string
+	VrNode            *SiteRecoveryNode
+	SrmNodes          []SrmNode
+	SddcId            *string
+	DraasH5Url        *string
 }
+
 const SiteRecovery_SITE_RECOVERY_STATE_ACTIVATING = "ACTIVATING"
 const SiteRecovery_SITE_RECOVERY_STATE_ACTIVATED = "ACTIVATED"
 const SiteRecovery_SITE_RECOVERY_STATE_DEACTIVATING = "DEACTIVATING"
@@ -217,11 +330,11 @@ const SiteRecovery_SITE_RECOVERY_STATE_FAILED = "FAILED"
 const SiteRecovery_SITE_RECOVERY_STATE_CANCELED = "CANCELED"
 const SiteRecovery_SITE_RECOVERY_STATE_DELETED = "DELETED"
 
-func (s SiteRecovery) GetType__() bindings.BindingType {
+func (s *SiteRecovery) GetType__() bindings.BindingType {
 	return SiteRecoveryBindingType()
 }
 
-func (s SiteRecovery) GetDataValue__() (data.DataValue, []error) {
+func (s *SiteRecovery) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -233,28 +346,28 @@ func (s SiteRecovery) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type SiteRecoveryNode struct {
 	VmMorefId *string
 	IpAddress *string
-	Hostname *string
-	Id *string
-    // Possible values are: 
-    //
-    // * SiteRecoveryNode#SiteRecoveryNode_STATE_DEPLOYING
-    // * SiteRecoveryNode#SiteRecoveryNode_STATE_PROVISIONED
-    // * SiteRecoveryNode#SiteRecoveryNode_STATE_READY
-    // * SiteRecoveryNode#SiteRecoveryNode_STATE_DELETING
-    // * SiteRecoveryNode#SiteRecoveryNode_STATE_FAILED
-    // * SiteRecoveryNode#SiteRecoveryNode_STATE_CANCELED
+	Hostname  *string
+	Id        *string
+	// Possible values are:
+	//
+	// * SiteRecoveryNode#SiteRecoveryNode_STATE_DEPLOYING
+	// * SiteRecoveryNode#SiteRecoveryNode_STATE_PROVISIONED
+	// * SiteRecoveryNode#SiteRecoveryNode_STATE_READY
+	// * SiteRecoveryNode#SiteRecoveryNode_STATE_DELETING
+	// * SiteRecoveryNode#SiteRecoveryNode_STATE_FAILED
+	// * SiteRecoveryNode#SiteRecoveryNode_STATE_CANCELED
 	State *string
-    // Possible values are: 
-    //
-    // * SiteRecoveryNode#SiteRecoveryNode_TYPE_VRMS
-    // * SiteRecoveryNode#SiteRecoveryNode_TYPE_SRM
-    // * SiteRecoveryNode#SiteRecoveryNode_TYPE_VRS
+	// Possible values are:
+	//
+	// * SiteRecoveryNode#SiteRecoveryNode_TYPE_VRMS
+	// * SiteRecoveryNode#SiteRecoveryNode_TYPE_SRM
+	// * SiteRecoveryNode#SiteRecoveryNode_TYPE_VRS
 	Type_ *string
 }
+
 const SiteRecoveryNode_STATE_DEPLOYING = "DEPLOYING"
 const SiteRecoveryNode_STATE_PROVISIONED = "PROVISIONED"
 const SiteRecoveryNode_STATE_READY = "READY"
@@ -265,11 +378,11 @@ const SiteRecoveryNode_TYPE_VRMS = "VRMS"
 const SiteRecoveryNode_TYPE_SRM = "SRM"
 const SiteRecoveryNode_TYPE_VRS = "VRS"
 
-func (s SiteRecoveryNode) GetType__() bindings.BindingType {
+func (s *SiteRecoveryNode) GetType__() bindings.BindingType {
 	return SiteRecoveryNodeBindingType()
 }
 
-func (s SiteRecoveryNode) GetDataValue__() (data.DataValue, []error) {
+func (s *SiteRecoveryNode) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -281,36 +394,35 @@ func (s SiteRecoveryNode) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type SiteRecoveryNodeVersion struct {
-    // Possible values are: 
-    //
-    // * SiteRecoveryNodeVersion#SiteRecoveryNodeVersion_VERSION_SOURCE_VAMICLI
-    // * SiteRecoveryNodeVersion#SiteRecoveryNodeVersion_VERSION_SOURCE_LS
+	// Possible values are:
+	//
+	// * SiteRecoveryNodeVersion#SiteRecoveryNodeVersion_VERSION_SOURCE_VAMICLI
+	// * SiteRecoveryNodeVersion#SiteRecoveryNodeVersion_VERSION_SOURCE_LS
 	VersionSource *string
-	NodeId *string
-	BuildNumber *string
-	ApplianceVersion *string
-	NodeIp *string
-	FullVersion *string
-    // Possible values are: 
-    //
-    // * SiteRecoveryNodeVersion#SiteRecoveryNodeVersion_NODE_TYPE_VRMS
-    // * SiteRecoveryNodeVersion#SiteRecoveryNodeVersion_NODE_TYPE_SRM
-    // * SiteRecoveryNodeVersion#SiteRecoveryNodeVersion_NODE_TYPE_VRS
+	NodeId        *string
+	NodeIp        *string
+	BuildVersion  *BuildVersion
+	FullVersion   *string
+	// Possible values are:
+	//
+	// * SiteRecoveryNodeVersion#SiteRecoveryNodeVersion_NODE_TYPE_VRMS
+	// * SiteRecoveryNodeVersion#SiteRecoveryNodeVersion_NODE_TYPE_SRM
+	// * SiteRecoveryNodeVersion#SiteRecoveryNodeVersion_NODE_TYPE_VRS
 	NodeType *string
 }
+
 const SiteRecoveryNodeVersion_VERSION_SOURCE_VAMICLI = "vamicli"
 const SiteRecoveryNodeVersion_VERSION_SOURCE_LS = "ls"
 const SiteRecoveryNodeVersion_NODE_TYPE_VRMS = "VRMS"
 const SiteRecoveryNodeVersion_NODE_TYPE_SRM = "SRM"
 const SiteRecoveryNodeVersion_NODE_TYPE_VRS = "VRS"
 
-func (s SiteRecoveryNodeVersion) GetType__() bindings.BindingType {
+func (s *SiteRecoveryNodeVersion) GetType__() bindings.BindingType {
 	return SiteRecoveryNodeVersionBindingType()
 }
 
-func (s SiteRecoveryNodeVersion) GetDataValue__() (data.DataValue, []error) {
+func (s *SiteRecoveryNodeVersion) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -322,19 +434,18 @@ func (s SiteRecoveryNodeVersion) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 type SiteRecoveryVersions struct {
 	Generated *time.Time
-	SddcId *string
-    // list of site recovery node version
+	SddcId    *string
+	// list of site recovery node version
 	NodeVersions []SiteRecoveryNodeVersion
 }
 
-func (s SiteRecoveryVersions) GetType__() bindings.BindingType {
+func (s *SiteRecoveryVersions) GetType__() bindings.BindingType {
 	return SiteRecoveryVersionsBindingType()
 }
 
-func (s SiteRecoveryVersions) GetDataValue__() (data.DataValue, []error) {
+func (s *SiteRecoveryVersions) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -346,61 +457,111 @@ func (s SiteRecoveryVersions) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+type SrmNode struct {
+	VmMorefId *string
+	IpAddress *string
+	Hostname  *string
+	Id        *string
+	// Possible values are:
+	//
+	// * SrmNode#SrmNode_STATE_DEPLOYING
+	// * SrmNode#SrmNode_STATE_PROVISIONED
+	// * SrmNode#SrmNode_STATE_READY
+	// * SrmNode#SrmNode_STATE_DELETING
+	// * SrmNode#SrmNode_STATE_FAILED
+	// * SrmNode#SrmNode_STATE_CANCELED
+	State *string
+	// Possible values are:
+	//
+	// * SrmNode#SrmNode_TYPE_VRMS
+	// * SrmNode#SrmNode_TYPE_SRM
+	// * SrmNode#SrmNode_TYPE_VRS
+	Type_                 *string
+	SrmExtensionKeySuffix *string
+	SrmExtensionKey       *string
+}
+
+const SrmNode_STATE_DEPLOYING = "DEPLOYING"
+const SrmNode_STATE_PROVISIONED = "PROVISIONED"
+const SrmNode_STATE_READY = "READY"
+const SrmNode_STATE_DELETING = "DELETING"
+const SrmNode_STATE_FAILED = "FAILED"
+const SrmNode_STATE_CANCELED = "CANCELED"
+const SrmNode_TYPE_VRMS = "VRMS"
+const SrmNode_TYPE_SRM = "SRM"
+const SrmNode_TYPE_VRS = "VRS"
+
+func (s *SrmNode) GetType__() bindings.BindingType {
+	return SrmNodeBindingType()
+}
+
+func (s *SrmNode) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for SrmNode._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
 
 type Task struct {
 	Updated time.Time
-    // User id that last updated this record
-	UserId string
+	// User id that last updated this record
+	UserId  string
 	Created time.Time
-    // User id that last updated this record
+	// User id that last updated this record
 	UpdatedByUserId string
-    // Version of this entity format: int32
+	// Version of this entity format: int32
 	Version int64
-    // User name that last updated this record
+	// User name that last updated this record
 	UpdatedByUserName string
-    // User name that last updated this record
+	// User name that last updated this record
 	UserName string
-	Id string
-    // Possible values are: 
-    //
-    // * Task#Task_STATUS_STARTED
-    // * Task#Task_STATUS_CANCELING
-    // * Task#Task_STATUS_FINISHED
-    // * Task#Task_STATUS_FAILED
-    // * Task#Task_STATUS_CANCELED
+	Id       string
+	// Possible values are:
+	//
+	// * Task#Task_STATUS_STARTED
+	// * Task#Task_STATUS_CANCELING
+	// * Task#Task_STATUS_FINISHED
+	// * Task#Task_STATUS_FAILED
+	// * Task#Task_STATUS_CANCELED
 	Status *string
-    // UUID of resources task is acting upon
+	// UUID of resources task is acting upon
 	ResourceId *string
-	StartTime *string
-	Retries *int64
-	TaskType *string
-    // Task progress phases involved in current task execution
+	StartTime  *time.Time
+	Retries    *int64
+	TaskType   *string
+	// Task progress phases involved in current task execution
 	TaskProgressPhases []TaskProgressPhase
-	TenantId *string
-	ErrorMessage *string
-	ParentTaskId *string
-    // Estimated progress percentage the task executed format: int32
+	TenantId           *string
+	ErrorMessage       *string
+	ParentTaskId       *string
+	// Estimated progress percentage the task executed format: int32
 	ProgressPercent *int64
-    // Estimated remaining time in minute of the task execution, < 0 means no estimation for the task. format: int32
+	// Estimated remaining time in minute of the task execution, < 0 means no estimation for the task. format: int32
 	EstimatedRemainingMinutes *int64
-	Params *data.StructValue
-	EndTime *time.Time
-	TaskVersion *string
-    // Type of resource being acted upon
+	Params                    *data.StructValue
+	EndTime                   *time.Time
+	TaskVersion               *string
+	// Type of resource being acted upon
 	ResourceType *string
-	SubStatus *string
+	SubStatus    *string
 }
+
 const Task_STATUS_STARTED = "STARTED"
 const Task_STATUS_CANCELING = "CANCELING"
 const Task_STATUS_FINISHED = "FINISHED"
 const Task_STATUS_FAILED = "FAILED"
 const Task_STATUS_CANCELED = "CANCELED"
 
-func (s Task) GetType__() bindings.BindingType {
+func (s *Task) GetType__() bindings.BindingType {
 	return TaskBindingType()
 }
 
-func (s Task) GetDataValue__() (data.DataValue, []error) {
+func (s *Task) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -412,22 +573,21 @@ func (s Task) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
-
 // A task progress can be (but does NOT have to be) divided to more meaningful progress phases.
 type TaskProgressPhase struct {
-    // The identifier of the task progress phase
+	// The identifier of the task progress phase
 	Id string
-    // The display name of the task progress phase
+	// The display name of the task progress phase
 	Name string
-    // The percentage of the phase that has completed format: int32
+	// The percentage of the phase that has completed format: int32
 	ProgressPercent int64
 }
 
-func (s TaskProgressPhase) GetType__() bindings.BindingType {
+func (s *TaskProgressPhase) GetType__() bindings.BindingType {
 	return TaskProgressPhaseBindingType()
 }
 
-func (s TaskProgressPhase) GetDataValue__() (data.DataValue, []error) {
+func (s *TaskProgressPhase) GetDataValue__() (data.DataValue, []error) {
 	typeConverter := bindings.NewTypeConverter()
 	typeConverter.SetMode(bindings.JSONRPC)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
@@ -438,10 +598,6 @@ func (s TaskProgressPhase) GetDataValue__() (data.DataValue, []error) {
 	}
 	return dataVal, nil
 }
-
-
-
-
 
 func AbstractEntityBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
@@ -475,6 +631,17 @@ func ActivateSiteRecoveryConfigBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.draas.model.activate_site_recovery_config", fields, reflect.TypeOf(ActivateSiteRecoveryConfig{}), fieldNameMap, validators)
 }
 
+func BuildVersionBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["version"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["version"] = "Version"
+	fields["build_number"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["build_number"] = "BuildNumber"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.draas.model.build_version", fields, reflect.TypeOf(BuildVersion{}), fieldNameMap, validators)
+}
+
 func ErrorResponseBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -490,6 +657,80 @@ func ErrorResponseBindingType() bindings.BindingType {
 	fieldNameMap["error_messages"] = "ErrorMessages"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.draas.model.error_response", fields, reflect.TypeOf(ErrorResponse{}), fieldNameMap, validators)
+}
+
+func FaultBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["message"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["message"] = "Message"
+	fields["cause"] = bindings.NewOptionalType(bindings.NewDynamicStructType(nil, bindings.REST))
+	fieldNameMap["cause"] = "Cause"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.draas.model.fault", fields, reflect.TypeOf(Fault{}), fieldNameMap, validators)
+}
+
+func HmsIssueInfoBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["target_object_mo_id"] = bindings.NewStringType()
+	fieldNameMap["target_object_mo_id"] = "TargetObjectMoId"
+	fields["severity"] = bindings.NewStringType()
+	fieldNameMap["severity"] = "Severity"
+	fields["issue_type"] = bindings.NewStringType()
+	fieldNameMap["issue_type"] = "IssueType"
+	fields["target_object_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["target_object_name"] = "TargetObjectName"
+	fields["fault"] = bindings.NewOptionalType(bindings.NewReferenceType(FaultBindingType))
+	fieldNameMap["fault"] = "Fault"
+	fields["triggered_time"] = bindings.NewDateTimeType()
+	fieldNameMap["triggered_time"] = "TriggeredTime"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.draas.model.hms_issue_info", fields, reflect.TypeOf(HmsIssueInfo{}), fieldNameMap, validators)
+}
+
+func HmsReplicationIssueInfoBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["target_object_mo_id"] = bindings.NewStringType()
+	fieldNameMap["target_object_mo_id"] = "TargetObjectMoId"
+	fields["severity"] = bindings.NewStringType()
+	fieldNameMap["severity"] = "Severity"
+	fields["issue_type"] = bindings.NewStringType()
+	fieldNameMap["issue_type"] = "IssueType"
+	fields["target_object_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["target_object_name"] = "TargetObjectName"
+	fields["fault"] = bindings.NewOptionalType(bindings.NewReferenceType(FaultBindingType))
+	fieldNameMap["fault"] = "Fault"
+	fields["triggered_time"] = bindings.NewDateTimeType()
+	fieldNameMap["triggered_time"] = "TriggeredTime"
+	fields["direction"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["direction"] = "Direction"
+	fields["source_site_uuid"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["source_site_uuid"] = "SourceSiteUuid"
+	fields["destination_site_uuid"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["destination_site_uuid"] = "DestinationSiteUuid"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.draas.model.hms_replication_issue_info", fields, reflect.TypeOf(HmsReplicationIssueInfo{}), fieldNameMap, validators)
+}
+
+func HmsSiteIssueInfoBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["target_object_mo_id"] = bindings.NewStringType()
+	fieldNameMap["target_object_mo_id"] = "TargetObjectMoId"
+	fields["severity"] = bindings.NewStringType()
+	fieldNameMap["severity"] = "Severity"
+	fields["issue_type"] = bindings.NewStringType()
+	fieldNameMap["issue_type"] = "IssueType"
+	fields["target_object_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["target_object_name"] = "TargetObjectName"
+	fields["fault"] = bindings.NewOptionalType(bindings.NewReferenceType(FaultBindingType))
+	fieldNameMap["fault"] = "Fault"
+	fields["triggered_time"] = bindings.NewDateTimeType()
+	fieldNameMap["triggered_time"] = "TriggeredTime"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.draas.model.hms_site_issue_info", fields, reflect.TypeOf(HmsSiteIssueInfo{}), fieldNameMap, validators)
 }
 
 func ProvisionSrmConfigBindingType() bindings.BindingType {
@@ -562,7 +803,7 @@ func SiteRecoveryBindingType() bindings.BindingType {
 	fieldNameMap["site_recovery_state"] = "SiteRecoveryState"
 	fields["vr_node"] = bindings.NewOptionalType(bindings.NewReferenceType(SiteRecoveryNodeBindingType))
 	fieldNameMap["vr_node"] = "VrNode"
-	fields["srm_nodes"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(SiteRecoveryNodeBindingType), reflect.TypeOf([]SiteRecoveryNode{})))
+	fields["srm_nodes"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(SrmNodeBindingType), reflect.TypeOf([]SrmNode{})))
 	fieldNameMap["srm_nodes"] = "SrmNodes"
 	fields["sddc_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["sddc_id"] = "SddcId"
@@ -598,12 +839,10 @@ func SiteRecoveryNodeVersionBindingType() bindings.BindingType {
 	fieldNameMap["version_source"] = "VersionSource"
 	fields["node_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["node_id"] = "NodeId"
-	fields["build_number"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["build_number"] = "BuildNumber"
-	fields["appliance_version"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["appliance_version"] = "ApplianceVersion"
 	fields["node_ip"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["node_ip"] = "NodeIp"
+	fields["build_version"] = bindings.NewOptionalType(bindings.NewReferenceType(BuildVersionBindingType))
+	fieldNameMap["build_version"] = "BuildVersion"
 	fields["full_version"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["full_version"] = "FullVersion"
 	fields["node_type"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -623,6 +862,29 @@ func SiteRecoveryVersionsBindingType() bindings.BindingType {
 	fieldNameMap["node_versions"] = "NodeVersions"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.draas.model.site_recovery_versions", fields, reflect.TypeOf(SiteRecoveryVersions{}), fieldNameMap, validators)
+}
+
+func SrmNodeBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["vm_moref_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["vm_moref_id"] = "VmMorefId"
+	fields["ip_address"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["ip_address"] = "IpAddress"
+	fields["hostname"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["hostname"] = "Hostname"
+	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["state"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["state"] = "State"
+	fields["type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["type"] = "Type_"
+	fields["srm_extension_key_suffix"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["srm_extension_key_suffix"] = "SrmExtensionKeySuffix"
+	fields["srm_extension_key"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["srm_extension_key"] = "SrmExtensionKey"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.draas.model.srm_node", fields, reflect.TypeOf(SrmNode{}), fieldNameMap, validators)
 }
 
 func TaskBindingType() bindings.BindingType {
@@ -648,7 +910,7 @@ func TaskBindingType() bindings.BindingType {
 	fieldNameMap["status"] = "Status"
 	fields["resource_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["resource_id"] = "ResourceId"
-	fields["start_time"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["start_time"] = bindings.NewOptionalType(bindings.NewDateTimeType())
 	fieldNameMap["start_time"] = "StartTime"
 	fields["retries"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["retries"] = "Retries"
@@ -692,5 +954,3 @@ func TaskProgressPhaseBindingType() bindings.BindingType {
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.draas.model.task_progress_phase", fields, reflect.TypeOf(TaskProgressPhase{}), fieldNameMap, validators)
 }
-
-

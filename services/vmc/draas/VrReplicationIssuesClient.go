@@ -3,7 +3,7 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: ReplicaDiskCollections
+// Interface file for service: VrReplicationIssues
 // Used by client-side stubs.
 
 package draas
@@ -19,70 +19,68 @@ import (
 
 const _ = core.SupportedByRuntimeVersion1
 
-type ReplicaDiskCollectionsClient interface {
+type VrReplicationIssuesClient interface {
 
-	// Query replica disk collections
+	// Query VR replication issues
 	//
 	// @param orgParam Organization identifier (required)
 	// @param sddcParam sddc identifier (required)
-	// @param datastoreMoIdParam Represents the datastore moref id to search. (optional)
 	// @throws Unauthenticated  Unauthorized
 	// @throws Unauthorized  Forbidden
 	// @throws NotFound  Not found
-	Get(orgParam string, sddcParam string, datastoreMoIdParam *string) ([]model.ReplicaDiskCollection, error)
+	Get(orgParam string, sddcParam string) ([]model.HmsReplicationIssueInfo, error)
 }
 
-type replicaDiskCollectionsClient struct {
+type vrReplicationIssuesClient struct {
 	connector           client.Connector
 	interfaceDefinition core.InterfaceDefinition
 	errorsBindingMap    map[string]bindings.BindingType
 }
 
-func NewReplicaDiskCollectionsClient(connector client.Connector) *replicaDiskCollectionsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vmc.draas.replica_disk_collections")
+func NewVrReplicationIssuesClient(connector client.Connector) *vrReplicationIssuesClient {
+	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vmc.draas.vr_replication_issues")
 	methodIdentifiers := map[string]core.MethodIdentifier{
 		"get": core.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
 
-	rIface := replicaDiskCollectionsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
-	return &rIface
+	vIface := vrReplicationIssuesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &vIface
 }
 
-func (rIface *replicaDiskCollectionsClient) GetErrorBindingType(errorName string) bindings.BindingType {
-	if entry, ok := rIface.errorsBindingMap[errorName]; ok {
+func (vIface *vrReplicationIssuesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+	if entry, ok := vIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (rIface *replicaDiskCollectionsClient) Get(orgParam string, sddcParam string, datastoreMoIdParam *string) ([]model.ReplicaDiskCollection, error) {
-	typeConverter := rIface.connector.TypeConverter()
-	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(replicaDiskCollectionsGetInputType(), typeConverter)
+func (vIface *vrReplicationIssuesClient) Get(orgParam string, sddcParam string) ([]model.HmsReplicationIssueInfo, error) {
+	typeConverter := vIface.connector.TypeConverter()
+	executionContext := vIface.connector.NewExecutionContext()
+	sv := bindings.NewStructValueBuilder(vrReplicationIssuesGetInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
-	sv.AddStructField("DatastoreMoId", datastoreMoIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput []model.ReplicaDiskCollection
+		var emptyOutput []model.HmsReplicationIssueInfo
 		return emptyOutput, bindings.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := replicaDiskCollectionsGetRestMetadata()
+	operationRestMetaData := vrReplicationIssuesGetRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
 	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.vmc.draas.replica_disk_collections", "get", inputDataValue, executionContext)
-	var emptyOutput []model.ReplicaDiskCollection
+	vIface.connector.SetConnectionMetadata(connectionMetadata)
+	methodResult := vIface.connector.GetApiProvider().Invoke("com.vmware.vmc.draas.vr_replication_issues", "get", inputDataValue, executionContext)
+	var emptyOutput []model.HmsReplicationIssueInfo
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), replicaDiskCollectionsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), vrReplicationIssuesGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
-		return output.([]model.ReplicaDiskCollection), nil
+		return output.([]model.HmsReplicationIssueInfo), nil
 	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), vIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
 			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
 		}
