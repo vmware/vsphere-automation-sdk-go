@@ -18,13 +18,13 @@ import (
 	"reflect"
 )
 
-// Possible value for ``source`` of method Leases#get.
-const Leases_GET_SOURCE_REALTIME = "realtime"
+// Possible value for ``source`` of method Leases#list.
+const Leases_LIST_SOURCE_REALTIME = "realtime"
 
-// Possible value for ``source`` of method Leases#get.
-const Leases_GET_SOURCE_CACHED = "cached"
+// Possible value for ``source`` of method Leases#list.
+const Leases_LIST_SOURCE_CACHED = "cached"
 
-func leasesGetInputType() bindings.StructType {
+func leasesListInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["config_id"] = bindings.NewStringType()
@@ -55,11 +55,11 @@ func leasesGetInputType() bindings.StructType {
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func leasesGetOutputType() bindings.BindingType {
+func leasesListOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.DhcpLeasesResultBindingType)
 }
 
-func leasesGetRestMetadata() protocol.OperationRestMetadata {
+func leasesListRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}

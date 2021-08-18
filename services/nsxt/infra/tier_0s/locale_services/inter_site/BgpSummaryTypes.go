@@ -18,7 +18,7 @@ import (
 	"reflect"
 )
 
-func bgpSummaryGetInputType() bindings.StructType {
+func bgpSummaryListInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["tier0_id"] = bindings.NewStringType()
@@ -41,11 +41,11 @@ func bgpSummaryGetInputType() bindings.StructType {
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func bgpSummaryGetOutputType() bindings.BindingType {
+func bgpSummaryListOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.PolicyEdgeClusterInterSiteBgpSummaryBindingType)
 }
 
-func bgpSummaryGetRestMetadata() protocol.OperationRestMetadata {
+func bgpSummaryListRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}

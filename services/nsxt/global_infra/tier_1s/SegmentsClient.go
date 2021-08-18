@@ -62,6 +62,7 @@ type SegmentsClient interface {
 	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param segmentTypeParam Segment type (optional)
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.SegmentListResult
@@ -70,7 +71,7 @@ type SegmentsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(tier1IdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.SegmentListResult, error)
+	List(tier1IdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, segmentTypeParam *string, sortAscendingParam *bool, sortByParam *string) (model.SegmentListResult, error)
 
 	// If segment with the segment-id is not already present, create a new segment. If it already exists, update the segment with specified attributes.
 	//
@@ -212,7 +213,7 @@ func (sIface *segmentsClient) Get(tier1IdParam string, segmentIdParam string) (m
 	}
 }
 
-func (sIface *segmentsClient) List(tier1IdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.SegmentListResult, error) {
+func (sIface *segmentsClient) List(tier1IdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, segmentTypeParam *string, sortAscendingParam *bool, sortByParam *string) (model.SegmentListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	sv := bindings.NewStructValueBuilder(segmentsListInputType(), typeConverter)
@@ -221,6 +222,7 @@ func (sIface *segmentsClient) List(tier1IdParam string, cursorParam *string, inc
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("SegmentType", segmentTypeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()

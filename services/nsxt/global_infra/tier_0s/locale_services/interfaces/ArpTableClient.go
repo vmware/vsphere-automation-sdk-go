@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type ArpTableClient interface {
 
-	//
+	// Returns ARP table (IPv4) or Neighbor Discovery table (IPv6) for the tier-0 interface, on a edge node if a query parameter \"edge_path=<policy-edge-path>\" is given. The edge_path parameter is mandatory if the interface type is not EXTERNAL.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)

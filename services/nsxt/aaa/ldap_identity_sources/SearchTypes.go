@@ -22,7 +22,7 @@ func searchCreateInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["ldap_identity_source_id"] = bindings.NewStringType()
-	fields["filter_value"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["filter_value"] = bindings.NewStringType()
 	fieldNameMap["ldap_identity_source_id"] = "LdapIdentitySourceId"
 	fieldNameMap["filter_value"] = "FilterValue"
 	var validators = []bindings.Validator{}
@@ -43,11 +43,11 @@ func searchCreateRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["ldap_identity_source_id"] = bindings.NewStringType()
-	fields["filter_value"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["filter_value"] = bindings.NewStringType()
 	fieldNameMap["ldap_identity_source_id"] = "LdapIdentitySourceId"
 	fieldNameMap["filter_value"] = "FilterValue"
 	paramsTypeMap["ldap_identity_source_id"] = bindings.NewStringType()
-	paramsTypeMap["filter_value"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["filter_value"] = bindings.NewStringType()
 	paramsTypeMap["ldapIdentitySourceId"] = bindings.NewStringType()
 	pathParams["ldap_identity_source_id"] = "ldapIdentitySourceId"
 	queryParams["filter_value"] = "filter_value"

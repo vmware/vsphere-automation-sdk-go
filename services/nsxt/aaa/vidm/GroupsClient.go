@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type GroupsClient interface {
 
-	// Get all the User Groups where vIDM display name matches the search key case insensitively. The search key is checked to be a substring of display name. This is a non paginated API.
+	// Get all the User Groups where vIDM display name matches the search key case insensitively. The search key is checked to be a substring of display name. This is a non paginated API. This API will return as many results that vIDM returns to NSX during the search query. vIDM may not send all results at once so to zero in on the group of interest more characters need to be entered.
 	//
 	// @param searchStringParam Search string to search for. (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)

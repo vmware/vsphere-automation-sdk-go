@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type PeerConfigClient interface {
 
-	// Get peer config for the Tier-0 L2VPN session to configure the remote side of the tunnel. - no enforcement point path specified: L2VPN Session Peer Codes will be evaluated on each enforcement point. - enforcement point paths specified: L2VPN Session Peer Codes are evaluated only on the given enforcement points. API supported only when L2VPN Service is in Server Mode.
+	// Get peer config for the Tier-0 L2VPN session to configure the remote side of the tunnel. - no enforcement point path specified: L2VPN Session Peer Codes will be evaluated on each enforcement point. - enforcement point paths specified: L2VPN Session Peer Codes are evaluated only on the given enforcement points. API supported only when L2VPN Service is in Server Mode. This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/l2vpn-services/<service-id>/ sessions/<session-id>/peer-config instead.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)

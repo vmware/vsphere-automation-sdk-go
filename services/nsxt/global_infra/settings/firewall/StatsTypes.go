@@ -27,8 +27,10 @@ func statsResetInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["category"] = bindings.NewStringType()
+	fields["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["category"] = "Category"
+	fieldNameMap["container_cluster_path"] = "ContainerClusterPath"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
@@ -48,11 +50,15 @@ func statsResetRestMetadata() protocol.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["category"] = bindings.NewStringType()
+	fields["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["category"] = "Category"
+	fieldNameMap["container_cluster_path"] = "ContainerClusterPath"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	paramsTypeMap["category"] = bindings.NewStringType()
 	paramsTypeMap["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	queryParams["container_cluster_path"] = "container_cluster_path"
 	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	queryParams["category"] = "category"
 	resultHeaders := map[string]string{}

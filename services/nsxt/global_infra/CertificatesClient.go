@@ -60,7 +60,7 @@ type CertificatesClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, detailsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (model.TlsCertificateList, error)
 
-	// Adds a new private-public certificate and, optionally, a private key that can be applied to one of the user-facing components (appliance management or edge). The certificate and the key should be stored in PEM format. If no private key is provided, the certificate is used as a client certificate in the trust store. A certificate chain will not be expanded into separate certificate instances for reference, but would be pushed to the enforcement point as a single certificate. This patch method does not modify an existing certificate.
+	// Adds a new private-public certificate and, optionally, a private key that can be applied to one of the user-facing components (appliance management or edge). The certificate and the key should be stored in PEM format. If no private key is provided, the certificate is used as a client certificate in the trust store. A private key can be uploaded for a CA certificate only if the \"purpose\" parameter is set to \"signing-ca\". A certificate chain will not be expanded into separate certificate instances for reference, but would be pushed to the enforcement point as a single certificate. This patch method does not modify an existing certificate.
 	//
 	// @param certificateIdParam (required)
 	// @param tlsTrustDataParam (required)
@@ -71,7 +71,7 @@ type CertificatesClient interface {
 	// @throws NotFound  Not Found
 	Patch(certificateIdParam string, tlsTrustDataParam model.TlsTrustData) error
 
-	// Adds a new private-public certificate and, optionally, a private key that can be applied to one of the user-facing components (appliance management or edge). The certificate and the key should be stored in PEM format. If no private key is provided, the certificate is used as a client certificate in the trust store. A certificate chain will not be expanded into separate certificate instances for reference, but would be pushed to the enforcement point as a single certificate.
+	// Adds a new private-public certificate and, optionally, a private key that can be applied to one of the user-facing components (appliance management or edge). The certificate and the key should be stored in PEM format. If no private key is provided, the certificate is used as a client certificate in the trust store. A private key can be uploaded for a CA certificate only if the \"purpose\" parameter is set to \"signing-ca\". A certificate chain will not be expanded into separate certificate instances for reference, but would be pushed to the enforcement point as a single certificate.
 	//
 	// @param certificateIdParam (required)
 	// @param tlsTrustDataParam (required)

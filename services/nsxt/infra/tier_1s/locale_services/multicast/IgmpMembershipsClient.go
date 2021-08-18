@@ -37,7 +37,7 @@ type IgmpMembershipsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(tier1IdParam string, localeServicesIdParam string, cursorParam *string, edgePathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IgmpMemberships, error)
+	List(tier1IdParam string, localeServicesIdParam string, cursorParam *string, edgePathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IgmpMemberships, error)
 }
 
 type igmpMembershipsClient struct {
@@ -49,7 +49,7 @@ type igmpMembershipsClient struct {
 func NewIgmpMembershipsClient(connector client.Connector) *igmpMembershipsClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.tier_1s.locale_services.multicast.igmp_memberships")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get": core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -65,10 +65,10 @@ func (iIface *igmpMembershipsClient) GetErrorBindingType(errorName string) bindi
 	return errors.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (iIface *igmpMembershipsClient) Get(tier1IdParam string, localeServicesIdParam string, cursorParam *string, edgePathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IgmpMemberships, error) {
+func (iIface *igmpMembershipsClient) List(tier1IdParam string, localeServicesIdParam string, cursorParam *string, edgePathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IgmpMemberships, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(igmpMembershipsGetInputType(), typeConverter)
+	sv := bindings.NewStructValueBuilder(igmpMembershipsListInputType(), typeConverter)
 	sv.AddStructField("Tier1Id", tier1IdParam)
 	sv.AddStructField("LocaleServicesId", localeServicesIdParam)
 	sv.AddStructField("Cursor", cursorParam)
@@ -82,14 +82,14 @@ func (iIface *igmpMembershipsClient) Get(tier1IdParam string, localeServicesIdPa
 		var emptyOutput model.IgmpMemberships
 		return emptyOutput, bindings.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := igmpMembershipsGetRestMetadata()
+	operationRestMetaData := igmpMembershipsListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
 	connectionMetadata["isStreamingResponse"] = false
 	iIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.tier_1s.locale_services.multicast.igmp_memberships", "get", inputDataValue, executionContext)
+	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.tier_1s.locale_services.multicast.igmp_memberships", "list", inputDataValue, executionContext)
 	var emptyOutput model.IgmpMemberships
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), igmpMembershipsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), igmpMembershipsListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}

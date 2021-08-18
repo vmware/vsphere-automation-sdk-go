@@ -37,7 +37,7 @@ type PimRpMappingsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(tier0IdParam string, localeServicesIdParam string, cursorParam *string, edgePathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PimRpMappings, error)
+	List(tier0IdParam string, localeServicesIdParam string, cursorParam *string, edgePathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PimRpMappings, error)
 }
 
 type pimRpMappingsClient struct {
@@ -49,7 +49,7 @@ type pimRpMappingsClient struct {
 func NewPimRpMappingsClient(connector client.Connector) *pimRpMappingsClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.tier_0s.locale_services.multicast.pim_rp_mappings")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get": core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -65,10 +65,10 @@ func (pIface *pimRpMappingsClient) GetErrorBindingType(errorName string) binding
 	return errors.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (pIface *pimRpMappingsClient) Get(tier0IdParam string, localeServicesIdParam string, cursorParam *string, edgePathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PimRpMappings, error) {
+func (pIface *pimRpMappingsClient) List(tier0IdParam string, localeServicesIdParam string, cursorParam *string, edgePathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PimRpMappings, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(pimRpMappingsGetInputType(), typeConverter)
+	sv := bindings.NewStructValueBuilder(pimRpMappingsListInputType(), typeConverter)
 	sv.AddStructField("Tier0Id", tier0IdParam)
 	sv.AddStructField("LocaleServicesId", localeServicesIdParam)
 	sv.AddStructField("Cursor", cursorParam)
@@ -82,14 +82,14 @@ func (pIface *pimRpMappingsClient) Get(tier0IdParam string, localeServicesIdPara
 		var emptyOutput model.PimRpMappings
 		return emptyOutput, bindings.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := pimRpMappingsGetRestMetadata()
+	operationRestMetaData := pimRpMappingsListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
 	connectionMetadata["isStreamingResponse"] = false
 	pIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_0s.locale_services.multicast.pim_rp_mappings", "get", inputDataValue, executionContext)
+	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_0s.locale_services.multicast.pim_rp_mappings", "list", inputDataValue, executionContext)
 	var emptyOutput model.PimRpMappings
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), pimRpMappingsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), pimRpMappingsListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}

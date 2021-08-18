@@ -18,7 +18,7 @@ import (
 	"reflect"
 )
 
-func forwardingGetInputType() bindings.StructType {
+func forwardingListInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["tier0_id"] = bindings.NewStringType()
@@ -41,11 +41,11 @@ func forwardingGetInputType() bindings.StructType {
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func forwardingGetOutputType() bindings.BindingType {
+func forwardingListOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.PolicyMulticastForwardingBindingType)
 }
 
-func forwardingGetRestMetadata() protocol.OperationRestMetadata {
+func forwardingListRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}

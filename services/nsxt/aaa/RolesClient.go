@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type RolesClient interface {
 
-	//
+	// The role with id <role> is cloned and the new id, name and description are the ones provided in the request body.
 	//
 	// @param roleParam Role id (required)
 	// @param newRoleParam (required)
@@ -63,7 +63,7 @@ type RolesClient interface {
 	// @throws NotFound  Not Found
 	List() (model.RoleListResult, error)
 
-	//
+	// Creates a new role with id as <role> if there does not exist any role with id <role>, else updates the existing role.
 	//
 	// @param roleParam Custom role id (required)
 	// @param roleWithFeaturesParam (required)

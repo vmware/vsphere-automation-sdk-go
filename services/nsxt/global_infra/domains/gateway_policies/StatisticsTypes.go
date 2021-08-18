@@ -23,9 +23,11 @@ func statisticsListInputType() bindings.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["domain_id"] = bindings.NewStringType()
 	fields["gateway_policy_id"] = bindings.NewStringType()
+	fields["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["gateway_policy_id"] = "GatewayPolicyId"
+	fieldNameMap["container_cluster_path"] = "ContainerClusterPath"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
@@ -46,17 +48,21 @@ func statisticsListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["domain_id"] = bindings.NewStringType()
 	fields["gateway_policy_id"] = bindings.NewStringType()
+	fields["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["gateway_policy_id"] = "GatewayPolicyId"
+	fieldNameMap["container_cluster_path"] = "ContainerClusterPath"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	paramsTypeMap["domain_id"] = bindings.NewStringType()
 	paramsTypeMap["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["gateway_policy_id"] = bindings.NewStringType()
 	paramsTypeMap["domainId"] = bindings.NewStringType()
 	paramsTypeMap["gatewayPolicyId"] = bindings.NewStringType()
 	pathParams["gateway_policy_id"] = "gatewayPolicyId"
 	pathParams["domain_id"] = "domainId"
+	queryParams["container_cluster_path"] = "container_cluster_path"
 	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}

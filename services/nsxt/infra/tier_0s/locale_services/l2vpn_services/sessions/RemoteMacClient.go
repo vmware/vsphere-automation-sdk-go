@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type RemoteMacClient interface {
 
-	// Returns L2Vpn session remote macs for a logical switch. Data is fetched from enforcement point.
+	// Returns L2Vpn session remote macs for a logical switch. Data is fetched from enforcement point. This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/l2vpn-services/<service-id>/ sessions/<session-id>/remote-mac instead.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)

@@ -37,7 +37,7 @@ type ForwardingClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(tier1IdParam string, localeServicesIdParam string, cursorParam *string, edgePathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PolicyMulticastForwarding, error)
+	List(tier1IdParam string, localeServicesIdParam string, cursorParam *string, edgePathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PolicyMulticastForwarding, error)
 }
 
 type forwardingClient struct {
@@ -49,7 +49,7 @@ type forwardingClient struct {
 func NewForwardingClient(connector client.Connector) *forwardingClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.tier_1s.locale_services.multicast.forwarding")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get": core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -65,10 +65,10 @@ func (fIface *forwardingClient) GetErrorBindingType(errorName string) bindings.B
 	return errors.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (fIface *forwardingClient) Get(tier1IdParam string, localeServicesIdParam string, cursorParam *string, edgePathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PolicyMulticastForwarding, error) {
+func (fIface *forwardingClient) List(tier1IdParam string, localeServicesIdParam string, cursorParam *string, edgePathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PolicyMulticastForwarding, error) {
 	typeConverter := fIface.connector.TypeConverter()
 	executionContext := fIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(forwardingGetInputType(), typeConverter)
+	sv := bindings.NewStructValueBuilder(forwardingListInputType(), typeConverter)
 	sv.AddStructField("Tier1Id", tier1IdParam)
 	sv.AddStructField("LocaleServicesId", localeServicesIdParam)
 	sv.AddStructField("Cursor", cursorParam)
@@ -82,14 +82,14 @@ func (fIface *forwardingClient) Get(tier1IdParam string, localeServicesIdParam s
 		var emptyOutput model.PolicyMulticastForwarding
 		return emptyOutput, bindings.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := forwardingGetRestMetadata()
+	operationRestMetaData := forwardingListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
 	connectionMetadata["isStreamingResponse"] = false
 	fIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := fIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.tier_1s.locale_services.multicast.forwarding", "get", inputDataValue, executionContext)
+	methodResult := fIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.tier_1s.locale_services.multicast.forwarding", "list", inputDataValue, executionContext)
 	var emptyOutput model.PolicyMulticastForwarding
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), forwardingGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), forwardingListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}

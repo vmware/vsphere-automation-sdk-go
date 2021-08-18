@@ -25,6 +25,7 @@ type StatisticsClient interface {
 	//
 	// @param domainIdParam Domain id (required)
 	// @param idsPolicyIdParam IDS Security policy id (required)
+	// @param containerClusterPathParam String Path of the Container Cluster entity (optional)
 	// @param enforcementPointPathParam String Path of the enforcement point (optional)
 	// @return com.vmware.nsx_policy.model.IdsSecurityPolicyStatisticsListResult
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -32,7 +33,7 @@ type StatisticsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(domainIdParam string, idsPolicyIdParam string, enforcementPointPathParam *string) (model.IdsSecurityPolicyStatisticsListResult, error)
+	List(domainIdParam string, idsPolicyIdParam string, containerClusterPathParam *string, enforcementPointPathParam *string) (model.IdsSecurityPolicyStatisticsListResult, error)
 }
 
 type statisticsClient struct {
@@ -60,12 +61,13 @@ func (sIface *statisticsClient) GetErrorBindingType(errorName string) bindings.B
 	return errors.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statisticsClient) List(domainIdParam string, idsPolicyIdParam string, enforcementPointPathParam *string) (model.IdsSecurityPolicyStatisticsListResult, error) {
+func (sIface *statisticsClient) List(domainIdParam string, idsPolicyIdParam string, containerClusterPathParam *string, enforcementPointPathParam *string) (model.IdsSecurityPolicyStatisticsListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	sv := bindings.NewStructValueBuilder(statisticsListInputType(), typeConverter)
 	sv.AddStructField("DomainId", domainIdParam)
 	sv.AddStructField("IdsPolicyId", idsPolicyIdParam)
+	sv.AddStructField("ContainerClusterPath", containerClusterPathParam)
 	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {

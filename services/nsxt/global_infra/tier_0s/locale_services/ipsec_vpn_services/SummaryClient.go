@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type SummaryClient interface {
 
-	// Summarized view of all tier-0 IPSec VPN sessions for a specified service.
+	// Summarized view of all tier-0 IPSec VPN sessions for a specified service. This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/ipsec-vpn-services/<service-id>/summary instead.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)

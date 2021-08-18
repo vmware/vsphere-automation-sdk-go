@@ -35,31 +35,68 @@ type RoleBindingsClient interface {
 	// Delete user/group's roles assignment
 	//
 	// @param bindingIdParam User/Group's id (required)
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param identitySourceIdParam Identity source ID (optional)
+	// @param identitySourceTypeParam Identity source type (optional)
+	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param nameParam User/Group name (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param pathParam Exact path of the context (optional)
+	// @param roleParam Role ID (optional)
+	// @param rootPathParam Prefix path of the context (optional)
+	// @param sortAscendingParam (optional)
+	// @param sortByParam Field by which records are sorted (optional)
+	// @param type_Param Type (optional)
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(bindingIdParam string) error
+	Delete(bindingIdParam string, cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, pathParam *string, roleParam *string, rootPathParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) error
 
 	// Delete all stale role assignments
+	//
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param identitySourceIdParam Identity source ID (optional)
+	// @param identitySourceTypeParam Identity source type (optional)
+	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param nameParam User/Group name (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param pathParam Exact path of the context (optional)
+	// @param roleParam Role ID (optional)
+	// @param rootPathParam Prefix path of the context (optional)
+	// @param sortAscendingParam (optional)
+	// @param sortByParam Field by which records are sorted (optional)
+	// @param type_Param Type (optional)
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Deletestalebindings() error
+	Deletestalebindings(cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, pathParam *string, roleParam *string, rootPathParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) error
 
 	// Get user/group's role information
 	//
 	// @param bindingIdParam User/Group's id (required)
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param identitySourceIdParam Identity source ID (optional)
+	// @param identitySourceTypeParam Identity source type (optional)
+	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param nameParam User/Group name (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param pathParam Exact path of the context (optional)
+	// @param roleParam Role ID (optional)
+	// @param rootPathParam Prefix path of the context (optional)
+	// @param sortAscendingParam (optional)
+	// @param sortByParam Field by which records are sorted (optional)
+	// @param type_Param Type (optional)
 	// @return com.vmware.nsx_policy.model.RoleBinding
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(bindingIdParam string) (model.RoleBinding, error)
+	Get(bindingIdParam string, cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, pathParam *string, roleParam *string, rootPathParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) (model.RoleBinding, error)
 
 	// Get all users and groups with their roles
 	//
@@ -69,7 +106,9 @@ type RoleBindingsClient interface {
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
 	// @param nameParam User/Group name (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param pathParam Exact path of the context (optional)
 	// @param roleParam Role ID (optional)
+	// @param rootPathParam Prefix path of the context (optional)
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param type_Param Type (optional)
@@ -79,7 +118,7 @@ type RoleBindingsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, roleParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) (model.RoleBindingListResult, error)
+	List(cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, pathParam *string, roleParam *string, rootPathParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) (model.RoleBindingListResult, error)
 
 	// Update User or Group's roles
 	//
@@ -155,11 +194,23 @@ func (rIface *roleBindingsClient) Create(roleBindingParam model.RoleBinding) (mo
 	}
 }
 
-func (rIface *roleBindingsClient) Delete(bindingIdParam string) error {
+func (rIface *roleBindingsClient) Delete(bindingIdParam string, cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, pathParam *string, roleParam *string, rootPathParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) error {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
 	sv := bindings.NewStructValueBuilder(roleBindingsDeleteInputType(), typeConverter)
 	sv.AddStructField("BindingId", bindingIdParam)
+	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IdentitySourceId", identitySourceIdParam)
+	sv.AddStructField("IdentitySourceType", identitySourceTypeParam)
+	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("Name", nameParam)
+	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("Path", pathParam)
+	sv.AddStructField("Role", roleParam)
+	sv.AddStructField("RootPath", rootPathParam)
+	sv.AddStructField("SortAscending", sortAscendingParam)
+	sv.AddStructField("SortBy", sortByParam)
+	sv.AddStructField("Type_", type_Param)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return bindings.VAPIerrorsToError(inputError)
@@ -180,10 +231,22 @@ func (rIface *roleBindingsClient) Delete(bindingIdParam string) error {
 	}
 }
 
-func (rIface *roleBindingsClient) Deletestalebindings() error {
+func (rIface *roleBindingsClient) Deletestalebindings(cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, pathParam *string, roleParam *string, rootPathParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) error {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
 	sv := bindings.NewStructValueBuilder(roleBindingsDeletestalebindingsInputType(), typeConverter)
+	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IdentitySourceId", identitySourceIdParam)
+	sv.AddStructField("IdentitySourceType", identitySourceTypeParam)
+	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("Name", nameParam)
+	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("Path", pathParam)
+	sv.AddStructField("Role", roleParam)
+	sv.AddStructField("RootPath", rootPathParam)
+	sv.AddStructField("SortAscending", sortAscendingParam)
+	sv.AddStructField("SortBy", sortByParam)
+	sv.AddStructField("Type_", type_Param)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return bindings.VAPIerrorsToError(inputError)
@@ -204,11 +267,23 @@ func (rIface *roleBindingsClient) Deletestalebindings() error {
 	}
 }
 
-func (rIface *roleBindingsClient) Get(bindingIdParam string) (model.RoleBinding, error) {
+func (rIface *roleBindingsClient) Get(bindingIdParam string, cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, pathParam *string, roleParam *string, rootPathParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) (model.RoleBinding, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
 	sv := bindings.NewStructValueBuilder(roleBindingsGetInputType(), typeConverter)
 	sv.AddStructField("BindingId", bindingIdParam)
+	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IdentitySourceId", identitySourceIdParam)
+	sv.AddStructField("IdentitySourceType", identitySourceTypeParam)
+	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("Name", nameParam)
+	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("Path", pathParam)
+	sv.AddStructField("Role", roleParam)
+	sv.AddStructField("RootPath", rootPathParam)
+	sv.AddStructField("SortAscending", sortAscendingParam)
+	sv.AddStructField("SortBy", sortByParam)
+	sv.AddStructField("Type_", type_Param)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.RoleBinding
@@ -235,7 +310,7 @@ func (rIface *roleBindingsClient) Get(bindingIdParam string) (model.RoleBinding,
 	}
 }
 
-func (rIface *roleBindingsClient) List(cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, roleParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) (model.RoleBindingListResult, error) {
+func (rIface *roleBindingsClient) List(cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, pathParam *string, roleParam *string, rootPathParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) (model.RoleBindingListResult, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
 	sv := bindings.NewStructValueBuilder(roleBindingsListInputType(), typeConverter)
@@ -245,7 +320,9 @@ func (rIface *roleBindingsClient) List(cursorParam *string, identitySourceIdPara
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("Name", nameParam)
 	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("Path", pathParam)
 	sv.AddStructField("Role", roleParam)
+	sv.AddStructField("RootPath", rootPathParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
 	sv.AddStructField("Type_", type_Param)

@@ -18,6 +18,12 @@ import (
 	"reflect"
 )
 
+// Possible value for ``segmentType`` of method Segments#list.
+const Segments_LIST_SEGMENT_TYPE_DVPORTGROUP = "DVPortgroup"
+
+// Possible value for ``segmentType`` of method Segments#list.
+const Segments_LIST_SEGMENT_TYPE_ALL = "ALL"
+
 func segmentsDeleteInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -197,6 +203,7 @@ func segmentsListInputType() bindings.StructType {
 	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fields["segment_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["tier1_id"] = "Tier1Id"
@@ -204,6 +211,7 @@ func segmentsListInputType() bindings.StructType {
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["segment_type"] = "SegmentType"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	var validators = []bindings.Validator{}
@@ -228,6 +236,7 @@ func segmentsListRestMetadata() protocol.OperationRestMetadata {
 	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fields["segment_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["tier1_id"] = "Tier1Id"
@@ -235,8 +244,10 @@ func segmentsListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["segment_type"] = "SegmentType"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
+	paramsTypeMap["segment_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["tier1_id"] = bindings.NewStringType()
 	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
@@ -249,6 +260,7 @@ func segmentsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
+	queryParams["segment_type"] = "segment_type"
 	queryParams["sort_by"] = "sort_by"
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"

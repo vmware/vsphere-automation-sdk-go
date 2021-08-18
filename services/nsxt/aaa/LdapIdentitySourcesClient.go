@@ -104,7 +104,7 @@ type LdapIdentitySourcesClient interface {
 	// @throws NotFound  Not Found
 	Probeldapserver(identitySourceLdapServerParam model.IdentitySourceLdapServer) (model.IdentitySourceLdapServerProbeResult, error)
 
-	// Update the configuration of an existing LDAP identity source. You may wish to verify the new configuration using the POST /aaa/ldap-identity-sources?action=probe API before changing the configuration.
+	// Update the configuration of an existing LDAP identity source. You may wish to verify the new configuration using the POST /aaa/ldap-identity-sources?action=probe API before changing the configuration. Note that if you are using LDAP on an active and standby NSX-T Global Manager in a federated environment, you must use the same name for your LDAP identity sources on the active and standby Global Managers.
 	//
 	// @param ldapIdentitySourceIdParam (required)
 	// @param ldapIdentitySourceParam (required)
