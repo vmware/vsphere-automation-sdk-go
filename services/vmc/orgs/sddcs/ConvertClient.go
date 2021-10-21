@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type ConvertClient interface {
 
-	// This API converts a one host SDDC to a 2 or 3 node DEFAULT SDDC. It takes care of configuring and upgrading the vCenter configurations on the SDDC for high availability and data redundancy.
+	// This API converts a one host SDDC to a 3 node DEFAULT SDDC. It takes care of configuring and upgrading the vCenter configurations on the SDDC for high availability and data redundancy.
 	//
 	// @param orgParam Organization identifier (required)
 	// @param sddcParam Sddc identifier (required)

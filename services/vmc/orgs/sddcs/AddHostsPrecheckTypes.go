@@ -23,8 +23,10 @@ func addHostsPrecheckAddHostPrecheckTaskInputType() bindings.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
+	fields["esx_config"] = bindings.NewReferenceType(model.EsxConfigBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
+	fieldNameMap["esx_config"] = "EsxConfig"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
@@ -44,10 +46,13 @@ func addHostsPrecheckAddHostPrecheckTaskRestMetadata() protocol.OperationRestMet
 	bodyFieldsMap := map[string]string{}
 	fields["org"] = bindings.NewStringType()
 	fields["sddc"] = bindings.NewStringType()
+	fields["esx_config"] = bindings.NewReferenceType(model.EsxConfigBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
+	fieldNameMap["esx_config"] = "EsxConfig"
 	paramsTypeMap["org"] = bindings.NewStringType()
 	paramsTypeMap["sddc"] = bindings.NewStringType()
+	paramsTypeMap["esx_config"] = bindings.NewReferenceType(model.EsxConfigBindingType)
 	paramsTypeMap["org"] = bindings.NewStringType()
 	paramsTypeMap["sddc"] = bindings.NewStringType()
 	pathParams["org"] = "org"
@@ -66,7 +71,7 @@ func addHostsPrecheckAddHostPrecheckTaskRestMetadata() protocol.OperationRestMet
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"",
+		"esx_config",
 		"POST",
 		"/vmc/api/orgs/{org}/sddcs/{sddc}/add-hosts-precheck",
 		"",

@@ -40,7 +40,7 @@ type SubscriptionsClient interface {
 	// @throws NotFound  Not Found
 	Get(orgParam string, subscriptionParam string) (model.SubscriptionDetails, error)
 
-	// Returns all subscriptions for a given org id
+	// Returns default billing account subscriptions for a given org id
 	//
 	// @param orgParam Organization identifier (required)
 	// @param offerTypeParam Offer Type \* \\\\`ON_DEMAND\\\\` - on-demand subscription \* \\\\`TERM\\\\` - term subscription \* All subscriptions if not specified (optional)
