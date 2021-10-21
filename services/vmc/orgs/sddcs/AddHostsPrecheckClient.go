@@ -25,12 +25,13 @@ type AddHostsPrecheckClient interface {
 	//
 	// @param orgParam Organization identifier (required)
 	// @param sddcParam Sddc identifier (required)
+	// @param esxConfigParam esxConfig (required)
 	// @return com.vmware.vmc.model.Task
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Bad Request.
 	// @throws Unauthorized  Access not allowed to the operation for the current user.
 	// @throws NotFound  Cannot find the SDDC with the given id.
-	AddHostPrecheckTask(orgParam string, sddcParam string) (model.Task, error)
+	AddHostPrecheckTask(orgParam string, sddcParam string, esxConfigParam model.EsxConfig) (model.Task, error)
 }
 
 type addHostsPrecheckClient struct {
@@ -58,12 +59,13 @@ func (aIface *addHostsPrecheckClient) GetErrorBindingType(errorName string) bind
 	return errors.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (aIface *addHostsPrecheckClient) AddHostPrecheckTask(orgParam string, sddcParam string) (model.Task, error) {
+func (aIface *addHostsPrecheckClient) AddHostPrecheckTask(orgParam string, sddcParam string, esxConfigParam model.EsxConfig) (model.Task, error) {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
 	sv := bindings.NewStructValueBuilder(addHostsPrecheckAddHostPrecheckTaskInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
+	sv.AddStructField("EsxConfig", esxConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.Task
