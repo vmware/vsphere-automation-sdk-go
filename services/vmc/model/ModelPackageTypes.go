@@ -726,6 +726,7 @@ type AwsSddcResourceConfig struct {
 	BackupRestoreBucket *string
 	PublicIpPool        []SddcPublicIp
 	VpcInfo             *VpcInfo
+	MgwPublicIpPool     []SddcPublicIp
 	KmsVpcEndpoint      *KmsVpcEndpoint
 	// maximum number of public IP that user can allocate.
 	MaxNumPublicIp        *int64
@@ -735,6 +736,8 @@ type AwsSddcResourceConfig struct {
 	NsxUserClient         *CspOauthClient
 	VpcInfoPeeredAgent    *VpcInfo
 	NsxServiceClient      *CspOauthClient
+	// (deprecated)
+	VcIp *string
 	// Name for management appliance network.
 	MgmtApplianceNetworkName *string
 	// Management Gateway Id
@@ -749,7 +752,9 @@ type AwsSddcResourceConfig struct {
 	ManagementDs *string
 	// nsx api entire base url
 	NsxApiPublicEndpointUrl *string
-	SddcNetworks            []string
+	// Nfs Mode Flag, for nfs mounting.
+	NfsMode      *bool
+	SddcNetworks []string
 	// List of clusters in the SDDC.
 	Clusters []Cluster
 	// Possible values are:
@@ -794,6 +799,8 @@ type AwsSddcResourceConfig struct {
 	Region *string
 	// Outpost configuration of this SDDC.
 	OutpostConfig *OutpostConfig
+	// (deprecated)
+	PscIp *string
 	// if true, NSX-T UI is enabled.
 	Nsxt *bool
 	// PSC internal management IP
@@ -803,7 +810,9 @@ type AwsSddcResourceConfig struct {
 	Cgws   []string
 	// Availability zones over which esx hosts are provisioned. MultiAZ SDDCs will have hosts provisioned over two availability zones while SingleAZ SDDCs will provision over one.
 	AvailabilityZones []string
-	CustomProperties  map[string]string
+	// Mark if Containerized Permissions has been enabled on vCenter.
+	VcContainerizedPermissionsEnabled *bool
+	CustomProperties                  map[string]string
 	// Password for vCenter SDDC administrator
 	CloudPassword *string
 	// Possible values are:
@@ -2469,8 +2478,6 @@ func (s *Organization) GetDataValue__() (data.DataValue, []error) {
 type OutpostConfig struct {
 	// Outpost ID
 	OutpostId *string
-	// Whether the Outposts is mocked.
-	Mocked *bool
 }
 
 func (s *OutpostConfig) GetType__() bindings.BindingType {
@@ -3387,6 +3394,8 @@ func (s *SddcPublicIp) GetDataValue__() (data.DataValue, []error) {
 }
 
 type SddcResourceConfig struct {
+	// (deprecated)
+	VcIp *string
 	// Name for management appliance network.
 	MgmtApplianceNetworkName *string
 	// Management Gateway Id
@@ -3401,7 +3410,9 @@ type SddcResourceConfig struct {
 	ManagementDs *string
 	// nsx api entire base url
 	NsxApiPublicEndpointUrl *string
-	SddcNetworks            []string
+	// Nfs Mode Flag, for nfs mounting.
+	NfsMode      *bool
+	SddcNetworks []string
 	// List of clusters in the SDDC.
 	Clusters []Cluster
 	// Possible values are:
@@ -3446,6 +3457,8 @@ type SddcResourceConfig struct {
 	Region *string
 	// Outpost configuration of this SDDC.
 	OutpostConfig *OutpostConfig
+	// (deprecated)
+	PscIp *string
 	// if true, NSX-T UI is enabled.
 	Nsxt *bool
 	// PSC internal management IP
@@ -3455,7 +3468,9 @@ type SddcResourceConfig struct {
 	Cgws   []string
 	// Availability zones over which esx hosts are provisioned. MultiAZ SDDCs will have hosts provisioned over two availability zones while SingleAZ SDDCs will provision over one.
 	AvailabilityZones []string
-	CustomProperties  map[string]string
+	// Mark if Containerized Permissions has been enabled on vCenter.
+	VcContainerizedPermissionsEnabled *bool
+	CustomProperties                  map[string]string
 	// Password for vCenter SDDC administrator
 	CloudPassword *string
 	// Possible values are:
@@ -5340,6 +5355,8 @@ func AwsSddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["public_ip_pool"] = "PublicIpPool"
 	fields["vpc_info"] = bindings.NewOptionalType(bindings.NewReferenceType(VpcInfoBindingType))
 	fieldNameMap["vpc_info"] = "VpcInfo"
+	fields["mgw_public_ip_pool"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(SddcPublicIpBindingType), reflect.TypeOf([]SddcPublicIp{})))
+	fieldNameMap["mgw_public_ip_pool"] = "MgwPublicIpPool"
 	fields["kms_vpc_endpoint"] = bindings.NewOptionalType(bindings.NewReferenceType(KmsVpcEndpointBindingType))
 	fieldNameMap["kms_vpc_endpoint"] = "KmsVpcEndpoint"
 	fields["max_num_public_ip"] = bindings.NewOptionalType(bindings.NewIntegerType())
@@ -5356,6 +5373,8 @@ func AwsSddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["vpc_info_peered_agent"] = "VpcInfoPeeredAgent"
 	fields["nsx_service_client"] = bindings.NewOptionalType(bindings.NewReferenceType(CspOauthClientBindingType))
 	fieldNameMap["nsx_service_client"] = "NsxServiceClient"
+	fields["vc_ip"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["vc_ip"] = "VcIp"
 	fields["mgmt_appliance_network_name"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["mgmt_appliance_network_name"] = "MgmtApplianceNetworkName"
 	fields["mgw_id"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -5370,6 +5389,8 @@ func AwsSddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["management_ds"] = "ManagementDs"
 	fields["nsx_api_public_endpoint_url"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["nsx_api_public_endpoint_url"] = "NsxApiPublicEndpointUrl"
+	fields["nfs_mode"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["nfs_mode"] = "NfsMode"
 	fields["sddc_networks"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["sddc_networks"] = "SddcNetworks"
 	fields["clusters"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ClusterBindingType), reflect.TypeOf([]Cluster{})))
@@ -5414,6 +5435,8 @@ func AwsSddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["region"] = "Region"
 	fields["outpost_config"] = bindings.NewOptionalType(bindings.NewReferenceType(OutpostConfigBindingType))
 	fieldNameMap["outpost_config"] = "OutpostConfig"
+	fields["psc_ip"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["psc_ip"] = "PscIp"
 	fields["nsxt"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["nsxt"] = "Nsxt"
 	fields["psc_management_ip"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -5424,6 +5447,8 @@ func AwsSddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["cgws"] = "Cgws"
 	fields["availability_zones"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["availability_zones"] = "AvailabilityZones"
+	fields["vc_containerized_permissions_enabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["vc_containerized_permissions_enabled"] = "VcContainerizedPermissionsEnabled"
 	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
 	fieldNameMap["custom_properties"] = "CustomProperties"
 	fields["cloud_password"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -6313,8 +6338,6 @@ func OutpostConfigBindingType() bindings.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["outpost_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["outpost_id"] = "OutpostId"
-	fields["mocked"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["mocked"] = "Mocked"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.outpost_config", fields, reflect.TypeOf(OutpostConfig{}), fieldNameMap, validators)
 }
@@ -6779,6 +6802,8 @@ func SddcPublicIpBindingType() bindings.BindingType {
 func SddcResourceConfigBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["vc_ip"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["vc_ip"] = "VcIp"
 	fields["mgmt_appliance_network_name"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["mgmt_appliance_network_name"] = "MgmtApplianceNetworkName"
 	fields["mgw_id"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -6793,6 +6818,8 @@ func SddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["management_ds"] = "ManagementDs"
 	fields["nsx_api_public_endpoint_url"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["nsx_api_public_endpoint_url"] = "NsxApiPublicEndpointUrl"
+	fields["nfs_mode"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["nfs_mode"] = "NfsMode"
 	fields["sddc_networks"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["sddc_networks"] = "SddcNetworks"
 	fields["clusters"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(ClusterBindingType), reflect.TypeOf([]Cluster{})))
@@ -6837,6 +6864,8 @@ func SddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["region"] = "Region"
 	fields["outpost_config"] = bindings.NewOptionalType(bindings.NewReferenceType(OutpostConfigBindingType))
 	fieldNameMap["outpost_config"] = "OutpostConfig"
+	fields["psc_ip"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["psc_ip"] = "PscIp"
 	fields["nsxt"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["nsxt"] = "Nsxt"
 	fields["psc_management_ip"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -6847,6 +6876,8 @@ func SddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["cgws"] = "Cgws"
 	fields["availability_zones"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["availability_zones"] = "AvailabilityZones"
+	fields["vc_containerized_permissions_enabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["vc_containerized_permissions_enabled"] = "VcContainerizedPermissionsEnabled"
 	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
 	fieldNameMap["custom_properties"] = "CustomProperties"
 	fields["cloud_password"] = bindings.NewOptionalType(bindings.NewStringType())
