@@ -6,6 +6,7 @@
 package client
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -328,6 +329,13 @@ func (j *RestConnector) PrepareMethodResult(response *http.Response, restMetadat
 
 	// assign status code
 	j.statusCode = response.StatusCode
+	// TODO handle redirects
+	if j.statusCode >= 300 {
+		err := l10n.NewRuntimeError("vapi.protocol.client.request.error",
+			map[string]string{"errMsg": fmt.Sprintf("%s %s: %d", response.Request.Method, response.Request.URL.String(), j.statusCode)})
+		errVal := bindings.CreateErrorValueFromMessages(bindings.INVALID_REQUEST_ERROR_DEF, []error{err})
+		return core.NewMethodResult(nil, errVal)
+	}
 
 	respHeader := response.Header
 	responseBody := string(resp)
