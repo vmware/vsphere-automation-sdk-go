@@ -535,6 +535,7 @@ type AwsKeyPair struct {
 	KeyName        *string
 	KeyFingerprint *string
 	KeyMaterial    *string
+	Tags           []string
 }
 
 func (s *AwsKeyPair) GetType__() bindings.BindingType {
@@ -746,8 +747,6 @@ type AwsSddcResourceConfig struct {
 	NsxMgrUrl *string
 	// skip creating vxlan for compute gateway for SDDC provisioning
 	SkipCreatingVxlan *bool
-	// NSX cloud audit Password
-	NsxCloudAuditPassword *string
 	// The ManagedObjectReference of the management Datastore
 	ManagementDs *string
 	// nsx api entire base url
@@ -803,6 +802,8 @@ type AwsSddcResourceConfig struct {
 	PscIp *string
 	// if true, NSX-T UI is enabled.
 	Nsxt *bool
+	// Key provider data.
+	KeyProvider []KeyProviderData
 	// PSC internal management IP
 	PscManagementIp *string
 	// URL of the PSC server
@@ -813,6 +814,8 @@ type AwsSddcResourceConfig struct {
 	// Mark if Containerized Permissions has been enabled on vCenter.
 	VcContainerizedPermissionsEnabled *bool
 	CustomProperties                  map[string]string
+	// NSX cloud audit Password
+	NsxCloudAuditPassword *string
 	// Password for vCenter SDDC administrator
 	CloudPassword *string
 	// Possible values are:
@@ -1344,7 +1347,7 @@ type CspOauthClient struct {
 	GrantTypes     []string
 	OrgId          *string
 	// The Oauth client secret.
-	Secret          string
+	Secret          *string
 	RefreshTokenTTL *int64
 	ResourceLink    *string
 	// The Oauth client ID.
@@ -1912,6 +1915,30 @@ func (s *InstanceTypeConfig) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+type KeyProviderData struct {
+	ProviderType          *string
+	NativeSpecKeyMaterial *NativeSpecKeyMaterial
+	IsDefaultKeyProvider  *bool
+	IsHostKeyProvider     *bool
+	Provider              *string
+}
+
+func (s *KeyProviderData) GetType__() bindings.BindingType {
+	return KeyProviderDataBindingType()
+}
+
+func (s *KeyProviderData) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for KeyProviderData._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 type KmsVpcEndpoint struct {
 	// The identifier of the VPC endpoint created to AWS Key Management Service
 	VpcEndpointId       *string
@@ -2263,6 +2290,26 @@ func (s *NatRule) GetDataValue__() (data.DataValue, []error) {
 	return dataVal, nil
 }
 
+type NativeSpecKeyMaterial struct {
+	KeyId *string
+}
+
+func (s *NativeSpecKeyMaterial) GetType__() bindings.BindingType {
+	return NativeSpecKeyMaterialBindingType()
+}
+
+func (s *NativeSpecKeyMaterial) GetDataValue__() (data.DataValue, []error) {
+	typeConverter := bindings.NewTypeConverter()
+	typeConverter.SetMode(bindings.JSONRPC)
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		log.Errorf("Error in ConvertToVapi for NativeSpecKeyMaterial._GetDataValue method - %s",
+			bindings.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 type NetworkTemplate struct {
 	ManagementGatewayTemplates []ManagementGatewayTemplate
 	ComputeGatewayTemplates    []ComputeGatewayTemplate
@@ -2603,15 +2650,25 @@ func (s *PopAmiInfo) GetDataValue__() (data.DataValue, []error) {
 type PopInfo struct {
 	// A map of [region name of PoP / PoP-AMI]:[PopAmiInfo].
 	AmiInfos map[string]PopAmiInfo
-	// The PopInfo (or PoP AMI) created time. Using ISO 8601 date-time pattern. format: date-time
-	CreatedAt *time.Time
-	// A map of [service type]:[PopServiceInfo]
-	ServiceInfos map[string]PopServiceInfo
-	// UUID of the PopInfo format: UUID
-	Id *string
 	// version of the manifest.
 	ManifestVersion *string
+	// A map of [service type]:[PopServiceInfo]
+	ServiceInfos map[string]PopServiceInfo
+	// The PopInfo (or PoP AMI) created time. Using ISO 8601 date-time pattern. format: date-time
+	CreatedAt *time.Time
+	// Possible values are:
+	//
+	// * PopInfo#PopInfo_OS_TYPE_CENTOS
+	// * PopInfo#PopInfo_OS_TYPE_AMAZON
+	//
+	//  Type of OS: CENTOS or AMAZON(Amazon Linux 2)
+	OsType *string
+	// UUID of the PopInfo format: UUID
+	Id *string
 }
+
+const PopInfo_OS_TYPE_CENTOS = "CENTOS"
+const PopInfo_OS_TYPE_AMAZON = "AMAZON"
 
 func (s *PopInfo) GetType__() bindings.BindingType {
 	return PopInfoBindingType()
@@ -2636,47 +2693,9 @@ type PopServiceInfo struct {
 	Version *string
 	// The service build number.
 	Build *string
-	// Possible values are:
-	//
-	// * PopServiceInfo#PopServiceInfo_SERVICE_OS
-	// * PopServiceInfo#PopServiceInfo_SERVICE_AGENT
-	// * PopServiceInfo#PopServiceInfo_SERVICE_GLCM
-	// * PopServiceInfo#PopServiceInfo_SERVICE_S3_ADAPTER
-	// * PopServiceInfo#PopServiceInfo_SERVICE_JRE
-	// * PopServiceInfo#PopServiceInfo_SERVICE_DOCKER
-	// * PopServiceInfo#PopServiceInfo_SERVICE_AIDE
-	// * PopServiceInfo#PopServiceInfo_SERVICE_RTS
-	// * PopServiceInfo#PopServiceInfo_SERVICE_FM_LOG_COLLECTOR
-	// * PopServiceInfo#PopServiceInfo_SERVICE_FM_METRICS_COLLECTOR
-	// * PopServiceInfo#PopServiceInfo_SERVICE_BRE
-	// * PopServiceInfo#PopServiceInfo_SERVICE_BRF
-	// * PopServiceInfo#PopServiceInfo_SERVICE_REVERSE_PROXY
-	// * PopServiceInfo#PopServiceInfo_SERVICE_FORWARD_PROXY
-	// * PopServiceInfo#PopServiceInfo_SERVICE_DNS
-	// * PopServiceInfo#PopServiceInfo_SERVICE_NTP
-	// * PopServiceInfo#PopServiceInfo_SERVICE_LOGZ_LOG_COLLECTOR
-	//
-	//  An enum of PoP related services (including os platform and JRE).
+	// PoP related services (including os platform and JRE).
 	Service *string
 }
-
-const PopServiceInfo_SERVICE_OS = "OS"
-const PopServiceInfo_SERVICE_AGENT = "AGENT"
-const PopServiceInfo_SERVICE_GLCM = "GLCM"
-const PopServiceInfo_SERVICE_S3_ADAPTER = "S3_ADAPTER"
-const PopServiceInfo_SERVICE_JRE = "JRE"
-const PopServiceInfo_SERVICE_DOCKER = "DOCKER"
-const PopServiceInfo_SERVICE_AIDE = "AIDE"
-const PopServiceInfo_SERVICE_RTS = "RTS"
-const PopServiceInfo_SERVICE_FM_LOG_COLLECTOR = "FM_LOG_COLLECTOR"
-const PopServiceInfo_SERVICE_FM_METRICS_COLLECTOR = "FM_METRICS_COLLECTOR"
-const PopServiceInfo_SERVICE_BRE = "BRE"
-const PopServiceInfo_SERVICE_BRF = "BRF"
-const PopServiceInfo_SERVICE_REVERSE_PROXY = "REVERSE_PROXY"
-const PopServiceInfo_SERVICE_FORWARD_PROXY = "FORWARD_PROXY"
-const PopServiceInfo_SERVICE_DNS = "DNS"
-const PopServiceInfo_SERVICE_NTP = "NTP"
-const PopServiceInfo_SERVICE_LOGZ_LOG_COLLECTOR = "LOGZ_LOG_COLLECTOR"
 
 func (s *PopServiceInfo) GetType__() bindings.BindingType {
 	return PopServiceInfoBindingType()
@@ -3404,8 +3423,6 @@ type SddcResourceConfig struct {
 	NsxMgrUrl *string
 	// skip creating vxlan for compute gateway for SDDC provisioning
 	SkipCreatingVxlan *bool
-	// NSX cloud audit Password
-	NsxCloudAuditPassword *string
 	// The ManagedObjectReference of the management Datastore
 	ManagementDs *string
 	// nsx api entire base url
@@ -3461,6 +3478,8 @@ type SddcResourceConfig struct {
 	PscIp *string
 	// if true, NSX-T UI is enabled.
 	Nsxt *bool
+	// Key provider data.
+	KeyProvider []KeyProviderData
 	// PSC internal management IP
 	PscManagementIp *string
 	// URL of the PSC server
@@ -3471,6 +3490,8 @@ type SddcResourceConfig struct {
 	// Mark if Containerized Permissions has been enabled on vCenter.
 	VcContainerizedPermissionsEnabled *bool
 	CustomProperties                  map[string]string
+	// NSX cloud audit Password
+	NsxCloudAuditPassword *string
 	// Password for vCenter SDDC administrator
 	CloudPassword *string
 	// Possible values are:
@@ -5235,6 +5256,8 @@ func AwsKeyPairBindingType() bindings.BindingType {
 	fieldNameMap["key_fingerprint"] = "KeyFingerprint"
 	fields["key_material"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["key_material"] = "KeyMaterial"
+	fields["tags"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["tags"] = "Tags"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.aws_key_pair", fields, reflect.TypeOf(AwsKeyPair{}), fieldNameMap, validators)
 }
@@ -5383,8 +5406,6 @@ func AwsSddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["nsx_mgr_url"] = "NsxMgrUrl"
 	fields["skip_creating_vxlan"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["skip_creating_vxlan"] = "SkipCreatingVxlan"
-	fields["nsx_cloud_audit_password"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["nsx_cloud_audit_password"] = "NsxCloudAuditPassword"
 	fields["management_ds"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["management_ds"] = "ManagementDs"
 	fields["nsx_api_public_endpoint_url"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -5439,6 +5460,8 @@ func AwsSddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["psc_ip"] = "PscIp"
 	fields["nsxt"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["nsxt"] = "Nsxt"
+	fields["key_provider"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(KeyProviderDataBindingType), reflect.TypeOf([]KeyProviderData{})))
+	fieldNameMap["key_provider"] = "KeyProvider"
 	fields["psc_management_ip"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["psc_management_ip"] = "PscManagementIp"
 	fields["psc_url"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -5451,6 +5474,8 @@ func AwsSddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["vc_containerized_permissions_enabled"] = "VcContainerizedPermissionsEnabled"
 	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
 	fieldNameMap["custom_properties"] = "CustomProperties"
+	fields["nsx_cloud_audit_password"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["nsx_cloud_audit_password"] = "NsxCloudAuditPassword"
 	fields["cloud_password"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["cloud_password"] = "CloudPassword"
 	fields["provider"] = bindings.NewStringType()
@@ -5733,7 +5758,7 @@ func CspOauthClientBindingType() bindings.BindingType {
 	fieldNameMap["grant_types"] = "GrantTypes"
 	fields["org_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
-	fields["secret"] = bindings.NewStringType()
+	fields["secret"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["secret"] = "Secret"
 	fields["refreshTokenTTL"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["refreshTokenTTL"] = "RefreshTokenTTL"
@@ -6034,6 +6059,23 @@ func InstanceTypeConfigBindingType() bindings.BindingType {
 	return bindings.NewStructType("com.vmware.vmc.model.instance_type_config", fields, reflect.TypeOf(InstanceTypeConfig{}), fieldNameMap, validators)
 }
 
+func KeyProviderDataBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["provider_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["provider_type"] = "ProviderType"
+	fields["native_spec_key_material"] = bindings.NewOptionalType(bindings.NewReferenceType(NativeSpecKeyMaterialBindingType))
+	fieldNameMap["native_spec_key_material"] = "NativeSpecKeyMaterial"
+	fields["is_default_key_provider"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["is_default_key_provider"] = "IsDefaultKeyProvider"
+	fields["is_host_key_provider"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["is_host_key_provider"] = "IsHostKeyProvider"
+	fields["provider"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["provider"] = "Provider"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.key_provider_data", fields, reflect.TypeOf(KeyProviderData{}), fieldNameMap, validators)
+}
+
 func KmsVpcEndpointBindingType() bindings.BindingType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -6205,6 +6247,15 @@ func NatRuleBindingType() bindings.BindingType {
 	fieldNameMap["revision"] = "Revision"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.nat_rule", fields, reflect.TypeOf(NatRule{}), fieldNameMap, validators)
+}
+
+func NativeSpecKeyMaterialBindingType() bindings.BindingType {
+	fields := make(map[string]bindings.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["key_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["key_id"] = "KeyId"
+	var validators = []bindings.Validator{}
+	return bindings.NewStructType("com.vmware.vmc.model.native_spec_key_material", fields, reflect.TypeOf(NativeSpecKeyMaterial{}), fieldNameMap, validators)
 }
 
 func NetworkTemplateBindingType() bindings.BindingType {
@@ -6399,14 +6450,16 @@ func PopInfoBindingType() bindings.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["ami_infos"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(PopAmiInfoBindingType), reflect.TypeOf(map[string]PopAmiInfo{}))
 	fieldNameMap["ami_infos"] = "AmiInfos"
-	fields["created_at"] = bindings.NewOptionalType(bindings.NewDateTimeType())
-	fieldNameMap["created_at"] = "CreatedAt"
-	fields["service_infos"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(PopServiceInfoBindingType), reflect.TypeOf(map[string]PopServiceInfo{})))
-	fieldNameMap["service_infos"] = "ServiceInfos"
-	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["id"] = "Id"
 	fields["manifest_version"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["manifest_version"] = "ManifestVersion"
+	fields["service_infos"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(PopServiceInfoBindingType), reflect.TypeOf(map[string]PopServiceInfo{})))
+	fieldNameMap["service_infos"] = "ServiceInfos"
+	fields["created_at"] = bindings.NewOptionalType(bindings.NewDateTimeType())
+	fieldNameMap["created_at"] = "CreatedAt"
+	fields["os_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["os_type"] = "OsType"
+	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["id"] = "Id"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("com.vmware.vmc.model.pop_info", fields, reflect.TypeOf(PopInfo{}), fieldNameMap, validators)
 }
@@ -6812,8 +6865,6 @@ func SddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["nsx_mgr_url"] = "NsxMgrUrl"
 	fields["skip_creating_vxlan"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["skip_creating_vxlan"] = "SkipCreatingVxlan"
-	fields["nsx_cloud_audit_password"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["nsx_cloud_audit_password"] = "NsxCloudAuditPassword"
 	fields["management_ds"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["management_ds"] = "ManagementDs"
 	fields["nsx_api_public_endpoint_url"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -6868,6 +6919,8 @@ func SddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["psc_ip"] = "PscIp"
 	fields["nsxt"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["nsxt"] = "Nsxt"
+	fields["key_provider"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(KeyProviderDataBindingType), reflect.TypeOf([]KeyProviderData{})))
+	fieldNameMap["key_provider"] = "KeyProvider"
 	fields["psc_management_ip"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["psc_management_ip"] = "PscManagementIp"
 	fields["psc_url"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -6880,6 +6933,8 @@ func SddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["vc_containerized_permissions_enabled"] = "VcContainerizedPermissionsEnabled"
 	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
 	fieldNameMap["custom_properties"] = "CustomProperties"
+	fields["nsx_cloud_audit_password"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["nsx_cloud_audit_password"] = "NsxCloudAuditPassword"
 	fields["cloud_password"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["cloud_password"] = "CloudPassword"
 	fields["provider"] = bindings.NewStringType()
