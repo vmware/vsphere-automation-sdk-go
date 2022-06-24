@@ -24,6 +24,7 @@ const (
 	HostInstanceTypes_I3_METAL   HostInstanceTypesEnum = "I3_METAL"
 	HostInstanceTypes_R5_METAL   HostInstanceTypesEnum = "R5_METAL"
 	HostInstanceTypes_I3EN_METAL HostInstanceTypesEnum = "I3EN_METAL"
+	HostInstanceTypes_I4I_METAL  HostInstanceTypesEnum = "I4I_METAL"
 )
 
 func (h HostInstanceTypesEnum) HostInstanceTypesEnum() bool {
@@ -33,6 +34,8 @@ func (h HostInstanceTypesEnum) HostInstanceTypesEnum() bool {
 	case HostInstanceTypes_R5_METAL:
 		return true
 	case HostInstanceTypes_I3EN_METAL:
+		return true
+	case HostInstanceTypes_I4I_METAL:
 		return true
 	default:
 		return false
@@ -747,6 +750,10 @@ type AwsSddcResourceConfig struct {
 	NsxMgrUrl *string
 	// skip creating vxlan for compute gateway for SDDC provisioning
 	SkipCreatingVxlan *bool
+	// ESX host subnet
+	EsxHostSubnet *string
+	// vCenter to csp federation status.
+	VcCspLoginStatus *string
 	// The ManagedObjectReference of the management Datastore
 	ManagementDs *string
 	// nsx api entire base url
@@ -788,8 +795,6 @@ type AwsSddcResourceConfig struct {
 	NsxControllerIps []string
 	// Marks that the SDDC VC should be deployed with two hostnames.
 	TwoHostnameVcDeployment *bool
-	// ESX host subnet
-	EsxHostSubnet *string
 	// The SSO domain name to use for vSphere users
 	SsoDomain *string
 	// The Microsoft license status of this SDDC.
@@ -846,6 +851,8 @@ type AwsSddcResourceConfig struct {
 	PopAgentXeniConnection *PopAgentXeniConnection
 	// URL of the NSX Manager UI login for local user access
 	NsxMgrLoginUrl *string
+	// Break-glass URL for non-federated login.
+	VcBreakGlassUrl *string
 	// if true, use the private IP addresses to register DNS records for the management VMs
 	DnsWithManagementVmPrivateIp *bool
 	// NSX cloud admin user name
@@ -1004,12 +1011,12 @@ type Cluster struct {
 	// Partition placement group infos
 	PartitionPlacementGroupInfo []PartitionPlacementGroupInfo
 	ClusterId                   string
-	ClusterName                 *string
+	// AWS Key Management Service information associated with this cluster
+	AwsKmsInfo *AwsKmsInfo
 	// Witness node
 	VsanWitness      *AwsWitnessEsx
 	CustomProperties map[string]string
-	// AWS Key Management Service information associated with this cluster
-	AwsKmsInfo *AwsKmsInfo
+	ClusterName      *string
 	// The capacity of this cluster.
 	ClusterCapacity *EntityCapacity
 	// Specifies whether hyperThreading is disabled/enabled explicitly
@@ -1450,6 +1457,8 @@ type EniInfo struct {
 	AssociationId *string
 	// The vmknic id or null if the ENI does not mapped to a vmknic.
 	VmkId *string
+	// index of eni device..
+	DeviceIndex *int64
 	// Security Group of Eni.
 	SecurityGroupId *string
 	// Id of the instance to be attached.
@@ -3423,6 +3432,10 @@ type SddcResourceConfig struct {
 	NsxMgrUrl *string
 	// skip creating vxlan for compute gateway for SDDC provisioning
 	SkipCreatingVxlan *bool
+	// ESX host subnet
+	EsxHostSubnet *string
+	// vCenter to csp federation status.
+	VcCspLoginStatus *string
 	// The ManagedObjectReference of the management Datastore
 	ManagementDs *string
 	// nsx api entire base url
@@ -3464,8 +3477,6 @@ type SddcResourceConfig struct {
 	NsxControllerIps []string
 	// Marks that the SDDC VC should be deployed with two hostnames.
 	TwoHostnameVcDeployment *bool
-	// ESX host subnet
-	EsxHostSubnet *string
 	// The SSO domain name to use for vSphere users
 	SsoDomain *string
 	// The Microsoft license status of this SDDC.
@@ -3522,6 +3533,8 @@ type SddcResourceConfig struct {
 	PopAgentXeniConnection *PopAgentXeniConnection
 	// URL of the NSX Manager UI login for local user access
 	NsxMgrLoginUrl *string
+	// Break-glass URL for non-federated login.
+	VcBreakGlassUrl *string
 	// if true, use the private IP addresses to register DNS records for the management VMs
 	DnsWithManagementVmPrivateIp *bool
 	// NSX cloud admin user name
@@ -5406,6 +5419,10 @@ func AwsSddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["nsx_mgr_url"] = "NsxMgrUrl"
 	fields["skip_creating_vxlan"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["skip_creating_vxlan"] = "SkipCreatingVxlan"
+	fields["esx_host_subnet"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["esx_host_subnet"] = "EsxHostSubnet"
+	fields["vc_csp_login_status"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["vc_csp_login_status"] = "VcCspLoginStatus"
 	fields["management_ds"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["management_ds"] = "ManagementDs"
 	fields["nsx_api_public_endpoint_url"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -5446,8 +5463,6 @@ func AwsSddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["nsx_controller_ips"] = "NsxControllerIps"
 	fields["two_hostname_vc_deployment"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["two_hostname_vc_deployment"] = "TwoHostnameVcDeployment"
-	fields["esx_host_subnet"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["esx_host_subnet"] = "EsxHostSubnet"
 	fields["sso_domain"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["sso_domain"] = "SsoDomain"
 	fields["msft_license_config"] = bindings.NewOptionalType(bindings.NewReferenceType(MsftLicensingConfigBindingType))
@@ -5504,6 +5519,8 @@ func AwsSddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["pop_agent_xeni_connection"] = "PopAgentXeniConnection"
 	fields["nsx_mgr_login_url"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["nsx_mgr_login_url"] = "NsxMgrLoginUrl"
+	fields["vc_break_glass_url"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["vc_break_glass_url"] = "VcBreakGlassUrl"
 	fields["dns_with_management_vm_private_ip"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["dns_with_management_vm_private_ip"] = "DnsWithManagementVmPrivateIp"
 	fields["nsx_cloud_admin"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -5590,14 +5607,14 @@ func ClusterBindingType() bindings.BindingType {
 	fieldNameMap["partition_placement_group_info"] = "PartitionPlacementGroupInfo"
 	fields["cluster_id"] = bindings.NewStringType()
 	fieldNameMap["cluster_id"] = "ClusterId"
-	fields["cluster_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["cluster_name"] = "ClusterName"
+	fields["aws_kms_info"] = bindings.NewOptionalType(bindings.NewReferenceType(AwsKmsInfoBindingType))
+	fieldNameMap["aws_kms_info"] = "AwsKmsInfo"
 	fields["vsan_witness"] = bindings.NewOptionalType(bindings.NewReferenceType(AwsWitnessEsxBindingType))
 	fieldNameMap["vsan_witness"] = "VsanWitness"
 	fields["custom_properties"] = bindings.NewOptionalType(bindings.NewMapType(bindings.NewStringType(), bindings.NewStringType(), reflect.TypeOf(map[string]string{})))
 	fieldNameMap["custom_properties"] = "CustomProperties"
-	fields["aws_kms_info"] = bindings.NewOptionalType(bindings.NewReferenceType(AwsKmsInfoBindingType))
-	fieldNameMap["aws_kms_info"] = "AwsKmsInfo"
+	fields["cluster_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["cluster_name"] = "ClusterName"
 	fields["cluster_capacity"] = bindings.NewOptionalType(bindings.NewReferenceType(EntityCapacityBindingType))
 	fieldNameMap["cluster_capacity"] = "ClusterCapacity"
 	fields["hyper_threading_enabled"] = bindings.NewOptionalType(bindings.NewBooleanType())
@@ -5814,6 +5831,8 @@ func EniInfoBindingType() bindings.BindingType {
 	fieldNameMap["association_id"] = "AssociationId"
 	fields["vmk_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vmk_id"] = "VmkId"
+	fields["device_index"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fieldNameMap["device_index"] = "DeviceIndex"
 	fields["security_group_id"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["security_group_id"] = "SecurityGroupId"
 	fields["instance_id"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -6865,6 +6884,10 @@ func SddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["nsx_mgr_url"] = "NsxMgrUrl"
 	fields["skip_creating_vxlan"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["skip_creating_vxlan"] = "SkipCreatingVxlan"
+	fields["esx_host_subnet"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["esx_host_subnet"] = "EsxHostSubnet"
+	fields["vc_csp_login_status"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["vc_csp_login_status"] = "VcCspLoginStatus"
 	fields["management_ds"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["management_ds"] = "ManagementDs"
 	fields["nsx_api_public_endpoint_url"] = bindings.NewOptionalType(bindings.NewStringType())
@@ -6905,8 +6928,6 @@ func SddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["nsx_controller_ips"] = "NsxControllerIps"
 	fields["two_hostname_vc_deployment"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["two_hostname_vc_deployment"] = "TwoHostnameVcDeployment"
-	fields["esx_host_subnet"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["esx_host_subnet"] = "EsxHostSubnet"
 	fields["sso_domain"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["sso_domain"] = "SsoDomain"
 	fields["msft_license_config"] = bindings.NewOptionalType(bindings.NewReferenceType(MsftLicensingConfigBindingType))
@@ -6963,6 +6984,8 @@ func SddcResourceConfigBindingType() bindings.BindingType {
 	fieldNameMap["pop_agent_xeni_connection"] = "PopAgentXeniConnection"
 	fields["nsx_mgr_login_url"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["nsx_mgr_login_url"] = "NsxMgrLoginUrl"
+	fields["vc_break_glass_url"] = bindings.NewOptionalType(bindings.NewStringType())
+	fieldNameMap["vc_break_glass_url"] = "VcBreakGlassUrl"
 	fields["dns_with_management_vm_private_ip"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["dns_with_management_vm_private_ip"] = "DnsWithManagementVmPrivateIp"
 	fields["nsx_cloud_admin"] = bindings.NewOptionalType(bindings.NewStringType())
