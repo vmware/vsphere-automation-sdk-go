@@ -24,7 +24,7 @@ const (
 	HostInstanceTypes_I3_METAL   HostInstanceTypesEnum = "I3_METAL"
 	HostInstanceTypes_R5_METAL   HostInstanceTypesEnum = "R5_METAL"
 	HostInstanceTypes_I3EN_METAL HostInstanceTypesEnum = "I3EN_METAL"
-	HostInstanceTypes_I4I_METAL  HostInstanceTypesEnum = "I4I_METAL"
+	HostInstanceTypes_I4I_METAL  HostInstanceTypesEnum = "I4_METAL"
 )
 
 func (h HostInstanceTypesEnum) HostInstanceTypesEnum() bool {
@@ -35,7 +35,7 @@ func (h HostInstanceTypesEnum) HostInstanceTypesEnum() bool {
 		return true
 	case HostInstanceTypes_I3EN_METAL:
 		return true
-	case HostInstanceTypes_I4I_METAL:
+	case HostInstanceTypes_I4_METAL:
 		return true
 	default:
 		return false
