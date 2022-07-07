@@ -18,63 +18,6 @@ import (
 	"reflect"
 )
 
-func staticRoutesDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["route_id"] = bindings.NewStringType()
-	fieldNameMap["tier0_id"] = "Tier0Id"
-	fieldNameMap["route_id"] = "RouteId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
-}
-
-func staticRoutesDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
-}
-
-func staticRoutesDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
-	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
-	pathParams := map[string]string{}
-	queryParams := map[string]string{}
-	headerParams := map[string]string{}
-	dispatchHeaderParams := map[string]string{}
-	bodyFieldsMap := map[string]string{}
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["route_id"] = bindings.NewStringType()
-	fieldNameMap["tier0_id"] = "Tier0Id"
-	fieldNameMap["route_id"] = "RouteId"
-	paramsTypeMap["tier0_id"] = bindings.NewStringType()
-	paramsTypeMap["route_id"] = bindings.NewStringType()
-	paramsTypeMap["tier0Id"] = bindings.NewStringType()
-	paramsTypeMap["routeId"] = bindings.NewStringType()
-	pathParams["route_id"] = "routeId"
-	pathParams["tier0_id"] = "tier0Id"
-	resultHeaders := map[string]string{}
-	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
-		fields,
-		fieldNameMap,
-		paramsTypeMap,
-		pathParams,
-		queryParams,
-		headerParams,
-		dispatchHeaderParams,
-		bodyFieldsMap,
-		"",
-		"",
-		"DELETE",
-		"/policy/api/v1/global-infra/tier-0s/{tier0Id}/static-routes/{routeId}",
-		"",
-		resultHeaders,
-		204,
-		"",
-		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
-}
-
 func staticRoutesGetInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -213,68 +156,6 @@ func staticRoutesListRestMetadata() protocol.OperationRestMetadata {
 		"",
 		resultHeaders,
 		200,
-		"",
-		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
-}
-
-func staticRoutesPatchInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["route_id"] = bindings.NewStringType()
-	fields["static_routes"] = bindings.NewReferenceType(model.StaticRoutesBindingType)
-	fieldNameMap["tier0_id"] = "Tier0Id"
-	fieldNameMap["route_id"] = "RouteId"
-	fieldNameMap["static_routes"] = "StaticRoutes"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
-}
-
-func staticRoutesPatchOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
-}
-
-func staticRoutesPatchRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
-	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
-	pathParams := map[string]string{}
-	queryParams := map[string]string{}
-	headerParams := map[string]string{}
-	dispatchHeaderParams := map[string]string{}
-	bodyFieldsMap := map[string]string{}
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["route_id"] = bindings.NewStringType()
-	fields["static_routes"] = bindings.NewReferenceType(model.StaticRoutesBindingType)
-	fieldNameMap["tier0_id"] = "Tier0Id"
-	fieldNameMap["route_id"] = "RouteId"
-	fieldNameMap["static_routes"] = "StaticRoutes"
-	paramsTypeMap["tier0_id"] = bindings.NewStringType()
-	paramsTypeMap["route_id"] = bindings.NewStringType()
-	paramsTypeMap["static_routes"] = bindings.NewReferenceType(model.StaticRoutesBindingType)
-	paramsTypeMap["tier0Id"] = bindings.NewStringType()
-	paramsTypeMap["routeId"] = bindings.NewStringType()
-	pathParams["route_id"] = "routeId"
-	pathParams["tier0_id"] = "tier0Id"
-	resultHeaders := map[string]string{}
-	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
-		fields,
-		fieldNameMap,
-		paramsTypeMap,
-		pathParams,
-		queryParams,
-		headerParams,
-		dispatchHeaderParams,
-		bodyFieldsMap,
-		"",
-		"static_routes",
-		"PATCH",
-		"/policy/api/v1/global-infra/tier-0s/{tier0Id}/static-routes/{routeId}",
-		"",
-		resultHeaders,
-		204,
 		"",
 		errorHeaders,
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})

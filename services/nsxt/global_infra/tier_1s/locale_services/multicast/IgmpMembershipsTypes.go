@@ -18,7 +18,7 @@ import (
 	"reflect"
 )
 
-func igmpMembershipsGetInputType() bindings.StructType {
+func igmpMembershipsListInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["tier1_id"] = bindings.NewStringType()
@@ -41,11 +41,11 @@ func igmpMembershipsGetInputType() bindings.StructType {
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func igmpMembershipsGetOutputType() bindings.BindingType {
+func igmpMembershipsListOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.IgmpMembershipsBindingType)
 }
 
-func igmpMembershipsGetRestMetadata() protocol.OperationRestMetadata {
+func igmpMembershipsListRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}

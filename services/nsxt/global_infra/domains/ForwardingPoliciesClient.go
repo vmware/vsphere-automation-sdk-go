@@ -21,17 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type ForwardingPoliciesClient interface {
 
-	// Delete forwarding policy.
-	//
-	// @param domainIdParam Domain id (required)
-	// @param forwardingPolicyIdParam Forwarding map id (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(domainIdParam string, forwardingPolicyIdParam string) error
-
 	// Read forwarding policy.
 	//
 	// @param domainIdParam Domain id (required)
@@ -61,31 +50,6 @@ type ForwardingPoliciesClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(domainIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includeRuleCountParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.ForwardingPolicyListResult, error)
-
-	// Create or update the forwarding policy. Performance Note: If you want to edit several rules in a forwarding policy use this API. It will perform better than several individual rule APIs. Just pass all the rules which you wish to edit as embedded rules to it.
-	//
-	// @param domainIdParam Domain id (required)
-	// @param forwardingPolicyIdParam Forwarding map id (required)
-	// @param forwardingPolicyParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(domainIdParam string, forwardingPolicyIdParam string, forwardingPolicyParam model.ForwardingPolicy) error
-
-	// Create or update the forwarding policy. Performance Note: If you want to edit several rules in a forwarding policy use this API. It will perform better than several individual rule APIs. Just pass all the rules which you wish to edit as embedded rules to it.
-	//
-	// @param domainIdParam Domain id (required)
-	// @param forwardingPolicyIdParam Forwarding map id (required)
-	// @param forwardingPolicyParam (required)
-	// @return com.vmware.nsx_policy.model.ForwardingPolicy
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(domainIdParam string, forwardingPolicyIdParam string, forwardingPolicyParam model.ForwardingPolicy) (model.ForwardingPolicy, error)
 }
 
 type forwardingPoliciesClient struct {
@@ -97,11 +61,8 @@ type forwardingPoliciesClient struct {
 func NewForwardingPoliciesClient(connector client.Connector) *forwardingPoliciesClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.domains.forwarding_policies")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -115,32 +76,6 @@ func (fIface *forwardingPoliciesClient) GetErrorBindingType(errorName string) bi
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (fIface *forwardingPoliciesClient) Delete(domainIdParam string, forwardingPolicyIdParam string) error {
-	typeConverter := fIface.connector.TypeConverter()
-	executionContext := fIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(forwardingPoliciesDeleteInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("ForwardingPolicyId", forwardingPolicyIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := forwardingPoliciesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	fIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := fIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.forwarding_policies", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), fIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (fIface *forwardingPoliciesClient) Get(domainIdParam string, forwardingPolicyIdParam string) (model.ForwardingPolicy, error) {
@@ -204,66 +139,6 @@ func (fIface *forwardingPoliciesClient) List(domainIdParam string, cursorParam *
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.ForwardingPolicyListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), fIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (fIface *forwardingPoliciesClient) Patch(domainIdParam string, forwardingPolicyIdParam string, forwardingPolicyParam model.ForwardingPolicy) error {
-	typeConverter := fIface.connector.TypeConverter()
-	executionContext := fIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(forwardingPoliciesPatchInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("ForwardingPolicyId", forwardingPolicyIdParam)
-	sv.AddStructField("ForwardingPolicy", forwardingPolicyParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := forwardingPoliciesPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	fIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := fIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.forwarding_policies", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), fIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (fIface *forwardingPoliciesClient) Update(domainIdParam string, forwardingPolicyIdParam string, forwardingPolicyParam model.ForwardingPolicy) (model.ForwardingPolicy, error) {
-	typeConverter := fIface.connector.TypeConverter()
-	executionContext := fIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(forwardingPoliciesUpdateInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("ForwardingPolicyId", forwardingPolicyIdParam)
-	sv.AddStructField("ForwardingPolicy", forwardingPolicyParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.ForwardingPolicy
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := forwardingPoliciesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	fIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := fIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.forwarding_policies", "update", inputDataValue, executionContext)
-	var emptyOutput model.ForwardingPolicy
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), forwardingPoliciesUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.ForwardingPolicy), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), fIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

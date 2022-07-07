@@ -21,18 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type DiscoveryProfileBindingMapsClient interface {
 
-	// API will delete Group discovery profile binding map
-	//
-	// @param domainIdParam Domain ID (required)
-	// @param groupIdParam Group ID (required)
-	// @param discoveryProfileBindingMapIdParam Group discovery profile binding map ID (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(domainIdParam string, groupIdParam string, discoveryProfileBindingMapIdParam string) error
-
 	// API will get Group discovery profile binding map
 	//
 	// @param domainIdParam Domain ID (required)
@@ -63,33 +51,6 @@ type DiscoveryProfileBindingMapsClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(domainIdParam string, groupIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.GroupDiscoveryProfileBindingMapListResult, error)
-
-	// API will create or update Group discovery profile binding map
-	//
-	// @param domainIdParam Domain ID (required)
-	// @param groupIdParam Group ID (required)
-	// @param discoveryProfileBindingMapIdParam Group discovery profile binding map ID (required)
-	// @param groupDiscoveryProfileBindingMapParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(domainIdParam string, groupIdParam string, discoveryProfileBindingMapIdParam string, groupDiscoveryProfileBindingMapParam model.GroupDiscoveryProfileBindingMap) error
-
-	// API will update Group discovery profile binding map
-	//
-	// @param domainIdParam Domain ID (required)
-	// @param groupIdParam Group ID (required)
-	// @param discoveryProfileBindingMapIdParam Group discovery profile binding map ID (required)
-	// @param groupDiscoveryProfileBindingMapParam (required)
-	// @return com.vmware.nsx_policy.model.GroupDiscoveryProfileBindingMap
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(domainIdParam string, groupIdParam string, discoveryProfileBindingMapIdParam string, groupDiscoveryProfileBindingMapParam model.GroupDiscoveryProfileBindingMap) (model.GroupDiscoveryProfileBindingMap, error)
 }
 
 type discoveryProfileBindingMapsClient struct {
@@ -101,11 +62,8 @@ type discoveryProfileBindingMapsClient struct {
 func NewDiscoveryProfileBindingMapsClient(connector client.Connector) *discoveryProfileBindingMapsClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.domains.groups.discovery_profile_binding_maps")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -119,33 +77,6 @@ func (dIface *discoveryProfileBindingMapsClient) GetErrorBindingType(errorName s
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (dIface *discoveryProfileBindingMapsClient) Delete(domainIdParam string, groupIdParam string, discoveryProfileBindingMapIdParam string) error {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(discoveryProfileBindingMapsDeleteInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("GroupId", groupIdParam)
-	sv.AddStructField("DiscoveryProfileBindingMapId", discoveryProfileBindingMapIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := discoveryProfileBindingMapsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.groups.discovery_profile_binding_maps", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (dIface *discoveryProfileBindingMapsClient) Get(domainIdParam string, groupIdParam string, discoveryProfileBindingMapIdParam string) (model.GroupDiscoveryProfileBindingMap, error) {
@@ -210,68 +141,6 @@ func (dIface *discoveryProfileBindingMapsClient) List(domainIdParam string, grou
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.GroupDiscoveryProfileBindingMapListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (dIface *discoveryProfileBindingMapsClient) Patch(domainIdParam string, groupIdParam string, discoveryProfileBindingMapIdParam string, groupDiscoveryProfileBindingMapParam model.GroupDiscoveryProfileBindingMap) error {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(discoveryProfileBindingMapsPatchInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("GroupId", groupIdParam)
-	sv.AddStructField("DiscoveryProfileBindingMapId", discoveryProfileBindingMapIdParam)
-	sv.AddStructField("GroupDiscoveryProfileBindingMap", groupDiscoveryProfileBindingMapParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := discoveryProfileBindingMapsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.groups.discovery_profile_binding_maps", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (dIface *discoveryProfileBindingMapsClient) Update(domainIdParam string, groupIdParam string, discoveryProfileBindingMapIdParam string, groupDiscoveryProfileBindingMapParam model.GroupDiscoveryProfileBindingMap) (model.GroupDiscoveryProfileBindingMap, error) {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(discoveryProfileBindingMapsUpdateInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("GroupId", groupIdParam)
-	sv.AddStructField("DiscoveryProfileBindingMapId", discoveryProfileBindingMapIdParam)
-	sv.AddStructField("GroupDiscoveryProfileBindingMap", groupDiscoveryProfileBindingMapParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.GroupDiscoveryProfileBindingMap
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := discoveryProfileBindingMapsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.groups.discovery_profile_binding_maps", "update", inputDataValue, executionContext)
-	var emptyOutput model.GroupDiscoveryProfileBindingMap
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), discoveryProfileBindingMapsUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.GroupDiscoveryProfileBindingMap), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

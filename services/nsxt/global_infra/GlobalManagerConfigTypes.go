@@ -18,54 +18,6 @@ import (
 	"reflect"
 )
 
-func globalManagerConfigPatchInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["global_manager_config"] = bindings.NewReferenceType(model.GlobalManagerConfigBindingType)
-	fieldNameMap["global_manager_config"] = "GlobalManagerConfig"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
-}
-
-func globalManagerConfigPatchOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
-}
-
-func globalManagerConfigPatchRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
-	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
-	pathParams := map[string]string{}
-	queryParams := map[string]string{}
-	headerParams := map[string]string{}
-	dispatchHeaderParams := map[string]string{}
-	bodyFieldsMap := map[string]string{}
-	fields["global_manager_config"] = bindings.NewReferenceType(model.GlobalManagerConfigBindingType)
-	fieldNameMap["global_manager_config"] = "GlobalManagerConfig"
-	paramsTypeMap["global_manager_config"] = bindings.NewReferenceType(model.GlobalManagerConfigBindingType)
-	resultHeaders := map[string]string{}
-	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
-		fields,
-		fieldNameMap,
-		paramsTypeMap,
-		pathParams,
-		queryParams,
-		headerParams,
-		dispatchHeaderParams,
-		bodyFieldsMap,
-		"",
-		"global_manager_config",
-		"PATCH",
-		"/policy/api/v1/global-infra/global-manager-config",
-		"",
-		resultHeaders,
-		204,
-		"",
-		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
-}
-
 func globalManagerConfigShowsensitivedataInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -100,54 +52,6 @@ func globalManagerConfigShowsensitivedataRestMetadata() protocol.OperationRestMe
 		"action=show-sensitive-data",
 		"",
 		"GET",
-		"/policy/api/v1/global-infra/global-manager-config",
-		"",
-		resultHeaders,
-		200,
-		"",
-		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
-}
-
-func globalManagerConfigUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["global_manager_config"] = bindings.NewReferenceType(model.GlobalManagerConfigBindingType)
-	fieldNameMap["global_manager_config"] = "GlobalManagerConfig"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
-}
-
-func globalManagerConfigUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.GlobalManagerConfigBindingType)
-}
-
-func globalManagerConfigUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
-	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
-	pathParams := map[string]string{}
-	queryParams := map[string]string{}
-	headerParams := map[string]string{}
-	dispatchHeaderParams := map[string]string{}
-	bodyFieldsMap := map[string]string{}
-	fields["global_manager_config"] = bindings.NewReferenceType(model.GlobalManagerConfigBindingType)
-	fieldNameMap["global_manager_config"] = "GlobalManagerConfig"
-	paramsTypeMap["global_manager_config"] = bindings.NewReferenceType(model.GlobalManagerConfigBindingType)
-	resultHeaders := map[string]string{}
-	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
-		fields,
-		fieldNameMap,
-		paramsTypeMap,
-		pathParams,
-		queryParams,
-		headerParams,
-		dispatchHeaderParams,
-		bodyFieldsMap,
-		"",
-		"global_manager_config",
-		"PUT",
 		"/policy/api/v1/global-infra/global-manager-config",
 		"",
 		resultHeaders,

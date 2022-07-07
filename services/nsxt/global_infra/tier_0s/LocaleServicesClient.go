@@ -21,17 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type LocaleServicesClient interface {
 
-	// Delete Tier-0 locale-services
-	//
-	// @param tier0IdParam (required)
-	// @param localeServicesIdParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(tier0IdParam string, localeServicesIdParam string) error
-
 	// Read Tier-0 locale-services
 	//
 	// @param tier0IdParam (required)
@@ -60,31 +49,6 @@ type LocaleServicesClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(tier0IdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.LocaleServicesListResult, error)
-
-	// If a Tier-0 locale-services with the locale-services-id is not already present, create a new locale-services. If it already exists, update Tier-0 locale-services with specified attributes.
-	//
-	// @param tier0IdParam (required)
-	// @param localeServicesIdParam (required)
-	// @param localeServicesParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(tier0IdParam string, localeServicesIdParam string, localeServicesParam model.LocaleServices) error
-
-	// If a Tier-0 locale-services with the locale-services-id is not already present, create a new locale-services. If it already exists, replace the Tier-0 locale-services instance with the new object.
-	//
-	// @param tier0IdParam (required)
-	// @param localeServicesIdParam (required)
-	// @param localeServicesParam (required)
-	// @return com.vmware.nsx_policy.model.LocaleServices
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(tier0IdParam string, localeServicesIdParam string, localeServicesParam model.LocaleServices) (model.LocaleServices, error)
 }
 
 type localeServicesClient struct {
@@ -96,11 +60,8 @@ type localeServicesClient struct {
 func NewLocaleServicesClient(connector client.Connector) *localeServicesClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.tier_0s.locale_services")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -114,32 +75,6 @@ func (lIface *localeServicesClient) GetErrorBindingType(errorName string) bindin
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (lIface *localeServicesClient) Delete(tier0IdParam string, localeServicesIdParam string) error {
-	typeConverter := lIface.connector.TypeConverter()
-	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(localeServicesDeleteInputType(), typeConverter)
-	sv.AddStructField("Tier0Id", tier0IdParam)
-	sv.AddStructField("LocaleServicesId", localeServicesIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := localeServicesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	lIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_0s.locale_services", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (lIface *localeServicesClient) Get(tier0IdParam string, localeServicesIdParam string) (model.LocaleServices, error) {
@@ -202,66 +137,6 @@ func (lIface *localeServicesClient) List(tier0IdParam string, cursorParam *strin
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.LocaleServicesListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (lIface *localeServicesClient) Patch(tier0IdParam string, localeServicesIdParam string, localeServicesParam model.LocaleServices) error {
-	typeConverter := lIface.connector.TypeConverter()
-	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(localeServicesPatchInputType(), typeConverter)
-	sv.AddStructField("Tier0Id", tier0IdParam)
-	sv.AddStructField("LocaleServicesId", localeServicesIdParam)
-	sv.AddStructField("LocaleServices", localeServicesParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := localeServicesPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	lIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_0s.locale_services", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (lIface *localeServicesClient) Update(tier0IdParam string, localeServicesIdParam string, localeServicesParam model.LocaleServices) (model.LocaleServices, error) {
-	typeConverter := lIface.connector.TypeConverter()
-	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(localeServicesUpdateInputType(), typeConverter)
-	sv.AddStructField("Tier0Id", tier0IdParam)
-	sv.AddStructField("LocaleServicesId", localeServicesIdParam)
-	sv.AddStructField("LocaleServices", localeServicesParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.LocaleServices
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := localeServicesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	lIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_0s.locale_services", "update", inputDataValue, executionContext)
-	var emptyOutput model.LocaleServices
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), localeServicesUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.LocaleServices), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

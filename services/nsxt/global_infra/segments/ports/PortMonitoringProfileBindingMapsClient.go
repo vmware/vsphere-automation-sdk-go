@@ -21,18 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type PortMonitoringProfileBindingMapsClient interface {
 
-	// API will delete Infra Port Monitoring Profile Binding Profile.
-	//
-	// @param infraSegmentIdParam Infra Segment ID (required)
-	// @param infraPortIdParam Infra Port ID (required)
-	// @param portMonitoringProfileBindingMapIdParam Port Monitoring Profile Binding Map ID (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(infraSegmentIdParam string, infraPortIdParam string, portMonitoringProfileBindingMapIdParam string) error
-
 	// API will get Infra Port Monitoring Profile Binding Map.
 	//
 	// @param infraSegmentIdParam Infra Segment ID (required)
@@ -63,33 +51,6 @@ type PortMonitoringProfileBindingMapsClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(infraSegmentIdParam string, infraPortIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PortMonitoringProfileBindingMapListResult, error)
-
-	// API will create Infra Port Monitoring Profile Binding Map.
-	//
-	// @param infraSegmentIdParam Infra Segment ID (required)
-	// @param infraPortIdParam Infra Port ID (required)
-	// @param portMonitoringProfileBindingMapIdParam Port Monitoring Profile Binding Map ID (required)
-	// @param portMonitoringProfileBindingMapParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(infraSegmentIdParam string, infraPortIdParam string, portMonitoringProfileBindingMapIdParam string, portMonitoringProfileBindingMapParam model.PortMonitoringProfileBindingMap) error
-
-	// API will update Infra Port Monitoring Profile Binding Map.
-	//
-	// @param infraSegmentIdParam InfraSegment ID (required)
-	// @param infraPortIdParam Infra Port ID (required)
-	// @param portMonitoringProfileBindingMapIdParam Port Monitoring Profile Binding Map ID (required)
-	// @param portMonitoringProfileBindingMapParam (required)
-	// @return com.vmware.nsx_policy.model.PortMonitoringProfileBindingMap
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(infraSegmentIdParam string, infraPortIdParam string, portMonitoringProfileBindingMapIdParam string, portMonitoringProfileBindingMapParam model.PortMonitoringProfileBindingMap) (model.PortMonitoringProfileBindingMap, error)
 }
 
 type portMonitoringProfileBindingMapsClient struct {
@@ -101,11 +62,8 @@ type portMonitoringProfileBindingMapsClient struct {
 func NewPortMonitoringProfileBindingMapsClient(connector client.Connector) *portMonitoringProfileBindingMapsClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.segments.ports.port_monitoring_profile_binding_maps")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -119,33 +77,6 @@ func (pIface *portMonitoringProfileBindingMapsClient) GetErrorBindingType(errorN
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (pIface *portMonitoringProfileBindingMapsClient) Delete(infraSegmentIdParam string, infraPortIdParam string, portMonitoringProfileBindingMapIdParam string) error {
-	typeConverter := pIface.connector.TypeConverter()
-	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(portMonitoringProfileBindingMapsDeleteInputType(), typeConverter)
-	sv.AddStructField("InfraSegmentId", infraSegmentIdParam)
-	sv.AddStructField("InfraPortId", infraPortIdParam)
-	sv.AddStructField("PortMonitoringProfileBindingMapId", portMonitoringProfileBindingMapIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := portMonitoringProfileBindingMapsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.segments.ports.port_monitoring_profile_binding_maps", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (pIface *portMonitoringProfileBindingMapsClient) Get(infraSegmentIdParam string, infraPortIdParam string, portMonitoringProfileBindingMapIdParam string) (model.PortMonitoringProfileBindingMap, error) {
@@ -210,68 +141,6 @@ func (pIface *portMonitoringProfileBindingMapsClient) List(infraSegmentIdParam s
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.PortMonitoringProfileBindingMapListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (pIface *portMonitoringProfileBindingMapsClient) Patch(infraSegmentIdParam string, infraPortIdParam string, portMonitoringProfileBindingMapIdParam string, portMonitoringProfileBindingMapParam model.PortMonitoringProfileBindingMap) error {
-	typeConverter := pIface.connector.TypeConverter()
-	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(portMonitoringProfileBindingMapsPatchInputType(), typeConverter)
-	sv.AddStructField("InfraSegmentId", infraSegmentIdParam)
-	sv.AddStructField("InfraPortId", infraPortIdParam)
-	sv.AddStructField("PortMonitoringProfileBindingMapId", portMonitoringProfileBindingMapIdParam)
-	sv.AddStructField("PortMonitoringProfileBindingMap", portMonitoringProfileBindingMapParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := portMonitoringProfileBindingMapsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.segments.ports.port_monitoring_profile_binding_maps", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (pIface *portMonitoringProfileBindingMapsClient) Update(infraSegmentIdParam string, infraPortIdParam string, portMonitoringProfileBindingMapIdParam string, portMonitoringProfileBindingMapParam model.PortMonitoringProfileBindingMap) (model.PortMonitoringProfileBindingMap, error) {
-	typeConverter := pIface.connector.TypeConverter()
-	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(portMonitoringProfileBindingMapsUpdateInputType(), typeConverter)
-	sv.AddStructField("InfraSegmentId", infraSegmentIdParam)
-	sv.AddStructField("InfraPortId", infraPortIdParam)
-	sv.AddStructField("PortMonitoringProfileBindingMapId", portMonitoringProfileBindingMapIdParam)
-	sv.AddStructField("PortMonitoringProfileBindingMap", portMonitoringProfileBindingMapParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.PortMonitoringProfileBindingMap
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := portMonitoringProfileBindingMapsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.segments.ports.port_monitoring_profile_binding_maps", "update", inputDataValue, executionContext)
-	var emptyOutput model.PortMonitoringProfileBindingMap
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), portMonitoringProfileBindingMapsUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.PortMonitoringProfileBindingMap), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

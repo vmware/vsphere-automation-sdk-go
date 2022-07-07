@@ -21,11 +21,12 @@ const _ = core.SupportedByRuntimeVersion1
 
 type StatisticsClient interface {
 
-	//
+	// Get statistics of an L3Vpn. - no enforcement point path specified: Stats will be evaluated on each enforcement point. - {enforcement_point_path}: Stats are evaluated only on the given enforcement point. This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/locale-services/ <locale-service-id>/ipsec-vpn-services/default/sessions/L3VPN_<l3vpn-id>/statistics instead.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
 	// @param l3vpnIdParam (required)
+	// @param containerClusterPathParam String Path of the Container Cluster entity (optional)
 	// @param enforcementPointPathParam String Path of the enforcement point (optional)
 	// @return com.vmware.nsx_policy.model.AggregateL3VpnStatistics
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -33,7 +34,7 @@ type StatisticsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(tier0IdParam string, localeServiceIdParam string, l3vpnIdParam string, enforcementPointPathParam *string) (model.AggregateL3VpnStatistics, error)
+	Get(tier0IdParam string, localeServiceIdParam string, l3vpnIdParam string, containerClusterPathParam *string, enforcementPointPathParam *string) (model.AggregateL3VpnStatistics, error)
 }
 
 type statisticsClient struct {
@@ -61,13 +62,14 @@ func (sIface *statisticsClient) GetErrorBindingType(errorName string) bindings.B
 	return errors.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statisticsClient) Get(tier0IdParam string, localeServiceIdParam string, l3vpnIdParam string, enforcementPointPathParam *string) (model.AggregateL3VpnStatistics, error) {
+func (sIface *statisticsClient) Get(tier0IdParam string, localeServiceIdParam string, l3vpnIdParam string, containerClusterPathParam *string, enforcementPointPathParam *string) (model.AggregateL3VpnStatistics, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	sv := bindings.NewStructValueBuilder(statisticsGetInputType(), typeConverter)
 	sv.AddStructField("Tier0Id", tier0IdParam)
 	sv.AddStructField("LocaleServiceId", localeServiceIdParam)
 	sv.AddStructField("L3vpnId", l3vpnIdParam)
+	sv.AddStructField("ContainerClusterPath", containerClusterPathParam)
 	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {

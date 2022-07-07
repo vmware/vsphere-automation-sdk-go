@@ -22,18 +22,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type DhcpStaticBindingConfigsClient interface {
 
-	// Delete DHCP static binding
-	//
-	// @param tier1IdParam (required)
-	// @param segmentIdParam (required)
-	// @param bindingIdParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(tier1IdParam string, segmentIdParam string, bindingIdParam string) error
-
 	// Read DHCP static binding
 	//
 	// @param tier1IdParam (required)
@@ -65,36 +53,6 @@ type DhcpStaticBindingConfigsClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(tier1IdParam string, segmentIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.DhcpStaticBindingConfigListResult, error)
-
-	// If binding with the binding-id is not already present, create a new DHCP static binding instance. If it already exists, replace the existing DHCP static binding instance with specified attributes.
-	//
-	// @param tier1IdParam (required)
-	// @param segmentIdParam (required)
-	// @param bindingIdParam (required)
-	// @param dhcpStaticBindingConfigParam (required)
-	// The parameter must contain all the properties defined in model.DhcpStaticBindingConfig.
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(tier1IdParam string, segmentIdParam string, bindingIdParam string, dhcpStaticBindingConfigParam *data.StructValue) error
-
-	// If binding with the binding-id is not already present, create a new DHCP static binding instance. If it already exists, replace the existing DHCP static binding instance with this object.
-	//
-	// @param tier1IdParam (required)
-	// @param segmentIdParam (required)
-	// @param bindingIdParam (required)
-	// @param dhcpStaticBindingConfigParam (required)
-	// The parameter must contain all the properties defined in model.DhcpStaticBindingConfig.
-	// @return com.vmware.nsx_policy.model.DhcpStaticBindingConfig
-	// The return value will contain all the properties defined in model.DhcpStaticBindingConfig.
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(tier1IdParam string, segmentIdParam string, bindingIdParam string, dhcpStaticBindingConfigParam *data.StructValue) (*data.StructValue, error)
 }
 
 type dhcpStaticBindingConfigsClient struct {
@@ -106,11 +64,8 @@ type dhcpStaticBindingConfigsClient struct {
 func NewDhcpStaticBindingConfigsClient(connector client.Connector) *dhcpStaticBindingConfigsClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.tier_1s.segments.dhcp_static_binding_configs")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -124,33 +79,6 @@ func (dIface *dhcpStaticBindingConfigsClient) GetErrorBindingType(errorName stri
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (dIface *dhcpStaticBindingConfigsClient) Delete(tier1IdParam string, segmentIdParam string, bindingIdParam string) error {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dhcpStaticBindingConfigsDeleteInputType(), typeConverter)
-	sv.AddStructField("Tier1Id", tier1IdParam)
-	sv.AddStructField("SegmentId", segmentIdParam)
-	sv.AddStructField("BindingId", bindingIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := dhcpStaticBindingConfigsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_1s.segments.dhcp_static_binding_configs", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (dIface *dhcpStaticBindingConfigsClient) Get(tier1IdParam string, segmentIdParam string, bindingIdParam string) (*data.StructValue, error) {
@@ -215,68 +143,6 @@ func (dIface *dhcpStaticBindingConfigsClient) List(tier1IdParam string, segmentI
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.DhcpStaticBindingConfigListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (dIface *dhcpStaticBindingConfigsClient) Patch(tier1IdParam string, segmentIdParam string, bindingIdParam string, dhcpStaticBindingConfigParam *data.StructValue) error {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dhcpStaticBindingConfigsPatchInputType(), typeConverter)
-	sv.AddStructField("Tier1Id", tier1IdParam)
-	sv.AddStructField("SegmentId", segmentIdParam)
-	sv.AddStructField("BindingId", bindingIdParam)
-	sv.AddStructField("DhcpStaticBindingConfig", dhcpStaticBindingConfigParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := dhcpStaticBindingConfigsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_1s.segments.dhcp_static_binding_configs", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (dIface *dhcpStaticBindingConfigsClient) Update(tier1IdParam string, segmentIdParam string, bindingIdParam string, dhcpStaticBindingConfigParam *data.StructValue) (*data.StructValue, error) {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dhcpStaticBindingConfigsUpdateInputType(), typeConverter)
-	sv.AddStructField("Tier1Id", tier1IdParam)
-	sv.AddStructField("SegmentId", segmentIdParam)
-	sv.AddStructField("BindingId", bindingIdParam)
-	sv.AddStructField("DhcpStaticBindingConfig", dhcpStaticBindingConfigParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput *data.StructValue
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := dhcpStaticBindingConfigsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_1s.segments.dhcp_static_binding_configs", "update", inputDataValue, executionContext)
-	var emptyOutput *data.StructValue
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), dhcpStaticBindingConfigsUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(*data.StructValue), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

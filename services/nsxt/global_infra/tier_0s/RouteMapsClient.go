@@ -21,17 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type RouteMapsClient interface {
 
-	// Delete a route map
-	//
-	// @param tier0IdParam (required)
-	// @param routeMapIdParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(tier0IdParam string, routeMapIdParam string) error
-
 	// Read a route map
 	//
 	// @param tier0IdParam (required)
@@ -60,31 +49,6 @@ type RouteMapsClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(tier0IdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.Tier0RouteMapListResult, error)
-
-	// If a route map with the route-map-id is not already present, create a new route map. If it already exists, update the route map for specified attributes.
-	//
-	// @param tier0IdParam (required)
-	// @param routeMapIdParam (required)
-	// @param tier0RouteMapParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(tier0IdParam string, routeMapIdParam string, tier0RouteMapParam model.Tier0RouteMap) error
-
-	// If a route map with the route-map-id is not already present, create a new route map. If it already exists, replace the route map instance with the new object.
-	//
-	// @param tier0IdParam (required)
-	// @param routeMapIdParam (required)
-	// @param tier0RouteMapParam (required)
-	// @return com.vmware.nsx_policy.model.Tier0RouteMap
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(tier0IdParam string, routeMapIdParam string, tier0RouteMapParam model.Tier0RouteMap) (model.Tier0RouteMap, error)
 }
 
 type routeMapsClient struct {
@@ -96,11 +60,8 @@ type routeMapsClient struct {
 func NewRouteMapsClient(connector client.Connector) *routeMapsClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.tier_0s.route_maps")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -114,32 +75,6 @@ func (rIface *routeMapsClient) GetErrorBindingType(errorName string) bindings.Bi
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (rIface *routeMapsClient) Delete(tier0IdParam string, routeMapIdParam string) error {
-	typeConverter := rIface.connector.TypeConverter()
-	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(routeMapsDeleteInputType(), typeConverter)
-	sv.AddStructField("Tier0Id", tier0IdParam)
-	sv.AddStructField("RouteMapId", routeMapIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := routeMapsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_0s.route_maps", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (rIface *routeMapsClient) Get(tier0IdParam string, routeMapIdParam string) (model.Tier0RouteMap, error) {
@@ -202,66 +137,6 @@ func (rIface *routeMapsClient) List(tier0IdParam string, cursorParam *string, in
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.Tier0RouteMapListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (rIface *routeMapsClient) Patch(tier0IdParam string, routeMapIdParam string, tier0RouteMapParam model.Tier0RouteMap) error {
-	typeConverter := rIface.connector.TypeConverter()
-	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(routeMapsPatchInputType(), typeConverter)
-	sv.AddStructField("Tier0Id", tier0IdParam)
-	sv.AddStructField("RouteMapId", routeMapIdParam)
-	sv.AddStructField("Tier0RouteMap", tier0RouteMapParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := routeMapsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_0s.route_maps", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (rIface *routeMapsClient) Update(tier0IdParam string, routeMapIdParam string, tier0RouteMapParam model.Tier0RouteMap) (model.Tier0RouteMap, error) {
-	typeConverter := rIface.connector.TypeConverter()
-	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(routeMapsUpdateInputType(), typeConverter)
-	sv.AddStructField("Tier0Id", tier0IdParam)
-	sv.AddStructField("RouteMapId", routeMapIdParam)
-	sv.AddStructField("Tier0RouteMap", tier0RouteMapParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.Tier0RouteMap
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := routeMapsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_0s.route_maps", "update", inputDataValue, executionContext)
-	var emptyOutput model.Tier0RouteMap
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), routeMapsUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.Tier0RouteMap), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

@@ -18,7 +18,7 @@ import (
 	"reflect"
 )
 
-func routesGetInputType() bindings.StructType {
+func routesListInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["tier0_id"] = bindings.NewStringType()
@@ -41,11 +41,11 @@ func routesGetInputType() bindings.StructType {
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func routesGetOutputType() bindings.BindingType {
+func routesListOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.PolicyMulticastRoutesBindingType)
 }
 
-func routesGetRestMetadata() protocol.OperationRestMetadata {
+func routesListRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}

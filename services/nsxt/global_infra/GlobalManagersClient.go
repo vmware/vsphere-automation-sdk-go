@@ -21,16 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type GlobalManagersClient interface {
 
-	// Delete a particular global manager under Infra. Global Manager id 'self' is reserved and can be used for referring to local logged in Global Manager. Example - /infra/global-managers/self
-	//
-	// @param globalManagerIdParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(globalManagerIdParam string) error
-
 	// Retrieve information about a particular configured global manager. Global Manager id 'self' is reserved and can be used for referring to local logged in Global Manager. Example - /infra/global-managers/self
 	//
 	// @param globalManagerIdParam (required)
@@ -57,31 +47,6 @@ type GlobalManagersClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.GlobalManagerListResult, error)
-
-	// Create or patch a Global Manager under Infra. Global Manager id 'self' is reserved and can be used for referring to local logged in Global Manager. Example - /infra/global-managers/self
-	//
-	// @param globalManagerIdParam (required)
-	// @param globalManagerParam (required)
-	// @param forceParam Indciates force switchover to Active (optional)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(globalManagerIdParam string, globalManagerParam model.GlobalManager, forceParam *bool) error
-
-	// Create or fully replace Global Manager under Infra. Revision is optional for creation and required for update. Global Manager id 'self' is reserved and can be used for referring to local logged in Global Manager. Example - /infra/global-managers/self
-	//
-	// @param globalManagerIdParam (required)
-	// @param globalManagerParam (required)
-	// @param forceParam Indciates force switchover to Active (optional)
-	// @return com.vmware.nsx_policy.model.GlobalManager
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(globalManagerIdParam string, globalManagerParam model.GlobalManager, forceParam *bool) (model.GlobalManager, error)
 }
 
 type globalManagersClient struct {
@@ -93,11 +58,8 @@ type globalManagersClient struct {
 func NewGlobalManagersClient(connector client.Connector) *globalManagersClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.global_managers")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -111,31 +73,6 @@ func (gIface *globalManagersClient) GetErrorBindingType(errorName string) bindin
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (gIface *globalManagersClient) Delete(globalManagerIdParam string) error {
-	typeConverter := gIface.connector.TypeConverter()
-	executionContext := gIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(globalManagersDeleteInputType(), typeConverter)
-	sv.AddStructField("GlobalManagerId", globalManagerIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := globalManagersDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	gIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := gIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.global_managers", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), gIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (gIface *globalManagersClient) Get(globalManagerIdParam string) (model.GlobalManager, error) {
@@ -196,66 +133,6 @@ func (gIface *globalManagersClient) List(cursorParam *string, includeMarkForDele
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.GlobalManagerListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), gIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (gIface *globalManagersClient) Patch(globalManagerIdParam string, globalManagerParam model.GlobalManager, forceParam *bool) error {
-	typeConverter := gIface.connector.TypeConverter()
-	executionContext := gIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(globalManagersPatchInputType(), typeConverter)
-	sv.AddStructField("GlobalManagerId", globalManagerIdParam)
-	sv.AddStructField("GlobalManager", globalManagerParam)
-	sv.AddStructField("Force", forceParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := globalManagersPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	gIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := gIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.global_managers", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), gIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (gIface *globalManagersClient) Update(globalManagerIdParam string, globalManagerParam model.GlobalManager, forceParam *bool) (model.GlobalManager, error) {
-	typeConverter := gIface.connector.TypeConverter()
-	executionContext := gIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(globalManagersUpdateInputType(), typeConverter)
-	sv.AddStructField("GlobalManagerId", globalManagerIdParam)
-	sv.AddStructField("GlobalManager", globalManagerParam)
-	sv.AddStructField("Force", forceParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.GlobalManager
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := globalManagersUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	gIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := gIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.global_managers", "update", inputDataValue, executionContext)
-	var emptyOutput model.GlobalManager
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), globalManagersUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.GlobalManager), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), gIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

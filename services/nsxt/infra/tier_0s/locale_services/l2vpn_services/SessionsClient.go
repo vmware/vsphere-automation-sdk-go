@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type SessionsClient interface {
 
-	// Create or patch an L2VPN session under Tier-0 from Peer Codes. In addition to the L2VPN Session, the IPSec VPN Session, along with the IKE, Tunnel, and DPD Profiles are created and owned by the system. IPSec VPN Service and Local Endpoint are created only when required, i.e., an IPSec VPN Service does not already exist, or an IPSec VPN Local Endpoint with same local address does not already exist. Updating the L2VPN Session can be performed only through this API by specifying new peer codes. Use of specific APIs to update the L2VPN Session and the different resources associated with it is not allowed, except for IPSec VPN Service and Local Endpoint, resources that are not system owned. API supported only when L2VPN Service is in Client Mode.
+	// Create or patch an L2VPN session under Tier-0 from Peer Codes. In addition to the L2VPN Session, the IPSec VPN Session, along with the IKE, Tunnel, and DPD Profiles are created and owned by the system. IPSec VPN Service and Local Endpoint are created only when required, i.e., an IPSec VPN Service does not already exist, or an IPSec VPN Local Endpoint with same local address does not already exist. Updating the L2VPN Session can be performed only through this API by specifying new peer codes. Use of specific APIs to update the L2VPN Session and the different resources associated with it is not allowed, except for IPSec VPN Service and Local Endpoint, resources that are not system owned. API supported only when L2VPN Service is in Client Mode. This API is deprecated. Please use POST /infra/tier-0s/<tier-0-id>/l2vpn-services/<service-id>/ sessions/<session-id>?action=create_with_peer_code instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource. Also VPN path returned in the Alarm, GPRR payload may include the new VPN path.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -35,7 +35,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	Createwithpeercode(tier0IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string, l2VPNSessionDataParam model.L2VPNSessionData) error
 
-	// Delete L2VPN session under Tier-0. When L2VPN Service is in CLIENT Mode, the L2VPN Session is deleted along with its transpot tunnels and related resources.
+	// Delete L2VPN session under Tier-0. When L2VPN Service is in CLIENT Mode, the L2VPN Session is deleted along with its transpot tunnels and related resources. This API is deprecated. Please use DELETE /infra/tier-0s/<tier-0-id>/ l2vpn-services/<service-id>/sessions/<session-id> instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource. Also VPN path returned in the Alarm, GPRR payload may include the new VPN path.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -48,7 +48,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	Delete(tier0IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string) error
 
-	// Get L2VPN session under Tier-0.
+	// Get L2VPN session under Tier-0. This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/ l2vpn-services/<service-id>/sessions/<session-id> instead. Note: The API will return a new VPN path for \"transport_tunnels\" in the response payload instead of the deprecated API path Both paths refer to the same object. Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -62,7 +62,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	Get(tier0IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string) (model.L2VPNSession, error)
 
-	// Get paginated list of all L2VPN sessions under Tier-0.
+	// Get paginated list of all L2VPN sessions under Tier-0. This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/ l2vpn-services/<service-id>/sessions instead. Note: The API will return a new VPN path for \"transport_tunnels\" in the response payload instead of the deprecated API path Both paths refer to the same object. Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -81,7 +81,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	List(tier0IdParam string, localeServiceIdParam string, serviceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.L2VPNSessionListResult, error)
 
-	// Create or patch an L2VPN session under Tier-0. API supported only when L2VPN Service is in Server Mode.
+	// Create or patch an L2VPN session under Tier-0. API supported only when L2VPN Service is in Server Mode. This API is deprecated. Please use PATCH /infra/tier-0s/<tier-0-id>/ l2vpn-services/<service-id>/sessions/<session-id> instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource. Also VPN path returned in the Alarm, GPRR payload may include the new VPN path.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -95,7 +95,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	Patch(tier0IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string, l2VPNSessionParam model.L2VPNSession) error
 
-	// Create or fully replace L2VPN session under Tier-0. API supported only when L2VPN Service is in Server Mode. Revision is optional for creation and required for update.
+	// Create or fully replace L2VPN session under Tier-0. API supported only when L2VPN Service is in Server Mode. Revision is optional for creation and required for update. This API is deprecated. Please use PUT /infra/tier-0s/<tier-0-id>/ l2vpn-services/<service-id>/sessions/<session-id> instead. Note: The API will return a new VPN path for \"transport_tunnels\" in the response payload instead of the deprecated API path Both paths refer to the same object. Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource. Also VPN path returned in the Alarm, GPRR payload may include the new VPN path.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)

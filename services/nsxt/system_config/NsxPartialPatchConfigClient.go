@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type NsxPartialPatchConfigClient interface {
 
-	// Get Configuration values for nsx-partial-patch. By default partial patch is disbaled (i.e false).
+	// Get Configuration values for nsx-partial-patch. By default partial patch is disabled (i.e false).
 	// @return com.vmware.nsx_policy.model.PartialPatchConfig
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

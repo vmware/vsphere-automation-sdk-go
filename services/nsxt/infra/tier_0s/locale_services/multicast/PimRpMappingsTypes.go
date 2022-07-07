@@ -18,7 +18,7 @@ import (
 	"reflect"
 )
 
-func pimRpMappingsGetInputType() bindings.StructType {
+func pimRpMappingsListInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["tier0_id"] = bindings.NewStringType()
@@ -41,11 +41,11 @@ func pimRpMappingsGetInputType() bindings.StructType {
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
 }
 
-func pimRpMappingsGetOutputType() bindings.BindingType {
+func pimRpMappingsListOutputType() bindings.BindingType {
 	return bindings.NewReferenceType(model.PimRpMappingsBindingType)
 }
 
-func pimRpMappingsGetRestMetadata() protocol.OperationRestMetadata {
+func pimRpMappingsListRestMetadata() protocol.OperationRestMetadata {
 	fields := map[string]bindings.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]bindings.BindingType{}

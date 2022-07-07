@@ -21,16 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type LabelsClient interface {
 
-	// Delete PolicyLabel object
-	//
-	// @param labelIdParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(labelIdParam string) error
-
 	// Read a label.
 	//
 	// @param labelIdParam (required)
@@ -57,29 +47,6 @@ type LabelsClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PolicyLabelListResult, error)
-
-	// Create label if not exists, otherwise take the partial updates. Note, once the label is created type attribute can not be changed.
-	//
-	// @param labelIdParam (required)
-	// @param policyLabelParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(labelIdParam string, policyLabelParam model.PolicyLabel) error
-
-	// Create label if not exists, otherwise replaces the existing label. If label already exists then type attribute cannot be changed.
-	//
-	// @param labelIdParam (required)
-	// @param policyLabelParam (required)
-	// @return com.vmware.nsx_policy.model.PolicyLabel
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(labelIdParam string, policyLabelParam model.PolicyLabel) (model.PolicyLabel, error)
 }
 
 type labelsClient struct {
@@ -91,11 +58,8 @@ type labelsClient struct {
 func NewLabelsClient(connector client.Connector) *labelsClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.labels")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -109,31 +73,6 @@ func (lIface *labelsClient) GetErrorBindingType(errorName string) bindings.Bindi
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (lIface *labelsClient) Delete(labelIdParam string) error {
-	typeConverter := lIface.connector.TypeConverter()
-	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(labelsDeleteInputType(), typeConverter)
-	sv.AddStructField("LabelId", labelIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := labelsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	lIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.labels", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (lIface *labelsClient) Get(labelIdParam string) (model.PolicyLabel, error) {
@@ -194,64 +133,6 @@ func (lIface *labelsClient) List(cursorParam *string, includeMarkForDeleteObject
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.PolicyLabelListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (lIface *labelsClient) Patch(labelIdParam string, policyLabelParam model.PolicyLabel) error {
-	typeConverter := lIface.connector.TypeConverter()
-	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(labelsPatchInputType(), typeConverter)
-	sv.AddStructField("LabelId", labelIdParam)
-	sv.AddStructField("PolicyLabel", policyLabelParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := labelsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	lIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.labels", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (lIface *labelsClient) Update(labelIdParam string, policyLabelParam model.PolicyLabel) (model.PolicyLabel, error) {
-	typeConverter := lIface.connector.TypeConverter()
-	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(labelsUpdateInputType(), typeConverter)
-	sv.AddStructField("LabelId", labelIdParam)
-	sv.AddStructField("PolicyLabel", policyLabelParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.PolicyLabel
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := labelsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	lIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.labels", "update", inputDataValue, executionContext)
-	var emptyOutput model.PolicyLabel
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), labelsUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.PolicyLabel), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type ObservationsClient interface {
 
-	// Read traceflow observations for id traceflow-id. Traceflow configuration will be cleaned up by the system after two hours of inactivity.
+	// Read traceflow observations for id traceflow-id. Traceflow configuration will be cleaned up by the system after two hours of inactivity. Enforcement point path is not required for Federation setup.
 	//
 	// @param traceflowIdParam (required)
 	// @param enforcementPointPathParam Enforcement point path (optional)

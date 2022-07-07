@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type DetailedStatusClient interface {
 
-	// Get LBPool detailed status information. - no enforcement point path specified: Information will be aggregated from each enforcement point. - {enforcement_point_path}: Information will be retrieved only from the given enforcement point.
+	// Get LBPool detailed status information. - no enforcement point path specified: Information will be aggregated from each enforcement point. - {enforcement_point_path}: Information will be retrieved only from the given enforcement point. This API is deprecated for the NSX-T Load Balancer, but not for the NSX-T Distributed Load Balancer.
 	//
 	// @param lbServiceIdParam LBService id (required)
 	// @param lbPoolIdParam LBPool id (required)

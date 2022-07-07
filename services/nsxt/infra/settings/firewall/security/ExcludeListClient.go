@@ -43,6 +43,15 @@ type ExcludeListClient interface {
 	// @throws NotFound  Not Found
 	Get() (model.PolicyExcludeList, error)
 
+	// Read security policy exclude list including system and user excluded members.
+	// @return com.vmware.nsx_policy.model.PolicyExcludeList
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Get0() (model.PolicyExcludeList, error)
+
 	// Patch exclusion list for security policy.
 	//
 	// @param policyExcludeListParam (required)
@@ -76,6 +85,7 @@ func NewExcludeListClient(connector client.Connector) *excludeListClient {
 	methodIdentifiers := map[string]core.MethodIdentifier{
 		"filter": core.NewMethodIdentifier(interfaceIdentifier, "filter"),
 		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get_0":  core.NewMethodIdentifier(interfaceIdentifier, "get_0"),
 		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
@@ -143,6 +153,36 @@ func (eIface *excludeListClient) Get() (model.PolicyExcludeList, error) {
 	var emptyOutput model.PolicyExcludeList
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), excludeListGetOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(model.PolicyExcludeList), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), eIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (eIface *excludeListClient) Get0() (model.PolicyExcludeList, error) {
+	typeConverter := eIface.connector.TypeConverter()
+	executionContext := eIface.connector.NewExecutionContext()
+	sv := bindings.NewStructValueBuilder(excludeListGet0InputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput model.PolicyExcludeList
+		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+	}
+	operationRestMetaData := excludeListGet0RestMetadata()
+	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
+	eIface.connector.SetConnectionMetadata(connectionMetadata)
+	methodResult := eIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.exclude_list", "get_0", inputDataValue, executionContext)
+	var emptyOutput model.PolicyExcludeList
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), excludeListGet0OutputType())
 		if errorInOutput != nil {
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}

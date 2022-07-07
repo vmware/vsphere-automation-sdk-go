@@ -22,17 +22,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type ServiceEntriesClient interface {
 
-	// Delete Service entry
-	//
-	// @param serviceIdParam Service ID (required)
-	// @param serviceEntryIdParam Service entry ID (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(serviceIdParam string, serviceEntryIdParam string) error
-
 	// Service entry
 	//
 	// @param serviceIdParam Service ID (required)
@@ -62,34 +51,6 @@ type ServiceEntriesClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(serviceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.ServiceEntryListResult, error)
-
-	// If a service entry with the service-entry-id is not already present, create a new service entry. If it already exists, patch the service entry.
-	//
-	// @param serviceIdParam Service ID (required)
-	// @param serviceEntryIdParam Service entry ID (required)
-	// @param serviceEntryParam (required)
-	// The parameter must contain all the properties defined in model.ServiceEntry.
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(serviceIdParam string, serviceEntryIdParam string, serviceEntryParam *data.StructValue) error
-
-	// If a service entry with the service-entry-id is not already present, create a new service entry. If it already exists, update the service entry.
-	//
-	// @param serviceIdParam Service ID (required)
-	// @param serviceEntryIdParam Service entry ID (required)
-	// @param serviceEntryParam (required)
-	// The parameter must contain all the properties defined in model.ServiceEntry.
-	// @return com.vmware.nsx_policy.model.ServiceEntry
-	// The return value will contain all the properties defined in model.ServiceEntry.
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(serviceIdParam string, serviceEntryIdParam string, serviceEntryParam *data.StructValue) (*data.StructValue, error)
 }
 
 type serviceEntriesClient struct {
@@ -101,11 +62,8 @@ type serviceEntriesClient struct {
 func NewServiceEntriesClient(connector client.Connector) *serviceEntriesClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.services.service_entries")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -119,32 +77,6 @@ func (sIface *serviceEntriesClient) GetErrorBindingType(errorName string) bindin
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (sIface *serviceEntriesClient) Delete(serviceIdParam string, serviceEntryIdParam string) error {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceEntriesDeleteInputType(), typeConverter)
-	sv.AddStructField("ServiceId", serviceIdParam)
-	sv.AddStructField("ServiceEntryId", serviceEntryIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := serviceEntriesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.services.service_entries", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (sIface *serviceEntriesClient) Get(serviceIdParam string, serviceEntryIdParam string) (*data.StructValue, error) {
@@ -207,66 +139,6 @@ func (sIface *serviceEntriesClient) List(serviceIdParam string, cursorParam *str
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.ServiceEntryListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (sIface *serviceEntriesClient) Patch(serviceIdParam string, serviceEntryIdParam string, serviceEntryParam *data.StructValue) error {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceEntriesPatchInputType(), typeConverter)
-	sv.AddStructField("ServiceId", serviceIdParam)
-	sv.AddStructField("ServiceEntryId", serviceEntryIdParam)
-	sv.AddStructField("ServiceEntry", serviceEntryParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := serviceEntriesPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.services.service_entries", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (sIface *serviceEntriesClient) Update(serviceIdParam string, serviceEntryIdParam string, serviceEntryParam *data.StructValue) (*data.StructValue, error) {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceEntriesUpdateInputType(), typeConverter)
-	sv.AddStructField("ServiceId", serviceIdParam)
-	sv.AddStructField("ServiceEntryId", serviceEntryIdParam)
-	sv.AddStructField("ServiceEntry", serviceEntryParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput *data.StructValue
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := serviceEntriesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.services.service_entries", "update", inputDataValue, executionContext)
-	var emptyOutput *data.StructValue
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), serviceEntriesUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(*data.StructValue), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

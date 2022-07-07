@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type MemberGroupsClient interface {
 
-	// A member group could be either direct member of the group specified by group_id or nested member of it. Both direct member groups and nested member groups are returned.
+	// A member group could be either direct member of the group specified by group_id or nested member of it. Both direct member groups and nested member groups are returned. Directory group member sync must be enabled to get the correct results.
 	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param groupIdParam Directory group identifier (required)

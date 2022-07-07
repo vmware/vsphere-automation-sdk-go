@@ -21,16 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type DnsForwarderZonesClient interface {
 
-	// Delete the DNS Forwarder Zone
-	//
-	// @param dnsForwarderZoneIdParam DNS Forwarder Zone ID (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(dnsForwarderZoneIdParam string) error
-
 	// Read the DNS Forwarder Zone
 	//
 	// @param dnsForwarderZoneIdParam DNS Forwarder Zone ID (required)
@@ -57,29 +47,6 @@ type DnsForwarderZonesClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PolicyDnsForwarderZoneListResult, error)
-
-	// Create or update the DNS Forwarder Zone
-	//
-	// @param dnsForwarderZoneIdParam DNS Forwarder Zone ID (required)
-	// @param policyDnsForwarderZoneParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(dnsForwarderZoneIdParam string, policyDnsForwarderZoneParam model.PolicyDnsForwarderZone) error
-
-	// Create or update the DNS Forwarder Zone
-	//
-	// @param dnsForwarderZoneIdParam DNS Forwarder Zone ID (required)
-	// @param policyDnsForwarderZoneParam (required)
-	// @return com.vmware.nsx_policy.model.PolicyDnsForwarderZone
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(dnsForwarderZoneIdParam string, policyDnsForwarderZoneParam model.PolicyDnsForwarderZone) (model.PolicyDnsForwarderZone, error)
 }
 
 type dnsForwarderZonesClient struct {
@@ -91,11 +58,8 @@ type dnsForwarderZonesClient struct {
 func NewDnsForwarderZonesClient(connector client.Connector) *dnsForwarderZonesClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.dns_forwarder_zones")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -109,31 +73,6 @@ func (dIface *dnsForwarderZonesClient) GetErrorBindingType(errorName string) bin
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (dIface *dnsForwarderZonesClient) Delete(dnsForwarderZoneIdParam string) error {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dnsForwarderZonesDeleteInputType(), typeConverter)
-	sv.AddStructField("DnsForwarderZoneId", dnsForwarderZoneIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := dnsForwarderZonesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.dns_forwarder_zones", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (dIface *dnsForwarderZonesClient) Get(dnsForwarderZoneIdParam string) (model.PolicyDnsForwarderZone, error) {
@@ -194,64 +133,6 @@ func (dIface *dnsForwarderZonesClient) List(cursorParam *string, includeMarkForD
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.PolicyDnsForwarderZoneListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (dIface *dnsForwarderZonesClient) Patch(dnsForwarderZoneIdParam string, policyDnsForwarderZoneParam model.PolicyDnsForwarderZone) error {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dnsForwarderZonesPatchInputType(), typeConverter)
-	sv.AddStructField("DnsForwarderZoneId", dnsForwarderZoneIdParam)
-	sv.AddStructField("PolicyDnsForwarderZone", policyDnsForwarderZoneParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := dnsForwarderZonesPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.dns_forwarder_zones", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (dIface *dnsForwarderZonesClient) Update(dnsForwarderZoneIdParam string, policyDnsForwarderZoneParam model.PolicyDnsForwarderZone) (model.PolicyDnsForwarderZone, error) {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dnsForwarderZonesUpdateInputType(), typeConverter)
-	sv.AddStructField("DnsForwarderZoneId", dnsForwarderZoneIdParam)
-	sv.AddStructField("PolicyDnsForwarderZone", policyDnsForwarderZoneParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.PolicyDnsForwarderZone
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := dnsForwarderZonesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.dns_forwarder_zones", "update", inputDataValue, executionContext)
-	var emptyOutput model.PolicyDnsForwarderZone
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), dnsForwarderZonesUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.PolicyDnsForwarderZone), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

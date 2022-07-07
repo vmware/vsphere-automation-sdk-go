@@ -21,17 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type PrefixListsClient interface {
 
-	// Delete a prefix list
-	//
-	// @param tier0IdParam (required)
-	// @param prefixListIdParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(tier0IdParam string, prefixListIdParam string) error
-
 	// Read a prefix list
 	//
 	// @param tier0IdParam (required)
@@ -60,31 +49,6 @@ type PrefixListsClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(tier0IdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PrefixListResult, error)
-
-	// If prefix list for prefix-list-id is not already present, create a prefix list. If it already exists, update prefix list for prefix-list-id.
-	//
-	// @param tier0IdParam (required)
-	// @param prefixListIdParam (required)
-	// @param prefixListParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(tier0IdParam string, prefixListIdParam string, prefixListParam model.PrefixList) error
-
-	// If prefix list for prefix-list-id is not already present, create a prefix list. If it already exists, replace the prefix list for prefix-list-id.
-	//
-	// @param tier0IdParam Tier-0 ID (required)
-	// @param prefixListIdParam Prefix List ID (required)
-	// @param prefixListParam (required)
-	// @return com.vmware.nsx_policy.model.PrefixList
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(tier0IdParam string, prefixListIdParam string, prefixListParam model.PrefixList) (model.PrefixList, error)
 }
 
 type prefixListsClient struct {
@@ -96,11 +60,8 @@ type prefixListsClient struct {
 func NewPrefixListsClient(connector client.Connector) *prefixListsClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.tier_0s.prefix_lists")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -114,32 +75,6 @@ func (pIface *prefixListsClient) GetErrorBindingType(errorName string) bindings.
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (pIface *prefixListsClient) Delete(tier0IdParam string, prefixListIdParam string) error {
-	typeConverter := pIface.connector.TypeConverter()
-	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(prefixListsDeleteInputType(), typeConverter)
-	sv.AddStructField("Tier0Id", tier0IdParam)
-	sv.AddStructField("PrefixListId", prefixListIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := prefixListsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_0s.prefix_lists", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (pIface *prefixListsClient) Get(tier0IdParam string, prefixListIdParam string) (model.PrefixList, error) {
@@ -202,66 +137,6 @@ func (pIface *prefixListsClient) List(tier0IdParam string, cursorParam *string, 
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.PrefixListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (pIface *prefixListsClient) Patch(tier0IdParam string, prefixListIdParam string, prefixListParam model.PrefixList) error {
-	typeConverter := pIface.connector.TypeConverter()
-	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(prefixListsPatchInputType(), typeConverter)
-	sv.AddStructField("Tier0Id", tier0IdParam)
-	sv.AddStructField("PrefixListId", prefixListIdParam)
-	sv.AddStructField("PrefixList", prefixListParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := prefixListsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_0s.prefix_lists", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (pIface *prefixListsClient) Update(tier0IdParam string, prefixListIdParam string, prefixListParam model.PrefixList) (model.PrefixList, error) {
-	typeConverter := pIface.connector.TypeConverter()
-	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(prefixListsUpdateInputType(), typeConverter)
-	sv.AddStructField("Tier0Id", tier0IdParam)
-	sv.AddStructField("PrefixListId", prefixListIdParam)
-	sv.AddStructField("PrefixList", prefixListParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.PrefixList
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := prefixListsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_0s.prefix_lists", "update", inputDataValue, executionContext)
-	var emptyOutput model.PrefixList
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), prefixListsUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.PrefixList), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

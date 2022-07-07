@@ -21,16 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type ConstraintsClient interface {
 
-	// Delete tenant constraint.
-	//
-	// @param constraintIdParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(constraintIdParam string) error
-
 	// Read tenant constraint.
 	//
 	// @param constraintIdParam (required)
@@ -57,29 +47,6 @@ type ConstraintsClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.ConstraintListResult, error)
-
-	// Create tenant constraint if not exists, otherwise update the existing constraint.
-	//
-	// @param constraintIdParam (required)
-	// @param constraintParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(constraintIdParam string, constraintParam model.Constraint) error
-
-	// Create tenant constraint if it does not exist, otherwise replace the existing constraint.
-	//
-	// @param constraintIdParam (required)
-	// @param constraintParam (required)
-	// @return com.vmware.nsx_policy.model.Constraint
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(constraintIdParam string, constraintParam model.Constraint) (model.Constraint, error)
 }
 
 type constraintsClient struct {
@@ -91,11 +58,8 @@ type constraintsClient struct {
 func NewConstraintsClient(connector client.Connector) *constraintsClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.constraints")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -109,31 +73,6 @@ func (cIface *constraintsClient) GetErrorBindingType(errorName string) bindings.
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (cIface *constraintsClient) Delete(constraintIdParam string) error {
-	typeConverter := cIface.connector.TypeConverter()
-	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(constraintsDeleteInputType(), typeConverter)
-	sv.AddStructField("ConstraintId", constraintIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := constraintsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.constraints", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (cIface *constraintsClient) Get(constraintIdParam string) (model.Constraint, error) {
@@ -194,64 +133,6 @@ func (cIface *constraintsClient) List(cursorParam *string, includeMarkForDeleteO
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.ConstraintListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (cIface *constraintsClient) Patch(constraintIdParam string, constraintParam model.Constraint) error {
-	typeConverter := cIface.connector.TypeConverter()
-	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(constraintsPatchInputType(), typeConverter)
-	sv.AddStructField("ConstraintId", constraintIdParam)
-	sv.AddStructField("Constraint", constraintParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := constraintsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.constraints", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (cIface *constraintsClient) Update(constraintIdParam string, constraintParam model.Constraint) (model.Constraint, error) {
-	typeConverter := cIface.connector.TypeConverter()
-	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(constraintsUpdateInputType(), typeConverter)
-	sv.AddStructField("ConstraintId", constraintIdParam)
-	sv.AddStructField("Constraint", constraintParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.Constraint
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := constraintsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.constraints", "update", inputDataValue, executionContext)
-	var emptyOutput model.Constraint
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), constraintsUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.Constraint), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
