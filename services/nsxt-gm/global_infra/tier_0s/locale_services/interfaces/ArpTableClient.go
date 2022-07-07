@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type ArpTableClient interface {
 
-	//
+	// Returns ARP table (IPv4) or Neighbor Discovery table (IPv6) for the tier-0 interface, on a edge node if a query parameter \"edge_path=<policy-edge-path>\" is given. The edge_path parameter is mandatory if the interface type is not EXTERNAL.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -29,6 +29,7 @@ type ArpTableClient interface {
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param edgePathParam Policy path of edge node (optional)
 	// @param enforcementPointPathParam Enforcement point path (optional)
+	// @param hostTransportNodePathParam Policy path of host transport node (optional)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam (optional)
@@ -39,7 +40,7 @@ type ArpTableClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(tier0IdParam string, localeServiceIdParam string, interfaceIdParam string, cursorParam *string, edgePathParam *string, enforcementPointPathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.InterfaceArpTable, error)
+	List(tier0IdParam string, localeServiceIdParam string, interfaceIdParam string, cursorParam *string, edgePathParam *string, enforcementPointPathParam *string, hostTransportNodePathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.InterfaceArpTable, error)
 }
 
 type arpTableClient struct {
@@ -67,7 +68,7 @@ func (aIface *arpTableClient) GetErrorBindingType(errorName string) bindings.Bin
 	return errors.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (aIface *arpTableClient) List(tier0IdParam string, localeServiceIdParam string, interfaceIdParam string, cursorParam *string, edgePathParam *string, enforcementPointPathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.InterfaceArpTable, error) {
+func (aIface *arpTableClient) List(tier0IdParam string, localeServiceIdParam string, interfaceIdParam string, cursorParam *string, edgePathParam *string, enforcementPointPathParam *string, hostTransportNodePathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.InterfaceArpTable, error) {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
 	sv := bindings.NewStructValueBuilder(arpTableListInputType(), typeConverter)
@@ -77,6 +78,7 @@ func (aIface *arpTableClient) List(tier0IdParam string, localeServiceIdParam str
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("EdgePath", edgePathParam)
 	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
+	sv.AddStructField("HostTransportNodePath", hostTransportNodePathParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)

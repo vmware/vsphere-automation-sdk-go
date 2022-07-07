@@ -41,7 +41,7 @@ type LeasesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(configIdParam string, connectivityPathParam string, addressParam *string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, segmentPathParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string) (model.DhcpLeasesResult, error)
+	List(configIdParam string, connectivityPathParam string, addressParam *string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, segmentPathParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string) (model.DhcpLeasesResult, error)
 }
 
 type leasesClient struct {
@@ -53,7 +53,7 @@ type leasesClient struct {
 func NewLeasesClient(connector client.Connector) *leasesClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_global_policy.global_infra.dhcp_server_configs.leases")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get": core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -69,10 +69,10 @@ func (lIface *leasesClient) GetErrorBindingType(errorName string) bindings.Bindi
 	return errors.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (lIface *leasesClient) Get(configIdParam string, connectivityPathParam string, addressParam *string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, segmentPathParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string) (model.DhcpLeasesResult, error) {
+func (lIface *leasesClient) List(configIdParam string, connectivityPathParam string, addressParam *string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, segmentPathParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string) (model.DhcpLeasesResult, error) {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(leasesGetInputType(), typeConverter)
+	sv := bindings.NewStructValueBuilder(leasesListInputType(), typeConverter)
 	sv.AddStructField("ConfigId", configIdParam)
 	sv.AddStructField("ConnectivityPath", connectivityPathParam)
 	sv.AddStructField("Address", addressParam)
@@ -90,14 +90,14 @@ func (lIface *leasesClient) Get(configIdParam string, connectivityPathParam stri
 		var emptyOutput model.DhcpLeasesResult
 		return emptyOutput, bindings.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := leasesGetRestMetadata()
+	operationRestMetaData := leasesListRestMetadata()
 	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
 	connectionMetadata["isStreamingResponse"] = false
 	lIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.global_infra.dhcp_server_configs.leases", "get", inputDataValue, executionContext)
+	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.global_infra.dhcp_server_configs.leases", "list", inputDataValue, executionContext)
 	var emptyOutput model.DhcpLeasesResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), leasesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), leasesListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}

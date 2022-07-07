@@ -26,6 +26,8 @@ type StatisticsClient interface {
 	// @param tier0IdParam Tier-0 ID (required)
 	// @param natIdParam NAT id (required)
 	// @param natRuleIdParam Rule ID (required)
+	// @param actionParam Action on statistics (optional)
+	// @param containerClusterPathParam String Path of the Container Cluster entity (optional)
 	// @param enforcementPointPathParam String Path of the enforcement point (optional)
 	// @return com.vmware.nsx_global_policy.model.PolicyNatRuleStatisticsListResult
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -33,7 +35,7 @@ type StatisticsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(tier0IdParam string, natIdParam string, natRuleIdParam string, enforcementPointPathParam *string) (model.PolicyNatRuleStatisticsListResult, error)
+	List(tier0IdParam string, natIdParam string, natRuleIdParam string, actionParam *string, containerClusterPathParam *string, enforcementPointPathParam *string) (model.PolicyNatRuleStatisticsListResult, error)
 }
 
 type statisticsClient struct {
@@ -61,13 +63,15 @@ func (sIface *statisticsClient) GetErrorBindingType(errorName string) bindings.B
 	return errors.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statisticsClient) List(tier0IdParam string, natIdParam string, natRuleIdParam string, enforcementPointPathParam *string) (model.PolicyNatRuleStatisticsListResult, error) {
+func (sIface *statisticsClient) List(tier0IdParam string, natIdParam string, natRuleIdParam string, actionParam *string, containerClusterPathParam *string, enforcementPointPathParam *string) (model.PolicyNatRuleStatisticsListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	sv := bindings.NewStructValueBuilder(statisticsListInputType(), typeConverter)
 	sv.AddStructField("Tier0Id", tier0IdParam)
 	sv.AddStructField("NatId", natIdParam)
 	sv.AddStructField("NatRuleId", natRuleIdParam)
+	sv.AddStructField("Action", actionParam)
+	sv.AddStructField("ContainerClusterPath", containerClusterPathParam)
 	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
