@@ -22,7 +22,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type SessionsClient interface {
 
-	// Delete IPSec VPN session for a given locale service under Tier-1.
+	// Delete IPSec VPN session for a given locale service under Tier-1. This API is deprecated. Please use DELETE /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/ sessions/<session-id> instead.
 	//
 	// @param tier1IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -35,7 +35,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	Delete(tier1IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string) error
 
-	// Get IPSec VPN session without sensitive data for a given locale service under Tier-1.
+	// Get IPSec VPN session without sensitive data for a given locale service under Tier-1. This API is deprecated. Please use GET /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions/<session-id> instead.
 	//
 	// @param tier1IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -50,7 +50,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	Get(tier1IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string) (*data.StructValue, error)
 
-	// Get paginated list of all IPSec VPN sessions for a given locale service under Tier-1.
+	// Get paginated list of all IPSec VPN sessions for a given locale service under Tier-1. This API is deprecated. Please use GET /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions instead.
 	//
 	// @param tier1IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -69,7 +69,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	List(tier1IdParam string, localeServiceIdParam string, serviceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IPSecVpnSessionListResult, error)
 
-	// Create or patch an IPSec VPN session for a given locale service under Tier-1.
+	// Create or patch an IPSec VPN session for a given locale service under Tier-1. This API is deprecated. Please use PATCH /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions/<session-id> instead.
 	//
 	// @param tier1IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -84,7 +84,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	Patch(tier1IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string, ipSecVpnSessionParam *data.StructValue) error
 
-	// Get IPSec VPN session with senstive data for a given locale service under Tier-1.
+	// Get IPSec VPN session with senstive data for a given locale service under Tier-1. This API is deprecated. Please use GET /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions/<session-id>?action=show_sensitive_data instead.
 	//
 	// @param tier1IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -99,7 +99,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	Showsensitivedata(tier1IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string) (*data.StructValue, error)
 
-	// Create or fully replace IPSec VPN session for a given locale service under Tier-1. Revision is optional for creation and required for update.
+	// Create or fully replace IPSec VPN session for a given locale service under Tier-1. Revision is optional for creation and required for update. This API is deprecated. Please use PUT /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions/<session-id> instead.
 	//
 	// @param tier1IdParam (required)
 	// @param localeServiceIdParam (required)

@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type StatusClient interface {
 
-	//
+	// Returns the status of all the BGP neighbors for the given Tier0. To get BGP neighbor status for a particular enforcement point, parameter \"enforcement_point_path=<enforcement_point_path>\" needs to be specified. If an enforcement_point is unspecified, then bgp neighbor status for all enforcement points is fetched. To get BGP neighbors status for the logical router from particular edge node, parameter \"edge_path=<edge_path>\" needs to be specified. If an edge_path is unspecified, then bgp neighbor status for all edges is fetched.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)

@@ -21,17 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type SitesClient interface {
 
-	// Delete a site under Infra.
-	//
-	// @param siteIdParam (required)
-	// @param forceParam (optional)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(siteIdParam string, forceParam *bool) error
-
 	// Read a site under Infra.
 	//
 	// @param siteIdParam (required)
@@ -58,29 +47,6 @@ type SitesClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.SiteListResult, error)
-
-	// Create or patch Site under Infra.
-	//
-	// @param siteIdParam (required)
-	// @param siteParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(siteIdParam string, siteParam model.Site) error
-
-	// Create or fully replace a Site under Infra. Revision is optional for creation and required for update.
-	//
-	// @param siteIdParam (required)
-	// @param siteParam (required)
-	// @return com.vmware.nsx_policy.model.Site
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(siteIdParam string, siteParam model.Site) (model.Site, error)
 }
 
 type sitesClient struct {
@@ -92,11 +58,8 @@ type sitesClient struct {
 func NewSitesClient(connector client.Connector) *sitesClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.sites")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -110,32 +73,6 @@ func (sIface *sitesClient) GetErrorBindingType(errorName string) bindings.Bindin
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (sIface *sitesClient) Delete(siteIdParam string, forceParam *bool) error {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sitesDeleteInputType(), typeConverter)
-	sv.AddStructField("SiteId", siteIdParam)
-	sv.AddStructField("Force", forceParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := sitesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.sites", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (sIface *sitesClient) Get(siteIdParam string) (model.Site, error) {
@@ -196,64 +133,6 @@ func (sIface *sitesClient) List(cursorParam *string, includeMarkForDeleteObjects
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.SiteListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (sIface *sitesClient) Patch(siteIdParam string, siteParam model.Site) error {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sitesPatchInputType(), typeConverter)
-	sv.AddStructField("SiteId", siteIdParam)
-	sv.AddStructField("Site", siteParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := sitesPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.sites", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (sIface *sitesClient) Update(siteIdParam string, siteParam model.Site) (model.Site, error) {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sitesUpdateInputType(), typeConverter)
-	sv.AddStructField("SiteId", siteIdParam)
-	sv.AddStructField("Site", siteParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.Site
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := sitesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.sites", "update", inputDataValue, executionContext)
-	var emptyOutput model.Site
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), sitesUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.Site), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

@@ -64,7 +64,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	List(domainIdParam string, securityPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.RuleListResult, error)
 
-	//
+	// Patch the rule. If Rule corresponding to the the given rule-id is not present, the object will get created and if it is present it will be updated. This is a full replace. Performance Note: If you want to edit several rules in a security policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/security-policies/<security-policy-id>
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)
@@ -93,7 +93,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Revise(domainIdParam string, securityPolicyIdParam string, ruleIdParam string, ruleParam model.Rule, anchorPathParam *string, operationParam *string) (model.Rule, error)
 
-	//
+	// Update the rule. Create new rule if a rule with the rule-id is not already present. Performance Note: If you wish to edit several rules in a security policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/security-policies/<security-policy-id>
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)

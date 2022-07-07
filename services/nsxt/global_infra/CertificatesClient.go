@@ -21,17 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type CertificatesClient interface {
 
-	// Removes the specified certificate. The private key associated with the certificate is also deleted.
-	//
-	// @param certificateIdParam ID of certificate to delete (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(certificateIdParam string) error
-
-	// Returns information for the specified certificate ID, including the certificate's id; resource_type (for example, certificate_self_signed, certificate_ca, or certificate_signed); pem_encoded data; and history of the certificate (who created or modified it and when). For additional information, include the ?details=true modifier at the end of the request URI.
+	// Returns information for the specified certificate ID, including the certificate's id; pem_encoded data; and history of the certificate (who created or modified it and when). For additional information, include the ?details=true modifier at the end of the request URI.
 	//
 	// @param certificateIdParam ID of certificate to read (required)
 	// @param detailsParam whether to expand the pem data and show all its details (optional, default to false)
@@ -43,7 +33,7 @@ type CertificatesClient interface {
 	// @throws NotFound  Not Found
 	Get(certificateIdParam string, detailsParam *bool) (model.TlsCertificate, error)
 
-	// Returns all certificate information viewable by the user, including each certificate's id; resource_type (for example, certificate_self_signed, certificate_ca, or certificate_signed); pem_encoded data; and history of the certificate (who created or modified it and when). For additional information, include the ?details=true modifier at the end of the request URI.
+	// Returns all certificate information viewable by the user, including each certificate's id; pem_encoded data; and history of the certificate (who created or modified it and when). For additional information, include the ?details=true modifier at the end of the request URI.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param detailsParam whether to expand the pem data and show all its details (optional, default to false)
@@ -59,29 +49,6 @@ type CertificatesClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(cursorParam *string, detailsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (model.TlsCertificateList, error)
-
-	// Adds a new private-public certificate and, optionally, a private key that can be applied to one of the user-facing components (appliance management or edge). The certificate and the key should be stored in PEM format. If no private key is provided, the certificate is used as a client certificate in the trust store. A certificate chain will not be expanded into separate certificate instances for reference, but would be pushed to the enforcement point as a single certificate. This patch method does not modify an existing certificate.
-	//
-	// @param certificateIdParam (required)
-	// @param tlsTrustDataParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(certificateIdParam string, tlsTrustDataParam model.TlsTrustData) error
-
-	// Adds a new private-public certificate and, optionally, a private key that can be applied to one of the user-facing components (appliance management or edge). The certificate and the key should be stored in PEM format. If no private key is provided, the certificate is used as a client certificate in the trust store. A certificate chain will not be expanded into separate certificate instances for reference, but would be pushed to the enforcement point as a single certificate.
-	//
-	// @param certificateIdParam (required)
-	// @param tlsTrustDataParam (required)
-	// @return com.vmware.nsx_policy.model.TlsCertificate
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(certificateIdParam string, tlsTrustDataParam model.TlsTrustData) (model.TlsCertificate, error)
 }
 
 type certificatesClient struct {
@@ -93,11 +60,8 @@ type certificatesClient struct {
 func NewCertificatesClient(connector client.Connector) *certificatesClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.certificates")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -111,31 +75,6 @@ func (cIface *certificatesClient) GetErrorBindingType(errorName string) bindings
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (cIface *certificatesClient) Delete(certificateIdParam string) error {
-	typeConverter := cIface.connector.TypeConverter()
-	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(certificatesDeleteInputType(), typeConverter)
-	sv.AddStructField("CertificateId", certificateIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := certificatesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.certificates", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (cIface *certificatesClient) Get(certificateIdParam string, detailsParam *bool) (model.TlsCertificate, error) {
@@ -198,64 +137,6 @@ func (cIface *certificatesClient) List(cursorParam *string, detailsParam *bool, 
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.TlsCertificateList), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (cIface *certificatesClient) Patch(certificateIdParam string, tlsTrustDataParam model.TlsTrustData) error {
-	typeConverter := cIface.connector.TypeConverter()
-	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(certificatesPatchInputType(), typeConverter)
-	sv.AddStructField("CertificateId", certificateIdParam)
-	sv.AddStructField("TlsTrustData", tlsTrustDataParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := certificatesPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.certificates", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (cIface *certificatesClient) Update(certificateIdParam string, tlsTrustDataParam model.TlsTrustData) (model.TlsCertificate, error) {
-	typeConverter := cIface.connector.TypeConverter()
-	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(certificatesUpdateInputType(), typeConverter)
-	sv.AddStructField("CertificateId", certificateIdParam)
-	sv.AddStructField("TlsTrustData", tlsTrustDataParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.TlsCertificate
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := certificatesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.certificates", "update", inputDataValue, executionContext)
-	var emptyOutput model.TlsCertificate
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), certificatesUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.TlsCertificate), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

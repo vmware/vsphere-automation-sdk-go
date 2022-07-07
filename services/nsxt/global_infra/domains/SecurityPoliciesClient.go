@@ -21,17 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type SecurityPoliciesClient interface {
 
-	// Deletes the security policy along with all the rules
-	//
-	// @param domainIdParam (required)
-	// @param securityPolicyIdParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(domainIdParam string, securityPolicyIdParam string) error
-
 	// Read security policy for a domain.
 	//
 	// @param domainIdParam (required)
@@ -61,46 +50,6 @@ type SecurityPoliciesClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(domainIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includeRuleCountParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.SecurityPolicyListResult, error)
-
-	// Patch the security policy for a domain. If a security policy for the given security-policy-id is not present, the object will get created and if it is present it will be updated. This is a full replace. Performance Note: If you want to edit several rules in a security policy use this API. It will perform better than several individual rule APIs. Just pass all the rules which you wish to edit as embedded rules to it.
-	//
-	// @param domainIdParam (required)
-	// @param securityPolicyIdParam (required)
-	// @param securityPolicyParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(domainIdParam string, securityPolicyIdParam string, securityPolicyParam model.SecurityPolicy) error
-
-	// This is used to set a precedence of a security policy w.r.t others.
-	//
-	// @param domainIdParam (required)
-	// @param securityPolicyIdParam (required)
-	// @param securityPolicyParam (required)
-	// @param anchorPathParam The security policy/rule path if operation is 'insert_after' or 'insert_before' (optional)
-	// @param operationParam Operation (optional, default to insert_top)
-	// @return com.vmware.nsx_policy.model.SecurityPolicy
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Revise(domainIdParam string, securityPolicyIdParam string, securityPolicyParam model.SecurityPolicy, anchorPathParam *string, operationParam *string) (model.SecurityPolicy, error)
-
-	// Create or Update the security policy for a domain. This is a full replace. All the rules are replaced. Performance Note: If you want to edit several rules in a security policy, use this API. It will perform better than several individual rule APIs. Just pass all the rules which you wish to edit as embedded rules to it.
-	//
-	// @param domainIdParam (required)
-	// @param securityPolicyIdParam (required)
-	// @param securityPolicyParam (required)
-	// @return com.vmware.nsx_policy.model.SecurityPolicy
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(domainIdParam string, securityPolicyIdParam string, securityPolicyParam model.SecurityPolicy) (model.SecurityPolicy, error)
 }
 
 type securityPoliciesClient struct {
@@ -112,12 +61,8 @@ type securityPoliciesClient struct {
 func NewSecurityPoliciesClient(connector client.Connector) *securityPoliciesClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.domains.security_policies")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"revise": core.NewMethodIdentifier(interfaceIdentifier, "revise"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -131,32 +76,6 @@ func (sIface *securityPoliciesClient) GetErrorBindingType(errorName string) bind
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (sIface *securityPoliciesClient) Delete(domainIdParam string, securityPolicyIdParam string) error {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(securityPoliciesDeleteInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("SecurityPolicyId", securityPolicyIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := securityPoliciesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.security_policies", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (sIface *securityPoliciesClient) Get(domainIdParam string, securityPolicyIdParam string) (model.SecurityPolicy, error) {
@@ -220,101 +139,6 @@ func (sIface *securityPoliciesClient) List(domainIdParam string, cursorParam *st
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.SecurityPolicyListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (sIface *securityPoliciesClient) Patch(domainIdParam string, securityPolicyIdParam string, securityPolicyParam model.SecurityPolicy) error {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(securityPoliciesPatchInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("SecurityPolicyId", securityPolicyIdParam)
-	sv.AddStructField("SecurityPolicy", securityPolicyParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := securityPoliciesPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.security_policies", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (sIface *securityPoliciesClient) Revise(domainIdParam string, securityPolicyIdParam string, securityPolicyParam model.SecurityPolicy, anchorPathParam *string, operationParam *string) (model.SecurityPolicy, error) {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(securityPoliciesReviseInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("SecurityPolicyId", securityPolicyIdParam)
-	sv.AddStructField("SecurityPolicy", securityPolicyParam)
-	sv.AddStructField("AnchorPath", anchorPathParam)
-	sv.AddStructField("Operation", operationParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.SecurityPolicy
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := securityPoliciesReviseRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.security_policies", "revise", inputDataValue, executionContext)
-	var emptyOutput model.SecurityPolicy
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), securityPoliciesReviseOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.SecurityPolicy), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (sIface *securityPoliciesClient) Update(domainIdParam string, securityPolicyIdParam string, securityPolicyParam model.SecurityPolicy) (model.SecurityPolicy, error) {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(securityPoliciesUpdateInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("SecurityPolicyId", securityPolicyIdParam)
-	sv.AddStructField("SecurityPolicy", securityPolicyParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.SecurityPolicy
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := securityPoliciesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.security_policies", "update", inputDataValue, executionContext)
-	var emptyOutput model.SecurityPolicy
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), securityPoliciesUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.SecurityPolicy), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type DetailedStatusClient interface {
 
-	// - no enforcement point path specified: detailed status is evaluated on each enforcement point. - an enforcement point path is specified: detailed status is evaluated only on the given enforcement point. - source=realtime: detailed status is fetched realtime from the enforcement point. - source=cached: cached detailed status from enforcement point is returned.
+	// - no enforcement point path specified: detailed status is evaluated on each enforcement point. - an enforcement point path is specified: detailed status is evaluated only on the given enforcement point. - source=realtime: detailed status is fetched realtime from the enforcement point. - source=cached: cached detailed status from enforcement point is returned. This API is deprecated. Please use GET /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/ sessions/<session-id>/detailed-status instead.
 	//
 	// @param tier1IdParam (required)
 	// @param localeServiceIdParam (required)

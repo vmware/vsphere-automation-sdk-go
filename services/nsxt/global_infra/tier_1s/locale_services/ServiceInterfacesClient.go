@@ -21,18 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type ServiceInterfacesClient interface {
 
-	// Delete Tier 1 service interface
-	//
-	// @param tier1IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param interfaceIdParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(tier1IdParam string, localeServiceIdParam string, interfaceIdParam string) error
-
 	// Read Tier 1 service interface
 	//
 	// @param tier1IdParam (required)
@@ -63,33 +51,6 @@ type ServiceInterfacesClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(tier1IdParam string, localeServiceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.ServiceInterfaceListResult, error)
-
-	// If a Tier1 service interface with the interface-id is not already present, create a new Tier1 service interface.
-	//
-	// @param tier1IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param interfaceIdParam (required)
-	// @param serviceInterfaceParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(tier1IdParam string, localeServiceIdParam string, interfaceIdParam string, serviceInterfaceParam model.ServiceInterface) error
-
-	// If a Tier1 service interface with the interface-id is not already present, create a new Tier1 service interface. Modification of Tier 1 service interface is not allowed.
-	//
-	// @param tier1IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param interfaceIdParam (required)
-	// @param serviceInterfaceParam (required)
-	// @return com.vmware.nsx_policy.model.ServiceInterface
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(tier1IdParam string, localeServiceIdParam string, interfaceIdParam string, serviceInterfaceParam model.ServiceInterface) (model.ServiceInterface, error)
 }
 
 type serviceInterfacesClient struct {
@@ -101,11 +62,8 @@ type serviceInterfacesClient struct {
 func NewServiceInterfacesClient(connector client.Connector) *serviceInterfacesClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.tier_1s.locale_services.service_interfaces")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -119,33 +77,6 @@ func (sIface *serviceInterfacesClient) GetErrorBindingType(errorName string) bin
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (sIface *serviceInterfacesClient) Delete(tier1IdParam string, localeServiceIdParam string, interfaceIdParam string) error {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceInterfacesDeleteInputType(), typeConverter)
-	sv.AddStructField("Tier1Id", tier1IdParam)
-	sv.AddStructField("LocaleServiceId", localeServiceIdParam)
-	sv.AddStructField("InterfaceId", interfaceIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := serviceInterfacesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_1s.locale_services.service_interfaces", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (sIface *serviceInterfacesClient) Get(tier1IdParam string, localeServiceIdParam string, interfaceIdParam string) (model.ServiceInterface, error) {
@@ -210,68 +141,6 @@ func (sIface *serviceInterfacesClient) List(tier1IdParam string, localeServiceId
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.ServiceInterfaceListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (sIface *serviceInterfacesClient) Patch(tier1IdParam string, localeServiceIdParam string, interfaceIdParam string, serviceInterfaceParam model.ServiceInterface) error {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceInterfacesPatchInputType(), typeConverter)
-	sv.AddStructField("Tier1Id", tier1IdParam)
-	sv.AddStructField("LocaleServiceId", localeServiceIdParam)
-	sv.AddStructField("InterfaceId", interfaceIdParam)
-	sv.AddStructField("ServiceInterface", serviceInterfaceParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := serviceInterfacesPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_1s.locale_services.service_interfaces", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (sIface *serviceInterfacesClient) Update(tier1IdParam string, localeServiceIdParam string, interfaceIdParam string, serviceInterfaceParam model.ServiceInterface) (model.ServiceInterface, error) {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceInterfacesUpdateInputType(), typeConverter)
-	sv.AddStructField("Tier1Id", tier1IdParam)
-	sv.AddStructField("LocaleServiceId", localeServiceIdParam)
-	sv.AddStructField("InterfaceId", interfaceIdParam)
-	sv.AddStructField("ServiceInterface", serviceInterfaceParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.ServiceInterface
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := serviceInterfacesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_1s.locale_services.service_interfaces", "update", inputDataValue, executionContext)
-	var emptyOutput model.ServiceInterface
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), serviceInterfacesUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.ServiceInterface), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

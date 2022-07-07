@@ -64,7 +64,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	List(domainIdParam string, gatewayPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.RuleListResult, error)
 
-	//
+	// Update the gateway rule. Create new rule if a rule with the rule-id is not already present. Performance Note: If you want to edit several rules in a gateway policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/gateway-policies/<gateway-policy-id> Concurrency Note: Concurrent firewall rule creation is not supported under the same Gateway Policy.
 	//
 	// @param domainIdParam (required)
 	// @param gatewayPolicyIdParam (required)
@@ -93,7 +93,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Revise(domainIdParam string, gatewayPolicyIdParam string, ruleIdParam string, ruleParam model.Rule, anchorPathParam *string, operationParam *string) (model.Rule, error)
 
-	//
+	// Update the gateway rule. Create new rule if a rule with the rule-id is not already present. Performance Note: If you want to edit several rules in a gateway policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/gateway-policies/<gateway-policy-id> Concurrency Note: Concurrent firewall rule creation is not supported under the same Gateway Policy.
 	//
 	// @param domainIdParam (required)
 	// @param gatewayPolicyIdParam (required)

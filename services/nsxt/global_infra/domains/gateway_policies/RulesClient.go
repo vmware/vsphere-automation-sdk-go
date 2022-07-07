@@ -21,18 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type RulesClient interface {
 
-	// Delete rule
-	//
-	// @param domainIdParam (required)
-	// @param gatewayPolicyIdParam (required)
-	// @param ruleIdParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(domainIdParam string, gatewayPolicyIdParam string, ruleIdParam string) error
-
 	// Read rule
 	//
 	// @param domainIdParam (required)
@@ -63,49 +51,6 @@ type RulesClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(domainIdParam string, gatewayPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.RuleListResult, error)
-
-	//
-	//
-	// @param domainIdParam (required)
-	// @param gatewayPolicyIdParam (required)
-	// @param ruleIdParam (required)
-	// @param ruleParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(domainIdParam string, gatewayPolicyIdParam string, ruleIdParam string, ruleParam model.Rule) error
-
-	// This is used to re-order a gateway rule within a gateway policy.
-	//
-	// @param domainIdParam (required)
-	// @param gatewayPolicyIdParam (required)
-	// @param ruleIdParam (required)
-	// @param ruleParam (required)
-	// @param anchorPathParam The security policy/rule path if operation is 'insert_after' or 'insert_before' (optional)
-	// @param operationParam Operation (optional, default to insert_top)
-	// @return com.vmware.nsx_policy.model.Rule
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Revise(domainIdParam string, gatewayPolicyIdParam string, ruleIdParam string, ruleParam model.Rule, anchorPathParam *string, operationParam *string) (model.Rule, error)
-
-	//
-	//
-	// @param domainIdParam (required)
-	// @param gatewayPolicyIdParam (required)
-	// @param ruleIdParam (required)
-	// @param ruleParam (required)
-	// @return com.vmware.nsx_policy.model.Rule
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(domainIdParam string, gatewayPolicyIdParam string, ruleIdParam string, ruleParam model.Rule) (model.Rule, error)
 }
 
 type rulesClient struct {
@@ -117,12 +62,8 @@ type rulesClient struct {
 func NewRulesClient(connector client.Connector) *rulesClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.domains.gateway_policies.rules")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"revise": core.NewMethodIdentifier(interfaceIdentifier, "revise"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -136,33 +77,6 @@ func (rIface *rulesClient) GetErrorBindingType(errorName string) bindings.Bindin
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (rIface *rulesClient) Delete(domainIdParam string, gatewayPolicyIdParam string, ruleIdParam string) error {
-	typeConverter := rIface.connector.TypeConverter()
-	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesDeleteInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("GatewayPolicyId", gatewayPolicyIdParam)
-	sv.AddStructField("RuleId", ruleIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := rulesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.gateway_policies.rules", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (rIface *rulesClient) Get(domainIdParam string, gatewayPolicyIdParam string, ruleIdParam string) (model.Rule, error) {
@@ -227,104 +141,6 @@ func (rIface *rulesClient) List(domainIdParam string, gatewayPolicyIdParam strin
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.RuleListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (rIface *rulesClient) Patch(domainIdParam string, gatewayPolicyIdParam string, ruleIdParam string, ruleParam model.Rule) error {
-	typeConverter := rIface.connector.TypeConverter()
-	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesPatchInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("GatewayPolicyId", gatewayPolicyIdParam)
-	sv.AddStructField("RuleId", ruleIdParam)
-	sv.AddStructField("Rule", ruleParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := rulesPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.gateway_policies.rules", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (rIface *rulesClient) Revise(domainIdParam string, gatewayPolicyIdParam string, ruleIdParam string, ruleParam model.Rule, anchorPathParam *string, operationParam *string) (model.Rule, error) {
-	typeConverter := rIface.connector.TypeConverter()
-	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesReviseInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("GatewayPolicyId", gatewayPolicyIdParam)
-	sv.AddStructField("RuleId", ruleIdParam)
-	sv.AddStructField("Rule", ruleParam)
-	sv.AddStructField("AnchorPath", anchorPathParam)
-	sv.AddStructField("Operation", operationParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.Rule
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := rulesReviseRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.gateway_policies.rules", "revise", inputDataValue, executionContext)
-	var emptyOutput model.Rule
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rulesReviseOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.Rule), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (rIface *rulesClient) Update(domainIdParam string, gatewayPolicyIdParam string, ruleIdParam string, ruleParam model.Rule) (model.Rule, error) {
-	typeConverter := rIface.connector.TypeConverter()
-	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesUpdateInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("GatewayPolicyId", gatewayPolicyIdParam)
-	sv.AddStructField("RuleId", ruleIdParam)
-	sv.AddStructField("Rule", ruleParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.Rule
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := rulesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.gateway_policies.rules", "update", inputDataValue, executionContext)
-	var emptyOutput model.Rule
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rulesUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.Rule), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

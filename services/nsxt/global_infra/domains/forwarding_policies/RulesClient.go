@@ -21,18 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type RulesClient interface {
 
-	// Delete ForwardingRule
-	//
-	// @param domainIdParam Domain ID (required)
-	// @param forwardingPolicyIdParam Forwarding Map ID (required)
-	// @param ruleIdParam ForwardingRule ID (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(domainIdParam string, forwardingPolicyIdParam string, ruleIdParam string) error
-
 	// Read rule
 	//
 	// @param domainIdParam Domain id (required)
@@ -63,33 +51,6 @@ type RulesClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(domainIdParam string, forwardingPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.ForwardingRuleListResult, error)
-
-	//
-	//
-	// @param domainIdParam Domain id (required)
-	// @param forwardingPolicyIdParam Forwarding map id (required)
-	// @param ruleIdParam Rule id (required)
-	// @param forwardingRuleParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(domainIdParam string, forwardingPolicyIdParam string, ruleIdParam string, forwardingRuleParam model.ForwardingRule) error
-
-	//
-	//
-	// @param domainIdParam Domain id (required)
-	// @param forwardingPolicyIdParam Forwarding map id (required)
-	// @param ruleIdParam rule id (required)
-	// @param forwardingRuleParam (required)
-	// @return com.vmware.nsx_policy.model.ForwardingRule
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(domainIdParam string, forwardingPolicyIdParam string, ruleIdParam string, forwardingRuleParam model.ForwardingRule) (model.ForwardingRule, error)
 }
 
 type rulesClient struct {
@@ -101,11 +62,8 @@ type rulesClient struct {
 func NewRulesClient(connector client.Connector) *rulesClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.domains.forwarding_policies.rules")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -119,33 +77,6 @@ func (rIface *rulesClient) GetErrorBindingType(errorName string) bindings.Bindin
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (rIface *rulesClient) Delete(domainIdParam string, forwardingPolicyIdParam string, ruleIdParam string) error {
-	typeConverter := rIface.connector.TypeConverter()
-	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesDeleteInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("ForwardingPolicyId", forwardingPolicyIdParam)
-	sv.AddStructField("RuleId", ruleIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := rulesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.forwarding_policies.rules", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (rIface *rulesClient) Get(domainIdParam string, forwardingPolicyIdParam string, ruleIdParam string) (model.ForwardingRule, error) {
@@ -210,68 +141,6 @@ func (rIface *rulesClient) List(domainIdParam string, forwardingPolicyIdParam st
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.ForwardingRuleListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (rIface *rulesClient) Patch(domainIdParam string, forwardingPolicyIdParam string, ruleIdParam string, forwardingRuleParam model.ForwardingRule) error {
-	typeConverter := rIface.connector.TypeConverter()
-	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesPatchInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("ForwardingPolicyId", forwardingPolicyIdParam)
-	sv.AddStructField("RuleId", ruleIdParam)
-	sv.AddStructField("ForwardingRule", forwardingRuleParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := rulesPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.forwarding_policies.rules", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (rIface *rulesClient) Update(domainIdParam string, forwardingPolicyIdParam string, ruleIdParam string, forwardingRuleParam model.ForwardingRule) (model.ForwardingRule, error) {
-	typeConverter := rIface.connector.TypeConverter()
-	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesUpdateInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("ForwardingPolicyId", forwardingPolicyIdParam)
-	sv.AddStructField("RuleId", ruleIdParam)
-	sv.AddStructField("ForwardingRule", forwardingRuleParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.ForwardingRule
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := rulesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.forwarding_policies.rules", "update", inputDataValue, executionContext)
-	var emptyOutput model.ForwardingRule
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rulesUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.ForwardingRule), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

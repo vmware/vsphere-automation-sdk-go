@@ -21,17 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type CommunityListsClient interface {
 
-	// Delete a BGP community list
-	//
-	// @param tier0IdParam (required)
-	// @param communityListIdParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(tier0IdParam string, communityListIdParam string) error
-
 	// Read a BGP community list
 	//
 	// @param tier0IdParam (required)
@@ -60,31 +49,6 @@ type CommunityListsClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(tier0IdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.CommunityListListResult, error)
-
-	// If a community list with the community-list-id is not already present, create a new community list. If it already exists, update the community list for specified attributes.
-	//
-	// @param tier0IdParam (required)
-	// @param communityListIdParam (required)
-	// @param communityListParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(tier0IdParam string, communityListIdParam string, communityListParam model.CommunityList) error
-
-	// If a community list with the community-list-id is not already present, create a new community list. If it already exists, replace the community list instance with the new object.
-	//
-	// @param tier0IdParam (required)
-	// @param communityListIdParam (required)
-	// @param communityListParam (required)
-	// @return com.vmware.nsx_policy.model.CommunityList
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(tier0IdParam string, communityListIdParam string, communityListParam model.CommunityList) (model.CommunityList, error)
 }
 
 type communityListsClient struct {
@@ -96,11 +60,8 @@ type communityListsClient struct {
 func NewCommunityListsClient(connector client.Connector) *communityListsClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.tier_0s.community_lists")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -114,32 +75,6 @@ func (cIface *communityListsClient) GetErrorBindingType(errorName string) bindin
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (cIface *communityListsClient) Delete(tier0IdParam string, communityListIdParam string) error {
-	typeConverter := cIface.connector.TypeConverter()
-	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(communityListsDeleteInputType(), typeConverter)
-	sv.AddStructField("Tier0Id", tier0IdParam)
-	sv.AddStructField("CommunityListId", communityListIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := communityListsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_0s.community_lists", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (cIface *communityListsClient) Get(tier0IdParam string, communityListIdParam string) (model.CommunityList, error) {
@@ -202,66 +137,6 @@ func (cIface *communityListsClient) List(tier0IdParam string, cursorParam *strin
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.CommunityListListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (cIface *communityListsClient) Patch(tier0IdParam string, communityListIdParam string, communityListParam model.CommunityList) error {
-	typeConverter := cIface.connector.TypeConverter()
-	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(communityListsPatchInputType(), typeConverter)
-	sv.AddStructField("Tier0Id", tier0IdParam)
-	sv.AddStructField("CommunityListId", communityListIdParam)
-	sv.AddStructField("CommunityList", communityListParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := communityListsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_0s.community_lists", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (cIface *communityListsClient) Update(tier0IdParam string, communityListIdParam string, communityListParam model.CommunityList) (model.CommunityList, error) {
-	typeConverter := cIface.connector.TypeConverter()
-	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(communityListsUpdateInputType(), typeConverter)
-	sv.AddStructField("Tier0Id", tier0IdParam)
-	sv.AddStructField("CommunityListId", communityListIdParam)
-	sv.AddStructField("CommunityList", communityListParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.CommunityList
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := communityListsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_0s.community_lists", "update", inputDataValue, executionContext)
-	var emptyOutput model.CommunityList
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), communityListsUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.CommunityList), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

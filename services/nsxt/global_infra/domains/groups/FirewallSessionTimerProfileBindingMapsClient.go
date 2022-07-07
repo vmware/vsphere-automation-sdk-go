@@ -21,18 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type FirewallSessionTimerProfileBindingMapsClient interface {
 
-	// API will delete Firewall Session Timer Profile Binding
-	//
-	// @param domainIdParam Domain ID (required)
-	// @param groupIdParam Group ID (required)
-	// @param firewallSessionTimerProfileBindingMapIdParam Firewall Session Timer Profile Binding Map ID (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(domainIdParam string, groupIdParam string, firewallSessionTimerProfileBindingMapIdParam string) error
-
 	// API will get Firewall Session Timer Profile Binding Map
 	//
 	// @param domainIdParam Domain-ID (required)
@@ -63,33 +51,6 @@ type FirewallSessionTimerProfileBindingMapsClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(domainIdParam string, groupIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PolicyFirewallSessionTimerProfileBindingMapListResult, error)
-
-	// API will create or update Firewall Session Timer profile binding map
-	//
-	// @param domainIdParam Domain ID (required)
-	// @param groupIdParam Group ID (required)
-	// @param firewallSessionTimerProfileBindingMapIdParam Firewall Session Timer Profile Binding Map ID (required)
-	// @param policyFirewallSessionTimerProfileBindingMapParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(domainIdParam string, groupIdParam string, firewallSessionTimerProfileBindingMapIdParam string, policyFirewallSessionTimerProfileBindingMapParam model.PolicyFirewallSessionTimerProfileBindingMap) error
-
-	// API will update Firewall Session Timer Profile Binding Map
-	//
-	// @param domainIdParam DomainID (required)
-	// @param groupIdParam Group ID (required)
-	// @param firewallSessionTimerProfileBindingMapIdParam Firewall Session Timer Profile Binding Map ID (required)
-	// @param policyFirewallSessionTimerProfileBindingMapParam (required)
-	// @return com.vmware.nsx_policy.model.PolicyFirewallSessionTimerProfileBindingMap
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(domainIdParam string, groupIdParam string, firewallSessionTimerProfileBindingMapIdParam string, policyFirewallSessionTimerProfileBindingMapParam model.PolicyFirewallSessionTimerProfileBindingMap) (model.PolicyFirewallSessionTimerProfileBindingMap, error)
 }
 
 type firewallSessionTimerProfileBindingMapsClient struct {
@@ -101,11 +62,8 @@ type firewallSessionTimerProfileBindingMapsClient struct {
 func NewFirewallSessionTimerProfileBindingMapsClient(connector client.Connector) *firewallSessionTimerProfileBindingMapsClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.domains.groups.firewall_session_timer_profile_binding_maps")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -119,33 +77,6 @@ func (fIface *firewallSessionTimerProfileBindingMapsClient) GetErrorBindingType(
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (fIface *firewallSessionTimerProfileBindingMapsClient) Delete(domainIdParam string, groupIdParam string, firewallSessionTimerProfileBindingMapIdParam string) error {
-	typeConverter := fIface.connector.TypeConverter()
-	executionContext := fIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(firewallSessionTimerProfileBindingMapsDeleteInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("GroupId", groupIdParam)
-	sv.AddStructField("FirewallSessionTimerProfileBindingMapId", firewallSessionTimerProfileBindingMapIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := firewallSessionTimerProfileBindingMapsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	fIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := fIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.groups.firewall_session_timer_profile_binding_maps", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), fIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (fIface *firewallSessionTimerProfileBindingMapsClient) Get(domainIdParam string, groupIdParam string, firewallSessionTimerProfileBindingMapIdParam string) (model.PolicyFirewallSessionTimerProfileBindingMap, error) {
@@ -210,68 +141,6 @@ func (fIface *firewallSessionTimerProfileBindingMapsClient) List(domainIdParam s
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.PolicyFirewallSessionTimerProfileBindingMapListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), fIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (fIface *firewallSessionTimerProfileBindingMapsClient) Patch(domainIdParam string, groupIdParam string, firewallSessionTimerProfileBindingMapIdParam string, policyFirewallSessionTimerProfileBindingMapParam model.PolicyFirewallSessionTimerProfileBindingMap) error {
-	typeConverter := fIface.connector.TypeConverter()
-	executionContext := fIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(firewallSessionTimerProfileBindingMapsPatchInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("GroupId", groupIdParam)
-	sv.AddStructField("FirewallSessionTimerProfileBindingMapId", firewallSessionTimerProfileBindingMapIdParam)
-	sv.AddStructField("PolicyFirewallSessionTimerProfileBindingMap", policyFirewallSessionTimerProfileBindingMapParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := firewallSessionTimerProfileBindingMapsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	fIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := fIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.groups.firewall_session_timer_profile_binding_maps", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), fIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (fIface *firewallSessionTimerProfileBindingMapsClient) Update(domainIdParam string, groupIdParam string, firewallSessionTimerProfileBindingMapIdParam string, policyFirewallSessionTimerProfileBindingMapParam model.PolicyFirewallSessionTimerProfileBindingMap) (model.PolicyFirewallSessionTimerProfileBindingMap, error) {
-	typeConverter := fIface.connector.TypeConverter()
-	executionContext := fIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(firewallSessionTimerProfileBindingMapsUpdateInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("GroupId", groupIdParam)
-	sv.AddStructField("FirewallSessionTimerProfileBindingMapId", firewallSessionTimerProfileBindingMapIdParam)
-	sv.AddStructField("PolicyFirewallSessionTimerProfileBindingMap", policyFirewallSessionTimerProfileBindingMapParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.PolicyFirewallSessionTimerProfileBindingMap
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := firewallSessionTimerProfileBindingMapsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	fIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := fIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.groups.firewall_session_timer_profile_binding_maps", "update", inputDataValue, executionContext)
-	var emptyOutput model.PolicyFirewallSessionTimerProfileBindingMap
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), firewallSessionTimerProfileBindingMapsUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.PolicyFirewallSessionTimerProfileBindingMap), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), fIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

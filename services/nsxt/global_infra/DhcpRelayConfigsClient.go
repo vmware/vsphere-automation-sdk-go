@@ -21,16 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type DhcpRelayConfigsClient interface {
 
-	// Delete DHCP relay configuration
-	//
-	// @param dhcpRelayConfigIdParam DHCP relay config ID (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(dhcpRelayConfigIdParam string) error
-
 	// Read DHCP relay configuration
 	//
 	// @param dhcpRelayConfigIdParam DHCP relay config ID (required)
@@ -57,29 +47,6 @@ type DhcpRelayConfigsClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.DhcpRelayConfigListResult, error)
-
-	// If DHCP relay config with the dhcp-relay-config-id is not already present, create a new DHCP relay config instance. If it already exists, update the DHCP relay config instance with specified attributes.
-	//
-	// @param dhcpRelayConfigIdParam DHCP relay config ID (required)
-	// @param dhcpRelayConfigParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(dhcpRelayConfigIdParam string, dhcpRelayConfigParam model.DhcpRelayConfig) error
-
-	// If DHCP relay config with the dhcp-relay-config-id is not already present, create a new DHCP relay config instance. If it already exists, replace the DHCP relay config instance with this object.
-	//
-	// @param dhcpRelayConfigIdParam DHCP relay config ID (required)
-	// @param dhcpRelayConfigParam (required)
-	// @return com.vmware.nsx_policy.model.DhcpRelayConfig
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(dhcpRelayConfigIdParam string, dhcpRelayConfigParam model.DhcpRelayConfig) (model.DhcpRelayConfig, error)
 }
 
 type dhcpRelayConfigsClient struct {
@@ -91,11 +58,8 @@ type dhcpRelayConfigsClient struct {
 func NewDhcpRelayConfigsClient(connector client.Connector) *dhcpRelayConfigsClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.dhcp_relay_configs")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -109,31 +73,6 @@ func (dIface *dhcpRelayConfigsClient) GetErrorBindingType(errorName string) bind
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (dIface *dhcpRelayConfigsClient) Delete(dhcpRelayConfigIdParam string) error {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dhcpRelayConfigsDeleteInputType(), typeConverter)
-	sv.AddStructField("DhcpRelayConfigId", dhcpRelayConfigIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := dhcpRelayConfigsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.dhcp_relay_configs", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (dIface *dhcpRelayConfigsClient) Get(dhcpRelayConfigIdParam string) (model.DhcpRelayConfig, error) {
@@ -194,64 +133,6 @@ func (dIface *dhcpRelayConfigsClient) List(cursorParam *string, includeMarkForDe
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.DhcpRelayConfigListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (dIface *dhcpRelayConfigsClient) Patch(dhcpRelayConfigIdParam string, dhcpRelayConfigParam model.DhcpRelayConfig) error {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dhcpRelayConfigsPatchInputType(), typeConverter)
-	sv.AddStructField("DhcpRelayConfigId", dhcpRelayConfigIdParam)
-	sv.AddStructField("DhcpRelayConfig", dhcpRelayConfigParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := dhcpRelayConfigsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.dhcp_relay_configs", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (dIface *dhcpRelayConfigsClient) Update(dhcpRelayConfigIdParam string, dhcpRelayConfigParam model.DhcpRelayConfig) (model.DhcpRelayConfig, error) {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dhcpRelayConfigsUpdateInputType(), typeConverter)
-	sv.AddStructField("DhcpRelayConfigId", dhcpRelayConfigIdParam)
-	sv.AddStructField("DhcpRelayConfig", dhcpRelayConfigParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.DhcpRelayConfig
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := dhcpRelayConfigsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.dhcp_relay_configs", "update", inputDataValue, executionContext)
-	var emptyOutput model.DhcpRelayConfig
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), dhcpRelayConfigsUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.DhcpRelayConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

@@ -22,7 +22,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type SessionsClient interface {
 
-	// Delete IPSec VPN session for a given locale service under Tier-0.
+	// Delete IPSec VPN session for a given locale service under Tier-0. This API is deprecated. Please use DELETE /infra/tier-0s/<tier-0-id>/ipsec-vpn-services/<service-id>/sessions/<session-id> instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource. Also VPN path returned in the Alarm, GPRR payload may include the new VPN path
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -35,7 +35,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	Delete(tier0IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string) error
 
-	// Get IPSec VPN session without sensitive data for a given locale service under Tier-0.
+	// Get IPSec VPN session without sensitive data for a given locale service under Tier-0. This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/ipsec-vpn-services/<service-id>/sessions/<session-id> instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -50,7 +50,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	Get(tier0IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string) (*data.StructValue, error)
 
-	// Get paginated list of all IPSec VPN sessions for a given locale service under Tier-0.
+	// Get paginated list of all IPSec VPN sessions for a given locale service under Tier-0. This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/ipsec-vpn-services/<service-id>/sessions instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -69,7 +69,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	List(tier0IdParam string, localeServiceIdParam string, serviceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IPSecVpnSessionListResult, error)
 
-	// Create or patch an IPSec VPN session for a given locale service under Tier-0.
+	// Create or patch an IPSec VPN session for a given locale service under Tier-0. This API is deprecated. Please use PATCH /infra/tier-0s/<tier-0-id>/ipsec-vpn-services/<service-id>/sessions/<session-id> instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource. Also VPN path returned in the Alarm, GPRR payload may include the new VPN path
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -84,7 +84,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	Patch(tier0IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string, ipSecVpnSessionParam *data.StructValue) error
 
-	// Get IPSec VPN session with senstive data for a given locale service under Tier-0.
+	// Get IPSec VPN session with senstive data for a given locale service under Tier-0. This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/ipsec-vpn-services/<service-id>/sessions/<session-id>?action=show_sensitive_data instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -99,7 +99,7 @@ type SessionsClient interface {
 	// @throws NotFound  Not Found
 	Showsensitivedata(tier0IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string) (*data.StructValue, error)
 
-	// Create or fully replace IPSec VPN session for a given locale service under Tier-0. Revision is optional for creation and required for update.
+	// Create or fully replace IPSec VPN session for a given locale service under Tier-0. Revision is optional for creation and required for update. This API is deprecated. Please use PUT /infra/tier-0s/<tier-0-id>/ipsec-vpn-services/<service-id>/sessions/<session-id> instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource. Also VPN path returned in the Alarm, GPRR payload may include the new VPN path
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)

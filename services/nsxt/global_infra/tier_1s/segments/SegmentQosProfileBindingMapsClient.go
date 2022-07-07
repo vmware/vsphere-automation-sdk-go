@@ -21,18 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type SegmentQosProfileBindingMapsClient interface {
 
-	// API will delete Segment QoS Profile Binding Profile.
-	//
-	// @param tier1IdParam Tier-1 ID (required)
-	// @param segmentIdParam Segment ID (required)
-	// @param segmentQosProfileBindingMapIdParam Segment QoS Profile Binding Map ID (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(tier1IdParam string, segmentIdParam string, segmentQosProfileBindingMapIdParam string) error
-
 	// API will get Segment QoS Profile Binding Map.
 	//
 	// @param tier1IdParam Tier-1 ID (required)
@@ -62,33 +50,6 @@ type SegmentQosProfileBindingMapsClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(tier1IdParam string, segmentIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.SegmentQosProfileBindingMapListResult, error)
-
-	// API will create segment QoS profile binding map. For objects with no binding maps, default profile is applied.
-	//
-	// @param tier1IdParam Tier-1 ID (required)
-	// @param segmentIdParam Segment ID (required)
-	// @param segmentQosProfileBindingMapIdParam Segment QoS Profile Binding Map ID (required)
-	// @param segmentQosProfileBindingMapParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(tier1IdParam string, segmentIdParam string, segmentQosProfileBindingMapIdParam string, segmentQosProfileBindingMapParam model.SegmentQosProfileBindingMap) error
-
-	// API will update Segment QoS Profile Binding Map. For objects with no binding maps, default profile is applied.
-	//
-	// @param tier1IdParam Tier-1 ID (required)
-	// @param segmentIdParam Segment ID (required)
-	// @param segmentQosProfileBindingMapIdParam Segment QoS Profile Binding Map ID (required)
-	// @param segmentQosProfileBindingMapParam (required)
-	// @return com.vmware.nsx_policy.model.SegmentQoSProfileBindingMap
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(tier1IdParam string, segmentIdParam string, segmentQosProfileBindingMapIdParam string, segmentQosProfileBindingMapParam model.SegmentQosProfileBindingMap) (model.SegmentQosProfileBindingMap, error)
 }
 
 type segmentQosProfileBindingMapsClient struct {
@@ -100,11 +61,8 @@ type segmentQosProfileBindingMapsClient struct {
 func NewSegmentQosProfileBindingMapsClient(connector client.Connector) *segmentQosProfileBindingMapsClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.tier_1s.segments.segment_qos_profile_binding_maps")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -118,33 +76,6 @@ func (sIface *segmentQosProfileBindingMapsClient) GetErrorBindingType(errorName 
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (sIface *segmentQosProfileBindingMapsClient) Delete(tier1IdParam string, segmentIdParam string, segmentQosProfileBindingMapIdParam string) error {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(segmentQosProfileBindingMapsDeleteInputType(), typeConverter)
-	sv.AddStructField("Tier1Id", tier1IdParam)
-	sv.AddStructField("SegmentId", segmentIdParam)
-	sv.AddStructField("SegmentQosProfileBindingMapId", segmentQosProfileBindingMapIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := segmentQosProfileBindingMapsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_1s.segments.segment_qos_profile_binding_maps", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (sIface *segmentQosProfileBindingMapsClient) Get(tier1IdParam string, segmentIdParam string, segmentQosProfileBindingMapIdParam string) (model.SegmentQosProfileBindingMap, error) {
@@ -208,68 +139,6 @@ func (sIface *segmentQosProfileBindingMapsClient) List(tier1IdParam string, segm
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.SegmentQosProfileBindingMapListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (sIface *segmentQosProfileBindingMapsClient) Patch(tier1IdParam string, segmentIdParam string, segmentQosProfileBindingMapIdParam string, segmentQosProfileBindingMapParam model.SegmentQosProfileBindingMap) error {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(segmentQosProfileBindingMapsPatchInputType(), typeConverter)
-	sv.AddStructField("Tier1Id", tier1IdParam)
-	sv.AddStructField("SegmentId", segmentIdParam)
-	sv.AddStructField("SegmentQosProfileBindingMapId", segmentQosProfileBindingMapIdParam)
-	sv.AddStructField("SegmentQosProfileBindingMap", segmentQosProfileBindingMapParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := segmentQosProfileBindingMapsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_1s.segments.segment_qos_profile_binding_maps", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (sIface *segmentQosProfileBindingMapsClient) Update(tier1IdParam string, segmentIdParam string, segmentQosProfileBindingMapIdParam string, segmentQosProfileBindingMapParam model.SegmentQosProfileBindingMap) (model.SegmentQosProfileBindingMap, error) {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(segmentQosProfileBindingMapsUpdateInputType(), typeConverter)
-	sv.AddStructField("Tier1Id", tier1IdParam)
-	sv.AddStructField("SegmentId", segmentIdParam)
-	sv.AddStructField("SegmentQosProfileBindingMapId", segmentQosProfileBindingMapIdParam)
-	sv.AddStructField("SegmentQosProfileBindingMap", segmentQosProfileBindingMapParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.SegmentQosProfileBindingMap
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := segmentQosProfileBindingMapsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.tier_1s.segments.segment_qos_profile_binding_maps", "update", inputDataValue, executionContext)
-	var emptyOutput model.SegmentQosProfileBindingMap
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), segmentQosProfileBindingMapsUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.SegmentQosProfileBindingMap), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

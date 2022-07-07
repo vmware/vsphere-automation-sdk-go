@@ -21,17 +21,6 @@ const _ = core.SupportedByRuntimeVersion1
 
 type DomainDeploymentMapsClient interface {
 
-	// Delete Domain Deployment Map
-	//
-	// @param domainIdParam (required)
-	// @param domainDeploymentMapIdParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(domainIdParam string, domainDeploymentMapIdParam string) error
-
 	// Read a Domain Deployment Map
 	//
 	// @param domainIdParam (required)
@@ -60,31 +49,6 @@ type DomainDeploymentMapsClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(domainIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.DomainDeploymentMapListResult, error)
-
-	// If the passed Domain Deployment Map does not already exist, create a new Domain Deployment Map. If it already exist, patch it.
-	//
-	// @param domainIdParam (required)
-	// @param domainDeploymentMapIdParam (required)
-	// @param domainDeploymentMapParam (required)
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Patch(domainIdParam string, domainDeploymentMapIdParam string, domainDeploymentMapParam model.DomainDeploymentMap) error
-
-	// If the passed Domain Deployment Map does not already exist, create a new Domain Deployment Map. If it already exist, replace it.
-	//
-	// @param domainIdParam (required)
-	// @param domainDeploymentMapIdParam (required)
-	// @param domainDeploymentMapParam (required)
-	// @return com.vmware.nsx_policy.model.DomainDeploymentMap
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Update(domainIdParam string, domainDeploymentMapIdParam string, domainDeploymentMapParam model.DomainDeploymentMap) (model.DomainDeploymentMap, error)
 }
 
 type domainDeploymentMapsClient struct {
@@ -96,11 +60,8 @@ type domainDeploymentMapsClient struct {
 func NewDomainDeploymentMapsClient(connector client.Connector) *domainDeploymentMapsClient {
 	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.domains.domain_deployment_maps")
 	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]bindings.BindingType)
@@ -114,32 +75,6 @@ func (dIface *domainDeploymentMapsClient) GetErrorBindingType(errorName string) 
 		return entry
 	}
 	return errors.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (dIface *domainDeploymentMapsClient) Delete(domainIdParam string, domainDeploymentMapIdParam string) error {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(domainDeploymentMapsDeleteInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("DomainDeploymentMapId", domainDeploymentMapIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := domainDeploymentMapsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.domain_deployment_maps", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
 }
 
 func (dIface *domainDeploymentMapsClient) Get(domainIdParam string, domainDeploymentMapIdParam string) (model.DomainDeploymentMap, error) {
@@ -202,66 +137,6 @@ func (dIface *domainDeploymentMapsClient) List(domainIdParam string, cursorParam
 			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.DomainDeploymentMapListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (dIface *domainDeploymentMapsClient) Patch(domainIdParam string, domainDeploymentMapIdParam string, domainDeploymentMapParam model.DomainDeploymentMap) error {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(domainDeploymentMapsPatchInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("DomainDeploymentMapId", domainDeploymentMapIdParam)
-	sv.AddStructField("DomainDeploymentMap", domainDeploymentMapParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := domainDeploymentMapsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.domain_deployment_maps", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (dIface *domainDeploymentMapsClient) Update(domainIdParam string, domainDeploymentMapIdParam string, domainDeploymentMapParam model.DomainDeploymentMap) (model.DomainDeploymentMap, error) {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(domainDeploymentMapsUpdateInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("DomainDeploymentMapId", domainDeploymentMapIdParam)
-	sv.AddStructField("DomainDeploymentMap", domainDeploymentMapParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.DomainDeploymentMap
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := domainDeploymentMapsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.domain_deployment_maps", "update", inputDataValue, executionContext)
-	var emptyOutput model.DomainDeploymentMap
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), domainDeploymentMapsUpdateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.DomainDeploymentMap), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

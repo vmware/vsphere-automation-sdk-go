@@ -24,10 +24,12 @@ func statisticsListInputType() bindings.StructType {
 	fields["domain_id"] = bindings.NewStringType()
 	fields["security_policy_id"] = bindings.NewStringType()
 	fields["rule_id"] = bindings.NewStringType()
+	fields["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["security_policy_id"] = "SecurityPolicyId"
 	fieldNameMap["rule_id"] = "RuleId"
+	fieldNameMap["container_cluster_path"] = "ContainerClusterPath"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
@@ -49,14 +51,17 @@ func statisticsListRestMetadata() protocol.OperationRestMetadata {
 	fields["domain_id"] = bindings.NewStringType()
 	fields["security_policy_id"] = bindings.NewStringType()
 	fields["rule_id"] = bindings.NewStringType()
+	fields["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["security_policy_id"] = "SecurityPolicyId"
 	fieldNameMap["rule_id"] = "RuleId"
+	fieldNameMap["container_cluster_path"] = "ContainerClusterPath"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	paramsTypeMap["domain_id"] = bindings.NewStringType()
 	paramsTypeMap["rule_id"] = bindings.NewStringType()
 	paramsTypeMap["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["security_policy_id"] = bindings.NewStringType()
 	paramsTypeMap["domainId"] = bindings.NewStringType()
 	paramsTypeMap["securityPolicyId"] = bindings.NewStringType()
@@ -64,6 +69,7 @@ func statisticsListRestMetadata() protocol.OperationRestMetadata {
 	pathParams["security_policy_id"] = "securityPolicyId"
 	pathParams["rule_id"] = "ruleId"
 	pathParams["domain_id"] = "domainId"
+	queryParams["container_cluster_path"] = "container_cluster_path"
 	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
