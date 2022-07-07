@@ -1,0 +1,87 @@
+// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// SPDX-License-Identifier: BSD-2-Clause
+
+// Auto generated code. DO NOT EDIT.
+
+// Interface file for service: Services
+// Used by client-side stubs.
+
+package node
+
+import (
+	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+)
+
+const _ = core.SupportedByRuntimeVersion1
+
+type ServicesClient interface {
+
+	// Returns a list of all services available on the node applicance.
+	// @return com.vmware.nsx.model.NodeServicePropertiesListResult
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	List() (model.NodeServicePropertiesListResult, error)
+}
+
+type servicesClient struct {
+	connector           client.Connector
+	interfaceDefinition core.InterfaceDefinition
+	errorsBindingMap    map[string]bindings.BindingType
+}
+
+func NewServicesClient(connector client.Connector) *servicesClient {
+	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.node.services")
+	methodIdentifiers := map[string]core.MethodIdentifier{
+		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
+	}
+	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]bindings.BindingType)
+
+	sIface := servicesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &sIface
+}
+
+func (sIface *servicesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
+		return entry
+	}
+	return errors.ERROR_BINDINGS_MAP[errorName]
+}
+
+func (sIface *servicesClient) List() (model.NodeServicePropertiesListResult, error) {
+	typeConverter := sIface.connector.TypeConverter()
+	executionContext := sIface.connector.NewExecutionContext()
+	sv := bindings.NewStructValueBuilder(servicesListInputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput model.NodeServicePropertiesListResult
+		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+	}
+	operationRestMetaData := servicesListRestMetadata()
+	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
+	connectionMetadata["isStreamingResponse"] = false
+	sIface.connector.SetConnectionMetadata(connectionMetadata)
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services", "list", inputDataValue, executionContext)
+	var emptyOutput model.NodeServicePropertiesListResult
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), servicesListOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(model.NodeServicePropertiesListResult), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
