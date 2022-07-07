@@ -26,15 +26,21 @@ type ArpProxyClient interface {
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
 	// @param interfaceIdParam (required)
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param sortAscendingParam (optional)
+	// @param sortByParam Field by which records are sorted (optional)
 	// @param sourceParam Data source type. (optional)
+	// @param transportNodeIdParam TransportNode Id (optional)
 	// @return com.vmware.nsx_global_policy.model.PolicyArpProxyTableListResult
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(tier0IdParam string, localeServiceIdParam string, interfaceIdParam string, enforcementPointPathParam *string, sourceParam *string) (model.PolicyArpProxyTableListResult, error)
+	List(tier0IdParam string, localeServiceIdParam string, interfaceIdParam string, cursorParam *string, enforcementPointPathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, transportNodeIdParam *string) (model.PolicyArpProxyTableListResult, error)
 }
 
 type arpProxyClient struct {
@@ -62,15 +68,21 @@ func (aIface *arpProxyClient) GetErrorBindingType(errorName string) bindings.Bin
 	return errors.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (aIface *arpProxyClient) List(tier0IdParam string, localeServiceIdParam string, interfaceIdParam string, enforcementPointPathParam *string, sourceParam *string) (model.PolicyArpProxyTableListResult, error) {
+func (aIface *arpProxyClient) List(tier0IdParam string, localeServiceIdParam string, interfaceIdParam string, cursorParam *string, enforcementPointPathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, transportNodeIdParam *string) (model.PolicyArpProxyTableListResult, error) {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
 	sv := bindings.NewStructValueBuilder(arpProxyListInputType(), typeConverter)
 	sv.AddStructField("Tier0Id", tier0IdParam)
 	sv.AddStructField("LocaleServiceId", localeServiceIdParam)
 	sv.AddStructField("InterfaceId", interfaceIdParam)
+	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
+	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("SortAscending", sortAscendingParam)
+	sv.AddStructField("SortBy", sortByParam)
 	sv.AddStructField("Source", sourceParam)
+	sv.AddStructField("TransportNodeId", transportNodeIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.PolicyArpProxyTableListResult

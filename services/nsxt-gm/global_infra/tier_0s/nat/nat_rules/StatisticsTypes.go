@@ -18,16 +18,23 @@ import (
 	"reflect"
 )
 
+// Possible value for ``action`` of method Statistics#list.
+const Statistics_LIST_ACTION_AGGREGATE = "aggregate"
+
 func statisticsListInputType() bindings.StructType {
 	fields := make(map[string]bindings.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["tier0_id"] = bindings.NewStringType()
 	fields["nat_id"] = bindings.NewStringType()
 	fields["nat_rule_id"] = bindings.NewStringType()
+	fields["action"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["nat_id"] = "NatId"
 	fieldNameMap["nat_rule_id"] = "NatRuleId"
+	fieldNameMap["action"] = "Action"
+	fieldNameMap["container_cluster_path"] = "ContainerClusterPath"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	var validators = []bindings.Validator{}
 	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
@@ -49,13 +56,19 @@ func statisticsListRestMetadata() protocol.OperationRestMetadata {
 	fields["tier0_id"] = bindings.NewStringType()
 	fields["nat_id"] = bindings.NewStringType()
 	fields["nat_rule_id"] = bindings.NewStringType()
+	fields["action"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["nat_id"] = "NatId"
 	fieldNameMap["nat_rule_id"] = "NatRuleId"
+	fieldNameMap["action"] = "Action"
+	fieldNameMap["container_cluster_path"] = "ContainerClusterPath"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	paramsTypeMap["tier0_id"] = bindings.NewStringType()
 	paramsTypeMap["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["action"] = bindings.NewOptionalType(bindings.NewStringType())
 	paramsTypeMap["nat_rule_id"] = bindings.NewStringType()
 	paramsTypeMap["nat_id"] = bindings.NewStringType()
 	paramsTypeMap["tier0Id"] = bindings.NewStringType()
@@ -64,6 +77,8 @@ func statisticsListRestMetadata() protocol.OperationRestMetadata {
 	pathParams["nat_rule_id"] = "natRuleId"
 	pathParams["nat_id"] = "natId"
 	pathParams["tier0_id"] = "tier0Id"
+	queryParams["container_cluster_path"] = "container_cluster_path"
+	queryParams["action"] = "action"
 	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}

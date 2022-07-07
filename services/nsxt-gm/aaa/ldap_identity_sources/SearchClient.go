@@ -24,14 +24,14 @@ type SearchClient interface {
 	// Search the LDAP identity source for users and groups that match the given filter_value. In most cases, the LDAP source performs a case-insensitive search.
 	//
 	// @param ldapIdentitySourceIdParam (required)
-	// @param filterValueParam Search filter value (optional)
+	// @param filterValueParam Search filter value (required)
 	// @return com.vmware.nsx_global_policy.model.LdapIdentitySourceSearchResultList
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(ldapIdentitySourceIdParam string, filterValueParam *string) (model.LdapIdentitySourceSearchResultList, error)
+	Create(ldapIdentitySourceIdParam string, filterValueParam string) (model.LdapIdentitySourceSearchResultList, error)
 }
 
 type searchClient struct {
@@ -59,7 +59,7 @@ func (sIface *searchClient) GetErrorBindingType(errorName string) bindings.Bindi
 	return errors.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *searchClient) Create(ldapIdentitySourceIdParam string, filterValueParam *string) (model.LdapIdentitySourceSearchResultList, error) {
+func (sIface *searchClient) Create(ldapIdentitySourceIdParam string, filterValueParam string) (model.LdapIdentitySourceSearchResultList, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	sv := bindings.NewStructValueBuilder(searchCreateInputType(), typeConverter)

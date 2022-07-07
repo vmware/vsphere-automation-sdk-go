@@ -21,7 +21,7 @@ const _ = core.SupportedByRuntimeVersion1
 
 type UsersClient interface {
 
-	// Get all the users from vIDM whose userName, givenName or familyName matches the search key case insensitively. The search key is checked to be a substring of name or given name or family name. This is a non paginated API.
+	// Get all the users from vIDM whose userName, givenName or familyName matches the search key case insensitively. The search key is checked to be a substring of name or given name or family name. This is a non paginated API. This API will return as many results that vIDM returns to NSX during the search query. vIDM may not send all results at once so to zero in on the user of interest more characters need to be entered.
 	//
 	// @param searchStringParam Search string to search for. (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
