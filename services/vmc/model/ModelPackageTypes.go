@@ -18,48 +18,6 @@ import (
 	"time"
 )
 
-type HostInstanceTypesEnum string
-
-const (
-	HostInstanceTypes_I3_METAL   HostInstanceTypesEnum = "I3_METAL"
-	HostInstanceTypes_R5_METAL   HostInstanceTypesEnum = "R5_METAL"
-	HostInstanceTypes_I3EN_METAL HostInstanceTypesEnum = "I3EN_METAL"
-	HostInstanceTypes_I4I_METAL  HostInstanceTypesEnum = "I4I_METAL"
-)
-
-func (h HostInstanceTypesEnum) HostInstanceTypesEnum() bool {
-	switch h {
-	case HostInstanceTypes_I3_METAL:
-		return true
-	case HostInstanceTypes_R5_METAL:
-		return true
-	case HostInstanceTypes_I3EN_METAL:
-		return true
-	case HostInstanceTypes_I4I_METAL:
-		return true
-	default:
-		return false
-	}
-}
-
-type OfferTypeEnum string
-
-const (
-	OfferType_TERM      OfferTypeEnum = "TERM"
-	OfferType_ON_DEMAND OfferTypeEnum = "ON_DEMAND"
-)
-
-func (o OfferTypeEnum) OfferTypeEnum() bool {
-	switch o {
-	case OfferType_TERM:
-		return true
-	case OfferType_ON_DEMAND:
-		return true
-	default:
-		return false
-	}
-}
-
 type AbstractEntity struct {
 	Updated time.Time
 	// User id that last updated this record
@@ -585,8 +543,15 @@ type AwsSddcConfig struct {
 	MsftLicenseConfig *MsftLicensingConfig
 	// AWS VPC IP range. Only prefix of 16 or 20 is currently supported.
 	VpcCidr *string
-	// The instance type for the esx hosts in the primary cluster of the SDDC.
-	HostInstanceType *HostInstanceTypesEnum
+	// Possible values are:
+	//
+	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_I3_METAL
+	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_R5_METAL
+	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_I3EN_METAL
+	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_I4I_METAL
+	//
+	//  The instance type for the esx hosts in the primary cluster of the SDDC.
+	HostInstanceType *string
 	// skip creating vxlan for compute gateway for SDDC provisioning
 	SkipCreatingVxlan *bool
 	// VXLAN IP subnet in CIDR for compute gateway
@@ -1047,14 +1012,26 @@ func (s *Cluster) GetDataValue__() (data.DataValue, []error) {
 type ClusterConfig struct {
 	// Customize CPU cores on hosts in a cluster. Specify number of cores to be enabled on hosts in a cluster. format: int32
 	HostCpuCoresCount *int64
-	// The instance type for the esx hosts added to this cluster.
-	HostInstanceType *HostInstanceTypesEnum
+	// Possible values are:
+	//
+	// * ClusterConfig#ClusterConfig_HOST_INSTANCE_TYPE_I3_METAL
+	// * ClusterConfig#ClusterConfig_HOST_INSTANCE_TYPE_R5_METAL
+	// * ClusterConfig#ClusterConfig_HOST_INSTANCE_TYPE_I3EN_METAL
+	// * ClusterConfig#ClusterConfig_HOST_INSTANCE_TYPE_I4I_METAL
+	//
+	//  The instance type for the esx hosts added to this cluster.
+	HostInstanceType *string
 	// For EBS-backed instances only, the requested storage capacity in GiB. format: int64
 	StorageCapacity *int64
 	// The desired Microsoft license status to apply to this cluster.
 	MsftLicenseConfig *MsftLicensingConfig
 	NumHosts          int64
 }
+
+const ClusterConfig_HOST_INSTANCE_TYPE_I3_METAL = "i3.metal"
+const ClusterConfig_HOST_INSTANCE_TYPE_R5_METAL = "r5.metal"
+const ClusterConfig_HOST_INSTANCE_TYPE_I3EN_METAL = "i3en.metal"
+const ClusterConfig_HOST_INSTANCE_TYPE_I4I_METAL = "i4i.metal"
 
 func (s *ClusterConfig) GetType__() bindings.BindingType {
 	return ClusterConfigBindingType()
@@ -3132,8 +3109,15 @@ type SddcConfig struct {
 	MsftLicenseConfig *MsftLicensingConfig
 	// AWS VPC IP range. Only prefix of 16 or 20 is currently supported.
 	VpcCidr *string
-	// The instance type for the esx hosts in the primary cluster of the SDDC.
-	HostInstanceType *HostInstanceTypesEnum
+	// Possible values are:
+	//
+	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_I3_METAL
+	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_R5_METAL
+	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_I3EN_METAL
+	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_I4I_METAL
+	//
+	//  The instance type for the esx hosts in the primary cluster of the SDDC.
+	HostInstanceType *string
 	// skip creating vxlan for compute gateway for SDDC provisioning
 	SkipCreatingVxlan *bool
 	// VXLAN IP subnet in CIDR for compute gateway
@@ -3185,6 +3169,10 @@ type SddcConfig struct {
 //
 // This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
 const SddcConfig__TYPE_IDENTIFIER = "SddcConfig"
+const SddcConfig_HOST_INSTANCE_TYPE_I3_METAL = "i3.metal"
+const SddcConfig_HOST_INSTANCE_TYPE_R5_METAL = "r5.metal"
+const SddcConfig_HOST_INSTANCE_TYPE_I3EN_METAL = "i3en.metal"
+const SddcConfig_HOST_INSTANCE_TYPE_I4I_METAL = "i4i.metal"
 const SddcConfig_SIZE_NSX_SMALL = "nsx_small"
 const SddcConfig_SIZE_MEDIUM = "medium"
 const SddcConfig_SIZE_LARGE = "large"
@@ -3991,12 +3979,16 @@ type SubscriptionDetails struct {
 	CspSubscriptionId     *string
 	BillingSubscriptionId *string
 	OfferVersion          *string
-	OfferType             *OfferTypeEnum
-	Description           *string
-	ProductId             *string
-	Region                *string
-	ProductName           *string
-	OfferName             *string
+	// Possible values are:
+	//
+	// * SubscriptionDetails#SubscriptionDetails_OFFER_TYPE_TERM
+	// * SubscriptionDetails#SubscriptionDetails_OFFER_TYPE_ON_DEMAND
+	OfferType   *string
+	Description *string
+	ProductId   *string
+	Region      *string
+	ProductName *string
+	OfferName   *string
 	// unit of measurment for commitment term
 	CommitmentTermUom *string
 	StartDate         *string
@@ -4013,6 +4005,8 @@ const SubscriptionDetails_STATUS_ORDER_SUBMITTED = "ORDER_SUBMITTED"
 const SubscriptionDetails_STATUS_SUSPENDED = "SUSPENDED"
 const SubscriptionDetails_STATUS_TERMINATED = "TERMINATED"
 const SubscriptionDetails_STATUS_UKNOWN = "UKNOWN"
+const SubscriptionDetails_OFFER_TYPE_TERM = "TERM"
+const SubscriptionDetails_OFFER_TYPE_ON_DEMAND = "ON_DEMAND"
 
 func (s *SubscriptionDetails) GetType__() bindings.BindingType {
 	return SubscriptionDetailsBindingType()
@@ -5295,7 +5289,7 @@ func AwsSddcConfigBindingType() bindings.BindingType {
 	fieldNameMap["msft_license_config"] = "MsftLicenseConfig"
 	fields["vpc_cidr"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vpc_cidr"] = "VpcCidr"
-	fields["host_instance_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vmc.model.host_instance_types", reflect.TypeOf(HostInstanceTypesEnum(HostInstanceTypes_I3_METAL))))
+	fields["host_instance_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["host_instance_type"] = "HostInstanceType"
 	fields["skip_creating_vxlan"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["skip_creating_vxlan"] = "SkipCreatingVxlan"
@@ -5628,7 +5622,7 @@ func ClusterConfigBindingType() bindings.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["host_cpu_cores_count"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["host_cpu_cores_count"] = "HostCpuCoresCount"
-	fields["host_instance_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vmc.model.host_instance_types", reflect.TypeOf(HostInstanceTypesEnum(HostInstanceTypes_I3_METAL))))
+	fields["host_instance_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["host_instance_type"] = "HostInstanceType"
 	fields["storage_capacity"] = bindings.NewOptionalType(bindings.NewIntegerType())
 	fieldNameMap["storage_capacity"] = "StorageCapacity"
@@ -6716,7 +6710,7 @@ func SddcConfigBindingType() bindings.BindingType {
 	fieldNameMap["msft_license_config"] = "MsftLicenseConfig"
 	fields["vpc_cidr"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["vpc_cidr"] = "VpcCidr"
-	fields["host_instance_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vmc.model.host_instance_types", reflect.TypeOf(HostInstanceTypesEnum(HostInstanceTypes_I3_METAL))))
+	fields["host_instance_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["host_instance_type"] = "HostInstanceType"
 	fields["skip_creating_vxlan"] = bindings.NewOptionalType(bindings.NewBooleanType())
 	fieldNameMap["skip_creating_vxlan"] = "SkipCreatingVxlan"
@@ -7227,7 +7221,7 @@ func SubscriptionDetailsBindingType() bindings.BindingType {
 	fieldNameMap["billing_subscription_id"] = "BillingSubscriptionId"
 	fields["offer_version"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["offer_version"] = "OfferVersion"
-	fields["offer_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vmc.model.offer_type", reflect.TypeOf(OfferTypeEnum(OfferType_TERM))))
+	fields["offer_type"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["offer_type"] = "OfferType"
 	fields["description"] = bindings.NewOptionalType(bindings.NewStringType())
 	fieldNameMap["description"] = "Description"
