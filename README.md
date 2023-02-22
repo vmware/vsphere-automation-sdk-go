@@ -146,9 +146,7 @@ Board members are volunteers from the SDK community and VMware staff members.
 
 Members:
 
-- Vandit Mehta (VMware)
-- Sreenidhi Sreesha (VMware)
-- Tianhao He (VMware)
+- Deyan Popov (VMware)
 
 ## VMware Resources
 
