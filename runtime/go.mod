@@ -7,6 +7,6 @@ require (
 	github.com/gibson042/canonicaljson-go v1.0.3
 	github.com/google/uuid v1.2.0
 	github.com/gorilla/mux v1.8.0
-	golang.org/x/net v0.0.0-20210510120150-4163338589ed
-	golang.org/x/text v0.3.6
+	golang.org/x/net v0.7.0
+	golang.org/x/text v0.7.0
 )
