@@ -11,59 +11,59 @@
 package subscriptions
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 	"reflect"
 )
 
-func offerInstancesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func offerInstancesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["region"] = bindings.NewStringType()
-	fields["product_type"] = bindings.NewStringType()
-	fields["product"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["region"] = vapiBindings_.NewStringType()
+	fields["product_type"] = vapiBindings_.NewStringType()
+	fields["product"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["region"] = "Region"
 	fieldNameMap["product_type"] = "ProductType"
 	fieldNameMap["product"] = "Product"
 	fieldNameMap["type"] = "Type_"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func offerInstancesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.OfferInstancesHolderBindingType)
+func OfferInstancesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(vmcModel.OfferInstancesHolderBindingType)
 }
 
-func offerInstancesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func offerInstancesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["region"] = bindings.NewStringType()
-	fields["product_type"] = bindings.NewStringType()
-	fields["product"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["region"] = vapiBindings_.NewStringType()
+	fields["product_type"] = vapiBindings_.NewStringType()
+	fields["product"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["region"] = "Region"
 	fieldNameMap["product_type"] = "ProductType"
 	fieldNameMap["product"] = "Product"
 	fieldNameMap["type"] = "Type_"
-	paramsTypeMap["region"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["product_type"] = bindings.NewStringType()
-	paramsTypeMap["product"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["type"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["org"] = bindings.NewStringType()
+	paramsTypeMap["product"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["product_type"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["region"] = vapiBindings_.NewStringType()
+	paramsTypeMap["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	queryParams["product"] = "product"
 	queryParams["product_type"] = "product_type"
@@ -73,7 +73,7 @@ func offerInstancesListRestMetadata() protocol.OperationRestMetadata {
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

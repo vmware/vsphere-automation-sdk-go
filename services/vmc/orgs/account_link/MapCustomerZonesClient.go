@@ -9,15 +9,14 @@
 package account_link
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type MapCustomerZonesClient interface {
 
@@ -26,63 +25,65 @@ type MapCustomerZonesClient interface {
 	// @param orgParam Organization identifier (required)
 	// @param mapZonesRequestParam The zones request information about who to map and what to map. (required)
 	// @return com.vmware.vmc.model.Task
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws Unauthorized  Forbidden
-	Post(orgParam string, mapZonesRequestParam model.MapZonesRequest) (model.Task, error)
+	Post(orgParam string, mapZonesRequestParam vmcModel.MapZonesRequest) (vmcModel.Task, error)
 }
 
 type mapCustomerZonesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewMapCustomerZonesClient(connector client.Connector) *mapCustomerZonesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vmc.orgs.account_link.map_customer_zones")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"post": core.NewMethodIdentifier(interfaceIdentifier, "post"),
+func NewMapCustomerZonesClient(connector vapiProtocolClient_.Connector) *mapCustomerZonesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vmc.orgs.account_link.map_customer_zones")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"post": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "post"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	mIface := mapCustomerZonesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &mIface
 }
 
-func (mIface *mapCustomerZonesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (mIface *mapCustomerZonesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := mIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (mIface *mapCustomerZonesClient) Post(orgParam string, mapZonesRequestParam model.MapZonesRequest) (model.Task, error) {
+func (mIface *mapCustomerZonesClient) Post(orgParam string, mapZonesRequestParam vmcModel.MapZonesRequest) (vmcModel.Task, error) {
 	typeConverter := mIface.connector.TypeConverter()
 	executionContext := mIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(mapCustomerZonesPostInputType(), typeConverter)
+	operationRestMetaData := mapCustomerZonesPostRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(mapCustomerZonesPostInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("MapZonesRequest", mapZonesRequestParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.Task
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput vmcModel.Task
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := mapCustomerZonesPostRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	mIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := mIface.connector.GetApiProvider().Invoke("com.vmware.vmc.orgs.account_link.map_customer_zones", "post", inputDataValue, executionContext)
-	var emptyOutput model.Task
+	var emptyOutput vmcModel.Task
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), mapCustomerZonesPostOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), MapCustomerZonesPostOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.Task), nil
+		return output.(vmcModel.Task), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), mIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

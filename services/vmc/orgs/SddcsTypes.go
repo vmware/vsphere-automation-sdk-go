@@ -11,56 +11,56 @@
 package orgs
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 	"reflect"
 )
 
-func sddcsCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sddcsCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc_config"] = bindings.NewReferenceType(model.AwsSddcConfigBindingType)
-	fields["validate_only"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc_config"] = vapiBindings_.NewReferenceType(vmcModel.AwsSddcConfigBindingType)
+	fields["validate_only"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc_config"] = "SddcConfig"
 	fieldNameMap["validate_only"] = "ValidateOnly"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sddcsCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TaskBindingType)
+func SddcsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(vmcModel.TaskBindingType)
 }
 
-func sddcsCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sddcsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc_config"] = bindings.NewReferenceType(model.AwsSddcConfigBindingType)
-	fields["validate_only"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc_config"] = vapiBindings_.NewReferenceType(vmcModel.AwsSddcConfigBindingType)
+	fields["validate_only"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc_config"] = "SddcConfig"
 	fieldNameMap["validate_only"] = "ValidateOnly"
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc_config"] = bindings.NewReferenceType(model.AwsSddcConfigBindingType)
-	paramsTypeMap["validate_only"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["org"] = bindings.NewStringType()
+	paramsTypeMap["validate_only"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc_config"] = vapiBindings_.NewReferenceType(vmcModel.AwsSddcConfigBindingType)
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	queryParams["validate_only"] = "validateOnly"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -81,53 +81,53 @@ func sddcsCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
-func sddcsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sddcsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["retain_configuration"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["template_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["retain_configuration"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["template_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["retain_configuration"] = "RetainConfiguration"
 	fieldNameMap["template_name"] = "TemplateName"
 	fieldNameMap["force"] = "Force"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sddcsDeleteOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TaskBindingType)
+func SddcsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(vmcModel.TaskBindingType)
 }
 
-func sddcsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sddcsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["retain_configuration"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["template_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["retain_configuration"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["template_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["retain_configuration"] = "RetainConfiguration"
 	fieldNameMap["template_name"] = "TemplateName"
 	fieldNameMap["force"] = "Force"
-	paramsTypeMap["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["template_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["retain_configuration"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
+	paramsTypeMap["retain_configuration"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["template_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
 	queryParams["retain_configuration"] = "retain_configuration"
@@ -137,7 +137,7 @@ func sddcsDeleteRestMetadata() protocol.OperationRestMetadata {
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -158,45 +158,45 @@ func sddcsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func sddcsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sddcsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sddcsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.SddcBindingType)
+func SddcsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(vmcModel.SddcBindingType)
 }
 
-func sddcsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sddcsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -217,44 +217,44 @@ func sddcsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func sddcsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sddcsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["include_deleted"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["include_deleted"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["include_deleted"] = "IncludeDeleted"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sddcsListOutputType() bindings.BindingType {
-	return bindings.NewListType(bindings.NewReferenceType(model.SddcBindingType), reflect.TypeOf([]model.Sddc{}))
+func SddcsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewListType(vapiBindings_.NewReferenceType(vmcModel.SddcBindingType), reflect.TypeOf([]vmcModel.Sddc{}))
 }
 
-func sddcsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sddcsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["include_deleted"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["include_deleted"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["include_deleted"] = "IncludeDeleted"
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["include_deleted"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["org"] = bindings.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["include_deleted"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	queryParams["include_deleted"] = "includeDeleted"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -275,50 +275,50 @@ func sddcsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
-func sddcsPatchInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sddcsPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["sddc_patch_request"] = bindings.NewReferenceType(model.SddcPatchRequestBindingType)
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["sddc_patch_request"] = vapiBindings_.NewReferenceType(vmcModel.SddcPatchRequestBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["sddc_patch_request"] = "SddcPatchRequest"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sddcsPatchOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.SddcBindingType)
+func SddcsPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(vmcModel.SddcBindingType)
 }
 
-func sddcsPatchRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sddcsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["sddc_patch_request"] = bindings.NewReferenceType(model.SddcPatchRequestBindingType)
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["sddc_patch_request"] = vapiBindings_.NewReferenceType(vmcModel.SddcPatchRequestBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["sddc_patch_request"] = "SddcPatchRequest"
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["sddc_patch_request"] = bindings.NewReferenceType(model.SddcPatchRequestBindingType)
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
+	paramsTypeMap["sddc_patch_request"] = vapiBindings_.NewReferenceType(vmcModel.SddcPatchRequestBindingType)
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

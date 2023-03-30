@@ -11,10 +11,10 @@
 package addons
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 	"reflect"
 )
 
@@ -30,55 +30,55 @@ const Credentials_LIST_ADDON_TYPE_HCX = "HCX"
 // Possible value for ``addonType`` of method Credentials#update.
 const Credentials_UPDATE_ADDON_TYPE_HCX = "HCX"
 
-func credentialsCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func credentialsCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc_id"] = bindings.NewStringType()
-	fields["addon_type"] = bindings.NewStringType()
-	fields["credentials"] = bindings.NewReferenceType(model.NewCredentialsBindingType)
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc_id"] = vapiBindings_.NewStringType()
+	fields["addon_type"] = vapiBindings_.NewStringType()
+	fields["credentials"] = vapiBindings_.NewReferenceType(vmcModel.NewCredentialsBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc_id"] = "SddcId"
 	fieldNameMap["addon_type"] = "AddonType"
 	fieldNameMap["credentials"] = "Credentials"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func credentialsCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NewCredentialsBindingType)
+func CredentialsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(vmcModel.NewCredentialsBindingType)
 }
 
-func credentialsCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func credentialsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc_id"] = bindings.NewStringType()
-	fields["addon_type"] = bindings.NewStringType()
-	fields["credentials"] = bindings.NewReferenceType(model.NewCredentialsBindingType)
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc_id"] = vapiBindings_.NewStringType()
+	fields["addon_type"] = vapiBindings_.NewStringType()
+	fields["credentials"] = vapiBindings_.NewReferenceType(vmcModel.NewCredentialsBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc_id"] = "SddcId"
 	fieldNameMap["addon_type"] = "AddonType"
 	fieldNameMap["credentials"] = "Credentials"
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["addon_type"] = bindings.NewStringType()
-	paramsTypeMap["credentials"] = bindings.NewReferenceType(model.NewCredentialsBindingType)
-	paramsTypeMap["sddc_id"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddcId"] = bindings.NewStringType()
-	paramsTypeMap["addonType"] = bindings.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["credentials"] = vapiBindings_.NewReferenceType(vmcModel.NewCredentialsBindingType)
+	paramsTypeMap["addon_type"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddcId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["addonType"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	pathParams["sddc_id"] = "sddcId"
 	pathParams["addon_type"] = "addonType"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -99,57 +99,57 @@ func credentialsCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
-func credentialsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func credentialsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc_id"] = bindings.NewStringType()
-	fields["addon_type"] = bindings.NewStringType()
-	fields["name"] = bindings.NewStringType()
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc_id"] = vapiBindings_.NewStringType()
+	fields["addon_type"] = vapiBindings_.NewStringType()
+	fields["name"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc_id"] = "SddcId"
 	fieldNameMap["addon_type"] = "AddonType"
 	fieldNameMap["name"] = "Name"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func credentialsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NewCredentialsBindingType)
+func CredentialsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(vmcModel.NewCredentialsBindingType)
 }
 
-func credentialsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func credentialsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc_id"] = bindings.NewStringType()
-	fields["addon_type"] = bindings.NewStringType()
-	fields["name"] = bindings.NewStringType()
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc_id"] = vapiBindings_.NewStringType()
+	fields["addon_type"] = vapiBindings_.NewStringType()
+	fields["name"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc_id"] = "SddcId"
 	fieldNameMap["addon_type"] = "AddonType"
 	fieldNameMap["name"] = "Name"
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["addon_type"] = bindings.NewStringType()
-	paramsTypeMap["name"] = bindings.NewStringType()
-	paramsTypeMap["sddc_id"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddcId"] = bindings.NewStringType()
-	paramsTypeMap["addonType"] = bindings.NewStringType()
-	paramsTypeMap["name"] = bindings.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["addon_type"] = vapiBindings_.NewStringType()
+	paramsTypeMap["name"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddcId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["addonType"] = vapiBindings_.NewStringType()
+	paramsTypeMap["name"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	pathParams["sddc_id"] = "sddcId"
 	pathParams["addon_type"] = "addonType"
 	pathParams["name"] = "name"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -170,50 +170,50 @@ func credentialsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
-func credentialsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func credentialsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc_id"] = bindings.NewStringType()
-	fields["addon_type"] = bindings.NewStringType()
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc_id"] = vapiBindings_.NewStringType()
+	fields["addon_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc_id"] = "SddcId"
 	fieldNameMap["addon_type"] = "AddonType"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func credentialsListOutputType() bindings.BindingType {
-	return bindings.NewListType(bindings.NewReferenceType(model.NewCredentialsBindingType), reflect.TypeOf([]model.NewCredentials{}))
+func CredentialsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewListType(vapiBindings_.NewReferenceType(vmcModel.NewCredentialsBindingType), reflect.TypeOf([]vmcModel.NewCredentials{}))
 }
 
-func credentialsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func credentialsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc_id"] = bindings.NewStringType()
-	fields["addon_type"] = bindings.NewStringType()
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc_id"] = vapiBindings_.NewStringType()
+	fields["addon_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc_id"] = "SddcId"
 	fieldNameMap["addon_type"] = "AddonType"
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["addon_type"] = bindings.NewStringType()
-	paramsTypeMap["sddc_id"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddcId"] = bindings.NewStringType()
-	paramsTypeMap["addonType"] = bindings.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["addon_type"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddcId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["addonType"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	pathParams["sddc_id"] = "sddcId"
 	pathParams["addon_type"] = "addonType"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -234,62 +234,62 @@ func credentialsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
-func credentialsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func credentialsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc_id"] = bindings.NewStringType()
-	fields["addon_type"] = bindings.NewStringType()
-	fields["name"] = bindings.NewStringType()
-	fields["credentials"] = bindings.NewReferenceType(model.UpdateCredentialsBindingType)
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc_id"] = vapiBindings_.NewStringType()
+	fields["addon_type"] = vapiBindings_.NewStringType()
+	fields["name"] = vapiBindings_.NewStringType()
+	fields["credentials"] = vapiBindings_.NewReferenceType(vmcModel.UpdateCredentialsBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc_id"] = "SddcId"
 	fieldNameMap["addon_type"] = "AddonType"
 	fieldNameMap["name"] = "Name"
 	fieldNameMap["credentials"] = "Credentials"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func credentialsUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NewCredentialsBindingType)
+func CredentialsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(vmcModel.NewCredentialsBindingType)
 }
 
-func credentialsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func credentialsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc_id"] = bindings.NewStringType()
-	fields["addon_type"] = bindings.NewStringType()
-	fields["name"] = bindings.NewStringType()
-	fields["credentials"] = bindings.NewReferenceType(model.UpdateCredentialsBindingType)
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc_id"] = vapiBindings_.NewStringType()
+	fields["addon_type"] = vapiBindings_.NewStringType()
+	fields["name"] = vapiBindings_.NewStringType()
+	fields["credentials"] = vapiBindings_.NewReferenceType(vmcModel.UpdateCredentialsBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc_id"] = "SddcId"
 	fieldNameMap["addon_type"] = "AddonType"
 	fieldNameMap["name"] = "Name"
 	fieldNameMap["credentials"] = "Credentials"
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["addon_type"] = bindings.NewStringType()
-	paramsTypeMap["name"] = bindings.NewStringType()
-	paramsTypeMap["credentials"] = bindings.NewReferenceType(model.UpdateCredentialsBindingType)
-	paramsTypeMap["sddc_id"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddcId"] = bindings.NewStringType()
-	paramsTypeMap["addonType"] = bindings.NewStringType()
-	paramsTypeMap["name"] = bindings.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["credentials"] = vapiBindings_.NewReferenceType(vmcModel.UpdateCredentialsBindingType)
+	paramsTypeMap["addon_type"] = vapiBindings_.NewStringType()
+	paramsTypeMap["name"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddcId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["addonType"] = vapiBindings_.NewStringType()
+	paramsTypeMap["name"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	pathParams["sddc_id"] = "sddcId"
 	pathParams["addon_type"] = "addonType"
 	pathParams["name"] = "name"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

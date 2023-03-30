@@ -9,15 +9,14 @@
 package sddcs
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AddHostsPrecheckClient interface {
 
@@ -27,66 +26,68 @@ type AddHostsPrecheckClient interface {
 	// @param sddcParam Sddc identifier (required)
 	// @param esxConfigParam esxConfig (required)
 	// @return com.vmware.vmc.model.Task
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Bad Request.
 	// @throws Unauthorized  Access not allowed to the operation for the current user.
 	// @throws NotFound  Cannot find the SDDC with the given id.
-	AddHostPrecheckTask(orgParam string, sddcParam string, esxConfigParam model.EsxConfig) (model.Task, error)
+	AddHostPrecheckTask(orgParam string, sddcParam string, esxConfigParam vmcModel.EsxConfig) (vmcModel.Task, error)
 }
 
 type addHostsPrecheckClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewAddHostsPrecheckClient(connector client.Connector) *addHostsPrecheckClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vmc.orgs.sddcs.add_hosts_precheck")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"add_host_precheck_task": core.NewMethodIdentifier(interfaceIdentifier, "add_host_precheck_task"),
+func NewAddHostsPrecheckClient(connector vapiProtocolClient_.Connector) *addHostsPrecheckClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vmc.orgs.sddcs.add_hosts_precheck")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"add_host_precheck_task": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "add_host_precheck_task"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	aIface := addHostsPrecheckClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &aIface
 }
 
-func (aIface *addHostsPrecheckClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (aIface *addHostsPrecheckClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := aIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (aIface *addHostsPrecheckClient) AddHostPrecheckTask(orgParam string, sddcParam string, esxConfigParam model.EsxConfig) (model.Task, error) {
+func (aIface *addHostsPrecheckClient) AddHostPrecheckTask(orgParam string, sddcParam string, esxConfigParam vmcModel.EsxConfig) (vmcModel.Task, error) {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(addHostsPrecheckAddHostPrecheckTaskInputType(), typeConverter)
+	operationRestMetaData := addHostsPrecheckAddHostPrecheckTaskRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(addHostsPrecheckAddHostPrecheckTaskInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
 	sv.AddStructField("EsxConfig", esxConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.Task
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput vmcModel.Task
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := addHostsPrecheckAddHostPrecheckTaskRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	aIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := aIface.connector.GetApiProvider().Invoke("com.vmware.vmc.orgs.sddcs.add_hosts_precheck", "add_host_precheck_task", inputDataValue, executionContext)
-	var emptyOutput model.Task
+	var emptyOutput vmcModel.Task
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), addHostsPrecheckAddHostPrecheckTaskOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), AddHostsPrecheckAddHostPrecheckTaskOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.Task), nil
+		return output.(vmcModel.Task), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), aIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

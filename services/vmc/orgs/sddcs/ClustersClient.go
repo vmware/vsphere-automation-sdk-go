@@ -9,15 +9,14 @@
 package sddcs
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ClustersClient interface {
 
@@ -27,11 +26,12 @@ type ClustersClient interface {
 	// @param sddcParam Sddc identifier (required)
 	// @param clusterConfigParam clusterConfig (required)
 	// @return com.vmware.vmc.model.Task
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  The sddc is not in a state that's valid for updates
 	// @throws Unauthorized  Access not allowed to the operation for the current user
 	// @throws NotFound  Cannot find the cluster with the given identifier
-	Create(orgParam string, sddcParam string, clusterConfigParam model.ClusterConfig) (model.Task, error)
+	Create(orgParam string, sddcParam string, clusterConfigParam vmcModel.ClusterConfig) (vmcModel.Task, error)
 
 	// This is a force operation which will delete the cluster even if there can be a data loss. Before calling this operation, all the VMs should be powered off.
 	//
@@ -39,100 +39,103 @@ type ClustersClient interface {
 	// @param sddcParam Sddc identifier (required)
 	// @param clusterParam cluster identifier (required)
 	// @return com.vmware.vmc.model.Task
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  The sddc is not in a state that's valid for updates
 	// @throws Unauthorized  Access not allowed to the operation for the current user
 	// @throws NotFound  Cannot find the cluster with the given id
-	Delete(orgParam string, sddcParam string, clusterParam string) (model.Task, error)
+	Delete(orgParam string, sddcParam string, clusterParam string) (vmcModel.Task, error)
 }
 
 type clustersClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewClustersClient(connector client.Connector) *clustersClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vmc.orgs.sddcs.clusters")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create": core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
+func NewClustersClient(connector vapiProtocolClient_.Connector) *clustersClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vmc.orgs.sddcs.clusters")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	cIface := clustersClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &cIface
 }
 
-func (cIface *clustersClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (cIface *clustersClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := cIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (cIface *clustersClient) Create(orgParam string, sddcParam string, clusterConfigParam model.ClusterConfig) (model.Task, error) {
+func (cIface *clustersClient) Create(orgParam string, sddcParam string, clusterConfigParam vmcModel.ClusterConfig) (vmcModel.Task, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(clustersCreateInputType(), typeConverter)
+	operationRestMetaData := clustersCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(clustersCreateInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
 	sv.AddStructField("ClusterConfig", clusterConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.Task
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput vmcModel.Task
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := clustersCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.vmc.orgs.sddcs.clusters", "create", inputDataValue, executionContext)
-	var emptyOutput model.Task
+	var emptyOutput vmcModel.Task
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), clustersCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ClustersCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.Task), nil
+		return output.(vmcModel.Task), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (cIface *clustersClient) Delete(orgParam string, sddcParam string, clusterParam string) (model.Task, error) {
+func (cIface *clustersClient) Delete(orgParam string, sddcParam string, clusterParam string) (vmcModel.Task, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(clustersDeleteInputType(), typeConverter)
+	operationRestMetaData := clustersDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(clustersDeleteInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
 	sv.AddStructField("Cluster", clusterParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.Task
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput vmcModel.Task
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := clustersDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.vmc.orgs.sddcs.clusters", "delete", inputDataValue, executionContext)
-	var emptyOutput model.Task
+	var emptyOutput vmcModel.Task
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), clustersDeleteOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ClustersDeleteOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.Task), nil
+		return output.(vmcModel.Task), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

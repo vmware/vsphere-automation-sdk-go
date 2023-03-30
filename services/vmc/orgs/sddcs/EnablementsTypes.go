@@ -11,10 +11,10 @@
 package sddcs
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 	"reflect"
 )
 
@@ -24,49 +24,49 @@ const Enablements_ENABLE_DISABLE_ADDON_ACTION_ENABLE = "enable"
 // Possible value for ``action`` of method Enablements#enableDisableAddon.
 const Enablements_ENABLE_DISABLE_ADDON_ACTION_DISABLE = "disable"
 
-func enablementsEnableDisableAddonInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func enablementsEnableDisableAddonInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["enablement"] = bindings.NewStringType()
-	fields["action"] = bindings.NewStringType()
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["enablement"] = vapiBindings_.NewStringType()
+	fields["action"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["enablement"] = "Enablement"
 	fieldNameMap["action"] = "Action"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func enablementsEnableDisableAddonOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func EnablementsEnableDisableAddonOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func enablementsEnableDisableAddonRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func enablementsEnableDisableAddonRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["enablement"] = bindings.NewStringType()
-	fields["action"] = bindings.NewStringType()
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["enablement"] = vapiBindings_.NewStringType()
+	fields["action"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["enablement"] = "Enablement"
 	fieldNameMap["action"] = "Action"
-	paramsTypeMap["enablement"] = bindings.NewStringType()
-	paramsTypeMap["action"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["enablement"] = bindings.NewStringType()
+	paramsTypeMap["enablement"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["action"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enablement"] = vapiBindings_.NewStringType()
 	pathParams["enablement"] = "enablement"
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
@@ -75,7 +75,7 @@ func enablementsEnableDisableAddonRestMetadata() protocol.OperationRestMetadata 
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -96,45 +96,45 @@ func enablementsEnableDisableAddonRestMetadata() protocol.OperationRestMetadata 
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func enablementsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func enablementsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func enablementsListOutputType() bindings.BindingType {
-	return bindings.NewListType(bindings.NewReferenceType(model.EnablementInfoBindingType), reflect.TypeOf([]model.EnablementInfo{}))
+func EnablementsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewListType(vapiBindings_.NewReferenceType(vmcModel.EnablementInfoBindingType), reflect.TypeOf([]vmcModel.EnablementInfo{}))
 }
 
-func enablementsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func enablementsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

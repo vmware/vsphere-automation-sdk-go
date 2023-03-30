@@ -9,15 +9,14 @@
 package esxs
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StorageSpecClient interface {
 
@@ -27,66 +26,68 @@ type StorageSpecClient interface {
 	// @param sddcParam Sddc identifier (required)
 	// @param clusterParam cluster identifier (required)
 	// @param esxParam esx identifier (required)
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Invalid or missing parameters
 	// @throws Unauthorized  Forbidden
-	GetStorageSpecs(orgParam string, sddcParam string, clusterParam string, esxParam string) ([]model.VsanDiskgroupMapping, error)
+	GetStorageSpecs(orgParam string, sddcParam string, clusterParam string, esxParam string) ([]vmcModel.VsanDiskgroupMapping, error)
 }
 
 type storageSpecClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewStorageSpecClient(connector client.Connector) *storageSpecClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vmc.orgs.sddcs.clusters.esxs.storage_spec")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get_storage_specs": core.NewMethodIdentifier(interfaceIdentifier, "get_storage_specs"),
+func NewStorageSpecClient(connector vapiProtocolClient_.Connector) *storageSpecClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vmc.orgs.sddcs.clusters.esxs.storage_spec")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get_storage_specs": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get_storage_specs"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	sIface := storageSpecClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *storageSpecClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (sIface *storageSpecClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *storageSpecClient) GetStorageSpecs(orgParam string, sddcParam string, clusterParam string, esxParam string) ([]model.VsanDiskgroupMapping, error) {
+func (sIface *storageSpecClient) GetStorageSpecs(orgParam string, sddcParam string, clusterParam string, esxParam string) ([]vmcModel.VsanDiskgroupMapping, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(storageSpecGetStorageSpecsInputType(), typeConverter)
+	operationRestMetaData := storageSpecGetStorageSpecsRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(storageSpecGetStorageSpecsInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
 	sv.AddStructField("Cluster", clusterParam)
 	sv.AddStructField("Esx", esxParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput []model.VsanDiskgroupMapping
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput []vmcModel.VsanDiskgroupMapping
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := storageSpecGetStorageSpecsRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.vmc.orgs.sddcs.clusters.esxs.storage_spec", "get_storage_specs", inputDataValue, executionContext)
-	var emptyOutput []model.VsanDiskgroupMapping
+	var emptyOutput []vmcModel.VsanDiskgroupMapping
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), storageSpecGetStorageSpecsOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StorageSpecGetStorageSpecsOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.([]model.VsanDiskgroupMapping), nil
+		return output.([]vmcModel.VsanDiskgroupMapping), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

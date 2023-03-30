@@ -9,15 +9,14 @@
 package vmc
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LocaleClient interface {
 
@@ -25,62 +24,64 @@ type LocaleClient interface {
 	//
 	// @param vmcLocaleParam The locale to be set. (required)
 	// @return com.vmware.vmc.model.VmcLocale
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws Unauthorized  Forbidden
-	Set(vmcLocaleParam model.VmcLocale) (model.VmcLocale, error)
+	Set(vmcLocaleParam vmcModel.VmcLocale) (vmcModel.VmcLocale, error)
 }
 
 type localeClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewLocaleClient(connector client.Connector) *localeClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vmc.locale")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"set": core.NewMethodIdentifier(interfaceIdentifier, "set"),
+func NewLocaleClient(connector vapiProtocolClient_.Connector) *localeClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vmc.locale")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"set": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "set"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	lIface := localeClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &lIface
 }
 
-func (lIface *localeClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (lIface *localeClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := lIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (lIface *localeClient) Set(vmcLocaleParam model.VmcLocale) (model.VmcLocale, error) {
+func (lIface *localeClient) Set(vmcLocaleParam vmcModel.VmcLocale) (vmcModel.VmcLocale, error) {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(localeSetInputType(), typeConverter)
+	operationRestMetaData := localeSetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(localeSetInputType(), typeConverter)
 	sv.AddStructField("VmcLocale", vmcLocaleParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.VmcLocale
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput vmcModel.VmcLocale
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := localeSetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	lIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.vmc.locale", "set", inputDataValue, executionContext)
-	var emptyOutput model.VmcLocale
+	var emptyOutput vmcModel.VmcLocale
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), localeSetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), LocaleSetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.VmcLocale), nil
+		return output.(vmcModel.VmcLocale), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
