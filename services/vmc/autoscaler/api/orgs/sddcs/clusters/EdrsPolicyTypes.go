@@ -11,51 +11,51 @@
 package clusters
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
 	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/autoscaler/model"
 	"reflect"
 )
 
-func edrsPolicyGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func edrsPolicyGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["cluster"] = bindings.NewStringType()
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["cluster"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["cluster"] = "Cluster"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func edrsPolicyGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.EdrsPolicyBindingType)
+func EdrsPolicyGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(model.EdrsPolicyBindingType)
 }
 
-func edrsPolicyGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func edrsPolicyGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["cluster"] = bindings.NewStringType()
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["cluster"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["cluster"] = "Cluster"
-	paramsTypeMap["cluster"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["cluster"] = bindings.NewStringType()
+	paramsTypeMap["cluster"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["cluster"] = vapiBindings_.NewStringType()
 	pathParams["cluster"] = "cluster"
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
@@ -63,7 +63,7 @@ func edrsPolicyGetRestMetadata() protocol.OperationRestMetadata {
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -84,49 +84,49 @@ func edrsPolicyGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
-func edrsPolicyPostInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func edrsPolicyPostInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["cluster"] = bindings.NewStringType()
-	fields["edrs_policy"] = bindings.NewReferenceType(model.EdrsPolicyBindingType)
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["cluster"] = vapiBindings_.NewStringType()
+	fields["edrs_policy"] = vapiBindings_.NewReferenceType(model.EdrsPolicyBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["cluster"] = "Cluster"
 	fieldNameMap["edrs_policy"] = "EdrsPolicy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func edrsPolicyPostOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TaskBindingType)
+func EdrsPolicyPostOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(model.TaskBindingType)
 }
 
-func edrsPolicyPostRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func edrsPolicyPostRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["cluster"] = bindings.NewStringType()
-	fields["edrs_policy"] = bindings.NewReferenceType(model.EdrsPolicyBindingType)
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["cluster"] = vapiBindings_.NewStringType()
+	fields["edrs_policy"] = vapiBindings_.NewReferenceType(model.EdrsPolicyBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["cluster"] = "Cluster"
 	fieldNameMap["edrs_policy"] = "EdrsPolicy"
-	paramsTypeMap["cluster"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["edrs_policy"] = bindings.NewReferenceType(model.EdrsPolicyBindingType)
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["cluster"] = bindings.NewStringType()
+	paramsTypeMap["cluster"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["edrs_policy"] = vapiBindings_.NewReferenceType(model.EdrsPolicyBindingType)
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["cluster"] = vapiBindings_.NewStringType()
 	pathParams["cluster"] = "cluster"
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
@@ -134,7 +134,7 @@ func edrsPolicyPostRestMetadata() protocol.OperationRestMetadata {
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
