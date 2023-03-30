@@ -11,42 +11,48 @@
 package aaa
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_global_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
 	"reflect"
 )
 
-func userInfoGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func userInfoGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["root_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["provide_flat_listing"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["root_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["provide_flat_listing"] = "ProvideFlatListing"
 	fieldNameMap["root_path"] = "RootPath"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func userInfoGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.UserInfoBindingType)
+func UserInfoGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_global_policyModel.UserInfoBindingType)
 }
 
-func userInfoGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func userInfoGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["root_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["provide_flat_listing"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["root_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["provide_flat_listing"] = "ProvideFlatListing"
 	fieldNameMap["root_path"] = "RootPath"
-	paramsTypeMap["root_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["root_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["provide_flat_listing"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	queryParams["root_path"] = "root_path"
+	queryParams["provide_flat_listing"] = "provide_flat_listing"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

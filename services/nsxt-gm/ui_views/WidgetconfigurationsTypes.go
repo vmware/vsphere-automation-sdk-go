@@ -11,48 +11,48 @@
 package ui_views
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_global_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
 	"reflect"
 )
 
-func widgetconfigurationsCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func widgetconfigurationsCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["view_id"] = bindings.NewStringType()
-	fields["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
+	fields["view_id"] = vapiBindings_.NewStringType()
+	fields["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_global_policyModel.WidgetConfigurationBindingType)})
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widget_configuration"] = "WidgetConfiguration"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func widgetconfigurationsCreateOutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
+func WidgetconfigurationsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_global_policyModel.WidgetConfigurationBindingType)})
 }
 
-func widgetconfigurationsCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func widgetconfigurationsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["view_id"] = bindings.NewStringType()
-	fields["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
+	fields["view_id"] = vapiBindings_.NewStringType()
+	fields["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_global_policyModel.WidgetConfigurationBindingType)})
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widget_configuration"] = "WidgetConfiguration"
-	paramsTypeMap["view_id"] = bindings.NewStringType()
-	paramsTypeMap["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
-	paramsTypeMap["viewId"] = bindings.NewStringType()
+	paramsTypeMap["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_global_policyModel.WidgetConfigurationBindingType)})
+	paramsTypeMap["view_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["viewId"] = vapiBindings_.NewStringType()
 	pathParams["view_id"] = "viewId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -73,43 +73,43 @@ func widgetconfigurationsCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func widgetconfigurationsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func widgetconfigurationsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["view_id"] = bindings.NewStringType()
-	fields["widgetconfiguration_id"] = bindings.NewStringType()
+	fields["view_id"] = vapiBindings_.NewStringType()
+	fields["widgetconfiguration_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widgetconfiguration_id"] = "WidgetconfigurationId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func widgetconfigurationsDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func WidgetconfigurationsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func widgetconfigurationsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func widgetconfigurationsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["view_id"] = bindings.NewStringType()
-	fields["widgetconfiguration_id"] = bindings.NewStringType()
+	fields["view_id"] = vapiBindings_.NewStringType()
+	fields["widgetconfiguration_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widgetconfiguration_id"] = "WidgetconfigurationId"
-	paramsTypeMap["widgetconfiguration_id"] = bindings.NewStringType()
-	paramsTypeMap["view_id"] = bindings.NewStringType()
-	paramsTypeMap["viewId"] = bindings.NewStringType()
-	paramsTypeMap["widgetconfigurationId"] = bindings.NewStringType()
+	paramsTypeMap["widgetconfiguration_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["view_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["viewId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["widgetconfigurationId"] = vapiBindings_.NewStringType()
 	pathParams["view_id"] = "viewId"
 	pathParams["widgetconfiguration_id"] = "widgetconfigurationId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -130,48 +130,48 @@ func widgetconfigurationsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func widgetconfigurationsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func widgetconfigurationsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["view_id"] = bindings.NewStringType()
-	fields["container"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["widget_ids"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["view_id"] = vapiBindings_.NewStringType()
+	fields["container"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["widget_ids"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["container"] = "Container"
 	fieldNameMap["widget_ids"] = "WidgetIds"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func widgetconfigurationsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.WidgetConfigurationListBindingType)
+func WidgetconfigurationsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_global_policyModel.WidgetConfigurationListBindingType)
 }
 
-func widgetconfigurationsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func widgetconfigurationsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["view_id"] = bindings.NewStringType()
-	fields["container"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["widget_ids"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["view_id"] = vapiBindings_.NewStringType()
+	fields["container"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["widget_ids"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["container"] = "Container"
 	fieldNameMap["widget_ids"] = "WidgetIds"
-	paramsTypeMap["view_id"] = bindings.NewStringType()
-	paramsTypeMap["container"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["widget_ids"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["viewId"] = bindings.NewStringType()
+	paramsTypeMap["container"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["view_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["widget_ids"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["viewId"] = vapiBindings_.NewStringType()
 	pathParams["view_id"] = "viewId"
 	queryParams["container"] = "container"
 	queryParams["widget_ids"] = "widget_ids"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -192,43 +192,43 @@ func widgetconfigurationsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func widgetconfigurationsGet0InputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func widgetconfigurationsGet0InputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["view_id"] = bindings.NewStringType()
-	fields["widgetconfiguration_id"] = bindings.NewStringType()
+	fields["view_id"] = vapiBindings_.NewStringType()
+	fields["widgetconfiguration_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widgetconfiguration_id"] = "WidgetconfigurationId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func widgetconfigurationsGet0OutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
+func WidgetconfigurationsGet0OutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_global_policyModel.WidgetConfigurationBindingType)})
 }
 
-func widgetconfigurationsGet0RestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func widgetconfigurationsGet0RestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["view_id"] = bindings.NewStringType()
-	fields["widgetconfiguration_id"] = bindings.NewStringType()
+	fields["view_id"] = vapiBindings_.NewStringType()
+	fields["widgetconfiguration_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widgetconfiguration_id"] = "WidgetconfigurationId"
-	paramsTypeMap["widgetconfiguration_id"] = bindings.NewStringType()
-	paramsTypeMap["view_id"] = bindings.NewStringType()
-	paramsTypeMap["viewId"] = bindings.NewStringType()
-	paramsTypeMap["widgetconfigurationId"] = bindings.NewStringType()
+	paramsTypeMap["widgetconfiguration_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["view_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["viewId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["widgetconfigurationId"] = vapiBindings_.NewStringType()
 	pathParams["view_id"] = "viewId"
 	pathParams["widgetconfiguration_id"] = "widgetconfigurationId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -249,48 +249,48 @@ func widgetconfigurationsGet0RestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func widgetconfigurationsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func widgetconfigurationsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["view_id"] = bindings.NewStringType()
-	fields["widgetconfiguration_id"] = bindings.NewStringType()
-	fields["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
+	fields["view_id"] = vapiBindings_.NewStringType()
+	fields["widgetconfiguration_id"] = vapiBindings_.NewStringType()
+	fields["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_global_policyModel.WidgetConfigurationBindingType)})
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widgetconfiguration_id"] = "WidgetconfigurationId"
 	fieldNameMap["widget_configuration"] = "WidgetConfiguration"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func widgetconfigurationsUpdateOutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
+func WidgetconfigurationsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_global_policyModel.WidgetConfigurationBindingType)})
 }
 
-func widgetconfigurationsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func widgetconfigurationsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["view_id"] = bindings.NewStringType()
-	fields["widgetconfiguration_id"] = bindings.NewStringType()
-	fields["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
+	fields["view_id"] = vapiBindings_.NewStringType()
+	fields["widgetconfiguration_id"] = vapiBindings_.NewStringType()
+	fields["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_global_policyModel.WidgetConfigurationBindingType)})
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widgetconfiguration_id"] = "WidgetconfigurationId"
 	fieldNameMap["widget_configuration"] = "WidgetConfiguration"
-	paramsTypeMap["widgetconfiguration_id"] = bindings.NewStringType()
-	paramsTypeMap["view_id"] = bindings.NewStringType()
-	paramsTypeMap["widget_configuration"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.WidgetConfigurationBindingType)}, bindings.REST)
-	paramsTypeMap["viewId"] = bindings.NewStringType()
-	paramsTypeMap["widgetconfigurationId"] = bindings.NewStringType()
+	paramsTypeMap["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_global_policyModel.WidgetConfigurationBindingType)})
+	paramsTypeMap["widgetconfiguration_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["view_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["viewId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["widgetconfigurationId"] = vapiBindings_.NewStringType()
 	pathParams["view_id"] = "viewId"
 	pathParams["widgetconfiguration_id"] = "widgetconfigurationId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

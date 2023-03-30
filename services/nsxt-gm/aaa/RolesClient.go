@@ -9,15 +9,14 @@
 package aaa
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_global_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RolesClient interface {
 
@@ -26,16 +25,18 @@ type RolesClient interface {
 	// @param roleParam Role id (required)
 	// @param newRoleParam (required)
 	// @return com.vmware.nsx_global_policy.model.NewRole
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Clone(roleParam string, newRoleParam model.NewRole) (model.NewRole, error)
+	Clone(roleParam string, newRoleParam nsx_global_policyModel.NewRole) (nsx_global_policyModel.NewRole, error)
 
 	// If a role is assigned to a role binding then the deletion of the role is not allowed. Precanned roles cannot be deleted.
 	//
 	// @param roleParam Custom role id (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -47,103 +48,115 @@ type RolesClient interface {
 	//
 	// @param roleParam Role id (required)
 	// @return com.vmware.nsx_global_policy.model.RoleWithFeatures
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(roleParam string) (model.RoleWithFeatures, error)
+	Get(roleParam string) (nsx_global_policyModel.RoleWithFeatures, error)
 
 	// Get information about all roles
+	//
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param scopeParam List only the roles which are applicable for this scope. (optional)
+	// @param sortAscendingParam (optional)
+	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_global_policy.model.RoleListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List() (model.RoleListResult, error)
+	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, scopeParam *string, sortAscendingParam *bool, sortByParam *string) (nsx_global_policyModel.RoleListResult, error)
 
-	// Creates a new role with id as <role> if there does not exist any role with id <role>, else updates the existing role.
+	// Creates a new role with id as <role> if there does not exist any role with id <role>, else updates the existing role. Permissions for features marked is_internal as true will be ignored if provided in request payload. These features' permission are set internally.
 	//
 	// @param roleParam Custom role id (required)
 	// @param roleWithFeaturesParam (required)
 	// @return com.vmware.nsx_global_policy.model.RoleWithFeatures
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(roleParam string, roleWithFeaturesParam model.RoleWithFeatures) (model.RoleWithFeatures, error)
+	Update(roleParam string, roleWithFeaturesParam nsx_global_policyModel.RoleWithFeatures) (nsx_global_policyModel.RoleWithFeatures, error)
 
 	// Validate the permissions of an incoming role. Also, recommend the permissions which need to be corrected.
 	//
 	// @param featurePermissionArrayParam (required)
 	// @return com.vmware.nsx_global_policy.model.RecommendedFeaturePermissionListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Validate(featurePermissionArrayParam model.FeaturePermissionArray) (model.RecommendedFeaturePermissionListResult, error)
+	Validate(featurePermissionArrayParam nsx_global_policyModel.FeaturePermissionArray) (nsx_global_policyModel.RecommendedFeaturePermissionListResult, error)
 }
 
 type rolesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewRolesClient(connector client.Connector) *rolesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_global_policy.aaa.roles")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"clone":    core.NewMethodIdentifier(interfaceIdentifier, "clone"),
-		"delete":   core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":      core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":     core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update":   core.NewMethodIdentifier(interfaceIdentifier, "update"),
-		"validate": core.NewMethodIdentifier(interfaceIdentifier, "validate"),
+func NewRolesClient(connector vapiProtocolClient_.Connector) *rolesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_global_policy.aaa.roles")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"clone":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "clone"),
+		"delete":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"validate": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "validate"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	rIface := rolesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &rIface
 }
 
-func (rIface *rolesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (rIface *rolesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := rIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (rIface *rolesClient) Clone(roleParam string, newRoleParam model.NewRole) (model.NewRole, error) {
+func (rIface *rolesClient) Clone(roleParam string, newRoleParam nsx_global_policyModel.NewRole) (nsx_global_policyModel.NewRole, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rolesCloneInputType(), typeConverter)
+	operationRestMetaData := rolesCloneRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rolesCloneInputType(), typeConverter)
 	sv.AddStructField("Role", roleParam)
 	sv.AddStructField("NewRole", newRoleParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NewRole
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_global_policyModel.NewRole
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rolesCloneRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.aaa.roles", "clone", inputDataValue, executionContext)
-	var emptyOutput model.NewRole
+	var emptyOutput nsx_global_policyModel.NewRole
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rolesCloneOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RolesCloneOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NewRole), nil
+		return output.(nsx_global_policyModel.NewRole), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -152,147 +165,158 @@ func (rIface *rolesClient) Clone(roleParam string, newRoleParam model.NewRole) (
 func (rIface *rolesClient) Delete(roleParam string) error {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rolesDeleteInputType(), typeConverter)
+	operationRestMetaData := rolesDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rolesDeleteInputType(), typeConverter)
 	sv.AddStructField("Role", roleParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rolesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.aaa.roles", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (rIface *rolesClient) Get(roleParam string) (model.RoleWithFeatures, error) {
+func (rIface *rolesClient) Get(roleParam string) (nsx_global_policyModel.RoleWithFeatures, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rolesGetInputType(), typeConverter)
+	operationRestMetaData := rolesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rolesGetInputType(), typeConverter)
 	sv.AddStructField("Role", roleParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.RoleWithFeatures
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_global_policyModel.RoleWithFeatures
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rolesGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.aaa.roles", "get", inputDataValue, executionContext)
-	var emptyOutput model.RoleWithFeatures
+	var emptyOutput nsx_global_policyModel.RoleWithFeatures
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rolesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RolesGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.RoleWithFeatures), nil
+		return output.(nsx_global_policyModel.RoleWithFeatures), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (rIface *rolesClient) List() (model.RoleListResult, error) {
+func (rIface *rolesClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, scopeParam *string, sortAscendingParam *bool, sortByParam *string) (nsx_global_policyModel.RoleListResult, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rolesListInputType(), typeConverter)
+	operationRestMetaData := rolesListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rolesListInputType(), typeConverter)
+	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("Scope", scopeParam)
+	sv.AddStructField("SortAscending", sortAscendingParam)
+	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.RoleListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_global_policyModel.RoleListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rolesListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.aaa.roles", "list", inputDataValue, executionContext)
-	var emptyOutput model.RoleListResult
+	var emptyOutput nsx_global_policyModel.RoleListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rolesListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RolesListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.RoleListResult), nil
+		return output.(nsx_global_policyModel.RoleListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (rIface *rolesClient) Update(roleParam string, roleWithFeaturesParam model.RoleWithFeatures) (model.RoleWithFeatures, error) {
+func (rIface *rolesClient) Update(roleParam string, roleWithFeaturesParam nsx_global_policyModel.RoleWithFeatures) (nsx_global_policyModel.RoleWithFeatures, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rolesUpdateInputType(), typeConverter)
+	operationRestMetaData := rolesUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rolesUpdateInputType(), typeConverter)
 	sv.AddStructField("Role", roleParam)
 	sv.AddStructField("RoleWithFeatures", roleWithFeaturesParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.RoleWithFeatures
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_global_policyModel.RoleWithFeatures
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rolesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.aaa.roles", "update", inputDataValue, executionContext)
-	var emptyOutput model.RoleWithFeatures
+	var emptyOutput nsx_global_policyModel.RoleWithFeatures
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rolesUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RolesUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.RoleWithFeatures), nil
+		return output.(nsx_global_policyModel.RoleWithFeatures), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (rIface *rolesClient) Validate(featurePermissionArrayParam model.FeaturePermissionArray) (model.RecommendedFeaturePermissionListResult, error) {
+func (rIface *rolesClient) Validate(featurePermissionArrayParam nsx_global_policyModel.FeaturePermissionArray) (nsx_global_policyModel.RecommendedFeaturePermissionListResult, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rolesValidateInputType(), typeConverter)
+	operationRestMetaData := rolesValidateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rolesValidateInputType(), typeConverter)
 	sv.AddStructField("FeaturePermissionArray", featurePermissionArrayParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.RecommendedFeaturePermissionListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_global_policyModel.RecommendedFeaturePermissionListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rolesValidateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.aaa.roles", "validate", inputDataValue, executionContext)
-	var emptyOutput model.RecommendedFeaturePermissionListResult
+	var emptyOutput nsx_global_policyModel.RecommendedFeaturePermissionListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rolesValidateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RolesValidateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.RecommendedFeaturePermissionListResult), nil
+		return output.(nsx_global_policyModel.RecommendedFeaturePermissionListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

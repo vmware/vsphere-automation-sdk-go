@@ -11,48 +11,48 @@
 package sites
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_global_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
 	"reflect"
 )
 
-func onboardingCheckconflictInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func onboardingCheckconflictInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["site_id"] = bindings.NewStringType()
-	fields["config_onboarding_conflict_request"] = bindings.NewReferenceType(model.ConfigOnboardingConflictRequestBindingType)
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["config_onboarding_conflict_request"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.ConfigOnboardingConflictRequestBindingType)
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["config_onboarding_conflict_request"] = "ConfigOnboardingConflictRequest"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func onboardingCheckconflictOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ConfigOnboardingConflictStatusBindingType)
+func OnboardingCheckconflictOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_global_policyModel.ConfigOnboardingConflictStatusBindingType)
 }
 
-func onboardingCheckconflictRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func onboardingCheckconflictRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["site_id"] = bindings.NewStringType()
-	fields["config_onboarding_conflict_request"] = bindings.NewReferenceType(model.ConfigOnboardingConflictRequestBindingType)
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["config_onboarding_conflict_request"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.ConfigOnboardingConflictRequestBindingType)
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["config_onboarding_conflict_request"] = "ConfigOnboardingConflictRequest"
-	paramsTypeMap["config_onboarding_conflict_request"] = bindings.NewReferenceType(model.ConfigOnboardingConflictRequestBindingType)
-	paramsTypeMap["site_id"] = bindings.NewStringType()
-	paramsTypeMap["siteId"] = bindings.NewStringType()
+	paramsTypeMap["config_onboarding_conflict_request"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.ConfigOnboardingConflictRequestBindingType)
+	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
 	pathParams["site_id"] = "siteId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -73,41 +73,41 @@ func onboardingCheckconflictRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func onboardingStartonboardingInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func onboardingStartonboardingInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["site_id"] = bindings.NewStringType()
-	fields["config_onboarding_request"] = bindings.NewReferenceType(model.ConfigOnboardingRequestBindingType)
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["config_onboarding_request"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.ConfigOnboardingRequestBindingType)
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["config_onboarding_request"] = "ConfigOnboardingRequest"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func onboardingStartonboardingOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ConfigOnboardingStatusBindingType)
+func OnboardingStartonboardingOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_global_policyModel.ConfigOnboardingStatusBindingType)
 }
 
-func onboardingStartonboardingRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func onboardingStartonboardingRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["site_id"] = bindings.NewStringType()
-	fields["config_onboarding_request"] = bindings.NewReferenceType(model.ConfigOnboardingRequestBindingType)
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["config_onboarding_request"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.ConfigOnboardingRequestBindingType)
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["config_onboarding_request"] = "ConfigOnboardingRequest"
-	paramsTypeMap["config_onboarding_request"] = bindings.NewReferenceType(model.ConfigOnboardingRequestBindingType)
-	paramsTypeMap["site_id"] = bindings.NewStringType()
-	paramsTypeMap["siteId"] = bindings.NewStringType()
+	paramsTypeMap["config_onboarding_request"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.ConfigOnboardingRequestBindingType)
+	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
 	pathParams["site_id"] = "siteId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

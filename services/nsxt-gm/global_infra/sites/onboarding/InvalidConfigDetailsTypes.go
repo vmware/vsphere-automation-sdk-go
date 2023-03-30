@@ -11,52 +11,52 @@
 package onboarding
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_global_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
 	"reflect"
 )
 
 // Possible value for ``feature`` of method InvalidConfigDetails#get.
 const InvalidConfigDetails_GET_FEATURE_LB = "LB"
 
-func invalidConfigDetailsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func invalidConfigDetailsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["site_id"] = bindings.NewStringType()
-	fields["feature"] = bindings.NewStringType()
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["feature"] = vapiBindings_.NewStringType()
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["feature"] = "Feature"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func invalidConfigDetailsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.FederationInvalidConfigurationDetailsResponseBindingType)
+func InvalidConfigDetailsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_global_policyModel.FederationInvalidConfigurationDetailsResponseBindingType)
 }
 
-func invalidConfigDetailsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func invalidConfigDetailsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["site_id"] = bindings.NewStringType()
-	fields["feature"] = bindings.NewStringType()
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["feature"] = vapiBindings_.NewStringType()
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["feature"] = "Feature"
-	paramsTypeMap["site_id"] = bindings.NewStringType()
-	paramsTypeMap["feature"] = bindings.NewStringType()
-	paramsTypeMap["siteId"] = bindings.NewStringType()
+	paramsTypeMap["feature"] = vapiBindings_.NewStringType()
+	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
 	pathParams["site_id"] = "siteId"
 	queryParams["feature"] = "feature"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
