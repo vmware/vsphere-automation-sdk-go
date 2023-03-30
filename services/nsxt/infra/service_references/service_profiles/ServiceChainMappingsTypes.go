@@ -11,56 +11,56 @@
 package service_profiles
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func serviceChainMappingsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceChainMappingsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["service_reference_id"] = bindings.NewStringType()
-	fields["service_profile_id"] = bindings.NewStringType()
-	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["service_reference_id"] = vapiBindings_.NewStringType()
+	fields["service_profile_id"] = vapiBindings_.NewStringType()
+	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["service_reference_id"] = "ServiceReferenceId"
 	fieldNameMap["service_profile_id"] = "ServiceProfileId"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceChainMappingsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ServiceChainMappingListResultBindingType)
+func ServiceChainMappingsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.ServiceChainMappingListResultBindingType)
 }
 
-func serviceChainMappingsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceChainMappingsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["service_reference_id"] = bindings.NewStringType()
-	fields["service_profile_id"] = bindings.NewStringType()
-	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["service_reference_id"] = vapiBindings_.NewStringType()
+	fields["service_profile_id"] = vapiBindings_.NewStringType()
+	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["service_reference_id"] = "ServiceReferenceId"
 	fieldNameMap["service_profile_id"] = "ServiceProfileId"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
-	paramsTypeMap["service_reference_id"] = bindings.NewStringType()
-	paramsTypeMap["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["service_profile_id"] = bindings.NewStringType()
-	paramsTypeMap["serviceReferenceId"] = bindings.NewStringType()
-	paramsTypeMap["serviceProfileId"] = bindings.NewStringType()
+	paramsTypeMap["service_reference_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["serviceReferenceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceProfileId"] = vapiBindings_.NewStringType()
 	pathParams["service_reference_id"] = "serviceReferenceId"
 	pathParams["service_profile_id"] = "serviceProfileId"
 	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

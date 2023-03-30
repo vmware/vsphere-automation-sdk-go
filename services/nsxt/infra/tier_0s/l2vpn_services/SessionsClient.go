@@ -9,15 +9,14 @@
 package l2vpn_services
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SessionsClient interface {
 
@@ -27,18 +26,20 @@ type SessionsClient interface {
 	// @param serviceIdParam (required)
 	// @param sessionIdParam (required)
 	// @param l2VPNSessionDataParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Createwithpeercode(tier0IdParam string, serviceIdParam string, sessionIdParam string, l2VPNSessionDataParam model.L2VPNSessionData) error
+	Createwithpeercode(tier0IdParam string, serviceIdParam string, sessionIdParam string, l2VPNSessionDataParam nsx_policyModel.L2VPNSessionData) error
 
 	// Delete L2VPN session under Tier-0. When L2VPN Service is in CLIENT Mode, the L2VPN Session is deleted along with its transpot tunnels and related resources.
 	//
 	// @param tier0IdParam (required)
 	// @param serviceIdParam (required)
 	// @param sessionIdParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -52,12 +53,13 @@ type SessionsClient interface {
 	// @param serviceIdParam (required)
 	// @param sessionIdParam (required)
 	// @return com.vmware.nsx_policy.model.L2VPNSession
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(tier0IdParam string, serviceIdParam string, sessionIdParam string) (model.L2VPNSession, error)
+	Get(tier0IdParam string, serviceIdParam string, sessionIdParam string) (nsx_policyModel.L2VPNSession, error)
 
 	// Get paginated list of all L2VPN sessions under Tier-0.
 	//
@@ -70,12 +72,13 @@ type SessionsClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.L2VPNSessionListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(tier0IdParam string, serviceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.L2VPNSessionListResult, error)
+	List(tier0IdParam string, serviceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.L2VPNSessionListResult, error)
 
 	// Create or patch an L2VPN session under Tier-0. API supported only when L2VPN Service is in Server Mode.
 	//
@@ -83,12 +86,13 @@ type SessionsClient interface {
 	// @param serviceIdParam (required)
 	// @param sessionIdParam (required)
 	// @param l2VPNSessionParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(tier0IdParam string, serviceIdParam string, sessionIdParam string, l2VPNSessionParam model.L2VPNSession) error
+	Patch(tier0IdParam string, serviceIdParam string, sessionIdParam string, l2VPNSessionParam nsx_policyModel.L2VPNSession) error
 
 	// Create or fully replace L2VPN session under Tier-0. API supported only when L2VPN Service is in Server Mode. Revision is optional for creation and required for update.
 	//
@@ -97,67 +101,69 @@ type SessionsClient interface {
 	// @param sessionIdParam (required)
 	// @param l2VPNSessionParam (required)
 	// @return com.vmware.nsx_policy.model.L2VPNSession
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(tier0IdParam string, serviceIdParam string, sessionIdParam string, l2VPNSessionParam model.L2VPNSession) (model.L2VPNSession, error)
+	Update(tier0IdParam string, serviceIdParam string, sessionIdParam string, l2VPNSessionParam nsx_policyModel.L2VPNSession) (nsx_policyModel.L2VPNSession, error)
 }
 
 type sessionsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewSessionsClient(connector client.Connector) *sessionsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.tier_0s.l2vpn_services.sessions")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"createwithpeercode": core.NewMethodIdentifier(interfaceIdentifier, "createwithpeercode"),
-		"delete":             core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":                core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":               core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":              core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update":             core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewSessionsClient(connector vapiProtocolClient_.Connector) *sessionsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.tier_0s.l2vpn_services.sessions")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"createwithpeercode": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "createwithpeercode"),
+		"delete":             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":                vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":               vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch":              vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"update":             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	sIface := sessionsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *sessionsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (sIface *sessionsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *sessionsClient) Createwithpeercode(tier0IdParam string, serviceIdParam string, sessionIdParam string, l2VPNSessionDataParam model.L2VPNSessionData) error {
+func (sIface *sessionsClient) Createwithpeercode(tier0IdParam string, serviceIdParam string, sessionIdParam string, l2VPNSessionDataParam nsx_policyModel.L2VPNSessionData) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sessionsCreatewithpeercodeInputType(), typeConverter)
+	operationRestMetaData := sessionsCreatewithpeercodeRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sessionsCreatewithpeercodeInputType(), typeConverter)
 	sv.AddStructField("Tier0Id", tier0IdParam)
 	sv.AddStructField("ServiceId", serviceIdParam)
 	sv.AddStructField("SessionId", sessionIdParam)
 	sv.AddStructField("L2VPNSessionData", l2VPNSessionDataParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sessionsCreatewithpeercodeRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.tier_0s.l2vpn_services.sessions", "createwithpeercode", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
@@ -166,67 +172,73 @@ func (sIface *sessionsClient) Createwithpeercode(tier0IdParam string, serviceIdP
 func (sIface *sessionsClient) Delete(tier0IdParam string, serviceIdParam string, sessionIdParam string) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sessionsDeleteInputType(), typeConverter)
+	operationRestMetaData := sessionsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sessionsDeleteInputType(), typeConverter)
 	sv.AddStructField("Tier0Id", tier0IdParam)
 	sv.AddStructField("ServiceId", serviceIdParam)
 	sv.AddStructField("SessionId", sessionIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sessionsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.tier_0s.l2vpn_services.sessions", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (sIface *sessionsClient) Get(tier0IdParam string, serviceIdParam string, sessionIdParam string) (model.L2VPNSession, error) {
+func (sIface *sessionsClient) Get(tier0IdParam string, serviceIdParam string, sessionIdParam string) (nsx_policyModel.L2VPNSession, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sessionsGetInputType(), typeConverter)
+	operationRestMetaData := sessionsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sessionsGetInputType(), typeConverter)
 	sv.AddStructField("Tier0Id", tier0IdParam)
 	sv.AddStructField("ServiceId", serviceIdParam)
 	sv.AddStructField("SessionId", sessionIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.L2VPNSession
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.L2VPNSession
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sessionsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.tier_0s.l2vpn_services.sessions", "get", inputDataValue, executionContext)
-	var emptyOutput model.L2VPNSession
+	var emptyOutput nsx_policyModel.L2VPNSession
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), sessionsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SessionsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.L2VPNSession), nil
+		return output.(nsx_policyModel.L2VPNSession), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *sessionsClient) List(tier0IdParam string, serviceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.L2VPNSessionListResult, error) {
+func (sIface *sessionsClient) List(tier0IdParam string, serviceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.L2VPNSessionListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sessionsListInputType(), typeConverter)
+	operationRestMetaData := sessionsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sessionsListInputType(), typeConverter)
 	sv.AddStructField("Tier0Id", tier0IdParam)
 	sv.AddStructField("ServiceId", serviceIdParam)
 	sv.AddStructField("Cursor", cursorParam)
@@ -237,87 +249,86 @@ func (sIface *sessionsClient) List(tier0IdParam string, serviceIdParam string, c
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.L2VPNSessionListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.L2VPNSessionListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sessionsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.tier_0s.l2vpn_services.sessions", "list", inputDataValue, executionContext)
-	var emptyOutput model.L2VPNSessionListResult
+	var emptyOutput nsx_policyModel.L2VPNSessionListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), sessionsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SessionsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.L2VPNSessionListResult), nil
+		return output.(nsx_policyModel.L2VPNSessionListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *sessionsClient) Patch(tier0IdParam string, serviceIdParam string, sessionIdParam string, l2VPNSessionParam model.L2VPNSession) error {
+func (sIface *sessionsClient) Patch(tier0IdParam string, serviceIdParam string, sessionIdParam string, l2VPNSessionParam nsx_policyModel.L2VPNSession) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sessionsPatchInputType(), typeConverter)
+	operationRestMetaData := sessionsPatchRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sessionsPatchInputType(), typeConverter)
 	sv.AddStructField("Tier0Id", tier0IdParam)
 	sv.AddStructField("ServiceId", serviceIdParam)
 	sv.AddStructField("SessionId", sessionIdParam)
 	sv.AddStructField("L2VPNSession", l2VPNSessionParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sessionsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.tier_0s.l2vpn_services.sessions", "patch", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (sIface *sessionsClient) Update(tier0IdParam string, serviceIdParam string, sessionIdParam string, l2VPNSessionParam model.L2VPNSession) (model.L2VPNSession, error) {
+func (sIface *sessionsClient) Update(tier0IdParam string, serviceIdParam string, sessionIdParam string, l2VPNSessionParam nsx_policyModel.L2VPNSession) (nsx_policyModel.L2VPNSession, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sessionsUpdateInputType(), typeConverter)
+	operationRestMetaData := sessionsUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sessionsUpdateInputType(), typeConverter)
 	sv.AddStructField("Tier0Id", tier0IdParam)
 	sv.AddStructField("ServiceId", serviceIdParam)
 	sv.AddStructField("SessionId", sessionIdParam)
 	sv.AddStructField("L2VPNSession", l2VPNSessionParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.L2VPNSession
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.L2VPNSession
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sessionsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.tier_0s.l2vpn_services.sessions", "update", inputDataValue, executionContext)
-	var emptyOutput model.L2VPNSession
+	var emptyOutput nsx_policyModel.L2VPNSession
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), sessionsUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SessionsUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.L2VPNSession), nil
+		return output.(nsx_policyModel.L2VPNSession), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

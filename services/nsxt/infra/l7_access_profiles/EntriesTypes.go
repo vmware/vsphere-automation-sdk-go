@@ -11,56 +11,56 @@
 package l7_access_profiles
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func entriesDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func entriesDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["l7_access_profile_id"] = bindings.NewStringType()
-	fields["l7_access_entry_id"] = bindings.NewStringType()
-	fields["override"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	fields["l7_access_entry_id"] = vapiBindings_.NewStringType()
+	fields["override"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["l7_access_profile_id"] = "L7AccessProfileId"
 	fieldNameMap["l7_access_entry_id"] = "L7AccessEntryId"
 	fieldNameMap["override"] = "Override"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func entriesDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func EntriesDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func entriesDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func entriesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["l7_access_profile_id"] = bindings.NewStringType()
-	fields["l7_access_entry_id"] = bindings.NewStringType()
-	fields["override"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	fields["l7_access_entry_id"] = vapiBindings_.NewStringType()
+	fields["override"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["l7_access_profile_id"] = "L7AccessProfileId"
 	fieldNameMap["l7_access_entry_id"] = "L7AccessEntryId"
 	fieldNameMap["override"] = "Override"
-	paramsTypeMap["l7_access_entry_id"] = bindings.NewStringType()
-	paramsTypeMap["override"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["l7_access_profile_id"] = bindings.NewStringType()
-	paramsTypeMap["l7AccessProfileId"] = bindings.NewStringType()
-	paramsTypeMap["l7AccessEntryId"] = bindings.NewStringType()
+	paramsTypeMap["l7_access_entry_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["override"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["l7AccessProfileId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l7AccessEntryId"] = vapiBindings_.NewStringType()
 	pathParams["l7_access_entry_id"] = "l7AccessEntryId"
 	pathParams["l7_access_profile_id"] = "l7AccessProfileId"
 	queryParams["override"] = "override"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -81,43 +81,43 @@ func entriesDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func entriesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func entriesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["l7_access_profile_id"] = bindings.NewStringType()
-	fields["l7_access_entry_id"] = bindings.NewStringType()
+	fields["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	fields["l7_access_entry_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["l7_access_profile_id"] = "L7AccessProfileId"
 	fieldNameMap["l7_access_entry_id"] = "L7AccessEntryId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func entriesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.L7AccessEntryBindingType)
+func EntriesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.L7AccessEntryBindingType)
 }
 
-func entriesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func entriesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["l7_access_profile_id"] = bindings.NewStringType()
-	fields["l7_access_entry_id"] = bindings.NewStringType()
+	fields["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	fields["l7_access_entry_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["l7_access_profile_id"] = "L7AccessProfileId"
 	fieldNameMap["l7_access_entry_id"] = "L7AccessEntryId"
-	paramsTypeMap["l7_access_entry_id"] = bindings.NewStringType()
-	paramsTypeMap["l7_access_profile_id"] = bindings.NewStringType()
-	paramsTypeMap["l7AccessProfileId"] = bindings.NewStringType()
-	paramsTypeMap["l7AccessEntryId"] = bindings.NewStringType()
+	paramsTypeMap["l7_access_entry_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l7AccessProfileId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l7AccessEntryId"] = vapiBindings_.NewStringType()
 	pathParams["l7_access_entry_id"] = "l7AccessEntryId"
 	pathParams["l7_access_profile_id"] = "l7AccessProfileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -138,16 +138,16 @@ func entriesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func entriesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func entriesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["l7_access_profile_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["l7_access_profile_id"] = "L7AccessProfileId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
@@ -155,30 +155,30 @@ func entriesListInputType() bindings.StructType {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func entriesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.L7AccessEntryListResultBindingType)
+func EntriesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.L7AccessEntryListResultBindingType)
 }
 
-func entriesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func entriesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["l7_access_profile_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["l7_access_profile_id"] = "L7AccessProfileId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
@@ -186,14 +186,14 @@ func entriesListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["l7_access_profile_id"] = bindings.NewStringType()
-	paramsTypeMap["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["l7AccessProfileId"] = bindings.NewStringType()
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["l7AccessProfileId"] = vapiBindings_.NewStringType()
 	pathParams["l7_access_profile_id"] = "l7AccessProfileId"
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
@@ -203,7 +203,7 @@ func entriesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -224,48 +224,48 @@ func entriesListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func entriesPatchInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func entriesPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["l7_access_profile_id"] = bindings.NewStringType()
-	fields["l7_access_entry_id"] = bindings.NewStringType()
-	fields["l7_access_entry"] = bindings.NewReferenceType(model.L7AccessEntryBindingType)
+	fields["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	fields["l7_access_entry_id"] = vapiBindings_.NewStringType()
+	fields["l7_access_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.L7AccessEntryBindingType)
 	fieldNameMap["l7_access_profile_id"] = "L7AccessProfileId"
 	fieldNameMap["l7_access_entry_id"] = "L7AccessEntryId"
 	fieldNameMap["l7_access_entry"] = "L7AccessEntry"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func entriesPatchOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.L7AccessEntryBindingType)
+func EntriesPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.L7AccessEntryBindingType)
 }
 
-func entriesPatchRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func entriesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["l7_access_profile_id"] = bindings.NewStringType()
-	fields["l7_access_entry_id"] = bindings.NewStringType()
-	fields["l7_access_entry"] = bindings.NewReferenceType(model.L7AccessEntryBindingType)
+	fields["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	fields["l7_access_entry_id"] = vapiBindings_.NewStringType()
+	fields["l7_access_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.L7AccessEntryBindingType)
 	fieldNameMap["l7_access_profile_id"] = "L7AccessProfileId"
 	fieldNameMap["l7_access_entry_id"] = "L7AccessEntryId"
 	fieldNameMap["l7_access_entry"] = "L7AccessEntry"
-	paramsTypeMap["l7_access_entry"] = bindings.NewReferenceType(model.L7AccessEntryBindingType)
-	paramsTypeMap["l7_access_entry_id"] = bindings.NewStringType()
-	paramsTypeMap["l7_access_profile_id"] = bindings.NewStringType()
-	paramsTypeMap["l7AccessProfileId"] = bindings.NewStringType()
-	paramsTypeMap["l7AccessEntryId"] = bindings.NewStringType()
+	paramsTypeMap["l7_access_entry_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l7_access_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.L7AccessEntryBindingType)
+	paramsTypeMap["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l7AccessProfileId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l7AccessEntryId"] = vapiBindings_.NewStringType()
 	pathParams["l7_access_entry_id"] = "l7AccessEntryId"
 	pathParams["l7_access_profile_id"] = "l7AccessProfileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -286,48 +286,48 @@ func entriesPatchRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func entriesUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func entriesUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["l7_access_profile_id"] = bindings.NewStringType()
-	fields["l7_access_entry_id"] = bindings.NewStringType()
-	fields["l7_access_entry"] = bindings.NewReferenceType(model.L7AccessEntryBindingType)
+	fields["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	fields["l7_access_entry_id"] = vapiBindings_.NewStringType()
+	fields["l7_access_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.L7AccessEntryBindingType)
 	fieldNameMap["l7_access_profile_id"] = "L7AccessProfileId"
 	fieldNameMap["l7_access_entry_id"] = "L7AccessEntryId"
 	fieldNameMap["l7_access_entry"] = "L7AccessEntry"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func entriesUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.L7AccessEntryBindingType)
+func EntriesUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.L7AccessEntryBindingType)
 }
 
-func entriesUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func entriesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["l7_access_profile_id"] = bindings.NewStringType()
-	fields["l7_access_entry_id"] = bindings.NewStringType()
-	fields["l7_access_entry"] = bindings.NewReferenceType(model.L7AccessEntryBindingType)
+	fields["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	fields["l7_access_entry_id"] = vapiBindings_.NewStringType()
+	fields["l7_access_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.L7AccessEntryBindingType)
 	fieldNameMap["l7_access_profile_id"] = "L7AccessProfileId"
 	fieldNameMap["l7_access_entry_id"] = "L7AccessEntryId"
 	fieldNameMap["l7_access_entry"] = "L7AccessEntry"
-	paramsTypeMap["l7_access_entry"] = bindings.NewReferenceType(model.L7AccessEntryBindingType)
-	paramsTypeMap["l7_access_entry_id"] = bindings.NewStringType()
-	paramsTypeMap["l7_access_profile_id"] = bindings.NewStringType()
-	paramsTypeMap["l7AccessProfileId"] = bindings.NewStringType()
-	paramsTypeMap["l7AccessEntryId"] = bindings.NewStringType()
+	paramsTypeMap["l7_access_entry_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l7_access_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.L7AccessEntryBindingType)
+	paramsTypeMap["l7_access_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l7AccessProfileId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l7AccessEntryId"] = vapiBindings_.NewStringType()
 	pathParams["l7_access_entry_id"] = "l7AccessEntryId"
 	pathParams["l7_access_profile_id"] = "l7AccessProfileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

@@ -11,57 +11,57 @@
 package forwarding_policies
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func rulesDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func rulesDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["forwarding_policy_id"] = bindings.NewStringType()
-	fields["rule_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	fields["rule_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["forwarding_policy_id"] = "ForwardingPolicyId"
 	fieldNameMap["rule_id"] = "RuleId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func rulesDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func RulesDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func rulesDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func rulesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["forwarding_policy_id"] = bindings.NewStringType()
-	fields["rule_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	fields["rule_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["forwarding_policy_id"] = "ForwardingPolicyId"
 	fieldNameMap["rule_id"] = "RuleId"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["rule_id"] = bindings.NewStringType()
-	paramsTypeMap["forwarding_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["forwardingPolicyId"] = bindings.NewStringType()
-	paramsTypeMap["ruleId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["rule_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["forwardingPolicyId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ruleId"] = vapiBindings_.NewStringType()
 	pathParams["forwarding_policy_id"] = "forwardingPolicyId"
 	pathParams["rule_id"] = "ruleId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -82,50 +82,50 @@ func rulesDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func rulesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func rulesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["forwarding_policy_id"] = bindings.NewStringType()
-	fields["rule_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	fields["rule_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["forwarding_policy_id"] = "ForwardingPolicyId"
 	fieldNameMap["rule_id"] = "RuleId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func rulesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ForwardingRuleBindingType)
+func RulesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.ForwardingRuleBindingType)
 }
 
-func rulesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func rulesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["forwarding_policy_id"] = bindings.NewStringType()
-	fields["rule_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	fields["rule_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["forwarding_policy_id"] = "ForwardingPolicyId"
 	fieldNameMap["rule_id"] = "RuleId"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["rule_id"] = bindings.NewStringType()
-	paramsTypeMap["forwarding_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["forwardingPolicyId"] = bindings.NewStringType()
-	paramsTypeMap["ruleId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["rule_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["forwardingPolicyId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ruleId"] = vapiBindings_.NewStringType()
 	pathParams["forwarding_policy_id"] = "forwardingPolicyId"
 	pathParams["rule_id"] = "ruleId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -146,17 +146,17 @@ func rulesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func rulesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func rulesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["forwarding_policy_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["forwarding_policy_id"] = "ForwardingPolicyId"
 	fieldNameMap["cursor"] = "Cursor"
@@ -165,31 +165,31 @@ func rulesListInputType() bindings.StructType {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func rulesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ForwardingRuleListResultBindingType)
+func RulesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.ForwardingRuleListResultBindingType)
 }
 
-func rulesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func rulesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["forwarding_policy_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["forwarding_policy_id"] = "ForwardingPolicyId"
 	fieldNameMap["cursor"] = "Cursor"
@@ -198,16 +198,16 @@ func rulesListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["forwarding_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["forwardingPolicyId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["forwardingPolicyId"] = vapiBindings_.NewStringType()
 	pathParams["forwarding_policy_id"] = "forwardingPolicyId"
 	pathParams["domain_id"] = "domainId"
 	queryParams["cursor"] = "cursor"
@@ -218,7 +218,7 @@ func rulesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -239,55 +239,55 @@ func rulesListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func rulesPatchInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func rulesPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["forwarding_policy_id"] = bindings.NewStringType()
-	fields["rule_id"] = bindings.NewStringType()
-	fields["forwarding_rule"] = bindings.NewReferenceType(model.ForwardingRuleBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	fields["rule_id"] = vapiBindings_.NewStringType()
+	fields["forwarding_rule"] = vapiBindings_.NewReferenceType(nsx_policyModel.ForwardingRuleBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["forwarding_policy_id"] = "ForwardingPolicyId"
 	fieldNameMap["rule_id"] = "RuleId"
 	fieldNameMap["forwarding_rule"] = "ForwardingRule"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func rulesPatchOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func RulesPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func rulesPatchRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func rulesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["forwarding_policy_id"] = bindings.NewStringType()
-	fields["rule_id"] = bindings.NewStringType()
-	fields["forwarding_rule"] = bindings.NewReferenceType(model.ForwardingRuleBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	fields["rule_id"] = vapiBindings_.NewStringType()
+	fields["forwarding_rule"] = vapiBindings_.NewReferenceType(nsx_policyModel.ForwardingRuleBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["forwarding_policy_id"] = "ForwardingPolicyId"
 	fieldNameMap["rule_id"] = "RuleId"
 	fieldNameMap["forwarding_rule"] = "ForwardingRule"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["rule_id"] = bindings.NewStringType()
-	paramsTypeMap["forwarding_rule"] = bindings.NewReferenceType(model.ForwardingRuleBindingType)
-	paramsTypeMap["forwarding_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["forwardingPolicyId"] = bindings.NewStringType()
-	paramsTypeMap["ruleId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["rule_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["forwarding_rule"] = vapiBindings_.NewReferenceType(nsx_policyModel.ForwardingRuleBindingType)
+	paramsTypeMap["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["forwardingPolicyId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ruleId"] = vapiBindings_.NewStringType()
 	pathParams["forwarding_policy_id"] = "forwardingPolicyId"
 	pathParams["rule_id"] = "ruleId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -308,55 +308,55 @@ func rulesPatchRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func rulesUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func rulesUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["forwarding_policy_id"] = bindings.NewStringType()
-	fields["rule_id"] = bindings.NewStringType()
-	fields["forwarding_rule"] = bindings.NewReferenceType(model.ForwardingRuleBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	fields["rule_id"] = vapiBindings_.NewStringType()
+	fields["forwarding_rule"] = vapiBindings_.NewReferenceType(nsx_policyModel.ForwardingRuleBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["forwarding_policy_id"] = "ForwardingPolicyId"
 	fieldNameMap["rule_id"] = "RuleId"
 	fieldNameMap["forwarding_rule"] = "ForwardingRule"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func rulesUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ForwardingRuleBindingType)
+func RulesUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.ForwardingRuleBindingType)
 }
 
-func rulesUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func rulesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["forwarding_policy_id"] = bindings.NewStringType()
-	fields["rule_id"] = bindings.NewStringType()
-	fields["forwarding_rule"] = bindings.NewReferenceType(model.ForwardingRuleBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	fields["rule_id"] = vapiBindings_.NewStringType()
+	fields["forwarding_rule"] = vapiBindings_.NewReferenceType(nsx_policyModel.ForwardingRuleBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["forwarding_policy_id"] = "ForwardingPolicyId"
 	fieldNameMap["rule_id"] = "RuleId"
 	fieldNameMap["forwarding_rule"] = "ForwardingRule"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["rule_id"] = bindings.NewStringType()
-	paramsTypeMap["forwarding_rule"] = bindings.NewReferenceType(model.ForwardingRuleBindingType)
-	paramsTypeMap["forwarding_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["forwardingPolicyId"] = bindings.NewStringType()
-	paramsTypeMap["ruleId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["rule_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["forwarding_rule"] = vapiBindings_.NewReferenceType(nsx_policyModel.ForwardingRuleBindingType)
+	paramsTypeMap["forwarding_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["forwardingPolicyId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ruleId"] = vapiBindings_.NewStringType()
 	pathParams["forwarding_policy_id"] = "forwardingPolicyId"
 	pathParams["rule_id"] = "ruleId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

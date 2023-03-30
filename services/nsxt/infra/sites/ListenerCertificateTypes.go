@@ -11,48 +11,48 @@
 package sites
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func listenerCertificateGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func listenerCertificateGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["address"] = bindings.NewStringType()
-	fields["port"] = bindings.NewIntegerType()
+	fields["address"] = vapiBindings_.NewStringType()
+	fields["port"] = vapiBindings_.NewIntegerType()
 	fieldNameMap["address"] = "Address"
 	fieldNameMap["port"] = "Port"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func listenerCertificateGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TlsListenerCertificateBindingType)
+func ListenerCertificateGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.TlsListenerCertificateBindingType)
 }
 
-func listenerCertificateGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func listenerCertificateGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["address"] = bindings.NewStringType()
-	fields["port"] = bindings.NewIntegerType()
+	fields["address"] = vapiBindings_.NewStringType()
+	fields["port"] = vapiBindings_.NewIntegerType()
 	fieldNameMap["address"] = "Address"
 	fieldNameMap["port"] = "Port"
-	paramsTypeMap["port"] = bindings.NewIntegerType()
-	paramsTypeMap["address"] = bindings.NewStringType()
+	paramsTypeMap["address"] = vapiBindings_.NewStringType()
+	paramsTypeMap["port"] = vapiBindings_.NewIntegerType()
 	queryParams["address"] = "address"
 	queryParams["port"] = "port"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

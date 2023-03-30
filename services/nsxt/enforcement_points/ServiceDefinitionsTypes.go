@@ -11,48 +11,48 @@
 package enforcement_points
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func serviceDefinitionsCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceDefinitionsCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["enforcement_point_id"] = bindings.NewStringType()
-	fields["service_definition"] = bindings.NewReferenceType(model.ServiceDefinitionBindingType)
+	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
+	fields["service_definition"] = vapiBindings_.NewReferenceType(nsx_policyModel.ServiceDefinitionBindingType)
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	fieldNameMap["service_definition"] = "ServiceDefinition"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceDefinitionsCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ServiceDefinitionBindingType)
+func ServiceDefinitionsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.ServiceDefinitionBindingType)
 }
 
-func serviceDefinitionsCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceDefinitionsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["enforcement_point_id"] = bindings.NewStringType()
-	fields["service_definition"] = bindings.NewReferenceType(model.ServiceDefinitionBindingType)
+	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
+	fields["service_definition"] = vapiBindings_.NewReferenceType(nsx_policyModel.ServiceDefinitionBindingType)
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	fieldNameMap["service_definition"] = "ServiceDefinition"
-	paramsTypeMap["service_definition"] = bindings.NewReferenceType(model.ServiceDefinitionBindingType)
-	paramsTypeMap["enforcement_point_id"] = bindings.NewStringType()
-	paramsTypeMap["enforcementPointId"] = bindings.NewStringType()
+	paramsTypeMap["service_definition"] = vapiBindings_.NewReferenceType(nsx_policyModel.ServiceDefinitionBindingType)
+	paramsTypeMap["enforcement_point_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementPointId"] = vapiBindings_.NewStringType()
 	pathParams["enforcement_point_id"] = "enforcementPointId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -73,43 +73,43 @@ func serviceDefinitionsCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func serviceDefinitionsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceDefinitionsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["enforcement_point_id"] = bindings.NewStringType()
-	fields["service_definition_id"] = bindings.NewStringType()
+	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
+	fields["service_definition_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	fieldNameMap["service_definition_id"] = "ServiceDefinitionId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceDefinitionsDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func ServiceDefinitionsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func serviceDefinitionsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceDefinitionsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["enforcement_point_id"] = bindings.NewStringType()
-	fields["service_definition_id"] = bindings.NewStringType()
+	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
+	fields["service_definition_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	fieldNameMap["service_definition_id"] = "ServiceDefinitionId"
-	paramsTypeMap["enforcement_point_id"] = bindings.NewStringType()
-	paramsTypeMap["service_definition_id"] = bindings.NewStringType()
-	paramsTypeMap["enforcementPointId"] = bindings.NewStringType()
-	paramsTypeMap["serviceDefinitionId"] = bindings.NewStringType()
+	paramsTypeMap["enforcement_point_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_definition_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementPointId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceDefinitionId"] = vapiBindings_.NewStringType()
 	pathParams["service_definition_id"] = "serviceDefinitionId"
 	pathParams["enforcement_point_id"] = "enforcementPointId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -130,43 +130,43 @@ func serviceDefinitionsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func serviceDefinitionsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceDefinitionsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["enforcement_point_id"] = bindings.NewStringType()
-	fields["service_definition_id"] = bindings.NewStringType()
+	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
+	fields["service_definition_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	fieldNameMap["service_definition_id"] = "ServiceDefinitionId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceDefinitionsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ServiceDefinitionBindingType)
+func ServiceDefinitionsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.ServiceDefinitionBindingType)
 }
 
-func serviceDefinitionsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceDefinitionsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["enforcement_point_id"] = bindings.NewStringType()
-	fields["service_definition_id"] = bindings.NewStringType()
+	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
+	fields["service_definition_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	fieldNameMap["service_definition_id"] = "ServiceDefinitionId"
-	paramsTypeMap["enforcement_point_id"] = bindings.NewStringType()
-	paramsTypeMap["service_definition_id"] = bindings.NewStringType()
-	paramsTypeMap["enforcementPointId"] = bindings.NewStringType()
-	paramsTypeMap["serviceDefinitionId"] = bindings.NewStringType()
+	paramsTypeMap["enforcement_point_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_definition_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementPointId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceDefinitionId"] = vapiBindings_.NewStringType()
 	pathParams["service_definition_id"] = "serviceDefinitionId"
 	pathParams["enforcement_point_id"] = "enforcementPointId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -187,36 +187,36 @@ func serviceDefinitionsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func serviceDefinitionsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceDefinitionsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["enforcement_point_id"] = bindings.NewStringType()
+	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceDefinitionsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ServiceInsertionServiceListResultBindingType)
+func ServiceDefinitionsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.ServiceInsertionServiceListResultBindingType)
 }
 
-func serviceDefinitionsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceDefinitionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["enforcement_point_id"] = bindings.NewStringType()
+	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
-	paramsTypeMap["enforcement_point_id"] = bindings.NewStringType()
-	paramsTypeMap["enforcementPointId"] = bindings.NewStringType()
+	paramsTypeMap["enforcement_point_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementPointId"] = vapiBindings_.NewStringType()
 	pathParams["enforcement_point_id"] = "enforcementPointId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -237,48 +237,48 @@ func serviceDefinitionsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func serviceDefinitionsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceDefinitionsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["enforcement_point_id"] = bindings.NewStringType()
-	fields["service_definition_id"] = bindings.NewStringType()
-	fields["service_definition"] = bindings.NewReferenceType(model.ServiceDefinitionBindingType)
+	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
+	fields["service_definition_id"] = vapiBindings_.NewStringType()
+	fields["service_definition"] = vapiBindings_.NewReferenceType(nsx_policyModel.ServiceDefinitionBindingType)
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	fieldNameMap["service_definition_id"] = "ServiceDefinitionId"
 	fieldNameMap["service_definition"] = "ServiceDefinition"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceDefinitionsUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ServiceDefinitionBindingType)
+func ServiceDefinitionsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.ServiceDefinitionBindingType)
 }
 
-func serviceDefinitionsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceDefinitionsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["enforcement_point_id"] = bindings.NewStringType()
-	fields["service_definition_id"] = bindings.NewStringType()
-	fields["service_definition"] = bindings.NewReferenceType(model.ServiceDefinitionBindingType)
+	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
+	fields["service_definition_id"] = vapiBindings_.NewStringType()
+	fields["service_definition"] = vapiBindings_.NewReferenceType(nsx_policyModel.ServiceDefinitionBindingType)
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	fieldNameMap["service_definition_id"] = "ServiceDefinitionId"
 	fieldNameMap["service_definition"] = "ServiceDefinition"
-	paramsTypeMap["service_definition"] = bindings.NewReferenceType(model.ServiceDefinitionBindingType)
-	paramsTypeMap["enforcement_point_id"] = bindings.NewStringType()
-	paramsTypeMap["service_definition_id"] = bindings.NewStringType()
-	paramsTypeMap["enforcementPointId"] = bindings.NewStringType()
-	paramsTypeMap["serviceDefinitionId"] = bindings.NewStringType()
+	paramsTypeMap["service_definition"] = vapiBindings_.NewReferenceType(nsx_policyModel.ServiceDefinitionBindingType)
+	paramsTypeMap["enforcement_point_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_definition_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementPointId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceDefinitionId"] = vapiBindings_.NewStringType()
 	pathParams["service_definition_id"] = "serviceDefinitionId"
 	pathParams["enforcement_point_id"] = "enforcementPointId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

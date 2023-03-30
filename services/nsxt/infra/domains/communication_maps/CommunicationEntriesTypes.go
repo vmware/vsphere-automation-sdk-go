@@ -11,10 +11,10 @@
 package communication_maps
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
@@ -30,50 +30,50 @@ const CommunicationEntries_REVISE_OPERATION_AFTER = "insert_after"
 // Possible value for ``operation`` of method CommunicationEntries#revise.
 const CommunicationEntries_REVISE_OPERATION_BEFORE = "insert_before"
 
-func communicationEntriesDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func communicationEntriesDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["communication_map_id"] = bindings.NewStringType()
-	fields["communication_entry_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["communication_map_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["communication_map_id"] = "CommunicationMapId"
 	fieldNameMap["communication_entry_id"] = "CommunicationEntryId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func communicationEntriesDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func CommunicationEntriesDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func communicationEntriesDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func communicationEntriesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["communication_map_id"] = bindings.NewStringType()
-	fields["communication_entry_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["communication_map_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["communication_map_id"] = "CommunicationMapId"
 	fieldNameMap["communication_entry_id"] = "CommunicationEntryId"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["communication_map_id"] = bindings.NewStringType()
-	paramsTypeMap["communication_entry_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["communicationMapId"] = bindings.NewStringType()
-	paramsTypeMap["communicationEntryId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communication_map_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communication_entry_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communicationMapId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communicationEntryId"] = vapiBindings_.NewStringType()
 	pathParams["communication_entry_id"] = "communicationEntryId"
 	pathParams["communication_map_id"] = "communicationMapId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -94,50 +94,50 @@ func communicationEntriesDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func communicationEntriesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func communicationEntriesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["communication_map_id"] = bindings.NewStringType()
-	fields["communication_entry_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["communication_map_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["communication_map_id"] = "CommunicationMapId"
 	fieldNameMap["communication_entry_id"] = "CommunicationEntryId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func communicationEntriesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.CommunicationEntryBindingType)
+func CommunicationEntriesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.CommunicationEntryBindingType)
 }
 
-func communicationEntriesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func communicationEntriesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["communication_map_id"] = bindings.NewStringType()
-	fields["communication_entry_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["communication_map_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["communication_map_id"] = "CommunicationMapId"
 	fieldNameMap["communication_entry_id"] = "CommunicationEntryId"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["communication_map_id"] = bindings.NewStringType()
-	paramsTypeMap["communication_entry_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["communicationMapId"] = bindings.NewStringType()
-	paramsTypeMap["communicationEntryId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communication_map_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communication_entry_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communicationMapId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communicationEntryId"] = vapiBindings_.NewStringType()
 	pathParams["communication_entry_id"] = "communicationEntryId"
 	pathParams["communication_map_id"] = "communicationMapId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -158,17 +158,17 @@ func communicationEntriesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func communicationEntriesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func communicationEntriesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["communication_map_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["communication_map_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["communication_map_id"] = "CommunicationMapId"
 	fieldNameMap["cursor"] = "Cursor"
@@ -177,31 +177,31 @@ func communicationEntriesListInputType() bindings.StructType {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func communicationEntriesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.CommunicationEntryListResultBindingType)
+func CommunicationEntriesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.CommunicationEntryListResultBindingType)
 }
 
-func communicationEntriesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func communicationEntriesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["communication_map_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["communication_map_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["communication_map_id"] = "CommunicationMapId"
 	fieldNameMap["cursor"] = "Cursor"
@@ -210,16 +210,16 @@ func communicationEntriesListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["communication_map_id"] = bindings.NewStringType()
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["communicationMapId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["communication_map_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communicationMapId"] = vapiBindings_.NewStringType()
 	pathParams["communication_map_id"] = "communicationMapId"
 	pathParams["domain_id"] = "domainId"
 	queryParams["cursor"] = "cursor"
@@ -230,7 +230,7 @@ func communicationEntriesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -251,55 +251,55 @@ func communicationEntriesListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func communicationEntriesPatchInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func communicationEntriesPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["communication_map_id"] = bindings.NewStringType()
-	fields["communication_entry_id"] = bindings.NewStringType()
-	fields["communication_entry"] = bindings.NewReferenceType(model.CommunicationEntryBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["communication_map_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.CommunicationEntryBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["communication_map_id"] = "CommunicationMapId"
 	fieldNameMap["communication_entry_id"] = "CommunicationEntryId"
 	fieldNameMap["communication_entry"] = "CommunicationEntry"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func communicationEntriesPatchOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func CommunicationEntriesPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func communicationEntriesPatchRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func communicationEntriesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["communication_map_id"] = bindings.NewStringType()
-	fields["communication_entry_id"] = bindings.NewStringType()
-	fields["communication_entry"] = bindings.NewReferenceType(model.CommunicationEntryBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["communication_map_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.CommunicationEntryBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["communication_map_id"] = "CommunicationMapId"
 	fieldNameMap["communication_entry_id"] = "CommunicationEntryId"
 	fieldNameMap["communication_entry"] = "CommunicationEntry"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["communication_map_id"] = bindings.NewStringType()
-	paramsTypeMap["communication_entry"] = bindings.NewReferenceType(model.CommunicationEntryBindingType)
-	paramsTypeMap["communication_entry_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["communicationMapId"] = bindings.NewStringType()
-	paramsTypeMap["communicationEntryId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communication_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.CommunicationEntryBindingType)
+	paramsTypeMap["communication_map_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communication_entry_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communicationMapId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communicationEntryId"] = vapiBindings_.NewStringType()
 	pathParams["communication_entry_id"] = "communicationEntryId"
 	pathParams["communication_map_id"] = "communicationMapId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -320,59 +320,59 @@ func communicationEntriesPatchRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func communicationEntriesReviseInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func communicationEntriesReviseInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["communication_map_id"] = bindings.NewStringType()
-	fields["communication_entry_id"] = bindings.NewStringType()
-	fields["communication_entry"] = bindings.NewReferenceType(model.CommunicationEntryBindingType)
-	fields["anchor_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["operation"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["communication_map_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.CommunicationEntryBindingType)
+	fields["anchor_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["operation"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["communication_map_id"] = "CommunicationMapId"
 	fieldNameMap["communication_entry_id"] = "CommunicationEntryId"
 	fieldNameMap["communication_entry"] = "CommunicationEntry"
 	fieldNameMap["anchor_path"] = "AnchorPath"
 	fieldNameMap["operation"] = "Operation"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func communicationEntriesReviseOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.CommunicationEntryBindingType)
+func CommunicationEntriesReviseOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.CommunicationEntryBindingType)
 }
 
-func communicationEntriesReviseRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func communicationEntriesReviseRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["communication_map_id"] = bindings.NewStringType()
-	fields["communication_entry_id"] = bindings.NewStringType()
-	fields["communication_entry"] = bindings.NewReferenceType(model.CommunicationEntryBindingType)
-	fields["anchor_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["operation"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["communication_map_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.CommunicationEntryBindingType)
+	fields["anchor_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["operation"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["communication_map_id"] = "CommunicationMapId"
 	fieldNameMap["communication_entry_id"] = "CommunicationEntryId"
 	fieldNameMap["communication_entry"] = "CommunicationEntry"
 	fieldNameMap["anchor_path"] = "AnchorPath"
 	fieldNameMap["operation"] = "Operation"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["communication_map_id"] = bindings.NewStringType()
-	paramsTypeMap["communication_entry"] = bindings.NewReferenceType(model.CommunicationEntryBindingType)
-	paramsTypeMap["anchor_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["operation"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["communication_entry_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["communicationMapId"] = bindings.NewStringType()
-	paramsTypeMap["communicationEntryId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communication_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.CommunicationEntryBindingType)
+	paramsTypeMap["communication_map_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communication_entry_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["anchor_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["operation"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communicationMapId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communicationEntryId"] = vapiBindings_.NewStringType()
 	pathParams["communication_entry_id"] = "communicationEntryId"
 	pathParams["communication_map_id"] = "communicationMapId"
 	pathParams["domain_id"] = "domainId"
@@ -380,7 +380,7 @@ func communicationEntriesReviseRestMetadata() protocol.OperationRestMetadata {
 	queryParams["operation"] = "operation"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -401,55 +401,55 @@ func communicationEntriesReviseRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func communicationEntriesUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func communicationEntriesUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["communication_map_id"] = bindings.NewStringType()
-	fields["communication_entry_id"] = bindings.NewStringType()
-	fields["communication_entry"] = bindings.NewReferenceType(model.CommunicationEntryBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["communication_map_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.CommunicationEntryBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["communication_map_id"] = "CommunicationMapId"
 	fieldNameMap["communication_entry_id"] = "CommunicationEntryId"
 	fieldNameMap["communication_entry"] = "CommunicationEntry"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func communicationEntriesUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.CommunicationEntryBindingType)
+func CommunicationEntriesUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.CommunicationEntryBindingType)
 }
 
-func communicationEntriesUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func communicationEntriesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["communication_map_id"] = bindings.NewStringType()
-	fields["communication_entry_id"] = bindings.NewStringType()
-	fields["communication_entry"] = bindings.NewReferenceType(model.CommunicationEntryBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["communication_map_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry_id"] = vapiBindings_.NewStringType()
+	fields["communication_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.CommunicationEntryBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["communication_map_id"] = "CommunicationMapId"
 	fieldNameMap["communication_entry_id"] = "CommunicationEntryId"
 	fieldNameMap["communication_entry"] = "CommunicationEntry"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["communication_map_id"] = bindings.NewStringType()
-	paramsTypeMap["communication_entry"] = bindings.NewReferenceType(model.CommunicationEntryBindingType)
-	paramsTypeMap["communication_entry_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["communicationMapId"] = bindings.NewStringType()
-	paramsTypeMap["communicationEntryId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communication_entry"] = vapiBindings_.NewReferenceType(nsx_policyModel.CommunicationEntryBindingType)
+	paramsTypeMap["communication_map_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communication_entry_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communicationMapId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communicationEntryId"] = vapiBindings_.NewStringType()
 	pathParams["communication_entry_id"] = "communicationEntryId"
 	pathParams["communication_map_id"] = "communicationMapId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

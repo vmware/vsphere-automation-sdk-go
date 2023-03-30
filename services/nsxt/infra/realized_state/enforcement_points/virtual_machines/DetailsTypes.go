@@ -11,50 +11,50 @@
 package virtual_machines
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func detailsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func detailsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["enforcement_point_name"] = bindings.NewStringType()
-	fields["virtual_machine_id"] = bindings.NewStringType()
+	fields["enforcement_point_name"] = vapiBindings_.NewStringType()
+	fields["virtual_machine_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["enforcement_point_name"] = "EnforcementPointName"
 	fieldNameMap["virtual_machine_id"] = "VirtualMachineId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func detailsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.VirtualMachineDetailsBindingType)
+func DetailsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.VirtualMachineDetailsBindingType)
 }
 
-func detailsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func detailsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["enforcement_point_name"] = bindings.NewStringType()
-	fields["virtual_machine_id"] = bindings.NewStringType()
+	fields["enforcement_point_name"] = vapiBindings_.NewStringType()
+	fields["virtual_machine_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["enforcement_point_name"] = "EnforcementPointName"
 	fieldNameMap["virtual_machine_id"] = "VirtualMachineId"
-	paramsTypeMap["enforcement_point_name"] = bindings.NewStringType()
-	paramsTypeMap["virtual_machine_id"] = bindings.NewStringType()
-	paramsTypeMap["enforcementPointName"] = bindings.NewStringType()
-	paramsTypeMap["virtualMachineId"] = bindings.NewStringType()
+	paramsTypeMap["enforcement_point_name"] = vapiBindings_.NewStringType()
+	paramsTypeMap["virtual_machine_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementPointName"] = vapiBindings_.NewStringType()
+	paramsTypeMap["virtualMachineId"] = vapiBindings_.NewStringType()
 	pathParams["virtual_machine_id"] = "virtualMachineId"
 	pathParams["enforcement_point_name"] = "enforcementPointName"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
