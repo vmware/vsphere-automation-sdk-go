@@ -4,18 +4,13 @@
 // Auto generated code. DO NOT EDIT.
 
 // Interface file for service: Session
-// Used by client-side stubs.
+// Used by service-side to provide implementations.
 
 package cis
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
 )
-
-const _ = vapiCore_.SupportedByRuntimeVersion2
 
 // The ``Session`` interface allows API clients to manage session tokens including creating, deleting and obtaining information about sessions.
 //
@@ -64,7 +59,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 //
 // * vapiStdErrors_.Unauthenticated exception for any exceptions related to the request.
 // * vapiStdErrors_.ServiceUnavailable exception for all exceptions caused by internal service failure.
-type SessionClient interface {
+type SessionProvider interface {
 
 	// Creates a session with the API. This is the equivalent of login. This method exchanges user credentials supplied in the security context for a session token that is to be used for authenticating subsequent calls.
 	//
@@ -80,16 +75,14 @@ type SessionClient interface {
 	// * the token supplied is valid.
 	// * if bearer tokens are used check that system configuration allows the API endpoint to accept such tokens.
 	// @throws ServiceUnavailable  if session creation fails due to server specific issues, for example connection to a back end component is failing. Due to the security nature of this API further details will not be disclosed in the exception. Please refer to component health information, administrative logs and product specific documentation for possible causes.
-	Create() (string, error)
-
+	Create(ctx *vapiCore_.ExecutionContext) (string, error)
 	// Terminates the validity of a session token. This is the equivalent of log out.
 	//
 	//  A session token is expected as part of the request.
 	//
 	// @throws Unauthenticated  if the session id is missing from the request or the corresponding session object cannot be found.
 	// @throws ServiceUnavailable  if session deletion fails due to server specific issues, for example connection to a back end component is failing. Due to the security nature of this API further details will not be disclosed in the exception. Please refer to component health information, administrative logs and product specific documentation for possible causes.
-	Delete() error
-
+	Delete(ctx *vapiCore_.ExecutionContext) error
 	// Returns information about the current session. This method expects a valid session token to be supplied.
 	//
 	//  A side effect of invoking this method may be a change to the session's last accessed time to the current time if this is supported by the session implementation. Invoking any other method in the API will also update the session's last accessed time.
@@ -99,119 +92,5 @@ type SessionClient interface {
 	//
 	// @throws Unauthenticated  if the session id is missing from the request or the corresponding session object cannot be found.
 	// @throws ServiceUnavailable  if session retrieval fails due to server specific issues e.g. connection to back end component is failing. Due to the security nature of this API further details will not be disclosed in the error. Please refer to component health information, administrative logs and product specific documentation for possible causes.
-	Get() (SessionInfo, error)
-}
-
-type sessionClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
-}
-
-func NewSessionClient(connector vapiProtocolClient_.Connector) *sessionClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.cis.session")
-	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-	}
-	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
-
-	sIface := sessionClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
-	return &sIface
-}
-
-func (sIface *sessionClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
-	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
-		return entry
-	}
-	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
-}
-
-func (sIface *sessionClient) Create() (string, error) {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	operationRestMetaData := sessionCreateRestMetadata()
-	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
-	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
-
-	sv := vapiBindings_.NewStructValueBuilder(sessionCreateInputType(), typeConverter)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput string
-		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
-	}
-
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.cis.session", "create", inputDataValue, executionContext)
-	var emptyOutput string
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SessionCreateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(string), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (sIface *sessionClient) Delete() error {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	operationRestMetaData := sessionDeleteRestMetadata()
-	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
-	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
-
-	sv := vapiBindings_.NewStructValueBuilder(sessionDeleteInputType(), typeConverter)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return vapiBindings_.VAPIerrorsToError(inputError)
-	}
-
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.cis.session", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return vapiBindings_.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (sIface *sessionClient) Get() (SessionInfo, error) {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	operationRestMetaData := sessionGetRestMetadata()
-	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
-	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
-
-	sv := vapiBindings_.NewStructValueBuilder(sessionGetInputType(), typeConverter)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput SessionInfo
-		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
-	}
-
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.cis.session", "get", inputDataValue, executionContext)
-	var emptyOutput SessionInfo
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SessionGetOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(SessionInfo), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
+	Get(ctx *vapiCore_.ExecutionContext) (SessionInfo, error)
 }

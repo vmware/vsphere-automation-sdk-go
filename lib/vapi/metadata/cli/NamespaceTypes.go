@@ -11,10 +11,10 @@
 package cli
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiLog_ "github.com/vmware/vsphere-automation-sdk-go/runtime/log"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
 	"reflect"
 )
 
@@ -26,17 +26,16 @@ type NamespaceIdentity struct {
 	Name string
 }
 
-func (s *NamespaceIdentity) GetType__() bindings.BindingType {
+func (s *NamespaceIdentity) GetType__() vapiBindings_.BindingType {
 	return NamespaceIdentityBindingType()
 }
 
-func (s *NamespaceIdentity) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *NamespaceIdentity) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for NamespaceIdentity._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for NamespaceIdentity._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -52,37 +51,36 @@ type NamespaceInfo struct {
 	Children []NamespaceIdentity
 }
 
-func (s *NamespaceInfo) GetType__() bindings.BindingType {
+func (s *NamespaceInfo) GetType__() vapiBindings_.BindingType {
 	return NamespaceInfoBindingType()
 }
 
-func (s *NamespaceInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *NamespaceInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for NamespaceInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for NamespaceInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
 }
 
-func namespaceListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func namespaceListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func namespaceListOutputType() bindings.BindingType {
-	return bindings.NewListType(bindings.NewReferenceType(NamespaceIdentityBindingType), reflect.TypeOf([]NamespaceIdentity{}))
+func NamespaceListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewListType(vapiBindings_.NewReferenceType(NamespaceIdentityBindingType), reflect.TypeOf([]NamespaceIdentity{}))
 }
 
-func namespaceListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func namespaceListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -90,7 +88,7 @@ func namespaceListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -111,34 +109,34 @@ func namespaceListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{})
 }
 
-func namespaceGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func namespaceGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["identity"] = bindings.NewReferenceType(NamespaceIdentityBindingType)
+	fields["identity"] = vapiBindings_.NewReferenceType(NamespaceIdentityBindingType)
 	fieldNameMap["identity"] = "Identity"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func namespaceGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(NamespaceInfoBindingType)
+func NamespaceGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(NamespaceInfoBindingType)
 }
 
-func namespaceGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func namespaceGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["identity"] = bindings.NewReferenceType(NamespaceIdentityBindingType)
+	fields["identity"] = vapiBindings_.NewReferenceType(NamespaceIdentityBindingType)
 	fieldNameMap["identity"] = "Identity"
 	bodyFieldsMap["identity"] = "identity"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -159,21 +157,21 @@ func namespaceGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func namespaceFingerprintInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func namespaceFingerprintInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func namespaceFingerprintOutputType() bindings.BindingType {
-	return bindings.NewStringType()
+func NamespaceFingerprintOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewStringType()
 }
 
-func namespaceFingerprintRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func namespaceFingerprintRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -181,7 +179,7 @@ func namespaceFingerprintRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -202,26 +200,26 @@ func namespaceFingerprintRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{})
 }
 
-func NamespaceIdentityBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func NamespaceIdentityBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["path"] = bindings.NewStringType()
+	fields["path"] = vapiBindings_.NewStringType()
 	fieldNameMap["path"] = "Path"
-	fields["name"] = bindings.NewStringType()
+	fields["name"] = vapiBindings_.NewStringType()
 	fieldNameMap["name"] = "Name"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.cli.namespace.identity", fields, reflect.TypeOf(NamespaceIdentity{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.cli.namespace.identity", fields, reflect.TypeOf(NamespaceIdentity{}), fieldNameMap, validators)
 }
 
-func NamespaceInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func NamespaceInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["identity"] = bindings.NewReferenceType(NamespaceIdentityBindingType)
+	fields["identity"] = vapiBindings_.NewReferenceType(NamespaceIdentityBindingType)
 	fieldNameMap["identity"] = "Identity"
-	fields["description"] = bindings.NewStringType()
+	fields["description"] = vapiBindings_.NewStringType()
 	fieldNameMap["description"] = "Description"
-	fields["children"] = bindings.NewListType(bindings.NewReferenceType(NamespaceIdentityBindingType), reflect.TypeOf([]NamespaceIdentity{}))
+	fields["children"] = vapiBindings_.NewListType(vapiBindings_.NewReferenceType(NamespaceIdentityBindingType), reflect.TypeOf([]NamespaceIdentity{}))
 	fieldNameMap["children"] = "Children"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.cli.namespace.info", fields, reflect.TypeOf(NamespaceInfo{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.cli.namespace.info", fields, reflect.TypeOf(NamespaceInfo{}), fieldNameMap, validators)
 }

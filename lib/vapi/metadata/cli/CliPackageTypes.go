@@ -11,9 +11,9 @@
 package cli
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiLog_ "github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"reflect"
 )
 
@@ -25,29 +25,28 @@ type ComponentInfo struct {
 	Commands []CommandInfo
 }
 
-func (s *ComponentInfo) GetType__() bindings.BindingType {
+func (s *ComponentInfo) GetType__() vapiBindings_.BindingType {
 	return ComponentInfoBindingType()
 }
 
-func (s *ComponentInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *ComponentInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ComponentInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for ComponentInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
 }
 
-func ComponentInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func ComponentInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["namespaces"] = bindings.NewListType(bindings.NewReferenceType(NamespaceInfoBindingType), reflect.TypeOf([]NamespaceInfo{}))
+	fields["namespaces"] = vapiBindings_.NewListType(vapiBindings_.NewReferenceType(NamespaceInfoBindingType), reflect.TypeOf([]NamespaceInfo{}))
 	fieldNameMap["namespaces"] = "Namespaces"
-	fields["commands"] = bindings.NewListType(bindings.NewReferenceType(CommandInfoBindingType), reflect.TypeOf([]CommandInfo{}))
+	fields["commands"] = vapiBindings_.NewListType(vapiBindings_.NewReferenceType(CommandInfoBindingType), reflect.TypeOf([]CommandInfo{}))
 	fieldNameMap["commands"] = "Commands"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.cli.component_info", fields, reflect.TypeOf(ComponentInfo{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.cli.component_info", fields, reflect.TypeOf(ComponentInfo{}), fieldNameMap, validators)
 }

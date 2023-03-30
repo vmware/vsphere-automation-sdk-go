@@ -9,14 +9,13 @@
 package authentication
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 // The ``Source`` interface provides methods to manage the sources of authentication metadata information.
 //
@@ -32,17 +31,19 @@ type SourceClient interface {
 	// @param sourceIdParam metadata source identifier.
 	// The parameter must be an identifier for the resource type: ``com.vmware.vapi.metadata.authentication.source``.
 	// @param specParam create specification.
+	//
 	// @throws AlreadyExists if the metadata source identifier is already registered with the infrastructure.
-	// @throws InvalidArgument if the type of the source specified in metadata.SourceCreateSpec#type is invalid.
-	// @throws InvalidArgument if the file specified in metadata.SourceCreateSpec#filepath is not a valid JSON file or if the format of the authentication metadata in the JSON file is invalid.
-	// @throws InvalidArgument if the URI specified in metadata.SourceCreateSpec#address is unreachable or if there is a transport protocol or message protocol mismatch between the client and the server or if the remote server do not have interfaces present in com.vmware.vapi.metadata.authentication package.
-	// @throws NotFound if the file specified in metadata.SourceCreateSpec#filepath does not exist.
+	// @throws InvalidArgument if the type of the source specified in vapiMetadata_.SourceCreateSpec#type is invalid.
+	// @throws InvalidArgument if the file specified in vapiMetadata_.SourceCreateSpec#filepath is not a valid JSON file or if the format of the authentication metadata in the JSON file is invalid.
+	// @throws InvalidArgument if the URI specified in vapiMetadata_.SourceCreateSpec#address is unreachable or if there is a transport protocol or message protocol mismatch between the client and the server or if the remote server do not have interfaces present in com.vmware.vapi.metadata.authentication package.
+	// @throws NotFound if the file specified in vapiMetadata_.SourceCreateSpec#filepath does not exist.
 	Create(sourceIdParam string, specParam SourceCreateSpec) error
 
 	// Deletes an existing authentication metadata source from the infrastructure.
 	//
 	// @param sourceIdParam Identifier of the metadata source.
 	// The parameter must be an identifier for the resource type: ``com.vmware.vapi.metadata.authentication.source``.
+	//
 	// @throws NotFound if the metadata source identifier is not found.
 	Delete(sourceIdParam string) error
 
@@ -51,6 +52,7 @@ type SourceClient interface {
 	// @param sourceIdParam Identifier of the metadata source.
 	// The parameter must be an identifier for the resource type: ``com.vmware.vapi.metadata.authentication.source``.
 	// @return The SourceInfo instance that corresponds to ``source_id``
+	//
 	// @throws NotFound if the metadata source associated with ``source_id`` is not found.
 	Get(sourceIdParam string) (SourceInfo, error)
 
@@ -64,6 +66,7 @@ type SourceClient interface {
 	// @param sourceIdParam Identifier of the metadata source.
 	// The parameter must be an identifier for the resource type: ``com.vmware.vapi.metadata.authentication.source``.
 	// If unspecified, all the metadata sources are reloaded.
+	//
 	// @throws NotFound if the metadata source associated with ``source_id`` is not found.
 	Reload(sourceIdParam *string) error
 
@@ -73,61 +76,63 @@ type SourceClient interface {
 	// The parameter must be an identifier for the resource type: ``com.vmware.vapi.metadata.authentication.source``.
 	// If unspecified, the fingerprint of all the metadata sources is returned.
 	// @return Aggregate fingerprint of all the metadata sources or of a particular metadata source.
+	//
 	// @throws NotFound if the metadata source associated with ``source_id`` is not found.
 	Fingerprint(sourceIdParam *string) (string, error)
 }
 
 type sourceClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewSourceClient(connector client.Connector) *sourceClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vapi.metadata.authentication.source")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create":      core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete":      core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":         core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":        core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"reload":      core.NewMethodIdentifier(interfaceIdentifier, "reload"),
-		"fingerprint": core.NewMethodIdentifier(interfaceIdentifier, "fingerprint"),
+func NewSourceClient(connector vapiProtocolClient_.Connector) *sourceClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vapi.metadata.authentication.source")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create":      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete":      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":         vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":        vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"reload":      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "reload"),
+		"fingerprint": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "fingerprint"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	sIface := sourceClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *sourceClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (sIface *sourceClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
 func (sIface *sourceClient) Create(sourceIdParam string, specParam SourceCreateSpec) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sourceCreateInputType(), typeConverter)
+	operationRestMetaData := sourceCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sourceCreateInputType(), typeConverter)
 	sv.AddStructField("SourceId", sourceIdParam)
 	sv.AddStructField("Spec", specParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sourceCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.vapi.metadata.authentication.source", "create", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
@@ -136,23 +141,24 @@ func (sIface *sourceClient) Create(sourceIdParam string, specParam SourceCreateS
 func (sIface *sourceClient) Delete(sourceIdParam string) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sourceDeleteInputType(), typeConverter)
+	operationRestMetaData := sourceDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sourceDeleteInputType(), typeConverter)
 	sv.AddStructField("SourceId", sourceIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sourceDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.vapi.metadata.authentication.source", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
@@ -161,29 +167,30 @@ func (sIface *sourceClient) Delete(sourceIdParam string) error {
 func (sIface *sourceClient) Get(sourceIdParam string) (SourceInfo, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sourceGetInputType(), typeConverter)
+	operationRestMetaData := sourceGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sourceGetInputType(), typeConverter)
 	sv.AddStructField("SourceId", sourceIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput SourceInfo
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sourceGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.vapi.metadata.authentication.source", "get", inputDataValue, executionContext)
 	var emptyOutput SourceInfo
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), sourceGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SourceGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(SourceInfo), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -192,28 +199,29 @@ func (sIface *sourceClient) Get(sourceIdParam string) (SourceInfo, error) {
 func (sIface *sourceClient) List() ([]string, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sourceListInputType(), typeConverter)
+	operationRestMetaData := sourceListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sourceListInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput []string
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sourceListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.vapi.metadata.authentication.source", "list", inputDataValue, executionContext)
 	var emptyOutput []string
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), sourceListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SourceListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.([]string), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -222,23 +230,24 @@ func (sIface *sourceClient) List() ([]string, error) {
 func (sIface *sourceClient) Reload(sourceIdParam *string) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sourceReloadInputType(), typeConverter)
+	operationRestMetaData := sourceReloadRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sourceReloadInputType(), typeConverter)
 	sv.AddStructField("SourceId", sourceIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sourceReloadRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.vapi.metadata.authentication.source", "reload", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
@@ -247,29 +256,30 @@ func (sIface *sourceClient) Reload(sourceIdParam *string) error {
 func (sIface *sourceClient) Fingerprint(sourceIdParam *string) (string, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sourceFingerprintInputType(), typeConverter)
+	operationRestMetaData := sourceFingerprintRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sourceFingerprintInputType(), typeConverter)
 	sv.AddStructField("SourceId", sourceIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput string
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sourceFingerprintRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.vapi.metadata.authentication.source", "fingerprint", inputDataValue, executionContext)
 	var emptyOutput string
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), sourceFingerprintOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SourceFingerprintOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(string), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

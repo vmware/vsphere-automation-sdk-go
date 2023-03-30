@@ -11,30 +11,30 @@
 package metamodel
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
 	"reflect"
 )
 
 // Resource type for enumeration.
 const Enumeration_RESOURCE_TYPE = "com.vmware.vapi.enumeration"
 
-func enumerationListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func enumerationListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func enumerationListOutputType() bindings.BindingType {
-	return bindings.NewListType(bindings.NewIdType([]string{"com.vmware.vapi.enumeration"}, ""), reflect.TypeOf([]string{}))
+func EnumerationListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewListType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.enumeration"}, ""), reflect.TypeOf([]string{}))
 }
 
-func enumerationListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func enumerationListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -42,7 +42,7 @@ func enumerationListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -63,36 +63,36 @@ func enumerationListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{})
 }
 
-func enumerationGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func enumerationGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["enumeration_id"] = bindings.NewIdType([]string{"com.vmware.vapi.enumeration"}, "")
+	fields["enumeration_id"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.enumeration"}, "")
 	fieldNameMap["enumeration_id"] = "EnumerationId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func enumerationGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(EnumerationInfoBindingType)
+func EnumerationGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(EnumerationInfoBindingType)
 }
 
-func enumerationGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func enumerationGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["enumeration_id"] = bindings.NewIdType([]string{"com.vmware.vapi.enumeration"}, "")
+	fields["enumeration_id"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.enumeration"}, "")
 	fieldNameMap["enumeration_id"] = "EnumerationId"
-	paramsTypeMap["enumeration_id"] = bindings.NewIdType([]string{"com.vmware.vapi.enumeration"}, "")
-	paramsTypeMap["enumerationId"] = bindings.NewIdType([]string{"com.vmware.vapi.enumeration"}, "")
+	paramsTypeMap["enumeration_id"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.enumeration"}, "")
+	paramsTypeMap["enumerationId"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.enumeration"}, "")
 	pathParams["enumeration_id"] = "enumerationId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
