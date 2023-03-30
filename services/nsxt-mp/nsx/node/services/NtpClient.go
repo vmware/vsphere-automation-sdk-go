@@ -9,241 +9,250 @@
 package services
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type NtpClient interface {
 
 	// Read NTP service properties
 	// @return com.vmware.nsx.model.NodeNtpServiceProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (model.NodeNtpServiceProperties, error)
+	Get() (nsxModel.NodeNtpServiceProperties, error)
 
 	// Restart, start or stop the NTP service
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Restart() (model.NodeServiceStatusProperties, error)
+	Restart() (nsxModel.NodeServiceStatusProperties, error)
 
 	// Restart, start or stop the NTP service
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Start() (model.NodeServiceStatusProperties, error)
+	Start() (nsxModel.NodeServiceStatusProperties, error)
 
 	// Restart, start or stop the NTP service
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Stop() (model.NodeServiceStatusProperties, error)
+	Stop() (nsxModel.NodeServiceStatusProperties, error)
 
 	// Update NTP service properties
 	//
 	// @param nodeNtpServicePropertiesParam (required)
 	// @return com.vmware.nsx.model.NodeNtpServiceProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(nodeNtpServicePropertiesParam model.NodeNtpServiceProperties) (model.NodeNtpServiceProperties, error)
+	Update(nodeNtpServicePropertiesParam nsxModel.NodeNtpServiceProperties) (nsxModel.NodeNtpServiceProperties, error)
 }
 
 type ntpClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewNtpClient(connector client.Connector) *ntpClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.node.services.ntp")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get":     core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"restart": core.NewMethodIdentifier(interfaceIdentifier, "restart"),
-		"start":   core.NewMethodIdentifier(interfaceIdentifier, "start"),
-		"stop":    core.NewMethodIdentifier(interfaceIdentifier, "stop"),
-		"update":  core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewNtpClient(connector vapiProtocolClient_.Connector) *ntpClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.node.services.ntp")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"restart": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "restart"),
+		"start":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "start"),
+		"stop":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "stop"),
+		"update":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	nIface := ntpClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &nIface
 }
 
-func (nIface *ntpClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (nIface *ntpClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := nIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (nIface *ntpClient) Get() (model.NodeNtpServiceProperties, error) {
+func (nIface *ntpClient) Get() (nsxModel.NodeNtpServiceProperties, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ntpGetInputType(), typeConverter)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.NodeNtpServiceProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
 	operationRestMetaData := ntpGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ntpGetInputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.NodeNtpServiceProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.ntp", "get", inputDataValue, executionContext)
-	var emptyOutput model.NodeNtpServiceProperties
+	var emptyOutput nsxModel.NodeNtpServiceProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ntpGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NtpGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodeNtpServiceProperties), nil
+		return output.(nsxModel.NodeNtpServiceProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (nIface *ntpClient) Restart() (model.NodeServiceStatusProperties, error) {
+func (nIface *ntpClient) Restart() (nsxModel.NodeServiceStatusProperties, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ntpRestartInputType(), typeConverter)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.NodeServiceStatusProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
 	operationRestMetaData := ntpRestartRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ntpRestartInputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.NodeServiceStatusProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.ntp", "restart", inputDataValue, executionContext)
-	var emptyOutput model.NodeServiceStatusProperties
+	var emptyOutput nsxModel.NodeServiceStatusProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ntpRestartOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NtpRestartOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodeServiceStatusProperties), nil
+		return output.(nsxModel.NodeServiceStatusProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (nIface *ntpClient) Start() (model.NodeServiceStatusProperties, error) {
+func (nIface *ntpClient) Start() (nsxModel.NodeServiceStatusProperties, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ntpStartInputType(), typeConverter)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.NodeServiceStatusProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
 	operationRestMetaData := ntpStartRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.ntp", "start", inputDataValue, executionContext)
-	var emptyOutput model.NodeServiceStatusProperties
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ntpStartOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.NodeServiceStatusProperties), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-func (nIface *ntpClient) Stop() (model.NodeServiceStatusProperties, error) {
-	typeConverter := nIface.connector.TypeConverter()
-	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ntpStopInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(ntpStartInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NodeServiceStatusProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NodeServiceStatusProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ntpStopRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.ntp", "stop", inputDataValue, executionContext)
-	var emptyOutput model.NodeServiceStatusProperties
+
+	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.ntp", "start", inputDataValue, executionContext)
+	var emptyOutput nsxModel.NodeServiceStatusProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ntpStopOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NtpStartOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodeServiceStatusProperties), nil
+		return output.(nsxModel.NodeServiceStatusProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (nIface *ntpClient) Update(nodeNtpServicePropertiesParam model.NodeNtpServiceProperties) (model.NodeNtpServiceProperties, error) {
+func (nIface *ntpClient) Stop() (nsxModel.NodeServiceStatusProperties, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ntpUpdateInputType(), typeConverter)
+	operationRestMetaData := ntpStopRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ntpStopInputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.NodeServiceStatusProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.ntp", "stop", inputDataValue, executionContext)
+	var emptyOutput nsxModel.NodeServiceStatusProperties
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NtpStopOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsxModel.NodeServiceStatusProperties), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (nIface *ntpClient) Update(nodeNtpServicePropertiesParam nsxModel.NodeNtpServiceProperties) (nsxModel.NodeNtpServiceProperties, error) {
+	typeConverter := nIface.connector.TypeConverter()
+	executionContext := nIface.connector.NewExecutionContext()
+	operationRestMetaData := ntpUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ntpUpdateInputType(), typeConverter)
 	sv.AddStructField("NodeNtpServiceProperties", nodeNtpServicePropertiesParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NodeNtpServiceProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NodeNtpServiceProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ntpUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.ntp", "update", inputDataValue, executionContext)
-	var emptyOutput model.NodeNtpServiceProperties
+	var emptyOutput nsxModel.NodeNtpServiceProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ntpUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NtpUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodeNtpServiceProperties), nil
+		return output.(nsxModel.NodeNtpServiceProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

@@ -11,41 +11,41 @@
 package serviceinsertion
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func serviceAttachmentsCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceAttachmentsCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["service_attachment"] = bindings.NewReferenceType(model.ServiceAttachmentBindingType)
+	fields["service_attachment"] = vapiBindings_.NewReferenceType(nsxModel.ServiceAttachmentBindingType)
 	fieldNameMap["service_attachment"] = "ServiceAttachment"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceAttachmentsCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ServiceAttachmentBindingType)
+func ServiceAttachmentsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.ServiceAttachmentBindingType)
 }
 
-func serviceAttachmentsCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceAttachmentsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["service_attachment"] = bindings.NewReferenceType(model.ServiceAttachmentBindingType)
+	fields["service_attachment"] = vapiBindings_.NewReferenceType(nsxModel.ServiceAttachmentBindingType)
 	fieldNameMap["service_attachment"] = "ServiceAttachment"
-	paramsTypeMap["service_attachment"] = bindings.NewReferenceType(model.ServiceAttachmentBindingType)
+	paramsTypeMap["service_attachment"] = vapiBindings_.NewReferenceType(nsxModel.ServiceAttachmentBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,36 +66,36 @@ func serviceAttachmentsCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func serviceAttachmentsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceAttachmentsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["service_attachment_id"] = bindings.NewStringType()
+	fields["service_attachment_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["service_attachment_id"] = "ServiceAttachmentId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceAttachmentsDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func ServiceAttachmentsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func serviceAttachmentsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceAttachmentsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["service_attachment_id"] = bindings.NewStringType()
+	fields["service_attachment_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["service_attachment_id"] = "ServiceAttachmentId"
-	paramsTypeMap["service_attachment_id"] = bindings.NewStringType()
-	paramsTypeMap["serviceAttachmentId"] = bindings.NewStringType()
+	paramsTypeMap["service_attachment_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceAttachmentId"] = vapiBindings_.NewStringType()
 	pathParams["service_attachment_id"] = "serviceAttachmentId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -116,36 +116,36 @@ func serviceAttachmentsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func serviceAttachmentsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceAttachmentsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["service_attachment_id"] = bindings.NewStringType()
+	fields["service_attachment_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["service_attachment_id"] = "ServiceAttachmentId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceAttachmentsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ServiceAttachmentBindingType)
+func ServiceAttachmentsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.ServiceAttachmentBindingType)
 }
 
-func serviceAttachmentsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceAttachmentsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["service_attachment_id"] = bindings.NewStringType()
+	fields["service_attachment_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["service_attachment_id"] = "ServiceAttachmentId"
-	paramsTypeMap["service_attachment_id"] = bindings.NewStringType()
-	paramsTypeMap["serviceAttachmentId"] = bindings.NewStringType()
+	paramsTypeMap["service_attachment_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceAttachmentId"] = vapiBindings_.NewStringType()
 	pathParams["service_attachment_id"] = "serviceAttachmentId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -166,21 +166,21 @@ func serviceAttachmentsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func serviceAttachmentsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceAttachmentsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceAttachmentsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ServiceAttachmentListResultBindingType)
+func ServiceAttachmentsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.ServiceAttachmentListResultBindingType)
 }
 
-func serviceAttachmentsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceAttachmentsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -188,7 +188,7 @@ func serviceAttachmentsListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -209,41 +209,41 @@ func serviceAttachmentsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func serviceAttachmentsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceAttachmentsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["service_attachment_id"] = bindings.NewStringType()
-	fields["service_attachment"] = bindings.NewReferenceType(model.ServiceAttachmentBindingType)
+	fields["service_attachment_id"] = vapiBindings_.NewStringType()
+	fields["service_attachment"] = vapiBindings_.NewReferenceType(nsxModel.ServiceAttachmentBindingType)
 	fieldNameMap["service_attachment_id"] = "ServiceAttachmentId"
 	fieldNameMap["service_attachment"] = "ServiceAttachment"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceAttachmentsUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ServiceAttachmentBindingType)
+func ServiceAttachmentsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.ServiceAttachmentBindingType)
 }
 
-func serviceAttachmentsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceAttachmentsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["service_attachment_id"] = bindings.NewStringType()
-	fields["service_attachment"] = bindings.NewReferenceType(model.ServiceAttachmentBindingType)
+	fields["service_attachment_id"] = vapiBindings_.NewStringType()
+	fields["service_attachment"] = vapiBindings_.NewReferenceType(nsxModel.ServiceAttachmentBindingType)
 	fieldNameMap["service_attachment_id"] = "ServiceAttachmentId"
 	fieldNameMap["service_attachment"] = "ServiceAttachment"
-	paramsTypeMap["service_attachment"] = bindings.NewReferenceType(model.ServiceAttachmentBindingType)
-	paramsTypeMap["service_attachment_id"] = bindings.NewStringType()
-	paramsTypeMap["serviceAttachmentId"] = bindings.NewStringType()
+	paramsTypeMap["service_attachment"] = vapiBindings_.NewReferenceType(nsxModel.ServiceAttachmentBindingType)
+	paramsTypeMap["service_attachment_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceAttachmentId"] = vapiBindings_.NewStringType()
 	pathParams["service_attachment_id"] = "serviceAttachmentId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

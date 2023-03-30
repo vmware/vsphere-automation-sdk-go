@@ -11,41 +11,41 @@
 package compatibility
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func remoteGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func remoteGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["remote_site_credential"] = bindings.NewReferenceType(model.RemoteSiteCredentialBindingType)
+	fields["remote_site_credential"] = vapiBindings_.NewReferenceType(nsxModel.RemoteSiteCredentialBindingType)
 	fieldNameMap["remote_site_credential"] = "RemoteSiteCredential"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func remoteGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.RemoteSiteCompatibilityInfoBindingType)
+func RemoteGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.RemoteSiteCompatibilityInfoBindingType)
 }
 
-func remoteGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func remoteGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["remote_site_credential"] = bindings.NewReferenceType(model.RemoteSiteCredentialBindingType)
+	fields["remote_site_credential"] = vapiBindings_.NewReferenceType(nsxModel.RemoteSiteCredentialBindingType)
 	fieldNameMap["remote_site_credential"] = "RemoteSiteCredential"
-	paramsTypeMap["remote_site_credential"] = bindings.NewReferenceType(model.RemoteSiteCredentialBindingType)
+	paramsTypeMap["remote_site_credential"] = vapiBindings_.NewReferenceType(nsxModel.RemoteSiteCredentialBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

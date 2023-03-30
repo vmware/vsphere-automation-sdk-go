@@ -11,55 +11,55 @@
 package migration_unit_groups
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func migrationUnitReorderInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func migrationUnitReorderInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["group_id"] = bindings.NewStringType()
-	fields["migration_unit_id"] = bindings.NewStringType()
-	fields["reorder_migration_request"] = bindings.NewReferenceType(model.ReorderMigrationRequestBindingType)
+	fields["group_id"] = vapiBindings_.NewStringType()
+	fields["migration_unit_id"] = vapiBindings_.NewStringType()
+	fields["reorder_migration_request"] = vapiBindings_.NewReferenceType(nsxModel.ReorderMigrationRequestBindingType)
 	fieldNameMap["group_id"] = "GroupId"
 	fieldNameMap["migration_unit_id"] = "MigrationUnitId"
 	fieldNameMap["reorder_migration_request"] = "ReorderMigrationRequest"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func migrationUnitReorderOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func MigrationUnitReorderOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func migrationUnitReorderRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func migrationUnitReorderRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["group_id"] = bindings.NewStringType()
-	fields["migration_unit_id"] = bindings.NewStringType()
-	fields["reorder_migration_request"] = bindings.NewReferenceType(model.ReorderMigrationRequestBindingType)
+	fields["group_id"] = vapiBindings_.NewStringType()
+	fields["migration_unit_id"] = vapiBindings_.NewStringType()
+	fields["reorder_migration_request"] = vapiBindings_.NewReferenceType(nsxModel.ReorderMigrationRequestBindingType)
 	fieldNameMap["group_id"] = "GroupId"
 	fieldNameMap["migration_unit_id"] = "MigrationUnitId"
 	fieldNameMap["reorder_migration_request"] = "ReorderMigrationRequest"
-	paramsTypeMap["reorder_migration_request"] = bindings.NewReferenceType(model.ReorderMigrationRequestBindingType)
-	paramsTypeMap["group_id"] = bindings.NewStringType()
-	paramsTypeMap["migration_unit_id"] = bindings.NewStringType()
-	paramsTypeMap["groupId"] = bindings.NewStringType()
-	paramsTypeMap["migrationUnitId"] = bindings.NewStringType()
+	paramsTypeMap["group_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["migration_unit_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["reorder_migration_request"] = vapiBindings_.NewReferenceType(nsxModel.ReorderMigrationRequestBindingType)
+	paramsTypeMap["groupId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["migrationUnitId"] = vapiBindings_.NewStringType()
 	pathParams["group_id"] = "groupId"
 	pathParams["migration_unit_id"] = "migrationUnitId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

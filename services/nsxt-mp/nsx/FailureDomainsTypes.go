@@ -11,41 +11,41 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func failureDomainsCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func failureDomainsCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["failure_domain"] = bindings.NewReferenceType(model.FailureDomainBindingType)
+	fields["failure_domain"] = vapiBindings_.NewReferenceType(nsxModel.FailureDomainBindingType)
 	fieldNameMap["failure_domain"] = "FailureDomain"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func failureDomainsCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.FailureDomainBindingType)
+func FailureDomainsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.FailureDomainBindingType)
 }
 
-func failureDomainsCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func failureDomainsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["failure_domain"] = bindings.NewReferenceType(model.FailureDomainBindingType)
+	fields["failure_domain"] = vapiBindings_.NewReferenceType(nsxModel.FailureDomainBindingType)
 	fieldNameMap["failure_domain"] = "FailureDomain"
-	paramsTypeMap["failure_domain"] = bindings.NewReferenceType(model.FailureDomainBindingType)
+	paramsTypeMap["failure_domain"] = vapiBindings_.NewReferenceType(nsxModel.FailureDomainBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,36 +66,36 @@ func failureDomainsCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func failureDomainsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func failureDomainsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["failure_domain_id"] = bindings.NewStringType()
+	fields["failure_domain_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["failure_domain_id"] = "FailureDomainId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func failureDomainsDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func FailureDomainsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func failureDomainsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func failureDomainsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["failure_domain_id"] = bindings.NewStringType()
+	fields["failure_domain_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["failure_domain_id"] = "FailureDomainId"
-	paramsTypeMap["failure_domain_id"] = bindings.NewStringType()
-	paramsTypeMap["failureDomainId"] = bindings.NewStringType()
+	paramsTypeMap["failure_domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["failureDomainId"] = vapiBindings_.NewStringType()
 	pathParams["failure_domain_id"] = "failureDomainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -116,36 +116,36 @@ func failureDomainsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func failureDomainsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func failureDomainsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["failure_domain_id"] = bindings.NewStringType()
+	fields["failure_domain_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["failure_domain_id"] = "FailureDomainId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func failureDomainsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.FailureDomainBindingType)
+func FailureDomainsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.FailureDomainBindingType)
 }
 
-func failureDomainsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func failureDomainsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["failure_domain_id"] = bindings.NewStringType()
+	fields["failure_domain_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["failure_domain_id"] = "FailureDomainId"
-	paramsTypeMap["failure_domain_id"] = bindings.NewStringType()
-	paramsTypeMap["failureDomainId"] = bindings.NewStringType()
+	paramsTypeMap["failure_domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["failureDomainId"] = vapiBindings_.NewStringType()
 	pathParams["failure_domain_id"] = "failureDomainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -166,21 +166,21 @@ func failureDomainsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func failureDomainsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func failureDomainsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func failureDomainsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.FailureDomainListResultBindingType)
+func FailureDomainsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.FailureDomainListResultBindingType)
 }
 
-func failureDomainsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func failureDomainsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -188,7 +188,7 @@ func failureDomainsListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -209,41 +209,41 @@ func failureDomainsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func failureDomainsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func failureDomainsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["failure_domain_id"] = bindings.NewStringType()
-	fields["failure_domain"] = bindings.NewReferenceType(model.FailureDomainBindingType)
+	fields["failure_domain_id"] = vapiBindings_.NewStringType()
+	fields["failure_domain"] = vapiBindings_.NewReferenceType(nsxModel.FailureDomainBindingType)
 	fieldNameMap["failure_domain_id"] = "FailureDomainId"
 	fieldNameMap["failure_domain"] = "FailureDomain"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func failureDomainsUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.FailureDomainBindingType)
+func FailureDomainsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.FailureDomainBindingType)
 }
 
-func failureDomainsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func failureDomainsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["failure_domain_id"] = bindings.NewStringType()
-	fields["failure_domain"] = bindings.NewReferenceType(model.FailureDomainBindingType)
+	fields["failure_domain_id"] = vapiBindings_.NewStringType()
+	fields["failure_domain"] = vapiBindings_.NewReferenceType(nsxModel.FailureDomainBindingType)
 	fieldNameMap["failure_domain_id"] = "FailureDomainId"
 	fieldNameMap["failure_domain"] = "FailureDomain"
-	paramsTypeMap["failure_domain_id"] = bindings.NewStringType()
-	paramsTypeMap["failure_domain"] = bindings.NewReferenceType(model.FailureDomainBindingType)
-	paramsTypeMap["failureDomainId"] = bindings.NewStringType()
+	paramsTypeMap["failure_domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["failure_domain"] = vapiBindings_.NewReferenceType(nsxModel.FailureDomainBindingType)
+	paramsTypeMap["failureDomainId"] = vapiBindings_.NewStringType()
 	pathParams["failure_domain_id"] = "failureDomainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

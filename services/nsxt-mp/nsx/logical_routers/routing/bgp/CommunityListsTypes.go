@@ -11,48 +11,48 @@
 package bgp
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func communityListsCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func communityListsCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["b_GP_community_list"] = bindings.NewReferenceType(model.BGPCommunityListBindingType)
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["b_GP_community_list"] = vapiBindings_.NewReferenceType(nsxModel.BGPCommunityListBindingType)
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["b_GP_community_list"] = "BGPCommunityList"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func communityListsCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BGPCommunityListBindingType)
+func CommunityListsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BGPCommunityListBindingType)
 }
 
-func communityListsCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func communityListsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["b_GP_community_list"] = bindings.NewReferenceType(model.BGPCommunityListBindingType)
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["b_GP_community_list"] = vapiBindings_.NewReferenceType(nsxModel.BGPCommunityListBindingType)
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["b_GP_community_list"] = "BGPCommunityList"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["b_GP_community_list"] = bindings.NewReferenceType(model.BGPCommunityListBindingType)
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["b_GP_community_list"] = vapiBindings_.NewReferenceType(nsxModel.BGPCommunityListBindingType)
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
 	pathParams["logical_router_id"] = "logicalRouterId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -73,43 +73,43 @@ func communityListsCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func communityListsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func communityListsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["community_list_id"] = bindings.NewStringType()
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["community_list_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["community_list_id"] = "CommunityListId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func communityListsDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func CommunityListsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func communityListsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func communityListsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["community_list_id"] = bindings.NewStringType()
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["community_list_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["community_list_id"] = "CommunityListId"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["community_list_id"] = bindings.NewStringType()
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
-	paramsTypeMap["communityListId"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["community_list_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communityListId"] = vapiBindings_.NewStringType()
 	pathParams["logical_router_id"] = "logicalRouterId"
 	pathParams["community_list_id"] = "communityListId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -130,43 +130,43 @@ func communityListsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func communityListsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func communityListsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["community_list_id"] = bindings.NewStringType()
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["community_list_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["community_list_id"] = "CommunityListId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func communityListsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BGPCommunityListBindingType)
+func CommunityListsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BGPCommunityListBindingType)
 }
 
-func communityListsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func communityListsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["community_list_id"] = bindings.NewStringType()
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["community_list_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["community_list_id"] = "CommunityListId"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["community_list_id"] = bindings.NewStringType()
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
-	paramsTypeMap["communityListId"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["community_list_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communityListId"] = vapiBindings_.NewStringType()
 	pathParams["logical_router_id"] = "logicalRouterId"
 	pathParams["community_list_id"] = "communityListId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -187,57 +187,57 @@ func communityListsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func communityListsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func communityListsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func communityListsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BGPCommunityListListResultBindingType)
+func CommunityListsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BGPCommunityListListResultBindingType)
 }
 
-func communityListsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func communityListsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
 	pathParams["logical_router_id"] = "logicalRouterId"
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
@@ -246,7 +246,7 @@ func communityListsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -267,48 +267,48 @@ func communityListsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func communityListsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func communityListsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["community_list_id"] = bindings.NewStringType()
-	fields["b_GP_community_list"] = bindings.NewReferenceType(model.BGPCommunityListBindingType)
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["community_list_id"] = vapiBindings_.NewStringType()
+	fields["b_GP_community_list"] = vapiBindings_.NewReferenceType(nsxModel.BGPCommunityListBindingType)
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["community_list_id"] = "CommunityListId"
 	fieldNameMap["b_GP_community_list"] = "BGPCommunityList"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func communityListsUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BGPCommunityListBindingType)
+func CommunityListsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BGPCommunityListBindingType)
 }
 
-func communityListsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func communityListsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["community_list_id"] = bindings.NewStringType()
-	fields["b_GP_community_list"] = bindings.NewReferenceType(model.BGPCommunityListBindingType)
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["community_list_id"] = vapiBindings_.NewStringType()
+	fields["b_GP_community_list"] = vapiBindings_.NewReferenceType(nsxModel.BGPCommunityListBindingType)
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["community_list_id"] = "CommunityListId"
 	fieldNameMap["b_GP_community_list"] = "BGPCommunityList"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["community_list_id"] = bindings.NewStringType()
-	paramsTypeMap["b_GP_community_list"] = bindings.NewReferenceType(model.BGPCommunityListBindingType)
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
-	paramsTypeMap["communityListId"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["community_list_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["b_GP_community_list"] = vapiBindings_.NewReferenceType(nsxModel.BGPCommunityListBindingType)
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communityListId"] = vapiBindings_.NewStringType()
 	pathParams["logical_router_id"] = "logicalRouterId"
 	pathParams["community_list_id"] = "communityListId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

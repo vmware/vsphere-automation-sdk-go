@@ -9,15 +9,14 @@
 package trust_management
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type OidcUrisClient interface {
 
@@ -25,193 +24,296 @@ type OidcUrisClient interface {
 	//
 	// @param oidcEndPointParam (required)
 	// @return com.vmware.nsx.model.OidcEndPoint
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(oidcEndPointParam model.OidcEndPoint) (model.OidcEndPoint, error)
+	Create(oidcEndPointParam nsxModel.OidcEndPoint) (nsxModel.OidcEndPoint, error)
 
 	// When ?refresh=true is added to the request, the meta-data is newly fetched from the OIDC end-point.
 	//
 	// @param idParam (required)
 	// @param refreshParam Refresh meta-data (optional, default to false)
 	// @return com.vmware.nsx.model.OidcEndPoint
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(idParam string, refreshParam *bool) (model.OidcEndPoint, error)
+	Get(idParam string, refreshParam *bool) (nsxModel.OidcEndPoint, error)
 
 	// Return the list of OpenID Connect end-points.
+	//
+	// @param oidcTypeParam Type of OIDC endpoint to return (optional)
 	// @return com.vmware.nsx.model.OidcEndPointListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List() (model.OidcEndPointListResult, error)
+	List(oidcTypeParam *string) (nsxModel.OidcEndPointListResult, error)
+
+	// Refresh an OpenID Connect end-point by re-reading data from the OIDC URI.
+	//
+	// @param idParam (required)
+	// @return com.vmware.nsx.model.OidcEndPoint
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Refresh(idParam string) (nsxModel.OidcEndPoint, error)
+
+	// Update the properties of an OpenID Connect end-point. The oidc_uri property may not be changed. If you need to update the oidc_uri, you should delete the OIDC end-point and create a new one with the correct oidc_uri. This request also re-fetches the issuer, jwks_uri, and other meta-data from the OIDC end-point and stores it.
+	//
+	// @param idParam (required)
+	// @param oidcEndPointParam (required)
+	// @return com.vmware.nsx.model.OidcEndPoint
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Update(idParam string, oidcEndPointParam nsxModel.OidcEndPoint) (nsxModel.OidcEndPoint, error)
 
 	// Update a OpenID Connect end-point's thumbprint used to connect to the oidc_uri through SSL
 	//
 	// @param updateOidcEndPointThumbprintRequestParam (required)
 	// @return com.vmware.nsx.model.OidcEndPoint
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Updatethumbprint(updateOidcEndPointThumbprintRequestParam model.UpdateOidcEndPointThumbprintRequest) (model.OidcEndPoint, error)
+	Updatethumbprint(updateOidcEndPointThumbprintRequestParam nsxModel.UpdateOidcEndPointThumbprintRequest) (nsxModel.OidcEndPoint, error)
 }
 
 type oidcUrisClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewOidcUrisClient(connector client.Connector) *oidcUrisClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.trust_management.oidc_uris")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create":           core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"get":              core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":             core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"updatethumbprint": core.NewMethodIdentifier(interfaceIdentifier, "updatethumbprint"),
+func NewOidcUrisClient(connector vapiProtocolClient_.Connector) *oidcUrisClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.trust_management.oidc_uris")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create":           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"get":              vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"refresh":          vapiCore_.NewMethodIdentifier(interfaceIdentifier, "refresh"),
+		"update":           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"updatethumbprint": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "updatethumbprint"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	oIface := oidcUrisClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &oIface
 }
 
-func (oIface *oidcUrisClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (oIface *oidcUrisClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := oIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (oIface *oidcUrisClient) Create(oidcEndPointParam model.OidcEndPoint) (model.OidcEndPoint, error) {
+func (oIface *oidcUrisClient) Create(oidcEndPointParam nsxModel.OidcEndPoint) (nsxModel.OidcEndPoint, error) {
 	typeConverter := oIface.connector.TypeConverter()
 	executionContext := oIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(oidcUrisCreateInputType(), typeConverter)
+	operationRestMetaData := oidcUrisCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(oidcUrisCreateInputType(), typeConverter)
 	sv.AddStructField("OidcEndPoint", oidcEndPointParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.OidcEndPoint
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.OidcEndPoint
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := oidcUrisCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	oIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := oIface.connector.GetApiProvider().Invoke("com.vmware.nsx.trust_management.oidc_uris", "create", inputDataValue, executionContext)
-	var emptyOutput model.OidcEndPoint
+	var emptyOutput nsxModel.OidcEndPoint
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), oidcUrisCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), OidcUrisCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.OidcEndPoint), nil
+		return output.(nsxModel.OidcEndPoint), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), oIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (oIface *oidcUrisClient) Get(idParam string, refreshParam *bool) (model.OidcEndPoint, error) {
+func (oIface *oidcUrisClient) Get(idParam string, refreshParam *bool) (nsxModel.OidcEndPoint, error) {
 	typeConverter := oIface.connector.TypeConverter()
 	executionContext := oIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(oidcUrisGetInputType(), typeConverter)
+	operationRestMetaData := oidcUrisGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(oidcUrisGetInputType(), typeConverter)
 	sv.AddStructField("Id", idParam)
 	sv.AddStructField("Refresh", refreshParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.OidcEndPoint
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.OidcEndPoint
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := oidcUrisGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	oIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := oIface.connector.GetApiProvider().Invoke("com.vmware.nsx.trust_management.oidc_uris", "get", inputDataValue, executionContext)
-	var emptyOutput model.OidcEndPoint
+	var emptyOutput nsxModel.OidcEndPoint
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), oidcUrisGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), OidcUrisGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.OidcEndPoint), nil
+		return output.(nsxModel.OidcEndPoint), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), oIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (oIface *oidcUrisClient) List() (model.OidcEndPointListResult, error) {
+func (oIface *oidcUrisClient) List(oidcTypeParam *string) (nsxModel.OidcEndPointListResult, error) {
 	typeConverter := oIface.connector.TypeConverter()
 	executionContext := oIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(oidcUrisListInputType(), typeConverter)
+	operationRestMetaData := oidcUrisListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(oidcUrisListInputType(), typeConverter)
+	sv.AddStructField("OidcType", oidcTypeParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.OidcEndPointListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.OidcEndPointListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := oidcUrisListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	oIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := oIface.connector.GetApiProvider().Invoke("com.vmware.nsx.trust_management.oidc_uris", "list", inputDataValue, executionContext)
-	var emptyOutput model.OidcEndPointListResult
+	var emptyOutput nsxModel.OidcEndPointListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), oidcUrisListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), OidcUrisListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.OidcEndPointListResult), nil
+		return output.(nsxModel.OidcEndPointListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), oIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (oIface *oidcUrisClient) Updatethumbprint(updateOidcEndPointThumbprintRequestParam model.UpdateOidcEndPointThumbprintRequest) (model.OidcEndPoint, error) {
+func (oIface *oidcUrisClient) Refresh(idParam string) (nsxModel.OidcEndPoint, error) {
 	typeConverter := oIface.connector.TypeConverter()
 	executionContext := oIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(oidcUrisUpdatethumbprintInputType(), typeConverter)
+	operationRestMetaData := oidcUrisRefreshRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(oidcUrisRefreshInputType(), typeConverter)
+	sv.AddStructField("Id", idParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.OidcEndPoint
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := oIface.connector.GetApiProvider().Invoke("com.vmware.nsx.trust_management.oidc_uris", "refresh", inputDataValue, executionContext)
+	var emptyOutput nsxModel.OidcEndPoint
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), OidcUrisRefreshOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsxModel.OidcEndPoint), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), oIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (oIface *oidcUrisClient) Update(idParam string, oidcEndPointParam nsxModel.OidcEndPoint) (nsxModel.OidcEndPoint, error) {
+	typeConverter := oIface.connector.TypeConverter()
+	executionContext := oIface.connector.NewExecutionContext()
+	operationRestMetaData := oidcUrisUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(oidcUrisUpdateInputType(), typeConverter)
+	sv.AddStructField("Id", idParam)
+	sv.AddStructField("OidcEndPoint", oidcEndPointParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.OidcEndPoint
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := oIface.connector.GetApiProvider().Invoke("com.vmware.nsx.trust_management.oidc_uris", "update", inputDataValue, executionContext)
+	var emptyOutput nsxModel.OidcEndPoint
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), OidcUrisUpdateOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsxModel.OidcEndPoint), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), oIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (oIface *oidcUrisClient) Updatethumbprint(updateOidcEndPointThumbprintRequestParam nsxModel.UpdateOidcEndPointThumbprintRequest) (nsxModel.OidcEndPoint, error) {
+	typeConverter := oIface.connector.TypeConverter()
+	executionContext := oIface.connector.NewExecutionContext()
+	operationRestMetaData := oidcUrisUpdatethumbprintRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(oidcUrisUpdatethumbprintInputType(), typeConverter)
 	sv.AddStructField("UpdateOidcEndPointThumbprintRequest", updateOidcEndPointThumbprintRequestParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.OidcEndPoint
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.OidcEndPoint
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := oidcUrisUpdatethumbprintRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	oIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := oIface.connector.GetApiProvider().Invoke("com.vmware.nsx.trust_management.oidc_uris", "updatethumbprint", inputDataValue, executionContext)
-	var emptyOutput model.OidcEndPoint
+	var emptyOutput nsxModel.OidcEndPoint
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), oidcUrisUpdatethumbprintOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), OidcUrisUpdatethumbprintOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.OidcEndPoint), nil
+		return output.(nsxModel.OidcEndPoint), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), oIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

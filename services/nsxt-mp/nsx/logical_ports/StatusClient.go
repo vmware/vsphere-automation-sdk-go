@@ -9,31 +9,41 @@
 package logical_ports
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatusClient interface {
 
 	// Returns operational status of a specified logical port.
 	//
+	//  This api is deprecated from 3.2.2. Please use policy api -
+	//  /infra/segments/<segment-id>/ports/<segment-port-id>/status
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param lportIdParam (required)
 	// @param sourceParam Data source type. (optional)
 	// @return com.vmware.nsx.model.LogicalPortOperationalStatus
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(lportIdParam string, sourceParam *string) (model.LogicalPortOperationalStatus, error)
+	Get(lportIdParam string, sourceParam *string) (nsxModel.LogicalPortOperationalStatus, error)
 
 	// Returns operational status of all logical ports. The query parameter \"source=realtime\" is not supported. Pagination is not supported for this API. The query parameters \"cursor\", \"sort_ascending\", \"sort_by\", \"page_size\" and \"included_fields\" will be ignored.
+	//
+	//  This api is deprecated from 3.2.2. Please use policy api -
+	//  /search/query?query=resource_type:SegmentPort&included_fields=id&included_fields=admin_state
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param attachmentIdParam Logical Port attachment Id (optional)
 	// @param attachmentTypeParam Type of attachment for logical port; for query only. (optional)
@@ -52,76 +62,82 @@ type StatusClient interface {
 	// @param transportNodeIdParam Transport node identifier (optional)
 	// @param transportZoneIdParam Transport zone identifier (optional)
 	// @return com.vmware.nsx.model.LogicalPortStatusSummary
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Getall(attachmentIdParam *string, attachmentTypeParam *string, bridgeClusterIdParam *string, containerPortsOnlyParam *bool, cursorParam *string, diagnosticParam *bool, includedFieldsParam *string, logicalSwitchIdParam *string, pageSizeParam *int64, parentVifIdParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string, switchingProfileIdParam *string, transportNodeIdParam *string, transportZoneIdParam *string) (model.LogicalPortStatusSummary, error)
+	Getall(attachmentIdParam *string, attachmentTypeParam *string, bridgeClusterIdParam *string, containerPortsOnlyParam *bool, cursorParam *string, diagnosticParam *bool, includedFieldsParam *string, logicalSwitchIdParam *string, pageSizeParam *int64, parentVifIdParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string, switchingProfileIdParam *string, transportNodeIdParam *string, transportZoneIdParam *string) (nsxModel.LogicalPortStatusSummary, error)
 }
 
 type statusClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewStatusClient(connector client.Connector) *statusClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.logical_ports.status")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"getall": core.NewMethodIdentifier(interfaceIdentifier, "getall"),
+func NewStatusClient(connector vapiProtocolClient_.Connector) *statusClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.logical_ports.status")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"getall": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "getall"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	sIface := statusClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *statusClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (sIface *statusClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statusClient) Get(lportIdParam string, sourceParam *string) (model.LogicalPortOperationalStatus, error) {
+func (sIface *statusClient) Get(lportIdParam string, sourceParam *string) (nsxModel.LogicalPortOperationalStatus, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(statusGetInputType(), typeConverter)
+	operationRestMetaData := statusGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(statusGetInputType(), typeConverter)
 	sv.AddStructField("LportId", lportIdParam)
 	sv.AddStructField("Source", sourceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.LogicalPortOperationalStatus
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.LogicalPortOperationalStatus
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := statusGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.logical_ports.status", "get", inputDataValue, executionContext)
-	var emptyOutput model.LogicalPortOperationalStatus
+	var emptyOutput nsxModel.LogicalPortOperationalStatus
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), statusGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatusGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.LogicalPortOperationalStatus), nil
+		return output.(nsxModel.LogicalPortOperationalStatus), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *statusClient) Getall(attachmentIdParam *string, attachmentTypeParam *string, bridgeClusterIdParam *string, containerPortsOnlyParam *bool, cursorParam *string, diagnosticParam *bool, includedFieldsParam *string, logicalSwitchIdParam *string, pageSizeParam *int64, parentVifIdParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string, switchingProfileIdParam *string, transportNodeIdParam *string, transportZoneIdParam *string) (model.LogicalPortStatusSummary, error) {
+func (sIface *statusClient) Getall(attachmentIdParam *string, attachmentTypeParam *string, bridgeClusterIdParam *string, containerPortsOnlyParam *bool, cursorParam *string, diagnosticParam *bool, includedFieldsParam *string, logicalSwitchIdParam *string, pageSizeParam *int64, parentVifIdParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string, switchingProfileIdParam *string, transportNodeIdParam *string, transportZoneIdParam *string) (nsxModel.LogicalPortStatusSummary, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(statusGetallInputType(), typeConverter)
+	operationRestMetaData := statusGetallRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(statusGetallInputType(), typeConverter)
 	sv.AddStructField("AttachmentId", attachmentIdParam)
 	sv.AddStructField("AttachmentType", attachmentTypeParam)
 	sv.AddStructField("BridgeClusterId", bridgeClusterIdParam)
@@ -140,25 +156,22 @@ func (sIface *statusClient) Getall(attachmentIdParam *string, attachmentTypePara
 	sv.AddStructField("TransportZoneId", transportZoneIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.LogicalPortStatusSummary
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.LogicalPortStatusSummary
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := statusGetallRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.logical_ports.status", "getall", inputDataValue, executionContext)
-	var emptyOutput model.LogicalPortStatusSummary
+	var emptyOutput nsxModel.LogicalPortStatusSummary
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), statusGetallOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatusGetallOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.LogicalPortStatusSummary), nil
+		return output.(nsxModel.LogicalPortStatusSummary), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

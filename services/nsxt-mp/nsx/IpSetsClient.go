@@ -9,46 +9,54 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type IpSetsClient interface {
 
-	// Creates a new IPSet that can group either IPv4 or IPv6 individual ip addresses, ranges or subnets.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param ipSetParam (required)
 	// @return com.vmware.nsx.model.IPSet
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(ipSetParam model.IPSet) (model.IPSet, error)
+	Create(ipSetParam nsxModel.IPSet) (nsxModel.IPSet, error)
 
-	// Add/Remove an individual IP address to an IPSet
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param ipSetIdParam IP Set Id (required)
 	// @param ipAddressElementParam (required)
 	// @param actionParam Specifies addition or removal action (required)
 	// @return com.vmware.nsx.model.IPAddressElement
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create0(ipSetIdParam string, ipAddressElementParam model.IPAddressElement, actionParam string) (model.IPAddressElement, error)
+	Create0(ipSetIdParam string, ipAddressElementParam nsxModel.IPAddressElement, actionParam string) (nsxModel.IPAddressElement, error)
 
-	// Deletes the specified IPSet. By default, if the IPSet is added to an NSGroup, it won't be deleted. In such situations, pass \"force=true\" as query param to force delete the IPSet.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param ipSetIdParam IPSet Id (required)
 	// @param forceParam Force delete the resource even if it is being used somewhere (optional, default to false)
+	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -57,18 +65,23 @@ type IpSetsClient interface {
 	// @throws NotFound  Not Found
 	Delete(ipSetIdParam string, forceParam *bool) error
 
-	// Returns information about the specified IPSet
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param ipSetIdParam IPSet Id (required)
 	// @return com.vmware.nsx.model.IPSet
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(ipSetIdParam string) (model.IPSet, error)
+	Get(ipSetIdParam string) (nsxModel.IPSet, error)
 
-	// Returns paginated list of IPSets
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
@@ -76,115 +89,121 @@ type IpSetsClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.IPSetListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IPSetListResult, error)
+	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.IPSetListResult, error)
 
-	// Updates the specified IPSet. Modifiable parameters include description, display_name and ip_addresses.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param ipSetIdParam IPSet Id (required)
 	// @param ipSetParam (required)
 	// @return com.vmware.nsx.model.IPSet
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(ipSetIdParam string, ipSetParam model.IPSet) (model.IPSet, error)
+	Update(ipSetIdParam string, ipSetParam nsxModel.IPSet) (nsxModel.IPSet, error)
 }
 
 type ipSetsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewIpSetsClient(connector client.Connector) *ipSetsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.ip_sets")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create":   core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"create_0": core.NewMethodIdentifier(interfaceIdentifier, "create_0"),
-		"delete":   core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":      core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":     core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update":   core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewIpSetsClient(connector vapiProtocolClient_.Connector) *ipSetsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.ip_sets")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"create_0": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create_0"),
+		"delete":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	iIface := ipSetsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &iIface
 }
 
-func (iIface *ipSetsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (iIface *ipSetsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := iIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (iIface *ipSetsClient) Create(ipSetParam model.IPSet) (model.IPSet, error) {
+func (iIface *ipSetsClient) Create(ipSetParam nsxModel.IPSet) (nsxModel.IPSet, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ipSetsCreateInputType(), typeConverter)
+	operationRestMetaData := ipSetsCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ipSetsCreateInputType(), typeConverter)
 	sv.AddStructField("IpSet", ipSetParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IPSet
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IPSet
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ipSetsCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ip_sets", "create", inputDataValue, executionContext)
-	var emptyOutput model.IPSet
+	var emptyOutput nsxModel.IPSet
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ipSetsCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IpSetsCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IPSet), nil
+		return output.(nsxModel.IPSet), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (iIface *ipSetsClient) Create0(ipSetIdParam string, ipAddressElementParam model.IPAddressElement, actionParam string) (model.IPAddressElement, error) {
+func (iIface *ipSetsClient) Create0(ipSetIdParam string, ipAddressElementParam nsxModel.IPAddressElement, actionParam string) (nsxModel.IPAddressElement, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ipSetsCreate0InputType(), typeConverter)
+	operationRestMetaData := ipSetsCreate0RestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ipSetsCreate0InputType(), typeConverter)
 	sv.AddStructField("IpSetId", ipSetIdParam)
 	sv.AddStructField("IpAddressElement", ipAddressElementParam)
 	sv.AddStructField("Action", actionParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IPAddressElement
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IPAddressElement
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ipSetsCreate0RestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ip_sets", "create_0", inputDataValue, executionContext)
-	var emptyOutput model.IPAddressElement
+	var emptyOutput nsxModel.IPAddressElement
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ipSetsCreate0OutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IpSetsCreate0OutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IPAddressElement), nil
+		return output.(nsxModel.IPAddressElement), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -193,64 +212,70 @@ func (iIface *ipSetsClient) Create0(ipSetIdParam string, ipAddressElementParam m
 func (iIface *ipSetsClient) Delete(ipSetIdParam string, forceParam *bool) error {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ipSetsDeleteInputType(), typeConverter)
+	operationRestMetaData := ipSetsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ipSetsDeleteInputType(), typeConverter)
 	sv.AddStructField("IpSetId", ipSetIdParam)
 	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ipSetsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ip_sets", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (iIface *ipSetsClient) Get(ipSetIdParam string) (model.IPSet, error) {
+func (iIface *ipSetsClient) Get(ipSetIdParam string) (nsxModel.IPSet, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ipSetsGetInputType(), typeConverter)
+	operationRestMetaData := ipSetsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ipSetsGetInputType(), typeConverter)
 	sv.AddStructField("IpSetId", ipSetIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IPSet
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IPSet
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ipSetsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ip_sets", "get", inputDataValue, executionContext)
-	var emptyOutput model.IPSet
+	var emptyOutput nsxModel.IPSet
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ipSetsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IpSetsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IPSet), nil
+		return output.(nsxModel.IPSet), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (iIface *ipSetsClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IPSetListResult, error) {
+func (iIface *ipSetsClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.IPSetListResult, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ipSetsListInputType(), typeConverter)
+	operationRestMetaData := ipSetsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ipSetsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
@@ -258,57 +283,55 @@ func (iIface *ipSetsClient) List(cursorParam *string, includedFieldsParam *strin
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IPSetListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IPSetListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ipSetsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ip_sets", "list", inputDataValue, executionContext)
-	var emptyOutput model.IPSetListResult
+	var emptyOutput nsxModel.IPSetListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ipSetsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IpSetsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IPSetListResult), nil
+		return output.(nsxModel.IPSetListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (iIface *ipSetsClient) Update(ipSetIdParam string, ipSetParam model.IPSet) (model.IPSet, error) {
+func (iIface *ipSetsClient) Update(ipSetIdParam string, ipSetParam nsxModel.IPSet) (nsxModel.IPSet, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ipSetsUpdateInputType(), typeConverter)
+	operationRestMetaData := ipSetsUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ipSetsUpdateInputType(), typeConverter)
 	sv.AddStructField("IpSetId", ipSetIdParam)
 	sv.AddStructField("IpSet", ipSetParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IPSet
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IPSet
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ipSetsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ip_sets", "update", inputDataValue, executionContext)
-	var emptyOutput model.IPSet
+	var emptyOutput nsxModel.IPSet
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ipSetsUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IpSetsUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IPSet), nil
+		return output.(nsxModel.IPSet), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

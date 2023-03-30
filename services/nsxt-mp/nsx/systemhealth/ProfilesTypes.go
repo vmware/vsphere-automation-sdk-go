@@ -11,41 +11,41 @@
 package systemhealth
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func profilesCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func profilesCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["system_health_agent_profile"] = bindings.NewReferenceType(model.SystemHealthAgentProfileBindingType)
+	fields["system_health_agent_profile"] = vapiBindings_.NewReferenceType(nsxModel.SystemHealthAgentProfileBindingType)
 	fieldNameMap["system_health_agent_profile"] = "SystemHealthAgentProfile"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func profilesCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.SystemHealthAgentProfileBindingType)
+func ProfilesCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.SystemHealthAgentProfileBindingType)
 }
 
-func profilesCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func profilesCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["system_health_agent_profile"] = bindings.NewReferenceType(model.SystemHealthAgentProfileBindingType)
+	fields["system_health_agent_profile"] = vapiBindings_.NewReferenceType(nsxModel.SystemHealthAgentProfileBindingType)
 	fieldNameMap["system_health_agent_profile"] = "SystemHealthAgentProfile"
-	paramsTypeMap["system_health_agent_profile"] = bindings.NewReferenceType(model.SystemHealthAgentProfileBindingType)
+	paramsTypeMap["system_health_agent_profile"] = vapiBindings_.NewReferenceType(nsxModel.SystemHealthAgentProfileBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,36 +66,36 @@ func profilesCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func profilesDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func profilesDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["profile_id"] = bindings.NewStringType()
+	fields["profile_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["profile_id"] = "ProfileId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func profilesDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func ProfilesDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func profilesDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func profilesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["profile_id"] = bindings.NewStringType()
+	fields["profile_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["profile_id"] = "ProfileId"
-	paramsTypeMap["profile_id"] = bindings.NewStringType()
-	paramsTypeMap["profileId"] = bindings.NewStringType()
+	paramsTypeMap["profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["profileId"] = vapiBindings_.NewStringType()
 	pathParams["profile_id"] = "profileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -116,36 +116,36 @@ func profilesDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func profilesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func profilesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["profile_id"] = bindings.NewStringType()
+	fields["profile_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["profile_id"] = "ProfileId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func profilesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.SystemHealthAgentProfileBindingType)
+func ProfilesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.SystemHealthAgentProfileBindingType)
 }
 
-func profilesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func profilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["profile_id"] = bindings.NewStringType()
+	fields["profile_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["profile_id"] = "ProfileId"
-	paramsTypeMap["profile_id"] = bindings.NewStringType()
-	paramsTypeMap["profileId"] = bindings.NewStringType()
+	paramsTypeMap["profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["profileId"] = vapiBindings_.NewStringType()
 	pathParams["profile_id"] = "profileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -166,21 +166,21 @@ func profilesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func profilesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func profilesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func profilesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.SystemHealthAgentProfileListResultBindingType)
+func ProfilesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.SystemHealthAgentProfileListResultBindingType)
 }
 
-func profilesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func profilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -188,7 +188,7 @@ func profilesListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -209,41 +209,41 @@ func profilesListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func profilesUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func profilesUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["profile_id"] = bindings.NewStringType()
-	fields["system_health_agent_profile"] = bindings.NewReferenceType(model.SystemHealthAgentProfileBindingType)
+	fields["profile_id"] = vapiBindings_.NewStringType()
+	fields["system_health_agent_profile"] = vapiBindings_.NewReferenceType(nsxModel.SystemHealthAgentProfileBindingType)
 	fieldNameMap["profile_id"] = "ProfileId"
 	fieldNameMap["system_health_agent_profile"] = "SystemHealthAgentProfile"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func profilesUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.SystemHealthAgentProfileBindingType)
+func ProfilesUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.SystemHealthAgentProfileBindingType)
 }
 
-func profilesUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func profilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["profile_id"] = bindings.NewStringType()
-	fields["system_health_agent_profile"] = bindings.NewReferenceType(model.SystemHealthAgentProfileBindingType)
+	fields["profile_id"] = vapiBindings_.NewStringType()
+	fields["system_health_agent_profile"] = vapiBindings_.NewReferenceType(nsxModel.SystemHealthAgentProfileBindingType)
 	fieldNameMap["profile_id"] = "ProfileId"
 	fieldNameMap["system_health_agent_profile"] = "SystemHealthAgentProfile"
-	paramsTypeMap["profile_id"] = bindings.NewStringType()
-	paramsTypeMap["system_health_agent_profile"] = bindings.NewReferenceType(model.SystemHealthAgentProfileBindingType)
-	paramsTypeMap["profileId"] = bindings.NewStringType()
+	paramsTypeMap["system_health_agent_profile"] = vapiBindings_.NewReferenceType(nsxModel.SystemHealthAgentProfileBindingType)
+	paramsTypeMap["profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["profileId"] = vapiBindings_.NewStringType()
 	pathParams["profile_id"] = "profileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

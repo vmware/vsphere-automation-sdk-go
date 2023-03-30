@@ -9,32 +9,37 @@
 package systemhealth
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ProfilesClient interface {
 
 	// Create a system health profile.
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param systemHealthAgentProfileParam (required)
 	// @return com.vmware.nsx.model.SystemHealthAgentProfile
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(systemHealthAgentProfileParam model.SystemHealthAgentProfile) (model.SystemHealthAgentProfile, error)
+	Create(systemHealthAgentProfileParam nsxModel.SystemHealthAgentProfile) (nsxModel.SystemHealthAgentProfile, error)
 
 	// Delete an existing system health profile by ID.
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param profileIdParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -44,92 +49,102 @@ type ProfilesClient interface {
 
 	// Show the details of a system health profile.
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param profileIdParam (required)
 	// @return com.vmware.nsx.model.SystemHealthAgentProfile
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(profileIdParam string) (model.SystemHealthAgentProfile, error)
+	Get(profileIdParam string) (nsxModel.SystemHealthAgentProfile, error)
 
 	// List all system health profiles.
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.SystemHealthAgentProfileListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List() (model.SystemHealthAgentProfileListResult, error)
+	List() (nsxModel.SystemHealthAgentProfileListResult, error)
 
 	// Update a system health profile definition.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param profileIdParam (required)
 	// @param systemHealthAgentProfileParam (required)
 	// @return com.vmware.nsx.model.SystemHealthAgentProfile
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(profileIdParam string, systemHealthAgentProfileParam model.SystemHealthAgentProfile) (model.SystemHealthAgentProfile, error)
+	Update(profileIdParam string, systemHealthAgentProfileParam nsxModel.SystemHealthAgentProfile) (nsxModel.SystemHealthAgentProfile, error)
 }
 
 type profilesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewProfilesClient(connector client.Connector) *profilesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.systemhealth.profiles")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create": core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewProfilesClient(connector vapiProtocolClient_.Connector) *profilesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.systemhealth.profiles")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	pIface := profilesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &pIface
 }
 
-func (pIface *profilesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (pIface *profilesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := pIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (pIface *profilesClient) Create(systemHealthAgentProfileParam model.SystemHealthAgentProfile) (model.SystemHealthAgentProfile, error) {
+func (pIface *profilesClient) Create(systemHealthAgentProfileParam nsxModel.SystemHealthAgentProfile) (nsxModel.SystemHealthAgentProfile, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(profilesCreateInputType(), typeConverter)
+	operationRestMetaData := profilesCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(profilesCreateInputType(), typeConverter)
 	sv.AddStructField("SystemHealthAgentProfile", systemHealthAgentProfileParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.SystemHealthAgentProfile
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.SystemHealthAgentProfile
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := profilesCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.systemhealth.profiles", "create", inputDataValue, executionContext)
-	var emptyOutput model.SystemHealthAgentProfile
+	var emptyOutput nsxModel.SystemHealthAgentProfile
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), profilesCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ProfilesCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.SystemHealthAgentProfile), nil
+		return output.(nsxModel.SystemHealthAgentProfile), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -138,116 +153,120 @@ func (pIface *profilesClient) Create(systemHealthAgentProfileParam model.SystemH
 func (pIface *profilesClient) Delete(profileIdParam string) error {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(profilesDeleteInputType(), typeConverter)
+	operationRestMetaData := profilesDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(profilesDeleteInputType(), typeConverter)
 	sv.AddStructField("ProfileId", profileIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := profilesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.systemhealth.profiles", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (pIface *profilesClient) Get(profileIdParam string) (model.SystemHealthAgentProfile, error) {
+func (pIface *profilesClient) Get(profileIdParam string) (nsxModel.SystemHealthAgentProfile, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(profilesGetInputType(), typeConverter)
+	operationRestMetaData := profilesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(profilesGetInputType(), typeConverter)
 	sv.AddStructField("ProfileId", profileIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.SystemHealthAgentProfile
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.SystemHealthAgentProfile
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := profilesGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.systemhealth.profiles", "get", inputDataValue, executionContext)
-	var emptyOutput model.SystemHealthAgentProfile
+	var emptyOutput nsxModel.SystemHealthAgentProfile
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), profilesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ProfilesGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.SystemHealthAgentProfile), nil
+		return output.(nsxModel.SystemHealthAgentProfile), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (pIface *profilesClient) List() (model.SystemHealthAgentProfileListResult, error) {
+func (pIface *profilesClient) List() (nsxModel.SystemHealthAgentProfileListResult, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(profilesListInputType(), typeConverter)
+	operationRestMetaData := profilesListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(profilesListInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.SystemHealthAgentProfileListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.SystemHealthAgentProfileListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := profilesListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.systemhealth.profiles", "list", inputDataValue, executionContext)
-	var emptyOutput model.SystemHealthAgentProfileListResult
+	var emptyOutput nsxModel.SystemHealthAgentProfileListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), profilesListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ProfilesListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.SystemHealthAgentProfileListResult), nil
+		return output.(nsxModel.SystemHealthAgentProfileListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (pIface *profilesClient) Update(profileIdParam string, systemHealthAgentProfileParam model.SystemHealthAgentProfile) (model.SystemHealthAgentProfile, error) {
+func (pIface *profilesClient) Update(profileIdParam string, systemHealthAgentProfileParam nsxModel.SystemHealthAgentProfile) (nsxModel.SystemHealthAgentProfile, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(profilesUpdateInputType(), typeConverter)
+	operationRestMetaData := profilesUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(profilesUpdateInputType(), typeConverter)
 	sv.AddStructField("ProfileId", profileIdParam)
 	sv.AddStructField("SystemHealthAgentProfile", systemHealthAgentProfileParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.SystemHealthAgentProfile
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.SystemHealthAgentProfile
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := profilesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.systemhealth.profiles", "update", inputDataValue, executionContext)
-	var emptyOutput model.SystemHealthAgentProfile
+	var emptyOutput nsxModel.SystemHealthAgentProfile
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), profilesUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ProfilesUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.SystemHealthAgentProfile), nil
+		return output.(nsxModel.SystemHealthAgentProfile), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

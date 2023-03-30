@@ -11,10 +11,10 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
@@ -27,34 +27,34 @@ const IpfixProfiles_LIST_APPLIED_TO_ENTITY_TYPE_LOGICALSWITCH = "LogicalSwitch"
 // Possible value for ``appliedToEntityType`` of method IpfixProfiles#list.
 const IpfixProfiles_LIST_APPLIED_TO_ENTITY_TYPE_NSGROUP = "NSGroup"
 
-func ipfixProfilesCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func ipfixProfilesCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["ipfix_upm_profile"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IpfixUpmProfileBindingType)}, bindings.REST)
+	fields["ipfix_upm_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsxModel.IpfixUpmProfileBindingType)})
 	fieldNameMap["ipfix_upm_profile"] = "IpfixUpmProfile"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ipfixProfilesCreateOutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IpfixUpmProfileBindingType)}, bindings.REST)
+func IpfixProfilesCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsxModel.IpfixUpmProfileBindingType)})
 }
 
-func ipfixProfilesCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func ipfixProfilesCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["ipfix_upm_profile"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IpfixUpmProfileBindingType)}, bindings.REST)
+	fields["ipfix_upm_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsxModel.IpfixUpmProfileBindingType)})
 	fieldNameMap["ipfix_upm_profile"] = "IpfixUpmProfile"
-	paramsTypeMap["ipfix_upm_profile"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IpfixUpmProfileBindingType)}, bindings.REST)
+	paramsTypeMap["ipfix_upm_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsxModel.IpfixUpmProfileBindingType)})
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -75,36 +75,36 @@ func ipfixProfilesCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func ipfixProfilesDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func ipfixProfilesDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["ipfix_profile_id"] = bindings.NewStringType()
+	fields["ipfix_profile_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["ipfix_profile_id"] = "IpfixProfileId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ipfixProfilesDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func IpfixProfilesDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func ipfixProfilesDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func ipfixProfilesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["ipfix_profile_id"] = bindings.NewStringType()
+	fields["ipfix_profile_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["ipfix_profile_id"] = "IpfixProfileId"
-	paramsTypeMap["ipfix_profile_id"] = bindings.NewStringType()
-	paramsTypeMap["ipfixProfileId"] = bindings.NewStringType()
+	paramsTypeMap["ipfix_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipfixProfileId"] = vapiBindings_.NewStringType()
 	pathParams["ipfix_profile_id"] = "ipfixProfileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -125,36 +125,36 @@ func ipfixProfilesDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func ipfixProfilesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func ipfixProfilesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["ipfix_profile_id"] = bindings.NewStringType()
+	fields["ipfix_profile_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["ipfix_profile_id"] = "IpfixProfileId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ipfixProfilesGetOutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IpfixUpmProfileBindingType)}, bindings.REST)
+func IpfixProfilesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsxModel.IpfixUpmProfileBindingType)})
 }
 
-func ipfixProfilesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func ipfixProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["ipfix_profile_id"] = bindings.NewStringType()
+	fields["ipfix_profile_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["ipfix_profile_id"] = "IpfixProfileId"
-	paramsTypeMap["ipfix_profile_id"] = bindings.NewStringType()
-	paramsTypeMap["ipfixProfileId"] = bindings.NewStringType()
+	paramsTypeMap["ipfix_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipfixProfileId"] = vapiBindings_.NewStringType()
 	pathParams["ipfix_profile_id"] = "ipfixProfileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -175,17 +175,17 @@ func ipfixProfilesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func ipfixProfilesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func ipfixProfilesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["applied_to_entity_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["applied_to_entity_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["profile_types"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["applied_to_entity_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["applied_to_entity_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["profile_types"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["applied_to_entity_id"] = "AppliedToEntityId"
 	fieldNameMap["applied_to_entity_type"] = "AppliedToEntityType"
 	fieldNameMap["cursor"] = "Cursor"
@@ -194,31 +194,31 @@ func ipfixProfilesListInputType() bindings.StructType {
 	fieldNameMap["profile_types"] = "ProfileTypes"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ipfixProfilesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.IpfixUpmProfileListResultBindingType)
+func IpfixProfilesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.IpfixUpmProfileListResultBindingType)
 }
 
-func ipfixProfilesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func ipfixProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["applied_to_entity_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["applied_to_entity_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["profile_types"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["applied_to_entity_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["applied_to_entity_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["profile_types"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["applied_to_entity_id"] = "AppliedToEntityId"
 	fieldNameMap["applied_to_entity_type"] = "AppliedToEntityType"
 	fieldNameMap["cursor"] = "Cursor"
@@ -227,14 +227,14 @@ func ipfixProfilesListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["profile_types"] = "ProfileTypes"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["profile_types"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["applied_to_entity_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["applied_to_entity_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["applied_to_entity_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["profile_types"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["applied_to_entity_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["applied_to_entity_id"] = "applied_to_entity_id"
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
@@ -245,7 +245,7 @@ func ipfixProfilesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -266,41 +266,41 @@ func ipfixProfilesListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func ipfixProfilesUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func ipfixProfilesUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["ipfix_profile_id"] = bindings.NewStringType()
-	fields["ipfix_upm_profile"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IpfixUpmProfileBindingType)}, bindings.REST)
+	fields["ipfix_profile_id"] = vapiBindings_.NewStringType()
+	fields["ipfix_upm_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsxModel.IpfixUpmProfileBindingType)})
 	fieldNameMap["ipfix_profile_id"] = "IpfixProfileId"
 	fieldNameMap["ipfix_upm_profile"] = "IpfixUpmProfile"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ipfixProfilesUpdateOutputType() bindings.BindingType {
-	return bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IpfixUpmProfileBindingType)}, bindings.REST)
+func IpfixProfilesUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsxModel.IpfixUpmProfileBindingType)})
 }
 
-func ipfixProfilesUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func ipfixProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["ipfix_profile_id"] = bindings.NewStringType()
-	fields["ipfix_upm_profile"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IpfixUpmProfileBindingType)}, bindings.REST)
+	fields["ipfix_profile_id"] = vapiBindings_.NewStringType()
+	fields["ipfix_upm_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsxModel.IpfixUpmProfileBindingType)})
 	fieldNameMap["ipfix_profile_id"] = "IpfixProfileId"
 	fieldNameMap["ipfix_upm_profile"] = "IpfixUpmProfile"
-	paramsTypeMap["ipfix_upm_profile"] = bindings.NewDynamicStructType([]bindings.ReferenceType{bindings.NewReferenceType(model.IpfixUpmProfileBindingType)}, bindings.REST)
-	paramsTypeMap["ipfix_profile_id"] = bindings.NewStringType()
-	paramsTypeMap["ipfixProfileId"] = bindings.NewStringType()
+	paramsTypeMap["ipfix_upm_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsxModel.IpfixUpmProfileBindingType)})
+	paramsTypeMap["ipfix_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipfixProfileId"] = vapiBindings_.NewStringType()
 	pathParams["ipfix_profile_id"] = "ipfixProfileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

@@ -9,15 +9,14 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ClusterClient interface {
 
@@ -25,6 +24,7 @@ type ClusterClient interface {
 	//
 	// @param frameTypeParam Frame type (optional, default to LOCAL_LOCAL_MANAGER)
 	// @param siteIdParam Site ID (optional, default to localhost)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -36,6 +36,7 @@ type ClusterClient interface {
 	//
 	// @param targetNodeIdParam Target node UUID or keyword self (required)
 	// @param targetUriParam URI of API to invoke on target node (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
@@ -48,6 +49,7 @@ type ClusterClient interface {
 	//
 	// @param targetNodeIdParam Target node UUID or keyword self (required)
 	// @param targetUriParam URI of API to invoke on target node (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
@@ -58,28 +60,31 @@ type ClusterClient interface {
 
 	// Returns information about the NSX cluster configuration. An NSX cluster has two functions or purposes, commonly referred to as \"roles.\" These two roles are control and management. Each NSX installation has a single cluster. Separate NSX clusters do not share data. In other words, a given data-plane node is attached to only one cluster, not to multiple clusters.
 	// @return com.vmware.nsx.model.ClusterConfig
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (model.ClusterConfig, error)
+	Get() (nsxModel.ClusterConfig, error)
 
 	// Returns information about the specified NSX cluster node.
 	//
 	// @param nodeIdParam (required)
 	// @return com.vmware.nsx.model.ClusterNodeInfo
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get0(nodeIdParam string) (model.ClusterNodeInfo, error)
+	Get0(nodeIdParam string) (nsxModel.ClusterNodeInfo, error)
 
 	// Invoke GET request on target cluster node
 	//
 	// @param targetNodeIdParam Target node UUID or keyword self (required)
 	// @param targetUriParam URI of API to invoke on target node (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
@@ -92,12 +97,13 @@ type ClusterClient interface {
 	//
 	// @param joinClusterParametersParam (required)
 	// @return com.vmware.nsx.model.ClusterConfiguration
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Joincluster(joinClusterParametersParam model.JoinClusterParameters) (model.ClusterConfiguration, error)
+	Joincluster(joinClusterParametersParam nsxModel.JoinClusterParameters) (nsxModel.ClusterConfiguration, error)
 
 	// Detach a node from the Cluster
 	//
@@ -106,14 +112,16 @@ type ClusterClient interface {
 	// @param gracefulShutdownParam (optional, default to false)
 	// @param ignoreRepositoryIpCheckParam (optional, default to false)
 	// @return com.vmware.nsx.model.ClusterConfiguration
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Removenode(nodeIdParam string, forceParam *string, gracefulShutdownParam *string, ignoreRepositoryIpCheckParam *string) (model.ClusterConfiguration, error)
+	Removenode(nodeIdParam string, forceParam *string, gracefulShutdownParam *string, ignoreRepositoryIpCheckParam *string) (nsxModel.ClusterConfiguration, error)
 
 	// Request one-time inventory summary. The backup will be uploaded using the same server configuration as for an automatic backup.
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -125,6 +133,7 @@ type ClusterClient interface {
 	//
 	// @param targetNodeIdParam Target node UUID or keyword self (required)
 	// @param targetUriParam URI of API to invoke on target node (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
@@ -135,60 +144,61 @@ type ClusterClient interface {
 }
 
 type clusterClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewClusterClient(connector client.Connector) *clusterClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.cluster")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"backuptoremote":             core.NewMethodIdentifier(interfaceIdentifier, "backuptoremote"),
-		"create":                     core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete":                     core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":                        core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"get_0":                      core.NewMethodIdentifier(interfaceIdentifier, "get_0"),
-		"get_1":                      core.NewMethodIdentifier(interfaceIdentifier, "get_1"),
-		"joincluster":                core.NewMethodIdentifier(interfaceIdentifier, "joincluster"),
-		"removenode":                 core.NewMethodIdentifier(interfaceIdentifier, "removenode"),
-		"summarizeinventorytoremote": core.NewMethodIdentifier(interfaceIdentifier, "summarizeinventorytoremote"),
-		"update":                     core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewClusterClient(connector vapiProtocolClient_.Connector) *clusterClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.cluster")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"backuptoremote":             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "backuptoremote"),
+		"create":                     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete":                     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":                        vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get_0":                      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get_0"),
+		"get_1":                      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get_1"),
+		"joincluster":                vapiCore_.NewMethodIdentifier(interfaceIdentifier, "joincluster"),
+		"removenode":                 vapiCore_.NewMethodIdentifier(interfaceIdentifier, "removenode"),
+		"summarizeinventorytoremote": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "summarizeinventorytoremote"),
+		"update":                     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	cIface := clusterClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &cIface
 }
 
-func (cIface *clusterClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (cIface *clusterClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := cIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
 func (cIface *clusterClient) Backuptoremote(frameTypeParam *string, siteIdParam *string) error {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(clusterBackuptoremoteInputType(), typeConverter)
+	operationRestMetaData := clusterBackuptoremoteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(clusterBackuptoremoteInputType(), typeConverter)
 	sv.AddStructField("FrameType", frameTypeParam)
 	sv.AddStructField("SiteId", siteIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := clusterBackuptoremoteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster", "backuptoremote", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
@@ -197,24 +207,25 @@ func (cIface *clusterClient) Backuptoremote(frameTypeParam *string, siteIdParam 
 func (cIface *clusterClient) Create(targetNodeIdParam string, targetUriParam string) error {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(clusterCreateInputType(), typeConverter)
+	operationRestMetaData := clusterCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(clusterCreateInputType(), typeConverter)
 	sv.AddStructField("TargetNodeId", targetNodeIdParam)
 	sv.AddStructField("TargetUri", targetUriParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := clusterCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster", "create", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
@@ -223,85 +234,88 @@ func (cIface *clusterClient) Create(targetNodeIdParam string, targetUriParam str
 func (cIface *clusterClient) Delete(targetNodeIdParam string, targetUriParam string) error {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(clusterDeleteInputType(), typeConverter)
+	operationRestMetaData := clusterDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(clusterDeleteInputType(), typeConverter)
 	sv.AddStructField("TargetNodeId", targetNodeIdParam)
 	sv.AddStructField("TargetUri", targetUriParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := clusterDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (cIface *clusterClient) Get() (model.ClusterConfig, error) {
+func (cIface *clusterClient) Get() (nsxModel.ClusterConfig, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(clusterGetInputType(), typeConverter)
+	operationRestMetaData := clusterGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(clusterGetInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ClusterConfig
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ClusterConfig
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := clusterGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster", "get", inputDataValue, executionContext)
-	var emptyOutput model.ClusterConfig
+	var emptyOutput nsxModel.ClusterConfig
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), clusterGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ClusterGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ClusterConfig), nil
+		return output.(nsxModel.ClusterConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (cIface *clusterClient) Get0(nodeIdParam string) (model.ClusterNodeInfo, error) {
+func (cIface *clusterClient) Get0(nodeIdParam string) (nsxModel.ClusterNodeInfo, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(clusterGet0InputType(), typeConverter)
+	operationRestMetaData := clusterGet0RestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(clusterGet0InputType(), typeConverter)
 	sv.AddStructField("NodeId", nodeIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ClusterNodeInfo
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ClusterNodeInfo
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := clusterGet0RestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster", "get_0", inputDataValue, executionContext)
-	var emptyOutput model.ClusterNodeInfo
+	var emptyOutput nsxModel.ClusterNodeInfo
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), clusterGet0OutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ClusterGet0OutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ClusterNodeInfo), nil
+		return output.(nsxModel.ClusterNodeInfo), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -310,89 +324,92 @@ func (cIface *clusterClient) Get0(nodeIdParam string) (model.ClusterNodeInfo, er
 func (cIface *clusterClient) Get1(targetNodeIdParam string, targetUriParam string) error {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(clusterGet1InputType(), typeConverter)
+	operationRestMetaData := clusterGet1RestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(clusterGet1InputType(), typeConverter)
 	sv.AddStructField("TargetNodeId", targetNodeIdParam)
 	sv.AddStructField("TargetUri", targetUriParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := clusterGet1RestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster", "get_1", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (cIface *clusterClient) Joincluster(joinClusterParametersParam model.JoinClusterParameters) (model.ClusterConfiguration, error) {
+func (cIface *clusterClient) Joincluster(joinClusterParametersParam nsxModel.JoinClusterParameters) (nsxModel.ClusterConfiguration, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(clusterJoinclusterInputType(), typeConverter)
+	operationRestMetaData := clusterJoinclusterRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(clusterJoinclusterInputType(), typeConverter)
 	sv.AddStructField("JoinClusterParameters", joinClusterParametersParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ClusterConfiguration
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ClusterConfiguration
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := clusterJoinclusterRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster", "joincluster", inputDataValue, executionContext)
-	var emptyOutput model.ClusterConfiguration
+	var emptyOutput nsxModel.ClusterConfiguration
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), clusterJoinclusterOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ClusterJoinclusterOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ClusterConfiguration), nil
+		return output.(nsxModel.ClusterConfiguration), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (cIface *clusterClient) Removenode(nodeIdParam string, forceParam *string, gracefulShutdownParam *string, ignoreRepositoryIpCheckParam *string) (model.ClusterConfiguration, error) {
+func (cIface *clusterClient) Removenode(nodeIdParam string, forceParam *string, gracefulShutdownParam *string, ignoreRepositoryIpCheckParam *string) (nsxModel.ClusterConfiguration, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(clusterRemovenodeInputType(), typeConverter)
+	operationRestMetaData := clusterRemovenodeRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(clusterRemovenodeInputType(), typeConverter)
 	sv.AddStructField("NodeId", nodeIdParam)
 	sv.AddStructField("Force", forceParam)
 	sv.AddStructField("GracefulShutdown", gracefulShutdownParam)
 	sv.AddStructField("IgnoreRepositoryIpCheck", ignoreRepositoryIpCheckParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ClusterConfiguration
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ClusterConfiguration
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := clusterRemovenodeRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster", "removenode", inputDataValue, executionContext)
-	var emptyOutput model.ClusterConfiguration
+	var emptyOutput nsxModel.ClusterConfiguration
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), clusterRemovenodeOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ClusterRemovenodeOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ClusterConfiguration), nil
+		return output.(nsxModel.ClusterConfiguration), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -401,22 +418,23 @@ func (cIface *clusterClient) Removenode(nodeIdParam string, forceParam *string, 
 func (cIface *clusterClient) Summarizeinventorytoremote() error {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(clusterSummarizeinventorytoremoteInputType(), typeConverter)
+	operationRestMetaData := clusterSummarizeinventorytoremoteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(clusterSummarizeinventorytoremoteInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := clusterSummarizeinventorytoremoteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster", "summarizeinventorytoremote", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
@@ -425,24 +443,25 @@ func (cIface *clusterClient) Summarizeinventorytoremote() error {
 func (cIface *clusterClient) Update(targetNodeIdParam string, targetUriParam string) error {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(clusterUpdateInputType(), typeConverter)
+	operationRestMetaData := clusterUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(clusterUpdateInputType(), typeConverter)
 	sv.AddStructField("TargetNodeId", targetNodeIdParam)
 	sv.AddStructField("TargetUri", targetUriParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := clusterUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster", "update", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}

@@ -9,121 +9,124 @@
 package hardening_policy
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type MandatoryAccessControlClient interface {
 
 	// Gets the enable status for Mandatory Access Control
 	// @return com.vmware.nsx.model.MandatoryAccessControlProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (model.MandatoryAccessControlProperties, error)
+	Get() (nsxModel.MandatoryAccessControlProperties, error)
 
 	// Enable or disable Mandatory Access Control
 	//
 	// @param mandatoryAccessControlPropertiesParam (required)
 	// @return com.vmware.nsx.model.MandatoryAccessControlProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(mandatoryAccessControlPropertiesParam model.MandatoryAccessControlProperties) (model.MandatoryAccessControlProperties, error)
+	Update(mandatoryAccessControlPropertiesParam nsxModel.MandatoryAccessControlProperties) (nsxModel.MandatoryAccessControlProperties, error)
 }
 
 type mandatoryAccessControlClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewMandatoryAccessControlClient(connector client.Connector) *mandatoryAccessControlClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.node.hardening_policy.mandatory_access_control")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewMandatoryAccessControlClient(connector vapiProtocolClient_.Connector) *mandatoryAccessControlClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.node.hardening_policy.mandatory_access_control")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	mIface := mandatoryAccessControlClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &mIface
 }
 
-func (mIface *mandatoryAccessControlClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (mIface *mandatoryAccessControlClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := mIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (mIface *mandatoryAccessControlClient) Get() (model.MandatoryAccessControlProperties, error) {
+func (mIface *mandatoryAccessControlClient) Get() (nsxModel.MandatoryAccessControlProperties, error) {
 	typeConverter := mIface.connector.TypeConverter()
 	executionContext := mIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(mandatoryAccessControlGetInputType(), typeConverter)
+	operationRestMetaData := mandatoryAccessControlGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(mandatoryAccessControlGetInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.MandatoryAccessControlProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.MandatoryAccessControlProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := mandatoryAccessControlGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	mIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := mIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.hardening_policy.mandatory_access_control", "get", inputDataValue, executionContext)
-	var emptyOutput model.MandatoryAccessControlProperties
+	var emptyOutput nsxModel.MandatoryAccessControlProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), mandatoryAccessControlGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), MandatoryAccessControlGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.MandatoryAccessControlProperties), nil
+		return output.(nsxModel.MandatoryAccessControlProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), mIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (mIface *mandatoryAccessControlClient) Update(mandatoryAccessControlPropertiesParam model.MandatoryAccessControlProperties) (model.MandatoryAccessControlProperties, error) {
+func (mIface *mandatoryAccessControlClient) Update(mandatoryAccessControlPropertiesParam nsxModel.MandatoryAccessControlProperties) (nsxModel.MandatoryAccessControlProperties, error) {
 	typeConverter := mIface.connector.TypeConverter()
 	executionContext := mIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(mandatoryAccessControlUpdateInputType(), typeConverter)
+	operationRestMetaData := mandatoryAccessControlUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(mandatoryAccessControlUpdateInputType(), typeConverter)
 	sv.AddStructField("MandatoryAccessControlProperties", mandatoryAccessControlPropertiesParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.MandatoryAccessControlProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.MandatoryAccessControlProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := mandatoryAccessControlUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	mIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := mIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.hardening_policy.mandatory_access_control", "update", inputDataValue, executionContext)
-	var emptyOutput model.MandatoryAccessControlProperties
+	var emptyOutput nsxModel.MandatoryAccessControlProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), mandatoryAccessControlUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), MandatoryAccessControlUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.MandatoryAccessControlProperties), nil
+		return output.(nsxModel.MandatoryAccessControlProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), mIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

@@ -11,55 +11,55 @@
 package solution_configs
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func extendedSolutionConfigCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func extendedSolutionConfigCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["service_id"] = bindings.NewStringType()
-	fields["solution_config_id"] = bindings.NewStringType()
-	fields["extended_solution_config"] = bindings.NewReferenceType(model.ExtendedSolutionConfigBindingType)
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["solution_config_id"] = vapiBindings_.NewStringType()
+	fields["extended_solution_config"] = vapiBindings_.NewReferenceType(nsxModel.ExtendedSolutionConfigBindingType)
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["solution_config_id"] = "SolutionConfigId"
 	fieldNameMap["extended_solution_config"] = "ExtendedSolutionConfig"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func extendedSolutionConfigCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ExtendedSolutionConfigBindingType)
+func ExtendedSolutionConfigCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.ExtendedSolutionConfigBindingType)
 }
 
-func extendedSolutionConfigCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func extendedSolutionConfigCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["service_id"] = bindings.NewStringType()
-	fields["solution_config_id"] = bindings.NewStringType()
-	fields["extended_solution_config"] = bindings.NewReferenceType(model.ExtendedSolutionConfigBindingType)
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["solution_config_id"] = vapiBindings_.NewStringType()
+	fields["extended_solution_config"] = vapiBindings_.NewReferenceType(nsxModel.ExtendedSolutionConfigBindingType)
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["solution_config_id"] = "SolutionConfigId"
 	fieldNameMap["extended_solution_config"] = "ExtendedSolutionConfig"
-	paramsTypeMap["solution_config_id"] = bindings.NewStringType()
-	paramsTypeMap["service_id"] = bindings.NewStringType()
-	paramsTypeMap["extended_solution_config"] = bindings.NewReferenceType(model.ExtendedSolutionConfigBindingType)
-	paramsTypeMap["serviceId"] = bindings.NewStringType()
-	paramsTypeMap["solutionConfigId"] = bindings.NewStringType()
+	paramsTypeMap["extended_solution_config"] = vapiBindings_.NewReferenceType(nsxModel.ExtendedSolutionConfigBindingType)
+	paramsTypeMap["solution_config_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["solutionConfigId"] = vapiBindings_.NewStringType()
 	pathParams["solution_config_id"] = "solutionConfigId"
 	pathParams["service_id"] = "serviceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -80,43 +80,43 @@ func extendedSolutionConfigCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func extendedSolutionConfigDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func extendedSolutionConfigDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["service_id"] = bindings.NewStringType()
-	fields["solution_config_id"] = bindings.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["solution_config_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["solution_config_id"] = "SolutionConfigId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func extendedSolutionConfigDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func ExtendedSolutionConfigDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func extendedSolutionConfigDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func extendedSolutionConfigDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["service_id"] = bindings.NewStringType()
-	fields["solution_config_id"] = bindings.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["solution_config_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["solution_config_id"] = "SolutionConfigId"
-	paramsTypeMap["solution_config_id"] = bindings.NewStringType()
-	paramsTypeMap["service_id"] = bindings.NewStringType()
-	paramsTypeMap["serviceId"] = bindings.NewStringType()
-	paramsTypeMap["solutionConfigId"] = bindings.NewStringType()
+	paramsTypeMap["solution_config_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["solutionConfigId"] = vapiBindings_.NewStringType()
 	pathParams["solution_config_id"] = "solutionConfigId"
 	pathParams["service_id"] = "serviceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -137,43 +137,43 @@ func extendedSolutionConfigDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func extendedSolutionConfigGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func extendedSolutionConfigGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["service_id"] = bindings.NewStringType()
-	fields["solution_config_id"] = bindings.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["solution_config_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["solution_config_id"] = "SolutionConfigId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func extendedSolutionConfigGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ExtendedSolutionConfigBindingType)
+func ExtendedSolutionConfigGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.ExtendedSolutionConfigBindingType)
 }
 
-func extendedSolutionConfigGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func extendedSolutionConfigGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["service_id"] = bindings.NewStringType()
-	fields["solution_config_id"] = bindings.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["solution_config_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["solution_config_id"] = "SolutionConfigId"
-	paramsTypeMap["solution_config_id"] = bindings.NewStringType()
-	paramsTypeMap["service_id"] = bindings.NewStringType()
-	paramsTypeMap["serviceId"] = bindings.NewStringType()
-	paramsTypeMap["solutionConfigId"] = bindings.NewStringType()
+	paramsTypeMap["solution_config_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["solutionConfigId"] = vapiBindings_.NewStringType()
 	pathParams["solution_config_id"] = "solutionConfigId"
 	pathParams["service_id"] = "serviceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -194,48 +194,48 @@ func extendedSolutionConfigGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func extendedSolutionConfigUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func extendedSolutionConfigUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["service_id"] = bindings.NewStringType()
-	fields["solution_config_id"] = bindings.NewStringType()
-	fields["extended_solution_config"] = bindings.NewReferenceType(model.ExtendedSolutionConfigBindingType)
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["solution_config_id"] = vapiBindings_.NewStringType()
+	fields["extended_solution_config"] = vapiBindings_.NewReferenceType(nsxModel.ExtendedSolutionConfigBindingType)
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["solution_config_id"] = "SolutionConfigId"
 	fieldNameMap["extended_solution_config"] = "ExtendedSolutionConfig"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func extendedSolutionConfigUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ExtendedSolutionConfigBindingType)
+func ExtendedSolutionConfigUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.ExtendedSolutionConfigBindingType)
 }
 
-func extendedSolutionConfigUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func extendedSolutionConfigUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["service_id"] = bindings.NewStringType()
-	fields["solution_config_id"] = bindings.NewStringType()
-	fields["extended_solution_config"] = bindings.NewReferenceType(model.ExtendedSolutionConfigBindingType)
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["solution_config_id"] = vapiBindings_.NewStringType()
+	fields["extended_solution_config"] = vapiBindings_.NewReferenceType(nsxModel.ExtendedSolutionConfigBindingType)
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["solution_config_id"] = "SolutionConfigId"
 	fieldNameMap["extended_solution_config"] = "ExtendedSolutionConfig"
-	paramsTypeMap["solution_config_id"] = bindings.NewStringType()
-	paramsTypeMap["service_id"] = bindings.NewStringType()
-	paramsTypeMap["extended_solution_config"] = bindings.NewReferenceType(model.ExtendedSolutionConfigBindingType)
-	paramsTypeMap["serviceId"] = bindings.NewStringType()
-	paramsTypeMap["solutionConfigId"] = bindings.NewStringType()
+	paramsTypeMap["extended_solution_config"] = vapiBindings_.NewReferenceType(nsxModel.ExtendedSolutionConfigBindingType)
+	paramsTypeMap["solution_config_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["solutionConfigId"] = vapiBindings_.NewStringType()
 	pathParams["solution_config_id"] = "solutionConfigId"
 	pathParams["service_id"] = "serviceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

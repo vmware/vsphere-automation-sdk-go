@@ -3,9 +3,9 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for package: com.vmware.nsx.intelligence.nodes.
+// Data type definitions file for package: com.vmware.nsx.node.services.datastore_log_replication.
 // Includes binding types of a top level structures and enumerations.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package nodes
+package datastore_log_replication

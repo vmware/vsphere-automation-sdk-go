@@ -11,48 +11,48 @@
 package mac_sets
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func membersCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func membersCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["mac_set_id"] = bindings.NewStringType()
-	fields["m_AC_address_element"] = bindings.NewReferenceType(model.MACAddressElementBindingType)
+	fields["mac_set_id"] = vapiBindings_.NewStringType()
+	fields["m_AC_address_element"] = vapiBindings_.NewReferenceType(nsxModel.MACAddressElementBindingType)
 	fieldNameMap["mac_set_id"] = "MacSetId"
 	fieldNameMap["m_AC_address_element"] = "MACAddressElement"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func membersCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.MACAddressElementBindingType)
+func MembersCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.MACAddressElementBindingType)
 }
 
-func membersCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func membersCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["mac_set_id"] = bindings.NewStringType()
-	fields["m_AC_address_element"] = bindings.NewReferenceType(model.MACAddressElementBindingType)
+	fields["mac_set_id"] = vapiBindings_.NewStringType()
+	fields["m_AC_address_element"] = vapiBindings_.NewReferenceType(nsxModel.MACAddressElementBindingType)
 	fieldNameMap["mac_set_id"] = "MacSetId"
 	fieldNameMap["m_AC_address_element"] = "MACAddressElement"
-	paramsTypeMap["mac_set_id"] = bindings.NewStringType()
-	paramsTypeMap["m_AC_address_element"] = bindings.NewReferenceType(model.MACAddressElementBindingType)
-	paramsTypeMap["macSetId"] = bindings.NewStringType()
+	paramsTypeMap["mac_set_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["m_AC_address_element"] = vapiBindings_.NewReferenceType(nsxModel.MACAddressElementBindingType)
+	paramsTypeMap["macSetId"] = vapiBindings_.NewStringType()
 	pathParams["mac_set_id"] = "macSetId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -73,43 +73,43 @@ func membersCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func membersDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func membersDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["mac_set_id"] = bindings.NewStringType()
-	fields["mac_address"] = bindings.NewStringType()
+	fields["mac_set_id"] = vapiBindings_.NewStringType()
+	fields["mac_address"] = vapiBindings_.NewStringType()
 	fieldNameMap["mac_set_id"] = "MacSetId"
 	fieldNameMap["mac_address"] = "MacAddress"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func membersDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func MembersDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func membersDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func membersDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["mac_set_id"] = bindings.NewStringType()
-	fields["mac_address"] = bindings.NewStringType()
+	fields["mac_set_id"] = vapiBindings_.NewStringType()
+	fields["mac_address"] = vapiBindings_.NewStringType()
 	fieldNameMap["mac_set_id"] = "MacSetId"
 	fieldNameMap["mac_address"] = "MacAddress"
-	paramsTypeMap["mac_set_id"] = bindings.NewStringType()
-	paramsTypeMap["mac_address"] = bindings.NewStringType()
-	paramsTypeMap["macSetId"] = bindings.NewStringType()
-	paramsTypeMap["macAddress"] = bindings.NewStringType()
+	paramsTypeMap["mac_set_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["mac_address"] = vapiBindings_.NewStringType()
+	paramsTypeMap["macSetId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["macAddress"] = vapiBindings_.NewStringType()
 	pathParams["mac_address"] = "macAddress"
 	pathParams["mac_set_id"] = "macSetId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -130,36 +130,36 @@ func membersDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func membersListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func membersListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["mac_set_id"] = bindings.NewStringType()
+	fields["mac_set_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["mac_set_id"] = "MacSetId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func membersListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.MACAddressElementListResultBindingType)
+func MembersListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.MACAddressElementListResultBindingType)
 }
 
-func membersListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func membersListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["mac_set_id"] = bindings.NewStringType()
+	fields["mac_set_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["mac_set_id"] = "MacSetId"
-	paramsTypeMap["mac_set_id"] = bindings.NewStringType()
-	paramsTypeMap["macSetId"] = bindings.NewStringType()
+	paramsTypeMap["mac_set_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["macSetId"] = vapiBindings_.NewStringType()
 	pathParams["mac_set_id"] = "macSetId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

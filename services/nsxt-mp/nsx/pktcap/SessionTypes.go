@@ -11,41 +11,41 @@
 package pktcap
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func sessionCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sessionCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["packet_capture_request"] = bindings.NewReferenceType(model.PacketCaptureRequestBindingType)
+	fields["packet_capture_request"] = vapiBindings_.NewReferenceType(nsxModel.PacketCaptureRequestBindingType)
 	fieldNameMap["packet_capture_request"] = "PacketCaptureRequest"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sessionCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.PacketCaptureSessionBindingType)
+func SessionCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.PacketCaptureSessionBindingType)
 }
 
-func sessionCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sessionCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["packet_capture_request"] = bindings.NewReferenceType(model.PacketCaptureRequestBindingType)
+	fields["packet_capture_request"] = vapiBindings_.NewReferenceType(nsxModel.PacketCaptureRequestBindingType)
 	fieldNameMap["packet_capture_request"] = "PacketCaptureRequest"
-	paramsTypeMap["packet_capture_request"] = bindings.NewReferenceType(model.PacketCaptureRequestBindingType)
+	paramsTypeMap["packet_capture_request"] = vapiBindings_.NewReferenceType(nsxModel.PacketCaptureRequestBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,36 +66,36 @@ func sessionCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func sessionDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sessionDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["session_id"] = bindings.NewStringType()
+	fields["session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["session_id"] = "SessionId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sessionDeleteOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.PacketCaptureSessionBindingType)
+func SessionDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.PacketCaptureSessionBindingType)
 }
 
-func sessionDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sessionDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["session_id"] = bindings.NewStringType()
+	fields["session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["session_id"] = "SessionId"
-	paramsTypeMap["session_id"] = bindings.NewStringType()
-	paramsTypeMap["sessionId"] = bindings.NewStringType()
+	paramsTypeMap["session_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sessionId"] = vapiBindings_.NewStringType()
 	pathParams["session_id"] = "sessionId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -116,36 +116,36 @@ func sessionDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func sessionGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sessionGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["session_id"] = bindings.NewStringType()
+	fields["session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["session_id"] = "SessionId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sessionGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.PacketCaptureSessionBindingType)
+func SessionGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.PacketCaptureSessionBindingType)
 }
 
-func sessionGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sessionGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["session_id"] = bindings.NewStringType()
+	fields["session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["session_id"] = "SessionId"
-	paramsTypeMap["session_id"] = bindings.NewStringType()
-	paramsTypeMap["sessionId"] = bindings.NewStringType()
+	paramsTypeMap["session_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sessionId"] = vapiBindings_.NewStringType()
 	pathParams["session_id"] = "sessionId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -166,36 +166,36 @@ func sessionGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func sessionRestartInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sessionRestartInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["session_id"] = bindings.NewStringType()
+	fields["session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["session_id"] = "SessionId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sessionRestartOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.PacketCaptureSessionBindingType)
+func SessionRestartOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.PacketCaptureSessionBindingType)
 }
 
-func sessionRestartRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sessionRestartRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["session_id"] = bindings.NewStringType()
+	fields["session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["session_id"] = "SessionId"
-	paramsTypeMap["session_id"] = bindings.NewStringType()
-	paramsTypeMap["sessionId"] = bindings.NewStringType()
+	paramsTypeMap["session_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sessionId"] = vapiBindings_.NewStringType()
 	pathParams["session_id"] = "sessionId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -216,36 +216,36 @@ func sessionRestartRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func sessionTerminateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sessionTerminateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["session_id"] = bindings.NewStringType()
+	fields["session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["session_id"] = "SessionId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sessionTerminateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.PacketCaptureSessionBindingType)
+func SessionTerminateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.PacketCaptureSessionBindingType)
 }
 
-func sessionTerminateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sessionTerminateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["session_id"] = bindings.NewStringType()
+	fields["session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["session_id"] = "SessionId"
-	paramsTypeMap["session_id"] = bindings.NewStringType()
-	paramsTypeMap["sessionId"] = bindings.NewStringType()
+	paramsTypeMap["session_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sessionId"] = vapiBindings_.NewStringType()
 	pathParams["session_id"] = "sessionId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

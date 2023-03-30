@@ -11,10 +11,10 @@
 package logical_ports
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
@@ -51,42 +51,42 @@ const Status_GETALL_SOURCE_REALTIME = "realtime"
 // Possible value for ``source`` of method Status#getall.
 const Status_GETALL_SOURCE_CACHED = "cached"
 
-func statusGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func statusGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["lport_id"] = bindings.NewStringType()
-	fields["source"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["lport_id"] = vapiBindings_.NewStringType()
+	fields["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["lport_id"] = "LportId"
 	fieldNameMap["source"] = "Source"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func statusGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.LogicalPortOperationalStatusBindingType)
+func StatusGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.LogicalPortOperationalStatusBindingType)
 }
 
-func statusGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func statusGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["lport_id"] = bindings.NewStringType()
-	fields["source"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["lport_id"] = vapiBindings_.NewStringType()
+	fields["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["lport_id"] = "LportId"
 	fieldNameMap["source"] = "Source"
-	paramsTypeMap["source"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["lport_id"] = bindings.NewStringType()
-	paramsTypeMap["lportId"] = bindings.NewStringType()
+	paramsTypeMap["lport_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["lportId"] = vapiBindings_.NewStringType()
 	pathParams["lport_id"] = "lportId"
 	queryParams["source"] = "source"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -107,25 +107,25 @@ func statusGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func statusGetallInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func statusGetallInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["attachment_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["attachment_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["bridge_cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["container_ports_only"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["diagnostic"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["logical_switch_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["parent_vif_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["source"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["switching_profile_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["transport_node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["transport_zone_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["attachment_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["attachment_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["bridge_cluster_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["container_ports_only"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["diagnostic"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["logical_switch_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["parent_vif_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["switching_profile_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["transport_zone_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["attachment_id"] = "AttachmentId"
 	fieldNameMap["attachment_type"] = "AttachmentType"
 	fieldNameMap["bridge_cluster_id"] = "BridgeClusterId"
@@ -142,39 +142,39 @@ func statusGetallInputType() bindings.StructType {
 	fieldNameMap["switching_profile_id"] = "SwitchingProfileId"
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
 	fieldNameMap["transport_zone_id"] = "TransportZoneId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func statusGetallOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.LogicalPortStatusSummaryBindingType)
+func StatusGetallOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.LogicalPortStatusSummaryBindingType)
 }
 
-func statusGetallRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func statusGetallRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["attachment_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["attachment_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["bridge_cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["container_ports_only"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["diagnostic"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["logical_switch_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["parent_vif_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["source"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["switching_profile_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["transport_node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["transport_zone_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["attachment_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["attachment_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["bridge_cluster_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["container_ports_only"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["diagnostic"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["logical_switch_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["parent_vif_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["switching_profile_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["transport_zone_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["attachment_id"] = "AttachmentId"
 	fieldNameMap["attachment_type"] = "AttachmentType"
 	fieldNameMap["bridge_cluster_id"] = "BridgeClusterId"
@@ -191,22 +191,22 @@ func statusGetallRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["switching_profile_id"] = "SwitchingProfileId"
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
 	fieldNameMap["transport_zone_id"] = "TransportZoneId"
-	paramsTypeMap["bridge_cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["switching_profile_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["parent_vif_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["transport_node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["container_ports_only"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["diagnostic"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["source"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["attachment_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["attachment_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["logical_switch_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["transport_zone_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["switching_profile_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["bridge_cluster_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["attachment_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["attachment_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["transport_zone_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["container_ports_only"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["diagnostic"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["parent_vif_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["logical_switch_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
 	queryParams["switching_profile_id"] = "switching_profile_id"
 	queryParams["sort_by"] = "sort_by"
@@ -225,7 +225,7 @@ func statusGetallRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

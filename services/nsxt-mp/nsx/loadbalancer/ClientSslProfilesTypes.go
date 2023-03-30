@@ -11,41 +11,41 @@
 package loadbalancer
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func clientSslProfilesCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func clientSslProfilesCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["lb_client_ssl_profile"] = bindings.NewReferenceType(model.LbClientSslProfileBindingType)
+	fields["lb_client_ssl_profile"] = vapiBindings_.NewReferenceType(nsxModel.LbClientSslProfileBindingType)
 	fieldNameMap["lb_client_ssl_profile"] = "LbClientSslProfile"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func clientSslProfilesCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.LbClientSslProfileBindingType)
+func ClientSslProfilesCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.LbClientSslProfileBindingType)
 }
 
-func clientSslProfilesCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func clientSslProfilesCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["lb_client_ssl_profile"] = bindings.NewReferenceType(model.LbClientSslProfileBindingType)
+	fields["lb_client_ssl_profile"] = vapiBindings_.NewReferenceType(nsxModel.LbClientSslProfileBindingType)
 	fieldNameMap["lb_client_ssl_profile"] = "LbClientSslProfile"
-	paramsTypeMap["lb_client_ssl_profile"] = bindings.NewReferenceType(model.LbClientSslProfileBindingType)
+	paramsTypeMap["lb_client_ssl_profile"] = vapiBindings_.NewReferenceType(nsxModel.LbClientSslProfileBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,36 +66,36 @@ func clientSslProfilesCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func clientSslProfilesDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func clientSslProfilesDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["client_ssl_profile_id"] = bindings.NewStringType()
+	fields["client_ssl_profile_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["client_ssl_profile_id"] = "ClientSslProfileId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func clientSslProfilesDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func ClientSslProfilesDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func clientSslProfilesDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func clientSslProfilesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["client_ssl_profile_id"] = bindings.NewStringType()
+	fields["client_ssl_profile_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["client_ssl_profile_id"] = "ClientSslProfileId"
-	paramsTypeMap["client_ssl_profile_id"] = bindings.NewStringType()
-	paramsTypeMap["clientSslProfileId"] = bindings.NewStringType()
+	paramsTypeMap["client_ssl_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["clientSslProfileId"] = vapiBindings_.NewStringType()
 	pathParams["client_ssl_profile_id"] = "clientSslProfileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -116,36 +116,36 @@ func clientSslProfilesDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func clientSslProfilesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func clientSslProfilesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["client_ssl_profile_id"] = bindings.NewStringType()
+	fields["client_ssl_profile_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["client_ssl_profile_id"] = "ClientSslProfileId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func clientSslProfilesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.LbClientSslProfileBindingType)
+func ClientSslProfilesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.LbClientSslProfileBindingType)
 }
 
-func clientSslProfilesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func clientSslProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["client_ssl_profile_id"] = bindings.NewStringType()
+	fields["client_ssl_profile_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["client_ssl_profile_id"] = "ClientSslProfileId"
-	paramsTypeMap["client_ssl_profile_id"] = bindings.NewStringType()
-	paramsTypeMap["clientSslProfileId"] = bindings.NewStringType()
+	paramsTypeMap["client_ssl_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["clientSslProfileId"] = vapiBindings_.NewStringType()
 	pathParams["client_ssl_profile_id"] = "clientSslProfileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -166,51 +166,51 @@ func clientSslProfilesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func clientSslProfilesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func clientSslProfilesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func clientSslProfilesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.LbClientSslProfileListResultBindingType)
+func ClientSslProfilesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.LbClientSslProfileListResultBindingType)
 }
 
-func clientSslProfilesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func clientSslProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
@@ -218,7 +218,7 @@ func clientSslProfilesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -239,41 +239,41 @@ func clientSslProfilesListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func clientSslProfilesUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func clientSslProfilesUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["client_ssl_profile_id"] = bindings.NewStringType()
-	fields["lb_client_ssl_profile"] = bindings.NewReferenceType(model.LbClientSslProfileBindingType)
+	fields["client_ssl_profile_id"] = vapiBindings_.NewStringType()
+	fields["lb_client_ssl_profile"] = vapiBindings_.NewReferenceType(nsxModel.LbClientSslProfileBindingType)
 	fieldNameMap["client_ssl_profile_id"] = "ClientSslProfileId"
 	fieldNameMap["lb_client_ssl_profile"] = "LbClientSslProfile"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func clientSslProfilesUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.LbClientSslProfileBindingType)
+func ClientSslProfilesUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.LbClientSslProfileBindingType)
 }
 
-func clientSslProfilesUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func clientSslProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["client_ssl_profile_id"] = bindings.NewStringType()
-	fields["lb_client_ssl_profile"] = bindings.NewReferenceType(model.LbClientSslProfileBindingType)
+	fields["client_ssl_profile_id"] = vapiBindings_.NewStringType()
+	fields["lb_client_ssl_profile"] = vapiBindings_.NewReferenceType(nsxModel.LbClientSslProfileBindingType)
 	fieldNameMap["client_ssl_profile_id"] = "ClientSslProfileId"
 	fieldNameMap["lb_client_ssl_profile"] = "LbClientSslProfile"
-	paramsTypeMap["client_ssl_profile_id"] = bindings.NewStringType()
-	paramsTypeMap["lb_client_ssl_profile"] = bindings.NewReferenceType(model.LbClientSslProfileBindingType)
-	paramsTypeMap["clientSslProfileId"] = bindings.NewStringType()
+	paramsTypeMap["lb_client_ssl_profile"] = vapiBindings_.NewReferenceType(nsxModel.LbClientSslProfileBindingType)
+	paramsTypeMap["client_ssl_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["clientSslProfileId"] = vapiBindings_.NewStringType()
 	pathParams["client_ssl_profile_id"] = "clientSslProfileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

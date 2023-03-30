@@ -11,28 +11,28 @@
 package snmp
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func v3EngineIdGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func v3EngineIdGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func v3EngineIdGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeSnmpV3EngineIDBindingType)
+func V3EngineIdGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeSnmpV3EngineIDBindingType)
 }
 
-func v3EngineIdGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func v3EngineIdGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -40,7 +40,7 @@ func v3EngineIdGetRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -61,34 +61,34 @@ func v3EngineIdGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func v3EngineIdUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func v3EngineIdUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["node_snmp_v3_engine_ID"] = bindings.NewReferenceType(model.NodeSnmpV3EngineIDBindingType)
+	fields["node_snmp_v3_engine_ID"] = vapiBindings_.NewReferenceType(nsxModel.NodeSnmpV3EngineIDBindingType)
 	fieldNameMap["node_snmp_v3_engine_ID"] = "NodeSnmpV3EngineID"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func v3EngineIdUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeSnmpV3EngineIDBindingType)
+func V3EngineIdUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeSnmpV3EngineIDBindingType)
 }
 
-func v3EngineIdUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func v3EngineIdUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["node_snmp_v3_engine_ID"] = bindings.NewReferenceType(model.NodeSnmpV3EngineIDBindingType)
+	fields["node_snmp_v3_engine_ID"] = vapiBindings_.NewReferenceType(nsxModel.NodeSnmpV3EngineIDBindingType)
 	fieldNameMap["node_snmp_v3_engine_ID"] = "NodeSnmpV3EngineID"
-	paramsTypeMap["node_snmp_v3_engine_ID"] = bindings.NewReferenceType(model.NodeSnmpV3EngineIDBindingType)
+	paramsTypeMap["node_snmp_v3_engine_ID"] = vapiBindings_.NewReferenceType(nsxModel.NodeSnmpV3EngineIDBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

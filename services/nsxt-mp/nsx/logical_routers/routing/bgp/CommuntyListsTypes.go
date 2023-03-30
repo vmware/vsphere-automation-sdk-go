@@ -11,55 +11,55 @@
 package bgp
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func communtyListsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func communtyListsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["community_list_id"] = bindings.NewStringType()
-	fields["b_GP_community_list"] = bindings.NewReferenceType(model.BGPCommunityListBindingType)
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["community_list_id"] = vapiBindings_.NewStringType()
+	fields["b_GP_community_list"] = vapiBindings_.NewReferenceType(nsxModel.BGPCommunityListBindingType)
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["community_list_id"] = "CommunityListId"
 	fieldNameMap["b_GP_community_list"] = "BGPCommunityList"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func communtyListsUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BGPCommunityListBindingType)
+func CommuntyListsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BGPCommunityListBindingType)
 }
 
-func communtyListsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func communtyListsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["community_list_id"] = bindings.NewStringType()
-	fields["b_GP_community_list"] = bindings.NewReferenceType(model.BGPCommunityListBindingType)
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["community_list_id"] = vapiBindings_.NewStringType()
+	fields["b_GP_community_list"] = vapiBindings_.NewReferenceType(nsxModel.BGPCommunityListBindingType)
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["community_list_id"] = "CommunityListId"
 	fieldNameMap["b_GP_community_list"] = "BGPCommunityList"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["community_list_id"] = bindings.NewStringType()
-	paramsTypeMap["b_GP_community_list"] = bindings.NewReferenceType(model.BGPCommunityListBindingType)
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
-	paramsTypeMap["communityListId"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["community_list_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["b_GP_community_list"] = vapiBindings_.NewReferenceType(nsxModel.BGPCommunityListBindingType)
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["communityListId"] = vapiBindings_.NewStringType()
 	pathParams["logical_router_id"] = "logicalRouterId"
 	pathParams["community_list_id"] = "communityListId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

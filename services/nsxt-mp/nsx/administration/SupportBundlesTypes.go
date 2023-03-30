@@ -11,53 +11,53 @@
 package administration
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func supportBundlesCollectInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func supportBundlesCollectInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["support_bundle_request"] = bindings.NewReferenceType(model.SupportBundleRequestBindingType)
-	fields["override_async_response"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["require_delete_or_override_async_response"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["support_bundle_request"] = vapiBindings_.NewReferenceType(nsxModel.SupportBundleRequestBindingType)
+	fields["override_async_response"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["require_delete_or_override_async_response"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["support_bundle_request"] = "SupportBundleRequest"
 	fieldNameMap["override_async_response"] = "OverrideAsyncResponse"
 	fieldNameMap["require_delete_or_override_async_response"] = "RequireDeleteOrOverrideAsyncResponse"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func supportBundlesCollectOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.SupportBundleResultBindingType)
+func SupportBundlesCollectOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.SupportBundleResultBindingType)
 }
 
-func supportBundlesCollectRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func supportBundlesCollectRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["support_bundle_request"] = bindings.NewReferenceType(model.SupportBundleRequestBindingType)
-	fields["override_async_response"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["require_delete_or_override_async_response"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["support_bundle_request"] = vapiBindings_.NewReferenceType(nsxModel.SupportBundleRequestBindingType)
+	fields["override_async_response"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["require_delete_or_override_async_response"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["support_bundle_request"] = "SupportBundleRequest"
 	fieldNameMap["override_async_response"] = "OverrideAsyncResponse"
 	fieldNameMap["require_delete_or_override_async_response"] = "RequireDeleteOrOverrideAsyncResponse"
-	paramsTypeMap["override_async_response"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["require_delete_or_override_async_response"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["support_bundle_request"] = bindings.NewReferenceType(model.SupportBundleRequestBindingType)
+	paramsTypeMap["override_async_response"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["require_delete_or_override_async_response"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["support_bundle_request"] = vapiBindings_.NewReferenceType(nsxModel.SupportBundleRequestBindingType)
 	queryParams["override_async_response"] = "override_async_response"
 	queryParams["require_delete_or_override_async_response"] = "require_delete_or_override_async_response"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -78,21 +78,21 @@ func supportBundlesCollectRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func supportBundlesDeleteasyncresponseInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func supportBundlesDeleteasyncresponseInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func supportBundlesDeleteasyncresponseOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func SupportBundlesDeleteasyncresponseOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func supportBundlesDeleteasyncresponseRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func supportBundlesDeleteasyncresponseRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -100,7 +100,7 @@ func supportBundlesDeleteasyncresponseRestMetadata() protocol.OperationRestMetad
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

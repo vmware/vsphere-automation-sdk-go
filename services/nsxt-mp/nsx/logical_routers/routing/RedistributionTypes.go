@@ -11,43 +11,43 @@
 package routing
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func redistributionGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func redistributionGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func redistributionGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.RedistributionConfigBindingType)
+func RedistributionGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.RedistributionConfigBindingType)
 }
 
-func redistributionGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func redistributionGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
 	pathParams["logical_router_id"] = "logicalRouterId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -68,41 +68,41 @@ func redistributionGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func redistributionUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func redistributionUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["redistribution_config"] = bindings.NewReferenceType(model.RedistributionConfigBindingType)
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["redistribution_config"] = vapiBindings_.NewReferenceType(nsxModel.RedistributionConfigBindingType)
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["redistribution_config"] = "RedistributionConfig"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func redistributionUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.RedistributionConfigBindingType)
+func RedistributionUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.RedistributionConfigBindingType)
 }
 
-func redistributionUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func redistributionUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["redistribution_config"] = bindings.NewReferenceType(model.RedistributionConfigBindingType)
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["redistribution_config"] = vapiBindings_.NewReferenceType(nsxModel.RedistributionConfigBindingType)
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["redistribution_config"] = "RedistributionConfig"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["redistribution_config"] = bindings.NewReferenceType(model.RedistributionConfigBindingType)
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["redistribution_config"] = vapiBindings_.NewReferenceType(nsxModel.RedistributionConfigBindingType)
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
 	pathParams["logical_router_id"] = "logicalRouterId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

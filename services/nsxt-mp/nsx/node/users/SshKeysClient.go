@@ -9,15 +9,14 @@
 package users
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SshKeysClient interface {
 
@@ -25,141 +24,147 @@ type SshKeysClient interface {
 	//
 	// @param useridParam User id of the user (required)
 	// @param sshKeyPropertiesParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Addsshkey(useridParam string, sshKeyPropertiesParam model.SshKeyProperties) error
+	Addsshkey(useridParam string, sshKeyPropertiesParam nsxModel.SshKeyProperties) error
 
 	// Returns a list of all SSH keys from authorized_keys file for node user
 	//
 	// @param useridParam User id of the user (required)
 	// @return com.vmware.nsx.model.SshKeyPropertiesListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(useridParam string) (model.SshKeyPropertiesListResult, error)
+	List(useridParam string) (nsxModel.SshKeyPropertiesListResult, error)
 
 	// Remove SSH public key from authorized_keys file for node user
 	//
 	// @param useridParam User id of the user (required)
 	// @param sshKeyBasePropertiesParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Removesshkey(useridParam string, sshKeyBasePropertiesParam model.SshKeyBaseProperties) error
+	Removesshkey(useridParam string, sshKeyBasePropertiesParam nsxModel.SshKeyBaseProperties) error
 }
 
 type sshKeysClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewSshKeysClient(connector client.Connector) *sshKeysClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.node.users.ssh_keys")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"addsshkey":    core.NewMethodIdentifier(interfaceIdentifier, "addsshkey"),
-		"list":         core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"removesshkey": core.NewMethodIdentifier(interfaceIdentifier, "removesshkey"),
+func NewSshKeysClient(connector vapiProtocolClient_.Connector) *sshKeysClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.node.users.ssh_keys")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"addsshkey":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "addsshkey"),
+		"list":         vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"removesshkey": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "removesshkey"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	sIface := sshKeysClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *sshKeysClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (sIface *sshKeysClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *sshKeysClient) Addsshkey(useridParam string, sshKeyPropertiesParam model.SshKeyProperties) error {
+func (sIface *sshKeysClient) Addsshkey(useridParam string, sshKeyPropertiesParam nsxModel.SshKeyProperties) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sshKeysAddsshkeyInputType(), typeConverter)
+	operationRestMetaData := sshKeysAddsshkeyRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sshKeysAddsshkeyInputType(), typeConverter)
 	sv.AddStructField("Userid", useridParam)
 	sv.AddStructField("SshKeyProperties", sshKeyPropertiesParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sshKeysAddsshkeyRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.users.ssh_keys", "addsshkey", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (sIface *sshKeysClient) List(useridParam string) (model.SshKeyPropertiesListResult, error) {
+func (sIface *sshKeysClient) List(useridParam string) (nsxModel.SshKeyPropertiesListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sshKeysListInputType(), typeConverter)
+	operationRestMetaData := sshKeysListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sshKeysListInputType(), typeConverter)
 	sv.AddStructField("Userid", useridParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.SshKeyPropertiesListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.SshKeyPropertiesListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sshKeysListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.users.ssh_keys", "list", inputDataValue, executionContext)
-	var emptyOutput model.SshKeyPropertiesListResult
+	var emptyOutput nsxModel.SshKeyPropertiesListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), sshKeysListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SshKeysListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.SshKeyPropertiesListResult), nil
+		return output.(nsxModel.SshKeyPropertiesListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *sshKeysClient) Removesshkey(useridParam string, sshKeyBasePropertiesParam model.SshKeyBaseProperties) error {
+func (sIface *sshKeysClient) Removesshkey(useridParam string, sshKeyBasePropertiesParam nsxModel.SshKeyBaseProperties) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(sshKeysRemovesshkeyInputType(), typeConverter)
+	operationRestMetaData := sshKeysRemovesshkeyRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sshKeysRemovesshkeyInputType(), typeConverter)
 	sv.AddStructField("Userid", useridParam)
 	sv.AddStructField("SshKeyBaseProperties", sshKeyBasePropertiesParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := sshKeysRemovesshkeyRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.users.ssh_keys", "removesshkey", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}

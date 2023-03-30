@@ -11,61 +11,61 @@
 package forwarders
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func nslookupGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func nslookupGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["forwarder_id"] = bindings.NewStringType()
-	fields["address"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["server_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["source_ip"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["forwarder_id"] = vapiBindings_.NewStringType()
+	fields["address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["server_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["source_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["forwarder_id"] = "ForwarderId"
 	fieldNameMap["address"] = "Address"
 	fieldNameMap["server_ip"] = "ServerIp"
 	fieldNameMap["source_ip"] = "SourceIp"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func nslookupGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.DnsAnswerBindingType)
+func NslookupGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.DnsAnswerBindingType)
 }
 
-func nslookupGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func nslookupGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["forwarder_id"] = bindings.NewStringType()
-	fields["address"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["server_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["source_ip"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["forwarder_id"] = vapiBindings_.NewStringType()
+	fields["address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["server_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["source_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["forwarder_id"] = "ForwarderId"
 	fieldNameMap["address"] = "Address"
 	fieldNameMap["server_ip"] = "ServerIp"
 	fieldNameMap["source_ip"] = "SourceIp"
-	paramsTypeMap["server_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["source_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["forwarder_id"] = bindings.NewStringType()
-	paramsTypeMap["address"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["forwarderId"] = bindings.NewStringType()
+	paramsTypeMap["address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["server_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["forwarder_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["source_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["forwarderId"] = vapiBindings_.NewStringType()
 	pathParams["forwarder_id"] = "forwarderId"
 	queryParams["address"] = "address"
 	queryParams["server_ip"] = "server_ip"
 	queryParams["source_ip"] = "source_ip"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

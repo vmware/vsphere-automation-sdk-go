@@ -11,48 +11,60 @@
 package aaa
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func rolesCloneInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+// Possible value for ``scope`` of method Roles#list.
+const Roles_LIST_SCOPE_ROOT = "ROOT"
+
+// Possible value for ``scope`` of method Roles#list.
+const Roles_LIST_SCOPE_ORG = "ORG"
+
+// Possible value for ``scope`` of method Roles#list.
+const Roles_LIST_SCOPE_PROJECT = "PROJECT"
+
+// Possible value for ``scope`` of method Roles#list.
+const Roles_LIST_SCOPE_VPC = "VPC"
+
+func rolesCloneInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["role"] = bindings.NewStringType()
-	fields["new_role"] = bindings.NewReferenceType(model.NewRoleBindingType)
+	fields["role"] = vapiBindings_.NewStringType()
+	fields["new_role"] = vapiBindings_.NewReferenceType(nsxModel.NewRoleBindingType)
 	fieldNameMap["role"] = "Role"
 	fieldNameMap["new_role"] = "NewRole"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func rolesCloneOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NewRoleBindingType)
+func RolesCloneOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NewRoleBindingType)
 }
 
-func rolesCloneRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func rolesCloneRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["role"] = bindings.NewStringType()
-	fields["new_role"] = bindings.NewReferenceType(model.NewRoleBindingType)
+	fields["role"] = vapiBindings_.NewStringType()
+	fields["new_role"] = vapiBindings_.NewReferenceType(nsxModel.NewRoleBindingType)
 	fieldNameMap["role"] = "Role"
 	fieldNameMap["new_role"] = "NewRole"
-	paramsTypeMap["role"] = bindings.NewStringType()
-	paramsTypeMap["new_role"] = bindings.NewReferenceType(model.NewRoleBindingType)
-	paramsTypeMap["role"] = bindings.NewStringType()
+	paramsTypeMap["new_role"] = vapiBindings_.NewReferenceType(nsxModel.NewRoleBindingType)
+	paramsTypeMap["role"] = vapiBindings_.NewStringType()
+	paramsTypeMap["role"] = vapiBindings_.NewStringType()
 	pathParams["role"] = "role"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -73,36 +85,36 @@ func rolesCloneRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func rolesDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func rolesDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["role"] = bindings.NewStringType()
+	fields["role"] = vapiBindings_.NewStringType()
 	fieldNameMap["role"] = "Role"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func rolesDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func RolesDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func rolesDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func rolesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["role"] = bindings.NewStringType()
+	fields["role"] = vapiBindings_.NewStringType()
 	fieldNameMap["role"] = "Role"
-	paramsTypeMap["role"] = bindings.NewStringType()
-	paramsTypeMap["role"] = bindings.NewStringType()
+	paramsTypeMap["role"] = vapiBindings_.NewStringType()
+	paramsTypeMap["role"] = vapiBindings_.NewStringType()
 	pathParams["role"] = "role"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -123,36 +135,36 @@ func rolesDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func rolesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func rolesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["role"] = bindings.NewStringType()
+	fields["role"] = vapiBindings_.NewStringType()
 	fieldNameMap["role"] = "Role"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func rolesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.RoleWithFeaturesBindingType)
+func RolesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.RoleWithFeaturesBindingType)
 }
 
-func rolesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func rolesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["role"] = bindings.NewStringType()
+	fields["role"] = vapiBindings_.NewStringType()
 	fieldNameMap["role"] = "Role"
-	paramsTypeMap["role"] = bindings.NewStringType()
-	paramsTypeMap["role"] = bindings.NewStringType()
+	paramsTypeMap["role"] = vapiBindings_.NewStringType()
+	paramsTypeMap["role"] = vapiBindings_.NewStringType()
 	pathParams["role"] = "role"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -173,29 +185,65 @@ func rolesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func rolesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func rolesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["scope"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["scope"] = "Scope"
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fieldNameMap["sort_by"] = "SortBy"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func rolesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.RoleListResultBindingType)
+func RolesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.RoleListResultBindingType)
 }
 
-func rolesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func rolesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["scope"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["scope"] = "Scope"
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fieldNameMap["sort_by"] = "SortBy"
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["scope"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	queryParams["cursor"] = "cursor"
+	queryParams["sort_ascending"] = "sort_ascending"
+	queryParams["included_fields"] = "included_fields"
+	queryParams["scope"] = "scope"
+	queryParams["sort_by"] = "sort_by"
+	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -216,41 +264,41 @@ func rolesListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func rolesUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func rolesUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["role"] = bindings.NewStringType()
-	fields["role_with_features"] = bindings.NewReferenceType(model.RoleWithFeaturesBindingType)
+	fields["role"] = vapiBindings_.NewStringType()
+	fields["role_with_features"] = vapiBindings_.NewReferenceType(nsxModel.RoleWithFeaturesBindingType)
 	fieldNameMap["role"] = "Role"
 	fieldNameMap["role_with_features"] = "RoleWithFeatures"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func rolesUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.RoleWithFeaturesBindingType)
+func RolesUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.RoleWithFeaturesBindingType)
 }
 
-func rolesUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func rolesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["role"] = bindings.NewStringType()
-	fields["role_with_features"] = bindings.NewReferenceType(model.RoleWithFeaturesBindingType)
+	fields["role"] = vapiBindings_.NewStringType()
+	fields["role_with_features"] = vapiBindings_.NewReferenceType(nsxModel.RoleWithFeaturesBindingType)
 	fieldNameMap["role"] = "Role"
 	fieldNameMap["role_with_features"] = "RoleWithFeatures"
-	paramsTypeMap["role"] = bindings.NewStringType()
-	paramsTypeMap["role_with_features"] = bindings.NewReferenceType(model.RoleWithFeaturesBindingType)
-	paramsTypeMap["role"] = bindings.NewStringType()
+	paramsTypeMap["role"] = vapiBindings_.NewStringType()
+	paramsTypeMap["role_with_features"] = vapiBindings_.NewReferenceType(nsxModel.RoleWithFeaturesBindingType)
+	paramsTypeMap["role"] = vapiBindings_.NewStringType()
 	pathParams["role"] = "role"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -271,34 +319,34 @@ func rolesUpdateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func rolesValidateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func rolesValidateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["feature_permission_array"] = bindings.NewReferenceType(model.FeaturePermissionArrayBindingType)
+	fields["feature_permission_array"] = vapiBindings_.NewReferenceType(nsxModel.FeaturePermissionArrayBindingType)
 	fieldNameMap["feature_permission_array"] = "FeaturePermissionArray"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func rolesValidateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.RecommendedFeaturePermissionListResultBindingType)
+func RolesValidateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.RecommendedFeaturePermissionListResultBindingType)
 }
 
-func rolesValidateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func rolesValidateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["feature_permission_array"] = bindings.NewReferenceType(model.FeaturePermissionArrayBindingType)
+	fields["feature_permission_array"] = vapiBindings_.NewReferenceType(nsxModel.FeaturePermissionArrayBindingType)
 	fieldNameMap["feature_permission_array"] = "FeaturePermissionArray"
-	paramsTypeMap["feature_permission_array"] = bindings.NewReferenceType(model.FeaturePermissionArrayBindingType)
+	paramsTypeMap["feature_permission_array"] = vapiBindings_.NewReferenceType(nsxModel.FeaturePermissionArrayBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

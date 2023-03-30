@@ -11,41 +11,41 @@
 package trust_management
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func csrsCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func csrsCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["csr"] = bindings.NewReferenceType(model.CsrBindingType)
+	fields["csr"] = vapiBindings_.NewReferenceType(nsxModel.CsrBindingType)
 	fieldNameMap["csr"] = "Csr"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func csrsCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.CsrBindingType)
+func CsrsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.CsrBindingType)
 }
 
-func csrsCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func csrsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["csr"] = bindings.NewReferenceType(model.CsrBindingType)
+	fields["csr"] = vapiBindings_.NewReferenceType(nsxModel.CsrBindingType)
 	fieldNameMap["csr"] = "Csr"
-	paramsTypeMap["csr"] = bindings.NewReferenceType(model.CsrBindingType)
+	paramsTypeMap["csr"] = vapiBindings_.NewReferenceType(nsxModel.CsrBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,36 +66,36 @@ func csrsCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func csrsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func csrsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["csr_id"] = bindings.NewStringType()
+	fields["csr_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["csr_id"] = "CsrId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func csrsDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func CsrsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func csrsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func csrsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["csr_id"] = bindings.NewStringType()
+	fields["csr_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["csr_id"] = "CsrId"
-	paramsTypeMap["csr_id"] = bindings.NewStringType()
-	paramsTypeMap["csrId"] = bindings.NewStringType()
+	paramsTypeMap["csr_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["csrId"] = vapiBindings_.NewStringType()
 	pathParams["csr_id"] = "csrId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -116,36 +116,36 @@ func csrsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func csrsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func csrsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["csr_id"] = bindings.NewStringType()
+	fields["csr_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["csr_id"] = "CsrId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func csrsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.CsrBindingType)
+func CsrsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.CsrBindingType)
 }
 
-func csrsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func csrsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["csr_id"] = bindings.NewStringType()
+	fields["csr_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["csr_id"] = "CsrId"
-	paramsTypeMap["csr_id"] = bindings.NewStringType()
-	paramsTypeMap["csrId"] = bindings.NewStringType()
+	paramsTypeMap["csr_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["csrId"] = vapiBindings_.NewStringType()
 	pathParams["csr_id"] = "csrId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -166,41 +166,41 @@ func csrsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func csrsImportcsrInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func csrsImportcsrInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["csr_id"] = bindings.NewStringType()
-	fields["trust_object_data"] = bindings.NewReferenceType(model.TrustObjectDataBindingType)
+	fields["csr_id"] = vapiBindings_.NewStringType()
+	fields["trust_object_data"] = vapiBindings_.NewReferenceType(nsxModel.TrustObjectDataBindingType)
 	fieldNameMap["csr_id"] = "CsrId"
 	fieldNameMap["trust_object_data"] = "TrustObjectData"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func csrsImportcsrOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.CertificateListBindingType)
+func CsrsImportcsrOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.CertificateListBindingType)
 }
 
-func csrsImportcsrRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func csrsImportcsrRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["csr_id"] = bindings.NewStringType()
-	fields["trust_object_data"] = bindings.NewReferenceType(model.TrustObjectDataBindingType)
+	fields["csr_id"] = vapiBindings_.NewStringType()
+	fields["trust_object_data"] = vapiBindings_.NewReferenceType(nsxModel.TrustObjectDataBindingType)
 	fieldNameMap["csr_id"] = "CsrId"
 	fieldNameMap["trust_object_data"] = "TrustObjectData"
-	paramsTypeMap["csr_id"] = bindings.NewStringType()
-	paramsTypeMap["trust_object_data"] = bindings.NewReferenceType(model.TrustObjectDataBindingType)
-	paramsTypeMap["csrId"] = bindings.NewStringType()
+	paramsTypeMap["csr_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["trust_object_data"] = vapiBindings_.NewReferenceType(nsxModel.TrustObjectDataBindingType)
+	paramsTypeMap["csrId"] = vapiBindings_.NewStringType()
 	pathParams["csr_id"] = "csrId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -221,51 +221,51 @@ func csrsImportcsrRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func csrsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func csrsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func csrsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.CsrListBindingType)
+func CsrsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.CsrListBindingType)
 }
 
-func csrsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func csrsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
@@ -273,7 +273,7 @@ func csrsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -294,42 +294,42 @@ func csrsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func csrsSelfsignInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func csrsSelfsignInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["csr_id"] = bindings.NewStringType()
-	fields["days_valid"] = bindings.NewIntegerType()
+	fields["csr_id"] = vapiBindings_.NewStringType()
+	fields["days_valid"] = vapiBindings_.NewIntegerType()
 	fieldNameMap["csr_id"] = "CsrId"
 	fieldNameMap["days_valid"] = "DaysValid"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func csrsSelfsignOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.CertificateBindingType)
+func CsrsSelfsignOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.CertificateBindingType)
 }
 
-func csrsSelfsignRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func csrsSelfsignRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["csr_id"] = bindings.NewStringType()
-	fields["days_valid"] = bindings.NewIntegerType()
+	fields["csr_id"] = vapiBindings_.NewStringType()
+	fields["days_valid"] = vapiBindings_.NewIntegerType()
 	fieldNameMap["csr_id"] = "CsrId"
 	fieldNameMap["days_valid"] = "DaysValid"
-	paramsTypeMap["csr_id"] = bindings.NewStringType()
-	paramsTypeMap["days_valid"] = bindings.NewIntegerType()
-	paramsTypeMap["csrId"] = bindings.NewStringType()
+	paramsTypeMap["csr_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["days_valid"] = vapiBindings_.NewIntegerType()
+	paramsTypeMap["csrId"] = vapiBindings_.NewStringType()
 	pathParams["csr_id"] = "csrId"
 	queryParams["days_valid"] = "days_valid"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -350,34 +350,34 @@ func csrsSelfsignRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func csrsSelfsign0InputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func csrsSelfsign0InputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["csr_with_days_valid"] = bindings.NewReferenceType(model.CsrWithDaysValidBindingType)
+	fields["csr_with_days_valid"] = vapiBindings_.NewReferenceType(nsxModel.CsrWithDaysValidBindingType)
 	fieldNameMap["csr_with_days_valid"] = "CsrWithDaysValid"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func csrsSelfsign0OutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.CertificateBindingType)
+func CsrsSelfsign0OutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.CertificateBindingType)
 }
 
-func csrsSelfsign0RestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func csrsSelfsign0RestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["csr_with_days_valid"] = bindings.NewReferenceType(model.CsrWithDaysValidBindingType)
+	fields["csr_with_days_valid"] = vapiBindings_.NewReferenceType(nsxModel.CsrWithDaysValidBindingType)
 	fieldNameMap["csr_with_days_valid"] = "CsrWithDaysValid"
-	paramsTypeMap["csr_with_days_valid"] = bindings.NewReferenceType(model.CsrWithDaysValidBindingType)
+	paramsTypeMap["csr_with_days_valid"] = vapiBindings_.NewReferenceType(nsxModel.CsrWithDaysValidBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

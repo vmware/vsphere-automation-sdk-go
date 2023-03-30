@@ -11,48 +11,48 @@
 package users
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func sshKeysAddsshkeyInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sshKeysAddsshkeyInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["userid"] = bindings.NewStringType()
-	fields["ssh_key_properties"] = bindings.NewReferenceType(model.SshKeyPropertiesBindingType)
+	fields["userid"] = vapiBindings_.NewStringType()
+	fields["ssh_key_properties"] = vapiBindings_.NewReferenceType(nsxModel.SshKeyPropertiesBindingType)
 	fieldNameMap["userid"] = "Userid"
 	fieldNameMap["ssh_key_properties"] = "SshKeyProperties"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sshKeysAddsshkeyOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func SshKeysAddsshkeyOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func sshKeysAddsshkeyRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sshKeysAddsshkeyRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["userid"] = bindings.NewStringType()
-	fields["ssh_key_properties"] = bindings.NewReferenceType(model.SshKeyPropertiesBindingType)
+	fields["userid"] = vapiBindings_.NewStringType()
+	fields["ssh_key_properties"] = vapiBindings_.NewReferenceType(nsxModel.SshKeyPropertiesBindingType)
 	fieldNameMap["userid"] = "Userid"
 	fieldNameMap["ssh_key_properties"] = "SshKeyProperties"
-	paramsTypeMap["ssh_key_properties"] = bindings.NewReferenceType(model.SshKeyPropertiesBindingType)
-	paramsTypeMap["userid"] = bindings.NewStringType()
-	paramsTypeMap["userid"] = bindings.NewStringType()
+	paramsTypeMap["ssh_key_properties"] = vapiBindings_.NewReferenceType(nsxModel.SshKeyPropertiesBindingType)
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
 	pathParams["userid"] = "userid"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -73,36 +73,36 @@ func sshKeysAddsshkeyRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func sshKeysListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sshKeysListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["userid"] = bindings.NewStringType()
+	fields["userid"] = vapiBindings_.NewStringType()
 	fieldNameMap["userid"] = "Userid"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sshKeysListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.SshKeyPropertiesListResultBindingType)
+func SshKeysListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.SshKeyPropertiesListResultBindingType)
 }
 
-func sshKeysListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sshKeysListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["userid"] = bindings.NewStringType()
+	fields["userid"] = vapiBindings_.NewStringType()
 	fieldNameMap["userid"] = "Userid"
-	paramsTypeMap["userid"] = bindings.NewStringType()
-	paramsTypeMap["userid"] = bindings.NewStringType()
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
 	pathParams["userid"] = "userid"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -123,41 +123,41 @@ func sshKeysListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func sshKeysRemovesshkeyInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sshKeysRemovesshkeyInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["userid"] = bindings.NewStringType()
-	fields["ssh_key_base_properties"] = bindings.NewReferenceType(model.SshKeyBasePropertiesBindingType)
+	fields["userid"] = vapiBindings_.NewStringType()
+	fields["ssh_key_base_properties"] = vapiBindings_.NewReferenceType(nsxModel.SshKeyBasePropertiesBindingType)
 	fieldNameMap["userid"] = "Userid"
 	fieldNameMap["ssh_key_base_properties"] = "SshKeyBaseProperties"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sshKeysRemovesshkeyOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func SshKeysRemovesshkeyOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func sshKeysRemovesshkeyRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sshKeysRemovesshkeyRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["userid"] = bindings.NewStringType()
-	fields["ssh_key_base_properties"] = bindings.NewReferenceType(model.SshKeyBasePropertiesBindingType)
+	fields["userid"] = vapiBindings_.NewStringType()
+	fields["ssh_key_base_properties"] = vapiBindings_.NewReferenceType(nsxModel.SshKeyBasePropertiesBindingType)
 	fieldNameMap["userid"] = "Userid"
 	fieldNameMap["ssh_key_base_properties"] = "SshKeyBaseProperties"
-	paramsTypeMap["ssh_key_base_properties"] = bindings.NewReferenceType(model.SshKeyBasePropertiesBindingType)
-	paramsTypeMap["userid"] = bindings.NewStringType()
-	paramsTypeMap["userid"] = bindings.NewStringType()
+	paramsTypeMap["ssh_key_base_properties"] = vapiBindings_.NewReferenceType(nsxModel.SshKeyBasePropertiesBindingType)
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
 	pathParams["userid"] = "userid"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

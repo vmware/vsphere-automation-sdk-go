@@ -11,49 +11,49 @@
 package central_config
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func nodeConfigProfilesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func nodeConfigProfilesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["profile_id"] = bindings.NewStringType()
-	fields["show_sensitive_data"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["profile_id"] = vapiBindings_.NewStringType()
+	fields["show_sensitive_data"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["profile_id"] = "ProfileId"
 	fieldNameMap["show_sensitive_data"] = "ShowSensitiveData"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func nodeConfigProfilesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.CentralNodeConfigProfileBindingType)
+func NodeConfigProfilesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.CentralNodeConfigProfileBindingType)
 }
 
-func nodeConfigProfilesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func nodeConfigProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["profile_id"] = bindings.NewStringType()
-	fields["show_sensitive_data"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["profile_id"] = vapiBindings_.NewStringType()
+	fields["show_sensitive_data"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["profile_id"] = "ProfileId"
 	fieldNameMap["show_sensitive_data"] = "ShowSensitiveData"
-	paramsTypeMap["profile_id"] = bindings.NewStringType()
-	paramsTypeMap["show_sensitive_data"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["profileId"] = bindings.NewStringType()
+	paramsTypeMap["profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["show_sensitive_data"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["profileId"] = vapiBindings_.NewStringType()
 	pathParams["profile_id"] = "profileId"
 	queryParams["show_sensitive_data"] = "show_sensitive_data"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -74,21 +74,21 @@ func nodeConfigProfilesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func nodeConfigProfilesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func nodeConfigProfilesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func nodeConfigProfilesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.CentralNodeConfigProfileListResultBindingType)
+func NodeConfigProfilesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.CentralNodeConfigProfileListResultBindingType)
 }
 
-func nodeConfigProfilesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func nodeConfigProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -96,7 +96,7 @@ func nodeConfigProfilesListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -117,41 +117,41 @@ func nodeConfigProfilesListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func nodeConfigProfilesUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func nodeConfigProfilesUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["node_config_profile_id"] = bindings.NewStringType()
-	fields["central_node_config_profile"] = bindings.NewReferenceType(model.CentralNodeConfigProfileBindingType)
+	fields["node_config_profile_id"] = vapiBindings_.NewStringType()
+	fields["central_node_config_profile"] = vapiBindings_.NewReferenceType(nsxModel.CentralNodeConfigProfileBindingType)
 	fieldNameMap["node_config_profile_id"] = "NodeConfigProfileId"
 	fieldNameMap["central_node_config_profile"] = "CentralNodeConfigProfile"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func nodeConfigProfilesUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.CentralNodeConfigProfileBindingType)
+func NodeConfigProfilesUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.CentralNodeConfigProfileBindingType)
 }
 
-func nodeConfigProfilesUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func nodeConfigProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["node_config_profile_id"] = bindings.NewStringType()
-	fields["central_node_config_profile"] = bindings.NewReferenceType(model.CentralNodeConfigProfileBindingType)
+	fields["node_config_profile_id"] = vapiBindings_.NewStringType()
+	fields["central_node_config_profile"] = vapiBindings_.NewReferenceType(nsxModel.CentralNodeConfigProfileBindingType)
 	fieldNameMap["node_config_profile_id"] = "NodeConfigProfileId"
 	fieldNameMap["central_node_config_profile"] = "CentralNodeConfigProfile"
-	paramsTypeMap["central_node_config_profile"] = bindings.NewReferenceType(model.CentralNodeConfigProfileBindingType)
-	paramsTypeMap["node_config_profile_id"] = bindings.NewStringType()
-	paramsTypeMap["nodeConfigProfileId"] = bindings.NewStringType()
+	paramsTypeMap["central_node_config_profile"] = vapiBindings_.NewReferenceType(nsxModel.CentralNodeConfigProfileBindingType)
+	paramsTypeMap["node_config_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["nodeConfigProfileId"] = vapiBindings_.NewStringType()
 	pathParams["node_config_profile_id"] = "nodeConfigProfileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

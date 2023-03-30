@@ -11,10 +11,10 @@
 package mp_to_policy
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
@@ -24,41 +24,41 @@ const Stats_GET_LOCATION_CURRENT = "CURRENT"
 // Possible value for ``location`` of method Stats#get.
 const Stats_GET_LOCATION_ARCHIVED = "ARCHIVED"
 
-func statsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func statsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["location"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["pre_promotion"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["location"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["pre_promotion"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["location"] = "Location"
 	fieldNameMap["pre_promotion"] = "PrePromotion"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func statsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.MigrationStatsResultBindingType)
+func StatsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.MigrationStatsResultBindingType)
 }
 
-func statsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func statsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["location"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["pre_promotion"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["location"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["pre_promotion"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["location"] = "Location"
 	fieldNameMap["pre_promotion"] = "PrePromotion"
-	paramsTypeMap["location"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["pre_promotion"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["pre_promotion"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["location"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	queryParams["pre_promotion"] = "pre_promotion"
 	queryParams["location"] = "location"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

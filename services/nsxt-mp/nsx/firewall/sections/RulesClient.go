@@ -9,50 +9,67 @@
 package sections
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RulesClient interface {
 
 	// Adds a new firewall rule in existing firewall section. Adding firewall rule to a section modifies parent section entity and simultaneous update (modify) operations on same section are not allowed to prevent overwriting stale content to firewall section. If a concurrent update is performed, HTTP response code 409 will be returned to the client operating on stale data. That client should retrieve the firewall section again and re-apply its update.
+	//
+	//  Use the following Policy API -
+	//  PUT|PATCH /policy/api/v1/infra/domains/<domain-id>/security-policies/<security-policy-id>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param sectionIdParam (required)
 	// @param firewallRuleParam (required)
 	// @param idParam Identifier of the anchor rule or section. This is a required field in case operation like 'insert_before' and 'insert_after'. (optional)
 	// @param operationParam Operation (optional, default to insert_top)
 	// @return com.vmware.nsx.model.FirewallRule
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(sectionIdParam string, firewallRuleParam model.FirewallRule, idParam *string, operationParam *string) (model.FirewallRule, error)
+	Create(sectionIdParam string, firewallRuleParam nsxModel.FirewallRule, idParam *string, operationParam *string) (nsxModel.FirewallRule, error)
 
 	// Create multiple firewall rules in existing firewall section bounded by limit of 1000 firewall rules per section. Adding multiple firewall rules in a section modifies parent section entity and simultaneous update (modify) operations on same section are not allowed to prevent overwriting stale contents to firewall section. If a concurrent update is performed, HTTP response code 409 will be returned to the client operating on stale data. That client should retrieve the firewall section again and re-apply its update.
+	//
+	//  Use the following Policy API -
+	//  PUT|PATCH /policy/api/v1/infra/domains/<domain-id>/security-policies/<security-policy-id>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param sectionIdParam (required)
 	// @param firewallRuleListParam (required)
 	// @param idParam Identifier of the anchor rule or section. This is a required field in case operation like 'insert_before' and 'insert_after'. (optional)
 	// @param operationParam Operation (optional, default to insert_top)
 	// @return com.vmware.nsx.model.FirewallRuleList
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Createmultiple(sectionIdParam string, firewallRuleListParam model.FirewallRuleList, idParam *string, operationParam *string) (model.FirewallRuleList, error)
+	Createmultiple(sectionIdParam string, firewallRuleListParam nsxModel.FirewallRuleList, idParam *string, operationParam *string) (nsxModel.FirewallRuleList, error)
 
 	// Delete existing firewall rule in a firewall section. Deleting firewall rule in a section modifies parent section and simultaneous update (modify) operations on same section are not allowed to prevent overwriting stale contents to firewall section. If a concurrent update is performed, HTTP response code 409 will be returned to the client operating on stale data. That client should retrieve the firewall section again and re-apply its update.
 	//
+	//  Use the following Policy API -
+	//  DELETE /policy/api/v1/infra/domains/<domain-id>/security-policies/<security-policy-id>/rules/<rule-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param sectionIdParam (required)
 	// @param ruleIdParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -62,17 +79,28 @@ type RulesClient interface {
 
 	// Return existing firewall rule information in a firewall section.
 	//
+	//  Use the following Policy API -
+	//  GET /policy/api/v1/infra/domains/<domain-id>/security-policies/<security-policy-id>/rules/<rule-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param sectionIdParam (required)
 	// @param ruleIdParam (required)
 	// @return com.vmware.nsx.model.FirewallRule
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(sectionIdParam string, ruleIdParam string) (model.FirewallRule, error)
+	Get(sectionIdParam string, ruleIdParam string) (nsxModel.FirewallRule, error)
 
 	// Return all firewall rule(s) information for a given firewall section.
+	//
+	//  Use the following Policy API -
+	//  GET /policy/api/v1/infra/domains/<domain-id>/security-policies/<security-policy-id>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param sectionIdParam (required)
 	// @param appliedTosParam AppliedTo's referenced by this section or section's Distributed Service Rules . (optional)
@@ -90,14 +118,20 @@ type RulesClient interface {
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param sourcesParam Sources referenced by this section's Distributed Service Rules . (optional)
 	// @return com.vmware.nsx.model.FirewallRuleListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(sectionIdParam string, appliedTosParam *string, contextProfilesParam *string, cursorParam *string, deepSearchParam *bool, destinationsParam *string, extendedSourcesParam *string, filterTypeParam *string, includedFieldsParam *string, pageSizeParam *int64, searchInvalidReferencesParam *bool, servicesParam *string, sortAscendingParam *bool, sortByParam *string, sourcesParam *string) (model.FirewallRuleListResult, error)
+	List(sectionIdParam string, appliedTosParam *string, contextProfilesParam *string, cursorParam *string, deepSearchParam *bool, destinationsParam *string, extendedSourcesParam *string, filterTypeParam *string, includedFieldsParam *string, pageSizeParam *int64, searchInvalidReferencesParam *bool, servicesParam *string, sortAscendingParam *bool, sortByParam *string, sourcesParam *string) (nsxModel.FirewallRuleListResult, error)
 
 	// Modifies existing firewall rule along with relative position among other firewall rules inside a firewall section. Revising firewall rule in a section modifies parent section entity and simultaneous update (modify) operations on same section are not allowed to prevent overwriting stale contents to firewall section. If a concurrent update is performed, HTTP response code 409 will be returned to the client operating on stale data. That client should retrieve the firewall section again and re-apply its update.
+	//
+	//  Use the following Policy API -
+	//  POST /policy/api/v1/infra/domains/<domain-id>/security-policies/<security-policy-id>/rules/<rule-id>?action=revise
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param sectionIdParam (required)
 	// @param ruleIdParam (required)
@@ -105,121 +139,130 @@ type RulesClient interface {
 	// @param idParam Identifier of the anchor rule or section. This is a required field in case operation like 'insert_before' and 'insert_after'. (optional)
 	// @param operationParam Operation (optional, default to insert_top)
 	// @return com.vmware.nsx.model.FirewallRule
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Revise(sectionIdParam string, ruleIdParam string, firewallRuleParam model.FirewallRule, idParam *string, operationParam *string) (model.FirewallRule, error)
+	Revise(sectionIdParam string, ruleIdParam string, firewallRuleParam nsxModel.FirewallRule, idParam *string, operationParam *string) (nsxModel.FirewallRule, error)
 
 	// Modifies existing firewall rule in a firewall section. Updating firewall rule in a section modifies parent section entity and simultaneous update (modify) operations on same section are not allowed to prevent overwriting stale contents to firewall section. If a concurrent update is performed, HTTP response code 409 will be returned to the client operating on stale data. That client should retrieve the firewall section again and re-apply its update.
+	//
+	//  Use the following Policy API -
+	//  PUT|PATCH /policy/api/v1/infra/domains/<domain-id>/security-policies/<security-policy-id>/rules/<rule-id>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param sectionIdParam (required)
 	// @param ruleIdParam (required)
 	// @param firewallRuleParam (required)
 	// @return com.vmware.nsx.model.FirewallRule
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(sectionIdParam string, ruleIdParam string, firewallRuleParam model.FirewallRule) (model.FirewallRule, error)
+	Update(sectionIdParam string, ruleIdParam string, firewallRuleParam nsxModel.FirewallRule) (nsxModel.FirewallRule, error)
 }
 
 type rulesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewRulesClient(connector client.Connector) *rulesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.firewall.sections.rules")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create":         core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"createmultiple": core.NewMethodIdentifier(interfaceIdentifier, "createmultiple"),
-		"delete":         core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":            core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":           core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"revise":         core.NewMethodIdentifier(interfaceIdentifier, "revise"),
-		"update":         core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewRulesClient(connector vapiProtocolClient_.Connector) *rulesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.firewall.sections.rules")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create":         vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"createmultiple": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "createmultiple"),
+		"delete":         vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":            vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"revise":         vapiCore_.NewMethodIdentifier(interfaceIdentifier, "revise"),
+		"update":         vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	rIface := rulesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &rIface
 }
 
-func (rIface *rulesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (rIface *rulesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := rIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (rIface *rulesClient) Create(sectionIdParam string, firewallRuleParam model.FirewallRule, idParam *string, operationParam *string) (model.FirewallRule, error) {
+func (rIface *rulesClient) Create(sectionIdParam string, firewallRuleParam nsxModel.FirewallRule, idParam *string, operationParam *string) (nsxModel.FirewallRule, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesCreateInputType(), typeConverter)
+	operationRestMetaData := rulesCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesCreateInputType(), typeConverter)
 	sv.AddStructField("SectionId", sectionIdParam)
 	sv.AddStructField("FirewallRule", firewallRuleParam)
 	sv.AddStructField("Id", idParam)
 	sv.AddStructField("Operation", operationParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.FirewallRule
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.FirewallRule
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rulesCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.sections.rules", "create", inputDataValue, executionContext)
-	var emptyOutput model.FirewallRule
+	var emptyOutput nsxModel.FirewallRule
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rulesCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RulesCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.FirewallRule), nil
+		return output.(nsxModel.FirewallRule), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (rIface *rulesClient) Createmultiple(sectionIdParam string, firewallRuleListParam model.FirewallRuleList, idParam *string, operationParam *string) (model.FirewallRuleList, error) {
+func (rIface *rulesClient) Createmultiple(sectionIdParam string, firewallRuleListParam nsxModel.FirewallRuleList, idParam *string, operationParam *string) (nsxModel.FirewallRuleList, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesCreatemultipleInputType(), typeConverter)
+	operationRestMetaData := rulesCreatemultipleRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesCreatemultipleInputType(), typeConverter)
 	sv.AddStructField("SectionId", sectionIdParam)
 	sv.AddStructField("FirewallRuleList", firewallRuleListParam)
 	sv.AddStructField("Id", idParam)
 	sv.AddStructField("Operation", operationParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.FirewallRuleList
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.FirewallRuleList
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rulesCreatemultipleRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.sections.rules", "createmultiple", inputDataValue, executionContext)
-	var emptyOutput model.FirewallRuleList
+	var emptyOutput nsxModel.FirewallRuleList
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rulesCreatemultipleOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RulesCreatemultipleOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.FirewallRuleList), nil
+		return output.(nsxModel.FirewallRuleList), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -228,65 +271,71 @@ func (rIface *rulesClient) Createmultiple(sectionIdParam string, firewallRuleLis
 func (rIface *rulesClient) Delete(sectionIdParam string, ruleIdParam string) error {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesDeleteInputType(), typeConverter)
+	operationRestMetaData := rulesDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesDeleteInputType(), typeConverter)
 	sv.AddStructField("SectionId", sectionIdParam)
 	sv.AddStructField("RuleId", ruleIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rulesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.sections.rules", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (rIface *rulesClient) Get(sectionIdParam string, ruleIdParam string) (model.FirewallRule, error) {
+func (rIface *rulesClient) Get(sectionIdParam string, ruleIdParam string) (nsxModel.FirewallRule, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesGetInputType(), typeConverter)
+	operationRestMetaData := rulesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesGetInputType(), typeConverter)
 	sv.AddStructField("SectionId", sectionIdParam)
 	sv.AddStructField("RuleId", ruleIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.FirewallRule
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.FirewallRule
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rulesGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.sections.rules", "get", inputDataValue, executionContext)
-	var emptyOutput model.FirewallRule
+	var emptyOutput nsxModel.FirewallRule
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rulesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RulesGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.FirewallRule), nil
+		return output.(nsxModel.FirewallRule), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (rIface *rulesClient) List(sectionIdParam string, appliedTosParam *string, contextProfilesParam *string, cursorParam *string, deepSearchParam *bool, destinationsParam *string, extendedSourcesParam *string, filterTypeParam *string, includedFieldsParam *string, pageSizeParam *int64, searchInvalidReferencesParam *bool, servicesParam *string, sortAscendingParam *bool, sortByParam *string, sourcesParam *string) (model.FirewallRuleListResult, error) {
+func (rIface *rulesClient) List(sectionIdParam string, appliedTosParam *string, contextProfilesParam *string, cursorParam *string, deepSearchParam *bool, destinationsParam *string, extendedSourcesParam *string, filterTypeParam *string, includedFieldsParam *string, pageSizeParam *int64, searchInvalidReferencesParam *bool, servicesParam *string, sortAscendingParam *bool, sortByParam *string, sourcesParam *string) (nsxModel.FirewallRuleListResult, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesListInputType(), typeConverter)
+	operationRestMetaData := rulesListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesListInputType(), typeConverter)
 	sv.AddStructField("SectionId", sectionIdParam)
 	sv.AddStructField("AppliedTos", appliedTosParam)
 	sv.AddStructField("ContextProfiles", contextProfilesParam)
@@ -304,34 +353,35 @@ func (rIface *rulesClient) List(sectionIdParam string, appliedTosParam *string, 
 	sv.AddStructField("Sources", sourcesParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.FirewallRuleListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.FirewallRuleListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rulesListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.sections.rules", "list", inputDataValue, executionContext)
-	var emptyOutput model.FirewallRuleListResult
+	var emptyOutput nsxModel.FirewallRuleListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rulesListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RulesListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.FirewallRuleListResult), nil
+		return output.(nsxModel.FirewallRuleListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (rIface *rulesClient) Revise(sectionIdParam string, ruleIdParam string, firewallRuleParam model.FirewallRule, idParam *string, operationParam *string) (model.FirewallRule, error) {
+func (rIface *rulesClient) Revise(sectionIdParam string, ruleIdParam string, firewallRuleParam nsxModel.FirewallRule, idParam *string, operationParam *string) (nsxModel.FirewallRule, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesReviseInputType(), typeConverter)
+	operationRestMetaData := rulesReviseRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesReviseInputType(), typeConverter)
 	sv.AddStructField("SectionId", sectionIdParam)
 	sv.AddStructField("RuleId", ruleIdParam)
 	sv.AddStructField("FirewallRule", firewallRuleParam)
@@ -339,58 +389,56 @@ func (rIface *rulesClient) Revise(sectionIdParam string, ruleIdParam string, fir
 	sv.AddStructField("Operation", operationParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.FirewallRule
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.FirewallRule
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rulesReviseRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.sections.rules", "revise", inputDataValue, executionContext)
-	var emptyOutput model.FirewallRule
+	var emptyOutput nsxModel.FirewallRule
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rulesReviseOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RulesReviseOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.FirewallRule), nil
+		return output.(nsxModel.FirewallRule), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (rIface *rulesClient) Update(sectionIdParam string, ruleIdParam string, firewallRuleParam model.FirewallRule) (model.FirewallRule, error) {
+func (rIface *rulesClient) Update(sectionIdParam string, ruleIdParam string, firewallRuleParam nsxModel.FirewallRule) (nsxModel.FirewallRule, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesUpdateInputType(), typeConverter)
+	operationRestMetaData := rulesUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesUpdateInputType(), typeConverter)
 	sv.AddStructField("SectionId", sectionIdParam)
 	sv.AddStructField("RuleId", ruleIdParam)
 	sv.AddStructField("FirewallRule", firewallRuleParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.FirewallRule
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.FirewallRule
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rulesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.sections.rules", "update", inputDataValue, executionContext)
-	var emptyOutput model.FirewallRule
+	var emptyOutput nsxModel.FirewallRule
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rulesUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RulesUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.FirewallRule), nil
+		return output.(nsxModel.FirewallRule), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
