@@ -1,0 +1,344 @@
+{
+    "single-component": "true",
+    "author": {
+        "name": "com.vmware.vapi.idl.model.tools.JsonIdlWriter",
+        "version": "2.100.0.21334314"
+    },
+    "exports": {
+        "name": "vmodl.examples.greeter",
+        "type": "exports",
+        "packages": [
+        ]
+    },
+    "imports": [
+        {
+            "name": "com.vmware.vapi.std",
+            "type": "imports",
+            "packages": [
+                {
+                    "name": "com.vmware.vapi.std",
+                    "structures": [
+                        {
+                            "name": "AuthenticationScheme",
+                            "constants": {
+                                "NO_AUTHENTICATION": "NO_AUTHENTICATION",
+                                "SAML_BEARER_TOKEN": "SAML_BEARER_TOKEN",
+                                "SAML_HOK_TOKEN": "SAML_HOK_TOKEN",
+                                "SESSION_ID": "SESSION_ID",
+                                "USER_PASSWORD": "USER_PASSWORD",
+                                "OAUTH_ACCESS_TOKEN": "OAUTH_ACCESS_TOKEN"
+                            }
+                        },
+                        {
+                            "name": "DynamicID"
+                        },
+                        {
+                            "name": "LocalizableMessage"
+                        },
+                        {
+                            "name": "LocalizationParam"
+                        },
+                        {
+                            "name": "NestedLocalizableMessage"
+                        }
+                    ]
+                },
+                {
+                    "name": "com.vmware.vapi.std.errors",
+                    "structures": [
+                        {
+                            "name": "ArgumentLocations"
+                        },
+                        {
+                            "name": "FileLocations"
+                        },
+                        {
+                            "name": "TransientIndication"
+                        }
+                    ],
+                    "errors": [
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "AlreadyExists"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "AlreadyInDesiredState"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "Canceled"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "ConcurrentChange"
+                        },
+                        {
+                            "parent": "Exception",
+                            "name": "Error"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "FeatureInUse"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "InternalServerError"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "InvalidArgument"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "InvalidElementConfiguration"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "InvalidElementType"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "InvalidRequest"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "NotAllowedInCurrentState"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "NotFound"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "OperationNotFound"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "ResourceBusy"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "ResourceInUse"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "ResourceInaccessible"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "ServiceUnavailable"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "TimedOut"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "UnableToAllocateResource"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "Unauthenticated"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "Unauthorized"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "UnexpectedInput"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "Unsupported"
+                        },
+                        {
+                            "parent": "com.vmware.vapi.std.errors.Error",
+                            "name": "UnverifiedPeer"
+                        }
+                    ]
+                },
+                {
+                    "name": "com.vmware.vapi.std.interposition",
+                    "structures": [
+                        {
+                            "name": "InvocationRequest"
+                        },
+                        {
+                            "name": "InvocationResult"
+                        },
+                        {
+                            "name": "SecurityPrincipal"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "privilege": {
+        "component": {
+            "name": "vmodl.examples.greeter"
+        }
+    },
+    "authentication": {
+        "component": {
+            "name": "vmodl.examples.greeter",
+            "schemes": {
+                "SchemeJwt": {
+                    "type": "SessionLess",
+                    "authenticationScheme": "com.vmware.vapi.std.security.oauth"
+                }
+            },
+            "packages": {
+                "vmodl.examples.greeter": ["SchemeJwt"]
+            },
+            "services": {
+            },
+            "operations": {
+            }
+        }
+    },
+    "routing": {
+        "component": {
+            "name": "vmodl.examples.greeter"
+        }
+    },
+    "cli": [
+        {
+            "path": "vmodl.examples",
+            "name": "greeter",
+            "type": "namespace",
+            "description": ""
+        }
+        ,
+        {
+            "path": "vmodl.examples.greeter",
+            "name": "greeter",
+            "type": "namespace",
+            "description": "The Greeter namespace provides commands to greet the client."
+        }
+        ,
+        {
+            "path": "vmodl.examples.greeter.greeter",
+            "name": "greet",
+            "type": "command",
+            "description": "Gives a greeting.",
+            "node_metadata": {
+                "formatter": "simple",
+                "service_id": "vmodl.examples.greeter.greeter",
+                "operation_id": "greet"
+            }
+        }
+    ],
+    "metamodel": {
+        "component": {
+            "name": "vmodl.examples.greeter",
+            "documentation": "",
+            "docModels": {
+            },
+            "metadata": {
+                "authn": {"value": "AuthenticationMetadata"}
+            },
+            "fingerprint": "27e984db",
+            "packages": [
+                {
+                    "name": "vmodl.examples.greeter",
+                    "documentation": "",
+                    "docModels": {
+                    },
+                    "metadata": {
+                        "Component": {"value": "true"}
+                    },
+                    "fingerprint": "c1b26c34",
+                    "enumerations": [
+                    ],
+                    "structures": [
+                    ],
+                    "services": [
+                        {
+                            "name": "vmodl.examples.greeter.greeter",
+                            "documentation": "The Greeter service provides operations to greet the client.",
+                            "docModels": {
+                                "descriptions": [
+                                    {
+                                        "docModel": [
+                                            {"text": "The "},
+                                            {"atName": {"resolved": "vmodl.examples.greeter.Greeter", "isToType": true, "text": "Greeter", "tag": "name"}},
+                                            {"text": " "},
+                                            {"atTerm": "service"},
+                                            {"text": " provides "},
+                                            {"atTerm": "operations"},
+                                            {"text": " to greet the client."}
+                                        ]
+                                    }
+                                ]
+                            },
+                            "metadata": {
+                            },
+                            "fingerprint": "614fb3c9",
+                            "constants": [
+                            ],
+                            "enumerations": [
+                            ],
+                            "structures": [
+                            ],
+                            "operations": [
+                                {
+                                    "name": "greet",
+                                    "documentation": "Gives a greeting.",
+                                    "docModels": {
+                                        "descriptions": [
+                                            {
+                                                "docModel": [
+                                                    {"text": "Gives a greeting."}
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "metadata": {
+                                    },
+                                    "fingerprint": "a17b9986",
+                                    "params": [
+                                    ],
+                                    "errors": [
+                                        {
+                                            "user_defined_type_name": "com.vmware.vapi.std.errors.unauthenticated",
+                                            "name": "unauthenticated",
+                                            "documentation": "if the caller is not authenticated.",
+                                            "docModels": {
+                                                "descriptions": [
+                                                    {
+                                                        "docModel": [
+                                                            {"text": "if the caller is not authenticated."}
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "type": {"category": "user_defined", "user_defined_type": "Structure", "user_defined_type_name": "com.vmware.vapi.std.errors.unauthenticated"}
+                                        }
+                                    ],
+                                    "result": {
+                                        "documentation": "a string with the greeting.",
+                                        "docModels": {
+                                            "descriptions": [
+                                                {
+                                                    "docModel": [
+                                                        {"text": "a string with the greeting."}
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        "metadata": {
+                                        },
+                                        "type": {"category": "primitive", "primitive_type": "string"}
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

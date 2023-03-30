@@ -4,6 +4,7 @@
 package rest
 
 import (
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
 	"net/http"
 	"net/url"
 	"strings"
@@ -42,6 +43,7 @@ func returnBadRequest(errorStr string, rw http.ResponseWriter, dataErr []error) 
 	if err != nil {
 		log.Errorf("Error while setting error response body: %s", err)
 	}
+	rw.Header().Set(lib.HTTP_CONTENT_TYPE_HEADER, lib.JSON_CONTENT_TYPE)
 	rw.WriteHeader(status)
 	rw.Write([]byte(responseBody))
 }

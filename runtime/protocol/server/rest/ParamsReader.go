@@ -237,6 +237,11 @@ func QueryDataValueMap(request *http.Request,
 	queryParamMap := GetQuery(request)
 	requestKeys := []string{}
 	for k := range queryParamMap {
+		// task query param is vAPI preserved for task related operations
+		// should not be possible to be @Query annotated in VMODL
+		if k == lib.TaskRESTQueryKey {
+			continue
+		}
 		requestKeys = append(requestKeys, k)
 	}
 

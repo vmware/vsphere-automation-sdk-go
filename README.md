@@ -33,7 +33,7 @@ This document will walk you through setting up the SDK to start writing your Sam
 
 #### Pre-Requisites
 
-- golang 1.13
+- golang 1.17
 - Recommneded use of [Go Modules](https://blog.golang.org/using-go-modules) for development,
   as it will be very convenient and easy to upgrade to major version releases.
 
@@ -62,7 +62,7 @@ Executing this command will create go.mod file in current directory, as shown be
 ```golang
 module sample
 
-go 1.13
+go 1.17
 
 ```
 
@@ -147,6 +147,8 @@ Board members are volunteers from the SDK community and VMware staff members.
 Members:
 
 - Deyan Popov (VMware)
+- Ankit Agrawal (VMware)
+- Kunal Singh (VMware)
 
 ## VMware Resources
 
