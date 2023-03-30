@@ -9,15 +9,14 @@
 package account_link
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ConnectedAccountsClient interface {
 
@@ -27,106 +26,110 @@ type ConnectedAccountsClient interface {
 	// @param linkedAccountPathIdParam The linked connected account identifier (required)
 	// @param forceEvenWhenSddcPresentParam When true, forcibly removes a connected account even when SDDC's are still linked to it. (optional)
 	// @return com.vmware.vmc.model.AwsCustomerConnectedAccount
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  An invalid connected account ID was specified, or the connection still has SDDCs active on it.
 	// @throws Unauthorized  Forbidden
-	Delete(orgParam string, linkedAccountPathIdParam string, forceEvenWhenSddcPresentParam *bool) (model.AwsCustomerConnectedAccount, error)
+	Delete(orgParam string, linkedAccountPathIdParam string, forceEvenWhenSddcPresentParam *bool) (vmcModel.AwsCustomerConnectedAccount, error)
 
 	// Get a list of connected accounts
 	//
 	// @param orgParam Organization identifier (required)
 	// @param providerParam The cloud provider of the SDDC (AWS or ZeroCloud). Default value is AWS. (optional)
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws Unauthorized  Forbidden
-	Get(orgParam string, providerParam *string) ([]model.AwsCustomerConnectedAccount, error)
+	Get(orgParam string, providerParam *string) ([]vmcModel.AwsCustomerConnectedAccount, error)
 }
 
 type connectedAccountsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewConnectedAccountsClient(connector client.Connector) *connectedAccountsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vmc.orgs.account_link.connected_accounts")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
+func NewConnectedAccountsClient(connector vapiProtocolClient_.Connector) *connectedAccountsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vmc.orgs.account_link.connected_accounts")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	cIface := connectedAccountsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &cIface
 }
 
-func (cIface *connectedAccountsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (cIface *connectedAccountsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := cIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (cIface *connectedAccountsClient) Delete(orgParam string, linkedAccountPathIdParam string, forceEvenWhenSddcPresentParam *bool) (model.AwsCustomerConnectedAccount, error) {
+func (cIface *connectedAccountsClient) Delete(orgParam string, linkedAccountPathIdParam string, forceEvenWhenSddcPresentParam *bool) (vmcModel.AwsCustomerConnectedAccount, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(connectedAccountsDeleteInputType(), typeConverter)
+	operationRestMetaData := connectedAccountsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(connectedAccountsDeleteInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("LinkedAccountPathId", linkedAccountPathIdParam)
 	sv.AddStructField("ForceEvenWhenSddcPresent", forceEvenWhenSddcPresentParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.AwsCustomerConnectedAccount
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput vmcModel.AwsCustomerConnectedAccount
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := connectedAccountsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.vmc.orgs.account_link.connected_accounts", "delete", inputDataValue, executionContext)
-	var emptyOutput model.AwsCustomerConnectedAccount
+	var emptyOutput vmcModel.AwsCustomerConnectedAccount
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), connectedAccountsDeleteOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ConnectedAccountsDeleteOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.AwsCustomerConnectedAccount), nil
+		return output.(vmcModel.AwsCustomerConnectedAccount), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (cIface *connectedAccountsClient) Get(orgParam string, providerParam *string) ([]model.AwsCustomerConnectedAccount, error) {
+func (cIface *connectedAccountsClient) Get(orgParam string, providerParam *string) ([]vmcModel.AwsCustomerConnectedAccount, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(connectedAccountsGetInputType(), typeConverter)
+	operationRestMetaData := connectedAccountsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(connectedAccountsGetInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Provider", providerParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput []model.AwsCustomerConnectedAccount
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput []vmcModel.AwsCustomerConnectedAccount
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := connectedAccountsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.vmc.orgs.account_link.connected_accounts", "get", inputDataValue, executionContext)
-	var emptyOutput []model.AwsCustomerConnectedAccount
+	var emptyOutput []vmcModel.AwsCustomerConnectedAccount
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), connectedAccountsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ConnectedAccountsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.([]model.AwsCustomerConnectedAccount), nil
+		return output.([]vmcModel.AwsCustomerConnectedAccount), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

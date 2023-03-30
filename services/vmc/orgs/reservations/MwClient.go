@@ -9,126 +9,133 @@
 package reservations
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type MwClient interface {
 
 	// get the maintenance window for this SDDC
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param orgParam Organization identifier (required)
 	// @param reservationParam Reservation Identifier (required)
 	// @return com.vmware.vmc.model.MaintenanceWindowGet
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws Unauthorized  Access not allowed to the operation for the current user
-	Get(orgParam string, reservationParam string) (model.MaintenanceWindowGet, error)
+	Get(orgParam string, reservationParam string) (vmcModel.MaintenanceWindowGet, error)
 
 	// update the maintenance window for this SDDC
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param orgParam Organization identifier (required)
 	// @param reservationParam Reservation Identifier (required)
 	// @param windowParam Maintenance Window (required)
 	// @return com.vmware.vmc.model.MaintenanceWindow
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws ConcurrentChange  Conflict with exiting reservation
 	// @throws InvalidRequest  The reservation is not in a state that's valid for updates
 	// @throws Unauthorized  Access not allowed to the operation for the current user
-	Put(orgParam string, reservationParam string, windowParam model.MaintenanceWindow) (model.MaintenanceWindow, error)
+	Put(orgParam string, reservationParam string, windowParam vmcModel.MaintenanceWindow) (vmcModel.MaintenanceWindow, error)
 }
 
 type mwClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewMwClient(connector client.Connector) *mwClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vmc.orgs.reservations.mw")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get": core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"put": core.NewMethodIdentifier(interfaceIdentifier, "put"),
+func NewMwClient(connector vapiProtocolClient_.Connector) *mwClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vmc.orgs.reservations.mw")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"put": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "put"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	mIface := mwClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &mIface
 }
 
-func (mIface *mwClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (mIface *mwClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := mIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (mIface *mwClient) Get(orgParam string, reservationParam string) (model.MaintenanceWindowGet, error) {
+func (mIface *mwClient) Get(orgParam string, reservationParam string) (vmcModel.MaintenanceWindowGet, error) {
 	typeConverter := mIface.connector.TypeConverter()
 	executionContext := mIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(mwGetInputType(), typeConverter)
+	operationRestMetaData := mwGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(mwGetInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Reservation", reservationParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.MaintenanceWindowGet
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput vmcModel.MaintenanceWindowGet
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := mwGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	mIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := mIface.connector.GetApiProvider().Invoke("com.vmware.vmc.orgs.reservations.mw", "get", inputDataValue, executionContext)
-	var emptyOutput model.MaintenanceWindowGet
+	var emptyOutput vmcModel.MaintenanceWindowGet
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), mwGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), MwGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.MaintenanceWindowGet), nil
+		return output.(vmcModel.MaintenanceWindowGet), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), mIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (mIface *mwClient) Put(orgParam string, reservationParam string, windowParam model.MaintenanceWindow) (model.MaintenanceWindow, error) {
+func (mIface *mwClient) Put(orgParam string, reservationParam string, windowParam vmcModel.MaintenanceWindow) (vmcModel.MaintenanceWindow, error) {
 	typeConverter := mIface.connector.TypeConverter()
 	executionContext := mIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(mwPutInputType(), typeConverter)
+	operationRestMetaData := mwPutRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(mwPutInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Reservation", reservationParam)
 	sv.AddStructField("Window", windowParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.MaintenanceWindow
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput vmcModel.MaintenanceWindow
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := mwPutRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	mIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := mIface.connector.GetApiProvider().Invoke("com.vmware.vmc.orgs.reservations.mw", "put", inputDataValue, executionContext)
-	var emptyOutput model.MaintenanceWindow
+	var emptyOutput vmcModel.MaintenanceWindow
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), mwPutOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), MwPutOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.MaintenanceWindow), nil
+		return output.(vmcModel.MaintenanceWindow), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), mIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

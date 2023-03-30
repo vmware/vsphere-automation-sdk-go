@@ -11,62 +11,62 @@
 package msft_licensing
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 	"reflect"
 )
 
-func publishPostInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func publishPostInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["cluster"] = bindings.NewStringType()
-	fields["config_change"] = bindings.NewReferenceType(model.MsftLicensingConfigBindingType)
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["cluster"] = vapiBindings_.NewStringType()
+	fields["config_change"] = vapiBindings_.NewReferenceType(vmcModel.MsftLicensingConfigBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["cluster"] = "Cluster"
 	fieldNameMap["config_change"] = "ConfigChange"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func publishPostOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TaskBindingType)
+func PublishPostOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(vmcModel.TaskBindingType)
 }
 
-func publishPostRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func publishPostRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["cluster"] = bindings.NewStringType()
-	fields["config_change"] = bindings.NewReferenceType(model.MsftLicensingConfigBindingType)
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["cluster"] = vapiBindings_.NewStringType()
+	fields["config_change"] = vapiBindings_.NewReferenceType(vmcModel.MsftLicensingConfigBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["cluster"] = "Cluster"
 	fieldNameMap["config_change"] = "ConfigChange"
-	paramsTypeMap["cluster"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["config_change"] = bindings.NewReferenceType(model.MsftLicensingConfigBindingType)
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["cluster"] = bindings.NewStringType()
+	paramsTypeMap["cluster"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["config_change"] = vapiBindings_.NewReferenceType(vmcModel.MsftLicensingConfigBindingType)
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["cluster"] = vapiBindings_.NewStringType()
 	pathParams["cluster"] = "cluster"
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

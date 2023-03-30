@@ -11,10 +11,10 @@
 package management_vms
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 	"reflect"
 )
 
@@ -24,50 +24,50 @@ const Dns_UPDATE_IP_TYPE_PUBLIC = "public"
 // Possible value for ``ipType`` of method Dns#update.
 const Dns_UPDATE_IP_TYPE_PRIVATE = "private"
 
-func dnsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func dnsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["management_vm_id"] = bindings.NewStringType()
-	fields["ip_type"] = bindings.NewStringType()
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["management_vm_id"] = vapiBindings_.NewStringType()
+	fields["ip_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["management_vm_id"] = "ManagementVmId"
 	fieldNameMap["ip_type"] = "IpType"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func dnsUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TaskBindingType)
+func DnsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(vmcModel.TaskBindingType)
 }
 
-func dnsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func dnsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc"] = bindings.NewStringType()
-	fields["management_vm_id"] = bindings.NewStringType()
-	fields["ip_type"] = bindings.NewStringType()
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["management_vm_id"] = vapiBindings_.NewStringType()
+	fields["ip_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
 	fieldNameMap["management_vm_id"] = "ManagementVmId"
 	fieldNameMap["ip_type"] = "IpType"
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["management_vm_id"] = bindings.NewStringType()
-	paramsTypeMap["ip_type"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc"] = bindings.NewStringType()
-	paramsTypeMap["managementVmId"] = bindings.NewStringType()
-	paramsTypeMap["ipType"] = bindings.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["management_vm_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ip_type"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["managementVmId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipType"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
 	pathParams["management_vm_id"] = "managementVmId"
@@ -76,7 +76,7 @@ func dnsUpdateRestMetadata() protocol.OperationRestMetadata {
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

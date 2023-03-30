@@ -11,49 +11,49 @@
 package tbrs
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 	"reflect"
 )
 
-func supportWindowGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func supportWindowGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["minimum_seats_available"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["created_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["minimum_seats_available"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["created_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["minimum_seats_available"] = "MinimumSeatsAvailable"
 	fieldNameMap["created_by"] = "CreatedBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func supportWindowGetOutputType() bindings.BindingType {
-	return bindings.NewListType(bindings.NewReferenceType(model.SupportWindowBindingType), reflect.TypeOf([]model.SupportWindow{}))
+func SupportWindowGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewListType(vapiBindings_.NewReferenceType(vmcModel.SupportWindowBindingType), reflect.TypeOf([]vmcModel.SupportWindow{}))
 }
 
-func supportWindowGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func supportWindowGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["minimum_seats_available"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["created_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["minimum_seats_available"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["created_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["minimum_seats_available"] = "MinimumSeatsAvailable"
 	fieldNameMap["created_by"] = "CreatedBy"
-	paramsTypeMap["created_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["minimum_seats_available"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["org"] = bindings.NewStringType()
+	paramsTypeMap["minimum_seats_available"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["created_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	queryParams["created_by"] = "createdBy"
 	queryParams["minimum_seats_available"] = "minimumSeatsAvailable"
@@ -61,7 +61,7 @@ func supportWindowGetRestMetadata() protocol.OperationRestMetadata {
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -82,50 +82,50 @@ func supportWindowGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func supportWindowPutInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func supportWindowPutInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["id"] = bindings.NewStringType()
-	fields["sddc_id"] = bindings.NewReferenceType(model.SddcIdBindingType)
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["id"] = vapiBindings_.NewStringType()
+	fields["sddc_id"] = vapiBindings_.NewReferenceType(vmcModel.SddcIdBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["id"] = "Id"
 	fieldNameMap["sddc_id"] = "SddcId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func supportWindowPutOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.SupportWindowIdBindingType)
+func SupportWindowPutOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(vmcModel.SupportWindowIdBindingType)
 }
 
-func supportWindowPutRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func supportWindowPutRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["id"] = bindings.NewStringType()
-	fields["sddc_id"] = bindings.NewReferenceType(model.SddcIdBindingType)
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["id"] = vapiBindings_.NewStringType()
+	fields["sddc_id"] = vapiBindings_.NewReferenceType(vmcModel.SddcIdBindingType)
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["id"] = "Id"
 	fieldNameMap["sddc_id"] = "SddcId"
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["id"] = bindings.NewStringType()
-	paramsTypeMap["sddc_id"] = bindings.NewReferenceType(model.SddcIdBindingType)
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["id"] = bindings.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc_id"] = vapiBindings_.NewReferenceType(vmcModel.SddcIdBindingType)
+	paramsTypeMap["id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["id"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	pathParams["id"] = "id"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

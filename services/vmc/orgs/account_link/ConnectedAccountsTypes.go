@@ -11,50 +11,50 @@
 package account_link
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 	"reflect"
 )
 
-func connectedAccountsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func connectedAccountsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["linked_account_path_id"] = bindings.NewStringType()
-	fields["force_even_when_sddc_present"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["linked_account_path_id"] = vapiBindings_.NewStringType()
+	fields["force_even_when_sddc_present"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["linked_account_path_id"] = "LinkedAccountPathId"
 	fieldNameMap["force_even_when_sddc_present"] = "ForceEvenWhenSddcPresent"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func connectedAccountsDeleteOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.AwsCustomerConnectedAccountBindingType)
+func ConnectedAccountsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(vmcModel.AwsCustomerConnectedAccountBindingType)
 }
 
-func connectedAccountsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func connectedAccountsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["linked_account_path_id"] = bindings.NewStringType()
-	fields["force_even_when_sddc_present"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["linked_account_path_id"] = vapiBindings_.NewStringType()
+	fields["force_even_when_sddc_present"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["linked_account_path_id"] = "LinkedAccountPathId"
 	fieldNameMap["force_even_when_sddc_present"] = "ForceEvenWhenSddcPresent"
-	paramsTypeMap["force_even_when_sddc_present"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["linked_account_path_id"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["linkedAccountPathId"] = bindings.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["force_even_when_sddc_present"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["linked_account_path_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["linkedAccountPathId"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	pathParams["linked_account_path_id"] = "linkedAccountPathId"
 	queryParams["force_even_when_sddc_present"] = "forceEvenWhenSddcPresent"
@@ -62,7 +62,7 @@ func connectedAccountsDeleteRestMetadata() protocol.OperationRestMetadata {
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -83,44 +83,44 @@ func connectedAccountsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
-func connectedAccountsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func connectedAccountsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["provider"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["provider"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["provider"] = "Provider"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func connectedAccountsGetOutputType() bindings.BindingType {
-	return bindings.NewListType(bindings.NewReferenceType(model.AwsCustomerConnectedAccountBindingType), reflect.TypeOf([]model.AwsCustomerConnectedAccount{}))
+func ConnectedAccountsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewListType(vapiBindings_.NewReferenceType(vmcModel.AwsCustomerConnectedAccountBindingType), reflect.TypeOf([]vmcModel.AwsCustomerConnectedAccount{}))
 }
 
-func connectedAccountsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func connectedAccountsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["provider"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["provider"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["provider"] = "Provider"
-	paramsTypeMap["provider"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["org"] = bindings.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["provider"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	queryParams["provider"] = "provider"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

@@ -9,15 +9,14 @@
 package tbrs
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ReservationClient interface {
 
@@ -25,64 +24,66 @@ type ReservationClient interface {
 	//
 	// @param orgParam Organization identifier (required)
 	// @param sddcStateParam SDDCs and/or states to query (optional)
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Bad Call
 	// @throws Unauthorized  Forbidden
-	Post(orgParam string, sddcStateParam *model.SddcStateRequest) (map[string][]model.ReservationWindow, error)
+	Post(orgParam string, sddcStateParam *vmcModel.SddcStateRequest) (map[string][]vmcModel.ReservationWindow, error)
 }
 
 type reservationClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewReservationClient(connector client.Connector) *reservationClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vmc.orgs.tbrs.reservation")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"post": core.NewMethodIdentifier(interfaceIdentifier, "post"),
+func NewReservationClient(connector vapiProtocolClient_.Connector) *reservationClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vmc.orgs.tbrs.reservation")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"post": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "post"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	rIface := reservationClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &rIface
 }
 
-func (rIface *reservationClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (rIface *reservationClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := rIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (rIface *reservationClient) Post(orgParam string, sddcStateParam *model.SddcStateRequest) (map[string][]model.ReservationWindow, error) {
+func (rIface *reservationClient) Post(orgParam string, sddcStateParam *vmcModel.SddcStateRequest) (map[string][]vmcModel.ReservationWindow, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(reservationPostInputType(), typeConverter)
+	operationRestMetaData := reservationPostRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(reservationPostInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("SddcState", sddcStateParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput map[string][]model.ReservationWindow
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput map[string][]vmcModel.ReservationWindow
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := reservationPostRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.vmc.orgs.tbrs.reservation", "post", inputDataValue, executionContext)
-	var emptyOutput map[string][]model.ReservationWindow
+	var emptyOutput map[string][]vmcModel.ReservationWindow
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), reservationPostOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ReservationPostOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(map[string][]model.ReservationWindow), nil
+		return output.(map[string][]vmcModel.ReservationWindow), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

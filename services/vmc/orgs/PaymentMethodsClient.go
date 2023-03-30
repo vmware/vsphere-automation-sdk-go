@@ -9,15 +9,14 @@
 package orgs
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type PaymentMethodsClient interface {
 
@@ -25,64 +24,66 @@ type PaymentMethodsClient interface {
 	//
 	// @param orgParam Organization identifier (required)
 	// @param defaultFlagParam When true, will only return default payment methods. (optional, default to false)
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws Unauthorized  Forbidden
 	// @throws NotFound  Organization doesn't exist
-	GetOrgPaymentMethods(orgParam string, defaultFlagParam *bool) ([]model.PaymentMethodInfo, error)
+	GetOrgPaymentMethods(orgParam string, defaultFlagParam *bool) ([]vmcModel.PaymentMethodInfo, error)
 }
 
 type paymentMethodsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewPaymentMethodsClient(connector client.Connector) *paymentMethodsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vmc.orgs.payment_methods")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get_org_payment_methods": core.NewMethodIdentifier(interfaceIdentifier, "get_org_payment_methods"),
+func NewPaymentMethodsClient(connector vapiProtocolClient_.Connector) *paymentMethodsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vmc.orgs.payment_methods")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get_org_payment_methods": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get_org_payment_methods"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	pIface := paymentMethodsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &pIface
 }
 
-func (pIface *paymentMethodsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (pIface *paymentMethodsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := pIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (pIface *paymentMethodsClient) GetOrgPaymentMethods(orgParam string, defaultFlagParam *bool) ([]model.PaymentMethodInfo, error) {
+func (pIface *paymentMethodsClient) GetOrgPaymentMethods(orgParam string, defaultFlagParam *bool) ([]vmcModel.PaymentMethodInfo, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(paymentMethodsGetOrgPaymentMethodsInputType(), typeConverter)
+	operationRestMetaData := paymentMethodsGetOrgPaymentMethodsRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(paymentMethodsGetOrgPaymentMethodsInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("DefaultFlag", defaultFlagParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput []model.PaymentMethodInfo
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput []vmcModel.PaymentMethodInfo
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := paymentMethodsGetOrgPaymentMethodsRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.vmc.orgs.payment_methods", "get_org_payment_methods", inputDataValue, executionContext)
-	var emptyOutput []model.PaymentMethodInfo
+	var emptyOutput []vmcModel.PaymentMethodInfo
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), paymentMethodsGetOrgPaymentMethodsOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PaymentMethodsGetOrgPaymentMethodsOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.([]model.PaymentMethodInfo), nil
+		return output.([]vmcModel.PaymentMethodInfo), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

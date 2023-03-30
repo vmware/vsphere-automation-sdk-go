@@ -11,50 +11,50 @@
 package tbrs
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 	"reflect"
 )
 
-func reservationPostInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func reservationPostInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org"] = bindings.NewStringType()
-	fields["sddc_state"] = bindings.NewOptionalType(bindings.NewReferenceType(model.SddcStateRequestBindingType))
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vmcModel.SddcStateRequestBindingType))
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc_state"] = "SddcState"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func reservationPostOutputType() bindings.BindingType {
-	return bindings.NewMapType(bindings.NewStringType(), bindings.NewListType(bindings.NewReferenceType(model.ReservationWindowBindingType), reflect.TypeOf([]model.ReservationWindow{})), reflect.TypeOf(map[string][]model.ReservationWindow{}))
+func ReservationPostOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewMapType(vapiBindings_.NewStringType(), vapiBindings_.NewListType(vapiBindings_.NewReferenceType(vmcModel.ReservationWindowBindingType), reflect.TypeOf([]vmcModel.ReservationWindow{})), reflect.TypeOf(map[string][]vmcModel.ReservationWindow{}))
 }
 
-func reservationPostRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func reservationPostRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org"] = bindings.NewStringType()
-	fields["sddc_state"] = bindings.NewOptionalType(bindings.NewReferenceType(model.SddcStateRequestBindingType))
+	fields["org"] = vapiBindings_.NewStringType()
+	fields["sddc_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vmcModel.SddcStateRequestBindingType))
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc_state"] = "SddcState"
-	paramsTypeMap["org"] = bindings.NewStringType()
-	paramsTypeMap["sddc_state"] = bindings.NewOptionalType(bindings.NewReferenceType(model.SddcStateRequestBindingType))
-	paramsTypeMap["org"] = bindings.NewStringType()
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sddc_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vmcModel.SddcStateRequestBindingType))
+	paramsTypeMap["org"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
