@@ -9,15 +9,14 @@
 package clusters
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
 	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/autoscaler/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RemediationPolicyClient interface {
 
@@ -27,6 +26,7 @@ type RemediationPolicyClient interface {
 	// @param sddcParam Sddc identifier (required)
 	// @param clusterParam cluster identifier (required)
 	// @return com.vmware.model.RemediationClusterInfo
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Invalid action or bad argument
 	// @throws Unauthorized  Forbidden
@@ -39,6 +39,7 @@ type RemediationPolicyClient interface {
 	// @param clusterParam cluster identifier (required)
 	// @param remediationPolicyPatchParam Remediation policy patch (required)
 	// @return com.vmware.model.Task
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Invalid action or bad argument
 	// @throws Unauthorized  Forbidden
@@ -46,59 +47,60 @@ type RemediationPolicyClient interface {
 }
 
 type remediationPolicyClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewRemediationPolicyClient(connector client.Connector) *remediationPolicyClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.api.orgs.sddcs.clusters.remediation_policy")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get":   core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"patch": core.NewMethodIdentifier(interfaceIdentifier, "patch"),
+func NewRemediationPolicyClient(connector vapiProtocolClient_.Connector) *remediationPolicyClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.api.orgs.sddcs.clusters.remediation_policy")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	rIface := remediationPolicyClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &rIface
 }
 
-func (rIface *remediationPolicyClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (rIface *remediationPolicyClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := rIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
 func (rIface *remediationPolicyClient) Get(orgParam string, sddcParam string, clusterParam string) (model.RemediationClusterInfo, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(remediationPolicyGetInputType(), typeConverter)
+	operationRestMetaData := remediationPolicyGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(remediationPolicyGetInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
 	sv.AddStructField("Cluster", clusterParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.RemediationClusterInfo
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := remediationPolicyGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.api.orgs.sddcs.clusters.remediation_policy", "get", inputDataValue, executionContext)
 	var emptyOutput model.RemediationClusterInfo
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), remediationPolicyGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RemediationPolicyGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.RemediationClusterInfo), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -107,7 +109,11 @@ func (rIface *remediationPolicyClient) Get(orgParam string, sddcParam string, cl
 func (rIface *remediationPolicyClient) Patch(orgParam string, sddcParam string, clusterParam string, remediationPolicyPatchParam model.RemediationPolicyPatch) (model.Task, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(remediationPolicyPatchInputType(), typeConverter)
+	operationRestMetaData := remediationPolicyPatchRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(remediationPolicyPatchInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
 	sv.AddStructField("Cluster", clusterParam)
@@ -115,24 +121,21 @@ func (rIface *remediationPolicyClient) Patch(orgParam string, sddcParam string, 
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.Task
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := remediationPolicyPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.api.orgs.sddcs.clusters.remediation_policy", "patch", inputDataValue, executionContext)
 	var emptyOutput model.Task
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), remediationPolicyPatchOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RemediationPolicyPatchOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.Task), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

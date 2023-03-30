@@ -9,15 +9,14 @@
 package clusters
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
 	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/autoscaler/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type EdrsProvisioningSpecClient interface {
 
@@ -27,6 +26,7 @@ type EdrsProvisioningSpecClient interface {
 	// @param sddcParam Sddc identifier (required)
 	// @param clusterParam cluster identifier (required)
 	// @return com.vmware.model.EdrsProvisioningSpec
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Invalid action or bad argument
 	// @throws Unauthorized  Forbidden
@@ -34,58 +34,59 @@ type EdrsProvisioningSpecClient interface {
 }
 
 type edrsProvisioningSpecClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewEdrsProvisioningSpecClient(connector client.Connector) *edrsProvisioningSpecClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.api.orgs.sddcs.clusters.edrs_provisioning_spec")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get": core.NewMethodIdentifier(interfaceIdentifier, "get"),
+func NewEdrsProvisioningSpecClient(connector vapiProtocolClient_.Connector) *edrsProvisioningSpecClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.api.orgs.sddcs.clusters.edrs_provisioning_spec")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	eIface := edrsProvisioningSpecClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &eIface
 }
 
-func (eIface *edrsProvisioningSpecClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (eIface *edrsProvisioningSpecClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := eIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
 func (eIface *edrsProvisioningSpecClient) Get(orgParam string, sddcParam string, clusterParam string) (model.EdrsProvisioningSpec, error) {
 	typeConverter := eIface.connector.TypeConverter()
 	executionContext := eIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(edrsProvisioningSpecGetInputType(), typeConverter)
+	operationRestMetaData := edrsProvisioningSpecGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(edrsProvisioningSpecGetInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
 	sv.AddStructField("Cluster", clusterParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput model.EdrsProvisioningSpec
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := edrsProvisioningSpecGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	eIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := eIface.connector.GetApiProvider().Invoke("com.vmware.api.orgs.sddcs.clusters.edrs_provisioning_spec", "get", inputDataValue, executionContext)
 	var emptyOutput model.EdrsProvisioningSpec
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), edrsProvisioningSpecGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), EdrsProvisioningSpecGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(model.EdrsProvisioningSpec), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), eIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
