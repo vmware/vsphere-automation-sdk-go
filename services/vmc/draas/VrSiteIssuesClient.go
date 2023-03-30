@@ -9,15 +9,14 @@
 package draas
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/draas/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vmcDraasModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/draas/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VrSiteIssuesClient interface {
 
@@ -25,64 +24,66 @@ type VrSiteIssuesClient interface {
 	//
 	// @param orgParam Organization identifier (required)
 	// @param sddcParam sddc identifier (required)
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws Unauthorized  Forbidden
 	// @throws NotFound  Not found
-	Get(orgParam string, sddcParam string) ([]model.HmsSiteIssueInfo, error)
+	Get(orgParam string, sddcParam string) ([]vmcDraasModel.HmsSiteIssueInfo, error)
 }
 
 type vrSiteIssuesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewVrSiteIssuesClient(connector client.Connector) *vrSiteIssuesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vmc.draas.vr_site_issues")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get": core.NewMethodIdentifier(interfaceIdentifier, "get"),
+func NewVrSiteIssuesClient(connector vapiProtocolClient_.Connector) *vrSiteIssuesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vmc.draas.vr_site_issues")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	vIface := vrSiteIssuesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &vIface
 }
 
-func (vIface *vrSiteIssuesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (vIface *vrSiteIssuesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := vIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (vIface *vrSiteIssuesClient) Get(orgParam string, sddcParam string) ([]model.HmsSiteIssueInfo, error) {
+func (vIface *vrSiteIssuesClient) Get(orgParam string, sddcParam string) ([]vmcDraasModel.HmsSiteIssueInfo, error) {
 	typeConverter := vIface.connector.TypeConverter()
 	executionContext := vIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(vrSiteIssuesGetInputType(), typeConverter)
+	operationRestMetaData := vrSiteIssuesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(vrSiteIssuesGetInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput []model.HmsSiteIssueInfo
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput []vmcDraasModel.HmsSiteIssueInfo
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := vrSiteIssuesGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	vIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := vIface.connector.GetApiProvider().Invoke("com.vmware.vmc.draas.vr_site_issues", "get", inputDataValue, executionContext)
-	var emptyOutput []model.HmsSiteIssueInfo
+	var emptyOutput []vmcDraasModel.HmsSiteIssueInfo
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), vrSiteIssuesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), VrSiteIssuesGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.([]model.HmsSiteIssueInfo), nil
+		return output.([]vmcDraasModel.HmsSiteIssueInfo), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), vIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

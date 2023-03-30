@@ -9,15 +9,14 @@
 package draas
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/draas/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vmcDraasModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/draas/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ReplicaDiskCollectionsClient interface {
 
@@ -26,65 +25,67 @@ type ReplicaDiskCollectionsClient interface {
 	// @param orgParam Organization identifier (required)
 	// @param sddcParam sddc identifier (required)
 	// @param datastoreMoIdParam Represents the datastore moref id to search. (optional)
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws Unauthorized  Forbidden
 	// @throws NotFound  Not found
-	Get(orgParam string, sddcParam string, datastoreMoIdParam *string) ([]model.ReplicaDiskCollection, error)
+	Get(orgParam string, sddcParam string, datastoreMoIdParam *string) ([]vmcDraasModel.ReplicaDiskCollection, error)
 }
 
 type replicaDiskCollectionsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewReplicaDiskCollectionsClient(connector client.Connector) *replicaDiskCollectionsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vmc.draas.replica_disk_collections")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get": core.NewMethodIdentifier(interfaceIdentifier, "get"),
+func NewReplicaDiskCollectionsClient(connector vapiProtocolClient_.Connector) *replicaDiskCollectionsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vmc.draas.replica_disk_collections")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	rIface := replicaDiskCollectionsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &rIface
 }
 
-func (rIface *replicaDiskCollectionsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (rIface *replicaDiskCollectionsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := rIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (rIface *replicaDiskCollectionsClient) Get(orgParam string, sddcParam string, datastoreMoIdParam *string) ([]model.ReplicaDiskCollection, error) {
+func (rIface *replicaDiskCollectionsClient) Get(orgParam string, sddcParam string, datastoreMoIdParam *string) ([]vmcDraasModel.ReplicaDiskCollection, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(replicaDiskCollectionsGetInputType(), typeConverter)
+	operationRestMetaData := replicaDiskCollectionsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(replicaDiskCollectionsGetInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
 	sv.AddStructField("DatastoreMoId", datastoreMoIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput []model.ReplicaDiskCollection
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput []vmcDraasModel.ReplicaDiskCollection
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := replicaDiskCollectionsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.vmc.draas.replica_disk_collections", "get", inputDataValue, executionContext)
-	var emptyOutput []model.ReplicaDiskCollection
+	var emptyOutput []vmcDraasModel.ReplicaDiskCollection
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), replicaDiskCollectionsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ReplicaDiskCollectionsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.([]model.ReplicaDiskCollection), nil
+		return output.([]vmcDraasModel.ReplicaDiskCollection), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

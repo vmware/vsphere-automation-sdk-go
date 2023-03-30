@@ -9,15 +9,14 @@
 package draas
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/vmc/draas/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vmcDraasModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/draas/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SiteRecoveryClient interface {
 
@@ -28,21 +27,23 @@ type SiteRecoveryClient interface {
 	// @param forceParam If = 'true', will deactivate site recovery forcefully. (optional)
 	// @param deactivateHcxParam If = 'true', will deactivate HCX. (optional)
 	// @return com.vmware.vmc.draas.model.Task
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Invalid action or bad argument
 	// @throws Unauthorized  Forbidden
 	// @throws NotFound  Cannot find site recovery configuration for sddc identifier
-	Delete(orgParam string, sddcParam string, forceParam *bool, deactivateHcxParam *bool) (model.Task, error)
+	Delete(orgParam string, sddcParam string, forceParam *bool, deactivateHcxParam *bool) (vmcDraasModel.Task, error)
 
 	// Query site recovery configuration for the specified sddc
 	//
 	// @param orgParam Organization identifier (required)
 	// @param sddcParam sddc identifier (required)
 	// @return com.vmware.vmc.draas.model.SiteRecovery
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Invalid action or bad argument
 	// @throws Unauthorized  Forbidden
-	Get(orgParam string, sddcParam string) (model.SiteRecovery, error)
+	Get(orgParam string, sddcParam string) (vmcDraasModel.SiteRecovery, error)
 
 	// Activate site recovery for the specified sddc
 	//
@@ -50,134 +51,138 @@ type SiteRecoveryClient interface {
 	// @param sddcParam sddc identifier (required)
 	// @param activateSiteRecoveryConfigParam Customization, for example can specify custom extension key suffix for SRM. (optional)
 	// @return com.vmware.vmc.draas.model.Task
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Invalid action or bad argument
 	// @throws Unauthorized  Forbidden
 	// @throws NotFound  Cannot find site recovery configuration for sddc identifier
-	Post(orgParam string, sddcParam string, activateSiteRecoveryConfigParam *model.ActivateSiteRecoveryConfig) (model.Task, error)
+	Post(orgParam string, sddcParam string, activateSiteRecoveryConfigParam *vmcDraasModel.ActivateSiteRecoveryConfig) (vmcDraasModel.Task, error)
 }
 
 type siteRecoveryClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewSiteRecoveryClient(connector client.Connector) *siteRecoveryClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vmc.draas.site_recovery")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"post":   core.NewMethodIdentifier(interfaceIdentifier, "post"),
+func NewSiteRecoveryClient(connector vapiProtocolClient_.Connector) *siteRecoveryClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vmc.draas.site_recovery")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"post":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "post"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	sIface := siteRecoveryClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *siteRecoveryClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (sIface *siteRecoveryClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *siteRecoveryClient) Delete(orgParam string, sddcParam string, forceParam *bool, deactivateHcxParam *bool) (model.Task, error) {
+func (sIface *siteRecoveryClient) Delete(orgParam string, sddcParam string, forceParam *bool, deactivateHcxParam *bool) (vmcDraasModel.Task, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(siteRecoveryDeleteInputType(), typeConverter)
+	operationRestMetaData := siteRecoveryDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(siteRecoveryDeleteInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
 	sv.AddStructField("Force", forceParam)
 	sv.AddStructField("DeactivateHcx", deactivateHcxParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.Task
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput vmcDraasModel.Task
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := siteRecoveryDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.vmc.draas.site_recovery", "delete", inputDataValue, executionContext)
-	var emptyOutput model.Task
+	var emptyOutput vmcDraasModel.Task
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), siteRecoveryDeleteOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SiteRecoveryDeleteOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.Task), nil
+		return output.(vmcDraasModel.Task), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *siteRecoveryClient) Get(orgParam string, sddcParam string) (model.SiteRecovery, error) {
+func (sIface *siteRecoveryClient) Get(orgParam string, sddcParam string) (vmcDraasModel.SiteRecovery, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(siteRecoveryGetInputType(), typeConverter)
+	operationRestMetaData := siteRecoveryGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(siteRecoveryGetInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.SiteRecovery
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput vmcDraasModel.SiteRecovery
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := siteRecoveryGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.vmc.draas.site_recovery", "get", inputDataValue, executionContext)
-	var emptyOutput model.SiteRecovery
+	var emptyOutput vmcDraasModel.SiteRecovery
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), siteRecoveryGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SiteRecoveryGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.SiteRecovery), nil
+		return output.(vmcDraasModel.SiteRecovery), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *siteRecoveryClient) Post(orgParam string, sddcParam string, activateSiteRecoveryConfigParam *model.ActivateSiteRecoveryConfig) (model.Task, error) {
+func (sIface *siteRecoveryClient) Post(orgParam string, sddcParam string, activateSiteRecoveryConfigParam *vmcDraasModel.ActivateSiteRecoveryConfig) (vmcDraasModel.Task, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(siteRecoveryPostInputType(), typeConverter)
+	operationRestMetaData := siteRecoveryPostRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(siteRecoveryPostInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
 	sv.AddStructField("ActivateSiteRecoveryConfig", activateSiteRecoveryConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.Task
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput vmcDraasModel.Task
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := siteRecoveryPostRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.vmc.draas.site_recovery", "post", inputDataValue, executionContext)
-	var emptyOutput model.Task
+	var emptyOutput vmcDraasModel.Task
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), siteRecoveryPostOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SiteRecoveryPostOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.Task), nil
+		return output.(vmcDraasModel.Task), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
