@@ -1,18 +1,21 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
+/* Copyright © 2019, 2021-2023 VMware, Inc. All Rights Reserved.
    SPDX-License-Identifier: BSD-2-Clause */
 
 package rest
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/gorilla/mux"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/l10n"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/server/rest/contextbuilder"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/server/tracing"
 )
 
 type RequestHandler struct {
@@ -20,17 +23,49 @@ type RequestHandler struct {
 	opMetadata      protocol.OperationMetadata
 	appCtxBuilders  []contextbuilder.ApplicationContextBuilder
 	secCtxBuilders  []contextbuilder.SecurityContextBuilder
+	tracer          tracing.StartSpan
 }
 
-func NewRequestHandler(opMetadata protocol.OperationMetadata, nextApiProvider core.APIProvider) *RequestHandler {
-	rh := RequestHandler{nextApiProvider: nextApiProvider, opMetadata: opMetadata}
-	return &rh
+type RequestHandlerOption func(*RequestHandler)
+
+// WithTracerRest option allows NewRequestHandler to set API server tracer that will be used to extract http headers and
+// create server spans for incoming calls.
+func WithTracerRest(tracer tracing.StartSpan) RequestHandlerOption {
+	return func(handler *RequestHandler) {
+		handler.tracer = tracer
+	}
 }
 
+func WithApplicationContextBuilders(appCtxBuilders []contextbuilder.ApplicationContextBuilder) RequestHandlerOption {
+	return func(handler *RequestHandler) {
+		handler.appCtxBuilders = appCtxBuilders
+	}
+}
+
+func WithSecurityContextBuilders(secCtxBuilders []contextbuilder.SecurityContextBuilder) RequestHandlerOption {
+	return func(handler *RequestHandler) {
+		handler.secCtxBuilders = secCtxBuilders
+	}
+}
+
+func NewRequestHandler(opMetadata protocol.OperationMetadata, nextApiProvider core.APIProvider, opts ...RequestHandlerOption) *RequestHandler {
+	rh := &RequestHandler{
+		nextApiProvider: nextApiProvider,
+		opMetadata:      opMetadata,
+		tracer:          tracing.NoopTracer,
+	}
+	for _, opt := range opts {
+		opt(rh)
+	}
+	return rh
+}
+
+// Deprecated: use WithApplicationContextBuilders builder option instead
 func (rh *RequestHandler) SetApplicationContextBuilders(appCtxBuilders []contextbuilder.ApplicationContextBuilder) {
 	rh.appCtxBuilders = appCtxBuilders
 }
 
+// Deprecated: use WithSecurityContextBuilders builder option instead
 func (rh *RequestHandler) SetSecurityContextBuilders(secCtxBuilders []contextbuilder.SecurityContextBuilder) {
 	rh.secCtxBuilders = secCtxBuilders
 }
@@ -73,6 +108,14 @@ func (rh *RequestHandler) BuildExecutionContext(r *http.Request) (*core.Executio
 func (rh *RequestHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	msg := "Calling " + rh.opMetadata.MethodDefinition().Identifier().FullyQualifiedName() + mux.Vars(r)["id"]
 	log.Debugf(msg)
+
+	methodId := rh.opMetadata.MethodDefinition().Identifier()
+	serviceId := methodId.InterfaceIdentifier().Name()
+	operationId := methodId.Name()
+
+	if vmwTask := r.URL.Query().Get(lib.TaskRESTQueryKey); vmwTask == "true" {
+		operationId += lib.TaskInvocationString
+	}
 
 	var errs []error
 	opRestMetaData := rh.opMetadata.RestMetadata()
@@ -127,11 +170,15 @@ func (rh *RequestHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	tracerContext, serverSpan := rh.tracer(serviceId, operationId, tracing.Rest2018, r)
+	defer serverSpan.Finish()
+	goContext := context.WithValue(tracerContext, core.ResponseTypeKey, core.OnlyMonoResponse)
+	ctx.WithContext(goContext)
+
 	// Step 3: invoke apiprovider (local provider)
-	methodId := rh.opMetadata.MethodDefinition().Identifier()
 	methodResult := rh.nextApiProvider.Invoke(
-		methodId.InterfaceIdentifier().Name(),
-		methodId.Name(),
+		serviceId,
+		operationId,
 		inputDataVal,
 		ctx)
 
@@ -162,5 +209,8 @@ func (rh *RequestHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	}
 
 	rw.WriteHeader(statusCode)
-	rw.Write([]byte(resp))
+	_, e := rw.Write([]byte(resp))
+	if e != nil {
+		log.Debugf("Error writing rest response: %v", e)
+	}
 }

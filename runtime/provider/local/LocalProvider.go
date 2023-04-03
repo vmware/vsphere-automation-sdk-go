@@ -1,4 +1,4 @@
-/* Copyright © 2019-2020 VMware, Inc. All Rights Reserved.
+/* Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
    SPDX-License-Identifier: BSD-2-Clause */
 
 package local
@@ -10,8 +10,10 @@ import (
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/l10n"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/provider/introspection"
+	"strings"
 )
 
 type LocalProvider struct {
@@ -140,7 +142,6 @@ func (localProvider *LocalProvider) validateError(errorValue *data.ErrorValue, m
 }
 
 func (localProvider *LocalProvider) Invoke(serviceID string, operationID string, input data.DataValue, ctx *core.ExecutionContext) core.MethodResult {
-
 	var interfaceID = core.NewInterfaceIdentifier(serviceID)
 	var methodID = core.NewMethodIdentifier(interfaceID, operationID)
 	log.Debugf("Searching for service %s", serviceID)
@@ -182,6 +183,9 @@ func (localProvider *LocalProvider) Invoke(serviceID string, operationID string,
 	//Step 3: Validate output
 	log.Debug("Validating output")
 	var outputDef = methodDef.OutputDefinition()
+	if strings.HasSuffix(operationID, lib.TaskInvocationString) {
+		outputDef = data.NewStringDefinition()
+	}
 	if methodResult.IsResponseStream() {
 		// Validation for stream response is done in binding (__Name__ApiInterface.go)
 	} else {
@@ -202,6 +206,9 @@ func (localProvider *LocalProvider) Invoke(serviceID string, operationID string,
 			return core.NewMethodResult(nil, err)
 		}
 		log.Debug("Request processing complete")
+		// New instance of MethodResult which doesn't have its state
+		// set to monoResult and can be used as a stream.
+		methodResult = core.NewDataResult(methodResult.Output())
 	}
 
 	return methodResult

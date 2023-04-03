@@ -1,0 +1,22 @@
+/* Copyright © 2022 VMware, Inc. All Rights Reserved.
+   SPDX-License-Identifier: BSD-2-Clause */
+
+@Component
+package vmodl.examples.greeter;
+
+import vmodl.lang.*;
+import com.vmware.vapi.std.errors.Unauthenticated;
+
+/**
+ * The {@name Greeter} {@term service} provides {@term operations}
+ * to greet the client.
+ */
+interface Greeter {
+    /**
+     * Gives a greeting.
+     *
+     * @return a string with the greeting.
+     * @throws Unauthenticated if the caller is not authenticated.
+     */
+    String Greet() throws Unauthenticated;
+}
