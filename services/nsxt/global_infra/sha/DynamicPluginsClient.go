@@ -9,15 +9,14 @@
 package sha
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DynamicPluginsClient interface {
 
@@ -25,12 +24,13 @@ type DynamicPluginsClient interface {
 	//
 	// @param pluginIdParam Plugin filename (required)
 	// @return com.vmware.nsx_policy.model.ShaDynamicPlugin
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(pluginIdParam string) (model.ShaDynamicPlugin, error)
+	Get(pluginIdParam string) (nsx_policyModel.ShaDynamicPlugin, error)
 
 	// API will provide list of Sha dynamic plugins.
 	//
@@ -41,75 +41,81 @@ type DynamicPluginsClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.ShaDynamicPluginListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.ShaDynamicPluginListResult, error)
+	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ShaDynamicPluginListResult, error)
 }
 
 type dynamicPluginsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewDynamicPluginsClient(connector client.Connector) *dynamicPluginsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.sha.dynamic_plugins")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
+func NewDynamicPluginsClient(connector vapiProtocolClient_.Connector) *dynamicPluginsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.sha.dynamic_plugins")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	dIface := dynamicPluginsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &dIface
 }
 
-func (dIface *dynamicPluginsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (dIface *dynamicPluginsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := dIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (dIface *dynamicPluginsClient) Get(pluginIdParam string) (model.ShaDynamicPlugin, error) {
+func (dIface *dynamicPluginsClient) Get(pluginIdParam string) (nsx_policyModel.ShaDynamicPlugin, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dynamicPluginsGetInputType(), typeConverter)
+	operationRestMetaData := dynamicPluginsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(dynamicPluginsGetInputType(), typeConverter)
 	sv.AddStructField("PluginId", pluginIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ShaDynamicPlugin
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.ShaDynamicPlugin
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := dynamicPluginsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.sha.dynamic_plugins", "get", inputDataValue, executionContext)
-	var emptyOutput model.ShaDynamicPlugin
+	var emptyOutput nsx_policyModel.ShaDynamicPlugin
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), dynamicPluginsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DynamicPluginsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ShaDynamicPlugin), nil
+		return output.(nsx_policyModel.ShaDynamicPlugin), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (dIface *dynamicPluginsClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.ShaDynamicPluginListResult, error) {
+func (dIface *dynamicPluginsClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ShaDynamicPluginListResult, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dynamicPluginsListInputType(), typeConverter)
+	operationRestMetaData := dynamicPluginsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(dynamicPluginsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -118,25 +124,22 @@ func (dIface *dynamicPluginsClient) List(cursorParam *string, includeMarkForDele
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ShaDynamicPluginListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.ShaDynamicPluginListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := dynamicPluginsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.sha.dynamic_plugins", "list", inputDataValue, executionContext)
-	var emptyOutput model.ShaDynamicPluginListResult
+	var emptyOutput nsx_policyModel.ShaDynamicPluginListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), dynamicPluginsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DynamicPluginsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ShaDynamicPluginListResult), nil
+		return output.(nsx_policyModel.ShaDynamicPluginListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

@@ -9,15 +9,14 @@
 package administration
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AuditLogsClient interface {
 
@@ -28,69 +27,71 @@ type AuditLogsClient interface {
 	// @param fieldsParam Fields to include in query results (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 100)
 	// @return com.vmware.nsx.model.AuditLogListResult
+	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error, Bad Gateway
 	// @throws NotFound  Not Found
-	Create(auditLogRequestParam model.AuditLogRequest, cursorParam *int64, fieldsParam *string, pageSizeParam *int64) (model.AuditLogListResult, error)
+	Create(auditLogRequestParam nsxModel.AuditLogRequest, cursorParam *int64, fieldsParam *string, pageSizeParam *int64) (nsxModel.AuditLogListResult, error)
 }
 
 type auditLogsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewAuditLogsClient(connector client.Connector) *auditLogsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.administration.audit_logs")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create": core.NewMethodIdentifier(interfaceIdentifier, "create"),
+func NewAuditLogsClient(connector vapiProtocolClient_.Connector) *auditLogsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.administration.audit_logs")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	aIface := auditLogsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &aIface
 }
 
-func (aIface *auditLogsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (aIface *auditLogsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := aIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (aIface *auditLogsClient) Create(auditLogRequestParam model.AuditLogRequest, cursorParam *int64, fieldsParam *string, pageSizeParam *int64) (model.AuditLogListResult, error) {
+func (aIface *auditLogsClient) Create(auditLogRequestParam nsxModel.AuditLogRequest, cursorParam *int64, fieldsParam *string, pageSizeParam *int64) (nsxModel.AuditLogListResult, error) {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(auditLogsCreateInputType(), typeConverter)
+	operationRestMetaData := auditLogsCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(auditLogsCreateInputType(), typeConverter)
 	sv.AddStructField("AuditLogRequest", auditLogRequestParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("Fields", fieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.AuditLogListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.AuditLogListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := auditLogsCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	aIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := aIface.connector.GetApiProvider().Invoke("com.vmware.nsx.administration.audit_logs", "create", inputDataValue, executionContext)
-	var emptyOutput model.AuditLogListResult
+	var emptyOutput nsxModel.AuditLogListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), auditLogsCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), AuditLogsCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.AuditLogListResult), nil
+		return output.(nsxModel.AuditLogListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), aIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

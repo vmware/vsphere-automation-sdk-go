@@ -11,42 +11,42 @@
 package services
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func snmpGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func snmpGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["show_sensitive_data"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["show_sensitive_data"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["show_sensitive_data"] = "ShowSensitiveData"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func snmpGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeSnmpServicePropertiesBindingType)
+func SnmpGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeSnmpServicePropertiesBindingType)
 }
 
-func snmpGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func snmpGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["show_sensitive_data"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["show_sensitive_data"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["show_sensitive_data"] = "ShowSensitiveData"
-	paramsTypeMap["show_sensitive_data"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["show_sensitive_data"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	queryParams["show_sensitive_data"] = "show_sensitive_data"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -67,21 +67,21 @@ func snmpGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func snmpRestartInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func snmpRestartInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func snmpRestartOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeServiceStatusPropertiesBindingType)
+func SnmpRestartOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeServiceStatusPropertiesBindingType)
 }
 
-func snmpRestartRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func snmpRestartRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -89,7 +89,7 @@ func snmpRestartRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -110,21 +110,21 @@ func snmpRestartRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func snmpStartInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func snmpStartInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func snmpStartOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeServiceStatusPropertiesBindingType)
+func SnmpStartOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeServiceStatusPropertiesBindingType)
 }
 
-func snmpStartRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func snmpStartRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -132,7 +132,7 @@ func snmpStartRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -153,21 +153,21 @@ func snmpStartRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func snmpStopInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func snmpStopInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func snmpStopOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeServiceStatusPropertiesBindingType)
+func SnmpStopOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeServiceStatusPropertiesBindingType)
 }
 
-func snmpStopRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func snmpStopRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -175,7 +175,7 @@ func snmpStopRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -196,34 +196,34 @@ func snmpStopRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func snmpUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func snmpUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["node_snmp_service_properties"] = bindings.NewReferenceType(model.NodeSnmpServicePropertiesBindingType)
+	fields["node_snmp_service_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeSnmpServicePropertiesBindingType)
 	fieldNameMap["node_snmp_service_properties"] = "NodeSnmpServiceProperties"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func snmpUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeSnmpServicePropertiesBindingType)
+func SnmpUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeSnmpServicePropertiesBindingType)
 }
 
-func snmpUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func snmpUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["node_snmp_service_properties"] = bindings.NewReferenceType(model.NodeSnmpServicePropertiesBindingType)
+	fields["node_snmp_service_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeSnmpServicePropertiesBindingType)
 	fieldNameMap["node_snmp_service_properties"] = "NodeSnmpServiceProperties"
-	paramsTypeMap["node_snmp_service_properties"] = bindings.NewReferenceType(model.NodeSnmpServicePropertiesBindingType)
+	paramsTypeMap["node_snmp_service_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeSnmpServicePropertiesBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

@@ -11,41 +11,41 @@
 package network
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func routesCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func routesCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["node_route_properties"] = bindings.NewReferenceType(model.NodeRoutePropertiesBindingType)
+	fields["node_route_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeRoutePropertiesBindingType)
 	fieldNameMap["node_route_properties"] = "NodeRouteProperties"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func routesCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeRoutePropertiesBindingType)
+func RoutesCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeRoutePropertiesBindingType)
 }
 
-func routesCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func routesCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["node_route_properties"] = bindings.NewReferenceType(model.NodeRoutePropertiesBindingType)
+	fields["node_route_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeRoutePropertiesBindingType)
 	fieldNameMap["node_route_properties"] = "NodeRouteProperties"
-	paramsTypeMap["node_route_properties"] = bindings.NewReferenceType(model.NodeRoutePropertiesBindingType)
+	paramsTypeMap["node_route_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeRoutePropertiesBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,36 +66,36 @@ func routesCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func routesDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func routesDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["route_id"] = bindings.NewStringType()
+	fields["route_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["route_id"] = "RouteId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func routesDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func RoutesDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func routesDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func routesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["route_id"] = bindings.NewStringType()
+	fields["route_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["route_id"] = "RouteId"
-	paramsTypeMap["route_id"] = bindings.NewStringType()
-	paramsTypeMap["routeId"] = bindings.NewStringType()
+	paramsTypeMap["route_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["routeId"] = vapiBindings_.NewStringType()
 	pathParams["route_id"] = "routeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -116,36 +116,36 @@ func routesDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func routesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func routesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["route_id"] = bindings.NewStringType()
+	fields["route_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["route_id"] = "RouteId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func routesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeRoutePropertiesBindingType)
+func RoutesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeRoutePropertiesBindingType)
 }
 
-func routesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func routesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["route_id"] = bindings.NewStringType()
+	fields["route_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["route_id"] = "RouteId"
-	paramsTypeMap["route_id"] = bindings.NewStringType()
-	paramsTypeMap["routeId"] = bindings.NewStringType()
+	paramsTypeMap["route_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["routeId"] = vapiBindings_.NewStringType()
 	pathParams["route_id"] = "routeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -166,21 +166,21 @@ func routesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func routesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func routesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func routesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeRoutePropertiesListResultBindingType)
+func RoutesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeRoutePropertiesListResultBindingType)
 }
 
-func routesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func routesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -188,7 +188,7 @@ func routesListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

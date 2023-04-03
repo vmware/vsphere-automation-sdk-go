@@ -11,41 +11,41 @@
 package l2vpn
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func sessionsCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sessionsCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["l2_vpn_session"] = bindings.NewReferenceType(model.L2VpnSessionBindingType)
+	fields["l2_vpn_session"] = vapiBindings_.NewReferenceType(nsxModel.L2VpnSessionBindingType)
 	fieldNameMap["l2_vpn_session"] = "L2VpnSession"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sessionsCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.L2VpnSessionBindingType)
+func SessionsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.L2VpnSessionBindingType)
 }
 
-func sessionsCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sessionsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["l2_vpn_session"] = bindings.NewReferenceType(model.L2VpnSessionBindingType)
+	fields["l2_vpn_session"] = vapiBindings_.NewReferenceType(nsxModel.L2VpnSessionBindingType)
 	fieldNameMap["l2_vpn_session"] = "L2VpnSession"
-	paramsTypeMap["l2_vpn_session"] = bindings.NewReferenceType(model.L2VpnSessionBindingType)
+	paramsTypeMap["l2_vpn_session"] = vapiBindings_.NewReferenceType(nsxModel.L2VpnSessionBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,36 +66,36 @@ func sessionsCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func sessionsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sessionsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["l2vpn_session_id"] = bindings.NewStringType()
+	fields["l2vpn_session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["l2vpn_session_id"] = "L2vpnSessionId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sessionsDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func SessionsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func sessionsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sessionsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["l2vpn_session_id"] = bindings.NewStringType()
+	fields["l2vpn_session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["l2vpn_session_id"] = "L2vpnSessionId"
-	paramsTypeMap["l2vpn_session_id"] = bindings.NewStringType()
-	paramsTypeMap["l2vpnSessionId"] = bindings.NewStringType()
+	paramsTypeMap["l2vpn_session_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l2vpnSessionId"] = vapiBindings_.NewStringType()
 	pathParams["l2vpn_session_id"] = "l2vpnSessionId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -116,36 +116,36 @@ func sessionsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func sessionsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sessionsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["l2vpn_session_id"] = bindings.NewStringType()
+	fields["l2vpn_session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["l2vpn_session_id"] = "L2vpnSessionId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sessionsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.L2VpnSessionBindingType)
+func SessionsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.L2VpnSessionBindingType)
 }
 
-func sessionsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sessionsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["l2vpn_session_id"] = bindings.NewStringType()
+	fields["l2vpn_session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["l2vpn_session_id"] = "L2vpnSessionId"
-	paramsTypeMap["l2vpn_session_id"] = bindings.NewStringType()
-	paramsTypeMap["l2vpnSessionId"] = bindings.NewStringType()
+	paramsTypeMap["l2vpn_session_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l2vpnSessionId"] = vapiBindings_.NewStringType()
 	pathParams["l2vpn_session_id"] = "l2vpnSessionId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -166,56 +166,56 @@ func sessionsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func sessionsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sessionsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["l2vpn_service_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["l2vpn_service_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["l2vpn_service_id"] = "L2vpnServiceId"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sessionsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.L2VpnSessionListResultBindingType)
+func SessionsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.L2VpnSessionListResultBindingType)
 }
 
-func sessionsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sessionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["l2vpn_service_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["l2vpn_service_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["l2vpn_service_id"] = "L2vpnServiceId"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["l2vpn_service_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["l2vpn_service_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
 	queryParams["l2vpn_service_id"] = "l2vpn_service_id"
 	queryParams["sort_ascending"] = "sort_ascending"
@@ -224,7 +224,7 @@ func sessionsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -245,41 +245,41 @@ func sessionsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func sessionsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sessionsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["l2vpn_session_id"] = bindings.NewStringType()
-	fields["l2_vpn_session"] = bindings.NewReferenceType(model.L2VpnSessionBindingType)
+	fields["l2vpn_session_id"] = vapiBindings_.NewStringType()
+	fields["l2_vpn_session"] = vapiBindings_.NewReferenceType(nsxModel.L2VpnSessionBindingType)
 	fieldNameMap["l2vpn_session_id"] = "L2vpnSessionId"
 	fieldNameMap["l2_vpn_session"] = "L2VpnSession"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sessionsUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.L2VpnSessionBindingType)
+func SessionsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.L2VpnSessionBindingType)
 }
 
-func sessionsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sessionsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["l2vpn_session_id"] = bindings.NewStringType()
-	fields["l2_vpn_session"] = bindings.NewReferenceType(model.L2VpnSessionBindingType)
+	fields["l2vpn_session_id"] = vapiBindings_.NewStringType()
+	fields["l2_vpn_session"] = vapiBindings_.NewReferenceType(nsxModel.L2VpnSessionBindingType)
 	fieldNameMap["l2vpn_session_id"] = "L2vpnSessionId"
 	fieldNameMap["l2_vpn_session"] = "L2VpnSession"
-	paramsTypeMap["l2vpn_session_id"] = bindings.NewStringType()
-	paramsTypeMap["l2_vpn_session"] = bindings.NewReferenceType(model.L2VpnSessionBindingType)
-	paramsTypeMap["l2vpnSessionId"] = bindings.NewStringType()
+	paramsTypeMap["l2vpn_session_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l2_vpn_session"] = vapiBindings_.NewReferenceType(nsxModel.L2VpnSessionBindingType)
+	paramsTypeMap["l2vpnSessionId"] = vapiBindings_.NewStringType()
 	pathParams["l2vpn_session_id"] = "l2vpnSessionId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

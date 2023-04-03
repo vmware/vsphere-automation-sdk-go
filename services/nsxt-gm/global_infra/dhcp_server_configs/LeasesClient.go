@@ -9,15 +9,14 @@
 package dhcp_server_configs
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_global_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LeasesClient interface {
 
@@ -36,43 +35,48 @@ type LeasesClient interface {
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param sourceParam Data source type. (optional)
 	// @return com.vmware.nsx_global_policy.model.DhcpLeasesResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(configIdParam string, connectivityPathParam string, addressParam *string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, segmentPathParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string) (model.DhcpLeasesResult, error)
+	List(configIdParam string, connectivityPathParam string, addressParam *string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, segmentPathParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string) (nsx_global_policyModel.DhcpLeasesResult, error)
 }
 
 type leasesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewLeasesClient(connector client.Connector) *leasesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_global_policy.global_infra.dhcp_server_configs.leases")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
+func NewLeasesClient(connector vapiProtocolClient_.Connector) *leasesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_global_policy.global_infra.dhcp_server_configs.leases")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	lIface := leasesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &lIface
 }
 
-func (lIface *leasesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (lIface *leasesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := lIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (lIface *leasesClient) List(configIdParam string, connectivityPathParam string, addressParam *string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, segmentPathParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string) (model.DhcpLeasesResult, error) {
+func (lIface *leasesClient) List(configIdParam string, connectivityPathParam string, addressParam *string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, segmentPathParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string) (nsx_global_policyModel.DhcpLeasesResult, error) {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(leasesListInputType(), typeConverter)
+	operationRestMetaData := leasesListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(leasesListInputType(), typeConverter)
 	sv.AddStructField("ConfigId", configIdParam)
 	sv.AddStructField("ConnectivityPath", connectivityPathParam)
 	sv.AddStructField("Address", addressParam)
@@ -87,25 +91,22 @@ func (lIface *leasesClient) List(configIdParam string, connectivityPathParam str
 	sv.AddStructField("Source", sourceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.DhcpLeasesResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_global_policyModel.DhcpLeasesResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := leasesListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	lIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.global_infra.dhcp_server_configs.leases", "list", inputDataValue, executionContext)
-	var emptyOutput model.DhcpLeasesResult
+	var emptyOutput nsx_global_policyModel.DhcpLeasesResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), leasesListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), LeasesListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.DhcpLeasesResult), nil
+		return output.(nsx_global_policyModel.DhcpLeasesResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

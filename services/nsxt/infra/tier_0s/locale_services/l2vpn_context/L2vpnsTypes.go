@@ -11,57 +11,57 @@
 package l2vpn_context
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func l2vpnsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func l2vpnsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["l2vpn_id"] = bindings.NewStringType()
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["l2vpn_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["l2vpn_id"] = "L2vpnId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func l2vpnsDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func L2vpnsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func l2vpnsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func l2vpnsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["l2vpn_id"] = bindings.NewStringType()
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["l2vpn_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["l2vpn_id"] = "L2vpnId"
-	paramsTypeMap["tier0_id"] = bindings.NewStringType()
-	paramsTypeMap["locale_service_id"] = bindings.NewStringType()
-	paramsTypeMap["l2vpn_id"] = bindings.NewStringType()
-	paramsTypeMap["tier0Id"] = bindings.NewStringType()
-	paramsTypeMap["localeServiceId"] = bindings.NewStringType()
-	paramsTypeMap["l2vpnId"] = bindings.NewStringType()
+	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["locale_service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l2vpn_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["tier0Id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["localeServiceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l2vpnId"] = vapiBindings_.NewStringType()
 	pathParams["tier0_id"] = "tier0Id"
 	pathParams["locale_service_id"] = "localeServiceId"
 	pathParams["l2vpn_id"] = "l2vpnId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -82,50 +82,50 @@ func l2vpnsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func l2vpnsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func l2vpnsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["l2vpn_id"] = bindings.NewStringType()
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["l2vpn_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["l2vpn_id"] = "L2vpnId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func l2vpnsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.L2VpnBindingType)
+func L2vpnsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.L2VpnBindingType)
 }
 
-func l2vpnsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func l2vpnsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["l2vpn_id"] = bindings.NewStringType()
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["l2vpn_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["l2vpn_id"] = "L2vpnId"
-	paramsTypeMap["tier0_id"] = bindings.NewStringType()
-	paramsTypeMap["locale_service_id"] = bindings.NewStringType()
-	paramsTypeMap["l2vpn_id"] = bindings.NewStringType()
-	paramsTypeMap["tier0Id"] = bindings.NewStringType()
-	paramsTypeMap["localeServiceId"] = bindings.NewStringType()
-	paramsTypeMap["l2vpnId"] = bindings.NewStringType()
+	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["locale_service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l2vpn_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["tier0Id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["localeServiceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l2vpnId"] = vapiBindings_.NewStringType()
 	pathParams["tier0_id"] = "tier0Id"
 	pathParams["locale_service_id"] = "localeServiceId"
 	pathParams["l2vpn_id"] = "l2vpnId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -146,17 +146,17 @@ func l2vpnsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func l2vpnsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func l2vpnsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["cursor"] = "Cursor"
@@ -165,31 +165,31 @@ func l2vpnsListInputType() bindings.StructType {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func l2vpnsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.L2VpnListResultBindingType)
+func L2vpnsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.L2VpnListResultBindingType)
 }
 
-func l2vpnsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func l2vpnsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["cursor"] = "Cursor"
@@ -198,16 +198,16 @@ func l2vpnsListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["tier0_id"] = bindings.NewStringType()
-	paramsTypeMap["locale_service_id"] = bindings.NewStringType()
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["tier0Id"] = bindings.NewStringType()
-	paramsTypeMap["localeServiceId"] = bindings.NewStringType()
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["locale_service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["tier0Id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["localeServiceId"] = vapiBindings_.NewStringType()
 	pathParams["tier0_id"] = "tier0Id"
 	pathParams["locale_service_id"] = "localeServiceId"
 	queryParams["cursor"] = "cursor"
@@ -218,7 +218,7 @@ func l2vpnsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -239,55 +239,55 @@ func l2vpnsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func l2vpnsPatchInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func l2vpnsPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["l2vpn_id"] = bindings.NewStringType()
-	fields["l2_vpn"] = bindings.NewReferenceType(model.L2VpnBindingType)
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["l2vpn_id"] = vapiBindings_.NewStringType()
+	fields["l2_vpn"] = vapiBindings_.NewReferenceType(nsx_policyModel.L2VpnBindingType)
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["l2vpn_id"] = "L2vpnId"
 	fieldNameMap["l2_vpn"] = "L2Vpn"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func l2vpnsPatchOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func L2vpnsPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func l2vpnsPatchRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func l2vpnsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["l2vpn_id"] = bindings.NewStringType()
-	fields["l2_vpn"] = bindings.NewReferenceType(model.L2VpnBindingType)
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["l2vpn_id"] = vapiBindings_.NewStringType()
+	fields["l2_vpn"] = vapiBindings_.NewReferenceType(nsx_policyModel.L2VpnBindingType)
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["l2vpn_id"] = "L2vpnId"
 	fieldNameMap["l2_vpn"] = "L2Vpn"
-	paramsTypeMap["tier0_id"] = bindings.NewStringType()
-	paramsTypeMap["locale_service_id"] = bindings.NewStringType()
-	paramsTypeMap["l2_vpn"] = bindings.NewReferenceType(model.L2VpnBindingType)
-	paramsTypeMap["l2vpn_id"] = bindings.NewStringType()
-	paramsTypeMap["tier0Id"] = bindings.NewStringType()
-	paramsTypeMap["localeServiceId"] = bindings.NewStringType()
-	paramsTypeMap["l2vpnId"] = bindings.NewStringType()
+	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["locale_service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l2_vpn"] = vapiBindings_.NewReferenceType(nsx_policyModel.L2VpnBindingType)
+	paramsTypeMap["l2vpn_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["tier0Id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["localeServiceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l2vpnId"] = vapiBindings_.NewStringType()
 	pathParams["tier0_id"] = "tier0Id"
 	pathParams["locale_service_id"] = "localeServiceId"
 	pathParams["l2vpn_id"] = "l2vpnId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -308,55 +308,55 @@ func l2vpnsPatchRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func l2vpnsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func l2vpnsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["l2vpn_id"] = bindings.NewStringType()
-	fields["l2_vpn"] = bindings.NewReferenceType(model.L2VpnBindingType)
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["l2vpn_id"] = vapiBindings_.NewStringType()
+	fields["l2_vpn"] = vapiBindings_.NewReferenceType(nsx_policyModel.L2VpnBindingType)
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["l2vpn_id"] = "L2vpnId"
 	fieldNameMap["l2_vpn"] = "L2Vpn"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func l2vpnsUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.L2VpnBindingType)
+func L2vpnsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.L2VpnBindingType)
 }
 
-func l2vpnsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func l2vpnsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["l2vpn_id"] = bindings.NewStringType()
-	fields["l2_vpn"] = bindings.NewReferenceType(model.L2VpnBindingType)
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["l2vpn_id"] = vapiBindings_.NewStringType()
+	fields["l2_vpn"] = vapiBindings_.NewReferenceType(nsx_policyModel.L2VpnBindingType)
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["l2vpn_id"] = "L2vpnId"
 	fieldNameMap["l2_vpn"] = "L2Vpn"
-	paramsTypeMap["tier0_id"] = bindings.NewStringType()
-	paramsTypeMap["locale_service_id"] = bindings.NewStringType()
-	paramsTypeMap["l2_vpn"] = bindings.NewReferenceType(model.L2VpnBindingType)
-	paramsTypeMap["l2vpn_id"] = bindings.NewStringType()
-	paramsTypeMap["tier0Id"] = bindings.NewStringType()
-	paramsTypeMap["localeServiceId"] = bindings.NewStringType()
-	paramsTypeMap["l2vpnId"] = bindings.NewStringType()
+	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["locale_service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l2_vpn"] = vapiBindings_.NewReferenceType(nsx_policyModel.L2VpnBindingType)
+	paramsTypeMap["l2vpn_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["tier0Id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["localeServiceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l2vpnId"] = vapiBindings_.NewStringType()
 	pathParams["tier0_id"] = "tier0Id"
 	pathParams["locale_service_id"] = "localeServiceId"
 	pathParams["l2vpn_id"] = "l2vpnId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

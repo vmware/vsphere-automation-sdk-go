@@ -11,50 +11,50 @@
 package groups
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_global_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
 	"reflect"
 )
 
-func memberTypesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func memberTypesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["group_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["group_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["group_id"] = "GroupId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func memberTypesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.GroupMemberTypeListResultBindingType)
+func MemberTypesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_global_policyModel.GroupMemberTypeListResultBindingType)
 }
 
-func memberTypesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func memberTypesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["group_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["group_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["group_id"] = "GroupId"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["group_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["groupId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["group_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["groupId"] = vapiBindings_.NewStringType()
 	pathParams["group_id"] = "groupId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

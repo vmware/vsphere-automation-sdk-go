@@ -11,28 +11,28 @@
 package services
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func managerGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func managerGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func managerGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeProtonServicePropertiesBindingType)
+func ManagerGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeProtonServicePropertiesBindingType)
 }
 
-func managerGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func managerGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -40,7 +40,7 @@ func managerGetRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -61,21 +61,21 @@ func managerGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func managerResetmanagerlogginglevelsInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func managerResetmanagerlogginglevelsInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func managerResetmanagerlogginglevelsOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func ManagerResetmanagerlogginglevelsOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func managerResetmanagerlogginglevelsRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func managerResetmanagerlogginglevelsRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -83,7 +83,7 @@ func managerResetmanagerlogginglevelsRestMetadata() protocol.OperationRestMetada
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -104,21 +104,21 @@ func managerResetmanagerlogginglevelsRestMetadata() protocol.OperationRestMetada
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func managerRestartInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func managerRestartInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func managerRestartOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeServiceStatusPropertiesBindingType)
+func ManagerRestartOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeServiceStatusPropertiesBindingType)
 }
 
-func managerRestartRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func managerRestartRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -126,7 +126,7 @@ func managerRestartRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -147,21 +147,21 @@ func managerRestartRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func managerStartInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func managerStartInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func managerStartOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeServiceStatusPropertiesBindingType)
+func ManagerStartOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeServiceStatusPropertiesBindingType)
 }
 
-func managerStartRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func managerStartRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -169,7 +169,7 @@ func managerStartRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -190,21 +190,21 @@ func managerStartRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func managerStopInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func managerStopInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func managerStopOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeServiceStatusPropertiesBindingType)
+func ManagerStopOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeServiceStatusPropertiesBindingType)
 }
 
-func managerStopRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func managerStopRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -212,7 +212,7 @@ func managerStopRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -233,34 +233,34 @@ func managerStopRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func managerUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func managerUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["node_proton_service_properties"] = bindings.NewReferenceType(model.NodeProtonServicePropertiesBindingType)
+	fields["node_proton_service_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeProtonServicePropertiesBindingType)
 	fieldNameMap["node_proton_service_properties"] = "NodeProtonServiceProperties"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func managerUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeProtonServicePropertiesBindingType)
+func ManagerUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeProtonServicePropertiesBindingType)
 }
 
-func managerUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func managerUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["node_proton_service_properties"] = bindings.NewReferenceType(model.NodeProtonServicePropertiesBindingType)
+	fields["node_proton_service_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeProtonServicePropertiesBindingType)
 	fieldNameMap["node_proton_service_properties"] = "NodeProtonServiceProperties"
-	paramsTypeMap["node_proton_service_properties"] = bindings.NewReferenceType(model.NodeProtonServicePropertiesBindingType)
+	paramsTypeMap["node_proton_service_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeProtonServicePropertiesBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

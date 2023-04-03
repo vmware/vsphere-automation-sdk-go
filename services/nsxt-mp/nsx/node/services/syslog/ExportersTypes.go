@@ -11,41 +11,41 @@
 package syslog
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func exportersCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func exportersCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["node_syslog_exporter_properties"] = bindings.NewReferenceType(model.NodeSyslogExporterPropertiesBindingType)
+	fields["node_syslog_exporter_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeSyslogExporterPropertiesBindingType)
 	fieldNameMap["node_syslog_exporter_properties"] = "NodeSyslogExporterProperties"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func exportersCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeSyslogExporterPropertiesBindingType)
+func ExportersCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeSyslogExporterPropertiesBindingType)
 }
 
-func exportersCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func exportersCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["node_syslog_exporter_properties"] = bindings.NewReferenceType(model.NodeSyslogExporterPropertiesBindingType)
+	fields["node_syslog_exporter_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeSyslogExporterPropertiesBindingType)
 	fieldNameMap["node_syslog_exporter_properties"] = "NodeSyslogExporterProperties"
-	paramsTypeMap["node_syslog_exporter_properties"] = bindings.NewReferenceType(model.NodeSyslogExporterPropertiesBindingType)
+	paramsTypeMap["node_syslog_exporter_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeSyslogExporterPropertiesBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,21 +66,21 @@ func exportersCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func exportersDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func exportersDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func exportersDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func ExportersDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func exportersDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func exportersDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -88,7 +88,7 @@ func exportersDeleteRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -109,36 +109,36 @@ func exportersDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func exportersDelete0InputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func exportersDelete0InputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["exporter_name"] = bindings.NewStringType()
+	fields["exporter_name"] = vapiBindings_.NewStringType()
 	fieldNameMap["exporter_name"] = "ExporterName"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func exportersDelete0OutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func ExportersDelete0OutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func exportersDelete0RestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func exportersDelete0RestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["exporter_name"] = bindings.NewStringType()
+	fields["exporter_name"] = vapiBindings_.NewStringType()
 	fieldNameMap["exporter_name"] = "ExporterName"
-	paramsTypeMap["exporter_name"] = bindings.NewStringType()
-	paramsTypeMap["exporterName"] = bindings.NewStringType()
+	paramsTypeMap["exporter_name"] = vapiBindings_.NewStringType()
+	paramsTypeMap["exporterName"] = vapiBindings_.NewStringType()
 	pathParams["exporter_name"] = "exporterName"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -159,36 +159,36 @@ func exportersDelete0RestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func exportersGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func exportersGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["exporter_name"] = bindings.NewStringType()
+	fields["exporter_name"] = vapiBindings_.NewStringType()
 	fieldNameMap["exporter_name"] = "ExporterName"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func exportersGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeSyslogExporterPropertiesBindingType)
+func ExportersGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeSyslogExporterPropertiesBindingType)
 }
 
-func exportersGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func exportersGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["exporter_name"] = bindings.NewStringType()
+	fields["exporter_name"] = vapiBindings_.NewStringType()
 	fieldNameMap["exporter_name"] = "ExporterName"
-	paramsTypeMap["exporter_name"] = bindings.NewStringType()
-	paramsTypeMap["exporterName"] = bindings.NewStringType()
+	paramsTypeMap["exporter_name"] = vapiBindings_.NewStringType()
+	paramsTypeMap["exporterName"] = vapiBindings_.NewStringType()
 	pathParams["exporter_name"] = "exporterName"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -209,21 +209,21 @@ func exportersGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func exportersListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func exportersListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func exportersListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeSyslogExporterPropertiesListResultBindingType)
+func ExportersListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeSyslogExporterPropertiesListResultBindingType)
 }
 
-func exportersListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func exportersListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -231,7 +231,7 @@ func exportersListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -252,21 +252,21 @@ func exportersListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func exportersVerifyInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func exportersVerifyInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func exportersVerifyOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func ExportersVerifyOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func exportersVerifyRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func exportersVerifyRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -274,7 +274,7 @@ func exportersVerifyRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

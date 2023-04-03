@@ -9,21 +9,21 @@
 package firewall
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type CpuMemThresholdsProfileBindingMapsClient interface {
 
 	// API will delete Firewall CPU Memory Thresholds Profile Binding.
 	//
 	// @param cpuMemThresholdsProfileBindingMapIdParam Firewall CPU Memory Thresholds Profile Binding Map ID (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -35,12 +35,13 @@ type CpuMemThresholdsProfileBindingMapsClient interface {
 	//
 	// @param cpuMemThresholdsProfileBindingMapIdParam Firewall CPU Memory Thresholds Profile Binding Map ID (required)
 	// @return com.vmware.nsx_policy.model.PolicyFirewallCPUMemThresholdsProfileBindingMap
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(cpuMemThresholdsProfileBindingMapIdParam string) (model.PolicyFirewallCPUMemThresholdsProfileBindingMap, error)
+	Get(cpuMemThresholdsProfileBindingMapIdParam string) (nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMap, error)
 
 	// API will list all Firewall CPU Memory Thresholds Profile Binding Maps.
 	//
@@ -51,126 +52,135 @@ type CpuMemThresholdsProfileBindingMapsClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.PolicyFirewallCPUMemThresholdsProfileBindingMapListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PolicyFirewallCPUMemThresholdsProfileBindingMapListResult, error)
+	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMapListResult, error)
 
 	// API will create or update Firewall CPU Memory Thresholds Profile binding map.
 	//
 	// @param cpuMemThresholdsProfileBindingMapIdParam Firewall CPU Memory Thresholds Profile Binding Map ID (required)
 	// @param policyFirewallCPUMemThresholdsProfileBindingMapParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(cpuMemThresholdsProfileBindingMapIdParam string, policyFirewallCPUMemThresholdsProfileBindingMapParam model.PolicyFirewallCPUMemThresholdsProfileBindingMap) error
+	Patch(cpuMemThresholdsProfileBindingMapIdParam string, policyFirewallCPUMemThresholdsProfileBindingMapParam nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMap) error
 
 	// API will update Firewall CPU Memory Thresholds Profile Binding Map.
 	//
 	// @param cpuMemThresholdsProfileBindingMapIdParam Firewall CPU Memory Thresholds Profile Binding Map ID (required)
 	// @param policyFirewallCPUMemThresholdsProfileBindingMapParam (required)
 	// @return com.vmware.nsx_policy.model.PolicyFirewallCPUMemThresholdsProfileBindingMap
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(cpuMemThresholdsProfileBindingMapIdParam string, policyFirewallCPUMemThresholdsProfileBindingMapParam model.PolicyFirewallCPUMemThresholdsProfileBindingMap) (model.PolicyFirewallCPUMemThresholdsProfileBindingMap, error)
+	Update(cpuMemThresholdsProfileBindingMapIdParam string, policyFirewallCPUMemThresholdsProfileBindingMapParam nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMap) (nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMap, error)
 }
 
 type cpuMemThresholdsProfileBindingMapsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewCpuMemThresholdsProfileBindingMapsClient(connector client.Connector) *cpuMemThresholdsProfileBindingMapsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.settings.firewall.cpu_mem_thresholds_profile_binding_maps")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewCpuMemThresholdsProfileBindingMapsClient(connector vapiProtocolClient_.Connector) *cpuMemThresholdsProfileBindingMapsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.settings.firewall.cpu_mem_thresholds_profile_binding_maps")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	cIface := cpuMemThresholdsProfileBindingMapsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &cIface
 }
 
-func (cIface *cpuMemThresholdsProfileBindingMapsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (cIface *cpuMemThresholdsProfileBindingMapsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := cIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
 func (cIface *cpuMemThresholdsProfileBindingMapsClient) Delete(cpuMemThresholdsProfileBindingMapIdParam string) error {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(cpuMemThresholdsProfileBindingMapsDeleteInputType(), typeConverter)
+	operationRestMetaData := cpuMemThresholdsProfileBindingMapsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(cpuMemThresholdsProfileBindingMapsDeleteInputType(), typeConverter)
 	sv.AddStructField("CpuMemThresholdsProfileBindingMapId", cpuMemThresholdsProfileBindingMapIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := cpuMemThresholdsProfileBindingMapsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.cpu_mem_thresholds_profile_binding_maps", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (cIface *cpuMemThresholdsProfileBindingMapsClient) Get(cpuMemThresholdsProfileBindingMapIdParam string) (model.PolicyFirewallCPUMemThresholdsProfileBindingMap, error) {
+func (cIface *cpuMemThresholdsProfileBindingMapsClient) Get(cpuMemThresholdsProfileBindingMapIdParam string) (nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMap, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(cpuMemThresholdsProfileBindingMapsGetInputType(), typeConverter)
+	operationRestMetaData := cpuMemThresholdsProfileBindingMapsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(cpuMemThresholdsProfileBindingMapsGetInputType(), typeConverter)
 	sv.AddStructField("CpuMemThresholdsProfileBindingMapId", cpuMemThresholdsProfileBindingMapIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.PolicyFirewallCPUMemThresholdsProfileBindingMap
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMap
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := cpuMemThresholdsProfileBindingMapsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.cpu_mem_thresholds_profile_binding_maps", "get", inputDataValue, executionContext)
-	var emptyOutput model.PolicyFirewallCPUMemThresholdsProfileBindingMap
+	var emptyOutput nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMap
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), cpuMemThresholdsProfileBindingMapsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), CpuMemThresholdsProfileBindingMapsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.PolicyFirewallCPUMemThresholdsProfileBindingMap), nil
+		return output.(nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMap), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (cIface *cpuMemThresholdsProfileBindingMapsClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.PolicyFirewallCPUMemThresholdsProfileBindingMapListResult, error) {
+func (cIface *cpuMemThresholdsProfileBindingMapsClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMapListResult, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(cpuMemThresholdsProfileBindingMapsListInputType(), typeConverter)
+	operationRestMetaData := cpuMemThresholdsProfileBindingMapsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(cpuMemThresholdsProfileBindingMapsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -179,83 +189,82 @@ func (cIface *cpuMemThresholdsProfileBindingMapsClient) List(cursorParam *string
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.PolicyFirewallCPUMemThresholdsProfileBindingMapListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMapListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := cpuMemThresholdsProfileBindingMapsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.cpu_mem_thresholds_profile_binding_maps", "list", inputDataValue, executionContext)
-	var emptyOutput model.PolicyFirewallCPUMemThresholdsProfileBindingMapListResult
+	var emptyOutput nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMapListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), cpuMemThresholdsProfileBindingMapsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), CpuMemThresholdsProfileBindingMapsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.PolicyFirewallCPUMemThresholdsProfileBindingMapListResult), nil
+		return output.(nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMapListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (cIface *cpuMemThresholdsProfileBindingMapsClient) Patch(cpuMemThresholdsProfileBindingMapIdParam string, policyFirewallCPUMemThresholdsProfileBindingMapParam model.PolicyFirewallCPUMemThresholdsProfileBindingMap) error {
+func (cIface *cpuMemThresholdsProfileBindingMapsClient) Patch(cpuMemThresholdsProfileBindingMapIdParam string, policyFirewallCPUMemThresholdsProfileBindingMapParam nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMap) error {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(cpuMemThresholdsProfileBindingMapsPatchInputType(), typeConverter)
+	operationRestMetaData := cpuMemThresholdsProfileBindingMapsPatchRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(cpuMemThresholdsProfileBindingMapsPatchInputType(), typeConverter)
 	sv.AddStructField("CpuMemThresholdsProfileBindingMapId", cpuMemThresholdsProfileBindingMapIdParam)
 	sv.AddStructField("PolicyFirewallCPUMemThresholdsProfileBindingMap", policyFirewallCPUMemThresholdsProfileBindingMapParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := cpuMemThresholdsProfileBindingMapsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.cpu_mem_thresholds_profile_binding_maps", "patch", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (cIface *cpuMemThresholdsProfileBindingMapsClient) Update(cpuMemThresholdsProfileBindingMapIdParam string, policyFirewallCPUMemThresholdsProfileBindingMapParam model.PolicyFirewallCPUMemThresholdsProfileBindingMap) (model.PolicyFirewallCPUMemThresholdsProfileBindingMap, error) {
+func (cIface *cpuMemThresholdsProfileBindingMapsClient) Update(cpuMemThresholdsProfileBindingMapIdParam string, policyFirewallCPUMemThresholdsProfileBindingMapParam nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMap) (nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMap, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(cpuMemThresholdsProfileBindingMapsUpdateInputType(), typeConverter)
+	operationRestMetaData := cpuMemThresholdsProfileBindingMapsUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(cpuMemThresholdsProfileBindingMapsUpdateInputType(), typeConverter)
 	sv.AddStructField("CpuMemThresholdsProfileBindingMapId", cpuMemThresholdsProfileBindingMapIdParam)
 	sv.AddStructField("PolicyFirewallCPUMemThresholdsProfileBindingMap", policyFirewallCPUMemThresholdsProfileBindingMapParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.PolicyFirewallCPUMemThresholdsProfileBindingMap
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMap
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := cpuMemThresholdsProfileBindingMapsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.cpu_mem_thresholds_profile_binding_maps", "update", inputDataValue, executionContext)
-	var emptyOutput model.PolicyFirewallCPUMemThresholdsProfileBindingMap
+	var emptyOutput nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMap
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), cpuMemThresholdsProfileBindingMapsUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), CpuMemThresholdsProfileBindingMapsUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.PolicyFirewallCPUMemThresholdsProfileBindingMap), nil
+		return output.(nsx_policyModel.PolicyFirewallCPUMemThresholdsProfileBindingMap), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

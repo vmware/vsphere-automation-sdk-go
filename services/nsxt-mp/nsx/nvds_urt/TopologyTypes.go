@@ -11,53 +11,53 @@
 package nvds_urt
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func topologyApplyInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func topologyApplyInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["upgrade_topology"] = bindings.NewReferenceType(model.UpgradeTopologyBindingType)
-	fields["cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["use_recommended_topology_config"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["upgrade_topology"] = vapiBindings_.NewReferenceType(nsxModel.UpgradeTopologyBindingType)
+	fields["cluster_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["use_recommended_topology_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["upgrade_topology"] = "UpgradeTopology"
 	fieldNameMap["cluster_id"] = "ClusterId"
 	fieldNameMap["use_recommended_topology_config"] = "UseRecommendedTopologyConfig"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func topologyApplyOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.UpgradeTopologyBindingType)
+func TopologyApplyOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.UpgradeTopologyBindingType)
 }
 
-func topologyApplyRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func topologyApplyRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["upgrade_topology"] = bindings.NewReferenceType(model.UpgradeTopologyBindingType)
-	fields["cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["use_recommended_topology_config"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["upgrade_topology"] = vapiBindings_.NewReferenceType(nsxModel.UpgradeTopologyBindingType)
+	fields["cluster_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["use_recommended_topology_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["upgrade_topology"] = "UpgradeTopology"
 	fieldNameMap["cluster_id"] = "ClusterId"
 	fieldNameMap["use_recommended_topology_config"] = "UseRecommendedTopologyConfig"
-	paramsTypeMap["cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["use_recommended_topology_config"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["upgrade_topology"] = bindings.NewReferenceType(model.UpgradeTopologyBindingType)
+	paramsTypeMap["cluster_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["use_recommended_topology_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["upgrade_topology"] = vapiBindings_.NewReferenceType(nsxModel.UpgradeTopologyBindingType)
 	queryParams["cluster_id"] = "cluster_id"
 	queryParams["use_recommended_topology_config"] = "use_recommended_topology_config"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -78,54 +78,54 @@ func topologyApplyRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func topologyGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func topologyGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["precheck_id"] = bindings.NewStringType()
-	fields["cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["compute_manager_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["show_vds_config"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["precheck_id"] = vapiBindings_.NewStringType()
+	fields["cluster_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["compute_manager_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["show_vds_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["precheck_id"] = "PrecheckId"
 	fieldNameMap["cluster_id"] = "ClusterId"
 	fieldNameMap["compute_manager_id"] = "ComputeManagerId"
 	fieldNameMap["show_vds_config"] = "ShowVdsConfig"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func topologyGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.UpgradeTopologyBindingType)
+func TopologyGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.UpgradeTopologyBindingType)
 }
 
-func topologyGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func topologyGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["precheck_id"] = bindings.NewStringType()
-	fields["cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["compute_manager_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["show_vds_config"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["precheck_id"] = vapiBindings_.NewStringType()
+	fields["cluster_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["compute_manager_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["show_vds_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["precheck_id"] = "PrecheckId"
 	fieldNameMap["cluster_id"] = "ClusterId"
 	fieldNameMap["compute_manager_id"] = "ComputeManagerId"
 	fieldNameMap["show_vds_config"] = "ShowVdsConfig"
-	paramsTypeMap["cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["precheck_id"] = bindings.NewStringType()
-	paramsTypeMap["show_vds_config"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["compute_manager_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["precheckId"] = bindings.NewStringType()
+	paramsTypeMap["compute_manager_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["cluster_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["show_vds_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["precheck_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["precheckId"] = vapiBindings_.NewStringType()
 	pathParams["precheck_id"] = "precheckId"
 	queryParams["compute_manager_id"] = "compute_manager_id"
 	queryParams["cluster_id"] = "cluster_id"
 	queryParams["show_vds_config"] = "show_vds_config"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -138,6 +138,54 @@ func topologyGetRestMetadata() protocol.OperationRestMetadata {
 		"",
 		"GET",
 		"/api/v1/nvds-urt/topology/{precheckId}",
+		"",
+		resultHeaders,
+		200,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
+func topologyRevertInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["upgrade_topology"] = vapiBindings_.NewReferenceType(nsxModel.UpgradeTopologyBindingType)
+	fieldNameMap["upgrade_topology"] = "UpgradeTopology"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func TopologyRevertOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.UpgradeTopologyBindingType)
+}
+
+func topologyRevertRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["upgrade_topology"] = vapiBindings_.NewReferenceType(nsxModel.UpgradeTopologyBindingType)
+	fieldNameMap["upgrade_topology"] = "UpgradeTopology"
+	paramsTypeMap["upgrade_topology"] = vapiBindings_.NewReferenceType(nsxModel.UpgradeTopologyBindingType)
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"action=revert",
+		"upgrade_topology",
+		"POST",
+		"/api/v1/nvds-urt/topology",
 		"",
 		resultHeaders,
 		200,

@@ -9,15 +9,14 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ServiceConfigsClient interface {
 
@@ -25,16 +24,18 @@ type ServiceConfigsClient interface {
 	//
 	// @param serviceConfigParam (required)
 	// @return com.vmware.nsx.model.ServiceConfig
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(serviceConfigParam model.ServiceConfig) (model.ServiceConfig, error)
+	Create(serviceConfigParam nsxModel.ServiceConfig) (nsxModel.ServiceConfig, error)
 
 	// Deletes the specified service config
 	//
 	// @param configSetIdParam service Ccnfig Id (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -46,12 +47,13 @@ type ServiceConfigsClient interface {
 	//
 	// @param configSetIdParam Service Config Id (required)
 	// @return com.vmware.nsx.model.ServiceConfig
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(configSetIdParam string) (model.ServiceConfig, error)
+	Get(configSetIdParam string) (nsxModel.ServiceConfig, error)
 
 	// List of all service configs.
 	//
@@ -62,81 +64,84 @@ type ServiceConfigsClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.ServiceConfigListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, profileTypeParam *string, sortAscendingParam *bool, sortByParam *string) (model.ServiceConfigListResult, error)
+	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, profileTypeParam *string, sortAscendingParam *bool, sortByParam *string) (nsxModel.ServiceConfigListResult, error)
 
 	// Updates the specified ServiceConfig.
 	//
 	// @param configSetIdParam service config Id (required)
 	// @param serviceConfigParam (required)
 	// @return com.vmware.nsx.model.ServiceConfig
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(configSetIdParam string, serviceConfigParam model.ServiceConfig) (model.ServiceConfig, error)
+	Update(configSetIdParam string, serviceConfigParam nsxModel.ServiceConfig) (nsxModel.ServiceConfig, error)
 }
 
 type serviceConfigsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewServiceConfigsClient(connector client.Connector) *serviceConfigsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.service_configs")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create": core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewServiceConfigsClient(connector vapiProtocolClient_.Connector) *serviceConfigsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.service_configs")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	sIface := serviceConfigsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *serviceConfigsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (sIface *serviceConfigsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *serviceConfigsClient) Create(serviceConfigParam model.ServiceConfig) (model.ServiceConfig, error) {
+func (sIface *serviceConfigsClient) Create(serviceConfigParam nsxModel.ServiceConfig) (nsxModel.ServiceConfig, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceConfigsCreateInputType(), typeConverter)
+	operationRestMetaData := serviceConfigsCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(serviceConfigsCreateInputType(), typeConverter)
 	sv.AddStructField("ServiceConfig", serviceConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ServiceConfig
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ServiceConfig
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := serviceConfigsCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.service_configs", "create", inputDataValue, executionContext)
-	var emptyOutput model.ServiceConfig
+	var emptyOutput nsxModel.ServiceConfig
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), serviceConfigsCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ServiceConfigsCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ServiceConfig), nil
+		return output.(nsxModel.ServiceConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -145,63 +150,69 @@ func (sIface *serviceConfigsClient) Create(serviceConfigParam model.ServiceConfi
 func (sIface *serviceConfigsClient) Delete(configSetIdParam string) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceConfigsDeleteInputType(), typeConverter)
+	operationRestMetaData := serviceConfigsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(serviceConfigsDeleteInputType(), typeConverter)
 	sv.AddStructField("ConfigSetId", configSetIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := serviceConfigsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.service_configs", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (sIface *serviceConfigsClient) Get(configSetIdParam string) (model.ServiceConfig, error) {
+func (sIface *serviceConfigsClient) Get(configSetIdParam string) (nsxModel.ServiceConfig, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceConfigsGetInputType(), typeConverter)
+	operationRestMetaData := serviceConfigsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(serviceConfigsGetInputType(), typeConverter)
 	sv.AddStructField("ConfigSetId", configSetIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ServiceConfig
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ServiceConfig
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := serviceConfigsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.service_configs", "get", inputDataValue, executionContext)
-	var emptyOutput model.ServiceConfig
+	var emptyOutput nsxModel.ServiceConfig
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), serviceConfigsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ServiceConfigsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ServiceConfig), nil
+		return output.(nsxModel.ServiceConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *serviceConfigsClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, profileTypeParam *string, sortAscendingParam *bool, sortByParam *string) (model.ServiceConfigListResult, error) {
+func (sIface *serviceConfigsClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, profileTypeParam *string, sortAscendingParam *bool, sortByParam *string) (nsxModel.ServiceConfigListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceConfigsListInputType(), typeConverter)
+	operationRestMetaData := serviceConfigsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(serviceConfigsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
@@ -210,57 +221,55 @@ func (sIface *serviceConfigsClient) List(cursorParam *string, includedFieldsPara
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ServiceConfigListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ServiceConfigListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := serviceConfigsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.service_configs", "list", inputDataValue, executionContext)
-	var emptyOutput model.ServiceConfigListResult
+	var emptyOutput nsxModel.ServiceConfigListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), serviceConfigsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ServiceConfigsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ServiceConfigListResult), nil
+		return output.(nsxModel.ServiceConfigListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *serviceConfigsClient) Update(configSetIdParam string, serviceConfigParam model.ServiceConfig) (model.ServiceConfig, error) {
+func (sIface *serviceConfigsClient) Update(configSetIdParam string, serviceConfigParam nsxModel.ServiceConfig) (nsxModel.ServiceConfig, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceConfigsUpdateInputType(), typeConverter)
+	operationRestMetaData := serviceConfigsUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(serviceConfigsUpdateInputType(), typeConverter)
 	sv.AddStructField("ConfigSetId", configSetIdParam)
 	sv.AddStructField("ServiceConfig", serviceConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ServiceConfig
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ServiceConfig
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := serviceConfigsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.service_configs", "update", inputDataValue, executionContext)
-	var emptyOutput model.ServiceConfig
+	var emptyOutput nsxModel.ServiceConfig
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), serviceConfigsUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ServiceConfigsUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ServiceConfig), nil
+		return output.(nsxModel.ServiceConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

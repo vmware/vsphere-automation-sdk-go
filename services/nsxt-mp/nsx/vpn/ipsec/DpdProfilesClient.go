@@ -9,33 +9,44 @@
 package ipsec
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DpdProfilesClient interface {
 
 	// Create dead peer detection (DPD) profile. Any change in profile affects all sessions consuming this profile.
 	//
+	//  Please use below Policy API.
+	//  PATCH /policy/api/v1/infra/ipsec-vpn-dpd-profiles/<dpd-profile-id>.
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param ipSecVPNDPDProfileParam (required)
 	// @return com.vmware.nsx.model.IPSecVPNDPDProfile
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(ipSecVPNDPDProfileParam model.IPSecVPNDPDProfile) (model.IPSecVPNDPDProfile, error)
+	Create(ipSecVPNDPDProfileParam nsxModel.IPSecVPNDPDProfile) (nsxModel.IPSecVPNDPDProfile, error)
 
 	// Delete dead peer detection (DPD) profile.
 	//
+	//  Please use below Policy API.
+	//  DELETE /policy/api/v1/infra/ipsec-vpn-dpd-profiles/<dpd-profile-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param ipsecVpnDpdProfileIdParam (required)
 	// @param forceParam Force delete the resource even if it is being used somewhere (optional, default to false)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -45,16 +56,27 @@ type DpdProfilesClient interface {
 
 	// Get IPSec dead peer detection (DPD) profile.
 	//
+	//  Please use below Policy API.
+	//  GET /policy/api/v1/infra/ipsec-vpn-dpd-profiles/<dpd-profile-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param ipsecVpnDpdProfileIdParam (required)
 	// @return com.vmware.nsx.model.IPSecVPNDPDProfile
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(ipsecVpnDpdProfileIdParam string) (model.IPSecVPNDPDProfile, error)
+	Get(ipsecVpnDpdProfileIdParam string) (nsxModel.IPSecVPNDPDProfile, error)
 
 	// Get paginated list of all dead peer detection (DPD) profiles.
+	//
+	//  Please use below Policy API.
+	//  GET /policy/api/v1/infra/ipsec-vpn-dpd-profiles
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
@@ -62,81 +84,89 @@ type DpdProfilesClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.IPSecVPNDPDProfileListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IPSecVPNDPDProfileListResult, error)
+	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.IPSecVPNDPDProfileListResult, error)
 
 	// Edit IPSec dead peer detection (DPD) profile.
+	//
+	//  Please use below Policy API.
+	//  PUT /policy/api/v1/infra/ipsec-vpn-dpd-profiles/<dpd-profile-id>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param ipsecVpnDpdProfileIdParam (required)
 	// @param ipSecVPNDPDProfileParam (required)
 	// @return com.vmware.nsx.model.IPSecVPNDPDProfile
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(ipsecVpnDpdProfileIdParam string, ipSecVPNDPDProfileParam model.IPSecVPNDPDProfile) (model.IPSecVPNDPDProfile, error)
+	Update(ipsecVpnDpdProfileIdParam string, ipSecVPNDPDProfileParam nsxModel.IPSecVPNDPDProfile) (nsxModel.IPSecVPNDPDProfile, error)
 }
 
 type dpdProfilesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewDpdProfilesClient(connector client.Connector) *dpdProfilesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.vpn.ipsec.dpd_profiles")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create": core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewDpdProfilesClient(connector vapiProtocolClient_.Connector) *dpdProfilesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.vpn.ipsec.dpd_profiles")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	dIface := dpdProfilesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &dIface
 }
 
-func (dIface *dpdProfilesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (dIface *dpdProfilesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := dIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (dIface *dpdProfilesClient) Create(ipSecVPNDPDProfileParam model.IPSecVPNDPDProfile) (model.IPSecVPNDPDProfile, error) {
+func (dIface *dpdProfilesClient) Create(ipSecVPNDPDProfileParam nsxModel.IPSecVPNDPDProfile) (nsxModel.IPSecVPNDPDProfile, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dpdProfilesCreateInputType(), typeConverter)
+	operationRestMetaData := dpdProfilesCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(dpdProfilesCreateInputType(), typeConverter)
 	sv.AddStructField("IpSecVPNDPDProfile", ipSecVPNDPDProfileParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IPSecVPNDPDProfile
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IPSecVPNDPDProfile
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := dpdProfilesCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx.vpn.ipsec.dpd_profiles", "create", inputDataValue, executionContext)
-	var emptyOutput model.IPSecVPNDPDProfile
+	var emptyOutput nsxModel.IPSecVPNDPDProfile
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), dpdProfilesCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DpdProfilesCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IPSecVPNDPDProfile), nil
+		return output.(nsxModel.IPSecVPNDPDProfile), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -145,64 +175,70 @@ func (dIface *dpdProfilesClient) Create(ipSecVPNDPDProfileParam model.IPSecVPNDP
 func (dIface *dpdProfilesClient) Delete(ipsecVpnDpdProfileIdParam string, forceParam *bool) error {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dpdProfilesDeleteInputType(), typeConverter)
+	operationRestMetaData := dpdProfilesDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(dpdProfilesDeleteInputType(), typeConverter)
 	sv.AddStructField("IpsecVpnDpdProfileId", ipsecVpnDpdProfileIdParam)
 	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := dpdProfilesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx.vpn.ipsec.dpd_profiles", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (dIface *dpdProfilesClient) Get(ipsecVpnDpdProfileIdParam string) (model.IPSecVPNDPDProfile, error) {
+func (dIface *dpdProfilesClient) Get(ipsecVpnDpdProfileIdParam string) (nsxModel.IPSecVPNDPDProfile, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dpdProfilesGetInputType(), typeConverter)
+	operationRestMetaData := dpdProfilesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(dpdProfilesGetInputType(), typeConverter)
 	sv.AddStructField("IpsecVpnDpdProfileId", ipsecVpnDpdProfileIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IPSecVPNDPDProfile
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IPSecVPNDPDProfile
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := dpdProfilesGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx.vpn.ipsec.dpd_profiles", "get", inputDataValue, executionContext)
-	var emptyOutput model.IPSecVPNDPDProfile
+	var emptyOutput nsxModel.IPSecVPNDPDProfile
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), dpdProfilesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DpdProfilesGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IPSecVPNDPDProfile), nil
+		return output.(nsxModel.IPSecVPNDPDProfile), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (dIface *dpdProfilesClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IPSecVPNDPDProfileListResult, error) {
+func (dIface *dpdProfilesClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.IPSecVPNDPDProfileListResult, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dpdProfilesListInputType(), typeConverter)
+	operationRestMetaData := dpdProfilesListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(dpdProfilesListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
@@ -210,57 +246,55 @@ func (dIface *dpdProfilesClient) List(cursorParam *string, includedFieldsParam *
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IPSecVPNDPDProfileListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IPSecVPNDPDProfileListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := dpdProfilesListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx.vpn.ipsec.dpd_profiles", "list", inputDataValue, executionContext)
-	var emptyOutput model.IPSecVPNDPDProfileListResult
+	var emptyOutput nsxModel.IPSecVPNDPDProfileListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), dpdProfilesListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DpdProfilesListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IPSecVPNDPDProfileListResult), nil
+		return output.(nsxModel.IPSecVPNDPDProfileListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (dIface *dpdProfilesClient) Update(ipsecVpnDpdProfileIdParam string, ipSecVPNDPDProfileParam model.IPSecVPNDPDProfile) (model.IPSecVPNDPDProfile, error) {
+func (dIface *dpdProfilesClient) Update(ipsecVpnDpdProfileIdParam string, ipSecVPNDPDProfileParam nsxModel.IPSecVPNDPDProfile) (nsxModel.IPSecVPNDPDProfile, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dpdProfilesUpdateInputType(), typeConverter)
+	operationRestMetaData := dpdProfilesUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(dpdProfilesUpdateInputType(), typeConverter)
 	sv.AddStructField("IpsecVpnDpdProfileId", ipsecVpnDpdProfileIdParam)
 	sv.AddStructField("IpSecVPNDPDProfile", ipSecVPNDPDProfileParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IPSecVPNDPDProfile
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IPSecVPNDPDProfile
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := dpdProfilesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx.vpn.ipsec.dpd_profiles", "update", inputDataValue, executionContext)
-	var emptyOutput model.IPSecVPNDPDProfile
+	var emptyOutput nsxModel.IPSecVPNDPDProfile
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), dpdProfilesUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DpdProfilesUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IPSecVPNDPDProfile), nil
+		return output.(nsxModel.IPSecVPNDPDProfile), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

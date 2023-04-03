@@ -11,57 +11,57 @@
 package endpoint_policies
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func endpointRulesDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func endpointRulesDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["endpoint_policy_id"] = bindings.NewStringType()
-	fields["endpoint_rule_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_rule_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["endpoint_policy_id"] = "EndpointPolicyId"
 	fieldNameMap["endpoint_rule_id"] = "EndpointRuleId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func endpointRulesDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func EndpointRulesDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func endpointRulesDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func endpointRulesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["endpoint_policy_id"] = bindings.NewStringType()
-	fields["endpoint_rule_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_rule_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["endpoint_policy_id"] = "EndpointPolicyId"
 	fieldNameMap["endpoint_rule_id"] = "EndpointRuleId"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["endpoint_rule_id"] = bindings.NewStringType()
-	paramsTypeMap["endpoint_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["endpointPolicyId"] = bindings.NewStringType()
-	paramsTypeMap["endpointRuleId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpoint_rule_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpointPolicyId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpointRuleId"] = vapiBindings_.NewStringType()
 	pathParams["endpoint_policy_id"] = "endpointPolicyId"
 	pathParams["endpoint_rule_id"] = "endpointRuleId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -82,50 +82,50 @@ func endpointRulesDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func endpointRulesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func endpointRulesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["endpoint_policy_id"] = bindings.NewStringType()
-	fields["endpoint_rule_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_rule_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["endpoint_policy_id"] = "EndpointPolicyId"
 	fieldNameMap["endpoint_rule_id"] = "EndpointRuleId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func endpointRulesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.EndpointRuleBindingType)
+func EndpointRulesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.EndpointRuleBindingType)
 }
 
-func endpointRulesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func endpointRulesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["endpoint_policy_id"] = bindings.NewStringType()
-	fields["endpoint_rule_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_rule_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["endpoint_policy_id"] = "EndpointPolicyId"
 	fieldNameMap["endpoint_rule_id"] = "EndpointRuleId"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["endpoint_rule_id"] = bindings.NewStringType()
-	paramsTypeMap["endpoint_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["endpointPolicyId"] = bindings.NewStringType()
-	paramsTypeMap["endpointRuleId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpoint_rule_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpointPolicyId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpointRuleId"] = vapiBindings_.NewStringType()
 	pathParams["endpoint_policy_id"] = "endpointPolicyId"
 	pathParams["endpoint_rule_id"] = "endpointRuleId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -146,17 +146,17 @@ func endpointRulesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func endpointRulesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func endpointRulesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["endpoint_policy_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["endpoint_policy_id"] = "EndpointPolicyId"
 	fieldNameMap["cursor"] = "Cursor"
@@ -165,31 +165,31 @@ func endpointRulesListInputType() bindings.StructType {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func endpointRulesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.EndpointRuleListResultBindingType)
+func EndpointRulesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.EndpointRuleListResultBindingType)
 }
 
-func endpointRulesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func endpointRulesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["endpoint_policy_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["endpoint_policy_id"] = "EndpointPolicyId"
 	fieldNameMap["cursor"] = "Cursor"
@@ -198,16 +198,16 @@ func endpointRulesListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["endpoint_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["endpointPolicyId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpointPolicyId"] = vapiBindings_.NewStringType()
 	pathParams["endpoint_policy_id"] = "endpointPolicyId"
 	pathParams["domain_id"] = "domainId"
 	queryParams["cursor"] = "cursor"
@@ -218,7 +218,7 @@ func endpointRulesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -239,55 +239,55 @@ func endpointRulesListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func endpointRulesPatchInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func endpointRulesPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["endpoint_policy_id"] = bindings.NewStringType()
-	fields["endpoint_rule_id"] = bindings.NewStringType()
-	fields["endpoint_rule"] = bindings.NewReferenceType(model.EndpointRuleBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_rule_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_rule"] = vapiBindings_.NewReferenceType(nsx_policyModel.EndpointRuleBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["endpoint_policy_id"] = "EndpointPolicyId"
 	fieldNameMap["endpoint_rule_id"] = "EndpointRuleId"
 	fieldNameMap["endpoint_rule"] = "EndpointRule"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func endpointRulesPatchOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func EndpointRulesPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func endpointRulesPatchRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func endpointRulesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["endpoint_policy_id"] = bindings.NewStringType()
-	fields["endpoint_rule_id"] = bindings.NewStringType()
-	fields["endpoint_rule"] = bindings.NewReferenceType(model.EndpointRuleBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_rule_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_rule"] = vapiBindings_.NewReferenceType(nsx_policyModel.EndpointRuleBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["endpoint_policy_id"] = "EndpointPolicyId"
 	fieldNameMap["endpoint_rule_id"] = "EndpointRuleId"
 	fieldNameMap["endpoint_rule"] = "EndpointRule"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["endpoint_rule_id"] = bindings.NewStringType()
-	paramsTypeMap["endpoint_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["endpoint_rule"] = bindings.NewReferenceType(model.EndpointRuleBindingType)
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["endpointPolicyId"] = bindings.NewStringType()
-	paramsTypeMap["endpointRuleId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpoint_rule"] = vapiBindings_.NewReferenceType(nsx_policyModel.EndpointRuleBindingType)
+	paramsTypeMap["endpoint_rule_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpointPolicyId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpointRuleId"] = vapiBindings_.NewStringType()
 	pathParams["endpoint_policy_id"] = "endpointPolicyId"
 	pathParams["endpoint_rule_id"] = "endpointRuleId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -308,55 +308,55 @@ func endpointRulesPatchRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func endpointRulesUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func endpointRulesUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["endpoint_policy_id"] = bindings.NewStringType()
-	fields["endpoint_rule_id"] = bindings.NewStringType()
-	fields["endpoint_rule"] = bindings.NewReferenceType(model.EndpointRuleBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_rule_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_rule"] = vapiBindings_.NewReferenceType(nsx_policyModel.EndpointRuleBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["endpoint_policy_id"] = "EndpointPolicyId"
 	fieldNameMap["endpoint_rule_id"] = "EndpointRuleId"
 	fieldNameMap["endpoint_rule"] = "EndpointRule"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func endpointRulesUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.EndpointRuleBindingType)
+func EndpointRulesUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.EndpointRuleBindingType)
 }
 
-func endpointRulesUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func endpointRulesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["endpoint_policy_id"] = bindings.NewStringType()
-	fields["endpoint_rule_id"] = bindings.NewStringType()
-	fields["endpoint_rule"] = bindings.NewReferenceType(model.EndpointRuleBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_rule_id"] = vapiBindings_.NewStringType()
+	fields["endpoint_rule"] = vapiBindings_.NewReferenceType(nsx_policyModel.EndpointRuleBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["endpoint_policy_id"] = "EndpointPolicyId"
 	fieldNameMap["endpoint_rule_id"] = "EndpointRuleId"
 	fieldNameMap["endpoint_rule"] = "EndpointRule"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["endpoint_rule_id"] = bindings.NewStringType()
-	paramsTypeMap["endpoint_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["endpoint_rule"] = bindings.NewReferenceType(model.EndpointRuleBindingType)
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["endpointPolicyId"] = bindings.NewStringType()
-	paramsTypeMap["endpointRuleId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpoint_rule"] = vapiBindings_.NewReferenceType(nsx_policyModel.EndpointRuleBindingType)
+	paramsTypeMap["endpoint_rule_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpoint_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpointPolicyId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["endpointRuleId"] = vapiBindings_.NewStringType()
 	pathParams["endpoint_policy_id"] = "endpointPolicyId"
 	pathParams["endpoint_rule_id"] = "endpointRuleId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

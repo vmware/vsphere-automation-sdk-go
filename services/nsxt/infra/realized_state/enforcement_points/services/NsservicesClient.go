@@ -9,31 +9,35 @@
 package services
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type NsservicesClient interface {
 
 	// Read a NSService.
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param enforcementPointNameParam Enforcement Point Name (required)
 	// @param nsserviceNameParam NSService Name (required)
 	// @return com.vmware.nsx_policy.model.GenericPolicyRealizedResource
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(enforcementPointNameParam string, nsserviceNameParam string) (model.GenericPolicyRealizedResource, error)
+	Get(enforcementPointNameParam string, nsserviceNameParam string) (nsx_policyModel.GenericPolicyRealizedResource, error)
 
 	// Paginated list of all Realized NSService.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param enforcementPointNameParam Enforcement Point Name (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
@@ -42,76 +46,82 @@ type NsservicesClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.GenericPolicyRealizedResourceListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(enforcementPointNameParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.GenericPolicyRealizedResourceListResult, error)
+	List(enforcementPointNameParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.GenericPolicyRealizedResourceListResult, error)
 }
 
 type nsservicesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewNsservicesClient(connector client.Connector) *nsservicesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.realized_state.enforcement_points.services.nsservices")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
+func NewNsservicesClient(connector vapiProtocolClient_.Connector) *nsservicesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.realized_state.enforcement_points.services.nsservices")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	nIface := nsservicesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &nIface
 }
 
-func (nIface *nsservicesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (nIface *nsservicesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := nIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (nIface *nsservicesClient) Get(enforcementPointNameParam string, nsserviceNameParam string) (model.GenericPolicyRealizedResource, error) {
+func (nIface *nsservicesClient) Get(enforcementPointNameParam string, nsserviceNameParam string) (nsx_policyModel.GenericPolicyRealizedResource, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(nsservicesGetInputType(), typeConverter)
+	operationRestMetaData := nsservicesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(nsservicesGetInputType(), typeConverter)
 	sv.AddStructField("EnforcementPointName", enforcementPointNameParam)
 	sv.AddStructField("NsserviceName", nsserviceNameParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.GenericPolicyRealizedResource
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.GenericPolicyRealizedResource
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := nsservicesGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.realized_state.enforcement_points.services.nsservices", "get", inputDataValue, executionContext)
-	var emptyOutput model.GenericPolicyRealizedResource
+	var emptyOutput nsx_policyModel.GenericPolicyRealizedResource
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), nsservicesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NsservicesGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.GenericPolicyRealizedResource), nil
+		return output.(nsx_policyModel.GenericPolicyRealizedResource), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (nIface *nsservicesClient) List(enforcementPointNameParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.GenericPolicyRealizedResourceListResult, error) {
+func (nIface *nsservicesClient) List(enforcementPointNameParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.GenericPolicyRealizedResourceListResult, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(nsservicesListInputType(), typeConverter)
+	operationRestMetaData := nsservicesListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(nsservicesListInputType(), typeConverter)
 	sv.AddStructField("EnforcementPointName", enforcementPointNameParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -120,25 +130,22 @@ func (nIface *nsservicesClient) List(enforcementPointNameParam string, cursorPar
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.GenericPolicyRealizedResourceListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.GenericPolicyRealizedResourceListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := nsservicesListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.realized_state.enforcement_points.services.nsservices", "list", inputDataValue, executionContext)
-	var emptyOutput model.GenericPolicyRealizedResourceListResult
+	var emptyOutput nsx_policyModel.GenericPolicyRealizedResourceListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), nsservicesListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NsservicesListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.GenericPolicyRealizedResourceListResult), nil
+		return output.(nsx_policyModel.GenericPolicyRealizedResourceListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

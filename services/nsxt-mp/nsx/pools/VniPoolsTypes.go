@@ -11,41 +11,41 @@
 package pools
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func vniPoolsCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func vniPoolsCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["vni_pool"] = bindings.NewReferenceType(model.VniPoolBindingType)
+	fields["vni_pool"] = vapiBindings_.NewReferenceType(nsxModel.VniPoolBindingType)
 	fieldNameMap["vni_pool"] = "VniPool"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func vniPoolsCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.VniPoolBindingType)
+func VniPoolsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.VniPoolBindingType)
 }
 
-func vniPoolsCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func vniPoolsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["vni_pool"] = bindings.NewReferenceType(model.VniPoolBindingType)
+	fields["vni_pool"] = vapiBindings_.NewReferenceType(nsxModel.VniPoolBindingType)
 	fieldNameMap["vni_pool"] = "VniPool"
-	paramsTypeMap["vni_pool"] = bindings.NewReferenceType(model.VniPoolBindingType)
+	paramsTypeMap["vni_pool"] = vapiBindings_.NewReferenceType(nsxModel.VniPoolBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,42 +66,42 @@ func vniPoolsCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func vniPoolsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func vniPoolsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["pool_id"] = bindings.NewStringType()
-	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["pool_id"] = vapiBindings_.NewStringType()
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["pool_id"] = "PoolId"
 	fieldNameMap["force"] = "Force"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func vniPoolsDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func VniPoolsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func vniPoolsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func vniPoolsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["pool_id"] = bindings.NewStringType()
-	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["pool_id"] = vapiBindings_.NewStringType()
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["pool_id"] = "PoolId"
 	fieldNameMap["force"] = "Force"
-	paramsTypeMap["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["pool_id"] = bindings.NewStringType()
-	paramsTypeMap["poolId"] = bindings.NewStringType()
+	paramsTypeMap["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["pool_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["poolId"] = vapiBindings_.NewStringType()
 	pathParams["pool_id"] = "poolId"
 	queryParams["force"] = "force"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -122,36 +122,36 @@ func vniPoolsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func vniPoolsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func vniPoolsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["pool_id"] = bindings.NewStringType()
+	fields["pool_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["pool_id"] = "PoolId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func vniPoolsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.VniPoolBindingType)
+func VniPoolsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.VniPoolBindingType)
 }
 
-func vniPoolsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func vniPoolsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["pool_id"] = bindings.NewStringType()
+	fields["pool_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["pool_id"] = "PoolId"
-	paramsTypeMap["pool_id"] = bindings.NewStringType()
-	paramsTypeMap["poolId"] = bindings.NewStringType()
+	paramsTypeMap["pool_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["poolId"] = vapiBindings_.NewStringType()
 	pathParams["pool_id"] = "poolId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -172,51 +172,51 @@ func vniPoolsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func vniPoolsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func vniPoolsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func vniPoolsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.VniPoolListResultBindingType)
+func VniPoolsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.VniPoolListResultBindingType)
 }
 
-func vniPoolsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func vniPoolsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
@@ -224,7 +224,7 @@ func vniPoolsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -245,41 +245,41 @@ func vniPoolsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func vniPoolsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func vniPoolsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["pool_id"] = bindings.NewStringType()
-	fields["vni_pool"] = bindings.NewReferenceType(model.VniPoolBindingType)
+	fields["pool_id"] = vapiBindings_.NewStringType()
+	fields["vni_pool"] = vapiBindings_.NewReferenceType(nsxModel.VniPoolBindingType)
 	fieldNameMap["pool_id"] = "PoolId"
 	fieldNameMap["vni_pool"] = "VniPool"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func vniPoolsUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.VniPoolBindingType)
+func VniPoolsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.VniPoolBindingType)
 }
 
-func vniPoolsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func vniPoolsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["pool_id"] = bindings.NewStringType()
-	fields["vni_pool"] = bindings.NewReferenceType(model.VniPoolBindingType)
+	fields["pool_id"] = vapiBindings_.NewStringType()
+	fields["vni_pool"] = vapiBindings_.NewReferenceType(nsxModel.VniPoolBindingType)
 	fieldNameMap["pool_id"] = "PoolId"
 	fieldNameMap["vni_pool"] = "VniPool"
-	paramsTypeMap["vni_pool"] = bindings.NewReferenceType(model.VniPoolBindingType)
-	paramsTypeMap["pool_id"] = bindings.NewStringType()
-	paramsTypeMap["poolId"] = bindings.NewStringType()
+	paramsTypeMap["pool_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["vni_pool"] = vapiBindings_.NewReferenceType(nsxModel.VniPoolBindingType)
+	paramsTypeMap["poolId"] = vapiBindings_.NewStringType()
 	pathParams["pool_id"] = "poolId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

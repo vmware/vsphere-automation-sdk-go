@@ -11,10 +11,10 @@
 package backups
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
@@ -30,21 +30,21 @@ const Config_UPDATE_FRAME_TYPE_LOCAL_LOCAL_MANAGER = "LOCAL_LOCAL_MANAGER"
 // Possible value for ``frameType`` of method Config#update.
 const Config_UPDATE_FRAME_TYPE_NSX_INTELLIGENCE = "NSX_INTELLIGENCE"
 
-func configGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func configGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func configGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BackupConfigurationBindingType)
+func ConfigGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BackupConfigurationBindingType)
 }
 
-func configGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func configGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -52,7 +52,7 @@ func configGetRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -73,46 +73,46 @@ func configGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func configUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func configUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["backup_configuration"] = bindings.NewReferenceType(model.BackupConfigurationBindingType)
-	fields["frame_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["site_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["backup_configuration"] = vapiBindings_.NewReferenceType(nsxModel.BackupConfigurationBindingType)
+	fields["frame_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["site_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["backup_configuration"] = "BackupConfiguration"
 	fieldNameMap["frame_type"] = "FrameType"
 	fieldNameMap["site_id"] = "SiteId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func configUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BackupConfigurationBindingType)
+func ConfigUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BackupConfigurationBindingType)
 }
 
-func configUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func configUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["backup_configuration"] = bindings.NewReferenceType(model.BackupConfigurationBindingType)
-	fields["frame_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["site_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["backup_configuration"] = vapiBindings_.NewReferenceType(nsxModel.BackupConfigurationBindingType)
+	fields["frame_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["site_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["backup_configuration"] = "BackupConfiguration"
 	fieldNameMap["frame_type"] = "FrameType"
 	fieldNameMap["site_id"] = "SiteId"
-	paramsTypeMap["frame_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["site_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["backup_configuration"] = bindings.NewReferenceType(model.BackupConfigurationBindingType)
+	paramsTypeMap["site_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["frame_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["backup_configuration"] = vapiBindings_.NewReferenceType(nsxModel.BackupConfigurationBindingType)
 	queryParams["site_id"] = "site_id"
 	queryParams["frame_type"] = "frame_type"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

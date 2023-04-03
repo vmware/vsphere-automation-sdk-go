@@ -9,15 +9,14 @@
 package controller_nodes
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DeploymentsClient interface {
 
@@ -25,18 +24,20 @@ type DeploymentsClient interface {
 	//
 	// @param addALBControllerNodeVMInfoParam (required)
 	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequestList
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(addALBControllerNodeVMInfoParam model.AddALBControllerNodeVMInfo) (model.ALBControllerNodeVMDeploymentRequestList, error)
+	Create(addALBControllerNodeVMInfoParam nsx_policyModel.AddALBControllerNodeVMInfo) (nsx_policyModel.ALBControllerNodeVMDeploymentRequestList, error)
 
 	// Attempts to unregister and undeploy a specified auto-deployed cluster node VM. If it is a member of a cluster, then the VM will be automatically detached from the cluster before being unregistered and undeployed. Alternatively, if the original deployment attempt failed or the VM is not found, cleans up the deployment information associated with the deployment attempt. Note: If a VM has been successfully auto-deployed, then the associated deployment information will not be deleted unless and until the VM is successfully deleted.
 	//
 	// @param nodeIdParam (required)
 	// @param forceDeleteParam Delete by force (optional)
 	// @param inaccessibleParam Delete when controller is inaccessible (optional)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -48,23 +49,25 @@ type DeploymentsClient interface {
 	//
 	// @param nodeIdParam (required)
 	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequest
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(nodeIdParam string) (model.ALBControllerNodeVMDeploymentRequest, error)
+	Get(nodeIdParam string) (nsx_policyModel.ALBControllerNodeVMDeploymentRequest, error)
 
 	// Returns request information for every attempted deployment of a cluster node VM.
 	//
 	// @param stateParam the current state of the Advanced Load Balancer controller VM (optional)
 	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequestList
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(stateParam *string) (model.ALBControllerNodeVMDeploymentRequestList, error)
+	List(stateParam *string) (nsx_policyModel.ALBControllerNodeVMDeploymentRequestList, error)
 
 	// Update Advanced Load Balancer Controller node VM details
 	//
@@ -72,69 +75,71 @@ type DeploymentsClient interface {
 	// @param aLBControllerNodeVMDeploymentRequestParam (required)
 	// @param runningConfigParam Update Advanced Load Balancer Controller runtime config as well (optional)
 	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequest
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(nodeIdParam string, aLBControllerNodeVMDeploymentRequestParam model.ALBControllerNodeVMDeploymentRequest, runningConfigParam *bool) (model.ALBControllerNodeVMDeploymentRequest, error)
+	Update(nodeIdParam string, aLBControllerNodeVMDeploymentRequestParam nsx_policyModel.ALBControllerNodeVMDeploymentRequest, runningConfigParam *bool) (nsx_policyModel.ALBControllerNodeVMDeploymentRequest, error)
 }
 
 type deploymentsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewDeploymentsClient(connector client.Connector) *deploymentsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.alb.controller_nodes.deployments")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create": core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewDeploymentsClient(connector vapiProtocolClient_.Connector) *deploymentsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.alb.controller_nodes.deployments")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	dIface := deploymentsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &dIface
 }
 
-func (dIface *deploymentsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (dIface *deploymentsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := dIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (dIface *deploymentsClient) Create(addALBControllerNodeVMInfoParam model.AddALBControllerNodeVMInfo) (model.ALBControllerNodeVMDeploymentRequestList, error) {
+func (dIface *deploymentsClient) Create(addALBControllerNodeVMInfoParam nsx_policyModel.AddALBControllerNodeVMInfo) (nsx_policyModel.ALBControllerNodeVMDeploymentRequestList, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(deploymentsCreateInputType(), typeConverter)
+	operationRestMetaData := deploymentsCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(deploymentsCreateInputType(), typeConverter)
 	sv.AddStructField("AddALBControllerNodeVMInfo", addALBControllerNodeVMInfoParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ALBControllerNodeVMDeploymentRequestList
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.ALBControllerNodeVMDeploymentRequestList
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := deploymentsCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.alb.controller_nodes.deployments", "create", inputDataValue, executionContext)
-	var emptyOutput model.ALBControllerNodeVMDeploymentRequestList
+	var emptyOutput nsx_policyModel.ALBControllerNodeVMDeploymentRequestList
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), deploymentsCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DeploymentsCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ALBControllerNodeVMDeploymentRequestList), nil
+		return output.(nsx_policyModel.ALBControllerNodeVMDeploymentRequestList), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -143,120 +148,124 @@ func (dIface *deploymentsClient) Create(addALBControllerNodeVMInfoParam model.Ad
 func (dIface *deploymentsClient) Delete(nodeIdParam string, forceDeleteParam *bool, inaccessibleParam *string) error {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(deploymentsDeleteInputType(), typeConverter)
+	operationRestMetaData := deploymentsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(deploymentsDeleteInputType(), typeConverter)
 	sv.AddStructField("NodeId", nodeIdParam)
 	sv.AddStructField("ForceDelete", forceDeleteParam)
 	sv.AddStructField("Inaccessible", inaccessibleParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := deploymentsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.alb.controller_nodes.deployments", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (dIface *deploymentsClient) Get(nodeIdParam string) (model.ALBControllerNodeVMDeploymentRequest, error) {
+func (dIface *deploymentsClient) Get(nodeIdParam string) (nsx_policyModel.ALBControllerNodeVMDeploymentRequest, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(deploymentsGetInputType(), typeConverter)
+	operationRestMetaData := deploymentsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(deploymentsGetInputType(), typeConverter)
 	sv.AddStructField("NodeId", nodeIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ALBControllerNodeVMDeploymentRequest
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.ALBControllerNodeVMDeploymentRequest
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := deploymentsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.alb.controller_nodes.deployments", "get", inputDataValue, executionContext)
-	var emptyOutput model.ALBControllerNodeVMDeploymentRequest
+	var emptyOutput nsx_policyModel.ALBControllerNodeVMDeploymentRequest
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), deploymentsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DeploymentsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ALBControllerNodeVMDeploymentRequest), nil
+		return output.(nsx_policyModel.ALBControllerNodeVMDeploymentRequest), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (dIface *deploymentsClient) List(stateParam *string) (model.ALBControllerNodeVMDeploymentRequestList, error) {
+func (dIface *deploymentsClient) List(stateParam *string) (nsx_policyModel.ALBControllerNodeVMDeploymentRequestList, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(deploymentsListInputType(), typeConverter)
+	operationRestMetaData := deploymentsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(deploymentsListInputType(), typeConverter)
 	sv.AddStructField("State", stateParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ALBControllerNodeVMDeploymentRequestList
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.ALBControllerNodeVMDeploymentRequestList
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := deploymentsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.alb.controller_nodes.deployments", "list", inputDataValue, executionContext)
-	var emptyOutput model.ALBControllerNodeVMDeploymentRequestList
+	var emptyOutput nsx_policyModel.ALBControllerNodeVMDeploymentRequestList
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), deploymentsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DeploymentsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ALBControllerNodeVMDeploymentRequestList), nil
+		return output.(nsx_policyModel.ALBControllerNodeVMDeploymentRequestList), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (dIface *deploymentsClient) Update(nodeIdParam string, aLBControllerNodeVMDeploymentRequestParam model.ALBControllerNodeVMDeploymentRequest, runningConfigParam *bool) (model.ALBControllerNodeVMDeploymentRequest, error) {
+func (dIface *deploymentsClient) Update(nodeIdParam string, aLBControllerNodeVMDeploymentRequestParam nsx_policyModel.ALBControllerNodeVMDeploymentRequest, runningConfigParam *bool) (nsx_policyModel.ALBControllerNodeVMDeploymentRequest, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(deploymentsUpdateInputType(), typeConverter)
+	operationRestMetaData := deploymentsUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(deploymentsUpdateInputType(), typeConverter)
 	sv.AddStructField("NodeId", nodeIdParam)
 	sv.AddStructField("ALBControllerNodeVMDeploymentRequest", aLBControllerNodeVMDeploymentRequestParam)
 	sv.AddStructField("RunningConfig", runningConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ALBControllerNodeVMDeploymentRequest
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.ALBControllerNodeVMDeploymentRequest
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := deploymentsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.alb.controller_nodes.deployments", "update", inputDataValue, executionContext)
-	var emptyOutput model.ALBControllerNodeVMDeploymentRequest
+	var emptyOutput nsx_policyModel.ALBControllerNodeVMDeploymentRequest
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), deploymentsUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DeploymentsUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ALBControllerNodeVMDeploymentRequest), nil
+		return output.(nsx_policyModel.ALBControllerNodeVMDeploymentRequest), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

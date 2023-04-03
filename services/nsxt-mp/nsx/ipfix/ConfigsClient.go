@@ -9,35 +9,40 @@
 package ipfix
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ConfigsClient interface {
 
 	// Create a new IPFIX configuration
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param ipfixConfigParam (required)
-	// The parameter must contain all the properties defined in model.IpfixConfig.
+	// The parameter must contain all the properties defined in nsxModel.IpfixConfig.
 	// @return com.vmware.nsx.model.IpfixConfig
-	// The return value will contain all the properties defined in model.IpfixConfig.
+	// The return value will contain all the properties defined in nsxModel.IpfixConfig.
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(ipfixConfigParam *data.StructValue) (*data.StructValue, error)
+	Create(ipfixConfigParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 
 	// Delete an existing IPFIX configuration
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param configIdParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -47,15 +52,18 @@ type ConfigsClient interface {
 
 	// Get an existing IPFIX configuration
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param configIdParam (required)
 	// @return com.vmware.nsx.model.IpfixConfig
-	// The return value will contain all the properties defined in model.IpfixConfig.
+	// The return value will contain all the properties defined in nsxModel.IpfixConfig.
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(configIdParam string) (*data.StructValue, error)
+	Get(configIdParam string) (*vapiData_.StructValue, error)
 
 	// List IPFIX configuration
 	//
@@ -67,83 +75,88 @@ type ConfigsClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.IpfixConfigListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(appliedToParam *string, cursorParam *string, includedFieldsParam *string, ipfixConfigTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IpfixConfigListResult, error)
+	List(appliedToParam *string, cursorParam *string, includedFieldsParam *string, ipfixConfigTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.IpfixConfigListResult, error)
 
 	// Update an existing IPFIX configuration
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param configIdParam (required)
 	// @param ipfixConfigParam (required)
-	// The parameter must contain all the properties defined in model.IpfixConfig.
+	// The parameter must contain all the properties defined in nsxModel.IpfixConfig.
 	// @return com.vmware.nsx.model.IpfixConfig
-	// The return value will contain all the properties defined in model.IpfixConfig.
+	// The return value will contain all the properties defined in nsxModel.IpfixConfig.
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(configIdParam string, ipfixConfigParam *data.StructValue) (*data.StructValue, error)
+	Update(configIdParam string, ipfixConfigParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 }
 
 type configsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewConfigsClient(connector client.Connector) *configsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.ipfix.configs")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create": core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewConfigsClient(connector vapiProtocolClient_.Connector) *configsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.ipfix.configs")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	cIface := configsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &cIface
 }
 
-func (cIface *configsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (cIface *configsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := cIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (cIface *configsClient) Create(ipfixConfigParam *data.StructValue) (*data.StructValue, error) {
+func (cIface *configsClient) Create(ipfixConfigParam *vapiData_.StructValue) (*vapiData_.StructValue, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(configsCreateInputType(), typeConverter)
+	operationRestMetaData := configsCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(configsCreateInputType(), typeConverter)
 	sv.AddStructField("IpfixConfig", ipfixConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput *data.StructValue
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput *vapiData_.StructValue
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := configsCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ipfix.configs", "create", inputDataValue, executionContext)
-	var emptyOutput *data.StructValue
+	var emptyOutput *vapiData_.StructValue
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), configsCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ConfigsCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(*data.StructValue), nil
+		return output.(*vapiData_.StructValue), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -152,63 +165,69 @@ func (cIface *configsClient) Create(ipfixConfigParam *data.StructValue) (*data.S
 func (cIface *configsClient) Delete(configIdParam string) error {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(configsDeleteInputType(), typeConverter)
+	operationRestMetaData := configsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(configsDeleteInputType(), typeConverter)
 	sv.AddStructField("ConfigId", configIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := configsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ipfix.configs", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (cIface *configsClient) Get(configIdParam string) (*data.StructValue, error) {
+func (cIface *configsClient) Get(configIdParam string) (*vapiData_.StructValue, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(configsGetInputType(), typeConverter)
+	operationRestMetaData := configsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(configsGetInputType(), typeConverter)
 	sv.AddStructField("ConfigId", configIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput *data.StructValue
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput *vapiData_.StructValue
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := configsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ipfix.configs", "get", inputDataValue, executionContext)
-	var emptyOutput *data.StructValue
+	var emptyOutput *vapiData_.StructValue
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), configsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ConfigsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(*data.StructValue), nil
+		return output.(*vapiData_.StructValue), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (cIface *configsClient) List(appliedToParam *string, cursorParam *string, includedFieldsParam *string, ipfixConfigTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IpfixConfigListResult, error) {
+func (cIface *configsClient) List(appliedToParam *string, cursorParam *string, includedFieldsParam *string, ipfixConfigTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.IpfixConfigListResult, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(configsListInputType(), typeConverter)
+	operationRestMetaData := configsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(configsListInputType(), typeConverter)
 	sv.AddStructField("AppliedTo", appliedToParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -218,57 +237,55 @@ func (cIface *configsClient) List(appliedToParam *string, cursorParam *string, i
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IpfixConfigListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IpfixConfigListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := configsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ipfix.configs", "list", inputDataValue, executionContext)
-	var emptyOutput model.IpfixConfigListResult
+	var emptyOutput nsxModel.IpfixConfigListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), configsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ConfigsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IpfixConfigListResult), nil
+		return output.(nsxModel.IpfixConfigListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (cIface *configsClient) Update(configIdParam string, ipfixConfigParam *data.StructValue) (*data.StructValue, error) {
+func (cIface *configsClient) Update(configIdParam string, ipfixConfigParam *vapiData_.StructValue) (*vapiData_.StructValue, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(configsUpdateInputType(), typeConverter)
+	operationRestMetaData := configsUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(configsUpdateInputType(), typeConverter)
 	sv.AddStructField("ConfigId", configIdParam)
 	sv.AddStructField("IpfixConfig", ipfixConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput *data.StructValue
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput *vapiData_.StructValue
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := configsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ipfix.configs", "update", inputDataValue, executionContext)
-	var emptyOutput *data.StructValue
+	var emptyOutput *vapiData_.StructValue
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), configsUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ConfigsUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(*data.StructValue), nil
+		return output.(*vapiData_.StructValue), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

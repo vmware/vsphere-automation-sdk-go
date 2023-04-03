@@ -11,41 +11,41 @@
 package cluster
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_global_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
 	"reflect"
 )
 
-func restoreAdvanceInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func restoreAdvanceInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["advance_cluster_restore_request"] = bindings.NewReferenceType(model.AdvanceClusterRestoreRequestBindingType)
+	fields["advance_cluster_restore_request"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.AdvanceClusterRestoreRequestBindingType)
 	fieldNameMap["advance_cluster_restore_request"] = "AdvanceClusterRestoreRequest"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func restoreAdvanceOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ClusterRestoreStatusBindingType)
+func RestoreAdvanceOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_global_policyModel.ClusterRestoreStatusBindingType)
 }
 
-func restoreAdvanceRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func restoreAdvanceRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["advance_cluster_restore_request"] = bindings.NewReferenceType(model.AdvanceClusterRestoreRequestBindingType)
+	fields["advance_cluster_restore_request"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.AdvanceClusterRestoreRequestBindingType)
 	fieldNameMap["advance_cluster_restore_request"] = "AdvanceClusterRestoreRequest"
-	paramsTypeMap["advance_cluster_restore_request"] = bindings.NewReferenceType(model.AdvanceClusterRestoreRequestBindingType)
+	paramsTypeMap["advance_cluster_restore_request"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.AdvanceClusterRestoreRequestBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,21 +66,21 @@ func restoreAdvanceRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func restoreCancelInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func restoreCancelInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func restoreCancelOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ClusterRestoreStatusBindingType)
+func RestoreCancelOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_global_policyModel.ClusterRestoreStatusBindingType)
 }
 
-func restoreCancelRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func restoreCancelRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -88,7 +88,7 @@ func restoreCancelRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -109,21 +109,21 @@ func restoreCancelRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func restoreRetryInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func restoreRetryInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func restoreRetryOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ClusterRestoreStatusBindingType)
+func RestoreRetryOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_global_policyModel.ClusterRestoreStatusBindingType)
 }
 
-func restoreRetryRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func restoreRetryRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -131,7 +131,7 @@ func restoreRetryRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -152,34 +152,34 @@ func restoreRetryRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func restoreStartInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func restoreStartInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["initiate_cluster_restore_request"] = bindings.NewReferenceType(model.InitiateClusterRestoreRequestBindingType)
+	fields["initiate_cluster_restore_request"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.InitiateClusterRestoreRequestBindingType)
 	fieldNameMap["initiate_cluster_restore_request"] = "InitiateClusterRestoreRequest"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func restoreStartOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ClusterRestoreStatusBindingType)
+func RestoreStartOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_global_policyModel.ClusterRestoreStatusBindingType)
 }
 
-func restoreStartRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func restoreStartRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["initiate_cluster_restore_request"] = bindings.NewReferenceType(model.InitiateClusterRestoreRequestBindingType)
+	fields["initiate_cluster_restore_request"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.InitiateClusterRestoreRequestBindingType)
 	fieldNameMap["initiate_cluster_restore_request"] = "InitiateClusterRestoreRequest"
-	paramsTypeMap["initiate_cluster_restore_request"] = bindings.NewReferenceType(model.InitiateClusterRestoreRequestBindingType)
+	paramsTypeMap["initiate_cluster_restore_request"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.InitiateClusterRestoreRequestBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -200,21 +200,21 @@ func restoreStartRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func restoreSuspendInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func restoreSuspendInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func restoreSuspendOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ClusterRestoreStatusBindingType)
+func RestoreSuspendOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_global_policyModel.ClusterRestoreStatusBindingType)
 }
 
-func restoreSuspendRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func restoreSuspendRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -222,7 +222,7 @@ func restoreSuspendRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

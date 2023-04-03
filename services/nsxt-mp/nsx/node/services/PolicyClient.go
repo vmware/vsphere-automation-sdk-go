@@ -9,28 +9,37 @@
 package services
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type PolicyClient interface {
 
 	// Read service properties
+	//  Please use below endpoints.
+	// GET https://<nsx-mgr>/api/v1/node/services/nsxt-mp/manager
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.NodePolicyServiceProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (model.NodePolicyServiceProperties, error)
+	Get() (nsxModel.NodePolicyServiceProperties, error)
 
 	// Reset the logging levels to default values
+	//  Please use below endpoints.
+	// POST https://<nsx-mgr>/api/v1/node/services/nsxt-mp/manager?action=reset-manager-logging-levels
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -39,99 +48,120 @@ type PolicyClient interface {
 	Resetmanagerlogginglevels() error
 
 	// Restart, start or stop the service
+	//  Please use below endpoints.
+	// POST https://<nsx-mgr>/api/v1/node/services/nsxt-mp/manager?action=restart
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Restart() (model.NodeServiceStatusProperties, error)
+	Restart() (nsxModel.NodeServiceStatusProperties, error)
 
 	// Restart, start or stop the service
+	//  Please use below endpoints.
+	// POST https://<nsx-mgr>/api/v1/node/services/nsxt-mp/manager?action=restart
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Start() (model.NodeServiceStatusProperties, error)
+	Start() (nsxModel.NodeServiceStatusProperties, error)
 
 	// Restart, start or stop the service
+	//  Please use below endpoints.
+	// POST https://<nsx-mgr>/api/v1/node/services/nsxt-mp/manager?action=restart
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Stop() (model.NodeServiceStatusProperties, error)
+	Stop() (nsxModel.NodeServiceStatusProperties, error)
 
 	// Update service properties
+	//  Please use below endpoints.
+	// PUT https://<nsx-mgr>/api/v1/node/services/nsxt-mp/manager
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param nodePolicyServicePropertiesParam (required)
 	// @return com.vmware.nsx.model.NodePolicyServiceProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(nodePolicyServicePropertiesParam model.NodePolicyServiceProperties) (model.NodePolicyServiceProperties, error)
+	Update(nodePolicyServicePropertiesParam nsxModel.NodePolicyServiceProperties) (nsxModel.NodePolicyServiceProperties, error)
 }
 
 type policyClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewPolicyClient(connector client.Connector) *policyClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.node.services.policy")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get":                       core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"resetmanagerlogginglevels": core.NewMethodIdentifier(interfaceIdentifier, "resetmanagerlogginglevels"),
-		"restart":                   core.NewMethodIdentifier(interfaceIdentifier, "restart"),
-		"start":                     core.NewMethodIdentifier(interfaceIdentifier, "start"),
-		"stop":                      core.NewMethodIdentifier(interfaceIdentifier, "stop"),
-		"update":                    core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewPolicyClient(connector vapiProtocolClient_.Connector) *policyClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.node.services.policy")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":                       vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"resetmanagerlogginglevels": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "resetmanagerlogginglevels"),
+		"restart":                   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "restart"),
+		"start":                     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "start"),
+		"stop":                      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "stop"),
+		"update":                    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	pIface := policyClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &pIface
 }
 
-func (pIface *policyClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (pIface *policyClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := pIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (pIface *policyClient) Get() (model.NodePolicyServiceProperties, error) {
+func (pIface *policyClient) Get() (nsxModel.NodePolicyServiceProperties, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(policyGetInputType(), typeConverter)
+	operationRestMetaData := policyGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(policyGetInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NodePolicyServiceProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NodePolicyServiceProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := policyGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.policy", "get", inputDataValue, executionContext)
-	var emptyOutput model.NodePolicyServiceProperties
+	var emptyOutput nsxModel.NodePolicyServiceProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), policyGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PolicyGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodePolicyServiceProperties), nil
+		return output.(nsxModel.NodePolicyServiceProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -140,143 +170,148 @@ func (pIface *policyClient) Get() (model.NodePolicyServiceProperties, error) {
 func (pIface *policyClient) Resetmanagerlogginglevels() error {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(policyResetmanagerlogginglevelsInputType(), typeConverter)
+	operationRestMetaData := policyResetmanagerlogginglevelsRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(policyResetmanagerlogginglevelsInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := policyResetmanagerlogginglevelsRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.policy", "resetmanagerlogginglevels", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (pIface *policyClient) Restart() (model.NodeServiceStatusProperties, error) {
+func (pIface *policyClient) Restart() (nsxModel.NodeServiceStatusProperties, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(policyRestartInputType(), typeConverter)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.NodeServiceStatusProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
 	operationRestMetaData := policyRestartRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(policyRestartInputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.NodeServiceStatusProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.policy", "restart", inputDataValue, executionContext)
-	var emptyOutput model.NodeServiceStatusProperties
+	var emptyOutput nsxModel.NodeServiceStatusProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), policyRestartOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PolicyRestartOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodeServiceStatusProperties), nil
+		return output.(nsxModel.NodeServiceStatusProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (pIface *policyClient) Start() (model.NodeServiceStatusProperties, error) {
+func (pIface *policyClient) Start() (nsxModel.NodeServiceStatusProperties, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(policyStartInputType(), typeConverter)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.NodeServiceStatusProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
 	operationRestMetaData := policyStartRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.policy", "start", inputDataValue, executionContext)
-	var emptyOutput model.NodeServiceStatusProperties
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), policyStartOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.NodeServiceStatusProperties), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-func (pIface *policyClient) Stop() (model.NodeServiceStatusProperties, error) {
-	typeConverter := pIface.connector.TypeConverter()
-	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(policyStopInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(policyStartInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NodeServiceStatusProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NodeServiceStatusProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := policyStopRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.policy", "stop", inputDataValue, executionContext)
-	var emptyOutput model.NodeServiceStatusProperties
+
+	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.policy", "start", inputDataValue, executionContext)
+	var emptyOutput nsxModel.NodeServiceStatusProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), policyStopOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PolicyStartOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodeServiceStatusProperties), nil
+		return output.(nsxModel.NodeServiceStatusProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (pIface *policyClient) Update(nodePolicyServicePropertiesParam model.NodePolicyServiceProperties) (model.NodePolicyServiceProperties, error) {
+func (pIface *policyClient) Stop() (nsxModel.NodeServiceStatusProperties, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(policyUpdateInputType(), typeConverter)
+	operationRestMetaData := policyStopRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(policyStopInputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.NodeServiceStatusProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.policy", "stop", inputDataValue, executionContext)
+	var emptyOutput nsxModel.NodeServiceStatusProperties
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PolicyStopOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsxModel.NodeServiceStatusProperties), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (pIface *policyClient) Update(nodePolicyServicePropertiesParam nsxModel.NodePolicyServiceProperties) (nsxModel.NodePolicyServiceProperties, error) {
+	typeConverter := pIface.connector.TypeConverter()
+	executionContext := pIface.connector.NewExecutionContext()
+	operationRestMetaData := policyUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(policyUpdateInputType(), typeConverter)
 	sv.AddStructField("NodePolicyServiceProperties", nodePolicyServicePropertiesParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NodePolicyServiceProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NodePolicyServiceProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := policyUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.policy", "update", inputDataValue, executionContext)
-	var emptyOutput model.NodePolicyServiceProperties
+	var emptyOutput nsxModel.NodePolicyServiceProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), policyUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PolicyUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodePolicyServiceProperties), nil
+		return output.(nsxModel.NodePolicyServiceProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

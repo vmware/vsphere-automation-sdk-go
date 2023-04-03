@@ -9,15 +9,14 @@
 package logical_constructs
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatsClient interface {
 
@@ -29,43 +28,48 @@ type StatsClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.LogicalConstructMigrationStatsListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Getall(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.LogicalConstructMigrationStatsListResult, error)
+	Getall(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.LogicalConstructMigrationStatsListResult, error)
 }
 
 type statsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewStatsClient(connector client.Connector) *statsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.migration.logical_constructs.stats")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"getall": core.NewMethodIdentifier(interfaceIdentifier, "getall"),
+func NewStatsClient(connector vapiProtocolClient_.Connector) *statsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.migration.logical_constructs.stats")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"getall": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "getall"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	sIface := statsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *statsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (sIface *statsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statsClient) Getall(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.LogicalConstructMigrationStatsListResult, error) {
+func (sIface *statsClient) Getall(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.LogicalConstructMigrationStatsListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(statsGetallInputType(), typeConverter)
+	operationRestMetaData := statsGetallRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(statsGetallInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
@@ -73,25 +77,22 @@ func (sIface *statsClient) Getall(cursorParam *string, includedFieldsParam *stri
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.LogicalConstructMigrationStatsListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.LogicalConstructMigrationStatsListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := statsGetallRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.migration.logical_constructs.stats", "getall", inputDataValue, executionContext)
-	var emptyOutput model.LogicalConstructMigrationStatsListResult
+	var emptyOutput nsxModel.LogicalConstructMigrationStatsListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), statsGetallOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatsGetallOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.LogicalConstructMigrationStatsListResult), nil
+		return output.(nsxModel.LogicalConstructMigrationStatsListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

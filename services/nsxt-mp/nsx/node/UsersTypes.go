@@ -11,48 +11,48 @@
 package node
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func usersActivateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func usersActivateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["userid"] = bindings.NewStringType()
-	fields["node_user_password_property"] = bindings.NewReferenceType(model.NodeUserPasswordPropertyBindingType)
+	fields["userid"] = vapiBindings_.NewStringType()
+	fields["node_user_password_property"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPasswordPropertyBindingType)
 	fieldNameMap["userid"] = "Userid"
 	fieldNameMap["node_user_password_property"] = "NodeUserPasswordProperty"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func usersActivateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeUserPropertiesBindingType)
+func UsersActivateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
 }
 
-func usersActivateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func usersActivateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["userid"] = bindings.NewStringType()
-	fields["node_user_password_property"] = bindings.NewReferenceType(model.NodeUserPasswordPropertyBindingType)
+	fields["userid"] = vapiBindings_.NewStringType()
+	fields["node_user_password_property"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPasswordPropertyBindingType)
 	fieldNameMap["userid"] = "Userid"
 	fieldNameMap["node_user_password_property"] = "NodeUserPasswordProperty"
-	paramsTypeMap["node_user_password_property"] = bindings.NewReferenceType(model.NodeUserPasswordPropertyBindingType)
-	paramsTypeMap["userid"] = bindings.NewStringType()
-	paramsTypeMap["userid"] = bindings.NewStringType()
+	paramsTypeMap["node_user_password_property"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPasswordPropertyBindingType)
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
 	pathParams["userid"] = "userid"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -73,36 +73,132 @@ func usersActivateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func usersDeactivateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func usersCreateaudituserInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["userid"] = bindings.NewStringType()
-	fieldNameMap["userid"] = "Userid"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	fields["node_user_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
+	fieldNameMap["node_user_properties"] = "NodeUserProperties"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func usersDeactivateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeUserPropertiesBindingType)
+func UsersCreateaudituserOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
 }
 
-func usersDeactivateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func usersCreateaudituserRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["userid"] = bindings.NewStringType()
+	fields["node_user_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
+	fieldNameMap["node_user_properties"] = "NodeUserProperties"
+	paramsTypeMap["node_user_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"action=create_audit_user",
+		"node_user_properties",
+		"POST",
+		"/api/v1/node/users",
+		"",
+		resultHeaders,
+		200,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
+func usersCreateuserInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["node_user_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
+	fieldNameMap["node_user_properties"] = "NodeUserProperties"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func UsersCreateuserOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
+}
+
+func usersCreateuserRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["node_user_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
+	fieldNameMap["node_user_properties"] = "NodeUserProperties"
+	paramsTypeMap["node_user_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"action=create_user",
+		"node_user_properties",
+		"POST",
+		"/api/v1/node/users",
+		"",
+		resultHeaders,
+		200,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
+func usersDeactivateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["userid"] = vapiBindings_.NewStringType()
 	fieldNameMap["userid"] = "Userid"
-	paramsTypeMap["userid"] = bindings.NewStringType()
-	paramsTypeMap["userid"] = bindings.NewStringType()
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func UsersDeactivateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
+}
+
+func usersDeactivateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["userid"] = vapiBindings_.NewStringType()
+	fieldNameMap["userid"] = "Userid"
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
 	pathParams["userid"] = "userid"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -123,36 +219,86 @@ func usersDeactivateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func usersGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func usersDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["userid"] = bindings.NewStringType()
+	fields["userid"] = vapiBindings_.NewStringType()
 	fieldNameMap["userid"] = "Userid"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func usersGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeUserPropertiesBindingType)
+func UsersDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func usersGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func usersDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["userid"] = bindings.NewStringType()
+	fields["userid"] = vapiBindings_.NewStringType()
 	fieldNameMap["userid"] = "Userid"
-	paramsTypeMap["userid"] = bindings.NewStringType()
-	paramsTypeMap["userid"] = bindings.NewStringType()
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
 	pathParams["userid"] = "userid"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"",
+		"",
+		"DELETE",
+		"/api/v1/node/users/{userid}",
+		"",
+		resultHeaders,
+		204,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
+func usersGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["userid"] = vapiBindings_.NewStringType()
+	fieldNameMap["userid"] = "Userid"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func UsersGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
+}
+
+func usersGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["userid"] = vapiBindings_.NewStringType()
+	fieldNameMap["userid"] = "Userid"
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
+	pathParams["userid"] = "userid"
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -173,21 +319,21 @@ func usersGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func usersListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func usersListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func usersListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeUserPropertiesListResultBindingType)
+func UsersListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesListResultBindingType)
 }
 
-func usersListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func usersListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -195,7 +341,7 @@ func usersListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -216,34 +362,34 @@ func usersListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func usersResetownpasswordInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func usersResetownpasswordInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["reset_node_user_own_password_properties"] = bindings.NewReferenceType(model.ResetNodeUserOwnPasswordPropertiesBindingType)
+	fields["reset_node_user_own_password_properties"] = vapiBindings_.NewReferenceType(nsxModel.ResetNodeUserOwnPasswordPropertiesBindingType)
 	fieldNameMap["reset_node_user_own_password_properties"] = "ResetNodeUserOwnPasswordProperties"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func usersResetownpasswordOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func UsersResetownpasswordOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func usersResetownpasswordRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func usersResetownpasswordRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["reset_node_user_own_password_properties"] = bindings.NewReferenceType(model.ResetNodeUserOwnPasswordPropertiesBindingType)
+	fields["reset_node_user_own_password_properties"] = vapiBindings_.NewReferenceType(nsxModel.ResetNodeUserOwnPasswordPropertiesBindingType)
 	fieldNameMap["reset_node_user_own_password_properties"] = "ResetNodeUserOwnPasswordProperties"
-	paramsTypeMap["reset_node_user_own_password_properties"] = bindings.NewReferenceType(model.ResetNodeUserOwnPasswordPropertiesBindingType)
+	paramsTypeMap["reset_node_user_own_password_properties"] = vapiBindings_.NewReferenceType(nsxModel.ResetNodeUserOwnPasswordPropertiesBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -264,41 +410,41 @@ func usersResetownpasswordRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func usersResetpasswordInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func usersResetpasswordInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["userid"] = bindings.NewStringType()
-	fields["node_user_password_property"] = bindings.NewReferenceType(model.NodeUserPasswordPropertyBindingType)
+	fields["userid"] = vapiBindings_.NewStringType()
+	fields["node_user_password_property"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPasswordPropertyBindingType)
 	fieldNameMap["userid"] = "Userid"
 	fieldNameMap["node_user_password_property"] = "NodeUserPasswordProperty"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func usersResetpasswordOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func UsersResetpasswordOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func usersResetpasswordRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func usersResetpasswordRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["userid"] = bindings.NewStringType()
-	fields["node_user_password_property"] = bindings.NewReferenceType(model.NodeUserPasswordPropertyBindingType)
+	fields["userid"] = vapiBindings_.NewStringType()
+	fields["node_user_password_property"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPasswordPropertyBindingType)
 	fieldNameMap["userid"] = "Userid"
 	fieldNameMap["node_user_password_property"] = "NodeUserPasswordProperty"
-	paramsTypeMap["node_user_password_property"] = bindings.NewReferenceType(model.NodeUserPasswordPropertyBindingType)
-	paramsTypeMap["userid"] = bindings.NewStringType()
-	paramsTypeMap["userid"] = bindings.NewStringType()
+	paramsTypeMap["node_user_password_property"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPasswordPropertyBindingType)
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
 	pathParams["userid"] = "userid"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -319,41 +465,41 @@ func usersResetpasswordRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func usersUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func usersUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["userid"] = bindings.NewStringType()
-	fields["node_user_properties"] = bindings.NewReferenceType(model.NodeUserPropertiesBindingType)
+	fields["userid"] = vapiBindings_.NewStringType()
+	fields["node_user_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
 	fieldNameMap["userid"] = "Userid"
 	fieldNameMap["node_user_properties"] = "NodeUserProperties"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func usersUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NodeUserPropertiesBindingType)
+func UsersUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
 }
 
-func usersUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func usersUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["userid"] = bindings.NewStringType()
-	fields["node_user_properties"] = bindings.NewReferenceType(model.NodeUserPropertiesBindingType)
+	fields["userid"] = vapiBindings_.NewStringType()
+	fields["node_user_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
 	fieldNameMap["userid"] = "Userid"
 	fieldNameMap["node_user_properties"] = "NodeUserProperties"
-	paramsTypeMap["node_user_properties"] = bindings.NewReferenceType(model.NodeUserPropertiesBindingType)
-	paramsTypeMap["userid"] = bindings.NewStringType()
-	paramsTypeMap["userid"] = bindings.NewStringType()
+	paramsTypeMap["node_user_properties"] = vapiBindings_.NewReferenceType(nsxModel.NodeUserPropertiesBindingType)
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
+	paramsTypeMap["userid"] = vapiBindings_.NewStringType()
 	pathParams["userid"] = "userid"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

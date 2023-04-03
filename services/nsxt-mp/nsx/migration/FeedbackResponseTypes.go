@@ -11,10 +11,10 @@
 package migration
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
@@ -30,37 +30,37 @@ const FeedbackResponse_UPDATE_NETWORK_LAYER_L2 = "L2"
 // Possible value for ``networkLayer`` of method FeedbackResponse#update.
 const FeedbackResponse_UPDATE_NETWORK_LAYER_L3_L7 = "L3_L7"
 
-func feedbackResponseAcceptrecommendedInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func feedbackResponseAcceptrecommendedInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["network_layer"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["network_layer"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["network_layer"] = "NetworkLayer"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func feedbackResponseAcceptrecommendedOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func FeedbackResponseAcceptrecommendedOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func feedbackResponseAcceptrecommendedRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func feedbackResponseAcceptrecommendedRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["network_layer"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["network_layer"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["network_layer"] = "NetworkLayer"
-	paramsTypeMap["network_layer"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["network_layer"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	queryParams["network_layer"] = "network_layer"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -81,42 +81,42 @@ func feedbackResponseAcceptrecommendedRestMetadata() protocol.OperationRestMetad
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func feedbackResponseUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func feedbackResponseUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["migration_feedback_response_list"] = bindings.NewReferenceType(model.MigrationFeedbackResponseListBindingType)
-	fields["network_layer"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["migration_feedback_response_list"] = vapiBindings_.NewReferenceType(nsxModel.MigrationFeedbackResponseListBindingType)
+	fields["network_layer"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["migration_feedback_response_list"] = "MigrationFeedbackResponseList"
 	fieldNameMap["network_layer"] = "NetworkLayer"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func feedbackResponseUpdateOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func FeedbackResponseUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func feedbackResponseUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func feedbackResponseUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["migration_feedback_response_list"] = bindings.NewReferenceType(model.MigrationFeedbackResponseListBindingType)
-	fields["network_layer"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["migration_feedback_response_list"] = vapiBindings_.NewReferenceType(nsxModel.MigrationFeedbackResponseListBindingType)
+	fields["network_layer"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["migration_feedback_response_list"] = "MigrationFeedbackResponseList"
 	fieldNameMap["network_layer"] = "NetworkLayer"
-	paramsTypeMap["network_layer"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["migration_feedback_response_list"] = bindings.NewReferenceType(model.MigrationFeedbackResponseListBindingType)
+	paramsTypeMap["network_layer"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["migration_feedback_response_list"] = vapiBindings_.NewReferenceType(nsxModel.MigrationFeedbackResponseListBindingType)
 	queryParams["network_layer"] = "network_layer"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

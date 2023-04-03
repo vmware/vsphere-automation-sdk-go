@@ -11,48 +11,48 @@
 package aaa
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func effectivePermissionsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func effectivePermissionsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["feature_name"] = bindings.NewStringType()
-	fields["object_path"] = bindings.NewStringType()
+	fields["feature_name"] = vapiBindings_.NewStringType()
+	fields["object_path"] = vapiBindings_.NewStringType()
 	fieldNameMap["feature_name"] = "FeatureName"
 	fieldNameMap["object_path"] = "ObjectPath"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func effectivePermissionsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.PathPermissionGroupBindingType)
+func EffectivePermissionsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.PathPermissionGroupBindingType)
 }
 
-func effectivePermissionsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func effectivePermissionsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["feature_name"] = bindings.NewStringType()
-	fields["object_path"] = bindings.NewStringType()
+	fields["feature_name"] = vapiBindings_.NewStringType()
+	fields["object_path"] = vapiBindings_.NewStringType()
 	fieldNameMap["feature_name"] = "FeatureName"
 	fieldNameMap["object_path"] = "ObjectPath"
-	paramsTypeMap["object_path"] = bindings.NewStringType()
-	paramsTypeMap["feature_name"] = bindings.NewStringType()
+	paramsTypeMap["feature_name"] = vapiBindings_.NewStringType()
+	paramsTypeMap["object_path"] = vapiBindings_.NewStringType()
 	queryParams["feature_name"] = "feature_name"
 	queryParams["object_path"] = "object_path"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

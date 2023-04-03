@@ -9,15 +9,14 @@
 package forwarding_policies
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RulesClient interface {
 
@@ -27,12 +26,13 @@ type RulesClient interface {
 	// @param forwardingPolicyIdParam Forwarding map id (required)
 	// @param ruleIdParam Rule id (required)
 	// @return com.vmware.nsx_policy.model.ForwardingRule
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(domainIdParam string, forwardingPolicyIdParam string, ruleIdParam string) (model.ForwardingRule, error)
+	Get(domainIdParam string, forwardingPolicyIdParam string, ruleIdParam string) (nsx_policyModel.ForwardingRule, error)
 
 	// List rules
 	//
@@ -45,77 +45,83 @@ type RulesClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.ForwardingRuleListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(domainIdParam string, forwardingPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.ForwardingRuleListResult, error)
+	List(domainIdParam string, forwardingPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ForwardingRuleListResult, error)
 }
 
 type rulesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewRulesClient(connector client.Connector) *rulesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.domains.forwarding_policies.rules")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
+func NewRulesClient(connector vapiProtocolClient_.Connector) *rulesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.domains.forwarding_policies.rules")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	rIface := rulesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &rIface
 }
 
-func (rIface *rulesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (rIface *rulesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := rIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (rIface *rulesClient) Get(domainIdParam string, forwardingPolicyIdParam string, ruleIdParam string) (model.ForwardingRule, error) {
+func (rIface *rulesClient) Get(domainIdParam string, forwardingPolicyIdParam string, ruleIdParam string) (nsx_policyModel.ForwardingRule, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesGetInputType(), typeConverter)
+	operationRestMetaData := rulesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesGetInputType(), typeConverter)
 	sv.AddStructField("DomainId", domainIdParam)
 	sv.AddStructField("ForwardingPolicyId", forwardingPolicyIdParam)
 	sv.AddStructField("RuleId", ruleIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ForwardingRule
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.ForwardingRule
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rulesGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.forwarding_policies.rules", "get", inputDataValue, executionContext)
-	var emptyOutput model.ForwardingRule
+	var emptyOutput nsx_policyModel.ForwardingRule
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rulesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RulesGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ForwardingRule), nil
+		return output.(nsx_policyModel.ForwardingRule), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (rIface *rulesClient) List(domainIdParam string, forwardingPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.ForwardingRuleListResult, error) {
+func (rIface *rulesClient) List(domainIdParam string, forwardingPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ForwardingRuleListResult, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(rulesListInputType(), typeConverter)
+	operationRestMetaData := rulesListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesListInputType(), typeConverter)
 	sv.AddStructField("DomainId", domainIdParam)
 	sv.AddStructField("ForwardingPolicyId", forwardingPolicyIdParam)
 	sv.AddStructField("Cursor", cursorParam)
@@ -126,25 +132,22 @@ func (rIface *rulesClient) List(domainIdParam string, forwardingPolicyIdParam st
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ForwardingRuleListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.ForwardingRuleListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := rulesListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	rIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.forwarding_policies.rules", "list", inputDataValue, executionContext)
-	var emptyOutput model.ForwardingRuleListResult
+	var emptyOutput nsx_policyModel.ForwardingRuleListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), rulesListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RulesListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ForwardingRuleListResult), nil
+		return output.(nsx_policyModel.ForwardingRuleListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

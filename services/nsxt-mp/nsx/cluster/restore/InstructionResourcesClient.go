@@ -9,15 +9,14 @@
 package restore
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type InstructionResourcesClient interface {
 
@@ -30,43 +29,48 @@ type InstructionResourcesClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.ActionableResourceListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(instructionIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.ActionableResourceListResult, error)
+	Get(instructionIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.ActionableResourceListResult, error)
 }
 
 type instructionResourcesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewInstructionResourcesClient(connector client.Connector) *instructionResourcesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.cluster.restore.instruction_resources")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get": core.NewMethodIdentifier(interfaceIdentifier, "get"),
+func NewInstructionResourcesClient(connector vapiProtocolClient_.Connector) *instructionResourcesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.cluster.restore.instruction_resources")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	iIface := instructionResourcesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &iIface
 }
 
-func (iIface *instructionResourcesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (iIface *instructionResourcesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := iIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (iIface *instructionResourcesClient) Get(instructionIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.ActionableResourceListResult, error) {
+func (iIface *instructionResourcesClient) Get(instructionIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.ActionableResourceListResult, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(instructionResourcesGetInputType(), typeConverter)
+	operationRestMetaData := instructionResourcesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(instructionResourcesGetInputType(), typeConverter)
 	sv.AddStructField("InstructionId", instructionIdParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -75,25 +79,22 @@ func (iIface *instructionResourcesClient) Get(instructionIdParam string, cursorP
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ActionableResourceListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ActionableResourceListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := instructionResourcesGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster.restore.instruction_resources", "get", inputDataValue, executionContext)
-	var emptyOutput model.ActionableResourceListResult
+	var emptyOutput nsxModel.ActionableResourceListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), instructionResourcesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), InstructionResourcesGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ActionableResourceListResult), nil
+		return output.(nsxModel.ActionableResourceListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

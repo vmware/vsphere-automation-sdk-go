@@ -9,78 +9,79 @@
 package upgrade
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type HistoryClient interface {
 
 	// Get upgrade history
 	// @return com.vmware.nsx.model.UpgradeHistoryList
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List() (model.UpgradeHistoryList, error)
+	List() (nsxModel.UpgradeHistoryList, error)
 }
 
 type historyClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewHistoryClient(connector client.Connector) *historyClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.upgrade.history")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
+func NewHistoryClient(connector vapiProtocolClient_.Connector) *historyClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.upgrade.history")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	hIface := historyClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &hIface
 }
 
-func (hIface *historyClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (hIface *historyClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := hIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (hIface *historyClient) List() (model.UpgradeHistoryList, error) {
+func (hIface *historyClient) List() (nsxModel.UpgradeHistoryList, error) {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(historyListInputType(), typeConverter)
+	operationRestMetaData := historyListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(historyListInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.UpgradeHistoryList
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.UpgradeHistoryList
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := historyListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	hIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx.upgrade.history", "list", inputDataValue, executionContext)
-	var emptyOutput model.UpgradeHistoryList
+	var emptyOutput nsxModel.UpgradeHistoryList
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), historyListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), HistoryListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.UpgradeHistoryList), nil
+		return output.(nsxModel.UpgradeHistoryList), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), hIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

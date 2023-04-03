@@ -11,10 +11,10 @@
 package repository
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
@@ -51,42 +51,42 @@ const Bundles_GET_PRODUCT_ALB_CONTROLLER = "ALB_CONTROLLER"
 // Possible value for ``product`` of method Bundles#get.
 const Bundles_GET_PRODUCT_INTELLIGENCE = "INTELLIGENCE"
 
-func bundlesCanceluploadInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func bundlesCanceluploadInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["bundle_id"] = bindings.NewStringType()
-	fields["product"] = bindings.NewStringType()
+	fields["bundle_id"] = vapiBindings_.NewStringType()
+	fields["product"] = vapiBindings_.NewStringType()
 	fieldNameMap["bundle_id"] = "BundleId"
 	fieldNameMap["product"] = "Product"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func bundlesCanceluploadOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func BundlesCanceluploadOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func bundlesCanceluploadRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func bundlesCanceluploadRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["bundle_id"] = bindings.NewStringType()
-	fields["product"] = bindings.NewStringType()
+	fields["bundle_id"] = vapiBindings_.NewStringType()
+	fields["product"] = vapiBindings_.NewStringType()
 	fieldNameMap["bundle_id"] = "BundleId"
 	fieldNameMap["product"] = "Product"
-	paramsTypeMap["bundle_id"] = bindings.NewStringType()
-	paramsTypeMap["product"] = bindings.NewStringType()
-	paramsTypeMap["bundleId"] = bindings.NewStringType()
+	paramsTypeMap["product"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bundle_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bundleId"] = vapiBindings_.NewStringType()
 	pathParams["bundle_id"] = "bundleId"
 	queryParams["product"] = "product"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -107,48 +107,48 @@ func bundlesCanceluploadRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func bundlesCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func bundlesCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["remote_bundle_url"] = bindings.NewReferenceType(model.RemoteBundleUrlBindingType)
-	fields["file_type"] = bindings.NewStringType()
-	fields["product"] = bindings.NewStringType()
+	fields["remote_bundle_url"] = vapiBindings_.NewReferenceType(nsxModel.RemoteBundleUrlBindingType)
+	fields["file_type"] = vapiBindings_.NewStringType()
+	fields["product"] = vapiBindings_.NewStringType()
 	fieldNameMap["remote_bundle_url"] = "RemoteBundleUrl"
 	fieldNameMap["file_type"] = "FileType"
 	fieldNameMap["product"] = "Product"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func bundlesCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BundleIdBindingType)
+func BundlesCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BundleIdBindingType)
 }
 
-func bundlesCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func bundlesCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["remote_bundle_url"] = bindings.NewReferenceType(model.RemoteBundleUrlBindingType)
-	fields["file_type"] = bindings.NewStringType()
-	fields["product"] = bindings.NewStringType()
+	fields["remote_bundle_url"] = vapiBindings_.NewReferenceType(nsxModel.RemoteBundleUrlBindingType)
+	fields["file_type"] = vapiBindings_.NewStringType()
+	fields["product"] = vapiBindings_.NewStringType()
 	fieldNameMap["remote_bundle_url"] = "RemoteBundleUrl"
 	fieldNameMap["file_type"] = "FileType"
 	fieldNameMap["product"] = "Product"
-	paramsTypeMap["remote_bundle_url"] = bindings.NewReferenceType(model.RemoteBundleUrlBindingType)
-	paramsTypeMap["file_type"] = bindings.NewStringType()
-	paramsTypeMap["product"] = bindings.NewStringType()
+	paramsTypeMap["product"] = vapiBindings_.NewStringType()
+	paramsTypeMap["file_type"] = vapiBindings_.NewStringType()
+	paramsTypeMap["remote_bundle_url"] = vapiBindings_.NewReferenceType(nsxModel.RemoteBundleUrlBindingType)
 	queryParams["product"] = "product"
 	queryParams["file_type"] = "file_type"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -169,41 +169,41 @@ func bundlesCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func bundlesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func bundlesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["file_type"] = bindings.NewStringType()
-	fields["product"] = bindings.NewStringType()
+	fields["file_type"] = vapiBindings_.NewStringType()
+	fields["product"] = vapiBindings_.NewStringType()
 	fieldNameMap["file_type"] = "FileType"
 	fieldNameMap["product"] = "Product"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func bundlesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BundleIdsBindingType)
+func BundlesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BundleIdsBindingType)
 }
 
-func bundlesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func bundlesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["file_type"] = bindings.NewStringType()
-	fields["product"] = bindings.NewStringType()
+	fields["file_type"] = vapiBindings_.NewStringType()
+	fields["product"] = vapiBindings_.NewStringType()
 	fieldNameMap["file_type"] = "FileType"
 	fieldNameMap["product"] = "Product"
-	paramsTypeMap["file_type"] = bindings.NewStringType()
-	paramsTypeMap["product"] = bindings.NewStringType()
+	paramsTypeMap["product"] = vapiBindings_.NewStringType()
+	paramsTypeMap["file_type"] = vapiBindings_.NewStringType()
 	queryParams["product"] = "product"
 	queryParams["file_type"] = "file_type"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

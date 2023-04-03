@@ -11,51 +11,51 @@
 package bgp
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
 // Possible value for ``action`` of method Neighbors#unsetpassword.
 const Neighbors_UNSETPASSWORD_ACTION_PASSWORD = "clear_password"
 
-func neighborsCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func neighborsCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["bgp_neighbor"] = bindings.NewReferenceType(model.BgpNeighborBindingType)
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["bgp_neighbor"] = vapiBindings_.NewReferenceType(nsxModel.BgpNeighborBindingType)
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["bgp_neighbor"] = "BgpNeighbor"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func neighborsCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BgpNeighborBindingType)
+func NeighborsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BgpNeighborBindingType)
 }
 
-func neighborsCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func neighborsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["bgp_neighbor"] = bindings.NewReferenceType(model.BgpNeighborBindingType)
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["bgp_neighbor"] = vapiBindings_.NewReferenceType(nsxModel.BgpNeighborBindingType)
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["bgp_neighbor"] = "BgpNeighbor"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["bgp_neighbor"] = bindings.NewReferenceType(model.BgpNeighborBindingType)
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bgp_neighbor"] = vapiBindings_.NewReferenceType(nsxModel.BgpNeighborBindingType)
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
 	pathParams["logical_router_id"] = "logicalRouterId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -76,43 +76,43 @@ func neighborsCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func neighborsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func neighborsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["id"] = bindings.NewStringType()
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["id"] = vapiBindings_.NewStringType()
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["id"] = "Id"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func neighborsDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func NeighborsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func neighborsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func neighborsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["id"] = bindings.NewStringType()
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["id"] = vapiBindings_.NewStringType()
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["id"] = "Id"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["id"] = bindings.NewStringType()
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
-	paramsTypeMap["id"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["id"] = vapiBindings_.NewStringType()
 	pathParams["id"] = "id"
 	pathParams["logical_router_id"] = "logicalRouterId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -133,43 +133,43 @@ func neighborsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func neighborsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func neighborsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["id"] = bindings.NewStringType()
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["id"] = vapiBindings_.NewStringType()
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["id"] = "Id"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func neighborsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BgpNeighborBindingType)
+func NeighborsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BgpNeighborBindingType)
 }
 
-func neighborsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func neighborsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["id"] = bindings.NewStringType()
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["id"] = vapiBindings_.NewStringType()
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["id"] = "Id"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["id"] = bindings.NewStringType()
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
-	paramsTypeMap["id"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["id"] = vapiBindings_.NewStringType()
 	pathParams["id"] = "id"
 	pathParams["logical_router_id"] = "logicalRouterId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -190,57 +190,57 @@ func neighborsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func neighborsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func neighborsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func neighborsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BgpNeighborListResultBindingType)
+func NeighborsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BgpNeighborListResultBindingType)
 }
 
-func neighborsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func neighborsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
 	pathParams["logical_router_id"] = "logicalRouterId"
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
@@ -249,7 +249,7 @@ func neighborsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -270,43 +270,43 @@ func neighborsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func neighborsShowsensitivedataInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func neighborsShowsensitivedataInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["id"] = bindings.NewStringType()
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["id"] = vapiBindings_.NewStringType()
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["id"] = "Id"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func neighborsShowsensitivedataOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BgpNeighborBindingType)
+func NeighborsShowsensitivedataOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BgpNeighborBindingType)
 }
 
-func neighborsShowsensitivedataRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func neighborsShowsensitivedataRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["id"] = bindings.NewStringType()
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["id"] = vapiBindings_.NewStringType()
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["id"] = "Id"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["id"] = bindings.NewStringType()
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
-	paramsTypeMap["id"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["id"] = vapiBindings_.NewStringType()
 	pathParams["id"] = "id"
 	pathParams["logical_router_id"] = "logicalRouterId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -327,49 +327,49 @@ func neighborsShowsensitivedataRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func neighborsUnsetpasswordInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func neighborsUnsetpasswordInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["id"] = bindings.NewStringType()
-	fields["action"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["id"] = vapiBindings_.NewStringType()
+	fields["action"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["id"] = "Id"
 	fieldNameMap["action"] = "Action"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func neighborsUnsetpasswordOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BgpNeighborBindingType)
+func NeighborsUnsetpasswordOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BgpNeighborBindingType)
 }
 
-func neighborsUnsetpasswordRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func neighborsUnsetpasswordRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["id"] = bindings.NewStringType()
-	fields["action"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["id"] = vapiBindings_.NewStringType()
+	fields["action"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["id"] = "Id"
 	fieldNameMap["action"] = "Action"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["action"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["id"] = bindings.NewStringType()
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
-	paramsTypeMap["id"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["action"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["id"] = vapiBindings_.NewStringType()
 	pathParams["id"] = "id"
 	pathParams["logical_router_id"] = "logicalRouterId"
 	queryParams["action"] = "action"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -390,48 +390,48 @@ func neighborsUnsetpasswordRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func neighborsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func neighborsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["id"] = bindings.NewStringType()
-	fields["bgp_neighbor"] = bindings.NewReferenceType(model.BgpNeighborBindingType)
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["id"] = vapiBindings_.NewStringType()
+	fields["bgp_neighbor"] = vapiBindings_.NewReferenceType(nsxModel.BgpNeighborBindingType)
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["id"] = "Id"
 	fieldNameMap["bgp_neighbor"] = "BgpNeighbor"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func neighborsUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BgpNeighborBindingType)
+func NeighborsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BgpNeighborBindingType)
 }
 
-func neighborsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func neighborsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["logical_router_id"] = bindings.NewStringType()
-	fields["id"] = bindings.NewStringType()
-	fields["bgp_neighbor"] = bindings.NewReferenceType(model.BgpNeighborBindingType)
+	fields["logical_router_id"] = vapiBindings_.NewStringType()
+	fields["id"] = vapiBindings_.NewStringType()
+	fields["bgp_neighbor"] = vapiBindings_.NewReferenceType(nsxModel.BgpNeighborBindingType)
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
 	fieldNameMap["id"] = "Id"
 	fieldNameMap["bgp_neighbor"] = "BgpNeighbor"
-	paramsTypeMap["logical_router_id"] = bindings.NewStringType()
-	paramsTypeMap["bgp_neighbor"] = bindings.NewReferenceType(model.BgpNeighborBindingType)
-	paramsTypeMap["id"] = bindings.NewStringType()
-	paramsTypeMap["logicalRouterId"] = bindings.NewStringType()
-	paramsTypeMap["id"] = bindings.NewStringType()
+	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bgp_neighbor"] = vapiBindings_.NewReferenceType(nsxModel.BgpNeighborBindingType)
+	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["id"] = vapiBindings_.NewStringType()
 	pathParams["id"] = "id"
 	pathParams["logical_router_id"] = "logicalRouterId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

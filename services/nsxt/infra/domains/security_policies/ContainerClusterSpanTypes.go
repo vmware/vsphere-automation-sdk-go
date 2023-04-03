@@ -11,57 +11,57 @@
 package security_policies
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func containerClusterSpanDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func containerClusterSpanDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["security_policy_id"] = bindings.NewStringType()
-	fields["antrea_cluster1"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["security_policy_id"] = vapiBindings_.NewStringType()
+	fields["antrea_cluster1"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["security_policy_id"] = "SecurityPolicyId"
 	fieldNameMap["antrea_cluster1"] = "AntreaCluster1"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func containerClusterSpanDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func ContainerClusterSpanDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func containerClusterSpanDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func containerClusterSpanDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["security_policy_id"] = bindings.NewStringType()
-	fields["antrea_cluster1"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["security_policy_id"] = vapiBindings_.NewStringType()
+	fields["antrea_cluster1"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["security_policy_id"] = "SecurityPolicyId"
 	fieldNameMap["antrea_cluster1"] = "AntreaCluster1"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["security_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["antrea_cluster1"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["securityPolicyId"] = bindings.NewStringType()
-	paramsTypeMap["antreaCluster1"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["security_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["antrea_cluster1"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["securityPolicyId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["antreaCluster1"] = vapiBindings_.NewStringType()
 	pathParams["security_policy_id"] = "securityPolicyId"
 	pathParams["antrea_cluster1"] = "antreaCluster1"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -82,50 +82,50 @@ func containerClusterSpanDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func containerClusterSpanGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func containerClusterSpanGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["security_policy_id"] = bindings.NewStringType()
-	fields["antrea_cluster1"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["security_policy_id"] = vapiBindings_.NewStringType()
+	fields["antrea_cluster1"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["security_policy_id"] = "SecurityPolicyId"
 	fieldNameMap["antrea_cluster1"] = "AntreaCluster1"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func containerClusterSpanGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.SecurityPolicyContainerClusterBindingType)
+func ContainerClusterSpanGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.SecurityPolicyContainerClusterBindingType)
 }
 
-func containerClusterSpanGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func containerClusterSpanGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["security_policy_id"] = bindings.NewStringType()
-	fields["antrea_cluster1"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["security_policy_id"] = vapiBindings_.NewStringType()
+	fields["antrea_cluster1"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["security_policy_id"] = "SecurityPolicyId"
 	fieldNameMap["antrea_cluster1"] = "AntreaCluster1"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["security_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["antrea_cluster1"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["securityPolicyId"] = bindings.NewStringType()
-	paramsTypeMap["antreaCluster1"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["security_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["antrea_cluster1"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["securityPolicyId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["antreaCluster1"] = vapiBindings_.NewStringType()
 	pathParams["security_policy_id"] = "securityPolicyId"
 	pathParams["antrea_cluster1"] = "antreaCluster1"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -146,17 +146,17 @@ func containerClusterSpanGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func containerClusterSpanListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func containerClusterSpanListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["security_policy_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["security_policy_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["security_policy_id"] = "SecurityPolicyId"
 	fieldNameMap["cursor"] = "Cursor"
@@ -165,31 +165,31 @@ func containerClusterSpanListInputType() bindings.StructType {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func containerClusterSpanListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.SecurityPolicyContainerClusterListResultBindingType)
+func ContainerClusterSpanListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.SecurityPolicyContainerClusterListResultBindingType)
 }
 
-func containerClusterSpanListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func containerClusterSpanListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["security_policy_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["security_policy_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["security_policy_id"] = "SecurityPolicyId"
 	fieldNameMap["cursor"] = "Cursor"
@@ -198,16 +198,16 @@ func containerClusterSpanListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["security_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["securityPolicyId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["security_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["securityPolicyId"] = vapiBindings_.NewStringType()
 	pathParams["security_policy_id"] = "securityPolicyId"
 	pathParams["domain_id"] = "domainId"
 	queryParams["cursor"] = "cursor"
@@ -218,7 +218,7 @@ func containerClusterSpanListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -239,55 +239,55 @@ func containerClusterSpanListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func containerClusterSpanPatchInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func containerClusterSpanPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["security_policy_id"] = bindings.NewStringType()
-	fields["container_cluster_id"] = bindings.NewStringType()
-	fields["security_policy_container_cluster"] = bindings.NewReferenceType(model.SecurityPolicyContainerClusterBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["security_policy_id"] = vapiBindings_.NewStringType()
+	fields["container_cluster_id"] = vapiBindings_.NewStringType()
+	fields["security_policy_container_cluster"] = vapiBindings_.NewReferenceType(nsx_policyModel.SecurityPolicyContainerClusterBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["security_policy_id"] = "SecurityPolicyId"
 	fieldNameMap["container_cluster_id"] = "ContainerClusterId"
 	fieldNameMap["security_policy_container_cluster"] = "SecurityPolicyContainerCluster"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func containerClusterSpanPatchOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func ContainerClusterSpanPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func containerClusterSpanPatchRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func containerClusterSpanPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["security_policy_id"] = bindings.NewStringType()
-	fields["container_cluster_id"] = bindings.NewStringType()
-	fields["security_policy_container_cluster"] = bindings.NewReferenceType(model.SecurityPolicyContainerClusterBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["security_policy_id"] = vapiBindings_.NewStringType()
+	fields["container_cluster_id"] = vapiBindings_.NewStringType()
+	fields["security_policy_container_cluster"] = vapiBindings_.NewReferenceType(nsx_policyModel.SecurityPolicyContainerClusterBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["security_policy_id"] = "SecurityPolicyId"
 	fieldNameMap["container_cluster_id"] = "ContainerClusterId"
 	fieldNameMap["security_policy_container_cluster"] = "SecurityPolicyContainerCluster"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["container_cluster_id"] = bindings.NewStringType()
-	paramsTypeMap["security_policy_container_cluster"] = bindings.NewReferenceType(model.SecurityPolicyContainerClusterBindingType)
-	paramsTypeMap["security_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["securityPolicyId"] = bindings.NewStringType()
-	paramsTypeMap["containerClusterId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["container_cluster_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["security_policy_container_cluster"] = vapiBindings_.NewReferenceType(nsx_policyModel.SecurityPolicyContainerClusterBindingType)
+	paramsTypeMap["security_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["securityPolicyId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["containerClusterId"] = vapiBindings_.NewStringType()
 	pathParams["container_cluster_id"] = "containerClusterId"
 	pathParams["security_policy_id"] = "securityPolicyId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -308,55 +308,55 @@ func containerClusterSpanPatchRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func containerClusterSpanUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func containerClusterSpanUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["security_policy_id"] = bindings.NewStringType()
-	fields["container_cluster_id"] = bindings.NewStringType()
-	fields["security_policy_container_cluster"] = bindings.NewReferenceType(model.SecurityPolicyContainerClusterBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["security_policy_id"] = vapiBindings_.NewStringType()
+	fields["container_cluster_id"] = vapiBindings_.NewStringType()
+	fields["security_policy_container_cluster"] = vapiBindings_.NewReferenceType(nsx_policyModel.SecurityPolicyContainerClusterBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["security_policy_id"] = "SecurityPolicyId"
 	fieldNameMap["container_cluster_id"] = "ContainerClusterId"
 	fieldNameMap["security_policy_container_cluster"] = "SecurityPolicyContainerCluster"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func containerClusterSpanUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.SecurityPolicyContainerClusterBindingType)
+func ContainerClusterSpanUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.SecurityPolicyContainerClusterBindingType)
 }
 
-func containerClusterSpanUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func containerClusterSpanUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["security_policy_id"] = bindings.NewStringType()
-	fields["container_cluster_id"] = bindings.NewStringType()
-	fields["security_policy_container_cluster"] = bindings.NewReferenceType(model.SecurityPolicyContainerClusterBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["security_policy_id"] = vapiBindings_.NewStringType()
+	fields["container_cluster_id"] = vapiBindings_.NewStringType()
+	fields["security_policy_container_cluster"] = vapiBindings_.NewReferenceType(nsx_policyModel.SecurityPolicyContainerClusterBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["security_policy_id"] = "SecurityPolicyId"
 	fieldNameMap["container_cluster_id"] = "ContainerClusterId"
 	fieldNameMap["security_policy_container_cluster"] = "SecurityPolicyContainerCluster"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["container_cluster_id"] = bindings.NewStringType()
-	paramsTypeMap["security_policy_container_cluster"] = bindings.NewReferenceType(model.SecurityPolicyContainerClusterBindingType)
-	paramsTypeMap["security_policy_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["securityPolicyId"] = bindings.NewStringType()
-	paramsTypeMap["containerClusterId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["container_cluster_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["security_policy_container_cluster"] = vapiBindings_.NewReferenceType(nsx_policyModel.SecurityPolicyContainerClusterBindingType)
+	paramsTypeMap["security_policy_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["securityPolicyId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["containerClusterId"] = vapiBindings_.NewStringType()
 	pathParams["container_cluster_id"] = "containerClusterId"
 	pathParams["security_policy_id"] = "securityPolicyId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

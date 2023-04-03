@@ -9,15 +9,14 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type IpfixCollectorProfilesClient interface {
 
@@ -25,16 +24,20 @@ type IpfixCollectorProfilesClient interface {
 	//
 	// @param ipfixCollectorUpmProfileParam (required)
 	// @return com.vmware.nsx.model.IpfixCollectorUpmProfile
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(ipfixCollectorUpmProfileParam model.IpfixCollectorUpmProfile) (model.IpfixCollectorUpmProfile, error)
+	Create(ipfixCollectorUpmProfileParam nsxModel.IpfixCollectorUpmProfile) (nsxModel.IpfixCollectorUpmProfile, error)
 
 	// Delete an existing IPFIX collector profile by ID.
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param ipfixCollectorProfileIdParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -44,14 +47,17 @@ type IpfixCollectorProfilesClient interface {
 
 	// Get an existing IPFIX collector profile by profile ID.
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param ipfixCollectorProfileIdParam (required)
 	// @return com.vmware.nsx.model.IpfixCollectorUpmProfile
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(ipfixCollectorProfileIdParam string) (model.IpfixCollectorUpmProfile, error)
+	Get(ipfixCollectorProfileIdParam string) (nsxModel.IpfixCollectorUpmProfile, error)
 
 	// Query IPFIX collector profiles with list parameters. List result can be filtered by profile type defined by IpfixCollectorUpmProfileType.
 	//
@@ -62,81 +68,86 @@ type IpfixCollectorProfilesClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.IpfixCollectorUpmProfileListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, profileTypesParam *string, sortAscendingParam *bool, sortByParam *string) (model.IpfixCollectorUpmProfileListResult, error)
+	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, profileTypesParam *string, sortAscendingParam *bool, sortByParam *string) (nsxModel.IpfixCollectorUpmProfileListResult, error)
 
 	// Update an existing IPFIX collector profile with profile ID and modified properties.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param ipfixCollectorProfileIdParam (required)
 	// @param ipfixCollectorUpmProfileParam (required)
 	// @return com.vmware.nsx.model.IpfixCollectorUpmProfile
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(ipfixCollectorProfileIdParam string, ipfixCollectorUpmProfileParam model.IpfixCollectorUpmProfile) (model.IpfixCollectorUpmProfile, error)
+	Update(ipfixCollectorProfileIdParam string, ipfixCollectorUpmProfileParam nsxModel.IpfixCollectorUpmProfile) (nsxModel.IpfixCollectorUpmProfile, error)
 }
 
 type ipfixCollectorProfilesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewIpfixCollectorProfilesClient(connector client.Connector) *ipfixCollectorProfilesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.ipfix_collector_profiles")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create": core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewIpfixCollectorProfilesClient(connector vapiProtocolClient_.Connector) *ipfixCollectorProfilesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.ipfix_collector_profiles")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	iIface := ipfixCollectorProfilesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &iIface
 }
 
-func (iIface *ipfixCollectorProfilesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (iIface *ipfixCollectorProfilesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := iIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (iIface *ipfixCollectorProfilesClient) Create(ipfixCollectorUpmProfileParam model.IpfixCollectorUpmProfile) (model.IpfixCollectorUpmProfile, error) {
+func (iIface *ipfixCollectorProfilesClient) Create(ipfixCollectorUpmProfileParam nsxModel.IpfixCollectorUpmProfile) (nsxModel.IpfixCollectorUpmProfile, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ipfixCollectorProfilesCreateInputType(), typeConverter)
+	operationRestMetaData := ipfixCollectorProfilesCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ipfixCollectorProfilesCreateInputType(), typeConverter)
 	sv.AddStructField("IpfixCollectorUpmProfile", ipfixCollectorUpmProfileParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IpfixCollectorUpmProfile
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IpfixCollectorUpmProfile
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ipfixCollectorProfilesCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ipfix_collector_profiles", "create", inputDataValue, executionContext)
-	var emptyOutput model.IpfixCollectorUpmProfile
+	var emptyOutput nsxModel.IpfixCollectorUpmProfile
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ipfixCollectorProfilesCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IpfixCollectorProfilesCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IpfixCollectorUpmProfile), nil
+		return output.(nsxModel.IpfixCollectorUpmProfile), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -145,63 +156,69 @@ func (iIface *ipfixCollectorProfilesClient) Create(ipfixCollectorUpmProfileParam
 func (iIface *ipfixCollectorProfilesClient) Delete(ipfixCollectorProfileIdParam string) error {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ipfixCollectorProfilesDeleteInputType(), typeConverter)
+	operationRestMetaData := ipfixCollectorProfilesDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ipfixCollectorProfilesDeleteInputType(), typeConverter)
 	sv.AddStructField("IpfixCollectorProfileId", ipfixCollectorProfileIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ipfixCollectorProfilesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ipfix_collector_profiles", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (iIface *ipfixCollectorProfilesClient) Get(ipfixCollectorProfileIdParam string) (model.IpfixCollectorUpmProfile, error) {
+func (iIface *ipfixCollectorProfilesClient) Get(ipfixCollectorProfileIdParam string) (nsxModel.IpfixCollectorUpmProfile, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ipfixCollectorProfilesGetInputType(), typeConverter)
+	operationRestMetaData := ipfixCollectorProfilesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ipfixCollectorProfilesGetInputType(), typeConverter)
 	sv.AddStructField("IpfixCollectorProfileId", ipfixCollectorProfileIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IpfixCollectorUpmProfile
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IpfixCollectorUpmProfile
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ipfixCollectorProfilesGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ipfix_collector_profiles", "get", inputDataValue, executionContext)
-	var emptyOutput model.IpfixCollectorUpmProfile
+	var emptyOutput nsxModel.IpfixCollectorUpmProfile
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ipfixCollectorProfilesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IpfixCollectorProfilesGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IpfixCollectorUpmProfile), nil
+		return output.(nsxModel.IpfixCollectorUpmProfile), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (iIface *ipfixCollectorProfilesClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, profileTypesParam *string, sortAscendingParam *bool, sortByParam *string) (model.IpfixCollectorUpmProfileListResult, error) {
+func (iIface *ipfixCollectorProfilesClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, profileTypesParam *string, sortAscendingParam *bool, sortByParam *string) (nsxModel.IpfixCollectorUpmProfileListResult, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ipfixCollectorProfilesListInputType(), typeConverter)
+	operationRestMetaData := ipfixCollectorProfilesListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ipfixCollectorProfilesListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
@@ -210,57 +227,55 @@ func (iIface *ipfixCollectorProfilesClient) List(cursorParam *string, includedFi
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IpfixCollectorUpmProfileListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IpfixCollectorUpmProfileListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ipfixCollectorProfilesListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ipfix_collector_profiles", "list", inputDataValue, executionContext)
-	var emptyOutput model.IpfixCollectorUpmProfileListResult
+	var emptyOutput nsxModel.IpfixCollectorUpmProfileListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ipfixCollectorProfilesListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IpfixCollectorProfilesListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IpfixCollectorUpmProfileListResult), nil
+		return output.(nsxModel.IpfixCollectorUpmProfileListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (iIface *ipfixCollectorProfilesClient) Update(ipfixCollectorProfileIdParam string, ipfixCollectorUpmProfileParam model.IpfixCollectorUpmProfile) (model.IpfixCollectorUpmProfile, error) {
+func (iIface *ipfixCollectorProfilesClient) Update(ipfixCollectorProfileIdParam string, ipfixCollectorUpmProfileParam nsxModel.IpfixCollectorUpmProfile) (nsxModel.IpfixCollectorUpmProfile, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ipfixCollectorProfilesUpdateInputType(), typeConverter)
+	operationRestMetaData := ipfixCollectorProfilesUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ipfixCollectorProfilesUpdateInputType(), typeConverter)
 	sv.AddStructField("IpfixCollectorProfileId", ipfixCollectorProfileIdParam)
 	sv.AddStructField("IpfixCollectorUpmProfile", ipfixCollectorUpmProfileParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IpfixCollectorUpmProfile
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IpfixCollectorUpmProfile
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ipfixCollectorProfilesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ipfix_collector_profiles", "update", inputDataValue, executionContext)
-	var emptyOutput model.IpfixCollectorUpmProfile
+	var emptyOutput nsxModel.IpfixCollectorUpmProfile
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ipfixCollectorProfilesUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IpfixCollectorProfilesUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IpfixCollectorUpmProfile), nil
+		return output.(nsxModel.IpfixCollectorUpmProfile), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

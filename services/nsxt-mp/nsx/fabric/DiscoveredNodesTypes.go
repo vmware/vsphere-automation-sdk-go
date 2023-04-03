@@ -11,10 +11,10 @@
 package fabric
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
@@ -24,41 +24,47 @@ const DiscoveredNodes_LIST_HAS_PARENT_TRUE = "true"
 // Possible value for ``hasParent`` of method DiscoveredNodes#list.
 const DiscoveredNodes_LIST_HAS_PARENT_FALSE = "false"
 
-func discoveredNodesCreatetransportnodeInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func discoveredNodesCreatetransportnodeInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["node_ext_id"] = bindings.NewStringType()
-	fields["transport_node"] = bindings.NewReferenceType(model.TransportNodeBindingType)
+	fields["node_ext_id"] = vapiBindings_.NewStringType()
+	fields["transport_node"] = vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
+	fields["override_nsx_ownership"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["node_ext_id"] = "NodeExtId"
 	fieldNameMap["transport_node"] = "TransportNode"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	fieldNameMap["override_nsx_ownership"] = "OverrideNsxOwnership"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func discoveredNodesCreatetransportnodeOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TransportNodeBindingType)
+func DiscoveredNodesCreatetransportnodeOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
 }
 
-func discoveredNodesCreatetransportnodeRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func discoveredNodesCreatetransportnodeRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["node_ext_id"] = bindings.NewStringType()
-	fields["transport_node"] = bindings.NewReferenceType(model.TransportNodeBindingType)
+	fields["node_ext_id"] = vapiBindings_.NewStringType()
+	fields["transport_node"] = vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
+	fields["override_nsx_ownership"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["node_ext_id"] = "NodeExtId"
 	fieldNameMap["transport_node"] = "TransportNode"
-	paramsTypeMap["transport_node"] = bindings.NewReferenceType(model.TransportNodeBindingType)
-	paramsTypeMap["node_ext_id"] = bindings.NewStringType()
-	paramsTypeMap["nodeExtId"] = bindings.NewStringType()
+	fieldNameMap["override_nsx_ownership"] = "OverrideNsxOwnership"
+	paramsTypeMap["transport_node"] = vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
+	paramsTypeMap["override_nsx_ownership"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["node_ext_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["nodeExtId"] = vapiBindings_.NewStringType()
 	pathParams["node_ext_id"] = "nodeExtId"
+	queryParams["override_nsx_ownership"] = "override_nsx_ownership"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -79,36 +85,36 @@ func discoveredNodesCreatetransportnodeRestMetadata() protocol.OperationRestMeta
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func discoveredNodesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func discoveredNodesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["node_ext_id"] = bindings.NewStringType()
+	fields["node_ext_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["node_ext_id"] = "NodeExtId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func discoveredNodesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.DiscoveredNodeBindingType)
+func DiscoveredNodesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.DiscoveredNodeBindingType)
 }
 
-func discoveredNodesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func discoveredNodesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["node_ext_id"] = bindings.NewStringType()
+	fields["node_ext_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["node_ext_id"] = "NodeExtId"
-	paramsTypeMap["node_ext_id"] = bindings.NewStringType()
-	paramsTypeMap["nodeExtId"] = bindings.NewStringType()
+	paramsTypeMap["node_ext_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["nodeExtId"] = vapiBindings_.NewStringType()
 	pathParams["node_ext_id"] = "nodeExtId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -129,23 +135,23 @@ func discoveredNodesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func discoveredNodesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func discoveredNodesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["cm_local_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["external_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["has_parent"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["ip_address"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["origin_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["parent_compute_collection"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cm_local_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["external_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["has_parent"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["ip_address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["origin_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["parent_compute_collection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cm_local_id"] = "CmLocalId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["display_name"] = "DisplayName"
@@ -160,37 +166,37 @@ func discoveredNodesListInputType() bindings.StructType {
 	fieldNameMap["parent_compute_collection"] = "ParentComputeCollection"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func discoveredNodesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.DiscoveredNodeListResultBindingType)
+func DiscoveredNodesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.DiscoveredNodeListResultBindingType)
 }
 
-func discoveredNodesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func discoveredNodesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["cm_local_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["external_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["has_parent"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["ip_address"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["origin_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["parent_compute_collection"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cm_local_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["external_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["has_parent"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["ip_address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["origin_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["parent_compute_collection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cm_local_id"] = "CmLocalId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["display_name"] = "DisplayName"
@@ -205,20 +211,20 @@ func discoveredNodesListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["parent_compute_collection"] = "ParentComputeCollection"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["origin_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["parent_compute_collection"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["cm_local_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["external_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["has_parent"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["ip_address"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["node_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["cm_local_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["has_parent"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["external_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["origin_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["ip_address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["parent_compute_collection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
 	queryParams["cm_local_id"] = "cm_local_id"
 	queryParams["has_parent"] = "has_parent"
@@ -235,7 +241,7 @@ func discoveredNodesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -256,36 +262,42 @@ func discoveredNodesListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func discoveredNodesReapplyclusterconfigInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func discoveredNodesReapplyclusterconfigInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["node_ext_id"] = bindings.NewStringType()
+	fields["node_ext_id"] = vapiBindings_.NewStringType()
+	fields["override_nsx_ownership"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["node_ext_id"] = "NodeExtId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	fieldNameMap["override_nsx_ownership"] = "OverrideNsxOwnership"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func discoveredNodesReapplyclusterconfigOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TransportNodeBindingType)
+func DiscoveredNodesReapplyclusterconfigOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
 }
 
-func discoveredNodesReapplyclusterconfigRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func discoveredNodesReapplyclusterconfigRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["node_ext_id"] = bindings.NewStringType()
+	fields["node_ext_id"] = vapiBindings_.NewStringType()
+	fields["override_nsx_ownership"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["node_ext_id"] = "NodeExtId"
-	paramsTypeMap["node_ext_id"] = bindings.NewStringType()
-	paramsTypeMap["nodeExtId"] = bindings.NewStringType()
+	fieldNameMap["override_nsx_ownership"] = "OverrideNsxOwnership"
+	paramsTypeMap["override_nsx_ownership"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["node_ext_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["nodeExtId"] = vapiBindings_.NewStringType()
 	pathParams["node_ext_id"] = "nodeExtId"
+	queryParams["override_nsx_ownership"] = "override_nsx_ownership"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

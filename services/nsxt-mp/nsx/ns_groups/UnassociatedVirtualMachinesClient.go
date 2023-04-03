@@ -9,15 +9,14 @@
 package ns_groups
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type UnassociatedVirtualMachinesClient interface {
 
@@ -33,43 +32,48 @@ type UnassociatedVirtualMachinesClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.UnassociatedVMListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, displayNameParam *string, excludeVmTypeParam *string, externalIdParam *string, hostIdParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.UnassociatedVMListResult, error)
+	List(cursorParam *string, displayNameParam *string, excludeVmTypeParam *string, externalIdParam *string, hostIdParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.UnassociatedVMListResult, error)
 }
 
 type unassociatedVirtualMachinesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewUnassociatedVirtualMachinesClient(connector client.Connector) *unassociatedVirtualMachinesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.ns_groups.unassociated_virtual_machines")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
+func NewUnassociatedVirtualMachinesClient(connector vapiProtocolClient_.Connector) *unassociatedVirtualMachinesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.ns_groups.unassociated_virtual_machines")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	uIface := unassociatedVirtualMachinesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &uIface
 }
 
-func (uIface *unassociatedVirtualMachinesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (uIface *unassociatedVirtualMachinesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := uIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (uIface *unassociatedVirtualMachinesClient) List(cursorParam *string, displayNameParam *string, excludeVmTypeParam *string, externalIdParam *string, hostIdParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.UnassociatedVMListResult, error) {
+func (uIface *unassociatedVirtualMachinesClient) List(cursorParam *string, displayNameParam *string, excludeVmTypeParam *string, externalIdParam *string, hostIdParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.UnassociatedVMListResult, error) {
 	typeConverter := uIface.connector.TypeConverter()
 	executionContext := uIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(unassociatedVirtualMachinesListInputType(), typeConverter)
+	operationRestMetaData := unassociatedVirtualMachinesListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(unassociatedVirtualMachinesListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("DisplayName", displayNameParam)
 	sv.AddStructField("ExcludeVmType", excludeVmTypeParam)
@@ -81,25 +85,22 @@ func (uIface *unassociatedVirtualMachinesClient) List(cursorParam *string, displ
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.UnassociatedVMListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.UnassociatedVMListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := unassociatedVirtualMachinesListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	uIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := uIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ns_groups.unassociated_virtual_machines", "list", inputDataValue, executionContext)
-	var emptyOutput model.UnassociatedVMListResult
+	var emptyOutput nsxModel.UnassociatedVMListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), unassociatedVirtualMachinesListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), UnassociatedVirtualMachinesListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.UnassociatedVMListResult), nil
+		return output.(nsxModel.UnassociatedVMListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), uIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

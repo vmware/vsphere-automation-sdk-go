@@ -9,15 +9,14 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type NsGroupsClient interface {
 
@@ -27,28 +26,33 @@ type NsGroupsClient interface {
 	// @param nsGroupExpressionListParam (required)
 	// @param actionParam Specifies addition or removal action (required)
 	// @return com.vmware.nsx.model.NSGroup
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Addorremoveexpression(nsGroupIdParam string, nsGroupExpressionListParam model.NSGroupExpressionList, actionParam string) (model.NSGroup, error)
+	Addorremoveexpression(nsGroupIdParam string, nsGroupExpressionListParam nsxModel.NSGroupExpressionList, actionParam string) (nsxModel.NSGroup, error)
 
-	// Creates a new NSGroup that can group NSX resources - VIFs, Lports and LSwitches as well as the grouping objects - IPSet, MACSet and other NSGroups. For NSGroups containing VM criteria(both static and dynamic), system VMs will not be included as members. This filter applies at VM level only. Exceptions are as follows: 1. LogicalPorts and VNI of System VMs will be included in NSGroup if the criteria is based on LogicalPort, LogicalSwitch or VNI directly.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param nsGroupParam (required)
 	// @return com.vmware.nsx.model.NSGroup
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(nsGroupParam model.NSGroup) (model.NSGroup, error)
+	Create(nsGroupParam nsxModel.NSGroup) (nsxModel.NSGroup, error)
 
 	// Deletes the specified NSGroup. By default, if the NSGroup is added to another NSGroup, it won't be deleted. In such situations, pass \"force=true\" as query param to force delete the NSGroup.
 	//
 	// @param nsGroupIdParam NSGroup Id (required)
 	// @param forceParam Force delete the resource even if it is being used somewhere (optional, default to false)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -56,19 +60,24 @@ type NsGroupsClient interface {
 	// @throws NotFound  Not Found
 	Delete(nsGroupIdParam string, forceParam *bool) error
 
-	// Returns information about the specified NSGroup.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param nsGroupIdParam NSGroup Id (required)
 	// @param populateReferencesParam Populate metadata of resource referenced by NSGroupExpressions (optional, default to false)
 	// @return com.vmware.nsx.model.NSGroup
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(nsGroupIdParam string, populateReferencesParam *bool) (model.NSGroup, error)
+	Get(nsGroupIdParam string, populateReferencesParam *bool) (nsxModel.NSGroup, error)
 
-	// List the NSGroups in a paginated format. The page size is restricted to 50 NSGroups so that the size of the response remains small even in the worst case. Optionally, specify valid member types as request parameter to filter NSGroups.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
@@ -78,115 +87,121 @@ type NsGroupsClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.NSGroupListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includedFieldsParam *string, memberTypesParam *string, pageSizeParam *int64, populateReferencesParam *bool, sortAscendingParam *bool, sortByParam *string) (model.NSGroupListResult, error)
+	List(cursorParam *string, includedFieldsParam *string, memberTypesParam *string, pageSizeParam *int64, populateReferencesParam *bool, sortAscendingParam *bool, sortByParam *string) (nsxModel.NSGroupListResult, error)
 
-	// Updates the specified NSGroup. Modifiable parameters include the description, display_name and members. For NSGroups containing VM criteria(both static and dynamic), system VMs will not be included as members. This filter applies at VM level only. Exceptions are as follows. 1. LogicalPorts and VNI of system VMs will be included in NSGroup if the criteria is based on LogicalPort, LogicalSwitch or VNI directly.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param nsGroupIdParam NSGroup Id (required)
 	// @param nsGroupParam (required)
 	// @return com.vmware.nsx.model.NSGroup
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(nsGroupIdParam string, nsGroupParam model.NSGroup) (model.NSGroup, error)
+	Update(nsGroupIdParam string, nsGroupParam nsxModel.NSGroup) (nsxModel.NSGroup, error)
 }
 
 type nsGroupsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewNsGroupsClient(connector client.Connector) *nsGroupsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.ns_groups")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"addorremoveexpression": core.NewMethodIdentifier(interfaceIdentifier, "addorremoveexpression"),
-		"create":                core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete":                core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":                   core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":                  core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update":                core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewNsGroupsClient(connector vapiProtocolClient_.Connector) *nsGroupsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.ns_groups")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"addorremoveexpression": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "addorremoveexpression"),
+		"create":                vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete":                vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":                   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":                  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update":                vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	nIface := nsGroupsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &nIface
 }
 
-func (nIface *nsGroupsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (nIface *nsGroupsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := nIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (nIface *nsGroupsClient) Addorremoveexpression(nsGroupIdParam string, nsGroupExpressionListParam model.NSGroupExpressionList, actionParam string) (model.NSGroup, error) {
+func (nIface *nsGroupsClient) Addorremoveexpression(nsGroupIdParam string, nsGroupExpressionListParam nsxModel.NSGroupExpressionList, actionParam string) (nsxModel.NSGroup, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(nsGroupsAddorremoveexpressionInputType(), typeConverter)
+	operationRestMetaData := nsGroupsAddorremoveexpressionRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(nsGroupsAddorremoveexpressionInputType(), typeConverter)
 	sv.AddStructField("NsGroupId", nsGroupIdParam)
 	sv.AddStructField("NsGroupExpressionList", nsGroupExpressionListParam)
 	sv.AddStructField("Action", actionParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NSGroup
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NSGroup
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := nsGroupsAddorremoveexpressionRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ns_groups", "addorremoveexpression", inputDataValue, executionContext)
-	var emptyOutput model.NSGroup
+	var emptyOutput nsxModel.NSGroup
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), nsGroupsAddorremoveexpressionOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NsGroupsAddorremoveexpressionOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NSGroup), nil
+		return output.(nsxModel.NSGroup), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (nIface *nsGroupsClient) Create(nsGroupParam model.NSGroup) (model.NSGroup, error) {
+func (nIface *nsGroupsClient) Create(nsGroupParam nsxModel.NSGroup) (nsxModel.NSGroup, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(nsGroupsCreateInputType(), typeConverter)
+	operationRestMetaData := nsGroupsCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(nsGroupsCreateInputType(), typeConverter)
 	sv.AddStructField("NsGroup", nsGroupParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NSGroup
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NSGroup
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := nsGroupsCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ns_groups", "create", inputDataValue, executionContext)
-	var emptyOutput model.NSGroup
+	var emptyOutput nsxModel.NSGroup
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), nsGroupsCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NsGroupsCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NSGroup), nil
+		return output.(nsxModel.NSGroup), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -195,65 +210,71 @@ func (nIface *nsGroupsClient) Create(nsGroupParam model.NSGroup) (model.NSGroup,
 func (nIface *nsGroupsClient) Delete(nsGroupIdParam string, forceParam *bool) error {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(nsGroupsDeleteInputType(), typeConverter)
+	operationRestMetaData := nsGroupsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(nsGroupsDeleteInputType(), typeConverter)
 	sv.AddStructField("NsGroupId", nsGroupIdParam)
 	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := nsGroupsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ns_groups", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (nIface *nsGroupsClient) Get(nsGroupIdParam string, populateReferencesParam *bool) (model.NSGroup, error) {
+func (nIface *nsGroupsClient) Get(nsGroupIdParam string, populateReferencesParam *bool) (nsxModel.NSGroup, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(nsGroupsGetInputType(), typeConverter)
+	operationRestMetaData := nsGroupsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(nsGroupsGetInputType(), typeConverter)
 	sv.AddStructField("NsGroupId", nsGroupIdParam)
 	sv.AddStructField("PopulateReferences", populateReferencesParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NSGroup
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NSGroup
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := nsGroupsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ns_groups", "get", inputDataValue, executionContext)
-	var emptyOutput model.NSGroup
+	var emptyOutput nsxModel.NSGroup
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), nsGroupsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NsGroupsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NSGroup), nil
+		return output.(nsxModel.NSGroup), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (nIface *nsGroupsClient) List(cursorParam *string, includedFieldsParam *string, memberTypesParam *string, pageSizeParam *int64, populateReferencesParam *bool, sortAscendingParam *bool, sortByParam *string) (model.NSGroupListResult, error) {
+func (nIface *nsGroupsClient) List(cursorParam *string, includedFieldsParam *string, memberTypesParam *string, pageSizeParam *int64, populateReferencesParam *bool, sortAscendingParam *bool, sortByParam *string) (nsxModel.NSGroupListResult, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(nsGroupsListInputType(), typeConverter)
+	operationRestMetaData := nsGroupsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(nsGroupsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("MemberTypes", memberTypesParam)
@@ -263,57 +284,55 @@ func (nIface *nsGroupsClient) List(cursorParam *string, includedFieldsParam *str
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NSGroupListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NSGroupListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := nsGroupsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ns_groups", "list", inputDataValue, executionContext)
-	var emptyOutput model.NSGroupListResult
+	var emptyOutput nsxModel.NSGroupListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), nsGroupsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NsGroupsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NSGroupListResult), nil
+		return output.(nsxModel.NSGroupListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (nIface *nsGroupsClient) Update(nsGroupIdParam string, nsGroupParam model.NSGroup) (model.NSGroup, error) {
+func (nIface *nsGroupsClient) Update(nsGroupIdParam string, nsGroupParam nsxModel.NSGroup) (nsxModel.NSGroup, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(nsGroupsUpdateInputType(), typeConverter)
+	operationRestMetaData := nsGroupsUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(nsGroupsUpdateInputType(), typeConverter)
 	sv.AddStructField("NsGroupId", nsGroupIdParam)
 	sv.AddStructField("NsGroup", nsGroupParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NSGroup
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NSGroup
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := nsGroupsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ns_groups", "update", inputDataValue, executionContext)
-	var emptyOutput model.NSGroup
+	var emptyOutput nsxModel.NSGroup
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), nsGroupsUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NsGroupsUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NSGroup), nil
+		return output.(nsxModel.NSGroup), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

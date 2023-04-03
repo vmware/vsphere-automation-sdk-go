@@ -9,15 +9,14 @@
 package plan
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SettingsClient interface {
 
@@ -25,110 +24,114 @@ type SettingsClient interface {
 	//
 	// @param componentTypeParam (required)
 	// @return com.vmware.nsx.model.UpgradePlanSettings
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(componentTypeParam string) (model.UpgradePlanSettings, error)
+	Get(componentTypeParam string) (nsxModel.UpgradePlanSettings, error)
 
 	// Update the upgrade plan settings for the component.
 	//
 	// @param componentTypeParam (required)
 	// @param upgradePlanSettingsParam (required)
 	// @return com.vmware.nsx.model.UpgradePlanSettings
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(componentTypeParam string, upgradePlanSettingsParam model.UpgradePlanSettings) (model.UpgradePlanSettings, error)
+	Update(componentTypeParam string, upgradePlanSettingsParam nsxModel.UpgradePlanSettings) (nsxModel.UpgradePlanSettings, error)
 }
 
 type settingsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewSettingsClient(connector client.Connector) *settingsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.upgrade.plan.settings")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewSettingsClient(connector vapiProtocolClient_.Connector) *settingsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.upgrade.plan.settings")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	sIface := settingsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *settingsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (sIface *settingsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *settingsClient) Get(componentTypeParam string) (model.UpgradePlanSettings, error) {
+func (sIface *settingsClient) Get(componentTypeParam string) (nsxModel.UpgradePlanSettings, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(settingsGetInputType(), typeConverter)
+	operationRestMetaData := settingsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(settingsGetInputType(), typeConverter)
 	sv.AddStructField("ComponentType", componentTypeParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.UpgradePlanSettings
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.UpgradePlanSettings
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := settingsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.upgrade.plan.settings", "get", inputDataValue, executionContext)
-	var emptyOutput model.UpgradePlanSettings
+	var emptyOutput nsxModel.UpgradePlanSettings
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), settingsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SettingsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.UpgradePlanSettings), nil
+		return output.(nsxModel.UpgradePlanSettings), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *settingsClient) Update(componentTypeParam string, upgradePlanSettingsParam model.UpgradePlanSettings) (model.UpgradePlanSettings, error) {
+func (sIface *settingsClient) Update(componentTypeParam string, upgradePlanSettingsParam nsxModel.UpgradePlanSettings) (nsxModel.UpgradePlanSettings, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(settingsUpdateInputType(), typeConverter)
+	operationRestMetaData := settingsUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(settingsUpdateInputType(), typeConverter)
 	sv.AddStructField("ComponentType", componentTypeParam)
 	sv.AddStructField("UpgradePlanSettings", upgradePlanSettingsParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.UpgradePlanSettings
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.UpgradePlanSettings
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := settingsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.upgrade.plan.settings", "update", inputDataValue, executionContext)
-	var emptyOutput model.UpgradePlanSettings
+	var emptyOutput nsxModel.UpgradePlanSettings
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), settingsUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SettingsUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.UpgradePlanSettings), nil
+		return output.(nsxModel.UpgradePlanSettings), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

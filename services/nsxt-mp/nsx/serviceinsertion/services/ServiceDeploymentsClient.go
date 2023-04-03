@@ -9,15 +9,14 @@
 package services
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ServiceDeploymentsClient interface {
 
@@ -26,18 +25,20 @@ type ServiceDeploymentsClient interface {
 	// @param serviceIdParam (required)
 	// @param serviceDeploymentParam (required)
 	// @return com.vmware.nsx.model.ServiceDeployment
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(serviceIdParam string, serviceDeploymentParam model.ServiceDeployment) (model.ServiceDeployment, error)
+	Create(serviceIdParam string, serviceDeploymentParam nsxModel.ServiceDeployment) (nsxModel.ServiceDeployment, error)
 
 	// Remove the service deployment. Will remove all the Service VMs that were created as part of this deployment. User can send optional force delete option which will force remove the deployment, but should be used only when the regular delete is not working. Regular delete will ensure proper cleanup of Service VMs and related objects. Directly calling this API without trying regular undeploy will result in unexpected results, and orphan objects.
 	//
 	// @param serviceIdParam (required)
 	// @param serviceDeploymentIdParam (required)
 	// @param forceParam Force delete the resource even if it is being used somewhere (optional, default to false)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -50,107 +51,115 @@ type ServiceDeploymentsClient interface {
 	// @param serviceIdParam (required)
 	// @param serviceDeploymentIdParam (required)
 	// @return com.vmware.nsx.model.ServiceDeployment
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(serviceIdParam string, serviceDeploymentIdParam string) (model.ServiceDeployment, error)
+	Get(serviceIdParam string, serviceDeploymentIdParam string) (nsxModel.ServiceDeployment, error)
 
 	// Returns the list of deployments for the given service
 	//
 	// @param serviceIdParam (required)
 	// @return com.vmware.nsx.model.ServiceDeploymentListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(serviceIdParam string) (model.ServiceDeploymentListResult, error)
+	List(serviceIdParam string) (nsxModel.ServiceDeploymentListResult, error)
 
-	// This API is deprecated since only property we can change on service deployment is display name, which is used for the SVM name. Changing the name will cause the name of the deployment to go out of sync with the deployed VM.
+	// Update an existing Service Deployment.
+	//  This API is deprecated since only property we can change on service deployment is display name, which is used for the SVM name. Changing the name will cause the name of the deployment to go out of sync with the deployed VM.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param serviceIdParam (required)
 	// @param serviceDeploymentIdParam (required)
 	// @param serviceDeploymentParam (required)
 	// @return com.vmware.nsx.model.ServiceDeployment
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(serviceIdParam string, serviceDeploymentIdParam string, serviceDeploymentParam model.ServiceDeployment) (model.ServiceDeployment, error)
+	Update(serviceIdParam string, serviceDeploymentIdParam string, serviceDeploymentParam nsxModel.ServiceDeployment) (nsxModel.ServiceDeployment, error)
 
-	// If new deployment spec is provided, the deployment will be moved to the provided spec provided that current deployment state is either UPGRADE_FAILED or DEPLOYMENT_SUCCESSFUL If same deployment spec is provided, upgrade will be done only if current deployment state is UPGRADE_FAILED
+	// If new deployment spec is provided, the deployment will be moved to the provided spec provided that current deployment state is either UPGRADE_FAILED or DEPLOYMENT_SUCCESSFUL If same deployment spec is provided, upgrade will be done only if current deployment state is UPGRADE_FAILED If the exisiting data store is upgraded or changed, there is an optional parameter to supply the new storage Id during upgrade which would perform the deployment upgrade on the new data store
 	//
 	// @param serviceIdParam (required)
 	// @param serviceDeploymentIdParam (required)
 	// @param deploymentSpecNameParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Upgrade(serviceIdParam string, serviceDeploymentIdParam string, deploymentSpecNameParam model.DeploymentSpecName) error
+	Upgrade(serviceIdParam string, serviceDeploymentIdParam string, deploymentSpecNameParam nsxModel.DeploymentSpecName) error
 }
 
 type serviceDeploymentsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewServiceDeploymentsClient(connector client.Connector) *serviceDeploymentsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.serviceinsertion.services.service_deployments")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create":  core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete":  core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":     core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":    core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update":  core.NewMethodIdentifier(interfaceIdentifier, "update"),
-		"upgrade": core.NewMethodIdentifier(interfaceIdentifier, "upgrade"),
+func NewServiceDeploymentsClient(connector vapiProtocolClient_.Connector) *serviceDeploymentsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.serviceinsertion.services.service_deployments")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"upgrade": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "upgrade"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	sIface := serviceDeploymentsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *serviceDeploymentsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (sIface *serviceDeploymentsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *serviceDeploymentsClient) Create(serviceIdParam string, serviceDeploymentParam model.ServiceDeployment) (model.ServiceDeployment, error) {
+func (sIface *serviceDeploymentsClient) Create(serviceIdParam string, serviceDeploymentParam nsxModel.ServiceDeployment) (nsxModel.ServiceDeployment, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceDeploymentsCreateInputType(), typeConverter)
+	operationRestMetaData := serviceDeploymentsCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(serviceDeploymentsCreateInputType(), typeConverter)
 	sv.AddStructField("ServiceId", serviceIdParam)
 	sv.AddStructField("ServiceDeployment", serviceDeploymentParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ServiceDeployment
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ServiceDeployment
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := serviceDeploymentsCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.serviceinsertion.services.service_deployments", "create", inputDataValue, executionContext)
-	var emptyOutput model.ServiceDeployment
+	var emptyOutput nsxModel.ServiceDeployment
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), serviceDeploymentsCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ServiceDeploymentsCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ServiceDeployment), nil
+		return output.(nsxModel.ServiceDeployment), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -159,148 +168,153 @@ func (sIface *serviceDeploymentsClient) Create(serviceIdParam string, serviceDep
 func (sIface *serviceDeploymentsClient) Delete(serviceIdParam string, serviceDeploymentIdParam string, forceParam *bool) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceDeploymentsDeleteInputType(), typeConverter)
+	operationRestMetaData := serviceDeploymentsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(serviceDeploymentsDeleteInputType(), typeConverter)
 	sv.AddStructField("ServiceId", serviceIdParam)
 	sv.AddStructField("ServiceDeploymentId", serviceDeploymentIdParam)
 	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := serviceDeploymentsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.serviceinsertion.services.service_deployments", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (sIface *serviceDeploymentsClient) Get(serviceIdParam string, serviceDeploymentIdParam string) (model.ServiceDeployment, error) {
+func (sIface *serviceDeploymentsClient) Get(serviceIdParam string, serviceDeploymentIdParam string) (nsxModel.ServiceDeployment, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceDeploymentsGetInputType(), typeConverter)
+	operationRestMetaData := serviceDeploymentsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(serviceDeploymentsGetInputType(), typeConverter)
 	sv.AddStructField("ServiceId", serviceIdParam)
 	sv.AddStructField("ServiceDeploymentId", serviceDeploymentIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ServiceDeployment
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ServiceDeployment
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := serviceDeploymentsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.serviceinsertion.services.service_deployments", "get", inputDataValue, executionContext)
-	var emptyOutput model.ServiceDeployment
+	var emptyOutput nsxModel.ServiceDeployment
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), serviceDeploymentsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ServiceDeploymentsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ServiceDeployment), nil
+		return output.(nsxModel.ServiceDeployment), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *serviceDeploymentsClient) List(serviceIdParam string) (model.ServiceDeploymentListResult, error) {
+func (sIface *serviceDeploymentsClient) List(serviceIdParam string) (nsxModel.ServiceDeploymentListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceDeploymentsListInputType(), typeConverter)
+	operationRestMetaData := serviceDeploymentsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(serviceDeploymentsListInputType(), typeConverter)
 	sv.AddStructField("ServiceId", serviceIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ServiceDeploymentListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ServiceDeploymentListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := serviceDeploymentsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.serviceinsertion.services.service_deployments", "list", inputDataValue, executionContext)
-	var emptyOutput model.ServiceDeploymentListResult
+	var emptyOutput nsxModel.ServiceDeploymentListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), serviceDeploymentsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ServiceDeploymentsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ServiceDeploymentListResult), nil
+		return output.(nsxModel.ServiceDeploymentListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *serviceDeploymentsClient) Update(serviceIdParam string, serviceDeploymentIdParam string, serviceDeploymentParam model.ServiceDeployment) (model.ServiceDeployment, error) {
+func (sIface *serviceDeploymentsClient) Update(serviceIdParam string, serviceDeploymentIdParam string, serviceDeploymentParam nsxModel.ServiceDeployment) (nsxModel.ServiceDeployment, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceDeploymentsUpdateInputType(), typeConverter)
+	operationRestMetaData := serviceDeploymentsUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(serviceDeploymentsUpdateInputType(), typeConverter)
 	sv.AddStructField("ServiceId", serviceIdParam)
 	sv.AddStructField("ServiceDeploymentId", serviceDeploymentIdParam)
 	sv.AddStructField("ServiceDeployment", serviceDeploymentParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ServiceDeployment
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ServiceDeployment
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := serviceDeploymentsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.serviceinsertion.services.service_deployments", "update", inputDataValue, executionContext)
-	var emptyOutput model.ServiceDeployment
+	var emptyOutput nsxModel.ServiceDeployment
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), serviceDeploymentsUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ServiceDeploymentsUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ServiceDeployment), nil
+		return output.(nsxModel.ServiceDeployment), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *serviceDeploymentsClient) Upgrade(serviceIdParam string, serviceDeploymentIdParam string, deploymentSpecNameParam model.DeploymentSpecName) error {
+func (sIface *serviceDeploymentsClient) Upgrade(serviceIdParam string, serviceDeploymentIdParam string, deploymentSpecNameParam nsxModel.DeploymentSpecName) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(serviceDeploymentsUpgradeInputType(), typeConverter)
+	operationRestMetaData := serviceDeploymentsUpgradeRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(serviceDeploymentsUpgradeInputType(), typeConverter)
 	sv.AddStructField("ServiceId", serviceIdParam)
 	sv.AddStructField("ServiceDeploymentId", serviceDeploymentIdParam)
 	sv.AddStructField("DeploymentSpecName", deploymentSpecNameParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := serviceDeploymentsUpgradeRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.serviceinsertion.services.service_deployments", "upgrade", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}

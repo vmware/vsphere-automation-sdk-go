@@ -9,245 +9,254 @@
 package services
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type InstallUpgradeClient interface {
 
 	// Read NSX install-upgrade service properties
 	// @return com.vmware.nsx.model.NodeInstallUpgradeServiceProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (model.NodeInstallUpgradeServiceProperties, error)
+	Get() (nsxModel.NodeInstallUpgradeServiceProperties, error)
 
 	// Restart, start or stop the NSX install-upgrade service
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
+	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Restart() (model.NodeServiceStatusProperties, error)
+	Restart() (nsxModel.NodeServiceStatusProperties, error)
 
 	// Restart, start or stop the NSX install-upgrade service
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
+	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Start() (model.NodeServiceStatusProperties, error)
+	Start() (nsxModel.NodeServiceStatusProperties, error)
 
 	// Restart, start or stop the NSX install-upgrade service
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
+	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Stop() (model.NodeServiceStatusProperties, error)
+	Stop() (nsxModel.NodeServiceStatusProperties, error)
 
 	// Update NSX install-upgrade service properties
 	//
 	// @param nodeInstallUpgradeServicePropertiesParam (required)
 	// @return com.vmware.nsx.model.NodeInstallUpgradeServiceProperties
+	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(nodeInstallUpgradeServicePropertiesParam model.NodeInstallUpgradeServiceProperties) (model.NodeInstallUpgradeServiceProperties, error)
+	Update(nodeInstallUpgradeServicePropertiesParam nsxModel.NodeInstallUpgradeServiceProperties) (nsxModel.NodeInstallUpgradeServiceProperties, error)
 }
 
 type installUpgradeClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewInstallUpgradeClient(connector client.Connector) *installUpgradeClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.node.services.install_upgrade")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get":     core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"restart": core.NewMethodIdentifier(interfaceIdentifier, "restart"),
-		"start":   core.NewMethodIdentifier(interfaceIdentifier, "start"),
-		"stop":    core.NewMethodIdentifier(interfaceIdentifier, "stop"),
-		"update":  core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewInstallUpgradeClient(connector vapiProtocolClient_.Connector) *installUpgradeClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.node.services.install_upgrade")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"restart": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "restart"),
+		"start":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "start"),
+		"stop":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "stop"),
+		"update":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	iIface := installUpgradeClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &iIface
 }
 
-func (iIface *installUpgradeClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (iIface *installUpgradeClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := iIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (iIface *installUpgradeClient) Get() (model.NodeInstallUpgradeServiceProperties, error) {
+func (iIface *installUpgradeClient) Get() (nsxModel.NodeInstallUpgradeServiceProperties, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(installUpgradeGetInputType(), typeConverter)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.NodeInstallUpgradeServiceProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
 	operationRestMetaData := installUpgradeGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(installUpgradeGetInputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.NodeInstallUpgradeServiceProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.install_upgrade", "get", inputDataValue, executionContext)
-	var emptyOutput model.NodeInstallUpgradeServiceProperties
+	var emptyOutput nsxModel.NodeInstallUpgradeServiceProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), installUpgradeGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), InstallUpgradeGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodeInstallUpgradeServiceProperties), nil
+		return output.(nsxModel.NodeInstallUpgradeServiceProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (iIface *installUpgradeClient) Restart() (model.NodeServiceStatusProperties, error) {
+func (iIface *installUpgradeClient) Restart() (nsxModel.NodeServiceStatusProperties, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(installUpgradeRestartInputType(), typeConverter)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.NodeServiceStatusProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
 	operationRestMetaData := installUpgradeRestartRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(installUpgradeRestartInputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.NodeServiceStatusProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.install_upgrade", "restart", inputDataValue, executionContext)
-	var emptyOutput model.NodeServiceStatusProperties
+	var emptyOutput nsxModel.NodeServiceStatusProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), installUpgradeRestartOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), InstallUpgradeRestartOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodeServiceStatusProperties), nil
+		return output.(nsxModel.NodeServiceStatusProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (iIface *installUpgradeClient) Start() (model.NodeServiceStatusProperties, error) {
+func (iIface *installUpgradeClient) Start() (nsxModel.NodeServiceStatusProperties, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(installUpgradeStartInputType(), typeConverter)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.NodeServiceStatusProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
 	operationRestMetaData := installUpgradeStartRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.install_upgrade", "start", inputDataValue, executionContext)
-	var emptyOutput model.NodeServiceStatusProperties
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), installUpgradeStartOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.NodeServiceStatusProperties), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-func (iIface *installUpgradeClient) Stop() (model.NodeServiceStatusProperties, error) {
-	typeConverter := iIface.connector.TypeConverter()
-	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(installUpgradeStopInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(installUpgradeStartInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NodeServiceStatusProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NodeServiceStatusProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := installUpgradeStopRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.install_upgrade", "stop", inputDataValue, executionContext)
-	var emptyOutput model.NodeServiceStatusProperties
+
+	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.install_upgrade", "start", inputDataValue, executionContext)
+	var emptyOutput nsxModel.NodeServiceStatusProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), installUpgradeStopOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), InstallUpgradeStartOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodeServiceStatusProperties), nil
+		return output.(nsxModel.NodeServiceStatusProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (iIface *installUpgradeClient) Update(nodeInstallUpgradeServicePropertiesParam model.NodeInstallUpgradeServiceProperties) (model.NodeInstallUpgradeServiceProperties, error) {
+func (iIface *installUpgradeClient) Stop() (nsxModel.NodeServiceStatusProperties, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(installUpgradeUpdateInputType(), typeConverter)
+	operationRestMetaData := installUpgradeStopRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(installUpgradeStopInputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.NodeServiceStatusProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.install_upgrade", "stop", inputDataValue, executionContext)
+	var emptyOutput nsxModel.NodeServiceStatusProperties
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), InstallUpgradeStopOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsxModel.NodeServiceStatusProperties), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (iIface *installUpgradeClient) Update(nodeInstallUpgradeServicePropertiesParam nsxModel.NodeInstallUpgradeServiceProperties) (nsxModel.NodeInstallUpgradeServiceProperties, error) {
+	typeConverter := iIface.connector.TypeConverter()
+	executionContext := iIface.connector.NewExecutionContext()
+	operationRestMetaData := installUpgradeUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(installUpgradeUpdateInputType(), typeConverter)
 	sv.AddStructField("NodeInstallUpgradeServiceProperties", nodeInstallUpgradeServicePropertiesParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NodeInstallUpgradeServiceProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NodeInstallUpgradeServiceProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := installUpgradeUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.install_upgrade", "update", inputDataValue, executionContext)
-	var emptyOutput model.NodeInstallUpgradeServiceProperties
+	var emptyOutput nsxModel.NodeInstallUpgradeServiceProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), installUpgradeUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), InstallUpgradeUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodeInstallUpgradeServiceProperties), nil
+		return output.(nsxModel.NodeInstallUpgradeServiceProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

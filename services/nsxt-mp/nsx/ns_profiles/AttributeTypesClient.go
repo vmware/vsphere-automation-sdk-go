@@ -9,78 +9,79 @@
 package ns_profiles
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AttributeTypesClient interface {
 
 	// Returns supported attribute type strings for NSProfile.
 	// @return com.vmware.nsx.model.NSSupportedAttributeTypesResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (model.NSSupportedAttributeTypesResult, error)
+	Get() (nsxModel.NSSupportedAttributeTypesResult, error)
 }
 
 type attributeTypesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewAttributeTypesClient(connector client.Connector) *attributeTypesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.ns_profiles.attribute_types")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get": core.NewMethodIdentifier(interfaceIdentifier, "get"),
+func NewAttributeTypesClient(connector vapiProtocolClient_.Connector) *attributeTypesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.ns_profiles.attribute_types")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	aIface := attributeTypesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &aIface
 }
 
-func (aIface *attributeTypesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (aIface *attributeTypesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := aIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (aIface *attributeTypesClient) Get() (model.NSSupportedAttributeTypesResult, error) {
+func (aIface *attributeTypesClient) Get() (nsxModel.NSSupportedAttributeTypesResult, error) {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(attributeTypesGetInputType(), typeConverter)
+	operationRestMetaData := attributeTypesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(attributeTypesGetInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NSSupportedAttributeTypesResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NSSupportedAttributeTypesResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := attributeTypesGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	aIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := aIface.connector.GetApiProvider().Invoke("com.vmware.nsx.ns_profiles.attribute_types", "get", inputDataValue, executionContext)
-	var emptyOutput model.NSSupportedAttributeTypesResult
+	var emptyOutput nsxModel.NSSupportedAttributeTypesResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), attributeTypesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), AttributeTypesGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NSSupportedAttributeTypesResult), nil
+		return output.(nsxModel.NSSupportedAttributeTypesResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), aIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

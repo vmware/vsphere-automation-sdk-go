@@ -11,10 +11,10 @@
 package migration
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
@@ -27,36 +27,36 @@ const Setup_SETESGTOROUTERMAPPINGOPTION_MAPPING_OPTION_FILE_UPLOAD = "FILE_UPLOA
 // Possible value for ``mappingOption`` of method Setup#setesgtoroutermappingoption.
 const Setup_SETESGTOROUTERMAPPINGOPTION_MAPPING_OPTION_NO_MAPPING = "NO_MAPPING"
 
-func setupAddalbinfoInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func setupAddalbinfoInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["avi_end_point"] = bindings.NewReferenceType(model.AviEndPointBindingType)
+	fields["avi_end_point"] = vapiBindings_.NewReferenceType(nsxModel.AviEndPointBindingType)
 	fieldNameMap["avi_end_point"] = "AviEndPoint"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func setupAddalbinfoOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func SetupAddalbinfoOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func setupAddalbinfoRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func setupAddalbinfoRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["avi_end_point"] = bindings.NewReferenceType(model.AviEndPointBindingType)
+	fields["avi_end_point"] = vapiBindings_.NewReferenceType(nsxModel.AviEndPointBindingType)
 	fieldNameMap["avi_end_point"] = "AviEndPoint"
-	paramsTypeMap["avi_end_point"] = bindings.NewReferenceType(model.AviEndPointBindingType)
+	paramsTypeMap["avi_end_point"] = vapiBindings_.NewReferenceType(nsxModel.AviEndPointBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -77,36 +77,36 @@ func setupAddalbinfoRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func setupAddv2tsitemappingInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func setupAddv2tsitemappingInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["v2t_site_mapping_spec"] = bindings.NewReferenceType(model.V2tSiteMappingSpecBindingType)
+	fields["v2t_site_mapping_spec"] = vapiBindings_.NewReferenceType(nsxModel.V2tSiteMappingSpecBindingType)
 	fieldNameMap["v2t_site_mapping_spec"] = "V2tSiteMappingSpec"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func setupAddv2tsitemappingOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func SetupAddv2tsitemappingOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func setupAddv2tsitemappingRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func setupAddv2tsitemappingRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["v2t_site_mapping_spec"] = bindings.NewReferenceType(model.V2tSiteMappingSpecBindingType)
+	fields["v2t_site_mapping_spec"] = vapiBindings_.NewReferenceType(nsxModel.V2tSiteMappingSpecBindingType)
 	fieldNameMap["v2t_site_mapping_spec"] = "V2tSiteMappingSpec"
-	paramsTypeMap["v2t_site_mapping_spec"] = bindings.NewReferenceType(model.V2tSiteMappingSpecBindingType)
+	paramsTypeMap["v2t_site_mapping_spec"] = vapiBindings_.NewReferenceType(nsxModel.V2tSiteMappingSpecBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -127,21 +127,21 @@ func setupAddv2tsitemappingRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func setupGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func setupGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func setupGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.MigrationSetupInfoBindingType)
+func SetupGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.MigrationSetupInfoBindingType)
 }
 
-func setupGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func setupGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -151,7 +151,7 @@ func setupGetRestMetadata() protocol.OperationRestMetadata {
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -172,37 +172,85 @@ func setupGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func setupSetesgtoroutermappingoptionInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func setupMigratenewlyaddedhosttransportnodeInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["mapping_option"] = bindings.NewStringType()
-	fieldNameMap["mapping_option"] = "MappingOption"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	fields["new_host_transport_node_spec"] = vapiBindings_.NewReferenceType(nsxModel.NewHostTransportNodeSpecBindingType)
+	fieldNameMap["new_host_transport_node_spec"] = "NewHostTransportNodeSpec"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func setupSetesgtoroutermappingoptionOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func SetupMigratenewlyaddedhosttransportnodeOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func setupSetesgtoroutermappingoptionRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func setupMigratenewlyaddedhosttransportnodeRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["mapping_option"] = bindings.NewStringType()
+	fields["new_host_transport_node_spec"] = vapiBindings_.NewReferenceType(nsxModel.NewHostTransportNodeSpecBindingType)
+	fieldNameMap["new_host_transport_node_spec"] = "NewHostTransportNodeSpec"
+	paramsTypeMap["new_host_transport_node_spec"] = vapiBindings_.NewReferenceType(nsxModel.NewHostTransportNodeSpecBindingType)
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"action=migrate_newly_added_host_transport_node",
+		"new_host_transport_node_spec",
+		"POST",
+		"/api/v1/migration/setup",
+		"",
+		resultHeaders,
+		204,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
+func setupSetesgtoroutermappingoptionInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["mapping_option"] = vapiBindings_.NewStringType()
 	fieldNameMap["mapping_option"] = "MappingOption"
-	paramsTypeMap["mapping_option"] = bindings.NewStringType()
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func SetupSetesgtoroutermappingoptionOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
+}
+
+func setupSetesgtoroutermappingoptionRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["mapping_option"] = vapiBindings_.NewStringType()
+	fieldNameMap["mapping_option"] = "MappingOption"
+	paramsTypeMap["mapping_option"] = vapiBindings_.NewStringType()
 	queryParams["mapping_option"] = "mapping_option"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -223,36 +271,36 @@ func setupSetesgtoroutermappingoptionRestMetadata() protocol.OperationRestMetada
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func setupUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func setupUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["migration_setup_info"] = bindings.NewReferenceType(model.MigrationSetupInfoBindingType)
+	fields["migration_setup_info"] = vapiBindings_.NewReferenceType(nsxModel.MigrationSetupInfoBindingType)
 	fieldNameMap["migration_setup_info"] = "MigrationSetupInfo"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func setupUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.MigrationSetupInfoBindingType)
+func SetupUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.MigrationSetupInfoBindingType)
 }
 
-func setupUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func setupUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["migration_setup_info"] = bindings.NewReferenceType(model.MigrationSetupInfoBindingType)
+	fields["migration_setup_info"] = vapiBindings_.NewReferenceType(nsxModel.MigrationSetupInfoBindingType)
 	fieldNameMap["migration_setup_info"] = "MigrationSetupInfo"
-	paramsTypeMap["migration_setup_info"] = bindings.NewReferenceType(model.MigrationSetupInfoBindingType)
+	paramsTypeMap["migration_setup_info"] = vapiBindings_.NewReferenceType(nsxModel.MigrationSetupInfoBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

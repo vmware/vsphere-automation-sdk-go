@@ -11,64 +11,64 @@
 package byod_service_instances
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func serviceInstanceEndpointsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceInstanceEndpointsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["service_instance_id"] = bindings.NewStringType()
-	fields["service_instance_endpoint_id"] = bindings.NewStringType()
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_endpoint_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_instance_id"] = "ServiceInstanceId"
 	fieldNameMap["service_instance_endpoint_id"] = "ServiceInstanceEndpointId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceInstanceEndpointsDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func ServiceInstanceEndpointsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func serviceInstanceEndpointsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceInstanceEndpointsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["service_instance_id"] = bindings.NewStringType()
-	fields["service_instance_endpoint_id"] = bindings.NewStringType()
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_endpoint_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_instance_id"] = "ServiceInstanceId"
 	fieldNameMap["service_instance_endpoint_id"] = "ServiceInstanceEndpointId"
-	paramsTypeMap["tier0_id"] = bindings.NewStringType()
-	paramsTypeMap["locale_service_id"] = bindings.NewStringType()
-	paramsTypeMap["service_instance_id"] = bindings.NewStringType()
-	paramsTypeMap["service_instance_endpoint_id"] = bindings.NewStringType()
-	paramsTypeMap["tier0Id"] = bindings.NewStringType()
-	paramsTypeMap["localeServiceId"] = bindings.NewStringType()
-	paramsTypeMap["serviceInstanceId"] = bindings.NewStringType()
-	paramsTypeMap["serviceInstanceEndpointId"] = bindings.NewStringType()
+	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["locale_service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_instance_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_instance_endpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["tier0Id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["localeServiceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceInstanceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceInstanceEndpointId"] = vapiBindings_.NewStringType()
 	pathParams["service_instance_endpoint_id"] = "serviceInstanceEndpointId"
 	pathParams["service_instance_id"] = "serviceInstanceId"
 	pathParams["tier0_id"] = "tier0Id"
 	pathParams["locale_service_id"] = "localeServiceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -89,57 +89,57 @@ func serviceInstanceEndpointsDeleteRestMetadata() protocol.OperationRestMetadata
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func serviceInstanceEndpointsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceInstanceEndpointsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["service_instance_id"] = bindings.NewStringType()
-	fields["service_instance_endpoint_id"] = bindings.NewStringType()
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_endpoint_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_instance_id"] = "ServiceInstanceId"
 	fieldNameMap["service_instance_endpoint_id"] = "ServiceInstanceEndpointId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceInstanceEndpointsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ServiceInstanceEndpointBindingType)
+func ServiceInstanceEndpointsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.ServiceInstanceEndpointBindingType)
 }
 
-func serviceInstanceEndpointsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceInstanceEndpointsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["service_instance_id"] = bindings.NewStringType()
-	fields["service_instance_endpoint_id"] = bindings.NewStringType()
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_endpoint_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_instance_id"] = "ServiceInstanceId"
 	fieldNameMap["service_instance_endpoint_id"] = "ServiceInstanceEndpointId"
-	paramsTypeMap["tier0_id"] = bindings.NewStringType()
-	paramsTypeMap["locale_service_id"] = bindings.NewStringType()
-	paramsTypeMap["service_instance_id"] = bindings.NewStringType()
-	paramsTypeMap["service_instance_endpoint_id"] = bindings.NewStringType()
-	paramsTypeMap["tier0Id"] = bindings.NewStringType()
-	paramsTypeMap["localeServiceId"] = bindings.NewStringType()
-	paramsTypeMap["serviceInstanceId"] = bindings.NewStringType()
-	paramsTypeMap["serviceInstanceEndpointId"] = bindings.NewStringType()
+	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["locale_service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_instance_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_instance_endpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["tier0Id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["localeServiceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceInstanceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceInstanceEndpointId"] = vapiBindings_.NewStringType()
 	pathParams["service_instance_endpoint_id"] = "serviceInstanceEndpointId"
 	pathParams["service_instance_id"] = "serviceInstanceId"
 	pathParams["tier0_id"] = "tier0Id"
 	pathParams["locale_service_id"] = "localeServiceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -160,18 +160,18 @@ func serviceInstanceEndpointsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func serviceInstanceEndpointsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceInstanceEndpointsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["service_instance_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_instance_id"] = "ServiceInstanceId"
@@ -181,32 +181,32 @@ func serviceInstanceEndpointsListInputType() bindings.StructType {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceInstanceEndpointsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ServiceInstanceEndpointListResultBindingType)
+func ServiceInstanceEndpointsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.ServiceInstanceEndpointListResultBindingType)
 }
 
-func serviceInstanceEndpointsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceInstanceEndpointsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["service_instance_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_instance_id"] = "ServiceInstanceId"
@@ -216,18 +216,18 @@ func serviceInstanceEndpointsListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["tier0_id"] = bindings.NewStringType()
-	paramsTypeMap["locale_service_id"] = bindings.NewStringType()
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["service_instance_id"] = bindings.NewStringType()
-	paramsTypeMap["include_mark_for_delete_objects"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["tier0Id"] = bindings.NewStringType()
-	paramsTypeMap["localeServiceId"] = bindings.NewStringType()
-	paramsTypeMap["serviceInstanceId"] = bindings.NewStringType()
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["locale_service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["service_instance_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["tier0Id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["localeServiceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceInstanceId"] = vapiBindings_.NewStringType()
 	pathParams["service_instance_id"] = "serviceInstanceId"
 	pathParams["tier0_id"] = "tier0Id"
 	pathParams["locale_service_id"] = "localeServiceId"
@@ -239,7 +239,7 @@ func serviceInstanceEndpointsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -260,62 +260,62 @@ func serviceInstanceEndpointsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func serviceInstanceEndpointsPatchInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceInstanceEndpointsPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["service_instance_id"] = bindings.NewStringType()
-	fields["service_instance_endpoint_id"] = bindings.NewStringType()
-	fields["service_instance_endpoint"] = bindings.NewReferenceType(model.ServiceInstanceEndpointBindingType)
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_endpoint_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_endpoint"] = vapiBindings_.NewReferenceType(nsx_policyModel.ServiceInstanceEndpointBindingType)
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_instance_id"] = "ServiceInstanceId"
 	fieldNameMap["service_instance_endpoint_id"] = "ServiceInstanceEndpointId"
 	fieldNameMap["service_instance_endpoint"] = "ServiceInstanceEndpoint"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceInstanceEndpointsPatchOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func ServiceInstanceEndpointsPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func serviceInstanceEndpointsPatchRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceInstanceEndpointsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["service_instance_id"] = bindings.NewStringType()
-	fields["service_instance_endpoint_id"] = bindings.NewStringType()
-	fields["service_instance_endpoint"] = bindings.NewReferenceType(model.ServiceInstanceEndpointBindingType)
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_endpoint_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_endpoint"] = vapiBindings_.NewReferenceType(nsx_policyModel.ServiceInstanceEndpointBindingType)
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_instance_id"] = "ServiceInstanceId"
 	fieldNameMap["service_instance_endpoint_id"] = "ServiceInstanceEndpointId"
 	fieldNameMap["service_instance_endpoint"] = "ServiceInstanceEndpoint"
-	paramsTypeMap["tier0_id"] = bindings.NewStringType()
-	paramsTypeMap["locale_service_id"] = bindings.NewStringType()
-	paramsTypeMap["service_instance_endpoint"] = bindings.NewReferenceType(model.ServiceInstanceEndpointBindingType)
-	paramsTypeMap["service_instance_id"] = bindings.NewStringType()
-	paramsTypeMap["service_instance_endpoint_id"] = bindings.NewStringType()
-	paramsTypeMap["tier0Id"] = bindings.NewStringType()
-	paramsTypeMap["localeServiceId"] = bindings.NewStringType()
-	paramsTypeMap["serviceInstanceId"] = bindings.NewStringType()
-	paramsTypeMap["serviceInstanceEndpointId"] = bindings.NewStringType()
+	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["locale_service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_instance_endpoint"] = vapiBindings_.NewReferenceType(nsx_policyModel.ServiceInstanceEndpointBindingType)
+	paramsTypeMap["service_instance_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_instance_endpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["tier0Id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["localeServiceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceInstanceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceInstanceEndpointId"] = vapiBindings_.NewStringType()
 	pathParams["service_instance_endpoint_id"] = "serviceInstanceEndpointId"
 	pathParams["service_instance_id"] = "serviceInstanceId"
 	pathParams["tier0_id"] = "tier0Id"
 	pathParams["locale_service_id"] = "localeServiceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -336,62 +336,62 @@ func serviceInstanceEndpointsPatchRestMetadata() protocol.OperationRestMetadata 
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func serviceInstanceEndpointsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func serviceInstanceEndpointsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["service_instance_id"] = bindings.NewStringType()
-	fields["service_instance_endpoint_id"] = bindings.NewStringType()
-	fields["service_instance_endpoint"] = bindings.NewReferenceType(model.ServiceInstanceEndpointBindingType)
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_endpoint_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_endpoint"] = vapiBindings_.NewReferenceType(nsx_policyModel.ServiceInstanceEndpointBindingType)
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_instance_id"] = "ServiceInstanceId"
 	fieldNameMap["service_instance_endpoint_id"] = "ServiceInstanceEndpointId"
 	fieldNameMap["service_instance_endpoint"] = "ServiceInstanceEndpoint"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func serviceInstanceEndpointsUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ServiceInstanceEndpointBindingType)
+func ServiceInstanceEndpointsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.ServiceInstanceEndpointBindingType)
 }
 
-func serviceInstanceEndpointsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func serviceInstanceEndpointsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["service_instance_id"] = bindings.NewStringType()
-	fields["service_instance_endpoint_id"] = bindings.NewStringType()
-	fields["service_instance_endpoint"] = bindings.NewReferenceType(model.ServiceInstanceEndpointBindingType)
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_endpoint_id"] = vapiBindings_.NewStringType()
+	fields["service_instance_endpoint"] = vapiBindings_.NewReferenceType(nsx_policyModel.ServiceInstanceEndpointBindingType)
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_instance_id"] = "ServiceInstanceId"
 	fieldNameMap["service_instance_endpoint_id"] = "ServiceInstanceEndpointId"
 	fieldNameMap["service_instance_endpoint"] = "ServiceInstanceEndpoint"
-	paramsTypeMap["tier0_id"] = bindings.NewStringType()
-	paramsTypeMap["locale_service_id"] = bindings.NewStringType()
-	paramsTypeMap["service_instance_endpoint"] = bindings.NewReferenceType(model.ServiceInstanceEndpointBindingType)
-	paramsTypeMap["service_instance_id"] = bindings.NewStringType()
-	paramsTypeMap["service_instance_endpoint_id"] = bindings.NewStringType()
-	paramsTypeMap["tier0Id"] = bindings.NewStringType()
-	paramsTypeMap["localeServiceId"] = bindings.NewStringType()
-	paramsTypeMap["serviceInstanceId"] = bindings.NewStringType()
-	paramsTypeMap["serviceInstanceEndpointId"] = bindings.NewStringType()
+	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["locale_service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_instance_endpoint"] = vapiBindings_.NewReferenceType(nsx_policyModel.ServiceInstanceEndpointBindingType)
+	paramsTypeMap["service_instance_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_instance_endpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["tier0Id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["localeServiceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceInstanceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceInstanceEndpointId"] = vapiBindings_.NewStringType()
 	pathParams["service_instance_endpoint_id"] = "serviceInstanceEndpointId"
 	pathParams["service_instance_id"] = "serviceInstanceId"
 	pathParams["tier0_id"] = "tier0Id"
 	pathParams["locale_service_id"] = "localeServiceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

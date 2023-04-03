@@ -9,35 +9,42 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TransportzoneProfilesClient interface {
 
-	// Creates a transport zone profile. The resource_type is required. This api is now deprecated. Please use new api - PUT /policy/api/v1/infra/transport-zone-profiles/<tz-profile>
+	// Creates a transport zone profile. The resource_type is required.
+	//  This api is now deprecated. Please use new api - PUT /policy/api/v1/infra/transport-zone-profiles/<tz-profile>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param transportZoneProfileParam (required)
-	// The parameter must contain all the properties defined in model.TransportZoneProfile.
+	// The parameter must contain all the properties defined in nsxModel.TransportZoneProfile.
 	// @return com.vmware.nsx.model.TransportZoneProfile
-	// The return value will contain all the properties defined in model.TransportZoneProfile.
+	// The return value will contain all the properties defined in nsxModel.TransportZoneProfile.
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(transportZoneProfileParam *data.StructValue) (*data.StructValue, error)
+	Create(transportZoneProfileParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 
-	// Deletes a specified transport zone profile. This api is now deprecated. Please use new api - DELETE /policy/api/v1/infra/transport-zone-profiles/<tz-profile>
+	// Deletes a specified transport zone profile.
+	//  This api is now deprecated. Please use new api - DELETE /policy/api/v1/infra/transport-zone-profiles/<tz-profile>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param transportzoneProfileIdParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -45,19 +52,26 @@ type TransportzoneProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(transportzoneProfileIdParam string) error
 
-	// Returns information about a specified transport zone profile. This api is now deprecated. Please use new api - /policy/api/v1/infra/transport-zone-profiles/<tz-profile>
+	// Returns information about a specified transport zone profile.
+	//  This api is now deprecated. Please use new api - /policy/api/v1/infra/transport-zone-profiles/<tz-profile>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param transportzoneProfileIdParam (required)
 	// @return com.vmware.nsx.model.TransportZoneProfile
-	// The return value will contain all the properties defined in model.TransportZoneProfile.
+	// The return value will contain all the properties defined in nsxModel.TransportZoneProfile.
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(transportzoneProfileIdParam string) (*data.StructValue, error)
+	Get(transportzoneProfileIdParam string) (*vapiData_.StructValue, error)
 
-	// Returns information about the configured transport zone profiles. Transport zone profiles define networking policies for transport zones and transport zone endpoints. This api is now deprecated. Please use new api - /policy/api/v1/infra/transport-zone-profiles
+	// Returns information about the configured transport zone profiles. Transport zone profiles define networking policies for transport zones and transport zone endpoints.
+	//  This api is now deprecated. Please use new api - /policy/api/v1/infra/transport-zone-profiles
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeSystemOwnedParam Whether the list result contains system resources (optional, default to false)
@@ -67,83 +81,89 @@ type TransportzoneProfilesClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.TransportZoneProfileListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includeSystemOwnedParam *bool, includedFieldsParam *string, pageSizeParam *int64, resourceTypeParam *string, sortAscendingParam *bool, sortByParam *string) (model.TransportZoneProfileListResult, error)
+	List(cursorParam *string, includeSystemOwnedParam *bool, includedFieldsParam *string, pageSizeParam *int64, resourceTypeParam *string, sortAscendingParam *bool, sortByParam *string) (nsxModel.TransportZoneProfileListResult, error)
 
-	// Modifies a specified transport zone profile. The body of the PUT request must include the resource_type. This api is now deprecated. Please use new api - PATCH /policy/api/v1/infra/transport-zone-profiles/<tz-profile>
+	// Modifies a specified transport zone profile. The body of the PUT request must include the resource_type.
+	//  This api is now deprecated. Please use new api - PATCH /policy/api/v1/infra/transport-zone-profiles/<tz-profile>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param transportzoneProfileIdParam (required)
 	// @param transportZoneProfileParam (required)
-	// The parameter must contain all the properties defined in model.TransportZoneProfile.
+	// The parameter must contain all the properties defined in nsxModel.TransportZoneProfile.
 	// @return com.vmware.nsx.model.TransportZoneProfile
-	// The return value will contain all the properties defined in model.TransportZoneProfile.
+	// The return value will contain all the properties defined in nsxModel.TransportZoneProfile.
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(transportzoneProfileIdParam string, transportZoneProfileParam *data.StructValue) (*data.StructValue, error)
+	Update(transportzoneProfileIdParam string, transportZoneProfileParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 }
 
 type transportzoneProfilesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewTransportzoneProfilesClient(connector client.Connector) *transportzoneProfilesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.transportzone_profiles")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create": core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewTransportzoneProfilesClient(connector vapiProtocolClient_.Connector) *transportzoneProfilesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.transportzone_profiles")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	tIface := transportzoneProfilesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &tIface
 }
 
-func (tIface *transportzoneProfilesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (tIface *transportzoneProfilesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := tIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (tIface *transportzoneProfilesClient) Create(transportZoneProfileParam *data.StructValue) (*data.StructValue, error) {
+func (tIface *transportzoneProfilesClient) Create(transportZoneProfileParam *vapiData_.StructValue) (*vapiData_.StructValue, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(transportzoneProfilesCreateInputType(), typeConverter)
+	operationRestMetaData := transportzoneProfilesCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(transportzoneProfilesCreateInputType(), typeConverter)
 	sv.AddStructField("TransportZoneProfile", transportZoneProfileParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput *data.StructValue
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput *vapiData_.StructValue
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := transportzoneProfilesCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	tIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx.transportzone_profiles", "create", inputDataValue, executionContext)
-	var emptyOutput *data.StructValue
+	var emptyOutput *vapiData_.StructValue
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), transportzoneProfilesCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), TransportzoneProfilesCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(*data.StructValue), nil
+		return output.(*vapiData_.StructValue), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -152,63 +172,69 @@ func (tIface *transportzoneProfilesClient) Create(transportZoneProfileParam *dat
 func (tIface *transportzoneProfilesClient) Delete(transportzoneProfileIdParam string) error {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(transportzoneProfilesDeleteInputType(), typeConverter)
+	operationRestMetaData := transportzoneProfilesDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(transportzoneProfilesDeleteInputType(), typeConverter)
 	sv.AddStructField("TransportzoneProfileId", transportzoneProfileIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := transportzoneProfilesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	tIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx.transportzone_profiles", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (tIface *transportzoneProfilesClient) Get(transportzoneProfileIdParam string) (*data.StructValue, error) {
+func (tIface *transportzoneProfilesClient) Get(transportzoneProfileIdParam string) (*vapiData_.StructValue, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(transportzoneProfilesGetInputType(), typeConverter)
+	operationRestMetaData := transportzoneProfilesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(transportzoneProfilesGetInputType(), typeConverter)
 	sv.AddStructField("TransportzoneProfileId", transportzoneProfileIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput *data.StructValue
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput *vapiData_.StructValue
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := transportzoneProfilesGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	tIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx.transportzone_profiles", "get", inputDataValue, executionContext)
-	var emptyOutput *data.StructValue
+	var emptyOutput *vapiData_.StructValue
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), transportzoneProfilesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), TransportzoneProfilesGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(*data.StructValue), nil
+		return output.(*vapiData_.StructValue), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (tIface *transportzoneProfilesClient) List(cursorParam *string, includeSystemOwnedParam *bool, includedFieldsParam *string, pageSizeParam *int64, resourceTypeParam *string, sortAscendingParam *bool, sortByParam *string) (model.TransportZoneProfileListResult, error) {
+func (tIface *transportzoneProfilesClient) List(cursorParam *string, includeSystemOwnedParam *bool, includedFieldsParam *string, pageSizeParam *int64, resourceTypeParam *string, sortAscendingParam *bool, sortByParam *string) (nsxModel.TransportZoneProfileListResult, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(transportzoneProfilesListInputType(), typeConverter)
+	operationRestMetaData := transportzoneProfilesListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(transportzoneProfilesListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludeSystemOwned", includeSystemOwnedParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -218,57 +244,55 @@ func (tIface *transportzoneProfilesClient) List(cursorParam *string, includeSyst
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.TransportZoneProfileListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.TransportZoneProfileListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := transportzoneProfilesListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	tIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx.transportzone_profiles", "list", inputDataValue, executionContext)
-	var emptyOutput model.TransportZoneProfileListResult
+	var emptyOutput nsxModel.TransportZoneProfileListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), transportzoneProfilesListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), TransportzoneProfilesListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.TransportZoneProfileListResult), nil
+		return output.(nsxModel.TransportZoneProfileListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (tIface *transportzoneProfilesClient) Update(transportzoneProfileIdParam string, transportZoneProfileParam *data.StructValue) (*data.StructValue, error) {
+func (tIface *transportzoneProfilesClient) Update(transportzoneProfileIdParam string, transportZoneProfileParam *vapiData_.StructValue) (*vapiData_.StructValue, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(transportzoneProfilesUpdateInputType(), typeConverter)
+	operationRestMetaData := transportzoneProfilesUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(transportzoneProfilesUpdateInputType(), typeConverter)
 	sv.AddStructField("TransportzoneProfileId", transportzoneProfileIdParam)
 	sv.AddStructField("TransportZoneProfile", transportZoneProfileParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput *data.StructValue
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput *vapiData_.StructValue
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := transportzoneProfilesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	tIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx.transportzone_profiles", "update", inputDataValue, executionContext)
-	var emptyOutput *data.StructValue
+	var emptyOutput *vapiData_.StructValue
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), transportzoneProfilesUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), TransportzoneProfilesUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(*data.StructValue), nil
+		return output.(*vapiData_.StructValue), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

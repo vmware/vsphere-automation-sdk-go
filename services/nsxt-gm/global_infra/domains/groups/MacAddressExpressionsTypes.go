@@ -11,10 +11,10 @@
 package groups
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_global_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
 	"reflect"
 )
 
@@ -24,61 +24,61 @@ const MacAddressExpressions_CREATE_ACTION_ADD = "add"
 // Possible value for ``action`` of method MacAddressExpressions#create.
 const MacAddressExpressions_CREATE_ACTION_REMOVE = "remove"
 
-func macAddressExpressionsCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func macAddressExpressionsCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["group_id"] = bindings.NewStringType()
-	fields["expression_id"] = bindings.NewStringType()
-	fields["m_AC_address_list"] = bindings.NewReferenceType(model.MACAddressListBindingType)
-	fields["action"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["group_id"] = vapiBindings_.NewStringType()
+	fields["expression_id"] = vapiBindings_.NewStringType()
+	fields["m_AC_address_list"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.MACAddressListBindingType)
+	fields["action"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["group_id"] = "GroupId"
 	fieldNameMap["expression_id"] = "ExpressionId"
 	fieldNameMap["m_AC_address_list"] = "MACAddressList"
 	fieldNameMap["action"] = "Action"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func macAddressExpressionsCreateOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func MacAddressExpressionsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func macAddressExpressionsCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func macAddressExpressionsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["group_id"] = bindings.NewStringType()
-	fields["expression_id"] = bindings.NewStringType()
-	fields["m_AC_address_list"] = bindings.NewReferenceType(model.MACAddressListBindingType)
-	fields["action"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["group_id"] = vapiBindings_.NewStringType()
+	fields["expression_id"] = vapiBindings_.NewStringType()
+	fields["m_AC_address_list"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.MACAddressListBindingType)
+	fields["action"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["group_id"] = "GroupId"
 	fieldNameMap["expression_id"] = "ExpressionId"
 	fieldNameMap["m_AC_address_list"] = "MACAddressList"
 	fieldNameMap["action"] = "Action"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["action"] = bindings.NewStringType()
-	paramsTypeMap["group_id"] = bindings.NewStringType()
-	paramsTypeMap["m_AC_address_list"] = bindings.NewReferenceType(model.MACAddressListBindingType)
-	paramsTypeMap["expression_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["groupId"] = bindings.NewStringType()
-	paramsTypeMap["expressionId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["group_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["m_AC_address_list"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.MACAddressListBindingType)
+	paramsTypeMap["action"] = vapiBindings_.NewStringType()
+	paramsTypeMap["expression_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["groupId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["expressionId"] = vapiBindings_.NewStringType()
 	pathParams["expression_id"] = "expressionId"
 	pathParams["group_id"] = "groupId"
 	pathParams["domain_id"] = "domainId"
 	queryParams["action"] = "action"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -99,50 +99,50 @@ func macAddressExpressionsCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func macAddressExpressionsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func macAddressExpressionsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["group_id"] = bindings.NewStringType()
-	fields["expression_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["group_id"] = vapiBindings_.NewStringType()
+	fields["expression_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["group_id"] = "GroupId"
 	fieldNameMap["expression_id"] = "ExpressionId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func macAddressExpressionsDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func MacAddressExpressionsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func macAddressExpressionsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func macAddressExpressionsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["group_id"] = bindings.NewStringType()
-	fields["expression_id"] = bindings.NewStringType()
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["group_id"] = vapiBindings_.NewStringType()
+	fields["expression_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["group_id"] = "GroupId"
 	fieldNameMap["expression_id"] = "ExpressionId"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["group_id"] = bindings.NewStringType()
-	paramsTypeMap["expression_id"] = bindings.NewStringType()
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["groupId"] = bindings.NewStringType()
-	paramsTypeMap["expressionId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["group_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["expression_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["groupId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["expressionId"] = vapiBindings_.NewStringType()
 	pathParams["expression_id"] = "expressionId"
 	pathParams["group_id"] = "groupId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -163,55 +163,55 @@ func macAddressExpressionsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func macAddressExpressionsPatchInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func macAddressExpressionsPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["domain_id"] = bindings.NewStringType()
-	fields["group_id"] = bindings.NewStringType()
-	fields["expression_id"] = bindings.NewStringType()
-	fields["m_AC_address_expression"] = bindings.NewReferenceType(model.MACAddressExpressionBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["group_id"] = vapiBindings_.NewStringType()
+	fields["expression_id"] = vapiBindings_.NewStringType()
+	fields["m_AC_address_expression"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.MACAddressExpressionBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["group_id"] = "GroupId"
 	fieldNameMap["expression_id"] = "ExpressionId"
 	fieldNameMap["m_AC_address_expression"] = "MACAddressExpression"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func macAddressExpressionsPatchOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func MacAddressExpressionsPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func macAddressExpressionsPatchRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func macAddressExpressionsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["domain_id"] = bindings.NewStringType()
-	fields["group_id"] = bindings.NewStringType()
-	fields["expression_id"] = bindings.NewStringType()
-	fields["m_AC_address_expression"] = bindings.NewReferenceType(model.MACAddressExpressionBindingType)
+	fields["domain_id"] = vapiBindings_.NewStringType()
+	fields["group_id"] = vapiBindings_.NewStringType()
+	fields["expression_id"] = vapiBindings_.NewStringType()
+	fields["m_AC_address_expression"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.MACAddressExpressionBindingType)
 	fieldNameMap["domain_id"] = "DomainId"
 	fieldNameMap["group_id"] = "GroupId"
 	fieldNameMap["expression_id"] = "ExpressionId"
 	fieldNameMap["m_AC_address_expression"] = "MACAddressExpression"
-	paramsTypeMap["domain_id"] = bindings.NewStringType()
-	paramsTypeMap["group_id"] = bindings.NewStringType()
-	paramsTypeMap["expression_id"] = bindings.NewStringType()
-	paramsTypeMap["m_AC_address_expression"] = bindings.NewReferenceType(model.MACAddressExpressionBindingType)
-	paramsTypeMap["domainId"] = bindings.NewStringType()
-	paramsTypeMap["groupId"] = bindings.NewStringType()
-	paramsTypeMap["expressionId"] = bindings.NewStringType()
+	paramsTypeMap["domain_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["m_AC_address_expression"] = vapiBindings_.NewReferenceType(nsx_global_policyModel.MACAddressExpressionBindingType)
+	paramsTypeMap["group_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["expression_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["domainId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["groupId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["expressionId"] = vapiBindings_.NewStringType()
 	pathParams["expression_id"] = "expressionId"
 	pathParams["group_id"] = "groupId"
 	pathParams["domain_id"] = "domainId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

@@ -9,33 +9,44 @@
 package ipsec
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TunnelProfilesClient interface {
 
 	// Create custom IPSec tunnel profile. IPSec tunnel profile is a reusable profile that captures phase two negotiation parameters and tunnel properties. System will be provisioned with system owned non editable default IPSec tunnel profile. Any change in profile affects all sessions consuming this profile.
 	//
+	//  Please use below Policy API.
+	//  PATCH /policy/api/v1/infra/ipsec-vpn-tunnel-profiles/<tunnel-profile-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param ipSecVPNTunnelProfileParam (required)
 	// @return com.vmware.nsx.model.IPSecVPNTunnelProfile
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(ipSecVPNTunnelProfileParam model.IPSecVPNTunnelProfile) (model.IPSecVPNTunnelProfile, error)
+	Create(ipSecVPNTunnelProfileParam nsxModel.IPSecVPNTunnelProfile) (nsxModel.IPSecVPNTunnelProfile, error)
 
 	// Delete custom IPSec Tunnel Profile.
 	//
+	//  Please use below Policy API.
+	//  DELETE /policy/api/v1/infra/ipsec-vpn-tunnel-profiles/<tunnel-profile-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param ipsecVpnTunnelProfileIdParam (required)
 	// @param forceParam Force delete the resource even if it is being used somewhere (optional, default to false)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -45,16 +56,27 @@ type TunnelProfilesClient interface {
 
 	// Get custom IPSec Tunnel Profile.
 	//
+	//  Please use below Policy API.
+	//  GET /policy/api/v1/infra/ipsec-vpn-tunnel-profiles/<tunnel-profile-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param ipsecVpnTunnelProfileIdParam (required)
 	// @return com.vmware.nsx.model.IPSecVPNTunnelProfile
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(ipsecVpnTunnelProfileIdParam string) (model.IPSecVPNTunnelProfile, error)
+	Get(ipsecVpnTunnelProfileIdParam string) (nsxModel.IPSecVPNTunnelProfile, error)
 
 	// Get paginated list of all IPSecTunnelProfiles.
+	//
+	//  Please use below Policy API.
+	//  GET /policy/api/v1/infra/ipsec-vpn-tunnel-profiles
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
@@ -62,81 +84,89 @@ type TunnelProfilesClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.IPSecVPNTunnelProfileListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IPSecVPNTunnelProfileListResult, error)
+	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.IPSecVPNTunnelProfileListResult, error)
 
 	// Edit custom IPSec Tunnel Profile. System owned profiles are non editable.
+	//
+	//  Please use below Policy API.
+	//  PUT /policy/api/v1/infra/ipsec-vpn-tunnel-profiles/<tunnel-profile-id>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param ipsecVpnTunnelProfileIdParam (required)
 	// @param ipSecVPNTunnelProfileParam (required)
 	// @return com.vmware.nsx.model.IPSecVPNTunnelProfile
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(ipsecVpnTunnelProfileIdParam string, ipSecVPNTunnelProfileParam model.IPSecVPNTunnelProfile) (model.IPSecVPNTunnelProfile, error)
+	Update(ipsecVpnTunnelProfileIdParam string, ipSecVPNTunnelProfileParam nsxModel.IPSecVPNTunnelProfile) (nsxModel.IPSecVPNTunnelProfile, error)
 }
 
 type tunnelProfilesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewTunnelProfilesClient(connector client.Connector) *tunnelProfilesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.vpn.ipsec.tunnel_profiles")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create": core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewTunnelProfilesClient(connector vapiProtocolClient_.Connector) *tunnelProfilesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.vpn.ipsec.tunnel_profiles")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	tIface := tunnelProfilesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &tIface
 }
 
-func (tIface *tunnelProfilesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (tIface *tunnelProfilesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := tIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (tIface *tunnelProfilesClient) Create(ipSecVPNTunnelProfileParam model.IPSecVPNTunnelProfile) (model.IPSecVPNTunnelProfile, error) {
+func (tIface *tunnelProfilesClient) Create(ipSecVPNTunnelProfileParam nsxModel.IPSecVPNTunnelProfile) (nsxModel.IPSecVPNTunnelProfile, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(tunnelProfilesCreateInputType(), typeConverter)
+	operationRestMetaData := tunnelProfilesCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(tunnelProfilesCreateInputType(), typeConverter)
 	sv.AddStructField("IpSecVPNTunnelProfile", ipSecVPNTunnelProfileParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IPSecVPNTunnelProfile
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IPSecVPNTunnelProfile
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := tunnelProfilesCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	tIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx.vpn.ipsec.tunnel_profiles", "create", inputDataValue, executionContext)
-	var emptyOutput model.IPSecVPNTunnelProfile
+	var emptyOutput nsxModel.IPSecVPNTunnelProfile
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), tunnelProfilesCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), TunnelProfilesCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IPSecVPNTunnelProfile), nil
+		return output.(nsxModel.IPSecVPNTunnelProfile), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -145,64 +175,70 @@ func (tIface *tunnelProfilesClient) Create(ipSecVPNTunnelProfileParam model.IPSe
 func (tIface *tunnelProfilesClient) Delete(ipsecVpnTunnelProfileIdParam string, forceParam *bool) error {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(tunnelProfilesDeleteInputType(), typeConverter)
+	operationRestMetaData := tunnelProfilesDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(tunnelProfilesDeleteInputType(), typeConverter)
 	sv.AddStructField("IpsecVpnTunnelProfileId", ipsecVpnTunnelProfileIdParam)
 	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := tunnelProfilesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	tIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx.vpn.ipsec.tunnel_profiles", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (tIface *tunnelProfilesClient) Get(ipsecVpnTunnelProfileIdParam string) (model.IPSecVPNTunnelProfile, error) {
+func (tIface *tunnelProfilesClient) Get(ipsecVpnTunnelProfileIdParam string) (nsxModel.IPSecVPNTunnelProfile, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(tunnelProfilesGetInputType(), typeConverter)
+	operationRestMetaData := tunnelProfilesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(tunnelProfilesGetInputType(), typeConverter)
 	sv.AddStructField("IpsecVpnTunnelProfileId", ipsecVpnTunnelProfileIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IPSecVPNTunnelProfile
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IPSecVPNTunnelProfile
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := tunnelProfilesGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	tIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx.vpn.ipsec.tunnel_profiles", "get", inputDataValue, executionContext)
-	var emptyOutput model.IPSecVPNTunnelProfile
+	var emptyOutput nsxModel.IPSecVPNTunnelProfile
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), tunnelProfilesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), TunnelProfilesGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IPSecVPNTunnelProfile), nil
+		return output.(nsxModel.IPSecVPNTunnelProfile), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (tIface *tunnelProfilesClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IPSecVPNTunnelProfileListResult, error) {
+func (tIface *tunnelProfilesClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.IPSecVPNTunnelProfileListResult, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(tunnelProfilesListInputType(), typeConverter)
+	operationRestMetaData := tunnelProfilesListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(tunnelProfilesListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
@@ -210,57 +246,55 @@ func (tIface *tunnelProfilesClient) List(cursorParam *string, includedFieldsPara
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IPSecVPNTunnelProfileListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IPSecVPNTunnelProfileListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := tunnelProfilesListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	tIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx.vpn.ipsec.tunnel_profiles", "list", inputDataValue, executionContext)
-	var emptyOutput model.IPSecVPNTunnelProfileListResult
+	var emptyOutput nsxModel.IPSecVPNTunnelProfileListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), tunnelProfilesListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), TunnelProfilesListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IPSecVPNTunnelProfileListResult), nil
+		return output.(nsxModel.IPSecVPNTunnelProfileListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (tIface *tunnelProfilesClient) Update(ipsecVpnTunnelProfileIdParam string, ipSecVPNTunnelProfileParam model.IPSecVPNTunnelProfile) (model.IPSecVPNTunnelProfile, error) {
+func (tIface *tunnelProfilesClient) Update(ipsecVpnTunnelProfileIdParam string, ipSecVPNTunnelProfileParam nsxModel.IPSecVPNTunnelProfile) (nsxModel.IPSecVPNTunnelProfile, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(tunnelProfilesUpdateInputType(), typeConverter)
+	operationRestMetaData := tunnelProfilesUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(tunnelProfilesUpdateInputType(), typeConverter)
 	sv.AddStructField("IpsecVpnTunnelProfileId", ipsecVpnTunnelProfileIdParam)
 	sv.AddStructField("IpSecVPNTunnelProfile", ipSecVPNTunnelProfileParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IPSecVPNTunnelProfile
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IPSecVPNTunnelProfile
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := tunnelProfilesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	tIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx.vpn.ipsec.tunnel_profiles", "update", inputDataValue, executionContext)
-	var emptyOutput model.IPSecVPNTunnelProfile
+	var emptyOutput nsxModel.IPSecVPNTunnelProfile
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), tunnelProfilesUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), TunnelProfilesUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IPSecVPNTunnelProfile), nil
+		return output.(nsxModel.IPSecVPNTunnelProfile), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

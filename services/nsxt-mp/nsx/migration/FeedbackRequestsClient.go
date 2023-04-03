@@ -9,15 +9,14 @@
 package migration
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FeedbackRequestsClient interface {
 
@@ -35,44 +34,49 @@ type FeedbackRequestsClient interface {
 	// @param stateParam Filter based on current state of the feedback request (optional, default to ALL)
 	// @param subCategoryParam Sub category based on which feedback request should be filtered (optional)
 	// @return com.vmware.nsx.model.MigrationFeedbackRequestListResult
+	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(categoryParam *string, cursorParam *string, federationSiteIdParam *string, hashParam *string, includedFieldsParam *string, networkLayerParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, stateParam *string, subCategoryParam *string) (model.MigrationFeedbackRequestListResult, error)
+	List(categoryParam *string, cursorParam *string, federationSiteIdParam *string, hashParam *string, includedFieldsParam *string, networkLayerParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, stateParam *string, subCategoryParam *string) (nsxModel.MigrationFeedbackRequestListResult, error)
 }
 
 type feedbackRequestsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewFeedbackRequestsClient(connector client.Connector) *feedbackRequestsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.migration.feedback_requests")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
+func NewFeedbackRequestsClient(connector vapiProtocolClient_.Connector) *feedbackRequestsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.migration.feedback_requests")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	fIface := feedbackRequestsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &fIface
 }
 
-func (fIface *feedbackRequestsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (fIface *feedbackRequestsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := fIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (fIface *feedbackRequestsClient) List(categoryParam *string, cursorParam *string, federationSiteIdParam *string, hashParam *string, includedFieldsParam *string, networkLayerParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, stateParam *string, subCategoryParam *string) (model.MigrationFeedbackRequestListResult, error) {
+func (fIface *feedbackRequestsClient) List(categoryParam *string, cursorParam *string, federationSiteIdParam *string, hashParam *string, includedFieldsParam *string, networkLayerParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, stateParam *string, subCategoryParam *string) (nsxModel.MigrationFeedbackRequestListResult, error) {
 	typeConverter := fIface.connector.TypeConverter()
 	executionContext := fIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(feedbackRequestsListInputType(), typeConverter)
+	operationRestMetaData := feedbackRequestsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(feedbackRequestsListInputType(), typeConverter)
 	sv.AddStructField("Category", categoryParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("FederationSiteId", federationSiteIdParam)
@@ -86,25 +90,22 @@ func (fIface *feedbackRequestsClient) List(categoryParam *string, cursorParam *s
 	sv.AddStructField("SubCategory", subCategoryParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.MigrationFeedbackRequestListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.MigrationFeedbackRequestListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := feedbackRequestsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	fIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := fIface.connector.GetApiProvider().Invoke("com.vmware.nsx.migration.feedback_requests", "list", inputDataValue, executionContext)
-	var emptyOutput model.MigrationFeedbackRequestListResult
+	var emptyOutput nsxModel.MigrationFeedbackRequestListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), feedbackRequestsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), FeedbackRequestsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.MigrationFeedbackRequestListResult), nil
+		return output.(nsxModel.MigrationFeedbackRequestListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), fIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

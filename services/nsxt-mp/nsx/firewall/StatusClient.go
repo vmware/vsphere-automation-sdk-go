@@ -9,301 +9,353 @@
 package firewall
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatusClient interface {
 
 	// Disable firewall on target resource in dfw context
 	//
+	//  Use the following Policy APIs -
+	//  PUT|PATCH /policy/api/v1/infra/tier-0s/<tier-0-id>
+	//  PUT|PATCH /policy/api/v1/infra/tier-1s/<tier-1-id>
+	//  The disable_firewall property must be set to true.
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param contextTypeParam (required)
 	// @param idParam (required)
 	// @return com.vmware.nsx.model.TargetResourceStatus
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Disablefirewall(contextTypeParam string, idParam string) (model.TargetResourceStatus, error)
+	Disablefirewall(contextTypeParam string, idParam string) (nsxModel.TargetResourceStatus, error)
 
 	// Enable firewall on target resource in dfw context
 	//
+	//  Use the following Policy APIs -
+	//  PUT|PATCH /policy/api/v1/infra/tier-0s/<tier-0-id>
+	//  PUT|PATCH /policy/api/v1/infra/tier-1s/<tier-1-id>
+	//  The disable_firewall property must be set to false.
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param contextTypeParam (required)
 	// @param idParam (required)
 	// @return com.vmware.nsx.model.TargetResourceStatus
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Enablefirewall(contextTypeParam string, idParam string) (model.TargetResourceStatus, error)
+	Enablefirewall(contextTypeParam string, idParam string) (nsxModel.TargetResourceStatus, error)
 
 	// Get firewall global status for dfw context
 	//
+	//  Use the following Policy APIs -
+	//  GET /policy/api/v1/infra/settings/firewall/security
+	//  GET /policy/api/v1/infra/tier-0s
+	//  GET /policy/api/v1/infra/tier-1s
+	//  Refer disable_firewall property in the result.
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param contextTypeParam (required)
 	// @return com.vmware.nsx.model.FirewallStatus
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(contextTypeParam string) (model.FirewallStatus, error)
+	Get(contextTypeParam string) (nsxModel.FirewallStatus, error)
 
 	// Get firewall status for target resource in dfw context
+	//
+	//  Use the following Policy APIs -
+	//  GET /policy/api/v1/infra/tier-0s/<tier-0-id>
+	//  GET /policy/api/v1/infra/tier-1s/<tier-1-id>
+	//  Refer disable_firewall property in the result.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param contextTypeParam (required)
 	// @param idParam (required)
 	// @return com.vmware.nsx.model.TargetResourceStatus
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get0(contextTypeParam string, idParam string) (model.TargetResourceStatus, error)
+	Get0(contextTypeParam string, idParam string) (nsxModel.TargetResourceStatus, error)
 
 	// List all firewall status for supported contexts
+	//
+	//  Use the following Policy APIs -
+	//  GET /policy/api/v1/infra/tier-0s
+	//  GET /policy/api/v1/infra/tier-1s
+	//  Refer disable_firewall property in the result.
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.FirewallStatusListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List() (model.FirewallStatusListResult, error)
+	List() (nsxModel.FirewallStatusListResult, error)
 
 	// Update global firewall status for dfw context
+	//
+	//  Use the following Policy API -
+	//  PUT /policy/api/v1/infra/settings/firewall/security
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param contextTypeParam (required)
 	// @param firewallStatusParam (required)
 	// @return com.vmware.nsx.model.FirewallStatus
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(contextTypeParam string, firewallStatusParam model.FirewallStatus) (model.FirewallStatus, error)
+	Update(contextTypeParam string, firewallStatusParam nsxModel.FirewallStatus) (nsxModel.FirewallStatus, error)
 }
 
 type statusClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewStatusClient(connector client.Connector) *statusClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.firewall.status")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"disablefirewall": core.NewMethodIdentifier(interfaceIdentifier, "disablefirewall"),
-		"enablefirewall":  core.NewMethodIdentifier(interfaceIdentifier, "enablefirewall"),
-		"get":             core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"get_0":           core.NewMethodIdentifier(interfaceIdentifier, "get_0"),
-		"list":            core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update":          core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewStatusClient(connector vapiProtocolClient_.Connector) *statusClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.firewall.status")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"disablefirewall": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "disablefirewall"),
+		"enablefirewall":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "enablefirewall"),
+		"get":             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get_0":           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get_0"),
+		"list":            vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update":          vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	sIface := statusClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *statusClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (sIface *statusClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statusClient) Disablefirewall(contextTypeParam string, idParam string) (model.TargetResourceStatus, error) {
+func (sIface *statusClient) Disablefirewall(contextTypeParam string, idParam string) (nsxModel.TargetResourceStatus, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(statusDisablefirewallInputType(), typeConverter)
-	sv.AddStructField("ContextType", contextTypeParam)
-	sv.AddStructField("Id", idParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.TargetResourceStatus
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
 	operationRestMetaData := statusDisablefirewallRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(statusDisablefirewallInputType(), typeConverter)
+	sv.AddStructField("ContextType", contextTypeParam)
+	sv.AddStructField("Id", idParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.TargetResourceStatus
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.status", "disablefirewall", inputDataValue, executionContext)
-	var emptyOutput model.TargetResourceStatus
+	var emptyOutput nsxModel.TargetResourceStatus
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), statusDisablefirewallOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatusDisablefirewallOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.TargetResourceStatus), nil
+		return output.(nsxModel.TargetResourceStatus), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *statusClient) Enablefirewall(contextTypeParam string, idParam string) (model.TargetResourceStatus, error) {
+func (sIface *statusClient) Enablefirewall(contextTypeParam string, idParam string) (nsxModel.TargetResourceStatus, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(statusEnablefirewallInputType(), typeConverter)
-	sv.AddStructField("ContextType", contextTypeParam)
-	sv.AddStructField("Id", idParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.TargetResourceStatus
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
 	operationRestMetaData := statusEnablefirewallRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.status", "enablefirewall", inputDataValue, executionContext)
-	var emptyOutput model.TargetResourceStatus
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), statusEnablefirewallOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.TargetResourceStatus), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-func (sIface *statusClient) Get(contextTypeParam string) (model.FirewallStatus, error) {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(statusGetInputType(), typeConverter)
-	sv.AddStructField("ContextType", contextTypeParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput model.FirewallStatus
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
-	}
-	operationRestMetaData := statusGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.status", "get", inputDataValue, executionContext)
-	var emptyOutput model.FirewallStatus
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), statusGetOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(model.FirewallStatus), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (sIface *statusClient) Get0(contextTypeParam string, idParam string) (model.TargetResourceStatus, error) {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(statusGet0InputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(statusEnablefirewallInputType(), typeConverter)
 	sv.AddStructField("ContextType", contextTypeParam)
 	sv.AddStructField("Id", idParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.TargetResourceStatus
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.TargetResourceStatus
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := statusGet0RestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.status", "get_0", inputDataValue, executionContext)
-	var emptyOutput model.TargetResourceStatus
+
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.status", "enablefirewall", inputDataValue, executionContext)
+	var emptyOutput nsxModel.TargetResourceStatus
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), statusGet0OutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatusEnablefirewallOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.TargetResourceStatus), nil
+		return output.(nsxModel.TargetResourceStatus), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *statusClient) List() (model.FirewallStatusListResult, error) {
+func (sIface *statusClient) Get(contextTypeParam string) (nsxModel.FirewallStatus, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(statusListInputType(), typeConverter)
+	operationRestMetaData := statusGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(statusGetInputType(), typeConverter)
+	sv.AddStructField("ContextType", contextTypeParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.FirewallStatusListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.FirewallStatus
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := statusListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.status", "list", inputDataValue, executionContext)
-	var emptyOutput model.FirewallStatusListResult
+
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.status", "get", inputDataValue, executionContext)
+	var emptyOutput nsxModel.FirewallStatus
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), statusListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatusGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.FirewallStatusListResult), nil
+		return output.(nsxModel.FirewallStatus), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *statusClient) Update(contextTypeParam string, firewallStatusParam model.FirewallStatus) (model.FirewallStatus, error) {
+func (sIface *statusClient) Get0(contextTypeParam string, idParam string) (nsxModel.TargetResourceStatus, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(statusUpdateInputType(), typeConverter)
+	operationRestMetaData := statusGet0RestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(statusGet0InputType(), typeConverter)
+	sv.AddStructField("ContextType", contextTypeParam)
+	sv.AddStructField("Id", idParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.TargetResourceStatus
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.status", "get_0", inputDataValue, executionContext)
+	var emptyOutput nsxModel.TargetResourceStatus
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatusGet0OutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsxModel.TargetResourceStatus), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (sIface *statusClient) List() (nsxModel.FirewallStatusListResult, error) {
+	typeConverter := sIface.connector.TypeConverter()
+	executionContext := sIface.connector.NewExecutionContext()
+	operationRestMetaData := statusListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(statusListInputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.FirewallStatusListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.status", "list", inputDataValue, executionContext)
+	var emptyOutput nsxModel.FirewallStatusListResult
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatusListOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsxModel.FirewallStatusListResult), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (sIface *statusClient) Update(contextTypeParam string, firewallStatusParam nsxModel.FirewallStatus) (nsxModel.FirewallStatus, error) {
+	typeConverter := sIface.connector.TypeConverter()
+	executionContext := sIface.connector.NewExecutionContext()
+	operationRestMetaData := statusUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(statusUpdateInputType(), typeConverter)
 	sv.AddStructField("ContextType", contextTypeParam)
 	sv.AddStructField("FirewallStatus", firewallStatusParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.FirewallStatus
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.FirewallStatus
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := statusUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	sIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.status", "update", inputDataValue, executionContext)
-	var emptyOutput model.FirewallStatus
+	var emptyOutput nsxModel.FirewallStatus
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), statusUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatusUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.FirewallStatus), nil
+		return output.(nsxModel.FirewallStatus), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

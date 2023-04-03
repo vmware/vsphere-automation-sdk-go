@@ -11,10 +11,10 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
@@ -27,21 +27,21 @@ const TransportNodes_UPDATEMAINTENANCEMODE_ACTION_FORCED_ENTER_MAINTENANCE_MODE 
 // Possible value for ``action`` of method TransportNodes#updatemaintenancemode.
 const TransportNodes_UPDATEMAINTENANCEMODE_ACTION_EXIT_MAINTENANCE_MODE = "exit_maintenance_mode"
 
-func transportNodesCleanstaleentriesInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesCleanstaleentriesInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesCleanstaleentriesOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TransportNodesCleanstaleentriesOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func transportNodesCleanstaleentriesRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesCleanstaleentriesRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -49,7 +49,7 @@ func transportNodesCleanstaleentriesRestMetadata() protocol.OperationRestMetadat
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -70,34 +70,34 @@ func transportNodesCleanstaleentriesRestMetadata() protocol.OperationRestMetadat
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["transport_node"] = bindings.NewReferenceType(model.TransportNodeBindingType)
+	fields["transport_node"] = vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
 	fieldNameMap["transport_node"] = "TransportNode"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TransportNodeBindingType)
+func TransportNodesCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
 }
 
-func transportNodesCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["transport_node"] = bindings.NewReferenceType(model.TransportNodeBindingType)
+	fields["transport_node"] = vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
 	fieldNameMap["transport_node"] = "TransportNode"
-	paramsTypeMap["transport_node"] = bindings.NewReferenceType(model.TransportNodeBindingType)
+	paramsTypeMap["transport_node"] = vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -118,48 +118,48 @@ func transportNodesCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["transport_node_id"] = bindings.NewStringType()
-	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["unprepare_host"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["unprepare_host"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
 	fieldNameMap["force"] = "Force"
 	fieldNameMap["unprepare_host"] = "UnprepareHost"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TransportNodesDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func transportNodesDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["transport_node_id"] = bindings.NewStringType()
-	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["unprepare_host"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["unprepare_host"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
 	fieldNameMap["force"] = "Force"
 	fieldNameMap["unprepare_host"] = "UnprepareHost"
-	paramsTypeMap["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["transport_node_id"] = bindings.NewStringType()
-	paramsTypeMap["unprepare_host"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["transportNodeId"] = bindings.NewStringType()
+	paramsTypeMap["unprepare_host"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["transport_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transportNodeId"] = vapiBindings_.NewStringType()
 	pathParams["transport_node_id"] = "transportNodeId"
 	queryParams["unprepare_host"] = "unprepare_host"
 	queryParams["force"] = "force"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -180,43 +180,43 @@ func transportNodesDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesDeleteontransportnodeInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesDeleteontransportnodeInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["target_node_id"] = bindings.NewStringType()
-	fields["target_uri"] = bindings.NewStringType()
+	fields["target_node_id"] = vapiBindings_.NewStringType()
+	fields["target_uri"] = vapiBindings_.NewStringType()
 	fieldNameMap["target_node_id"] = "TargetNodeId"
 	fieldNameMap["target_uri"] = "TargetUri"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesDeleteontransportnodeOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TransportNodesDeleteontransportnodeOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func transportNodesDeleteontransportnodeRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesDeleteontransportnodeRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["target_node_id"] = bindings.NewStringType()
-	fields["target_uri"] = bindings.NewStringType()
+	fields["target_node_id"] = vapiBindings_.NewStringType()
+	fields["target_uri"] = vapiBindings_.NewStringType()
 	fieldNameMap["target_node_id"] = "TargetNodeId"
 	fieldNameMap["target_uri"] = "TargetUri"
-	paramsTypeMap["target_uri"] = bindings.NewStringType()
-	paramsTypeMap["target_node_id"] = bindings.NewStringType()
-	paramsTypeMap["targetNodeId"] = bindings.NewStringType()
-	paramsTypeMap["targetUri"] = bindings.NewStringType()
+	paramsTypeMap["target_uri"] = vapiBindings_.NewStringType()
+	paramsTypeMap["target_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["targetNodeId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["targetUri"] = vapiBindings_.NewStringType()
 	pathParams["target_uri"] = "targetUri"
 	pathParams["target_node_id"] = "targetNodeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -237,36 +237,36 @@ func transportNodesDeleteontransportnodeRestMetadata() protocol.OperationRestMet
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesDisableflowcacheInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesDisableflowcacheInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["transport_node_id"] = bindings.NewStringType()
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesDisableflowcacheOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TransportNodesDisableflowcacheOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func transportNodesDisableflowcacheRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesDisableflowcacheRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["transport_node_id"] = bindings.NewStringType()
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
-	paramsTypeMap["transport_node_id"] = bindings.NewStringType()
-	paramsTypeMap["transportNodeId"] = bindings.NewStringType()
+	paramsTypeMap["transport_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transportNodeId"] = vapiBindings_.NewStringType()
 	pathParams["transport_node_id"] = "transportNodeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -287,36 +287,36 @@ func transportNodesDisableflowcacheRestMetadata() protocol.OperationRestMetadata
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesEnableflowcacheInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesEnableflowcacheInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["transport_node_id"] = bindings.NewStringType()
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesEnableflowcacheOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TransportNodesEnableflowcacheOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func transportNodesEnableflowcacheRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesEnableflowcacheRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["transport_node_id"] = bindings.NewStringType()
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
-	paramsTypeMap["transport_node_id"] = bindings.NewStringType()
-	paramsTypeMap["transportNodeId"] = bindings.NewStringType()
+	paramsTypeMap["transport_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transportNodeId"] = vapiBindings_.NewStringType()
 	pathParams["transport_node_id"] = "transportNodeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -337,36 +337,36 @@ func transportNodesEnableflowcacheRestMetadata() protocol.OperationRestMetadata 
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["transport_node_id"] = bindings.NewStringType()
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TransportNodeBindingType)
+func TransportNodesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
 }
 
-func transportNodesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["transport_node_id"] = bindings.NewStringType()
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
-	paramsTypeMap["transport_node_id"] = bindings.NewStringType()
-	paramsTypeMap["transportNodeId"] = bindings.NewStringType()
+	paramsTypeMap["transport_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transportNodeId"] = vapiBindings_.NewStringType()
 	pathParams["transport_node_id"] = "transportNodeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -387,43 +387,43 @@ func transportNodesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesGetontransportnodeInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesGetontransportnodeInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["target_node_id"] = bindings.NewStringType()
-	fields["target_uri"] = bindings.NewStringType()
+	fields["target_node_id"] = vapiBindings_.NewStringType()
+	fields["target_uri"] = vapiBindings_.NewStringType()
 	fieldNameMap["target_node_id"] = "TargetNodeId"
 	fieldNameMap["target_uri"] = "TargetUri"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesGetontransportnodeOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TransportNodesGetontransportnodeOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func transportNodesGetontransportnodeRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesGetontransportnodeRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["target_node_id"] = bindings.NewStringType()
-	fields["target_uri"] = bindings.NewStringType()
+	fields["target_node_id"] = vapiBindings_.NewStringType()
+	fields["target_uri"] = vapiBindings_.NewStringType()
 	fieldNameMap["target_node_id"] = "TargetNodeId"
 	fieldNameMap["target_uri"] = "TargetUri"
-	paramsTypeMap["target_uri"] = bindings.NewStringType()
-	paramsTypeMap["target_node_id"] = bindings.NewStringType()
-	paramsTypeMap["targetNodeId"] = bindings.NewStringType()
-	paramsTypeMap["targetUri"] = bindings.NewStringType()
+	paramsTypeMap["target_uri"] = vapiBindings_.NewStringType()
+	paramsTypeMap["target_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["targetNodeId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["targetUri"] = vapiBindings_.NewStringType()
 	pathParams["target_uri"] = "targetUri"
 	pathParams["target_node_id"] = "targetNodeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -444,19 +444,19 @@ func transportNodesGetontransportnodeRestMetadata() protocol.OperationRestMetada
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["in_maintenance_mode"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_types"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["transport_zone_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["in_maintenance_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_types"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["transport_zone_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["in_maintenance_mode"] = "InMaintenanceMode"
 	fieldNameMap["included_fields"] = "IncludedFields"
@@ -467,33 +467,33 @@ func transportNodesListInputType() bindings.StructType {
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["transport_zone_id"] = "TransportZoneId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TransportNodeListResultBindingType)
+func TransportNodesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.TransportNodeListResultBindingType)
 }
 
-func transportNodesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["in_maintenance_mode"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_types"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["transport_zone_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["in_maintenance_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_types"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["transport_zone_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["in_maintenance_mode"] = "InMaintenanceMode"
 	fieldNameMap["included_fields"] = "IncludedFields"
@@ -504,16 +504,16 @@ func transportNodesListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["transport_zone_id"] = "TransportZoneId"
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["in_maintenance_mode"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["node_types"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["transport_zone_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["node_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["node_types"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["node_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["transport_zone_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["in_maintenance_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
 	queryParams["node_types"] = "node_types"
 	queryParams["node_ip"] = "node_ip"
@@ -526,7 +526,7 @@ func transportNodesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -547,99 +547,43 @@ func transportNodesListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesMigratetovdsInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesPostontransportnodeInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["transport_node_id"] = bindings.NewStringType()
-	fields["skip_maintmode"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["transport_node_id"] = "TransportNodeId"
-	fieldNameMap["skip_maintmode"] = "SkipMaintmode"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	fields["target_node_id"] = vapiBindings_.NewStringType()
+	fields["target_uri"] = vapiBindings_.NewStringType()
+	fieldNameMap["target_node_id"] = "TargetNodeId"
+	fieldNameMap["target_uri"] = "TargetUri"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesMigratetovdsOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TransportNodesPostontransportnodeOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func transportNodesMigratetovdsRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesPostontransportnodeRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["transport_node_id"] = bindings.NewStringType()
-	fields["skip_maintmode"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fieldNameMap["transport_node_id"] = "TransportNodeId"
-	fieldNameMap["skip_maintmode"] = "SkipMaintmode"
-	paramsTypeMap["transport_node_id"] = bindings.NewStringType()
-	paramsTypeMap["skip_maintmode"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["transportNodeId"] = bindings.NewStringType()
-	pathParams["transport_node_id"] = "transportNodeId"
-	queryParams["skip_maintmode"] = "skip_maintmode"
-	resultHeaders := map[string]string{}
-	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
-		fields,
-		fieldNameMap,
-		paramsTypeMap,
-		pathParams,
-		queryParams,
-		headerParams,
-		dispatchHeaderParams,
-		bodyFieldsMap,
-		"action=migrate_to_vds",
-		"",
-		"POST",
-		"/api/v1/transport-nodes/{transportNodeId}",
-		"",
-		resultHeaders,
-		204,
-		"",
-		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
-}
-
-func transportNodesPostontransportnodeInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["target_node_id"] = bindings.NewStringType()
-	fields["target_uri"] = bindings.NewStringType()
+	fields["target_node_id"] = vapiBindings_.NewStringType()
+	fields["target_uri"] = vapiBindings_.NewStringType()
 	fieldNameMap["target_node_id"] = "TargetNodeId"
 	fieldNameMap["target_uri"] = "TargetUri"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
-}
-
-func transportNodesPostontransportnodeOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
-}
-
-func transportNodesPostontransportnodeRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
-	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
-	pathParams := map[string]string{}
-	queryParams := map[string]string{}
-	headerParams := map[string]string{}
-	dispatchHeaderParams := map[string]string{}
-	bodyFieldsMap := map[string]string{}
-	fields["target_node_id"] = bindings.NewStringType()
-	fields["target_uri"] = bindings.NewStringType()
-	fieldNameMap["target_node_id"] = "TargetNodeId"
-	fieldNameMap["target_uri"] = "TargetUri"
-	paramsTypeMap["target_uri"] = bindings.NewStringType()
-	paramsTypeMap["target_node_id"] = bindings.NewStringType()
-	paramsTypeMap["targetNodeId"] = bindings.NewStringType()
-	paramsTypeMap["targetUri"] = bindings.NewStringType()
+	paramsTypeMap["target_uri"] = vapiBindings_.NewStringType()
+	paramsTypeMap["target_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["targetNodeId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["targetUri"] = vapiBindings_.NewStringType()
 	pathParams["target_uri"] = "targetUri"
 	pathParams["target_node_id"] = "targetNodeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -660,43 +604,43 @@ func transportNodesPostontransportnodeRestMetadata() protocol.OperationRestMetad
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesPutontransportnodeInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesPutontransportnodeInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["target_node_id"] = bindings.NewStringType()
-	fields["target_uri"] = bindings.NewStringType()
+	fields["target_node_id"] = vapiBindings_.NewStringType()
+	fields["target_uri"] = vapiBindings_.NewStringType()
 	fieldNameMap["target_node_id"] = "TargetNodeId"
 	fieldNameMap["target_uri"] = "TargetUri"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesPutontransportnodeOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TransportNodesPutontransportnodeOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func transportNodesPutontransportnodeRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesPutontransportnodeRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["target_node_id"] = bindings.NewStringType()
-	fields["target_uri"] = bindings.NewStringType()
+	fields["target_node_id"] = vapiBindings_.NewStringType()
+	fields["target_uri"] = vapiBindings_.NewStringType()
 	fieldNameMap["target_node_id"] = "TargetNodeId"
 	fieldNameMap["target_uri"] = "TargetUri"
-	paramsTypeMap["target_uri"] = bindings.NewStringType()
-	paramsTypeMap["target_node_id"] = bindings.NewStringType()
-	paramsTypeMap["targetNodeId"] = bindings.NewStringType()
-	paramsTypeMap["targetUri"] = bindings.NewStringType()
+	paramsTypeMap["target_uri"] = vapiBindings_.NewStringType()
+	paramsTypeMap["target_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["targetNodeId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["targetUri"] = vapiBindings_.NewStringType()
 	pathParams["target_uri"] = "targetUri"
 	pathParams["target_node_id"] = "targetNodeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -717,41 +661,41 @@ func transportNodesPutontransportnodeRestMetadata() protocol.OperationRestMetada
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesRedeployInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesRedeployInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["node_id"] = bindings.NewStringType()
-	fields["transport_node"] = bindings.NewReferenceType(model.TransportNodeBindingType)
+	fields["node_id"] = vapiBindings_.NewStringType()
+	fields["transport_node"] = vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["transport_node"] = "TransportNode"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesRedeployOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TransportNodeBindingType)
+func TransportNodesRedeployOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
 }
 
-func transportNodesRedeployRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesRedeployRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["node_id"] = bindings.NewStringType()
-	fields["transport_node"] = bindings.NewReferenceType(model.TransportNodeBindingType)
+	fields["node_id"] = vapiBindings_.NewStringType()
+	fields["transport_node"] = vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["transport_node"] = "TransportNode"
-	paramsTypeMap["transport_node"] = bindings.NewReferenceType(model.TransportNodeBindingType)
-	paramsTypeMap["node_id"] = bindings.NewStringType()
-	paramsTypeMap["nodeId"] = bindings.NewStringType()
+	paramsTypeMap["transport_node"] = vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
+	paramsTypeMap["node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["nodeId"] = vapiBindings_.NewStringType()
 	pathParams["node_id"] = "nodeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -772,42 +716,42 @@ func transportNodesRedeployRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesRefreshnodeconfigurationInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesRefreshnodeconfigurationInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["transport_node_id"] = bindings.NewStringType()
-	fields["read_only"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
+	fields["read_only"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
 	fieldNameMap["read_only"] = "ReadOnly"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesRefreshnodeconfigurationOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TransportNodesRefreshnodeconfigurationOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func transportNodesRefreshnodeconfigurationRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesRefreshnodeconfigurationRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["transport_node_id"] = bindings.NewStringType()
-	fields["read_only"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
+	fields["read_only"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
 	fieldNameMap["read_only"] = "ReadOnly"
-	paramsTypeMap["read_only"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["transport_node_id"] = bindings.NewStringType()
-	paramsTypeMap["transportNodeId"] = bindings.NewStringType()
+	paramsTypeMap["read_only"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["transport_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transportNodeId"] = vapiBindings_.NewStringType()
 	pathParams["transport_node_id"] = "transportNodeId"
 	queryParams["read_only"] = "read_only"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -828,36 +772,36 @@ func transportNodesRefreshnodeconfigurationRestMetadata() protocol.OperationRest
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesRestartinventorysyncInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesRestartinventorysyncInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["transport_node_id"] = bindings.NewStringType()
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesRestartinventorysyncOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TransportNodesRestartinventorysyncOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func transportNodesRestartinventorysyncRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesRestartinventorysyncRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["transport_node_id"] = bindings.NewStringType()
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
-	paramsTypeMap["transport_node_id"] = bindings.NewStringType()
-	paramsTypeMap["transportNodeId"] = bindings.NewStringType()
+	paramsTypeMap["transport_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transportNodeId"] = vapiBindings_.NewStringType()
 	pathParams["transport_node_id"] = "transportNodeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -878,36 +822,36 @@ func transportNodesRestartinventorysyncRestMetadata() protocol.OperationRestMeta
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesRestoreclusterconfigInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesRestoreclusterconfigInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["transport_node_id"] = bindings.NewStringType()
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesRestoreclusterconfigOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TransportNodesRestoreclusterconfigOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func transportNodesRestoreclusterconfigRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesRestoreclusterconfigRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["transport_node_id"] = bindings.NewStringType()
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
-	paramsTypeMap["transport_node_id"] = bindings.NewStringType()
-	paramsTypeMap["transportNodeId"] = bindings.NewStringType()
+	paramsTypeMap["transport_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transportNodeId"] = vapiBindings_.NewStringType()
 	pathParams["transport_node_id"] = "transportNodeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -928,36 +872,36 @@ func transportNodesRestoreclusterconfigRestMetadata() protocol.OperationRestMeta
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesResynchostconfigInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesResynchostconfigInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["transportnode_id"] = bindings.NewStringType()
+	fields["transportnode_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["transportnode_id"] = "TransportnodeId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesResynchostconfigOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TransportNodesResynchostconfigOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func transportNodesResynchostconfigRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesResynchostconfigRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["transportnode_id"] = bindings.NewStringType()
+	fields["transportnode_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["transportnode_id"] = "TransportnodeId"
-	paramsTypeMap["transportnode_id"] = bindings.NewStringType()
-	paramsTypeMap["transportnodeId"] = bindings.NewStringType()
+	paramsTypeMap["transportnode_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transportnodeId"] = vapiBindings_.NewStringType()
 	pathParams["transportnode_id"] = "transportnodeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -978,67 +922,72 @@ func transportNodesResynchostconfigRestMetadata() protocol.OperationRestMetadata
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["transport_node_id"] = bindings.NewStringType()
-	fields["transport_node"] = bindings.NewReferenceType(model.TransportNodeBindingType)
-	fields["esx_mgmt_if_migration_dest"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["if_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["ping_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["skip_validation"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["vnic"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["vnic_migration_dest"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
+	fields["transport_node"] = vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
+	fields["esx_mgmt_if_migration_dest"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["if_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["override_nsx_ownership"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["ping_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["skip_validation"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["vnic"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["vnic_migration_dest"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
 	fieldNameMap["transport_node"] = "TransportNode"
 	fieldNameMap["esx_mgmt_if_migration_dest"] = "EsxMgmtIfMigrationDest"
 	fieldNameMap["if_id"] = "IfId"
+	fieldNameMap["override_nsx_ownership"] = "OverrideNsxOwnership"
 	fieldNameMap["ping_ip"] = "PingIp"
 	fieldNameMap["skip_validation"] = "SkipValidation"
 	fieldNameMap["vnic"] = "Vnic"
 	fieldNameMap["vnic_migration_dest"] = "VnicMigrationDest"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TransportNodeBindingType)
+func TransportNodesUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
 }
 
-func transportNodesUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["transport_node_id"] = bindings.NewStringType()
-	fields["transport_node"] = bindings.NewReferenceType(model.TransportNodeBindingType)
-	fields["esx_mgmt_if_migration_dest"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["if_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["ping_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["skip_validation"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["vnic"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["vnic_migration_dest"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["transport_node_id"] = vapiBindings_.NewStringType()
+	fields["transport_node"] = vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
+	fields["esx_mgmt_if_migration_dest"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["if_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["override_nsx_ownership"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["ping_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["skip_validation"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["vnic"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["vnic_migration_dest"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
 	fieldNameMap["transport_node"] = "TransportNode"
 	fieldNameMap["esx_mgmt_if_migration_dest"] = "EsxMgmtIfMigrationDest"
 	fieldNameMap["if_id"] = "IfId"
+	fieldNameMap["override_nsx_ownership"] = "OverrideNsxOwnership"
 	fieldNameMap["ping_ip"] = "PingIp"
 	fieldNameMap["skip_validation"] = "SkipValidation"
 	fieldNameMap["vnic"] = "Vnic"
 	fieldNameMap["vnic_migration_dest"] = "VnicMigrationDest"
-	paramsTypeMap["vnic"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["skip_validation"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["if_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["esx_mgmt_if_migration_dest"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["transport_node"] = bindings.NewReferenceType(model.TransportNodeBindingType)
-	paramsTypeMap["transport_node_id"] = bindings.NewStringType()
-	paramsTypeMap["ping_ip"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["vnic_migration_dest"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["transportNodeId"] = bindings.NewStringType()
+	paramsTypeMap["ping_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["vnic"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["skip_validation"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["esx_mgmt_if_migration_dest"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["if_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["transport_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["vnic_migration_dest"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["transport_node"] = vapiBindings_.NewReferenceType(nsxModel.TransportNodeBindingType)
+	paramsTypeMap["override_nsx_ownership"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["transportNodeId"] = vapiBindings_.NewStringType()
 	pathParams["transport_node_id"] = "transportNodeId"
 	queryParams["ping_ip"] = "ping_ip"
 	queryParams["vnic"] = "vnic"
@@ -1046,9 +995,10 @@ func transportNodesUpdateRestMetadata() protocol.OperationRestMetadata {
 	queryParams["esx_mgmt_if_migration_dest"] = "esx_mgmt_if_migration_dest"
 	queryParams["if_id"] = "if_id"
 	queryParams["vnic_migration_dest"] = "vnic_migration_dest"
+	queryParams["override_nsx_ownership"] = "override_nsx_ownership"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -1069,42 +1019,42 @@ func transportNodesUpdateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportNodesUpdatemaintenancemodeInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportNodesUpdatemaintenancemodeInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["transportnode_id"] = bindings.NewStringType()
-	fields["action"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["transportnode_id"] = vapiBindings_.NewStringType()
+	fields["action"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["transportnode_id"] = "TransportnodeId"
 	fieldNameMap["action"] = "Action"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportNodesUpdatemaintenancemodeOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TransportNodesUpdatemaintenancemodeOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func transportNodesUpdatemaintenancemodeRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportNodesUpdatemaintenancemodeRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["transportnode_id"] = bindings.NewStringType()
-	fields["action"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["transportnode_id"] = vapiBindings_.NewStringType()
+	fields["action"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["transportnode_id"] = "TransportnodeId"
 	fieldNameMap["action"] = "Action"
-	paramsTypeMap["action"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["transportnode_id"] = bindings.NewStringType()
-	paramsTypeMap["transportnodeId"] = bindings.NewStringType()
+	paramsTypeMap["action"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["transportnode_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transportnodeId"] = vapiBindings_.NewStringType()
 	pathParams["transportnode_id"] = "transportnodeId"
 	queryParams["action"] = "action"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

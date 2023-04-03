@@ -9,118 +9,121 @@
 package firewall
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_global_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ImportClient interface {
 
 	// This operation cancels an import task. Task needs to be in running state.
 	// @return com.vmware.nsx_global_policy.model.ImportTask
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Cancel() (model.ImportTask, error)
+	Cancel() (nsx_global_policyModel.ImportTask, error)
 
 	// Get the information of the latest import task.
 	// @return com.vmware.nsx_global_policy.model.ImportTask
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (model.ImportTask, error)
+	Get() (nsx_global_policyModel.ImportTask, error)
 }
 
 type importClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewImportClient(connector client.Connector) *importClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_global_policy.global_infra.settings.firewall.import")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"cancel": core.NewMethodIdentifier(interfaceIdentifier, "cancel"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
+func NewImportClient(connector vapiProtocolClient_.Connector) *importClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_global_policy.global_infra.settings.firewall.import")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"cancel": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "cancel"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	iIface := importClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &iIface
 }
 
-func (iIface *importClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (iIface *importClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := iIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (iIface *importClient) Cancel() (model.ImportTask, error) {
+func (iIface *importClient) Cancel() (nsx_global_policyModel.ImportTask, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(importCancelInputType(), typeConverter)
+	operationRestMetaData := importCancelRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(importCancelInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ImportTask
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_global_policyModel.ImportTask
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := importCancelRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.global_infra.settings.firewall.import", "cancel", inputDataValue, executionContext)
-	var emptyOutput model.ImportTask
+	var emptyOutput nsx_global_policyModel.ImportTask
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), importCancelOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ImportCancelOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ImportTask), nil
+		return output.(nsx_global_policyModel.ImportTask), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (iIface *importClient) Get() (model.ImportTask, error) {
+func (iIface *importClient) Get() (nsx_global_policyModel.ImportTask, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(importGetInputType(), typeConverter)
+	operationRestMetaData := importGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(importGetInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ImportTask
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_global_policyModel.ImportTask
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := importGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.global_infra.settings.firewall.import", "get", inputDataValue, executionContext)
-	var emptyOutput model.ImportTask
+	var emptyOutput nsx_global_policyModel.ImportTask
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), importGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ImportGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ImportTask), nil
+		return output.(nsx_global_policyModel.ImportTask), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

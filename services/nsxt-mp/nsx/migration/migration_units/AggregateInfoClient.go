@@ -9,15 +9,14 @@
 package migration_units
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AggregateInfoClient interface {
 
@@ -34,43 +33,48 @@ type AggregateInfoClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.MigrationUnitAggregateInfoListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(componentTypeParam *string, cursorParam *string, groupIdParam *string, hasErrorsParam *bool, includedFieldsParam *string, metadataParam *string, pageSizeParam *int64, selectionStatusParam *string, sortAscendingParam *bool, sortByParam *string) (model.MigrationUnitAggregateInfoListResult, error)
+	List(componentTypeParam *string, cursorParam *string, groupIdParam *string, hasErrorsParam *bool, includedFieldsParam *string, metadataParam *string, pageSizeParam *int64, selectionStatusParam *string, sortAscendingParam *bool, sortByParam *string) (nsxModel.MigrationUnitAggregateInfoListResult, error)
 }
 
 type aggregateInfoClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewAggregateInfoClient(connector client.Connector) *aggregateInfoClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.migration.migration_units.aggregate_info")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
+func NewAggregateInfoClient(connector vapiProtocolClient_.Connector) *aggregateInfoClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.migration.migration_units.aggregate_info")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	aIface := aggregateInfoClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &aIface
 }
 
-func (aIface *aggregateInfoClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (aIface *aggregateInfoClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := aIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (aIface *aggregateInfoClient) List(componentTypeParam *string, cursorParam *string, groupIdParam *string, hasErrorsParam *bool, includedFieldsParam *string, metadataParam *string, pageSizeParam *int64, selectionStatusParam *string, sortAscendingParam *bool, sortByParam *string) (model.MigrationUnitAggregateInfoListResult, error) {
+func (aIface *aggregateInfoClient) List(componentTypeParam *string, cursorParam *string, groupIdParam *string, hasErrorsParam *bool, includedFieldsParam *string, metadataParam *string, pageSizeParam *int64, selectionStatusParam *string, sortAscendingParam *bool, sortByParam *string) (nsxModel.MigrationUnitAggregateInfoListResult, error) {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(aggregateInfoListInputType(), typeConverter)
+	operationRestMetaData := aggregateInfoListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(aggregateInfoListInputType(), typeConverter)
 	sv.AddStructField("ComponentType", componentTypeParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("GroupId", groupIdParam)
@@ -83,25 +87,22 @@ func (aIface *aggregateInfoClient) List(componentTypeParam *string, cursorParam 
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.MigrationUnitAggregateInfoListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.MigrationUnitAggregateInfoListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := aggregateInfoListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	aIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := aIface.connector.GetApiProvider().Invoke("com.vmware.nsx.migration.migration_units.aggregate_info", "list", inputDataValue, executionContext)
-	var emptyOutput model.MigrationUnitAggregateInfoListResult
+	var emptyOutput nsxModel.MigrationUnitAggregateInfoListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), aggregateInfoListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), AggregateInfoListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.MigrationUnitAggregateInfoListResult), nil
+		return output.(nsxModel.MigrationUnitAggregateInfoListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), aIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

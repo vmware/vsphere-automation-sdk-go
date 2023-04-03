@@ -9,35 +9,52 @@
 package firewall
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ProfilesClient interface {
 
 	// Create a firewall profile with values provided. It creates profile based resource_type in the payload.
 	//
+	//  Use one of the following Policy APIs depending upon the profile type -
+	//  PUT|PATCH /policy/api/v1/infra/settings/firewall/cpu-mem-thresholds-profiles/<profile-id>
+	//  PUT|PATCH /policy/api/v1/infra/dns-security-profiles/<profile-id>
+	//  PATCH /policy/api/v1/infra/flood-protection-profiles/<flood-protection-profile-id>
+	//  PUT|PATCH /policy/api/v1/infra/firewall-session-timer-profiles/<firewall-session-timer-profile-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param baseFirewallProfileParam (required)
-	// The parameter must contain all the properties defined in model.BaseFirewallProfile.
+	// The parameter must contain all the properties defined in nsxModel.BaseFirewallProfile.
 	// @return com.vmware.nsx.model.BaseFirewallProfile
-	// The return value will contain all the properties defined in model.BaseFirewallProfile.
+	// The return value will contain all the properties defined in nsxModel.BaseFirewallProfile.
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(baseFirewallProfileParam *data.StructValue) (*data.StructValue, error)
+	Create(baseFirewallProfileParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 
 	// Deletes a firewall profile.
 	//
+	//  Use one of the following Policy APIs depending upon the profile type -
+	//  DELETE /policy/api/v1/infra/settings/firewall/cpu-mem-thresholds-profiles/<profile-id>
+	//  DELETE /policy/api/v1/infra/dns-security-profiles/<profile-id>
+	//  DELETE /policy/api/v1/infra/flood-protection-profiles/<flood-protection-profile-id>
+	//  DELETE /policy/api/v1/infra/firewall-session-timer-profiles/<firewall-session-timer-profile-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param profileIdParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -47,17 +64,34 @@ type ProfilesClient interface {
 
 	// Return firewall session timer profile.
 	//
+	//  Use one of the following Policy APIs depending upon the profile type -
+	//  GET /policy/api/v1/infra/settings/firewall/cpu-mem-thresholds-profiles/<profile-id>
+	//  GET /policy/api/v1/infra/dns-security-profiles/<profile-id>
+	//  GET /policy/api/v1/infra/flood-protection-profiles/<flood-protection-profile-id>
+	//  GET /policy/api/v1/infra/firewall-session-timer-profiles/<firewall-session-timer-profile-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param profileIdParam (required)
 	// @return com.vmware.nsx.model.BaseFirewallProfile
-	// The return value will contain all the properties defined in model.BaseFirewallProfile.
+	// The return value will contain all the properties defined in nsxModel.BaseFirewallProfile.
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(profileIdParam string) (*data.StructValue, error)
+	Get(profileIdParam string) (*vapiData_.StructValue, error)
 
 	// List all the firewall profiles available by requested resource_type.
+	//
+	//  Use one of the following Policy APIs depending upon the profile type -
+	//  GET /policy/api/v1/global-infra/settings/firewall/cpu-mem-thresholds-profiles
+	//  GET /policy/api/v1/infra/dns-security-profiles
+	//  GET /policy/api/v1/infra/flood-protection-profiles
+	//  GET /policy/api/v1/infra/firewall-session-timer-profiles
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param resourceTypeParam Profile resource type (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
@@ -66,83 +100,94 @@ type ProfilesClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.FirewallProfileListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(resourceTypeParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.FirewallProfileListResult, error)
+	List(resourceTypeParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.FirewallProfileListResult, error)
 
 	// Update user configurable properties of firewall profile.
 	//
+	//  Use one of the following Policy APIs depending upon the profile type -
+	//  PUT|PATCH /policy/api/v1/infra/settings/firewall/cpu-mem-thresholds-profiles/<profile-id>
+	//  PUT|PATCH /policy/api/v1/infra/dns-security-profiles/<profile-id>
+	//  PUT|PATCH /policy/api/v1/infra/flood-protection-profiles/<flood-protection-profile-id>
+	//  PUT|PATCH /policy/api/v1/infra/firewall-session-timer-profiles/<firewall-session-timer-profile-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param profileIdParam (required)
 	// @param baseFirewallProfileParam (required)
-	// The parameter must contain all the properties defined in model.BaseFirewallProfile.
+	// The parameter must contain all the properties defined in nsxModel.BaseFirewallProfile.
 	// @return com.vmware.nsx.model.BaseFirewallProfile
-	// The return value will contain all the properties defined in model.BaseFirewallProfile.
+	// The return value will contain all the properties defined in nsxModel.BaseFirewallProfile.
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(profileIdParam string, baseFirewallProfileParam *data.StructValue) (*data.StructValue, error)
+	Update(profileIdParam string, baseFirewallProfileParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 }
 
 type profilesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewProfilesClient(connector client.Connector) *profilesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.firewall.profiles")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create": core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewProfilesClient(connector vapiProtocolClient_.Connector) *profilesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.firewall.profiles")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	pIface := profilesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &pIface
 }
 
-func (pIface *profilesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (pIface *profilesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := pIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (pIface *profilesClient) Create(baseFirewallProfileParam *data.StructValue) (*data.StructValue, error) {
+func (pIface *profilesClient) Create(baseFirewallProfileParam *vapiData_.StructValue) (*vapiData_.StructValue, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(profilesCreateInputType(), typeConverter)
+	operationRestMetaData := profilesCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(profilesCreateInputType(), typeConverter)
 	sv.AddStructField("BaseFirewallProfile", baseFirewallProfileParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput *data.StructValue
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput *vapiData_.StructValue
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := profilesCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.profiles", "create", inputDataValue, executionContext)
-	var emptyOutput *data.StructValue
+	var emptyOutput *vapiData_.StructValue
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), profilesCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ProfilesCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(*data.StructValue), nil
+		return output.(*vapiData_.StructValue), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -151,63 +196,69 @@ func (pIface *profilesClient) Create(baseFirewallProfileParam *data.StructValue)
 func (pIface *profilesClient) Delete(profileIdParam string) error {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(profilesDeleteInputType(), typeConverter)
+	operationRestMetaData := profilesDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(profilesDeleteInputType(), typeConverter)
 	sv.AddStructField("ProfileId", profileIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := profilesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.profiles", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (pIface *profilesClient) Get(profileIdParam string) (*data.StructValue, error) {
+func (pIface *profilesClient) Get(profileIdParam string) (*vapiData_.StructValue, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(profilesGetInputType(), typeConverter)
+	operationRestMetaData := profilesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(profilesGetInputType(), typeConverter)
 	sv.AddStructField("ProfileId", profileIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput *data.StructValue
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput *vapiData_.StructValue
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := profilesGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.profiles", "get", inputDataValue, executionContext)
-	var emptyOutput *data.StructValue
+	var emptyOutput *vapiData_.StructValue
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), profilesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ProfilesGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(*data.StructValue), nil
+		return output.(*vapiData_.StructValue), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (pIface *profilesClient) List(resourceTypeParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.FirewallProfileListResult, error) {
+func (pIface *profilesClient) List(resourceTypeParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.FirewallProfileListResult, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(profilesListInputType(), typeConverter)
+	operationRestMetaData := profilesListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(profilesListInputType(), typeConverter)
 	sv.AddStructField("ResourceType", resourceTypeParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -216,57 +267,55 @@ func (pIface *profilesClient) List(resourceTypeParam string, cursorParam *string
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.FirewallProfileListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.FirewallProfileListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := profilesListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.profiles", "list", inputDataValue, executionContext)
-	var emptyOutput model.FirewallProfileListResult
+	var emptyOutput nsxModel.FirewallProfileListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), profilesListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ProfilesListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.FirewallProfileListResult), nil
+		return output.(nsxModel.FirewallProfileListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (pIface *profilesClient) Update(profileIdParam string, baseFirewallProfileParam *data.StructValue) (*data.StructValue, error) {
+func (pIface *profilesClient) Update(profileIdParam string, baseFirewallProfileParam *vapiData_.StructValue) (*vapiData_.StructValue, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(profilesUpdateInputType(), typeConverter)
+	operationRestMetaData := profilesUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(profilesUpdateInputType(), typeConverter)
 	sv.AddStructField("ProfileId", profileIdParam)
 	sv.AddStructField("BaseFirewallProfile", baseFirewallProfileParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput *data.StructValue
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput *vapiData_.StructValue
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := profilesUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	pIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx.firewall.profiles", "update", inputDataValue, executionContext)
-	var emptyOutput *data.StructValue
+	var emptyOutput *vapiData_.StructValue
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), profilesUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ProfilesUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(*data.StructValue), nil
+		return output.(*vapiData_.StructValue), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

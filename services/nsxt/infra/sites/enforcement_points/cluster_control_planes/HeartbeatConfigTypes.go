@@ -11,57 +11,57 @@
 package cluster_control_planes
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func heartbeatConfigGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func heartbeatConfigGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["site_id"] = bindings.NewStringType()
-	fields["enforcementpoint_id"] = bindings.NewStringType()
-	fields["cluster_control_plane_id"] = bindings.NewStringType()
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["cluster_control_plane_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["cluster_control_plane_id"] = "ClusterControlPlaneId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func heartbeatConfigGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.AntreaHeartbeatConfigBindingType)
+func HeartbeatConfigGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.AntreaHeartbeatConfigBindingType)
 }
 
-func heartbeatConfigGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func heartbeatConfigGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["site_id"] = bindings.NewStringType()
-	fields["enforcementpoint_id"] = bindings.NewStringType()
-	fields["cluster_control_plane_id"] = bindings.NewStringType()
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["cluster_control_plane_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["cluster_control_plane_id"] = "ClusterControlPlaneId"
-	paramsTypeMap["enforcementpoint_id"] = bindings.NewStringType()
-	paramsTypeMap["site_id"] = bindings.NewStringType()
-	paramsTypeMap["cluster_control_plane_id"] = bindings.NewStringType()
-	paramsTypeMap["siteId"] = bindings.NewStringType()
-	paramsTypeMap["enforcementpointId"] = bindings.NewStringType()
-	paramsTypeMap["clusterControlPlaneId"] = bindings.NewStringType()
+	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["cluster_control_plane_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["clusterControlPlaneId"] = vapiBindings_.NewStringType()
 	pathParams["enforcementpoint_id"] = "enforcementpointId"
 	pathParams["site_id"] = "siteId"
 	pathParams["cluster_control_plane_id"] = "clusterControlPlaneId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -82,55 +82,55 @@ func heartbeatConfigGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func heartbeatConfigPatchInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func heartbeatConfigPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["site_id"] = bindings.NewStringType()
-	fields["enforcementpoint_id"] = bindings.NewStringType()
-	fields["cluster_control_plane_id"] = bindings.NewStringType()
-	fields["antrea_heartbeat_config"] = bindings.NewReferenceType(model.AntreaHeartbeatConfigBindingType)
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["cluster_control_plane_id"] = vapiBindings_.NewStringType()
+	fields["antrea_heartbeat_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.AntreaHeartbeatConfigBindingType)
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["cluster_control_plane_id"] = "ClusterControlPlaneId"
 	fieldNameMap["antrea_heartbeat_config"] = "AntreaHeartbeatConfig"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func heartbeatConfigPatchOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func HeartbeatConfigPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func heartbeatConfigPatchRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func heartbeatConfigPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["site_id"] = bindings.NewStringType()
-	fields["enforcementpoint_id"] = bindings.NewStringType()
-	fields["cluster_control_plane_id"] = bindings.NewStringType()
-	fields["antrea_heartbeat_config"] = bindings.NewReferenceType(model.AntreaHeartbeatConfigBindingType)
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["cluster_control_plane_id"] = vapiBindings_.NewStringType()
+	fields["antrea_heartbeat_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.AntreaHeartbeatConfigBindingType)
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["cluster_control_plane_id"] = "ClusterControlPlaneId"
 	fieldNameMap["antrea_heartbeat_config"] = "AntreaHeartbeatConfig"
-	paramsTypeMap["enforcementpoint_id"] = bindings.NewStringType()
-	paramsTypeMap["site_id"] = bindings.NewStringType()
-	paramsTypeMap["antrea_heartbeat_config"] = bindings.NewReferenceType(model.AntreaHeartbeatConfigBindingType)
-	paramsTypeMap["cluster_control_plane_id"] = bindings.NewStringType()
-	paramsTypeMap["siteId"] = bindings.NewStringType()
-	paramsTypeMap["enforcementpointId"] = bindings.NewStringType()
-	paramsTypeMap["clusterControlPlaneId"] = bindings.NewStringType()
+	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["antrea_heartbeat_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.AntreaHeartbeatConfigBindingType)
+	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["cluster_control_plane_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["clusterControlPlaneId"] = vapiBindings_.NewStringType()
 	pathParams["enforcementpoint_id"] = "enforcementpointId"
 	pathParams["site_id"] = "siteId"
 	pathParams["cluster_control_plane_id"] = "clusterControlPlaneId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -151,55 +151,55 @@ func heartbeatConfigPatchRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func heartbeatConfigUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func heartbeatConfigUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["site_id"] = bindings.NewStringType()
-	fields["enforcementpoint_id"] = bindings.NewStringType()
-	fields["cluster_control_plane_id"] = bindings.NewStringType()
-	fields["antrea_heartbeat_config"] = bindings.NewReferenceType(model.AntreaHeartbeatConfigBindingType)
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["cluster_control_plane_id"] = vapiBindings_.NewStringType()
+	fields["antrea_heartbeat_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.AntreaHeartbeatConfigBindingType)
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["cluster_control_plane_id"] = "ClusterControlPlaneId"
 	fieldNameMap["antrea_heartbeat_config"] = "AntreaHeartbeatConfig"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func heartbeatConfigUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.AntreaHeartbeatConfigBindingType)
+func HeartbeatConfigUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.AntreaHeartbeatConfigBindingType)
 }
 
-func heartbeatConfigUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func heartbeatConfigUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["site_id"] = bindings.NewStringType()
-	fields["enforcementpoint_id"] = bindings.NewStringType()
-	fields["cluster_control_plane_id"] = bindings.NewStringType()
-	fields["antrea_heartbeat_config"] = bindings.NewReferenceType(model.AntreaHeartbeatConfigBindingType)
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["cluster_control_plane_id"] = vapiBindings_.NewStringType()
+	fields["antrea_heartbeat_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.AntreaHeartbeatConfigBindingType)
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["cluster_control_plane_id"] = "ClusterControlPlaneId"
 	fieldNameMap["antrea_heartbeat_config"] = "AntreaHeartbeatConfig"
-	paramsTypeMap["enforcementpoint_id"] = bindings.NewStringType()
-	paramsTypeMap["site_id"] = bindings.NewStringType()
-	paramsTypeMap["antrea_heartbeat_config"] = bindings.NewReferenceType(model.AntreaHeartbeatConfigBindingType)
-	paramsTypeMap["cluster_control_plane_id"] = bindings.NewStringType()
-	paramsTypeMap["siteId"] = bindings.NewStringType()
-	paramsTypeMap["enforcementpointId"] = bindings.NewStringType()
-	paramsTypeMap["clusterControlPlaneId"] = bindings.NewStringType()
+	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["antrea_heartbeat_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.AntreaHeartbeatConfigBindingType)
+	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["cluster_control_plane_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["clusterControlPlaneId"] = vapiBindings_.NewStringType()
 	pathParams["enforcementpoint_id"] = "enforcementpointId"
 	pathParams["site_id"] = "siteId"
 	pathParams["cluster_control_plane_id"] = "clusterControlPlaneId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

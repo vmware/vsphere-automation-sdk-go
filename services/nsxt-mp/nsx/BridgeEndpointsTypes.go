@@ -11,41 +11,41 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func bridgeEndpointsCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func bridgeEndpointsCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["bridge_endpoint"] = bindings.NewReferenceType(model.BridgeEndpointBindingType)
+	fields["bridge_endpoint"] = vapiBindings_.NewReferenceType(nsxModel.BridgeEndpointBindingType)
 	fieldNameMap["bridge_endpoint"] = "BridgeEndpoint"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func bridgeEndpointsCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BridgeEndpointBindingType)
+func BridgeEndpointsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BridgeEndpointBindingType)
 }
 
-func bridgeEndpointsCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func bridgeEndpointsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["bridge_endpoint"] = bindings.NewReferenceType(model.BridgeEndpointBindingType)
+	fields["bridge_endpoint"] = vapiBindings_.NewReferenceType(nsxModel.BridgeEndpointBindingType)
 	fieldNameMap["bridge_endpoint"] = "BridgeEndpoint"
-	paramsTypeMap["bridge_endpoint"] = bindings.NewReferenceType(model.BridgeEndpointBindingType)
+	paramsTypeMap["bridge_endpoint"] = vapiBindings_.NewReferenceType(nsxModel.BridgeEndpointBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,36 +66,36 @@ func bridgeEndpointsCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func bridgeEndpointsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func bridgeEndpointsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["bridgeendpoint_id"] = bindings.NewStringType()
+	fields["bridgeendpoint_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["bridgeendpoint_id"] = "BridgeendpointId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func bridgeEndpointsDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func BridgeEndpointsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func bridgeEndpointsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func bridgeEndpointsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["bridgeendpoint_id"] = bindings.NewStringType()
+	fields["bridgeendpoint_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["bridgeendpoint_id"] = "BridgeendpointId"
-	paramsTypeMap["bridgeendpoint_id"] = bindings.NewStringType()
-	paramsTypeMap["bridgeendpointId"] = bindings.NewStringType()
+	paramsTypeMap["bridgeendpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bridgeendpointId"] = vapiBindings_.NewStringType()
 	pathParams["bridgeendpoint_id"] = "bridgeendpointId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -116,36 +116,36 @@ func bridgeEndpointsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func bridgeEndpointsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func bridgeEndpointsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["bridgeendpoint_id"] = bindings.NewStringType()
+	fields["bridgeendpoint_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["bridgeendpoint_id"] = "BridgeendpointId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func bridgeEndpointsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BridgeEndpointBindingType)
+func BridgeEndpointsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BridgeEndpointBindingType)
 }
 
-func bridgeEndpointsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func bridgeEndpointsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["bridgeendpoint_id"] = bindings.NewStringType()
+	fields["bridgeendpoint_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["bridgeendpoint_id"] = "BridgeendpointId"
-	paramsTypeMap["bridgeendpoint_id"] = bindings.NewStringType()
-	paramsTypeMap["bridgeendpointId"] = bindings.NewStringType()
+	paramsTypeMap["bridgeendpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bridgeendpointId"] = vapiBindings_.NewStringType()
 	pathParams["bridgeendpoint_id"] = "bridgeendpointId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -166,18 +166,18 @@ func bridgeEndpointsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func bridgeEndpointsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func bridgeEndpointsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["bridge_cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["bridge_endpoint_profile_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["logical_switch_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["vlan_transport_zone_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["bridge_cluster_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["bridge_endpoint_profile_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["logical_switch_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["vlan_transport_zone_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["bridge_cluster_id"] = "BridgeClusterId"
 	fieldNameMap["bridge_endpoint_profile_id"] = "BridgeEndpointProfileId"
 	fieldNameMap["cursor"] = "Cursor"
@@ -187,32 +187,32 @@ func bridgeEndpointsListInputType() bindings.StructType {
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["vlan_transport_zone_id"] = "VlanTransportZoneId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func bridgeEndpointsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BridgeEndpointListResultBindingType)
+func BridgeEndpointsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BridgeEndpointListResultBindingType)
 }
 
-func bridgeEndpointsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func bridgeEndpointsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["bridge_cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["bridge_endpoint_profile_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["logical_switch_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["vlan_transport_zone_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["bridge_cluster_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["bridge_endpoint_profile_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["logical_switch_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["vlan_transport_zone_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["bridge_cluster_id"] = "BridgeClusterId"
 	fieldNameMap["bridge_endpoint_profile_id"] = "BridgeEndpointProfileId"
 	fieldNameMap["cursor"] = "Cursor"
@@ -222,15 +222,15 @@ func bridgeEndpointsListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["vlan_transport_zone_id"] = "VlanTransportZoneId"
-	paramsTypeMap["bridge_cluster_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["bridge_endpoint_profile_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["vlan_transport_zone_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["logical_switch_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["bridge_endpoint_profile_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["vlan_transport_zone_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["bridge_cluster_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["logical_switch_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
@@ -242,7 +242,7 @@ func bridgeEndpointsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -263,41 +263,41 @@ func bridgeEndpointsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func bridgeEndpointsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func bridgeEndpointsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["bridgeendpoint_id"] = bindings.NewStringType()
-	fields["bridge_endpoint"] = bindings.NewReferenceType(model.BridgeEndpointBindingType)
+	fields["bridgeendpoint_id"] = vapiBindings_.NewStringType()
+	fields["bridge_endpoint"] = vapiBindings_.NewReferenceType(nsxModel.BridgeEndpointBindingType)
 	fieldNameMap["bridgeendpoint_id"] = "BridgeendpointId"
 	fieldNameMap["bridge_endpoint"] = "BridgeEndpoint"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func bridgeEndpointsUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BridgeEndpointBindingType)
+func BridgeEndpointsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BridgeEndpointBindingType)
 }
 
-func bridgeEndpointsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func bridgeEndpointsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["bridgeendpoint_id"] = bindings.NewStringType()
-	fields["bridge_endpoint"] = bindings.NewReferenceType(model.BridgeEndpointBindingType)
+	fields["bridgeendpoint_id"] = vapiBindings_.NewStringType()
+	fields["bridge_endpoint"] = vapiBindings_.NewReferenceType(nsxModel.BridgeEndpointBindingType)
 	fieldNameMap["bridgeendpoint_id"] = "BridgeendpointId"
 	fieldNameMap["bridge_endpoint"] = "BridgeEndpoint"
-	paramsTypeMap["bridgeendpoint_id"] = bindings.NewStringType()
-	paramsTypeMap["bridge_endpoint"] = bindings.NewReferenceType(model.BridgeEndpointBindingType)
-	paramsTypeMap["bridgeendpointId"] = bindings.NewStringType()
+	paramsTypeMap["bridge_endpoint"] = vapiBindings_.NewReferenceType(nsxModel.BridgeEndpointBindingType)
+	paramsTypeMap["bridgeendpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bridgeendpointId"] = vapiBindings_.NewStringType()
 	pathParams["bridgeendpoint_id"] = "bridgeendpointId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

@@ -11,48 +11,48 @@
 package services
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func vendorTemplatesCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func vendorTemplatesCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["service_id"] = bindings.NewStringType()
-	fields["vendor_template"] = bindings.NewReferenceType(model.VendorTemplateBindingType)
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["vendor_template"] = vapiBindings_.NewReferenceType(nsxModel.VendorTemplateBindingType)
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["vendor_template"] = "VendorTemplate"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func vendorTemplatesCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.VendorTemplateBindingType)
+func VendorTemplatesCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.VendorTemplateBindingType)
 }
 
-func vendorTemplatesCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func vendorTemplatesCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["service_id"] = bindings.NewStringType()
-	fields["vendor_template"] = bindings.NewReferenceType(model.VendorTemplateBindingType)
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["vendor_template"] = vapiBindings_.NewReferenceType(nsxModel.VendorTemplateBindingType)
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["vendor_template"] = "VendorTemplate"
-	paramsTypeMap["vendor_template"] = bindings.NewReferenceType(model.VendorTemplateBindingType)
-	paramsTypeMap["service_id"] = bindings.NewStringType()
-	paramsTypeMap["serviceId"] = bindings.NewStringType()
+	paramsTypeMap["vendor_template"] = vapiBindings_.NewReferenceType(nsxModel.VendorTemplateBindingType)
+	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
 	pathParams["service_id"] = "serviceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -73,43 +73,43 @@ func vendorTemplatesCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func vendorTemplatesDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func vendorTemplatesDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["service_id"] = bindings.NewStringType()
-	fields["vendor_template_id"] = bindings.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["vendor_template_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["vendor_template_id"] = "VendorTemplateId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func vendorTemplatesDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func VendorTemplatesDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func vendorTemplatesDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func vendorTemplatesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["service_id"] = bindings.NewStringType()
-	fields["vendor_template_id"] = bindings.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["vendor_template_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["vendor_template_id"] = "VendorTemplateId"
-	paramsTypeMap["vendor_template_id"] = bindings.NewStringType()
-	paramsTypeMap["service_id"] = bindings.NewStringType()
-	paramsTypeMap["serviceId"] = bindings.NewStringType()
-	paramsTypeMap["vendorTemplateId"] = bindings.NewStringType()
+	paramsTypeMap["vendor_template_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["vendorTemplateId"] = vapiBindings_.NewStringType()
 	pathParams["service_id"] = "serviceId"
 	pathParams["vendor_template_id"] = "vendorTemplateId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -130,43 +130,43 @@ func vendorTemplatesDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func vendorTemplatesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func vendorTemplatesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["service_id"] = bindings.NewStringType()
-	fields["vendor_template_id"] = bindings.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["vendor_template_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["vendor_template_id"] = "VendorTemplateId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func vendorTemplatesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.VendorTemplateBindingType)
+func VendorTemplatesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.VendorTemplateBindingType)
 }
 
-func vendorTemplatesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func vendorTemplatesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["service_id"] = bindings.NewStringType()
-	fields["vendor_template_id"] = bindings.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["vendor_template_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["vendor_template_id"] = "VendorTemplateId"
-	paramsTypeMap["vendor_template_id"] = bindings.NewStringType()
-	paramsTypeMap["service_id"] = bindings.NewStringType()
-	paramsTypeMap["serviceId"] = bindings.NewStringType()
-	paramsTypeMap["vendorTemplateId"] = bindings.NewStringType()
+	paramsTypeMap["vendor_template_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["vendorTemplateId"] = vapiBindings_.NewStringType()
 	pathParams["service_id"] = "serviceId"
 	pathParams["vendor_template_id"] = "vendorTemplateId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -187,42 +187,42 @@ func vendorTemplatesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func vendorTemplatesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func vendorTemplatesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["service_id"] = bindings.NewStringType()
-	fields["vendor_template_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["vendor_template_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["vendor_template_name"] = "VendorTemplateName"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func vendorTemplatesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.VendorTemplateListResultBindingType)
+func VendorTemplatesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.VendorTemplateListResultBindingType)
 }
 
-func vendorTemplatesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func vendorTemplatesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["service_id"] = bindings.NewStringType()
-	fields["vendor_template_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["vendor_template_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["vendor_template_name"] = "VendorTemplateName"
-	paramsTypeMap["vendor_template_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["service_id"] = bindings.NewStringType()
-	paramsTypeMap["serviceId"] = bindings.NewStringType()
+	paramsTypeMap["vendor_template_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
 	pathParams["service_id"] = "serviceId"
 	queryParams["vendor_template_name"] = "vendor_template_name"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

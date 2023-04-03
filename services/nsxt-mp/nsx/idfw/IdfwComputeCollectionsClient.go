@@ -9,21 +9,23 @@
 package idfw
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type IdfwComputeCollectionsClient interface {
 
-	// Delete individual compute collections for IDFW.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param ccExtIdParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -31,18 +33,26 @@ type IdfwComputeCollectionsClient interface {
 	// @throws NotFound  Not Found
 	Delete(ccExtIdParam string) error
 
-	// Get enable/disable status of individual compute collections for IDFW.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param ccExtIdParam (required)
 	// @return com.vmware.nsx.model.IdfwEnabledComputeCollection
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(ccExtIdParam string) (model.IdfwEnabledComputeCollection, error)
+	Get(ccExtIdParam string) (nsxModel.IdfwEnabledComputeCollection, error)
 
 	// List all Identity firewall compute collections.
+	//
+	//  Use the following Policy API -
+	//  GET /policy/api/v1/infra/settings/firewall/idfw/cluster
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
@@ -50,114 +60,124 @@ type IdfwComputeCollectionsClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.IdfwEnabledComputeCollectionListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IdfwEnabledComputeCollectionListResult, error)
+	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.IdfwEnabledComputeCollectionListResult, error)
 
-	// Enable/disable individual compute collections for IDFW.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param ccExtIdParam (required)
 	// @param idfwEnabledComputeCollectionParam (required)
 	// @return com.vmware.nsx.model.IdfwEnabledComputeCollection
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(ccExtIdParam string, idfwEnabledComputeCollectionParam model.IdfwEnabledComputeCollection) (model.IdfwEnabledComputeCollection, error)
+	Update(ccExtIdParam string, idfwEnabledComputeCollectionParam nsxModel.IdfwEnabledComputeCollection) (nsxModel.IdfwEnabledComputeCollection, error)
 }
 
 type idfwComputeCollectionsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewIdfwComputeCollectionsClient(connector client.Connector) *idfwComputeCollectionsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.idfw.idfw_compute_collections")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewIdfwComputeCollectionsClient(connector vapiProtocolClient_.Connector) *idfwComputeCollectionsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.idfw.idfw_compute_collections")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	iIface := idfwComputeCollectionsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &iIface
 }
 
-func (iIface *idfwComputeCollectionsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (iIface *idfwComputeCollectionsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := iIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
 func (iIface *idfwComputeCollectionsClient) Delete(ccExtIdParam string) error {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(idfwComputeCollectionsDeleteInputType(), typeConverter)
+	operationRestMetaData := idfwComputeCollectionsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(idfwComputeCollectionsDeleteInputType(), typeConverter)
 	sv.AddStructField("CcExtId", ccExtIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := idfwComputeCollectionsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.idfw.idfw_compute_collections", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (iIface *idfwComputeCollectionsClient) Get(ccExtIdParam string) (model.IdfwEnabledComputeCollection, error) {
+func (iIface *idfwComputeCollectionsClient) Get(ccExtIdParam string) (nsxModel.IdfwEnabledComputeCollection, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(idfwComputeCollectionsGetInputType(), typeConverter)
+	operationRestMetaData := idfwComputeCollectionsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(idfwComputeCollectionsGetInputType(), typeConverter)
 	sv.AddStructField("CcExtId", ccExtIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IdfwEnabledComputeCollection
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IdfwEnabledComputeCollection
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := idfwComputeCollectionsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.idfw.idfw_compute_collections", "get", inputDataValue, executionContext)
-	var emptyOutput model.IdfwEnabledComputeCollection
+	var emptyOutput nsxModel.IdfwEnabledComputeCollection
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), idfwComputeCollectionsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IdfwComputeCollectionsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IdfwEnabledComputeCollection), nil
+		return output.(nsxModel.IdfwEnabledComputeCollection), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (iIface *idfwComputeCollectionsClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.IdfwEnabledComputeCollectionListResult, error) {
+func (iIface *idfwComputeCollectionsClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.IdfwEnabledComputeCollectionListResult, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(idfwComputeCollectionsListInputType(), typeConverter)
+	operationRestMetaData := idfwComputeCollectionsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(idfwComputeCollectionsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
@@ -165,57 +185,55 @@ func (iIface *idfwComputeCollectionsClient) List(cursorParam *string, includedFi
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IdfwEnabledComputeCollectionListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IdfwEnabledComputeCollectionListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := idfwComputeCollectionsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.idfw.idfw_compute_collections", "list", inputDataValue, executionContext)
-	var emptyOutput model.IdfwEnabledComputeCollectionListResult
+	var emptyOutput nsxModel.IdfwEnabledComputeCollectionListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), idfwComputeCollectionsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IdfwComputeCollectionsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IdfwEnabledComputeCollectionListResult), nil
+		return output.(nsxModel.IdfwEnabledComputeCollectionListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (iIface *idfwComputeCollectionsClient) Update(ccExtIdParam string, idfwEnabledComputeCollectionParam model.IdfwEnabledComputeCollection) (model.IdfwEnabledComputeCollection, error) {
+func (iIface *idfwComputeCollectionsClient) Update(ccExtIdParam string, idfwEnabledComputeCollectionParam nsxModel.IdfwEnabledComputeCollection) (nsxModel.IdfwEnabledComputeCollection, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(idfwComputeCollectionsUpdateInputType(), typeConverter)
+	operationRestMetaData := idfwComputeCollectionsUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(idfwComputeCollectionsUpdateInputType(), typeConverter)
 	sv.AddStructField("CcExtId", ccExtIdParam)
 	sv.AddStructField("IdfwEnabledComputeCollection", idfwEnabledComputeCollectionParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.IdfwEnabledComputeCollection
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.IdfwEnabledComputeCollection
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := idfwComputeCollectionsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	iIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.idfw.idfw_compute_collections", "update", inputDataValue, executionContext)
-	var emptyOutput model.IdfwEnabledComputeCollection
+	var emptyOutput nsxModel.IdfwEnabledComputeCollection
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), idfwComputeCollectionsUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IdfwComputeCollectionsUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.IdfwEnabledComputeCollection), nil
+		return output.(nsxModel.IdfwEnabledComputeCollection), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

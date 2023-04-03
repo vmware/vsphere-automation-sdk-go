@@ -11,48 +11,48 @@
 package upgrade
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func planContinue_InputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func planContinue_InputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["component_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["skip"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["skip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["component_type"] = "ComponentType"
 	fieldNameMap["skip"] = "Skip"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func planContinue_OutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func PlanContinue_OutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func planContinue_RestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func planContinue_RestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["component_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["skip"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["skip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["component_type"] = "ComponentType"
 	fieldNameMap["skip"] = "Skip"
-	paramsTypeMap["skip"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["component_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["skip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	queryParams["component_type"] = "component_type"
 	queryParams["skip"] = "skip"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -73,21 +73,21 @@ func planContinue_RestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func planPauseInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func planPauseInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func planPauseOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func PlanPauseOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func planPauseRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func planPauseRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -95,7 +95,7 @@ func planPauseRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -116,35 +116,35 @@ func planPauseRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func planResetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func planResetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["component_type"] = bindings.NewStringType()
+	fields["component_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["component_type"] = "ComponentType"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func planResetOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func PlanResetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func planResetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func planResetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["component_type"] = bindings.NewStringType()
+	fields["component_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["component_type"] = "ComponentType"
-	paramsTypeMap["component_type"] = bindings.NewStringType()
+	paramsTypeMap["component_type"] = vapiBindings_.NewStringType()
 	queryParams["component_type"] = "component_type"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -165,35 +165,35 @@ func planResetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func planStageupgradeInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func planStageupgradeInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["component_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["component_type"] = "ComponentType"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func planStageupgradeOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func PlanStageupgradeOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func planStageupgradeRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func planStageupgradeRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["component_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["component_type"] = "ComponentType"
-	paramsTypeMap["component_type"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	queryParams["component_type"] = "component_type"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -214,29 +214,35 @@ func planStageupgradeRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func planStartInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func planStartInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	fields["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["component_type"] = "ComponentType"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func planStartOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func PlanStartOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func planStartRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func planStartRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
+	fields["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["component_type"] = "ComponentType"
+	paramsTypeMap["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	queryParams["component_type"] = "component_type"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -257,34 +263,83 @@ func planStartRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func planUpgradeselectedunitsInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func planUpgradeInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["upgrade_unit_list"] = bindings.NewReferenceType(model.UpgradeUnitListBindingType)
-	fieldNameMap["upgrade_unit_list"] = "UpgradeUnitList"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	fields["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["component_type"] = "ComponentType"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func planUpgradeselectedunitsOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func PlanUpgradeOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func planUpgradeselectedunitsRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func planUpgradeRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["upgrade_unit_list"] = bindings.NewReferenceType(model.UpgradeUnitListBindingType)
-	fieldNameMap["upgrade_unit_list"] = "UpgradeUnitList"
-	paramsTypeMap["upgrade_unit_list"] = bindings.NewReferenceType(model.UpgradeUnitListBindingType)
+	fields["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["component_type"] = "ComponentType"
+	paramsTypeMap["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	queryParams["component_type"] = "component_type"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"action=upgrade",
+		"",
+		"POST",
+		"/api/v1/upgrade/plan",
+		"",
+		resultHeaders,
+		204,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
+func planUpgradeselectedunitsInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["upgrade_unit_list"] = vapiBindings_.NewReferenceType(nsxModel.UpgradeUnitListBindingType)
+	fieldNameMap["upgrade_unit_list"] = "UpgradeUnitList"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func PlanUpgradeselectedunitsOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
+}
+
+func planUpgradeselectedunitsRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["upgrade_unit_list"] = vapiBindings_.NewReferenceType(nsxModel.UpgradeUnitListBindingType)
+	fieldNameMap["upgrade_unit_list"] = "UpgradeUnitList"
+	paramsTypeMap["upgrade_unit_list"] = vapiBindings_.NewReferenceType(nsxModel.UpgradeUnitListBindingType)
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

@@ -11,43 +11,43 @@
 package upgrade
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func versionWhitelistGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func versionWhitelistGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["component_type"] = bindings.NewStringType()
+	fields["component_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["component_type"] = "ComponentType"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func versionWhitelistGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.AcceptableComponentVersionBindingType)
+func VersionWhitelistGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.AcceptableComponentVersionBindingType)
 }
 
-func versionWhitelistGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func versionWhitelistGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["component_type"] = bindings.NewStringType()
+	fields["component_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["component_type"] = "ComponentType"
-	paramsTypeMap["component_type"] = bindings.NewStringType()
-	paramsTypeMap["componentType"] = bindings.NewStringType()
+	paramsTypeMap["component_type"] = vapiBindings_.NewStringType()
+	paramsTypeMap["componentType"] = vapiBindings_.NewStringType()
 	pathParams["component_type"] = "componentType"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -68,21 +68,21 @@ func versionWhitelistGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func versionWhitelistListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func versionWhitelistListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func versionWhitelistListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.AcceptableComponentVersionListBindingType)
+func VersionWhitelistListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.AcceptableComponentVersionListBindingType)
 }
 
-func versionWhitelistListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func versionWhitelistListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -90,7 +90,7 @@ func versionWhitelistListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -111,41 +111,41 @@ func versionWhitelistListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func versionWhitelistUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func versionWhitelistUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["component_type"] = bindings.NewStringType()
-	fields["version_list"] = bindings.NewReferenceType(model.VersionListBindingType)
+	fields["component_type"] = vapiBindings_.NewStringType()
+	fields["version_list"] = vapiBindings_.NewReferenceType(nsxModel.VersionListBindingType)
 	fieldNameMap["component_type"] = "ComponentType"
 	fieldNameMap["version_list"] = "VersionList"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func versionWhitelistUpdateOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func VersionWhitelistUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func versionWhitelistUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func versionWhitelistUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["component_type"] = bindings.NewStringType()
-	fields["version_list"] = bindings.NewReferenceType(model.VersionListBindingType)
+	fields["component_type"] = vapiBindings_.NewStringType()
+	fields["version_list"] = vapiBindings_.NewReferenceType(nsxModel.VersionListBindingType)
 	fieldNameMap["component_type"] = "ComponentType"
 	fieldNameMap["version_list"] = "VersionList"
-	paramsTypeMap["component_type"] = bindings.NewStringType()
-	paramsTypeMap["version_list"] = bindings.NewReferenceType(model.VersionListBindingType)
-	paramsTypeMap["componentType"] = bindings.NewStringType()
+	paramsTypeMap["component_type"] = vapiBindings_.NewStringType()
+	paramsTypeMap["version_list"] = vapiBindings_.NewReferenceType(nsxModel.VersionListBindingType)
+	paramsTypeMap["componentType"] = vapiBindings_.NewStringType()
 	pathParams["component_type"] = "componentType"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

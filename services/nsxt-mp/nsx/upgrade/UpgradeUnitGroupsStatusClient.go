@@ -9,15 +9,14 @@
 package upgrade
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type UpgradeUnitGroupsStatusClient interface {
 
@@ -30,43 +29,48 @@ type UpgradeUnitGroupsStatusClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.UpgradeUnitGroupStatusListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Getall(componentTypeParam *string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.UpgradeUnitGroupStatusListResult, error)
+	Getall(componentTypeParam *string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.UpgradeUnitGroupStatusListResult, error)
 }
 
 type upgradeUnitGroupsStatusClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewUpgradeUnitGroupsStatusClient(connector client.Connector) *upgradeUnitGroupsStatusClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.upgrade.upgrade_unit_groups_status")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"getall": core.NewMethodIdentifier(interfaceIdentifier, "getall"),
+func NewUpgradeUnitGroupsStatusClient(connector vapiProtocolClient_.Connector) *upgradeUnitGroupsStatusClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.upgrade.upgrade_unit_groups_status")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"getall": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "getall"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	uIface := upgradeUnitGroupsStatusClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &uIface
 }
 
-func (uIface *upgradeUnitGroupsStatusClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (uIface *upgradeUnitGroupsStatusClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := uIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (uIface *upgradeUnitGroupsStatusClient) Getall(componentTypeParam *string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.UpgradeUnitGroupStatusListResult, error) {
+func (uIface *upgradeUnitGroupsStatusClient) Getall(componentTypeParam *string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.UpgradeUnitGroupStatusListResult, error) {
 	typeConverter := uIface.connector.TypeConverter()
 	executionContext := uIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(upgradeUnitGroupsStatusGetallInputType(), typeConverter)
+	operationRestMetaData := upgradeUnitGroupsStatusGetallRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(upgradeUnitGroupsStatusGetallInputType(), typeConverter)
 	sv.AddStructField("ComponentType", componentTypeParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -75,25 +79,22 @@ func (uIface *upgradeUnitGroupsStatusClient) Getall(componentTypeParam *string, 
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.UpgradeUnitGroupStatusListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.UpgradeUnitGroupStatusListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := upgradeUnitGroupsStatusGetallRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	uIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := uIface.connector.GetApiProvider().Invoke("com.vmware.nsx.upgrade.upgrade_unit_groups_status", "getall", inputDataValue, executionContext)
-	var emptyOutput model.UpgradeUnitGroupStatusListResult
+	var emptyOutput nsxModel.UpgradeUnitGroupStatusListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), upgradeUnitGroupsStatusGetallOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), UpgradeUnitGroupsStatusGetallOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.UpgradeUnitGroupStatusListResult), nil
+		return output.(nsxModel.UpgradeUnitGroupStatusListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), uIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

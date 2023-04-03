@@ -11,41 +11,41 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func nsServicesCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func nsServicesCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["ns_service"] = bindings.NewReferenceType(model.NSServiceBindingType)
+	fields["ns_service"] = vapiBindings_.NewReferenceType(nsxModel.NSServiceBindingType)
 	fieldNameMap["ns_service"] = "NsService"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func nsServicesCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NSServiceBindingType)
+func NsServicesCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NSServiceBindingType)
 }
 
-func nsServicesCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func nsServicesCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["ns_service"] = bindings.NewReferenceType(model.NSServiceBindingType)
+	fields["ns_service"] = vapiBindings_.NewReferenceType(nsxModel.NSServiceBindingType)
 	fieldNameMap["ns_service"] = "NsService"
-	paramsTypeMap["ns_service"] = bindings.NewReferenceType(model.NSServiceBindingType)
+	paramsTypeMap["ns_service"] = vapiBindings_.NewReferenceType(nsxModel.NSServiceBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,42 +66,42 @@ func nsServicesCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func nsServicesDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func nsServicesDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["ns_service_id"] = bindings.NewStringType()
-	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["ns_service_id"] = vapiBindings_.NewStringType()
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["ns_service_id"] = "NsServiceId"
 	fieldNameMap["force"] = "Force"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func nsServicesDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func NsServicesDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func nsServicesDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func nsServicesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["ns_service_id"] = bindings.NewStringType()
-	fields["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["ns_service_id"] = vapiBindings_.NewStringType()
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["ns_service_id"] = "NsServiceId"
 	fieldNameMap["force"] = "Force"
-	paramsTypeMap["force"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["ns_service_id"] = bindings.NewStringType()
-	paramsTypeMap["nsServiceId"] = bindings.NewStringType()
+	paramsTypeMap["ns_service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["nsServiceId"] = vapiBindings_.NewStringType()
 	pathParams["ns_service_id"] = "nsServiceId"
 	queryParams["force"] = "force"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -122,36 +122,36 @@ func nsServicesDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.concurrent_change": 409, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func nsServicesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func nsServicesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["ns_service_id"] = bindings.NewStringType()
+	fields["ns_service_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["ns_service_id"] = "NsServiceId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func nsServicesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NSServiceBindingType)
+func NsServicesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NSServiceBindingType)
 }
 
-func nsServicesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func nsServicesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["ns_service_id"] = bindings.NewStringType()
+	fields["ns_service_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["ns_service_id"] = "NsServiceId"
-	paramsTypeMap["ns_service_id"] = bindings.NewStringType()
-	paramsTypeMap["nsServiceId"] = bindings.NewStringType()
+	paramsTypeMap["ns_service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["nsServiceId"] = vapiBindings_.NewStringType()
 	pathParams["ns_service_id"] = "nsServiceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -172,56 +172,56 @@ func nsServicesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func nsServicesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func nsServicesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["default_service"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["default_service"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["default_service"] = "DefaultService"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func nsServicesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NSServiceListResultBindingType)
+func NsServicesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NSServiceListResultBindingType)
 }
 
-func nsServicesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func nsServicesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["default_service"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["default_service"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["default_service"] = "DefaultService"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["default_service"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["default_service"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
@@ -230,7 +230,7 @@ func nsServicesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -251,41 +251,41 @@ func nsServicesListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func nsServicesUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func nsServicesUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["ns_service_id"] = bindings.NewStringType()
-	fields["ns_service"] = bindings.NewReferenceType(model.NSServiceBindingType)
+	fields["ns_service_id"] = vapiBindings_.NewStringType()
+	fields["ns_service"] = vapiBindings_.NewReferenceType(nsxModel.NSServiceBindingType)
 	fieldNameMap["ns_service_id"] = "NsServiceId"
 	fieldNameMap["ns_service"] = "NsService"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func nsServicesUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.NSServiceBindingType)
+func NsServicesUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.NSServiceBindingType)
 }
 
-func nsServicesUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func nsServicesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["ns_service_id"] = bindings.NewStringType()
-	fields["ns_service"] = bindings.NewReferenceType(model.NSServiceBindingType)
+	fields["ns_service_id"] = vapiBindings_.NewStringType()
+	fields["ns_service"] = vapiBindings_.NewReferenceType(nsxModel.NSServiceBindingType)
 	fieldNameMap["ns_service_id"] = "NsServiceId"
 	fieldNameMap["ns_service"] = "NsService"
-	paramsTypeMap["ns_service_id"] = bindings.NewStringType()
-	paramsTypeMap["ns_service"] = bindings.NewReferenceType(model.NSServiceBindingType)
-	paramsTypeMap["nsServiceId"] = bindings.NewStringType()
+	paramsTypeMap["ns_service"] = vapiBindings_.NewReferenceType(nsxModel.NSServiceBindingType)
+	paramsTypeMap["ns_service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["nsServiceId"] = vapiBindings_.NewStringType()
 	pathParams["ns_service_id"] = "nsServiceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

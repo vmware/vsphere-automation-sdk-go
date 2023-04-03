@@ -11,41 +11,41 @@
 package nodes
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func deploymentsCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func deploymentsCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["add_cluster_node_VM_info"] = bindings.NewReferenceType(model.AddClusterNodeVMInfoBindingType)
+	fields["add_cluster_node_VM_info"] = vapiBindings_.NewReferenceType(nsxModel.AddClusterNodeVMInfoBindingType)
 	fieldNameMap["add_cluster_node_VM_info"] = "AddClusterNodeVMInfo"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func deploymentsCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ClusterNodeVMDeploymentRequestListBindingType)
+func DeploymentsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.ClusterNodeVMDeploymentRequestListBindingType)
 }
 
-func deploymentsCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func deploymentsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["add_cluster_node_VM_info"] = bindings.NewReferenceType(model.AddClusterNodeVMInfoBindingType)
+	fields["add_cluster_node_VM_info"] = vapiBindings_.NewReferenceType(nsxModel.AddClusterNodeVMInfoBindingType)
 	fieldNameMap["add_cluster_node_VM_info"] = "AddClusterNodeVMInfo"
-	paramsTypeMap["add_cluster_node_VM_info"] = bindings.NewReferenceType(model.AddClusterNodeVMInfoBindingType)
+	paramsTypeMap["add_cluster_node_VM_info"] = vapiBindings_.NewReferenceType(nsxModel.AddClusterNodeVMInfoBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,42 +66,42 @@ func deploymentsCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func deploymentsDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func deploymentsDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["node_id"] = bindings.NewStringType()
-	fields["force_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["node_id"] = vapiBindings_.NewStringType()
+	fields["force_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["force_delete"] = "ForceDelete"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func deploymentsDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func DeploymentsDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func deploymentsDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func deploymentsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["node_id"] = bindings.NewStringType()
-	fields["force_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["node_id"] = vapiBindings_.NewStringType()
+	fields["force_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["force_delete"] = "ForceDelete"
-	paramsTypeMap["force_delete"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["node_id"] = bindings.NewStringType()
-	paramsTypeMap["nodeId"] = bindings.NewStringType()
+	paramsTypeMap["force_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["nodeId"] = vapiBindings_.NewStringType()
 	pathParams["node_id"] = "nodeId"
 	queryParams["force_delete"] = "force_delete"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -122,36 +122,36 @@ func deploymentsDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func deploymentsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func deploymentsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["node_id"] = bindings.NewStringType()
+	fields["node_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["node_id"] = "NodeId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func deploymentsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ClusterNodeVMDeploymentRequestBindingType)
+func DeploymentsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.ClusterNodeVMDeploymentRequestBindingType)
 }
 
-func deploymentsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func deploymentsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["node_id"] = bindings.NewStringType()
+	fields["node_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["node_id"] = "NodeId"
-	paramsTypeMap["node_id"] = bindings.NewStringType()
-	paramsTypeMap["nodeId"] = bindings.NewStringType()
+	paramsTypeMap["node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["nodeId"] = vapiBindings_.NewStringType()
 	pathParams["node_id"] = "nodeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -172,21 +172,21 @@ func deploymentsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func deploymentsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func deploymentsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func deploymentsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ClusterNodeVMDeploymentRequestListBindingType)
+func DeploymentsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.ClusterNodeVMDeploymentRequestListBindingType)
 }
 
-func deploymentsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func deploymentsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -194,7 +194,7 @@ func deploymentsListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

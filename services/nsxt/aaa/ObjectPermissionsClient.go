@@ -9,15 +9,14 @@
 package aaa
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ObjectPermissionsClient interface {
 
@@ -32,6 +31,7 @@ type ObjectPermissionsClient interface {
 	// @param roleNameParam Role name (optional)
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -51,55 +51,61 @@ type ObjectPermissionsClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.ObjectRolePermissionGroupListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, inheritanceDisabledParam *bool, pageSizeParam *int64, pathPrefixParam *string, roleNameParam *string, sortAscendingParam *bool, sortByParam *string) (model.ObjectRolePermissionGroupListResult, error)
+	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, inheritanceDisabledParam *bool, pageSizeParam *int64, pathPrefixParam *string, roleNameParam *string, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ObjectRolePermissionGroupListResult, error)
 
 	// Create/update object permission mappings
 	//
 	// @param objectRolePermissionGroupParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(objectRolePermissionGroupParam model.ObjectRolePermissionGroup) error
+	Patch(objectRolePermissionGroupParam nsx_policyModel.ObjectRolePermissionGroup) error
 }
 
 type objectPermissionsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewObjectPermissionsClient(connector client.Connector) *objectPermissionsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.aaa.object_permissions")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  core.NewMethodIdentifier(interfaceIdentifier, "patch"),
+func NewObjectPermissionsClient(connector vapiProtocolClient_.Connector) *objectPermissionsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.aaa.object_permissions")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	oIface := objectPermissionsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &oIface
 }
 
-func (oIface *objectPermissionsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (oIface *objectPermissionsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := oIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
 func (oIface *objectPermissionsClient) Delete(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, inheritanceDisabledParam *bool, pageSizeParam *int64, pathPrefixParam *string, roleNameParam *string, sortAscendingParam *bool, sortByParam *string) error {
 	typeConverter := oIface.connector.TypeConverter()
 	executionContext := oIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(objectPermissionsDeleteInputType(), typeConverter)
+	operationRestMetaData := objectPermissionsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(objectPermissionsDeleteInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -111,28 +117,29 @@ func (oIface *objectPermissionsClient) Delete(cursorParam *string, includeMarkFo
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := objectPermissionsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	oIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := oIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.aaa.object_permissions", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), oIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (oIface *objectPermissionsClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, inheritanceDisabledParam *bool, pageSizeParam *int64, pathPrefixParam *string, roleNameParam *string, sortAscendingParam *bool, sortByParam *string) (model.ObjectRolePermissionGroupListResult, error) {
+func (oIface *objectPermissionsClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, inheritanceDisabledParam *bool, pageSizeParam *int64, pathPrefixParam *string, roleNameParam *string, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ObjectRolePermissionGroupListResult, error) {
 	typeConverter := oIface.connector.TypeConverter()
 	executionContext := oIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(objectPermissionsListInputType(), typeConverter)
+	operationRestMetaData := objectPermissionsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(objectPermissionsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -144,50 +151,48 @@ func (oIface *objectPermissionsClient) List(cursorParam *string, includeMarkForD
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ObjectRolePermissionGroupListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.ObjectRolePermissionGroupListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := objectPermissionsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	oIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := oIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.aaa.object_permissions", "list", inputDataValue, executionContext)
-	var emptyOutput model.ObjectRolePermissionGroupListResult
+	var emptyOutput nsx_policyModel.ObjectRolePermissionGroupListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), objectPermissionsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ObjectPermissionsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ObjectRolePermissionGroupListResult), nil
+		return output.(nsx_policyModel.ObjectRolePermissionGroupListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), oIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (oIface *objectPermissionsClient) Patch(objectRolePermissionGroupParam model.ObjectRolePermissionGroup) error {
+func (oIface *objectPermissionsClient) Patch(objectRolePermissionGroupParam nsx_policyModel.ObjectRolePermissionGroup) error {
 	typeConverter := oIface.connector.TypeConverter()
 	executionContext := oIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(objectPermissionsPatchInputType(), typeConverter)
+	operationRestMetaData := objectPermissionsPatchRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(objectPermissionsPatchInputType(), typeConverter)
 	sv.AddStructField("ObjectRolePermissionGroup", objectRolePermissionGroupParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := objectPermissionsPatchRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	oIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := oIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.aaa.object_permissions", "patch", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), oIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}

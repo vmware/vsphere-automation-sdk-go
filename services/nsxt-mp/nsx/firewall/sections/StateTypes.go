@@ -11,55 +11,55 @@
 package sections
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func stateGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func stateGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["section_id"] = bindings.NewStringType()
-	fields["barrier_id"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["request_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["section_id"] = vapiBindings_.NewStringType()
+	fields["barrier_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["request_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["section_id"] = "SectionId"
 	fieldNameMap["barrier_id"] = "BarrierId"
 	fieldNameMap["request_id"] = "RequestId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func stateGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.FirewallSectionStateBindingType)
+func StateGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.FirewallSectionStateBindingType)
 }
 
-func stateGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func stateGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["section_id"] = bindings.NewStringType()
-	fields["barrier_id"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["request_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["section_id"] = vapiBindings_.NewStringType()
+	fields["barrier_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["request_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["section_id"] = "SectionId"
 	fieldNameMap["barrier_id"] = "BarrierId"
 	fieldNameMap["request_id"] = "RequestId"
-	paramsTypeMap["barrier_id"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["section_id"] = bindings.NewStringType()
-	paramsTypeMap["request_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sectionId"] = bindings.NewStringType()
+	paramsTypeMap["section_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["barrier_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["request_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sectionId"] = vapiBindings_.NewStringType()
 	pathParams["section_id"] = "sectionId"
 	queryParams["barrier_id"] = "barrier_id"
 	queryParams["request_id"] = "request_id"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

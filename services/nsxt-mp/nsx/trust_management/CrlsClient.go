@@ -9,21 +9,21 @@
 package trust_management
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type CrlsClient interface {
 
 	// Deletes an existing CRL.
 	//
 	// @param crlIdParam ID of CRL to delete (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -36,235 +36,246 @@ type CrlsClient interface {
 	// @param crlIdParam ID of CRL to read (required)
 	// @param detailsParam whether to expand the pem data and show all its details (optional, default to false)
 	// @return com.vmware.nsx.model.Crl
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(crlIdParam string, detailsParam *bool) (model.Crl, error)
+	Get(crlIdParam string, detailsParam *bool) (nsxModel.Crl, error)
 
 	// Adds a new certificate revocation list (CRL). The CRL is used to verify the client certificate status against the revocation lists published by the CA. For this reason, the administrator needs to add the CRL in certificate repository as well. A CRL can be in the PEM X.509 format (crl_type=X509) or JSON OneCRL (crl_type=OneCRL). If crl_type is not specified, it is auto-detected based on the presence of fields pem_encoded or one_crl.
 	//
 	// @param crlObjectDataParam (required)
 	// @return com.vmware.nsx.model.CrlList
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Importcrl(crlObjectDataParam model.CrlObjectData) (model.CrlList, error)
+	Importcrl(crlObjectDataParam nsxModel.CrlObjectData) (nsxModel.CrlList, error)
 
 	// Returns information about all CRLs. For additional information, include the ?details=true modifier at the end of the request URI.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param detailsParam whether to expand the pem data and show all its details (optional, default to false)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param nodeIdParam Node ID of certificate to return (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param type_Param Type of certificate to return (optional)
 	// @return com.vmware.nsx.model.CrlList
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, detailsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (model.CrlList, error)
+	List(cursorParam *string, detailsParam *bool, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsxModel.CrlList, error)
 
 	// Updates an existing CRL.
 	//
 	// @param crlIdParam ID of CRL to update (required)
 	// @param crlParam (required)
 	// @return com.vmware.nsx.model.Crl
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(crlIdParam string, crlParam model.Crl) (model.Crl, error)
+	Update(crlIdParam string, crlParam nsxModel.Crl) (nsxModel.Crl, error)
 }
 
 type crlsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewCrlsClient(connector client.Connector) *crlsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.trust_management.crls")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete":    core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":       core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"importcrl": core.NewMethodIdentifier(interfaceIdentifier, "importcrl"),
-		"list":      core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update":    core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewCrlsClient(connector vapiProtocolClient_.Connector) *crlsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.trust_management.crls")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"delete":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":       vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"importcrl": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "importcrl"),
+		"list":      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	cIface := crlsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &cIface
 }
 
-func (cIface *crlsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (cIface *crlsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := cIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
 func (cIface *crlsClient) Delete(crlIdParam string) error {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(crlsDeleteInputType(), typeConverter)
+	operationRestMetaData := crlsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(crlsDeleteInputType(), typeConverter)
 	sv.AddStructField("CrlId", crlIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := crlsDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.trust_management.crls", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (cIface *crlsClient) Get(crlIdParam string, detailsParam *bool) (model.Crl, error) {
+func (cIface *crlsClient) Get(crlIdParam string, detailsParam *bool) (nsxModel.Crl, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(crlsGetInputType(), typeConverter)
+	operationRestMetaData := crlsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(crlsGetInputType(), typeConverter)
 	sv.AddStructField("CrlId", crlIdParam)
 	sv.AddStructField("Details", detailsParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.Crl
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.Crl
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := crlsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.trust_management.crls", "get", inputDataValue, executionContext)
-	var emptyOutput model.Crl
+	var emptyOutput nsxModel.Crl
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), crlsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), CrlsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.Crl), nil
+		return output.(nsxModel.Crl), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (cIface *crlsClient) Importcrl(crlObjectDataParam model.CrlObjectData) (model.CrlList, error) {
+func (cIface *crlsClient) Importcrl(crlObjectDataParam nsxModel.CrlObjectData) (nsxModel.CrlList, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(crlsImportcrlInputType(), typeConverter)
+	operationRestMetaData := crlsImportcrlRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(crlsImportcrlInputType(), typeConverter)
 	sv.AddStructField("CrlObjectData", crlObjectDataParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.CrlList
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.CrlList
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := crlsImportcrlRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.trust_management.crls", "importcrl", inputDataValue, executionContext)
-	var emptyOutput model.CrlList
+	var emptyOutput nsxModel.CrlList
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), crlsImportcrlOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), CrlsImportcrlOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.CrlList), nil
+		return output.(nsxModel.CrlList), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (cIface *crlsClient) List(cursorParam *string, detailsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (model.CrlList, error) {
+func (cIface *crlsClient) List(cursorParam *string, detailsParam *bool, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsxModel.CrlList, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(crlsListInputType(), typeConverter)
+	operationRestMetaData := crlsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(crlsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("Details", detailsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("NodeId", nodeIdParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
 	sv.AddStructField("Type_", type_Param)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.CrlList
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.CrlList
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := crlsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.trust_management.crls", "list", inputDataValue, executionContext)
-	var emptyOutput model.CrlList
+	var emptyOutput nsxModel.CrlList
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), crlsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), CrlsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.CrlList), nil
+		return output.(nsxModel.CrlList), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (cIface *crlsClient) Update(crlIdParam string, crlParam model.Crl) (model.Crl, error) {
+func (cIface *crlsClient) Update(crlIdParam string, crlParam nsxModel.Crl) (nsxModel.Crl, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(crlsUpdateInputType(), typeConverter)
+	operationRestMetaData := crlsUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(crlsUpdateInputType(), typeConverter)
 	sv.AddStructField("CrlId", crlIdParam)
 	sv.AddStructField("Crl", crlParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.Crl
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.Crl
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := crlsUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	cIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx.trust_management.crls", "update", inputDataValue, executionContext)
-	var emptyOutput model.Crl
+	var emptyOutput nsxModel.Crl
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), crlsUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), CrlsUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.Crl), nil
+		return output.(nsxModel.Crl), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

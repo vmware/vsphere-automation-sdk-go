@@ -11,50 +11,50 @@
 package neighbors
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func routesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func routesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["edge_node_id"] = bindings.NewStringType()
-	fields["neighbor_id"] = bindings.NewStringType()
+	fields["edge_node_id"] = vapiBindings_.NewStringType()
+	fields["neighbor_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["edge_node_id"] = "EdgeNodeId"
 	fieldNameMap["neighbor_id"] = "NeighborId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func routesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.BgpNeighborRouteDetailsBindingType)
+func RoutesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.BgpNeighborRouteDetailsBindingType)
 }
 
-func routesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func routesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["edge_node_id"] = bindings.NewStringType()
-	fields["neighbor_id"] = bindings.NewStringType()
+	fields["edge_node_id"] = vapiBindings_.NewStringType()
+	fields["neighbor_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["edge_node_id"] = "EdgeNodeId"
 	fieldNameMap["neighbor_id"] = "NeighborId"
-	paramsTypeMap["neighbor_id"] = bindings.NewStringType()
-	paramsTypeMap["edge_node_id"] = bindings.NewStringType()
-	paramsTypeMap["edgeNodeId"] = bindings.NewStringType()
-	paramsTypeMap["neighborId"] = bindings.NewStringType()
+	paramsTypeMap["neighbor_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["edge_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["edgeNodeId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["neighborId"] = vapiBindings_.NewStringType()
 	pathParams["neighbor_id"] = "neighborId"
 	pathParams["edge_node_id"] = "edgeNodeId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

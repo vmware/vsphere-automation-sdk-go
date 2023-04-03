@@ -11,26 +11,26 @@
 package host_transport_nodes
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func discoveredVifsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func discoveredVifsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["site_id"] = bindings.NewStringType()
-	fields["enforcementpoint_id"] = bindings.NewStringType()
-	fields["host_transport_node_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["host_switch_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["segment_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["host_transport_node_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["host_switch_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["segment_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["host_transport_node_id"] = "HostTransportNodeId"
@@ -41,33 +41,33 @@ func discoveredVifsListInputType() bindings.StructType {
 	fieldNameMap["segment_id"] = "SegmentId"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func discoveredVifsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.DiscoveredVifStateListResultBindingType)
+func DiscoveredVifsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.DiscoveredVifStateListResultBindingType)
 }
 
-func discoveredVifsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func discoveredVifsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["site_id"] = bindings.NewStringType()
-	fields["enforcementpoint_id"] = bindings.NewStringType()
-	fields["host_transport_node_id"] = bindings.NewStringType()
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["host_switch_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["segment_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["host_transport_node_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["host_switch_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["segment_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["host_transport_node_id"] = "HostTransportNodeId"
@@ -78,19 +78,19 @@ func discoveredVifsListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["segment_id"] = "SegmentId"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["host_transport_node_id"] = bindings.NewStringType()
-	paramsTypeMap["enforcementpoint_id"] = bindings.NewStringType()
-	paramsTypeMap["host_switch_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["segment_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["site_id"] = bindings.NewStringType()
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["siteId"] = bindings.NewStringType()
-	paramsTypeMap["enforcementpointId"] = bindings.NewStringType()
-	paramsTypeMap["hostTransportNodeId"] = bindings.NewStringType()
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["host_transport_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["host_switch_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["segment_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["hostTransportNodeId"] = vapiBindings_.NewStringType()
 	pathParams["enforcementpoint_id"] = "enforcementpointId"
 	pathParams["site_id"] = "siteId"
 	pathParams["host_transport_node_id"] = "hostTransportNodeId"
@@ -103,7 +103,7 @@ func discoveredVifsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

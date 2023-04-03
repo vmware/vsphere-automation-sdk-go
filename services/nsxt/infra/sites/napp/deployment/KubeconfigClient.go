@@ -9,15 +9,14 @@
 package deployment
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type KubeconfigClient interface {
 
@@ -25,65 +24,67 @@ type KubeconfigClient interface {
 	//
 	// @param siteIdParam (required)
 	// @return com.vmware.nsx_policy.model.KubeconfigInfo
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(siteIdParam string) (model.KubeconfigInfo, error)
+	Get(siteIdParam string) (nsx_policyModel.KubeconfigInfo, error)
 }
 
 type kubeconfigClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewKubeconfigClient(connector client.Connector) *kubeconfigClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.napp.deployment.kubeconfig")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get": core.NewMethodIdentifier(interfaceIdentifier, "get"),
+func NewKubeconfigClient(connector vapiProtocolClient_.Connector) *kubeconfigClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.napp.deployment.kubeconfig")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	kIface := kubeconfigClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &kIface
 }
 
-func (kIface *kubeconfigClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (kIface *kubeconfigClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := kIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (kIface *kubeconfigClient) Get(siteIdParam string) (model.KubeconfigInfo, error) {
+func (kIface *kubeconfigClient) Get(siteIdParam string) (nsx_policyModel.KubeconfigInfo, error) {
 	typeConverter := kIface.connector.TypeConverter()
 	executionContext := kIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(kubeconfigGetInputType(), typeConverter)
+	operationRestMetaData := kubeconfigGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(kubeconfigGetInputType(), typeConverter)
 	sv.AddStructField("SiteId", siteIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.KubeconfigInfo
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.KubeconfigInfo
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := kubeconfigGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	kIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := kIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.napp.deployment.kubeconfig", "get", inputDataValue, executionContext)
-	var emptyOutput model.KubeconfigInfo
+	var emptyOutput nsx_policyModel.KubeconfigInfo
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), kubeconfigGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), KubeconfigGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.KubeconfigInfo), nil
+		return output.(nsx_policyModel.KubeconfigInfo), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), kIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

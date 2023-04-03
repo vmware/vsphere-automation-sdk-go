@@ -11,43 +11,43 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func eventsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func eventsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["event_id"] = bindings.NewStringType()
+	fields["event_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["event_id"] = "EventId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func eventsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.MonitoringEventBindingType)
+func EventsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.MonitoringEventBindingType)
 }
 
-func eventsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func eventsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["event_id"] = bindings.NewStringType()
+	fields["event_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["event_id"] = "EventId"
-	paramsTypeMap["event_id"] = bindings.NewStringType()
-	paramsTypeMap["eventId"] = bindings.NewStringType()
+	paramsTypeMap["event_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["eventId"] = vapiBindings_.NewStringType()
 	pathParams["event_id"] = "eventId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -68,21 +68,21 @@ func eventsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func eventsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func eventsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func eventsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.EventListResultBindingType)
+func EventsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.EventListResultBindingType)
 }
 
-func eventsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func eventsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -90,7 +90,7 @@ func eventsListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -111,36 +111,36 @@ func eventsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func eventsSetdefaultInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func eventsSetdefaultInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["event_id"] = bindings.NewStringType()
+	fields["event_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["event_id"] = "EventId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func eventsSetdefaultOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.MonitoringEventBindingType)
+func EventsSetdefaultOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.MonitoringEventBindingType)
 }
 
-func eventsSetdefaultRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func eventsSetdefaultRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["event_id"] = bindings.NewStringType()
+	fields["event_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["event_id"] = "EventId"
-	paramsTypeMap["event_id"] = bindings.NewStringType()
-	paramsTypeMap["eventId"] = bindings.NewStringType()
+	paramsTypeMap["event_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["eventId"] = vapiBindings_.NewStringType()
 	pathParams["event_id"] = "eventId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -161,41 +161,41 @@ func eventsSetdefaultRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func eventsUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func eventsUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["event_id"] = bindings.NewStringType()
-	fields["monitoring_event"] = bindings.NewReferenceType(model.MonitoringEventBindingType)
+	fields["event_id"] = vapiBindings_.NewStringType()
+	fields["monitoring_event"] = vapiBindings_.NewReferenceType(nsxModel.MonitoringEventBindingType)
 	fieldNameMap["event_id"] = "EventId"
 	fieldNameMap["monitoring_event"] = "MonitoringEvent"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func eventsUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.MonitoringEventBindingType)
+func EventsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.MonitoringEventBindingType)
 }
 
-func eventsUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func eventsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["event_id"] = bindings.NewStringType()
-	fields["monitoring_event"] = bindings.NewReferenceType(model.MonitoringEventBindingType)
+	fields["event_id"] = vapiBindings_.NewStringType()
+	fields["monitoring_event"] = vapiBindings_.NewReferenceType(nsxModel.MonitoringEventBindingType)
 	fieldNameMap["event_id"] = "EventId"
 	fieldNameMap["monitoring_event"] = "MonitoringEvent"
-	paramsTypeMap["event_id"] = bindings.NewStringType()
-	paramsTypeMap["monitoring_event"] = bindings.NewReferenceType(model.MonitoringEventBindingType)
-	paramsTypeMap["eventId"] = bindings.NewStringType()
+	paramsTypeMap["event_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["monitoring_event"] = vapiBindings_.NewReferenceType(nsxModel.MonitoringEventBindingType)
+	paramsTypeMap["eventId"] = vapiBindings_.NewStringType()
 	pathParams["event_id"] = "eventId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

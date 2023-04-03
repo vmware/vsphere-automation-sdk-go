@@ -9,126 +9,139 @@
 package routing
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type BfdConfigClient interface {
 
 	// Returns the BFD configuration for all routing BFD peers. This will be inherited | by all BFD peers for LogicalRouter unless overriden while configuring the Peer.
 	//
+	//  Please use below Policy APIs.
+	//  GET /policy/api/v1/infra/tier-0s/<tier-0-id>/locale-services/<locale-service-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param logicalRouterIdParam (required)
 	// @return com.vmware.nsx.model.BfdConfig
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(logicalRouterIdParam string) (model.BfdConfig, error)
+	Get(logicalRouterIdParam string) (nsxModel.BfdConfig, error)
 
 	// Modifies the BFD configuration for routing BFD peers. Note - the configuration | changes apply only to those routing BFD peers for which the BFD configuration has | not been overridden at Peer level.
+	//
+	//  Please use below Policy APIs.
+	//  PUT /policy/api/v1/infra/tier-0s/<tier-0-id>/locale-services/<locale-service-id>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param logicalRouterIdParam (required)
 	// @param bfdConfigParam (required)
 	// @return com.vmware.nsx.model.BfdConfig
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(logicalRouterIdParam string, bfdConfigParam model.BfdConfig) (model.BfdConfig, error)
+	Update(logicalRouterIdParam string, bfdConfigParam nsxModel.BfdConfig) (nsxModel.BfdConfig, error)
 }
 
 type bfdConfigClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewBfdConfigClient(connector client.Connector) *bfdConfigClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.logical_routers.routing.bfd_config")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewBfdConfigClient(connector vapiProtocolClient_.Connector) *bfdConfigClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.logical_routers.routing.bfd_config")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	bIface := bfdConfigClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &bIface
 }
 
-func (bIface *bfdConfigClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (bIface *bfdConfigClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := bIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (bIface *bfdConfigClient) Get(logicalRouterIdParam string) (model.BfdConfig, error) {
+func (bIface *bfdConfigClient) Get(logicalRouterIdParam string) (nsxModel.BfdConfig, error) {
 	typeConverter := bIface.connector.TypeConverter()
 	executionContext := bIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(bfdConfigGetInputType(), typeConverter)
+	operationRestMetaData := bfdConfigGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(bfdConfigGetInputType(), typeConverter)
 	sv.AddStructField("LogicalRouterId", logicalRouterIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.BfdConfig
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.BfdConfig
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := bfdConfigGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	bIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := bIface.connector.GetApiProvider().Invoke("com.vmware.nsx.logical_routers.routing.bfd_config", "get", inputDataValue, executionContext)
-	var emptyOutput model.BfdConfig
+	var emptyOutput nsxModel.BfdConfig
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), bfdConfigGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), BfdConfigGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.BfdConfig), nil
+		return output.(nsxModel.BfdConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), bIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (bIface *bfdConfigClient) Update(logicalRouterIdParam string, bfdConfigParam model.BfdConfig) (model.BfdConfig, error) {
+func (bIface *bfdConfigClient) Update(logicalRouterIdParam string, bfdConfigParam nsxModel.BfdConfig) (nsxModel.BfdConfig, error) {
 	typeConverter := bIface.connector.TypeConverter()
 	executionContext := bIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(bfdConfigUpdateInputType(), typeConverter)
+	operationRestMetaData := bfdConfigUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(bfdConfigUpdateInputType(), typeConverter)
 	sv.AddStructField("LogicalRouterId", logicalRouterIdParam)
 	sv.AddStructField("BfdConfig", bfdConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.BfdConfig
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.BfdConfig
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := bfdConfigUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	bIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := bIface.connector.GetApiProvider().Invoke("com.vmware.nsx.logical_routers.routing.bfd_config", "update", inputDataValue, executionContext)
-	var emptyOutput model.BfdConfig
+	var emptyOutput nsxModel.BfdConfig
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), bfdConfigUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), BfdConfigUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.BfdConfig), nil
+		return output.(nsxModel.BfdConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), bIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

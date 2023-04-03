@@ -11,43 +11,43 @@
 package deployment
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func registryGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func registryGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["site_id"] = bindings.NewStringType()
+	fields["site_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["site_id"] = "SiteId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func registryGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.DeploymentRegistryBindingType)
+func RegistryGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.DeploymentRegistryBindingType)
 }
 
-func registryGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func registryGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["site_id"] = bindings.NewStringType()
+	fields["site_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["site_id"] = "SiteId"
-	paramsTypeMap["site_id"] = bindings.NewStringType()
-	paramsTypeMap["siteId"] = bindings.NewStringType()
+	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
 	pathParams["site_id"] = "siteId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -68,41 +68,41 @@ func registryGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func registryUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func registryUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["site_id"] = bindings.NewStringType()
-	fields["deployment_registry"] = bindings.NewReferenceType(model.DeploymentRegistryBindingType)
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["deployment_registry"] = vapiBindings_.NewReferenceType(nsx_policyModel.DeploymentRegistryBindingType)
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["deployment_registry"] = "DeploymentRegistry"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func registryUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.DeploymentRegistryBindingType)
+func RegistryUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.DeploymentRegistryBindingType)
 }
 
-func registryUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func registryUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["site_id"] = bindings.NewStringType()
-	fields["deployment_registry"] = bindings.NewReferenceType(model.DeploymentRegistryBindingType)
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["deployment_registry"] = vapiBindings_.NewReferenceType(nsx_policyModel.DeploymentRegistryBindingType)
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["deployment_registry"] = "DeploymentRegistry"
-	paramsTypeMap["deployment_registry"] = bindings.NewReferenceType(model.DeploymentRegistryBindingType)
-	paramsTypeMap["site_id"] = bindings.NewStringType()
-	paramsTypeMap["siteId"] = bindings.NewStringType()
+	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["deployment_registry"] = vapiBindings_.NewReferenceType(nsx_policyModel.DeploymentRegistryBindingType)
+	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
 	pathParams["site_id"] = "siteId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

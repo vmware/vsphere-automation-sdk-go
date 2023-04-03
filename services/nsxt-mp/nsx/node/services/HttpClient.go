@@ -9,21 +9,23 @@
 package services
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type HttpClient interface {
 
-	// Applies a security certificate to the http service. In the POST request, the CERTIFICATE_ID references a certificate created with the /api/v1/trust-management APIs. If the certificate used is a CA signed certificate,the request fails if the whole chain(leaf, intermediate, root) is not imported.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param certificateIdParam Certificate ID (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -31,16 +33,18 @@ type HttpClient interface {
 	// @throws NotFound  Not Found
 	Applycertificate(certificateIdParam string) error
 
-	// This API is deprecated. Read the configuration of the http service by calling the GET /api/v1/cluster/api-service API.
+	// Read http service properties. To read fields deprecated in this API, checkout API GET /api/v1/cluster/api-service.
 	// @return com.vmware.nsx.model.NodeHttpServiceProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (model.NodeHttpServiceProperties, error)
+	Get() (nsxModel.NodeHttpServiceProperties, error)
 
 	// Restart the http service
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -50,14 +54,16 @@ type HttpClient interface {
 
 	// Start the http service
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Start() (model.NodeServiceStatusProperties, error)
+	Start() (nsxModel.NodeServiceStatusProperties, error)
 
 	// Stop the http service
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -65,98 +71,101 @@ type HttpClient interface {
 	// @throws NotFound  Not Found
 	Stop() error
 
-	// This API is deprecated. Make changes to the http service configuration by calling the PUT /api/v1/cluster/api-service API.
+	// Update http service properties. To update fields deprecated in this API, checkout API PUT /api/v1/cluster/api-service.
 	//
 	// @param nodeHttpServicePropertiesParam (required)
 	// @return com.vmware.nsx.model.NodeHttpServiceProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(nodeHttpServicePropertiesParam model.NodeHttpServiceProperties) (model.NodeHttpServiceProperties, error)
+	Update(nodeHttpServicePropertiesParam nsxModel.NodeHttpServiceProperties) (nsxModel.NodeHttpServiceProperties, error)
 }
 
 type httpClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewHttpClient(connector client.Connector) *httpClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.node.services.http")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"applycertificate": core.NewMethodIdentifier(interfaceIdentifier, "applycertificate"),
-		"get":              core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"restart":          core.NewMethodIdentifier(interfaceIdentifier, "restart"),
-		"start":            core.NewMethodIdentifier(interfaceIdentifier, "start"),
-		"stop":             core.NewMethodIdentifier(interfaceIdentifier, "stop"),
-		"update":           core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewHttpClient(connector vapiProtocolClient_.Connector) *httpClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.node.services.http")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"applycertificate": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "applycertificate"),
+		"get":              vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"restart":          vapiCore_.NewMethodIdentifier(interfaceIdentifier, "restart"),
+		"start":            vapiCore_.NewMethodIdentifier(interfaceIdentifier, "start"),
+		"stop":             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "stop"),
+		"update":           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	hIface := httpClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &hIface
 }
 
-func (hIface *httpClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (hIface *httpClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := hIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
 func (hIface *httpClient) Applycertificate(certificateIdParam string) error {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(httpApplycertificateInputType(), typeConverter)
+	operationRestMetaData := httpApplycertificateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(httpApplycertificateInputType(), typeConverter)
 	sv.AddStructField("CertificateId", certificateIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := httpApplycertificateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	hIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.http", "applycertificate", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), hIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (hIface *httpClient) Get() (model.NodeHttpServiceProperties, error) {
+func (hIface *httpClient) Get() (nsxModel.NodeHttpServiceProperties, error) {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(httpGetInputType(), typeConverter)
+	operationRestMetaData := httpGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(httpGetInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NodeHttpServiceProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NodeHttpServiceProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := httpGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	hIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.http", "get", inputDataValue, executionContext)
-	var emptyOutput model.NodeHttpServiceProperties
+	var emptyOutput nsxModel.NodeHttpServiceProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), httpGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), HttpGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodeHttpServiceProperties), nil
+		return output.(nsxModel.NodeHttpServiceProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), hIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -165,52 +174,54 @@ func (hIface *httpClient) Get() (model.NodeHttpServiceProperties, error) {
 func (hIface *httpClient) Restart() error {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(httpRestartInputType(), typeConverter)
+	operationRestMetaData := httpRestartRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(httpRestartInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := httpRestartRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	hIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.http", "restart", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), hIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (hIface *httpClient) Start() (model.NodeServiceStatusProperties, error) {
+func (hIface *httpClient) Start() (nsxModel.NodeServiceStatusProperties, error) {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(httpStartInputType(), typeConverter)
+	operationRestMetaData := httpStartRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(httpStartInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NodeServiceStatusProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NodeServiceStatusProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := httpStartRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	hIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.http", "start", inputDataValue, executionContext)
-	var emptyOutput model.NodeServiceStatusProperties
+	var emptyOutput nsxModel.NodeServiceStatusProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), httpStartOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), HttpStartOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodeServiceStatusProperties), nil
+		return output.(nsxModel.NodeServiceStatusProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), hIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -219,53 +230,55 @@ func (hIface *httpClient) Start() (model.NodeServiceStatusProperties, error) {
 func (hIface *httpClient) Stop() error {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(httpStopInputType(), typeConverter)
+	operationRestMetaData := httpStopRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(httpStopInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := httpStopRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	hIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.http", "stop", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), hIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (hIface *httpClient) Update(nodeHttpServicePropertiesParam model.NodeHttpServiceProperties) (model.NodeHttpServiceProperties, error) {
+func (hIface *httpClient) Update(nodeHttpServicePropertiesParam nsxModel.NodeHttpServiceProperties) (nsxModel.NodeHttpServiceProperties, error) {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(httpUpdateInputType(), typeConverter)
+	operationRestMetaData := httpUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(httpUpdateInputType(), typeConverter)
 	sv.AddStructField("NodeHttpServiceProperties", nodeHttpServicePropertiesParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NodeHttpServiceProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NodeHttpServiceProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := httpUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	hIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.http", "update", inputDataValue, executionContext)
-	var emptyOutput model.NodeHttpServiceProperties
+	var emptyOutput nsxModel.NodeHttpServiceProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), httpUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), HttpUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodeHttpServiceProperties), nil
+		return output.(nsxModel.NodeHttpServiceProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), hIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

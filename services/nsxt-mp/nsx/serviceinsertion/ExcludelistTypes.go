@@ -11,41 +11,41 @@
 package serviceinsertion
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func excludelistAddmemberInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func excludelistAddmemberInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["resource_reference"] = bindings.NewReferenceType(model.ResourceReferenceBindingType)
+	fields["resource_reference"] = vapiBindings_.NewReferenceType(nsxModel.ResourceReferenceBindingType)
 	fieldNameMap["resource_reference"] = "ResourceReference"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func excludelistAddmemberOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ResourceReferenceBindingType)
+func ExcludelistAddmemberOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.ResourceReferenceBindingType)
 }
 
-func excludelistAddmemberRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func excludelistAddmemberRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["resource_reference"] = bindings.NewReferenceType(model.ResourceReferenceBindingType)
+	fields["resource_reference"] = vapiBindings_.NewReferenceType(nsxModel.ResourceReferenceBindingType)
 	fieldNameMap["resource_reference"] = "ResourceReference"
-	paramsTypeMap["resource_reference"] = bindings.NewReferenceType(model.ResourceReferenceBindingType)
+	paramsTypeMap["resource_reference"] = vapiBindings_.NewReferenceType(nsxModel.ResourceReferenceBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -66,21 +66,21 @@ func excludelistAddmemberRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func excludelistGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func excludelistGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func excludelistGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.SIExcludeListBindingType)
+func ExcludelistGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.SIExcludeListBindingType)
 }
 
-func excludelistGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func excludelistGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -88,7 +88,7 @@ func excludelistGetRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -109,35 +109,35 @@ func excludelistGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func excludelistRemovememberInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func excludelistRemovememberInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["object_id"] = bindings.NewStringType()
+	fields["object_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["object_id"] = "ObjectId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func excludelistRemovememberOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ResourceReferenceBindingType)
+func ExcludelistRemovememberOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.ResourceReferenceBindingType)
 }
 
-func excludelistRemovememberRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func excludelistRemovememberRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["object_id"] = bindings.NewStringType()
+	fields["object_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["object_id"] = "ObjectId"
-	paramsTypeMap["object_id"] = bindings.NewStringType()
+	paramsTypeMap["object_id"] = vapiBindings_.NewStringType()
 	queryParams["object_id"] = "object_id"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -158,34 +158,34 @@ func excludelistRemovememberRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func excludelistUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func excludelistUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["si_exclude_list"] = bindings.NewReferenceType(model.SIExcludeListBindingType)
+	fields["si_exclude_list"] = vapiBindings_.NewReferenceType(nsxModel.SIExcludeListBindingType)
 	fieldNameMap["si_exclude_list"] = "SiExcludeList"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func excludelistUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.SIExcludeListBindingType)
+func ExcludelistUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.SIExcludeListBindingType)
 }
 
-func excludelistUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func excludelistUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["si_exclude_list"] = bindings.NewReferenceType(model.SIExcludeListBindingType)
+	fields["si_exclude_list"] = vapiBindings_.NewReferenceType(nsxModel.SIExcludeListBindingType)
 	fieldNameMap["si_exclude_list"] = "SiExcludeList"
-	paramsTypeMap["si_exclude_list"] = bindings.NewReferenceType(model.SIExcludeListBindingType)
+	paramsTypeMap["si_exclude_list"] = vapiBindings_.NewReferenceType(nsxModel.SIExcludeListBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

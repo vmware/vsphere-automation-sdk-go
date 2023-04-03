@@ -9,15 +9,14 @@
 package migration
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DataClient interface {
 
@@ -25,6 +24,7 @@ type DataClient interface {
 	//
 	// @param fileTypeParam Type of the Migration data file that needs to be deleted. (required)
 	// @param federationSiteIdParam Id of the site in NSX-T Federation (optional)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -37,93 +37,96 @@ type DataClient interface {
 	// @param fileTypeParam Type of the Migration data file for which info is needed. (required)
 	// @param federationSiteIdParam Id of the site in NSX-T Federation (optional)
 	// @return com.vmware.nsx.model.MigrationDataInfo
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(fileTypeParam string, federationSiteIdParam *string) (model.MigrationDataInfo, error)
+	Get(fileTypeParam string, federationSiteIdParam *string) (nsxModel.MigrationDataInfo, error)
 }
 
 type dataClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewDataClient(connector client.Connector) *dataClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.migration.data")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
+func NewDataClient(connector vapiProtocolClient_.Connector) *dataClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.migration.data")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	dIface := dataClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &dIface
 }
 
-func (dIface *dataClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (dIface *dataClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := dIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
 func (dIface *dataClient) Delete(fileTypeParam string, federationSiteIdParam *string) error {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dataDeleteInputType(), typeConverter)
+	operationRestMetaData := dataDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(dataDeleteInputType(), typeConverter)
 	sv.AddStructField("FileType", fileTypeParam)
 	sv.AddStructField("FederationSiteId", federationSiteIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := dataDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx.migration.data", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (dIface *dataClient) Get(fileTypeParam string, federationSiteIdParam *string) (model.MigrationDataInfo, error) {
+func (dIface *dataClient) Get(fileTypeParam string, federationSiteIdParam *string) (nsxModel.MigrationDataInfo, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(dataGetInputType(), typeConverter)
+	operationRestMetaData := dataGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(dataGetInputType(), typeConverter)
 	sv.AddStructField("FileType", fileTypeParam)
 	sv.AddStructField("FederationSiteId", federationSiteIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.MigrationDataInfo
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.MigrationDataInfo
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := dataGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx.migration.data", "get", inputDataValue, executionContext)
-	var emptyOutput model.MigrationDataInfo
+	var emptyOutput nsxModel.MigrationDataInfo
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), dataGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DataGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.MigrationDataInfo), nil
+		return output.(nsxModel.MigrationDataInfo), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

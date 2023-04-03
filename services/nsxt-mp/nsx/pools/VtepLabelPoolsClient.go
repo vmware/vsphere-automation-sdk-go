@@ -9,15 +9,14 @@
 package pools
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VtepLabelPoolsClient interface {
 
@@ -25,12 +24,13 @@ type VtepLabelPoolsClient interface {
 	//
 	// @param poolIdParam Virtual tunnel endpoint label pool ID (required)
 	// @return com.vmware.nsx.model.VtepLabelPool
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(poolIdParam string) (model.VtepLabelPool, error)
+	Get(poolIdParam string) (nsxModel.VtepLabelPool, error)
 
 	// Returns a list of all virtual tunnel endpoint label pools
 	//
@@ -40,75 +40,81 @@ type VtepLabelPoolsClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.VtepLabelPoolListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.VtepLabelPoolListResult, error)
+	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.VtepLabelPoolListResult, error)
 }
 
 type vtepLabelPoolsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewVtepLabelPoolsClient(connector client.Connector) *vtepLabelPoolsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.pools.vtep_label_pools")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
+func NewVtepLabelPoolsClient(connector vapiProtocolClient_.Connector) *vtepLabelPoolsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.pools.vtep_label_pools")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	vIface := vtepLabelPoolsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &vIface
 }
 
-func (vIface *vtepLabelPoolsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (vIface *vtepLabelPoolsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := vIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (vIface *vtepLabelPoolsClient) Get(poolIdParam string) (model.VtepLabelPool, error) {
+func (vIface *vtepLabelPoolsClient) Get(poolIdParam string) (nsxModel.VtepLabelPool, error) {
 	typeConverter := vIface.connector.TypeConverter()
 	executionContext := vIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(vtepLabelPoolsGetInputType(), typeConverter)
+	operationRestMetaData := vtepLabelPoolsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(vtepLabelPoolsGetInputType(), typeConverter)
 	sv.AddStructField("PoolId", poolIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.VtepLabelPool
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.VtepLabelPool
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := vtepLabelPoolsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	vIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := vIface.connector.GetApiProvider().Invoke("com.vmware.nsx.pools.vtep_label_pools", "get", inputDataValue, executionContext)
-	var emptyOutput model.VtepLabelPool
+	var emptyOutput nsxModel.VtepLabelPool
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), vtepLabelPoolsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), VtepLabelPoolsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.VtepLabelPool), nil
+		return output.(nsxModel.VtepLabelPool), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), vIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (vIface *vtepLabelPoolsClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.VtepLabelPoolListResult, error) {
+func (vIface *vtepLabelPoolsClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.VtepLabelPoolListResult, error) {
 	typeConverter := vIface.connector.TypeConverter()
 	executionContext := vIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(vtepLabelPoolsListInputType(), typeConverter)
+	operationRestMetaData := vtepLabelPoolsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(vtepLabelPoolsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
@@ -116,25 +122,22 @@ func (vIface *vtepLabelPoolsClient) List(cursorParam *string, includedFieldsPara
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.VtepLabelPoolListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.VtepLabelPoolListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := vtepLabelPoolsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	vIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := vIface.connector.GetApiProvider().Invoke("com.vmware.nsx.pools.vtep_label_pools", "list", inputDataValue, executionContext)
-	var emptyOutput model.VtepLabelPoolListResult
+	var emptyOutput nsxModel.VtepLabelPoolListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), vtepLabelPoolsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), VtepLabelPoolsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.VtepLabelPoolListResult), nil
+		return output.(nsxModel.VtepLabelPoolListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), vIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

@@ -9,33 +9,40 @@
 package cluster
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type NodesClient interface {
 
-	// Add a new controller to the NSX cluster. Deprecated. Use POST /cluster?action=join_cluster to join a node to cluster. The controller comes with the new node.
+	// Add a new controller to the NSX cluster. The controller comes with the new node.
+	//  Deprecated. Use POST /cluster?action=join_cluster to join a node to cluster.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param addClusterNodeSpecParam (required)
 	// @param actionParam (required)
 	// @return com.vmware.nsx.model.ClusterNodeConfig
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(addClusterNodeSpecParam model.AddClusterNodeSpec, actionParam string) (model.ClusterNodeConfig, error)
+	Create(addClusterNodeSpecParam nsxModel.AddClusterNodeSpec, actionParam string) (nsxModel.ClusterNodeConfig, error)
 
-	// Removes the specified controller from the NSX cluster. Before you can remove a controller from the cluster, you must shut down the controller service with the \"stop service controller\" command. Deprecated. Use POST /cluster/<node-id>?action=remove_node to detach a node from cluster. The controller is removed with the node.
+	// Removes the specified controller from the NSX cluster. Before you can remove a controller from the cluster, you must shut down the controller service with the \"stop service controller\" command.
+	//  Use POST /cluster/<node-id>?action=remove_node to detach a node from cluster. The controller is removed with the node.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param nodeIdParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -43,16 +50,20 @@ type NodesClient interface {
 	// @throws NotFound  Not Found
 	Delete(nodeIdParam string) error
 
-	// Returns information about the specified NSX cluster node. Deprecated. Use GET /cluster/<node-id> to get cluster node configuration.
+	// Returns information about the specified NSX cluster node.
+	//  Deprecated. Use GET /cluster/<node-id> to get cluster node configuration.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param nodeIdParam (required)
 	// @return com.vmware.nsx.model.ClusterNodeConfig
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(nodeIdParam string) (model.ClusterNodeConfig, error)
+	Get(nodeIdParam string) (nsxModel.ClusterNodeConfig, error)
 
 	// Returns information about all NSX cluster nodes.
 	//
@@ -62,69 +73,71 @@ type NodesClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.ClusterNodeConfigListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.ClusterNodeConfigListResult, error)
+	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.ClusterNodeConfigListResult, error)
 }
 
 type nodesClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewNodesClient(connector client.Connector) *nodesClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.cluster.nodes")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create": core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
+func NewNodesClient(connector vapiProtocolClient_.Connector) *nodesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.cluster.nodes")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	nIface := nodesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &nIface
 }
 
-func (nIface *nodesClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (nIface *nodesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := nIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (nIface *nodesClient) Create(addClusterNodeSpecParam model.AddClusterNodeSpec, actionParam string) (model.ClusterNodeConfig, error) {
+func (nIface *nodesClient) Create(addClusterNodeSpecParam nsxModel.AddClusterNodeSpec, actionParam string) (nsxModel.ClusterNodeConfig, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(nodesCreateInputType(), typeConverter)
+	operationRestMetaData := nodesCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(nodesCreateInputType(), typeConverter)
 	sv.AddStructField("AddClusterNodeSpec", addClusterNodeSpecParam)
 	sv.AddStructField("Action", actionParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ClusterNodeConfig
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ClusterNodeConfig
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := nodesCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster.nodes", "create", inputDataValue, executionContext)
-	var emptyOutput model.ClusterNodeConfig
+	var emptyOutput nsxModel.ClusterNodeConfig
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), nodesCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NodesCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ClusterNodeConfig), nil
+		return output.(nsxModel.ClusterNodeConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -133,63 +146,69 @@ func (nIface *nodesClient) Create(addClusterNodeSpecParam model.AddClusterNodeSp
 func (nIface *nodesClient) Delete(nodeIdParam string) error {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(nodesDeleteInputType(), typeConverter)
+	operationRestMetaData := nodesDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(nodesDeleteInputType(), typeConverter)
 	sv.AddStructField("NodeId", nodeIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := nodesDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster.nodes", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (nIface *nodesClient) Get(nodeIdParam string) (model.ClusterNodeConfig, error) {
+func (nIface *nodesClient) Get(nodeIdParam string) (nsxModel.ClusterNodeConfig, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(nodesGetInputType(), typeConverter)
+	operationRestMetaData := nodesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(nodesGetInputType(), typeConverter)
 	sv.AddStructField("NodeId", nodeIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ClusterNodeConfig
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ClusterNodeConfig
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := nodesGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster.nodes", "get", inputDataValue, executionContext)
-	var emptyOutput model.ClusterNodeConfig
+	var emptyOutput nsxModel.ClusterNodeConfig
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), nodesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NodesGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ClusterNodeConfig), nil
+		return output.(nsxModel.ClusterNodeConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (nIface *nodesClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.ClusterNodeConfigListResult, error) {
+func (nIface *nodesClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.ClusterNodeConfigListResult, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(nodesListInputType(), typeConverter)
+	operationRestMetaData := nodesListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(nodesListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
@@ -197,25 +216,22 @@ func (nIface *nodesClient) List(cursorParam *string, includedFieldsParam *string
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.ClusterNodeConfigListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.ClusterNodeConfigListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := nodesListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.cluster.nodes", "list", inputDataValue, executionContext)
-	var emptyOutput model.ClusterNodeConfigListResult
+	var emptyOutput nsxModel.ClusterNodeConfigListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), nodesListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NodesListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.ClusterNodeConfigListResult), nil
+		return output.(nsxModel.ClusterNodeConfigListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

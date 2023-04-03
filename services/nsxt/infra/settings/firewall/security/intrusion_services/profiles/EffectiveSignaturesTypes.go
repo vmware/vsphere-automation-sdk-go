@@ -11,43 +11,43 @@
 package profiles
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func effectiveSignaturesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func effectiveSignaturesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["profile_id"] = bindings.NewStringType()
+	fields["profile_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["profile_id"] = "ProfileId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func effectiveSignaturesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.IdsProfileSignaturesBindingType)
+func EffectiveSignaturesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.IdsProfileSignaturesBindingType)
 }
 
-func effectiveSignaturesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func effectiveSignaturesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["profile_id"] = bindings.NewStringType()
+	fields["profile_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["profile_id"] = "ProfileId"
-	paramsTypeMap["profile_id"] = bindings.NewStringType()
-	paramsTypeMap["profileId"] = bindings.NewStringType()
+	paramsTypeMap["profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["profileId"] = vapiBindings_.NewStringType()
 	pathParams["profile_id"] = "profileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

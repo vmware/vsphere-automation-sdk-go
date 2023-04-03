@@ -9,19 +9,20 @@
 package traceflows
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ObservationsClient interface {
 
 	// Get observations for the Traceflow round
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param traceflowIdParam (required)
 	// @param componentNameParam Observations having the given component name will be listed. (optional)
@@ -34,43 +35,48 @@ type ObservationsClient interface {
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param transportNodeNameParam Observations having the given transport node name will be listed. (optional)
 	// @return com.vmware.nsx.model.TraceflowObservationListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(traceflowIdParam string, componentNameParam *string, componentTypeParam *string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, resourceTypeParam *string, sortAscendingParam *bool, sortByParam *string, transportNodeNameParam *string) (model.TraceflowObservationListResult, error)
+	List(traceflowIdParam string, componentNameParam *string, componentTypeParam *string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, resourceTypeParam *string, sortAscendingParam *bool, sortByParam *string, transportNodeNameParam *string) (nsxModel.TraceflowObservationListResult, error)
 }
 
 type observationsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewObservationsClient(connector client.Connector) *observationsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.traceflows.observations")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
+func NewObservationsClient(connector vapiProtocolClient_.Connector) *observationsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.traceflows.observations")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	oIface := observationsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &oIface
 }
 
-func (oIface *observationsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (oIface *observationsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := oIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (oIface *observationsClient) List(traceflowIdParam string, componentNameParam *string, componentTypeParam *string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, resourceTypeParam *string, sortAscendingParam *bool, sortByParam *string, transportNodeNameParam *string) (model.TraceflowObservationListResult, error) {
+func (oIface *observationsClient) List(traceflowIdParam string, componentNameParam *string, componentTypeParam *string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, resourceTypeParam *string, sortAscendingParam *bool, sortByParam *string, transportNodeNameParam *string) (nsxModel.TraceflowObservationListResult, error) {
 	typeConverter := oIface.connector.TypeConverter()
 	executionContext := oIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(observationsListInputType(), typeConverter)
+	operationRestMetaData := observationsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(observationsListInputType(), typeConverter)
 	sv.AddStructField("TraceflowId", traceflowIdParam)
 	sv.AddStructField("ComponentName", componentNameParam)
 	sv.AddStructField("ComponentType", componentTypeParam)
@@ -83,25 +89,22 @@ func (oIface *observationsClient) List(traceflowIdParam string, componentNamePar
 	sv.AddStructField("TransportNodeName", transportNodeNameParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.TraceflowObservationListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.TraceflowObservationListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := observationsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	oIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := oIface.connector.GetApiProvider().Invoke("com.vmware.nsx.traceflows.observations", "list", inputDataValue, executionContext)
-	var emptyOutput model.TraceflowObservationListResult
+	var emptyOutput nsxModel.TraceflowObservationListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), observationsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ObservationsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.TraceflowObservationListResult), nil
+		return output.(nsxModel.TraceflowObservationListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), oIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

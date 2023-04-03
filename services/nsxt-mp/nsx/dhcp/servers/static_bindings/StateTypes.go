@@ -11,62 +11,62 @@
 package static_bindings
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func stateGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func stateGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["server_id"] = bindings.NewStringType()
-	fields["binding_id"] = bindings.NewStringType()
-	fields["barrier_id"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["request_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["server_id"] = vapiBindings_.NewStringType()
+	fields["binding_id"] = vapiBindings_.NewStringType()
+	fields["barrier_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["request_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["server_id"] = "ServerId"
 	fieldNameMap["binding_id"] = "BindingId"
 	fieldNameMap["barrier_id"] = "BarrierId"
 	fieldNameMap["request_id"] = "RequestId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func stateGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.ConfigurationStateBindingType)
+func StateGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.ConfigurationStateBindingType)
 }
 
-func stateGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func stateGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["server_id"] = bindings.NewStringType()
-	fields["binding_id"] = bindings.NewStringType()
-	fields["barrier_id"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["request_id"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["server_id"] = vapiBindings_.NewStringType()
+	fields["binding_id"] = vapiBindings_.NewStringType()
+	fields["barrier_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["request_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["server_id"] = "ServerId"
 	fieldNameMap["binding_id"] = "BindingId"
 	fieldNameMap["barrier_id"] = "BarrierId"
 	fieldNameMap["request_id"] = "RequestId"
-	paramsTypeMap["barrier_id"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["request_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["server_id"] = bindings.NewStringType()
-	paramsTypeMap["binding_id"] = bindings.NewStringType()
-	paramsTypeMap["serverId"] = bindings.NewStringType()
-	paramsTypeMap["bindingId"] = bindings.NewStringType()
+	paramsTypeMap["barrier_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["server_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["request_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["binding_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serverId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bindingId"] = vapiBindings_.NewStringType()
 	pathParams["binding_id"] = "bindingId"
 	pathParams["server_id"] = "serverId"
 	queryParams["barrier_id"] = "barrier_id"
 	queryParams["request_id"] = "request_id"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

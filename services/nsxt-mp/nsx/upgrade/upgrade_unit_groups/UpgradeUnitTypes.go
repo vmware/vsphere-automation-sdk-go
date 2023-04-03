@@ -11,55 +11,55 @@
 package upgrade_unit_groups
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
-func upgradeUnitReorderInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func upgradeUnitReorderInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["group_id"] = bindings.NewStringType()
-	fields["upgrade_unit_id"] = bindings.NewStringType()
-	fields["reorder_request"] = bindings.NewReferenceType(model.ReorderRequestBindingType)
+	fields["group_id"] = vapiBindings_.NewStringType()
+	fields["upgrade_unit_id"] = vapiBindings_.NewStringType()
+	fields["reorder_request"] = vapiBindings_.NewReferenceType(nsxModel.ReorderRequestBindingType)
 	fieldNameMap["group_id"] = "GroupId"
 	fieldNameMap["upgrade_unit_id"] = "UpgradeUnitId"
 	fieldNameMap["reorder_request"] = "ReorderRequest"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func upgradeUnitReorderOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func UpgradeUnitReorderOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func upgradeUnitReorderRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func upgradeUnitReorderRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["group_id"] = bindings.NewStringType()
-	fields["upgrade_unit_id"] = bindings.NewStringType()
-	fields["reorder_request"] = bindings.NewReferenceType(model.ReorderRequestBindingType)
+	fields["group_id"] = vapiBindings_.NewStringType()
+	fields["upgrade_unit_id"] = vapiBindings_.NewStringType()
+	fields["reorder_request"] = vapiBindings_.NewReferenceType(nsxModel.ReorderRequestBindingType)
 	fieldNameMap["group_id"] = "GroupId"
 	fieldNameMap["upgrade_unit_id"] = "UpgradeUnitId"
 	fieldNameMap["reorder_request"] = "ReorderRequest"
-	paramsTypeMap["group_id"] = bindings.NewStringType()
-	paramsTypeMap["upgrade_unit_id"] = bindings.NewStringType()
-	paramsTypeMap["reorder_request"] = bindings.NewReferenceType(model.ReorderRequestBindingType)
-	paramsTypeMap["groupId"] = bindings.NewStringType()
-	paramsTypeMap["upgradeUnitId"] = bindings.NewStringType()
+	paramsTypeMap["reorder_request"] = vapiBindings_.NewReferenceType(nsxModel.ReorderRequestBindingType)
+	paramsTypeMap["group_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["upgrade_unit_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["groupId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["upgradeUnitId"] = vapiBindings_.NewStringType()
 	pathParams["group_id"] = "groupId"
 	pathParams["upgrade_unit_id"] = "upgradeUnitId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

@@ -9,15 +9,14 @@
 package lb_virtual_servers
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DetailedStatusClient interface {
 
@@ -28,68 +27,70 @@ type DetailedStatusClient interface {
 	// @param enforcementPointPathParam String Path of the enforcement point (optional)
 	// @param sourceParam Data source type. (optional)
 	// @return com.vmware.nsx_policy.model.AggregateLBVirtualServerStatus
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(lbServiceIdParam string, lbVirtualServerIdParam string, enforcementPointPathParam *string, sourceParam *string) (model.AggregateLBVirtualServerStatus, error)
+	Get(lbServiceIdParam string, lbVirtualServerIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.AggregateLBVirtualServerStatus, error)
 }
 
 type detailedStatusClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewDetailedStatusClient(connector client.Connector) *detailedStatusClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.lb_services.lb_virtual_servers.detailed_status")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get": core.NewMethodIdentifier(interfaceIdentifier, "get"),
+func NewDetailedStatusClient(connector vapiProtocolClient_.Connector) *detailedStatusClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.lb_services.lb_virtual_servers.detailed_status")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	dIface := detailedStatusClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &dIface
 }
 
-func (dIface *detailedStatusClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (dIface *detailedStatusClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := dIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (dIface *detailedStatusClient) Get(lbServiceIdParam string, lbVirtualServerIdParam string, enforcementPointPathParam *string, sourceParam *string) (model.AggregateLBVirtualServerStatus, error) {
+func (dIface *detailedStatusClient) Get(lbServiceIdParam string, lbVirtualServerIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.AggregateLBVirtualServerStatus, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(detailedStatusGetInputType(), typeConverter)
+	operationRestMetaData := detailedStatusGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(detailedStatusGetInputType(), typeConverter)
 	sv.AddStructField("LbServiceId", lbServiceIdParam)
 	sv.AddStructField("LbVirtualServerId", lbVirtualServerIdParam)
 	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	sv.AddStructField("Source", sourceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.AggregateLBVirtualServerStatus
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.AggregateLBVirtualServerStatus
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := detailedStatusGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	dIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.lb_services.lb_virtual_servers.detailed_status", "get", inputDataValue, executionContext)
-	var emptyOutput model.AggregateLBVirtualServerStatus
+	var emptyOutput nsx_policyModel.AggregateLBVirtualServerStatus
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), detailedStatusGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DetailedStatusGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.AggregateLBVirtualServerStatus), nil
+		return output.(nsx_policyModel.AggregateLBVirtualServerStatus), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

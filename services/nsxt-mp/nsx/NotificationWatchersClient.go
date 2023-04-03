@@ -9,15 +9,14 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type NotificationWatchersClient interface {
 
@@ -25,16 +24,18 @@ type NotificationWatchersClient interface {
 	//
 	// @param notificationWatcherParam (required)
 	// @return com.vmware.nsx.model.NotificationWatcher
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(notificationWatcherParam model.NotificationWatcher) (model.NotificationWatcher, error)
+	Create(notificationWatcherParam nsxModel.NotificationWatcher) (nsxModel.NotificationWatcher, error)
 
 	// Delete notification watcher.
 	//
 	// @param watcherIdParam (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -46,90 +47,94 @@ type NotificationWatchersClient interface {
 	//
 	// @param watcherIdParam (required)
 	// @return com.vmware.nsx.model.NotificationWatcher
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(watcherIdParam string) (model.NotificationWatcher, error)
+	Get(watcherIdParam string) (nsxModel.NotificationWatcher, error)
 
 	// Returns a list of registered notification watchers.
 	// @return com.vmware.nsx.model.NotificationWatcherListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List() (model.NotificationWatcherListResult, error)
+	List() (nsxModel.NotificationWatcherListResult, error)
 
 	// Update notification watcher.
 	//
 	// @param watcherIdParam (required)
 	// @param notificationWatcherParam (required)
 	// @return com.vmware.nsx.model.NotificationWatcher
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(watcherIdParam string, notificationWatcherParam model.NotificationWatcher) (model.NotificationWatcher, error)
+	Update(watcherIdParam string, notificationWatcherParam nsxModel.NotificationWatcher) (nsxModel.NotificationWatcher, error)
 }
 
 type notificationWatchersClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewNotificationWatchersClient(connector client.Connector) *notificationWatchersClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.notification_watchers")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create": core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete": core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update": core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewNotificationWatchersClient(connector vapiProtocolClient_.Connector) *notificationWatchersClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.notification_watchers")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	nIface := notificationWatchersClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &nIface
 }
 
-func (nIface *notificationWatchersClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (nIface *notificationWatchersClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := nIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (nIface *notificationWatchersClient) Create(notificationWatcherParam model.NotificationWatcher) (model.NotificationWatcher, error) {
+func (nIface *notificationWatchersClient) Create(notificationWatcherParam nsxModel.NotificationWatcher) (nsxModel.NotificationWatcher, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(notificationWatchersCreateInputType(), typeConverter)
+	operationRestMetaData := notificationWatchersCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(notificationWatchersCreateInputType(), typeConverter)
 	sv.AddStructField("NotificationWatcher", notificationWatcherParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NotificationWatcher
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NotificationWatcher
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := notificationWatchersCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.notification_watchers", "create", inputDataValue, executionContext)
-	var emptyOutput model.NotificationWatcher
+	var emptyOutput nsxModel.NotificationWatcher
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), notificationWatchersCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NotificationWatchersCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NotificationWatcher), nil
+		return output.(nsxModel.NotificationWatcher), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -138,116 +143,120 @@ func (nIface *notificationWatchersClient) Create(notificationWatcherParam model.
 func (nIface *notificationWatchersClient) Delete(watcherIdParam string) error {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(notificationWatchersDeleteInputType(), typeConverter)
+	operationRestMetaData := notificationWatchersDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(notificationWatchersDeleteInputType(), typeConverter)
 	sv.AddStructField("WatcherId", watcherIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := notificationWatchersDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.notification_watchers", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (nIface *notificationWatchersClient) Get(watcherIdParam string) (model.NotificationWatcher, error) {
+func (nIface *notificationWatchersClient) Get(watcherIdParam string) (nsxModel.NotificationWatcher, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(notificationWatchersGetInputType(), typeConverter)
+	operationRestMetaData := notificationWatchersGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(notificationWatchersGetInputType(), typeConverter)
 	sv.AddStructField("WatcherId", watcherIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NotificationWatcher
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NotificationWatcher
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := notificationWatchersGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.notification_watchers", "get", inputDataValue, executionContext)
-	var emptyOutput model.NotificationWatcher
+	var emptyOutput nsxModel.NotificationWatcher
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), notificationWatchersGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NotificationWatchersGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NotificationWatcher), nil
+		return output.(nsxModel.NotificationWatcher), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (nIface *notificationWatchersClient) List() (model.NotificationWatcherListResult, error) {
+func (nIface *notificationWatchersClient) List() (nsxModel.NotificationWatcherListResult, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(notificationWatchersListInputType(), typeConverter)
+	operationRestMetaData := notificationWatchersListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(notificationWatchersListInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NotificationWatcherListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NotificationWatcherListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := notificationWatchersListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.notification_watchers", "list", inputDataValue, executionContext)
-	var emptyOutput model.NotificationWatcherListResult
+	var emptyOutput nsxModel.NotificationWatcherListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), notificationWatchersListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NotificationWatchersListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NotificationWatcherListResult), nil
+		return output.(nsxModel.NotificationWatcherListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (nIface *notificationWatchersClient) Update(watcherIdParam string, notificationWatcherParam model.NotificationWatcher) (model.NotificationWatcher, error) {
+func (nIface *notificationWatchersClient) Update(watcherIdParam string, notificationWatcherParam nsxModel.NotificationWatcher) (nsxModel.NotificationWatcher, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(notificationWatchersUpdateInputType(), typeConverter)
+	operationRestMetaData := notificationWatchersUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(notificationWatchersUpdateInputType(), typeConverter)
 	sv.AddStructField("WatcherId", watcherIdParam)
 	sv.AddStructField("NotificationWatcher", notificationWatcherParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NotificationWatcher
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NotificationWatcher
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := notificationWatchersUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.notification_watchers", "update", inputDataValue, executionContext)
-	var emptyOutput model.NotificationWatcher
+	var emptyOutput nsxModel.NotificationWatcher
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), notificationWatchersUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NotificationWatchersUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NotificationWatcher), nil
+		return output.(nsxModel.NotificationWatcher), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

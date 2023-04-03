@@ -9,35 +9,46 @@
 package domains
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LdapServersClient interface {
 
 	// More than one LDAP server can be created and only one LDAP server is used to synchronize directory objects. If more than one LDAP server is configured, NSX will try all the servers until it is able to successfully connect to one.
 	//
+	//  Use the following Policy API -
+	//  POST /policy/api/v1/infra/firewall-identity-stores/<firewall-identity-store-id>/ldap-servers/<ldap-server-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param domainIdParam Directory domain identifier (required)
 	// @param directoryLdapServerParam (required)
 	// @return com.vmware.nsx.model.DirectoryLdapServer
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(domainIdParam string, directoryLdapServerParam model.DirectoryLdapServer) (model.DirectoryLdapServer, error)
+	Create(domainIdParam string, directoryLdapServerParam nsxModel.DirectoryLdapServer) (nsxModel.DirectoryLdapServer, error)
 
 	// The API tests a LDAP server connection for an already configured domain. If the connection is successful, the response will be HTTP status 200. Otherwise the response will be HTTP status 500 and corresponding error message will be returned.
+	//
+	//  Use the following Policy API -
+	//  POST /policy/api/v1/infra/firewall-identity-stores/<firewall-identity-store-id>/ldap-servers/<ldap-server-id>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param domainIdParam Directory domain identifier (required)
 	// @param serverIdParam LDAP server identifier (required)
 	// @param actionParam LDAP server test requested (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -47,8 +58,14 @@ type LdapServersClient interface {
 
 	// Delete a LDAP server for directory domain
 	//
+	//  Use the following Policy API -
+	//  DELETE /policy/api/v1/infra/firewall-identity-stores/<firewall-identity-store-id>/ldap-servers/<ldap-server-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param domainIdParam Directory domain identifier (required)
 	// @param serverIdParam LDAP server identifier (required)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -58,17 +75,28 @@ type LdapServersClient interface {
 
 	// Get a specific LDAP server for a given directory domain
 	//
+	//  Use the following Policy API -
+	//  GET /policy/api/v1/infra/firewall-identity-stores/<firewall-identity-store-id>/ldap-servers/<ldap-server-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param domainIdParam Directory domain identifier (required)
 	// @param serverIdParam LDAP server identifier (required)
 	// @return com.vmware.nsx.model.DirectoryLdapServer
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(domainIdParam string, serverIdParam string) (model.DirectoryLdapServer, error)
+	Get(domainIdParam string, serverIdParam string) (nsxModel.DirectoryLdapServer, error)
 
 	// List all configured domain LDAP servers
+	//
+	//  Use the following Policy API -
+	//  GET /policy/api/v1/infra/firewall-identity-stores/<firewall-identity-store-id>/ldap-servers
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param domainIdParam Directory domain identifier (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
@@ -77,84 +105,92 @@ type LdapServersClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.DirectoryLdapServerListResults
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(domainIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.DirectoryLdapServerListResults, error)
+	List(domainIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.DirectoryLdapServerListResults, error)
 
 	// Update a LDAP server for directory domain
+	//
+	//  Use the following Policy API -
+	//  PUT /policy/api/v1/infra/firewall-identity-stores/<firewall-identity-store-id>/ldap-servers/<ldap-server-id>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param domainIdParam Directory domain identifier (required)
 	// @param serverIdParam LDAP server identifier (required)
 	// @param directoryLdapServerParam (required)
 	// @return com.vmware.nsx.model.DirectoryLdapServer
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(domainIdParam string, serverIdParam string, directoryLdapServerParam model.DirectoryLdapServer) (model.DirectoryLdapServer, error)
+	Update(domainIdParam string, serverIdParam string, directoryLdapServerParam nsxModel.DirectoryLdapServer) (nsxModel.DirectoryLdapServer, error)
 }
 
 type ldapServersClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewLdapServersClient(connector client.Connector) *ldapServersClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.directory.domains.ldap_servers")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"create":   core.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"create_0": core.NewMethodIdentifier(interfaceIdentifier, "create_0"),
-		"delete":   core.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":      core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":     core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"update":   core.NewMethodIdentifier(interfaceIdentifier, "update"),
+func NewLdapServersClient(connector vapiProtocolClient_.Connector) *ldapServersClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.directory.domains.ldap_servers")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"create_0": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create_0"),
+		"delete":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"update":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	lIface := ldapServersClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &lIface
 }
 
-func (lIface *ldapServersClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (lIface *ldapServersClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := lIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (lIface *ldapServersClient) Create(domainIdParam string, directoryLdapServerParam model.DirectoryLdapServer) (model.DirectoryLdapServer, error) {
+func (lIface *ldapServersClient) Create(domainIdParam string, directoryLdapServerParam nsxModel.DirectoryLdapServer) (nsxModel.DirectoryLdapServer, error) {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ldapServersCreateInputType(), typeConverter)
+	operationRestMetaData := ldapServersCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ldapServersCreateInputType(), typeConverter)
 	sv.AddStructField("DomainId", domainIdParam)
 	sv.AddStructField("DirectoryLdapServer", directoryLdapServerParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.DirectoryLdapServer
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.DirectoryLdapServer
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ldapServersCreateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	lIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx.directory.domains.ldap_servers", "create", inputDataValue, executionContext)
-	var emptyOutput model.DirectoryLdapServer
+	var emptyOutput nsxModel.DirectoryLdapServer
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ldapServersCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), LdapServersCreateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.DirectoryLdapServer), nil
+		return output.(nsxModel.DirectoryLdapServer), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -163,25 +199,26 @@ func (lIface *ldapServersClient) Create(domainIdParam string, directoryLdapServe
 func (lIface *ldapServersClient) Create0(domainIdParam string, serverIdParam string, actionParam string) error {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ldapServersCreate0InputType(), typeConverter)
+	operationRestMetaData := ldapServersCreate0RestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ldapServersCreate0InputType(), typeConverter)
 	sv.AddStructField("DomainId", domainIdParam)
 	sv.AddStructField("ServerId", serverIdParam)
 	sv.AddStructField("Action", actionParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ldapServersCreate0RestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	lIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx.directory.domains.ldap_servers", "create_0", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
@@ -190,65 +227,71 @@ func (lIface *ldapServersClient) Create0(domainIdParam string, serverIdParam str
 func (lIface *ldapServersClient) Delete(domainIdParam string, serverIdParam string) error {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ldapServersDeleteInputType(), typeConverter)
+	operationRestMetaData := ldapServersDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ldapServersDeleteInputType(), typeConverter)
 	sv.AddStructField("DomainId", domainIdParam)
 	sv.AddStructField("ServerId", serverIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ldapServersDeleteRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	lIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx.directory.domains.ldap_servers", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}
 }
 
-func (lIface *ldapServersClient) Get(domainIdParam string, serverIdParam string) (model.DirectoryLdapServer, error) {
+func (lIface *ldapServersClient) Get(domainIdParam string, serverIdParam string) (nsxModel.DirectoryLdapServer, error) {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ldapServersGetInputType(), typeConverter)
+	operationRestMetaData := ldapServersGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ldapServersGetInputType(), typeConverter)
 	sv.AddStructField("DomainId", domainIdParam)
 	sv.AddStructField("ServerId", serverIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.DirectoryLdapServer
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.DirectoryLdapServer
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ldapServersGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	lIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx.directory.domains.ldap_servers", "get", inputDataValue, executionContext)
-	var emptyOutput model.DirectoryLdapServer
+	var emptyOutput nsxModel.DirectoryLdapServer
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ldapServersGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), LdapServersGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.DirectoryLdapServer), nil
+		return output.(nsxModel.DirectoryLdapServer), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (lIface *ldapServersClient) List(domainIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.DirectoryLdapServerListResults, error) {
+func (lIface *ldapServersClient) List(domainIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.DirectoryLdapServerListResults, error) {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ldapServersListInputType(), typeConverter)
+	operationRestMetaData := ldapServersListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ldapServersListInputType(), typeConverter)
 	sv.AddStructField("DomainId", domainIdParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -257,58 +300,56 @@ func (lIface *ldapServersClient) List(domainIdParam string, cursorParam *string,
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.DirectoryLdapServerListResults
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.DirectoryLdapServerListResults
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ldapServersListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	lIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx.directory.domains.ldap_servers", "list", inputDataValue, executionContext)
-	var emptyOutput model.DirectoryLdapServerListResults
+	var emptyOutput nsxModel.DirectoryLdapServerListResults
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ldapServersListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), LdapServersListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.DirectoryLdapServerListResults), nil
+		return output.(nsxModel.DirectoryLdapServerListResults), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (lIface *ldapServersClient) Update(domainIdParam string, serverIdParam string, directoryLdapServerParam model.DirectoryLdapServer) (model.DirectoryLdapServer, error) {
+func (lIface *ldapServersClient) Update(domainIdParam string, serverIdParam string, directoryLdapServerParam nsxModel.DirectoryLdapServer) (nsxModel.DirectoryLdapServer, error) {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(ldapServersUpdateInputType(), typeConverter)
+	operationRestMetaData := ldapServersUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(ldapServersUpdateInputType(), typeConverter)
 	sv.AddStructField("DomainId", domainIdParam)
 	sv.AddStructField("ServerId", serverIdParam)
 	sv.AddStructField("DirectoryLdapServer", directoryLdapServerParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.DirectoryLdapServer
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.DirectoryLdapServer
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := ldapServersUpdateRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	lIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := lIface.connector.GetApiProvider().Invoke("com.vmware.nsx.directory.domains.ldap_servers", "update", inputDataValue, executionContext)
-	var emptyOutput model.DirectoryLdapServer
+	var emptyOutput nsxModel.DirectoryLdapServer
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ldapServersUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), LdapServersUpdateOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.DirectoryLdapServer), nil
+		return output.(nsxModel.DirectoryLdapServer), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), lIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

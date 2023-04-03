@@ -9,15 +9,14 @@
 package tls_inspection_state
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FqdnsClient interface {
 
@@ -26,12 +25,13 @@ type FqdnsClient interface {
 	// @param tier1IdParam (required)
 	// @param fqdnIdParam (required)
 	// @return com.vmware.nsx_policy.model.TlsStateObject
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(tier1IdParam string, fqdnIdParam string) (model.TlsStateObject, error)
+	Get(tier1IdParam string, fqdnIdParam string) (nsx_policyModel.TlsStateObject, error)
 
 	// TLS inspection execution state fqdn details for the tier1
 	//
@@ -44,76 +44,82 @@ type FqdnsClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.TlsStateObjectListResult
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(tier1IdParam string, cursorParam *string, failedDomainsParam *bool, fqdnParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.TlsStateObjectListResult, error)
+	List(tier1IdParam string, cursorParam *string, failedDomainsParam *bool, fqdnParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.TlsStateObjectListResult, error)
 }
 
 type fqdnsClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewFqdnsClient(connector client.Connector) *fqdnsClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.tier_1s.tls_inspection_state.fqdns")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get":  core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list": core.NewMethodIdentifier(interfaceIdentifier, "list"),
+func NewFqdnsClient(connector vapiProtocolClient_.Connector) *fqdnsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.tier_1s.tls_inspection_state.fqdns")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	fIface := fqdnsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &fIface
 }
 
-func (fIface *fqdnsClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (fIface *fqdnsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := fIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (fIface *fqdnsClient) Get(tier1IdParam string, fqdnIdParam string) (model.TlsStateObject, error) {
+func (fIface *fqdnsClient) Get(tier1IdParam string, fqdnIdParam string) (nsx_policyModel.TlsStateObject, error) {
 	typeConverter := fIface.connector.TypeConverter()
 	executionContext := fIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(fqdnsGetInputType(), typeConverter)
+	operationRestMetaData := fqdnsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(fqdnsGetInputType(), typeConverter)
 	sv.AddStructField("Tier1Id", tier1IdParam)
 	sv.AddStructField("FqdnId", fqdnIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.TlsStateObject
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.TlsStateObject
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := fqdnsGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	fIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := fIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.tier_1s.tls_inspection_state.fqdns", "get", inputDataValue, executionContext)
-	var emptyOutput model.TlsStateObject
+	var emptyOutput nsx_policyModel.TlsStateObject
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), fqdnsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), FqdnsGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.TlsStateObject), nil
+		return output.(nsx_policyModel.TlsStateObject), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), fIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
 }
 
-func (fIface *fqdnsClient) List(tier1IdParam string, cursorParam *string, failedDomainsParam *bool, fqdnParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (model.TlsStateObjectListResult, error) {
+func (fIface *fqdnsClient) List(tier1IdParam string, cursorParam *string, failedDomainsParam *bool, fqdnParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.TlsStateObjectListResult, error) {
 	typeConverter := fIface.connector.TypeConverter()
 	executionContext := fIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(fqdnsListInputType(), typeConverter)
+	operationRestMetaData := fqdnsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(fqdnsListInputType(), typeConverter)
 	sv.AddStructField("Tier1Id", tier1IdParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("FailedDomains", failedDomainsParam)
@@ -124,25 +130,22 @@ func (fIface *fqdnsClient) List(tier1IdParam string, cursorParam *string, failed
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.TlsStateObjectListResult
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.TlsStateObjectListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := fqdnsListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	fIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := fIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.tier_1s.tls_inspection_state.fqdns", "list", inputDataValue, executionContext)
-	var emptyOutput model.TlsStateObjectListResult
+	var emptyOutput nsx_policyModel.TlsStateObjectListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), fqdnsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), FqdnsListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.TlsStateObjectListResult), nil
+		return output.(nsx_policyModel.TlsStateObjectListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), fIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

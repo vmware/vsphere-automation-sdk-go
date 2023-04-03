@@ -11,55 +11,55 @@
 package drafts
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_global_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
 	"reflect"
 )
 
-func aggregatedWithPaginationGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func aggregatedWithPaginationGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["draft_id"] = bindings.NewStringType()
-	fields["request_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["root_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["draft_id"] = vapiBindings_.NewStringType()
+	fields["request_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["root_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["draft_id"] = "DraftId"
 	fieldNameMap["request_id"] = "RequestId"
 	fieldNameMap["root_path"] = "RootPath"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func aggregatedWithPaginationGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.PolicyDraftPaginatedAggregatedConfigurationResultBindingType)
+func AggregatedWithPaginationGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_global_policyModel.PolicyDraftPaginatedAggregatedConfigurationResultBindingType)
 }
 
-func aggregatedWithPaginationGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func aggregatedWithPaginationGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["draft_id"] = bindings.NewStringType()
-	fields["request_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["root_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["draft_id"] = vapiBindings_.NewStringType()
+	fields["request_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["root_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["draft_id"] = "DraftId"
 	fieldNameMap["request_id"] = "RequestId"
 	fieldNameMap["root_path"] = "RootPath"
-	paramsTypeMap["request_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["root_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["draft_id"] = bindings.NewStringType()
-	paramsTypeMap["draftId"] = bindings.NewStringType()
+	paramsTypeMap["root_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["draft_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["request_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["draftId"] = vapiBindings_.NewStringType()
 	pathParams["draft_id"] = "draftId"
 	queryParams["root_path"] = "root_path"
 	queryParams["request_id"] = "request_id"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

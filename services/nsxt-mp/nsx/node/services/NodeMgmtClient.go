@@ -9,28 +9,29 @@
 package services
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type NodeMgmtClient interface {
 
 	// Read appliance management service properties
 	// @return com.vmware.nsx.model.NodeServiceProperties
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (model.NodeServiceProperties, error)
+	Get() (nsxModel.NodeServiceProperties, error)
 
 	// Restart the node management service
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
@@ -40,56 +41,57 @@ type NodeMgmtClient interface {
 }
 
 type nodeMgmtClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewNodeMgmtClient(connector client.Connector) *nodeMgmtClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.node.services.node_mgmt")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get":     core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"restart": core.NewMethodIdentifier(interfaceIdentifier, "restart"),
+func NewNodeMgmtClient(connector vapiProtocolClient_.Connector) *nodeMgmtClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.node.services.node_mgmt")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"restart": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "restart"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	nIface := nodeMgmtClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &nIface
 }
 
-func (nIface *nodeMgmtClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (nIface *nodeMgmtClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := nIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (nIface *nodeMgmtClient) Get() (model.NodeServiceProperties, error) {
+func (nIface *nodeMgmtClient) Get() (nsxModel.NodeServiceProperties, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(nodeMgmtGetInputType(), typeConverter)
+	operationRestMetaData := nodeMgmtGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(nodeMgmtGetInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput model.NodeServiceProperties
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput nsxModel.NodeServiceProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := nodeMgmtGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.node_mgmt", "get", inputDataValue, executionContext)
-	var emptyOutput model.NodeServiceProperties
+	var emptyOutput nsxModel.NodeServiceProperties
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), nodeMgmtGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NodeMgmtGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(model.NodeServiceProperties), nil
+		return output.(nsxModel.NodeServiceProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -98,22 +100,23 @@ func (nIface *nodeMgmtClient) Get() (model.NodeServiceProperties, error) {
 func (nIface *nodeMgmtClient) Restart() error {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(nodeMgmtRestartInputType(), typeConverter)
+	operationRestMetaData := nodeMgmtRestartRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(nodeMgmtRestartInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := nodeMgmtRestartRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.node_mgmt", "restart", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}

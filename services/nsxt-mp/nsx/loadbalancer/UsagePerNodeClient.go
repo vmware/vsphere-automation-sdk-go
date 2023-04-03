@@ -9,82 +9,89 @@
 package loadbalancer
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type UsagePerNodeClient interface {
 
 	// API is used to retrieve the usage of load balancer entities which include current number and remaining number of credits, virtual Servers, pools, pool Members and different size of LB services from the given node. Currently only Edge node is supported.
 	//
+	//  NSX-T Load Balancer is deprecated.
+	//  Please take advantage of NSX Advanced Load Balancer.
+	//  Refer to Policy > Networking > Network Services > Advanced Load Balancing section of the API guide.
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param nodeIdParam (required)
 	// @return com.vmware.nsx.model.LbNodeUsage
-	// The return value will contain all the properties defined in model.LbNodeUsage.
+	// The return value will contain all the properties defined in nsxModel.LbNodeUsage.
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(nodeIdParam string) (*data.StructValue, error)
+	Get(nodeIdParam string) (*vapiData_.StructValue, error)
 }
 
 type usagePerNodeClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewUsagePerNodeClient(connector client.Connector) *usagePerNodeClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.nsx.loadbalancer.usage_per_node")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"get": core.NewMethodIdentifier(interfaceIdentifier, "get"),
+func NewUsagePerNodeClient(connector vapiProtocolClient_.Connector) *usagePerNodeClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.loadbalancer.usage_per_node")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	uIface := usagePerNodeClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &uIface
 }
 
-func (uIface *usagePerNodeClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (uIface *usagePerNodeClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := uIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (uIface *usagePerNodeClient) Get(nodeIdParam string) (*data.StructValue, error) {
+func (uIface *usagePerNodeClient) Get(nodeIdParam string) (*vapiData_.StructValue, error) {
 	typeConverter := uIface.connector.TypeConverter()
 	executionContext := uIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(usagePerNodeGetInputType(), typeConverter)
+	operationRestMetaData := usagePerNodeGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(usagePerNodeGetInputType(), typeConverter)
 	sv.AddStructField("NodeId", nodeIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput *data.StructValue
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		var emptyOutput *vapiData_.StructValue
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := usagePerNodeGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	uIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := uIface.connector.GetApiProvider().Invoke("com.vmware.nsx.loadbalancer.usage_per_node", "get", inputDataValue, executionContext)
-	var emptyOutput *data.StructValue
+	var emptyOutput *vapiData_.StructValue
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), usagePerNodeGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), UsagePerNodeGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(*data.StructValue), nil
+		return output.(*vapiData_.StructValue), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), uIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

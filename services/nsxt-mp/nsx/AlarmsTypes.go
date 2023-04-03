@@ -11,10 +11,10 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
@@ -42,36 +42,36 @@ const Alarms_SETSTATUS_0_NEW_STATUS_SUPPRESSED = "SUPPRESSED"
 // Possible value for ``newStatus`` of method Alarms#setstatus0.
 const Alarms_SETSTATUS_0_NEW_STATUS_RESOLVED = "RESOLVED"
 
-func alarmsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func alarmsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["alarm_id"] = bindings.NewStringType()
+	fields["alarm_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["alarm_id"] = "AlarmId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func alarmsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.AlarmBindingType)
+func AlarmsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.AlarmBindingType)
 }
 
-func alarmsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func alarmsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["alarm_id"] = bindings.NewStringType()
+	fields["alarm_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["alarm_id"] = "AlarmId"
-	paramsTypeMap["alarm_id"] = bindings.NewStringType()
-	paramsTypeMap["alarmId"] = bindings.NewStringType()
+	paramsTypeMap["alarm_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["alarmId"] = vapiBindings_.NewStringType()
 	pathParams["alarm_id"] = "alarmId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -92,102 +92,126 @@ func alarmsGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func alarmsListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func alarmsListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["after"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["before"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["event_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["feature_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["intent_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["severity"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["status"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["after"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["before"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["event_tag"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["event_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["feature_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["intent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["org"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["project"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["severity"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["vpc"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["after"] = "After"
 	fieldNameMap["before"] = "Before"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["event_tag"] = "EventTag"
 	fieldNameMap["event_type"] = "EventType"
 	fieldNameMap["feature_name"] = "FeatureName"
 	fieldNameMap["id"] = "Id"
 	fieldNameMap["intent_path"] = "IntentPath"
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["node_resource_type"] = "NodeResourceType"
+	fieldNameMap["org"] = "Org"
 	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["project"] = "Project"
 	fieldNameMap["severity"] = "Severity"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["status"] = "Status"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	fieldNameMap["vpc"] = "Vpc"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func alarmsListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.AlarmsListResultBindingType)
+func AlarmsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.AlarmsListResultBindingType)
 }
 
-func alarmsListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func alarmsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["after"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["before"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["event_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["feature_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["intent_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["severity"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["status"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["after"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["before"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["event_tag"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["event_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["feature_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["intent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["org"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["project"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["severity"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["vpc"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["after"] = "After"
 	fieldNameMap["before"] = "Before"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["event_tag"] = "EventTag"
 	fieldNameMap["event_type"] = "EventType"
 	fieldNameMap["feature_name"] = "FeatureName"
 	fieldNameMap["id"] = "Id"
 	fieldNameMap["intent_path"] = "IntentPath"
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["node_resource_type"] = "NodeResourceType"
+	fieldNameMap["org"] = "Org"
 	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["project"] = "Project"
 	fieldNameMap["severity"] = "Severity"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["status"] = "Status"
-	paramsTypeMap["id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["node_resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["after"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["event_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["feature_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["intent_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["status"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["before"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["severity"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["vpc"] = "Vpc"
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["severity"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["feature_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["before"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["org"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["vpc"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["project"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["intent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["event_tag"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["event_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["after"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["node_resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	queryParams["cursor"] = "cursor"
 	queryParams["severity"] = "severity"
 	queryParams["feature_name"] = "feature_name"
 	queryParams["before"] = "before"
+	queryParams["org"] = "org"
+	queryParams["vpc"] = "vpc"
+	queryParams["project"] = "project"
 	queryParams["intent_path"] = "intent_path"
 	queryParams["sort_by"] = "sort_by"
+	queryParams["event_tag"] = "event_tag"
 	queryParams["event_type"] = "event_type"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["after"] = "after"
@@ -198,7 +222,7 @@ func alarmsListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["status"] = "status"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -219,48 +243,48 @@ func alarmsListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func alarmsSetstatusInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func alarmsSetstatusInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["alarm_id"] = bindings.NewStringType()
-	fields["new_status"] = bindings.NewStringType()
-	fields["suppress_duration"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fields["alarm_id"] = vapiBindings_.NewStringType()
+	fields["new_status"] = vapiBindings_.NewStringType()
+	fields["suppress_duration"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["alarm_id"] = "AlarmId"
 	fieldNameMap["new_status"] = "NewStatus"
 	fieldNameMap["suppress_duration"] = "SuppressDuration"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func alarmsSetstatusOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.AlarmBindingType)
+func AlarmsSetstatusOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.AlarmBindingType)
 }
 
-func alarmsSetstatusRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func alarmsSetstatusRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["alarm_id"] = bindings.NewStringType()
-	fields["new_status"] = bindings.NewStringType()
-	fields["suppress_duration"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fields["alarm_id"] = vapiBindings_.NewStringType()
+	fields["new_status"] = vapiBindings_.NewStringType()
+	fields["suppress_duration"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["alarm_id"] = "AlarmId"
 	fieldNameMap["new_status"] = "NewStatus"
 	fieldNameMap["suppress_duration"] = "SuppressDuration"
-	paramsTypeMap["suppress_duration"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["alarm_id"] = bindings.NewStringType()
-	paramsTypeMap["new_status"] = bindings.NewStringType()
-	paramsTypeMap["alarmId"] = bindings.NewStringType()
+	paramsTypeMap["new_status"] = vapiBindings_.NewStringType()
+	paramsTypeMap["alarm_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["suppress_duration"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["alarmId"] = vapiBindings_.NewStringType()
 	pathParams["alarm_id"] = "alarmId"
 	queryParams["new_status"] = "new_status"
 	queryParams["suppress_duration"] = "suppress_duration"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -281,114 +305,138 @@ func alarmsSetstatusRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func alarmsSetstatus0InputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func alarmsSetstatus0InputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["new_status"] = bindings.NewStringType()
-	fields["after"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["before"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["event_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["feature_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["intent_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["severity"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["status"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["suppress_duration"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fields["new_status"] = vapiBindings_.NewStringType()
+	fields["after"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["before"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["event_tag"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["event_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["feature_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["intent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["org"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["project"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["severity"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["suppress_duration"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["vpc"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["new_status"] = "NewStatus"
 	fieldNameMap["after"] = "After"
 	fieldNameMap["before"] = "Before"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["event_tag"] = "EventTag"
 	fieldNameMap["event_type"] = "EventType"
 	fieldNameMap["feature_name"] = "FeatureName"
 	fieldNameMap["id"] = "Id"
 	fieldNameMap["intent_path"] = "IntentPath"
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["node_resource_type"] = "NodeResourceType"
+	fieldNameMap["org"] = "Org"
 	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["project"] = "Project"
 	fieldNameMap["severity"] = "Severity"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["status"] = "Status"
 	fieldNameMap["suppress_duration"] = "SuppressDuration"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	fieldNameMap["vpc"] = "Vpc"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func alarmsSetstatus0OutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func AlarmsSetstatus0OutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func alarmsSetstatus0RestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func alarmsSetstatus0RestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["new_status"] = bindings.NewStringType()
-	fields["after"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["before"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["event_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["feature_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["intent_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["node_resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["severity"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["status"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["suppress_duration"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fields["new_status"] = vapiBindings_.NewStringType()
+	fields["after"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["before"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["event_tag"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["event_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["feature_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["intent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["org"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["project"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["severity"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["suppress_duration"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["vpc"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["new_status"] = "NewStatus"
 	fieldNameMap["after"] = "After"
 	fieldNameMap["before"] = "Before"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["event_tag"] = "EventTag"
 	fieldNameMap["event_type"] = "EventType"
 	fieldNameMap["feature_name"] = "FeatureName"
 	fieldNameMap["id"] = "Id"
 	fieldNameMap["intent_path"] = "IntentPath"
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["node_resource_type"] = "NodeResourceType"
+	fieldNameMap["org"] = "Org"
 	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["project"] = "Project"
 	fieldNameMap["severity"] = "Severity"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["status"] = "Status"
 	fieldNameMap["suppress_duration"] = "SuppressDuration"
-	paramsTypeMap["id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["node_resource_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["after"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["event_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["feature_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["new_status"] = bindings.NewStringType()
-	paramsTypeMap["intent_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["suppress_duration"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["node_id"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["status"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["before"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["severity"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fieldNameMap["vpc"] = "Vpc"
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["severity"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["feature_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["before"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["org"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["vpc"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["new_status"] = vapiBindings_.NewStringType()
+	paramsTypeMap["project"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["intent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["suppress_duration"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["event_tag"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["event_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["after"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["node_resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	queryParams["cursor"] = "cursor"
 	queryParams["severity"] = "severity"
 	queryParams["feature_name"] = "feature_name"
 	queryParams["before"] = "before"
+	queryParams["org"] = "org"
+	queryParams["vpc"] = "vpc"
 	queryParams["new_status"] = "new_status"
+	queryParams["project"] = "project"
 	queryParams["intent_path"] = "intent_path"
 	queryParams["sort_by"] = "sort_by"
 	queryParams["suppress_duration"] = "suppress_duration"
+	queryParams["event_tag"] = "event_tag"
 	queryParams["event_type"] = "event_type"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["after"] = "after"
@@ -399,7 +447,7 @@ func alarmsSetstatus0RestMetadata() protocol.OperationRestMetadata {
 	queryParams["status"] = "status"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

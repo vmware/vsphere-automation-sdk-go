@@ -11,10 +11,10 @@
 package nsx
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
 
@@ -24,34 +24,34 @@ const TransportZones_LIST_TRANSPORT_TYPE_OVERLAY = "OVERLAY"
 // Possible value for ``transportType`` of method TransportZones#list.
 const TransportZones_LIST_TRANSPORT_TYPE_VLAN = "VLAN"
 
-func transportZonesCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportZonesCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["transport_zone"] = bindings.NewReferenceType(model.TransportZoneBindingType)
+	fields["transport_zone"] = vapiBindings_.NewReferenceType(nsxModel.TransportZoneBindingType)
 	fieldNameMap["transport_zone"] = "TransportZone"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportZonesCreateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TransportZoneBindingType)
+func TransportZonesCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.TransportZoneBindingType)
 }
 
-func transportZonesCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportZonesCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["transport_zone"] = bindings.NewReferenceType(model.TransportZoneBindingType)
+	fields["transport_zone"] = vapiBindings_.NewReferenceType(nsxModel.TransportZoneBindingType)
 	fieldNameMap["transport_zone"] = "TransportZone"
-	paramsTypeMap["transport_zone"] = bindings.NewReferenceType(model.TransportZoneBindingType)
+	paramsTypeMap["transport_zone"] = vapiBindings_.NewReferenceType(nsxModel.TransportZoneBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -72,36 +72,36 @@ func transportZonesCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportZonesDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportZonesDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["zone_id"] = bindings.NewStringType()
+	fields["zone_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["zone_id"] = "ZoneId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportZonesDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TransportZonesDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func transportZonesDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportZonesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["zone_id"] = bindings.NewStringType()
+	fields["zone_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["zone_id"] = "ZoneId"
-	paramsTypeMap["zone_id"] = bindings.NewStringType()
-	paramsTypeMap["zoneId"] = bindings.NewStringType()
+	paramsTypeMap["zone_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["zoneId"] = vapiBindings_.NewStringType()
 	pathParams["zone_id"] = "zoneId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -122,36 +122,36 @@ func transportZonesDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportZonesGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportZonesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["zone_id"] = bindings.NewStringType()
+	fields["zone_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["zone_id"] = "ZoneId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportZonesGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TransportZoneBindingType)
+func TransportZonesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.TransportZoneBindingType)
 }
 
-func transportZonesGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportZonesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["zone_id"] = bindings.NewStringType()
+	fields["zone_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["zone_id"] = "ZoneId"
-	paramsTypeMap["zone_id"] = bindings.NewStringType()
-	paramsTypeMap["zoneId"] = bindings.NewStringType()
+	paramsTypeMap["zone_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["zoneId"] = vapiBindings_.NewStringType()
 	pathParams["zone_id"] = "zoneId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -172,19 +172,19 @@ func transportZonesGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportZonesListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportZonesListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["is_default"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["transport_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["uplink_teaming_policy_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["is_default"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["transport_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["uplink_teaming_policy_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["display_name"] = "DisplayName"
 	fieldNameMap["include_system_owned"] = "IncludeSystemOwned"
@@ -195,33 +195,33 @@ func transportZonesListInputType() bindings.StructType {
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["transport_type"] = "TransportType"
 	fieldNameMap["uplink_teaming_policy_name"] = "UplinkTeamingPolicyName"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportZonesListOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TransportZoneListResultBindingType)
+func TransportZonesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.TransportZoneListResultBindingType)
 }
 
-func transportZonesListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportZonesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["include_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["is_default"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	fields["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	fields["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["transport_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["uplink_teaming_policy_name"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["is_default"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["transport_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["uplink_teaming_policy_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["display_name"] = "DisplayName"
 	fieldNameMap["include_system_owned"] = "IncludeSystemOwned"
@@ -232,16 +232,16 @@ func transportZonesListRestMetadata() protocol.OperationRestMetadata {
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["transport_type"] = "TransportType"
 	fieldNameMap["uplink_teaming_policy_name"] = "UplinkTeamingPolicyName"
-	paramsTypeMap["is_default"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["transport_type"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["included_fields"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["page_size"] = bindings.NewOptionalType(bindings.NewIntegerType())
-	paramsTypeMap["display_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["cursor"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["uplink_teaming_policy_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["include_system_owned"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["sort_by"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["sort_ascending"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["uplink_teaming_policy_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["transport_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["is_default"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
 	queryParams["uplink_teaming_policy_name"] = "uplink_teaming_policy_name"
 	queryParams["include_system_owned"] = "include_system_owned"
@@ -254,7 +254,7 @@ func transportZonesListRestMetadata() protocol.OperationRestMetadata {
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -275,41 +275,41 @@ func transportZonesListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func transportZonesUpdateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func transportZonesUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["zone_id"] = bindings.NewStringType()
-	fields["transport_zone"] = bindings.NewReferenceType(model.TransportZoneBindingType)
+	fields["zone_id"] = vapiBindings_.NewStringType()
+	fields["transport_zone"] = vapiBindings_.NewReferenceType(nsxModel.TransportZoneBindingType)
 	fieldNameMap["zone_id"] = "ZoneId"
 	fieldNameMap["transport_zone"] = "TransportZone"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func transportZonesUpdateOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.TransportZoneBindingType)
+func TransportZonesUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.TransportZoneBindingType)
 }
 
-func transportZonesUpdateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func transportZonesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["zone_id"] = bindings.NewStringType()
-	fields["transport_zone"] = bindings.NewReferenceType(model.TransportZoneBindingType)
+	fields["zone_id"] = vapiBindings_.NewStringType()
+	fields["transport_zone"] = vapiBindings_.NewReferenceType(nsxModel.TransportZoneBindingType)
 	fieldNameMap["zone_id"] = "ZoneId"
 	fieldNameMap["transport_zone"] = "TransportZone"
-	paramsTypeMap["zone_id"] = bindings.NewStringType()
-	paramsTypeMap["transport_zone"] = bindings.NewReferenceType(model.TransportZoneBindingType)
-	paramsTypeMap["zoneId"] = bindings.NewStringType()
+	paramsTypeMap["zone_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transport_zone"] = vapiBindings_.NewReferenceType(nsxModel.TransportZoneBindingType)
+	paramsTypeMap["zoneId"] = vapiBindings_.NewStringType()
 	pathParams["zone_id"] = "zoneId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

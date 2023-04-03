@@ -11,61 +11,61 @@
 package l3vpns
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	"github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
 
-func statisticsGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func statisticsGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["l3vpn_id"] = bindings.NewStringType()
-	fields["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["l3vpn_id"] = vapiBindings_.NewStringType()
+	fields["container_cluster_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["l3vpn_id"] = "L3vpnId"
 	fieldNameMap["container_cluster_path"] = "ContainerClusterPath"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func statisticsGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(model.AggregateL3VpnStatisticsBindingType)
+func StatisticsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.AggregateL3VpnStatisticsBindingType)
 }
 
-func statisticsGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func statisticsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["tier0_id"] = bindings.NewStringType()
-	fields["locale_service_id"] = bindings.NewStringType()
-	fields["l3vpn_id"] = bindings.NewStringType()
-	fields["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	fields["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["tier0_id"] = vapiBindings_.NewStringType()
+	fields["locale_service_id"] = vapiBindings_.NewStringType()
+	fields["l3vpn_id"] = vapiBindings_.NewStringType()
+	fields["container_cluster_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["l3vpn_id"] = "L3vpnId"
 	fieldNameMap["container_cluster_path"] = "ContainerClusterPath"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
-	paramsTypeMap["tier0_id"] = bindings.NewStringType()
-	paramsTypeMap["enforcement_point_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["locale_service_id"] = bindings.NewStringType()
-	paramsTypeMap["container_cluster_path"] = bindings.NewOptionalType(bindings.NewStringType())
-	paramsTypeMap["l3vpn_id"] = bindings.NewStringType()
-	paramsTypeMap["tier0Id"] = bindings.NewStringType()
-	paramsTypeMap["localeServiceId"] = bindings.NewStringType()
-	paramsTypeMap["l3vpnId"] = bindings.NewStringType()
+	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["locale_service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["container_cluster_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["l3vpn_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["tier0Id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["localeServiceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["l3vpnId"] = vapiBindings_.NewStringType()
 	pathParams["l3vpn_id"] = "l3vpnId"
 	pathParams["tier0_id"] = "tier0Id"
 	pathParams["locale_service_id"] = "localeServiceId"
@@ -73,7 +73,7 @@ func statisticsGetRestMetadata() protocol.OperationRestMetadata {
 	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
