@@ -9,14 +9,13 @@
 package activation
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 // **WARNING:** Use only as a sample. The API is experimental and subject to change in future versions.
 //
@@ -28,55 +27,57 @@ type ActivationManagerClient interface {
 	// Asks for cancellation of a running activation. Whether or not the cancellation request will have any effect depends on the implementation of the method that has to be canceled.
 	//
 	// @param activationIdParam activation identifier
+	//
 	// @throws NotFound there is no activation with the specified id
 	Cancel(activationIdParam string) error
 }
 
 type activationManagerClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewActivationManagerClient(connector client.Connector) *activationManagerClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vapi.std.activation.activation_manager")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"cancel": core.NewMethodIdentifier(interfaceIdentifier, "cancel"),
+func NewActivationManagerClient(connector vapiProtocolClient_.Connector) *activationManagerClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vapi.std.activation.activation_manager")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"cancel": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "cancel"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	aIface := activationManagerClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &aIface
 }
 
-func (aIface *activationManagerClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (aIface *activationManagerClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := aIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
 func (aIface *activationManagerClient) Cancel(activationIdParam string) error {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(activationManagerCancelInputType(), typeConverter)
+	operationRestMetaData := activationManagerCancelRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(activationManagerCancelInputType(), typeConverter)
 	sv.AddStructField("ActivationId", activationIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return bindings.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := activationManagerCancelRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	aIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := aIface.connector.GetApiProvider().Invoke("com.vmware.vapi.std.activation.activation_manager", "cancel", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), aIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return bindings.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return methodError.(error)
 	}

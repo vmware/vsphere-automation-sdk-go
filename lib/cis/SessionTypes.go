@@ -11,10 +11,10 @@
 package cis
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiLog_ "github.com/vmware/vsphere-automation-sdk-go/runtime/log"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
 	"reflect"
 	"time"
 )
@@ -29,37 +29,36 @@ type SessionInfo struct {
 	LastAccessedTime time.Time
 }
 
-func (s *SessionInfo) GetType__() bindings.BindingType {
+func (s *SessionInfo) GetType__() vapiBindings_.BindingType {
 	return SessionInfoBindingType()
 }
 
-func (s *SessionInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *SessionInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for SessionInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for SessionInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
 }
 
-func sessionCreateInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sessionCreateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sessionCreateOutputType() bindings.BindingType {
-	return bindings.NewSecretType()
+func SessionCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewSecretType()
 }
 
-func sessionCreateRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sessionCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -69,7 +68,7 @@ func sessionCreateRestMetadata() protocol.OperationRestMetadata {
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -90,21 +89,21 @@ func sessionCreateRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.service_unavailable": 503})
 }
 
-func sessionDeleteInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sessionDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sessionDeleteOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func SessionDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func sessionDeleteRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sessionDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -114,7 +113,7 @@ func sessionDeleteRestMetadata() protocol.OperationRestMetadata {
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -135,21 +134,21 @@ func sessionDeleteRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.service_unavailable": 503})
 }
 
-func sessionGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func sessionGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func sessionGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(SessionInfoBindingType)
+func SessionGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(SessionInfoBindingType)
 }
 
-func sessionGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func sessionGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -159,7 +158,7 @@ func sessionGetRestMetadata() protocol.OperationRestMetadata {
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -180,15 +179,15 @@ func sessionGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.service_unavailable": 503})
 }
 
-func SessionInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func SessionInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["user"] = bindings.NewStringType()
+	fields["user"] = vapiBindings_.NewStringType()
 	fieldNameMap["user"] = "User"
-	fields["created_time"] = bindings.NewDateTimeType()
+	fields["created_time"] = vapiBindings_.NewDateTimeType()
 	fieldNameMap["created_time"] = "CreatedTime"
-	fields["last_accessed_time"] = bindings.NewDateTimeType()
+	fields["last_accessed_time"] = vapiBindings_.NewDateTimeType()
 	fieldNameMap["last_accessed_time"] = "LastAccessedTime"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.cis.session.info", fields, reflect.TypeOf(SessionInfo{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.cis.session.info", fields, reflect.TypeOf(SessionInfo{}), fieldNameMap, validators)
 }

@@ -11,12 +11,12 @@
 package cis
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/cis/task"
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	cisTask_ "github.com/vmware/vsphere-automation-sdk-go/lib/cis/task"
+	vapiStd_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiLog_ "github.com/vmware/vsphere-automation-sdk-go/runtime/log"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
 	"reflect"
 )
 
@@ -25,23 +25,22 @@ const Tasks_RESOURCE_TYPE = "com.vmware.cis.task"
 
 // The ``GetSpec`` class describes what data should be included when retrieving information about a task.
 type TasksGetSpec struct {
-	// If true, all data, including operation-specific data, will be returned, otherwise only the data described in task.Info will be returned.
+	// If true, all data, including operation-specific data, will be returned, otherwise only the data described in cisTask_.Info will be returned.
 	ReturnAll *bool
 	// If true, the result will not be included in the task information, otherwise it will be included.
 	ExcludeResult *bool
 }
 
-func (s *TasksGetSpec) GetType__() bindings.BindingType {
+func (s *TasksGetSpec) GetType__() vapiBindings_.BindingType {
 	return TasksGetSpecBindingType()
 }
 
-func (s *TasksGetSpec) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *TasksGetSpec) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for TasksGetSpec._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for TasksGetSpec._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -53,68 +52,67 @@ func (s *TasksGetSpec) GetDataValue__() (data.DataValue, []error) {
 type TasksFilterSpec struct {
 	// Identifiers of tasks that can match the filter.
 	Tasks map[string]bool
-	// Identifiers of services. Tasks created by operations in these services match the filter (see task.CommonInfo#service).
+	// Identifiers of services. Tasks created by operations in these services match the filter (see cisTask_.CommonInfo#service).
 	Services map[string]bool
-	// Identifiers of operations. Tasks created by these operations match the filter (see task.CommonInfo#operation).
+	// Identifiers of operations. Tasks created by these operations match the filter (see cisTask_.CommonInfo#operation).
 	//
 	//  Note that an operation identifier by itself is not globally unique. To filter on an operation, the identifier of the service interface containing the operation should also be specified in ``services``.
 	Operations map[string]bool
-	// Status that a task must have to match the filter (see task.CommonInfo#status).
-	Status map[task.StatusEnum]bool
-	// Identifiers of the targets the operation for the associated task created or was performed on (see task.CommonInfo#target).
-	Targets []std.DynamicID
-	// Users who must have initiated the operation for the associated task to match the filter (see task.CommonInfo#user).
+	// Status that a task must have to match the filter (see cisTask_.CommonInfo#status).
+	Status map[cisTask_.StatusEnum]bool
+	// Identifiers of the targets the operation for the associated task created or was performed on (see cisTask_.CommonInfo#target).
+	Targets []vapiStd_.DynamicID
+	// Users who must have initiated the operation for the associated task to match the filter (see cisTask_.CommonInfo#user).
 	Users map[string]bool
 }
 
-func (s *TasksFilterSpec) GetType__() bindings.BindingType {
+func (s *TasksFilterSpec) GetType__() vapiBindings_.BindingType {
 	return TasksFilterSpecBindingType()
 }
 
-func (s *TasksFilterSpec) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *TasksFilterSpec) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for TasksFilterSpec._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for TasksFilterSpec._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
 }
 
-func tasksGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func tasksGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["task"] = bindings.NewIdType([]string{"com.vmware.cis.task"}, "")
-	fields["spec"] = bindings.NewOptionalType(bindings.NewReferenceType(TasksGetSpecBindingType))
+	fields["task"] = vapiBindings_.NewIdType([]string{"com.vmware.cis.task"}, "")
+	fields["spec"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TasksGetSpecBindingType))
 	fieldNameMap["task"] = "Task"
 	fieldNameMap["spec"] = "Spec"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func tasksGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(task.InfoBindingType)
+func TasksGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(cisTask_.InfoBindingType)
 }
 
-func tasksGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func tasksGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["task"] = bindings.NewIdType([]string{"com.vmware.cis.task"}, "")
-	fields["spec"] = bindings.NewOptionalType(bindings.NewReferenceType(TasksGetSpecBindingType))
+	fields["task"] = vapiBindings_.NewIdType([]string{"com.vmware.cis.task"}, "")
+	fields["spec"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TasksGetSpecBindingType))
 	fieldNameMap["task"] = "Task"
 	fieldNameMap["spec"] = "Spec"
-	paramsTypeMap["task"] = bindings.NewIdType([]string{"com.vmware.cis.task"}, "")
-	paramsTypeMap["spec.return_all"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["spec.exclude_result"] = bindings.NewOptionalType(bindings.NewBooleanType())
-	paramsTypeMap["task"] = bindings.NewIdType([]string{"com.vmware.cis.task"}, "")
+	paramsTypeMap["task"] = vapiBindings_.NewIdType([]string{"com.vmware.cis.task"}, "")
+	paramsTypeMap["spec.exclude_result"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["spec.return_all"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["task"] = vapiBindings_.NewIdType([]string{"com.vmware.cis.task"}, "")
 	pathParams["task"] = "task"
 	queryParams["spec.exclude_result"] = "exclude_result"
 	queryParams["spec.return_all"] = "return_all"
@@ -122,7 +120,7 @@ func tasksGetRestMetadata() protocol.OperationRestMetadata {
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -143,32 +141,32 @@ func tasksGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.error": 500, "com.vmware.vapi.std.errors.not_found": 404, "com.vmware.vapi.std.errors.resource_inaccessible": 500, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
-func tasksListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func tasksListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["filter_spec"] = bindings.NewOptionalType(bindings.NewReferenceType(TasksFilterSpecBindingType))
-	fields["result_spec"] = bindings.NewOptionalType(bindings.NewReferenceType(TasksGetSpecBindingType))
+	fields["filter_spec"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TasksFilterSpecBindingType))
+	fields["result_spec"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TasksGetSpecBindingType))
 	fieldNameMap["filter_spec"] = "FilterSpec"
 	fieldNameMap["result_spec"] = "ResultSpec"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func tasksListOutputType() bindings.BindingType {
-	return bindings.NewMapType(bindings.NewIdType([]string{"com.vmware.cis.task"}, ""), bindings.NewReferenceType(task.InfoBindingType), reflect.TypeOf(map[string]task.Info{}))
+func TasksListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewMapType(vapiBindings_.NewIdType([]string{"com.vmware.cis.task"}, ""), vapiBindings_.NewReferenceType(cisTask_.InfoBindingType), reflect.TypeOf(map[string]cisTask_.Info{}))
 }
 
-func tasksListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func tasksListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["filter_spec"] = bindings.NewOptionalType(bindings.NewReferenceType(TasksFilterSpecBindingType))
-	fields["result_spec"] = bindings.NewOptionalType(bindings.NewReferenceType(TasksGetSpecBindingType))
+	fields["filter_spec"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TasksFilterSpecBindingType))
+	fields["result_spec"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TasksGetSpecBindingType))
 	fieldNameMap["filter_spec"] = "FilterSpec"
 	fieldNameMap["result_spec"] = "ResultSpec"
 	bodyFieldsMap["result_spec"] = "result_spec"
@@ -177,7 +175,7 @@ func tasksListRestMetadata() protocol.OperationRestMetadata {
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -198,38 +196,38 @@ func tasksListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_argument": 400, "com.vmware.vapi.std.errors.resource_inaccessible": 500, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.unauthorized": 403})
 }
 
-func tasksCancelInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func tasksCancelInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["task"] = bindings.NewIdType([]string{"com.vmware.cis.task"}, "")
+	fields["task"] = vapiBindings_.NewIdType([]string{"com.vmware.cis.task"}, "")
 	fieldNameMap["task"] = "Task"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func tasksCancelOutputType() bindings.BindingType {
-	return bindings.NewVoidType()
+func TasksCancelOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func tasksCancelRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func tasksCancelRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["task"] = bindings.NewIdType([]string{"com.vmware.cis.task"}, "")
+	fields["task"] = vapiBindings_.NewIdType([]string{"com.vmware.cis.task"}, "")
 	fieldNameMap["task"] = "Task"
-	paramsTypeMap["task"] = bindings.NewIdType([]string{"com.vmware.cis.task"}, "")
-	paramsTypeMap["task"] = bindings.NewIdType([]string{"com.vmware.cis.task"}, "")
+	paramsTypeMap["task"] = vapiBindings_.NewIdType([]string{"com.vmware.cis.task"}, "")
+	paramsTypeMap["task"] = vapiBindings_.NewIdType([]string{"com.vmware.cis.task"}, "")
 	pathParams["task"] = "task"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"]["challenge"] = "WWW-Authenticate"
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -250,32 +248,32 @@ func tasksCancelRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.error": 500, "com.vmware.vapi.std.errors.not_allowed_in_current_state": 400, "com.vmware.vapi.std.errors.not_found": 404, "com.vmware.vapi.std.errors.resource_inaccessible": 500, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.unsupported": 400})
 }
 
-func TasksGetSpecBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func TasksGetSpecBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["return_all"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["return_all"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["return_all"] = "ReturnAll"
-	fields["exclude_result"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["exclude_result"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["exclude_result"] = "ExcludeResult"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.cis.tasks.get_spec", fields, reflect.TypeOf(TasksGetSpec{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.cis.tasks.get_spec", fields, reflect.TypeOf(TasksGetSpec{}), fieldNameMap, validators)
 }
 
-func TasksFilterSpecBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func TasksFilterSpecBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["tasks"] = bindings.NewOptionalType(bindings.NewSetType(bindings.NewIdType([]string{"com.vmware.cis.task"}, ""), reflect.TypeOf(map[string]bool{})))
+	fields["tasks"] = vapiBindings_.NewOptionalType(vapiBindings_.NewSetType(vapiBindings_.NewIdType([]string{"com.vmware.cis.task"}, ""), reflect.TypeOf(map[string]bool{})))
 	fieldNameMap["tasks"] = "Tasks"
-	fields["services"] = bindings.NewOptionalType(bindings.NewSetType(bindings.NewIdType([]string{"com.vmware.vapi.service"}, ""), reflect.TypeOf(map[string]bool{})))
+	fields["services"] = vapiBindings_.NewOptionalType(vapiBindings_.NewSetType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.service"}, ""), reflect.TypeOf(map[string]bool{})))
 	fieldNameMap["services"] = "Services"
-	fields["operations"] = bindings.NewOptionalType(bindings.NewSetType(bindings.NewIdType([]string{"com.vmware.vapi.operation"}, ""), reflect.TypeOf(map[string]bool{})))
+	fields["operations"] = vapiBindings_.NewOptionalType(vapiBindings_.NewSetType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.operation"}, ""), reflect.TypeOf(map[string]bool{})))
 	fieldNameMap["operations"] = "Operations"
-	fields["status"] = bindings.NewOptionalType(bindings.NewSetType(bindings.NewEnumType("com.vmware.cis.task.status", reflect.TypeOf(task.StatusEnum(task.Status_PENDING))), reflect.TypeOf(map[task.StatusEnum]bool{})))
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewSetType(vapiBindings_.NewEnumType("com.vmware.cis.task.status", reflect.TypeOf(cisTask_.StatusEnum(cisTask_.Status_PENDING))), reflect.TypeOf(map[cisTask_.StatusEnum]bool{})))
 	fieldNameMap["status"] = "Status"
-	fields["targets"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(std.DynamicIDBindingType), reflect.TypeOf([]std.DynamicID{})))
+	fields["targets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(vapiStd_.DynamicIDBindingType), reflect.TypeOf([]vapiStd_.DynamicID{})))
 	fieldNameMap["targets"] = "Targets"
-	fields["users"] = bindings.NewOptionalType(bindings.NewSetType(bindings.NewStringType(), reflect.TypeOf(map[string]bool{})))
+	fields["users"] = vapiBindings_.NewOptionalType(vapiBindings_.NewSetType(vapiBindings_.NewStringType(), reflect.TypeOf(map[string]bool{})))
 	fieldNameMap["users"] = "Users"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.cis.tasks.filter_spec", fields, reflect.TypeOf(TasksFilterSpec{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.cis.tasks.filter_spec", fields, reflect.TypeOf(TasksFilterSpec{}), fieldNameMap, validators)
 }

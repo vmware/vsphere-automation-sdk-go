@@ -11,9 +11,9 @@
 package metadata
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiLog_ "github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"net/url"
 	"reflect"
 )
@@ -41,6 +41,27 @@ func (s SourceTypeEnum) SourceTypeEnum() bool {
 	}
 }
 
+// The ``LyfecycleInfo`` class contains information about the lifecycle of an API element. **Warning:** This class is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+type LifecycleInfo struct {
+	// Indicates whether the API element is deprecated. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	Deprecated bool
+}
+
+func (s *LifecycleInfo) GetType__() vapiBindings_.BindingType {
+	return LifecycleInfoBindingType()
+}
+
+func (s *LifecycleInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for LifecycleInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // The ``SourceCreateSpec`` class contains the registration information for a metadata source.
 type SourceCreateSpec struct {
 	// English language human readable description of the source.
@@ -55,17 +76,16 @@ type SourceCreateSpec struct {
 	Address *url.URL
 }
 
-func (s *SourceCreateSpec) GetType__() bindings.BindingType {
+func (s *SourceCreateSpec) GetType__() vapiBindings_.BindingType {
 	return SourceCreateSpecBindingType()
 }
 
-func (s *SourceCreateSpec) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *SourceCreateSpec) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for SourceCreateSpec._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for SourceCreateSpec._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -83,71 +103,79 @@ type SourceInfo struct {
 	MsgProtocol *string
 }
 
-func (s *SourceInfo) GetType__() bindings.BindingType {
+func (s *SourceInfo) GetType__() vapiBindings_.BindingType {
 	return SourceInfoBindingType()
 }
 
-func (s *SourceInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *SourceInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for SourceInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for SourceInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
 }
 
-func SourceCreateSpecBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func LifecycleInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["description"] = bindings.NewStringType()
-	fieldNameMap["description"] = "Description"
-	fields["type"] = bindings.NewEnumType("com.vmware.vapi.metadata.source_type", reflect.TypeOf(SourceTypeEnum(SourceType_FILE)))
-	fieldNameMap["type"] = "Type_"
-	fields["filepath"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["filepath"] = "Filepath"
-	fields["address"] = bindings.NewOptionalType(bindings.NewUriType())
-	fieldNameMap["address"] = "Address"
-	var validators = []bindings.Validator{}
-	uv1 := bindings.NewUnionValidator("type",
-		map[string][]bindings.FieldData{
-			"FILE": []bindings.FieldData{
-				bindings.NewFieldData("filepath", true),
-			},
-			"REMOTE": []bindings.FieldData{
-				bindings.NewFieldData("address", true),
-			},
-		},
-	)
-	validators = append(validators, uv1)
-	return bindings.NewStructType("com.vmware.vapi.metadata.source_create_spec", fields, reflect.TypeOf(SourceCreateSpec{}), fieldNameMap, validators)
+	fields["deprecated"] = vapiBindings_.NewBooleanType()
+	fieldNameMap["deprecated"] = "Deprecated"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.lifecycle_info", fields, reflect.TypeOf(LifecycleInfo{}), fieldNameMap, validators)
 }
 
-func SourceInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func SourceCreateSpecBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["type"] = bindings.NewEnumType("com.vmware.vapi.metadata.source_type", reflect.TypeOf(SourceTypeEnum(SourceType_FILE)))
+	fields["description"] = vapiBindings_.NewStringType()
+	fieldNameMap["description"] = "Description"
+	fields["type"] = vapiBindings_.NewEnumType("com.vmware.vapi.metadata.source_type", reflect.TypeOf(SourceTypeEnum(SourceType_FILE)))
 	fieldNameMap["type"] = "Type_"
-	fields["file_name"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["file_name"] = "FileName"
-	fields["remote_addr"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["remote_addr"] = "RemoteAddr"
-	fields["msg_protocol"] = bindings.NewOptionalType(bindings.NewStringType())
-	fieldNameMap["msg_protocol"] = "MsgProtocol"
-	var validators = []bindings.Validator{}
-	uv1 := bindings.NewUnionValidator("type",
-		map[string][]bindings.FieldData{
-			"FILE": []bindings.FieldData{
-				bindings.NewFieldData("file_name", true),
+	fields["filepath"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["filepath"] = "Filepath"
+	fields["address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewUriType())
+	fieldNameMap["address"] = "Address"
+	var validators = []vapiBindings_.Validator{}
+	uv1 := vapiBindings_.NewUnionValidator("type",
+		map[string][]vapiBindings_.FieldData{
+			"FILE": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("filepath", true),
 			},
-			"REMOTE": []bindings.FieldData{
-				bindings.NewFieldData("remote_addr", true),
-				bindings.NewFieldData("msg_protocol", true),
+			"REMOTE": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("address", true),
 			},
 		},
 	)
 	validators = append(validators, uv1)
-	return bindings.NewStructType("com.vmware.vapi.metadata.source_info", fields, reflect.TypeOf(SourceInfo{}), fieldNameMap, validators)
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.source_create_spec", fields, reflect.TypeOf(SourceCreateSpec{}), fieldNameMap, validators)
+}
+
+func SourceInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["type"] = vapiBindings_.NewEnumType("com.vmware.vapi.metadata.source_type", reflect.TypeOf(SourceTypeEnum(SourceType_FILE)))
+	fieldNameMap["type"] = "Type_"
+	fields["file_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["file_name"] = "FileName"
+	fields["remote_addr"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["remote_addr"] = "RemoteAddr"
+	fields["msg_protocol"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["msg_protocol"] = "MsgProtocol"
+	var validators = []vapiBindings_.Validator{}
+	uv1 := vapiBindings_.NewUnionValidator("type",
+		map[string][]vapiBindings_.FieldData{
+			"FILE": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("file_name", true),
+			},
+			"REMOTE": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("remote_addr", true),
+				vapiBindings_.NewFieldData("msg_protocol", true),
+			},
+		},
+	)
+	validators = append(validators, uv1)
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.source_info", fields, reflect.TypeOf(SourceInfo{}), fieldNameMap, validators)
 }

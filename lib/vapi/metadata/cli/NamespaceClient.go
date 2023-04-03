@@ -9,14 +9,13 @@
 package cli
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
 )
 
-const _ = core.SupportedByRuntimeVersion1
+const _ = vapiCore_.SupportedByRuntimeVersion2
 
 // The ``Namespace`` interface provides methods to get information about command line interface (CLI) namespaces.
 type NamespaceClient interface {
@@ -29,6 +28,7 @@ type NamespaceClient interface {
 	//
 	// @param identityParam Identifier of the namespace for which to retreive information.
 	// @return Information about the namespace including information about child of that namespace.
+	//
 	// @throws NotFound if a namespace corresponding to ``identity`` doesn't exist.
 	Get(identityParam NamespaceIdentity) (NamespaceInfo, error)
 
@@ -40,57 +40,58 @@ type NamespaceClient interface {
 }
 
 type namespaceClient struct {
-	connector           client.Connector
-	interfaceDefinition core.InterfaceDefinition
-	errorsBindingMap    map[string]bindings.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewNamespaceClient(connector client.Connector) *namespaceClient {
-	interfaceIdentifier := core.NewInterfaceIdentifier("com.vmware.vapi.metadata.cli.namespace")
-	methodIdentifiers := map[string]core.MethodIdentifier{
-		"list":        core.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"get":         core.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"fingerprint": core.NewMethodIdentifier(interfaceIdentifier, "fingerprint"),
+func NewNamespaceClient(connector vapiProtocolClient_.Connector) *namespaceClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vapi.metadata.cli.namespace")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"list":        vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"get":         vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"fingerprint": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "fingerprint"),
 	}
-	interfaceDefinition := core.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
-	errorsBindingMap := make(map[string]bindings.BindingType)
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
 	nIface := namespaceClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &nIface
 }
 
-func (nIface *namespaceClient) GetErrorBindingType(errorName string) bindings.BindingType {
+func (nIface *namespaceClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := nIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
-	return errors.ERROR_BINDINGS_MAP[errorName]
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
 func (nIface *namespaceClient) List() ([]NamespaceIdentity, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(namespaceListInputType(), typeConverter)
+	operationRestMetaData := namespaceListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(namespaceListInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput []NamespaceIdentity
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := namespaceListRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.vapi.metadata.cli.namespace", "list", inputDataValue, executionContext)
 	var emptyOutput []NamespaceIdentity
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), namespaceListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NamespaceListOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.([]NamespaceIdentity), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -99,29 +100,30 @@ func (nIface *namespaceClient) List() ([]NamespaceIdentity, error) {
 func (nIface *namespaceClient) Get(identityParam NamespaceIdentity) (NamespaceInfo, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(namespaceGetInputType(), typeConverter)
+	operationRestMetaData := namespaceGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(namespaceGetInputType(), typeConverter)
 	sv.AddStructField("Identity", identityParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput NamespaceInfo
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := namespaceGetRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.vapi.metadata.cli.namespace", "get", inputDataValue, executionContext)
 	var emptyOutput NamespaceInfo
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), namespaceGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NamespaceGetOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(NamespaceInfo), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}
@@ -130,28 +132,29 @@ func (nIface *namespaceClient) Get(identityParam NamespaceIdentity) (NamespaceIn
 func (nIface *namespaceClient) Fingerprint() (string, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
-	sv := bindings.NewStructValueBuilder(namespaceFingerprintInputType(), typeConverter)
+	operationRestMetaData := namespaceFingerprintRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(namespaceFingerprintInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput string
-		return emptyOutput, bindings.VAPIerrorsToError(inputError)
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
-	operationRestMetaData := namespaceFingerprintRestMetadata()
-	connectionMetadata := map[string]interface{}{lib.REST_METADATA: operationRestMetaData}
-	connectionMetadata["isStreamingResponse"] = false
-	nIface.connector.SetConnectionMetadata(connectionMetadata)
+
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.vapi.metadata.cli.namespace", "fingerprint", inputDataValue, executionContext)
 	var emptyOutput string
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), namespaceFingerprintOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NamespaceFingerprintOutputType())
 		if errorInOutput != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInOutput)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(string), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, bindings.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
 	}

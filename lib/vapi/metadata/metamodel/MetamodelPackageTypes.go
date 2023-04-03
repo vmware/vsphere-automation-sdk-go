@@ -11,9 +11,10 @@
 package metamodel
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
+	vapiMetadata_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiLog_ "github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"reflect"
 )
 
@@ -33,17 +34,16 @@ type ComponentData struct {
 	Fingerprint string
 }
 
-func (s *ComponentData) GetType__() bindings.BindingType {
+func (s *ComponentData) GetType__() vapiBindings_.BindingType {
 	return ComponentDataBindingType()
 }
 
-func (s *ComponentData) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *ComponentData) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ComponentData._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for ComponentData._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -63,17 +63,16 @@ type ComponentInfo struct {
 	Documentation string
 }
 
-func (s *ComponentInfo) GetType__() bindings.BindingType {
+func (s *ComponentInfo) GetType__() vapiBindings_.BindingType {
 	return ComponentInfoBindingType()
 }
 
-func (s *ComponentInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *ComponentInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ComponentInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for ComponentInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -87,19 +86,20 @@ type ConstantInfo struct {
 	Value ConstantValue
 	// English language documentation for the constant element. It can contain HTML markup and documentation tags (similar to Javadoc tags).
 	Documentation string
+	// Lifecycle information for the constant element. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
-func (s *ConstantInfo) GetType__() bindings.BindingType {
+func (s *ConstantInfo) GetType__() vapiBindings_.BindingType {
 	return ConstantInfoBindingType()
 }
 
-func (s *ConstantInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *ConstantInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ConstantInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for ConstantInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -115,17 +115,16 @@ type ConstantValue struct {
 	ListValue []PrimitiveValue
 }
 
-func (s *ConstantValue) GetType__() bindings.BindingType {
+func (s *ConstantValue) GetType__() vapiBindings_.BindingType {
 	return ConstantValueBindingType()
 }
 
-func (s *ConstantValue) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *ConstantValue) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ConstantValue._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for ConstantValue._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -164,17 +163,16 @@ type ElementMap struct {
 	Elements map[string]ElementValue
 }
 
-func (s *ElementMap) GetType__() bindings.BindingType {
+func (s *ElementMap) GetType__() vapiBindings_.BindingType {
 	return ElementMapBindingType()
 }
 
-func (s *ElementMap) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *ElementMap) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ElementMap._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for ElementMap._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -196,17 +194,16 @@ type ElementValue struct {
 	StructureIds []string
 }
 
-func (s *ElementValue) GetType__() bindings.BindingType {
+func (s *ElementValue) GetType__() vapiBindings_.BindingType {
 	return ElementValueBindingType()
 }
 
-func (s *ElementValue) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *ElementValue) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ElementValue._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for ElementValue._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -261,19 +258,20 @@ type EnumerationInfo struct {
 	//
 	//  The documentation also contains references to the context in which the enumeration is used. But if the enumeration is used in many contexts, the references may not be present.
 	Documentation string
+	// Lifecycle information for the enumeration element. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
-func (s *EnumerationInfo) GetType__() bindings.BindingType {
+func (s *EnumerationInfo) GetType__() vapiBindings_.BindingType {
 	return EnumerationInfoBindingType()
 }
 
-func (s *EnumerationInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *EnumerationInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for EnumerationInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for EnumerationInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -289,19 +287,20 @@ type EnumerationValueInfo struct {
 	Metadata map[string]ElementMap
 	// English language documentation for an enumeration value. It can contain HTML markup and documentation tags (similar to Javadoc tags). The first statement will be a noun or verb phrase that describes the purpose of the enumeration value.
 	Documentation string
+	// Lifecycle information for the enumeration value. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
-func (s *EnumerationValueInfo) GetType__() bindings.BindingType {
+func (s *EnumerationValueInfo) GetType__() vapiBindings_.BindingType {
 	return EnumerationValueInfoBindingType()
 }
 
-func (s *EnumerationValueInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *EnumerationValueInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for EnumerationValueInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for EnumerationValueInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -311,21 +310,22 @@ func (s *EnumerationValueInfo) GetDataValue__() (data.DataValue, []error) {
 type ErrorInfo struct {
 	// Identifier for the structure element corresponding to the error that is being reported by the operation.
 	StructureId string
-	// The English language documentation for the service element. It can contain HTML markup and Javadoc tags.
+	// The English language documentation for the error element. It can contain HTML markup and Javadoc tags.
 	Documentation string
+	// Lifecycle information for the error element contained in an operation element. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
-func (s *ErrorInfo) GetType__() bindings.BindingType {
+func (s *ErrorInfo) GetType__() vapiBindings_.BindingType {
 	return ErrorInfoBindingType()
 }
 
-func (s *ErrorInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *ErrorInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ErrorInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for ErrorInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -341,21 +341,22 @@ type FieldInfo struct {
 	//
 	//  The MetadataIdentifier contains possible string values for keys in the map.
 	Metadata map[string]ElementMap
-	// English language documentation for the service element. It can contain HTML markup and Javadoc tags.
+	// English language documentation for the field element. It can contain HTML markup and Javadoc tags.
 	Documentation string
+	// Lifecycle information for the field element. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
-func (s *FieldInfo) GetType__() bindings.BindingType {
+func (s *FieldInfo) GetType__() vapiBindings_.BindingType {
 	return FieldInfoBindingType()
 }
 
-func (s *FieldInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *FieldInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for FieldInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for FieldInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -373,17 +374,16 @@ type GenericInstantiation struct {
 	MapValueType *Type
 }
 
-func (s *GenericInstantiation) GetType__() bindings.BindingType {
+func (s *GenericInstantiation) GetType__() vapiBindings_.BindingType {
 	return GenericInstantiationBindingType()
 }
 
-func (s *GenericInstantiation) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *GenericInstantiation) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for GenericInstantiation._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for GenericInstantiation._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -434,21 +434,22 @@ type OperationInfo struct {
 	//
 	//  The MetadataIdentifier contains possible string values for key in the map.
 	Metadata map[string]ElementMap
-	// English language documentation for the service element. It can contain HTML markup and Javadoc tags.
+	// English language documentation for the operation element. It can contain HTML markup and Javadoc tags.
 	Documentation string
+	// Lifecycle information for the operation element. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
-func (s *OperationInfo) GetType__() bindings.BindingType {
+func (s *OperationInfo) GetType__() vapiBindings_.BindingType {
 	return OperationInfoBindingType()
 }
 
-func (s *OperationInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *OperationInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for OperationInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for OperationInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -468,17 +469,16 @@ type OperationResultInfo struct {
 	Documentation string
 }
 
-func (s *OperationResultInfo) GetType__() bindings.BindingType {
+func (s *OperationResultInfo) GetType__() vapiBindings_.BindingType {
 	return OperationResultInfoBindingType()
 }
 
-func (s *OperationResultInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *OperationResultInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for OperationResultInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for OperationResultInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -508,17 +508,16 @@ type PackageInfo struct {
 	Documentation string
 }
 
-func (s *PackageInfo) GetType__() bindings.BindingType {
+func (s *PackageInfo) GetType__() vapiBindings_.BindingType {
 	return PackageInfoBindingType()
 }
 
-func (s *PackageInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *PackageInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for PackageInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for PackageInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -538,17 +537,16 @@ type PrimitiveValue struct {
 	StringValue *string
 }
 
-func (s *PrimitiveValue) GetType__() bindings.BindingType {
+func (s *PrimitiveValue) GetType__() vapiBindings_.BindingType {
 	return PrimitiveValueBindingType()
 }
 
-func (s *PrimitiveValue) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *PrimitiveValue) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for PrimitiveValue._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for PrimitiveValue._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -603,19 +601,20 @@ type ServiceInfo struct {
 	Metadata map[string]ElementMap
 	// English language documentation for the service element. It can contain HTML markup and Javadoc tags. The first sentence of the service documentation is a complete sentence that identifies the service by name and summarizes the purpose of the service. The remaining part of the documentation provides a summary of how to use the operations defined in the service.
 	Documentation string
+	// Lifecycle information for the service element. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
-func (s *ServiceInfo) GetType__() bindings.BindingType {
+func (s *ServiceInfo) GetType__() vapiBindings_.BindingType {
 	return ServiceInfoBindingType()
 }
 
-func (s *ServiceInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *ServiceInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ServiceInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for ServiceInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -641,19 +640,20 @@ type StructureInfo struct {
 	Metadata map[string]ElementMap
 	// English language documentation for a structure element. It can contain HTML markup and Javadoc tags. The first sentence of the structure documentation is a complete sentence that identifies the structure by name and summarizes the purpose of the structure.
 	Documentation string
+	// Lifecycle information for the structure element. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
-func (s *StructureInfo) GetType__() bindings.BindingType {
+func (s *StructureInfo) GetType__() vapiBindings_.BindingType {
 	return StructureInfoBindingType()
 }
 
-func (s *StructureInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *StructureInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for StructureInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for StructureInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -704,17 +704,16 @@ type Type struct {
 	GenericInstantiation *GenericInstantiation
 }
 
-func (s *Type) GetType__() bindings.BindingType {
+func (s *Type) GetType__() vapiBindings_.BindingType {
 	return TypeBindingType()
 }
 
-func (s *Type) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *Type) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Type._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for Type._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -822,385 +821,400 @@ type UserDefinedType struct {
 	ResourceId string
 }
 
-func (s *UserDefinedType) GetType__() bindings.BindingType {
+func (s *UserDefinedType) GetType__() vapiBindings_.BindingType {
 	return UserDefinedTypeBindingType()
 }
 
-func (s *UserDefinedType) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *UserDefinedType) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for UserDefinedType._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for UserDefinedType._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
 }
 
-func ComponentDataBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func ComponentDataBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["info"] = bindings.NewReferenceType(ComponentInfoBindingType)
+	fields["info"] = vapiBindings_.NewReferenceType(ComponentInfoBindingType)
 	fieldNameMap["info"] = "Info"
-	fields["fingerprint"] = bindings.NewStringType()
+	fields["fingerprint"] = vapiBindings_.NewStringType()
 	fieldNameMap["fingerprint"] = "Fingerprint"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.component_data", fields, reflect.TypeOf(ComponentData{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.component_data", fields, reflect.TypeOf(ComponentData{}), fieldNameMap, validators)
 }
 
-func ComponentInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func ComponentInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["name"] = bindings.NewStringType()
+	fields["name"] = vapiBindings_.NewStringType()
 	fieldNameMap["name"] = "Name"
-	fields["packages"] = bindings.NewMapType(bindings.NewIdType([]string{"com.vmware.vapi.package"}, ""), bindings.NewReferenceType(PackageInfoBindingType), reflect.TypeOf(map[string]PackageInfo{}))
+	fields["packages"] = vapiBindings_.NewMapType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.package"}, ""), vapiBindings_.NewReferenceType(PackageInfoBindingType), reflect.TypeOf(map[string]PackageInfo{}))
 	fieldNameMap["packages"] = "Packages"
-	fields["metadata"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
+	fields["metadata"] = vapiBindings_.NewMapType(vapiBindings_.NewStringType(), vapiBindings_.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
 	fieldNameMap["metadata"] = "Metadata"
-	fields["documentation"] = bindings.NewStringType()
+	fields["documentation"] = vapiBindings_.NewStringType()
 	fieldNameMap["documentation"] = "Documentation"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.component_info", fields, reflect.TypeOf(ComponentInfo{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.component_info", fields, reflect.TypeOf(ComponentInfo{}), fieldNameMap, validators)
 }
 
-func ConstantInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func ConstantInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["type"] = bindings.NewReferenceType(TypeBindingType)
+	fields["type"] = vapiBindings_.NewReferenceType(TypeBindingType)
 	fieldNameMap["type"] = "Type_"
-	fields["value"] = bindings.NewReferenceType(ConstantValueBindingType)
+	fields["value"] = vapiBindings_.NewReferenceType(ConstantValueBindingType)
 	fieldNameMap["value"] = "Value"
-	fields["documentation"] = bindings.NewStringType()
+	fields["documentation"] = vapiBindings_.NewStringType()
 	fieldNameMap["documentation"] = "Documentation"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.constant_info", fields, reflect.TypeOf(ConstantInfo{}), fieldNameMap, validators)
+	fields["lifecycle"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vapiMetadata_.LifecycleInfoBindingType))
+	fieldNameMap["lifecycle"] = "Lifecycle"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.constant_info", fields, reflect.TypeOf(ConstantInfo{}), fieldNameMap, validators)
 }
 
-func ConstantValueBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func ConstantValueBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["category"] = bindings.NewEnumType("com.vmware.vapi.metadata.metamodel.constant_value.category", reflect.TypeOf(ConstantValueCategoryEnum(ConstantValueCategory_PRIMITIVE)))
+	fields["category"] = vapiBindings_.NewEnumType("com.vmware.vapi.metadata.metamodel.constant_value.category", reflect.TypeOf(ConstantValueCategoryEnum(ConstantValueCategory_PRIMITIVE)))
 	fieldNameMap["category"] = "Category"
-	fields["primitive_value"] = bindings.NewOptionalType(bindings.NewReferenceType(PrimitiveValueBindingType))
+	fields["primitive_value"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(PrimitiveValueBindingType))
 	fieldNameMap["primitive_value"] = "PrimitiveValue"
-	fields["list_value"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewReferenceType(PrimitiveValueBindingType), reflect.TypeOf([]PrimitiveValue{})))
+	fields["list_value"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(PrimitiveValueBindingType), reflect.TypeOf([]PrimitiveValue{})))
 	fieldNameMap["list_value"] = "ListValue"
-	var validators = []bindings.Validator{}
-	uv1 := bindings.NewUnionValidator("category",
-		map[string][]bindings.FieldData{
-			"PRIMITIVE": []bindings.FieldData{
-				bindings.NewFieldData("primitive_value", true),
+	var validators = []vapiBindings_.Validator{}
+	uv1 := vapiBindings_.NewUnionValidator("category",
+		map[string][]vapiBindings_.FieldData{
+			"PRIMITIVE": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("primitive_value", true),
 			},
-			"LIST": []bindings.FieldData{
-				bindings.NewFieldData("list_value", true),
+			"LIST": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("list_value", true),
 			},
 		},
 	)
 	validators = append(validators, uv1)
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.constant_value", fields, reflect.TypeOf(ConstantValue{}), fieldNameMap, validators)
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.constant_value", fields, reflect.TypeOf(ConstantValue{}), fieldNameMap, validators)
 }
 
-func ElementMapBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func ElementMapBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["elements"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(ElementValueBindingType), reflect.TypeOf(map[string]ElementValue{}))
+	fields["elements"] = vapiBindings_.NewMapType(vapiBindings_.NewStringType(), vapiBindings_.NewReferenceType(ElementValueBindingType), reflect.TypeOf(map[string]ElementValue{}))
 	fieldNameMap["elements"] = "Elements"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.element_map", fields, reflect.TypeOf(ElementMap{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.element_map", fields, reflect.TypeOf(ElementMap{}), fieldNameMap, validators)
 }
 
-func ElementValueBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func ElementValueBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["type"] = bindings.NewEnumType("com.vmware.vapi.metadata.metamodel.element_value.type", reflect.TypeOf(ElementValueTypeEnum(ElementValueType_LONG)))
+	fields["type"] = vapiBindings_.NewEnumType("com.vmware.vapi.metadata.metamodel.element_value.type", reflect.TypeOf(ElementValueTypeEnum(ElementValueType_LONG)))
 	fieldNameMap["type"] = "Type_"
-	fields["long_value"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fields["long_value"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["long_value"] = "LongValue"
-	fields["string_value"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["string_value"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["string_value"] = "StringValue"
-	fields["list_value"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{})))
+	fields["list_value"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["list_value"] = "ListValue"
-	fields["structure_id"] = bindings.NewOptionalType(bindings.NewIdType([]string{"com.vmware.vapi.structure"}, ""))
+	fields["structure_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.structure"}, ""))
 	fieldNameMap["structure_id"] = "StructureId"
-	fields["structure_ids"] = bindings.NewOptionalType(bindings.NewListType(bindings.NewIdType([]string{"com.vmware.vapi.structure"}, ""), reflect.TypeOf([]string{})))
+	fields["structure_ids"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.structure"}, ""), reflect.TypeOf([]string{})))
 	fieldNameMap["structure_ids"] = "StructureIds"
-	var validators = []bindings.Validator{}
-	uv1 := bindings.NewUnionValidator("type",
-		map[string][]bindings.FieldData{
-			"LONG": []bindings.FieldData{
-				bindings.NewFieldData("long_value", true),
+	var validators = []vapiBindings_.Validator{}
+	uv1 := vapiBindings_.NewUnionValidator("type",
+		map[string][]vapiBindings_.FieldData{
+			"LONG": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("long_value", true),
 			},
-			"STRING": []bindings.FieldData{
-				bindings.NewFieldData("string_value", true),
+			"STRING": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("string_value", true),
 			},
-			"STRING_LIST": []bindings.FieldData{
-				bindings.NewFieldData("list_value", true),
+			"STRING_LIST": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("list_value", true),
 			},
-			"STRUCTURE_REFERENCE": []bindings.FieldData{
-				bindings.NewFieldData("structure_id", true),
+			"STRUCTURE_REFERENCE": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("structure_id", true),
 			},
-			"STRUCTURE_REFERENCE_LIST": []bindings.FieldData{
-				bindings.NewFieldData("structure_ids", true),
+			"STRUCTURE_REFERENCE_LIST": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("structure_ids", true),
 			},
 		},
 	)
 	validators = append(validators, uv1)
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.element_value", fields, reflect.TypeOf(ElementValue{}), fieldNameMap, validators)
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.element_value", fields, reflect.TypeOf(ElementValue{}), fieldNameMap, validators)
 }
 
-func EnumerationInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func EnumerationInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["name"] = bindings.NewStringType()
+	fields["name"] = vapiBindings_.NewStringType()
 	fieldNameMap["name"] = "Name"
-	fields["values"] = bindings.NewListType(bindings.NewReferenceType(EnumerationValueInfoBindingType), reflect.TypeOf([]EnumerationValueInfo{}))
+	fields["values"] = vapiBindings_.NewListType(vapiBindings_.NewReferenceType(EnumerationValueInfoBindingType), reflect.TypeOf([]EnumerationValueInfo{}))
 	fieldNameMap["values"] = "Values"
-	fields["metadata"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
+	fields["metadata"] = vapiBindings_.NewMapType(vapiBindings_.NewStringType(), vapiBindings_.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
 	fieldNameMap["metadata"] = "Metadata"
-	fields["documentation"] = bindings.NewStringType()
+	fields["documentation"] = vapiBindings_.NewStringType()
 	fieldNameMap["documentation"] = "Documentation"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.enumeration_info", fields, reflect.TypeOf(EnumerationInfo{}), fieldNameMap, validators)
+	fields["lifecycle"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vapiMetadata_.LifecycleInfoBindingType))
+	fieldNameMap["lifecycle"] = "Lifecycle"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.enumeration_info", fields, reflect.TypeOf(EnumerationInfo{}), fieldNameMap, validators)
 }
 
-func EnumerationValueInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func EnumerationValueInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["value"] = bindings.NewStringType()
+	fields["value"] = vapiBindings_.NewStringType()
 	fieldNameMap["value"] = "Value"
-	fields["metadata"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
+	fields["metadata"] = vapiBindings_.NewMapType(vapiBindings_.NewStringType(), vapiBindings_.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
 	fieldNameMap["metadata"] = "Metadata"
-	fields["documentation"] = bindings.NewStringType()
+	fields["documentation"] = vapiBindings_.NewStringType()
 	fieldNameMap["documentation"] = "Documentation"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.enumeration_value_info", fields, reflect.TypeOf(EnumerationValueInfo{}), fieldNameMap, validators)
+	fields["lifecycle"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vapiMetadata_.LifecycleInfoBindingType))
+	fieldNameMap["lifecycle"] = "Lifecycle"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.enumeration_value_info", fields, reflect.TypeOf(EnumerationValueInfo{}), fieldNameMap, validators)
 }
 
-func ErrorInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func ErrorInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["structure_id"] = bindings.NewIdType([]string{"com.vmware.vapi.structure"}, "")
+	fields["structure_id"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.structure"}, "")
 	fieldNameMap["structure_id"] = "StructureId"
-	fields["documentation"] = bindings.NewStringType()
+	fields["documentation"] = vapiBindings_.NewStringType()
 	fieldNameMap["documentation"] = "Documentation"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.error_info", fields, reflect.TypeOf(ErrorInfo{}), fieldNameMap, validators)
+	fields["lifecycle"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vapiMetadata_.LifecycleInfoBindingType))
+	fieldNameMap["lifecycle"] = "Lifecycle"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.error_info", fields, reflect.TypeOf(ErrorInfo{}), fieldNameMap, validators)
 }
 
-func FieldInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func FieldInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["name"] = bindings.NewStringType()
+	fields["name"] = vapiBindings_.NewStringType()
 	fieldNameMap["name"] = "Name"
-	fields["type"] = bindings.NewReferenceType(TypeBindingType)
+	fields["type"] = vapiBindings_.NewReferenceType(TypeBindingType)
 	fieldNameMap["type"] = "Type_"
-	fields["metadata"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
+	fields["metadata"] = vapiBindings_.NewMapType(vapiBindings_.NewStringType(), vapiBindings_.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
 	fieldNameMap["metadata"] = "Metadata"
-	fields["documentation"] = bindings.NewStringType()
+	fields["documentation"] = vapiBindings_.NewStringType()
 	fieldNameMap["documentation"] = "Documentation"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.field_info", fields, reflect.TypeOf(FieldInfo{}), fieldNameMap, validators)
+	fields["lifecycle"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vapiMetadata_.LifecycleInfoBindingType))
+	fieldNameMap["lifecycle"] = "Lifecycle"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.field_info", fields, reflect.TypeOf(FieldInfo{}), fieldNameMap, validators)
 }
 
-func GenericInstantiationBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func GenericInstantiationBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["generic_type"] = bindings.NewEnumType("com.vmware.vapi.metadata.metamodel.generic_instantiation.generic_type", reflect.TypeOf(GenericInstantiationGenericTypeEnum(GenericInstantiationGenericType_LIST)))
+	fields["generic_type"] = vapiBindings_.NewEnumType("com.vmware.vapi.metadata.metamodel.generic_instantiation.generic_type", reflect.TypeOf(GenericInstantiationGenericTypeEnum(GenericInstantiationGenericType_LIST)))
 	fieldNameMap["generic_type"] = "GenericType"
-	fields["element_type"] = bindings.NewOptionalType(bindings.NewReferenceType(TypeBindingType))
+	fields["element_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TypeBindingType))
 	fieldNameMap["element_type"] = "ElementType"
-	fields["map_key_type"] = bindings.NewOptionalType(bindings.NewReferenceType(TypeBindingType))
+	fields["map_key_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TypeBindingType))
 	fieldNameMap["map_key_type"] = "MapKeyType"
-	fields["map_value_type"] = bindings.NewOptionalType(bindings.NewReferenceType(TypeBindingType))
+	fields["map_value_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TypeBindingType))
 	fieldNameMap["map_value_type"] = "MapValueType"
-	var validators = []bindings.Validator{}
-	uv1 := bindings.NewUnionValidator("generic_type",
-		map[string][]bindings.FieldData{
-			"LIST": []bindings.FieldData{
-				bindings.NewFieldData("element_type", true),
+	var validators = []vapiBindings_.Validator{}
+	uv1 := vapiBindings_.NewUnionValidator("generic_type",
+		map[string][]vapiBindings_.FieldData{
+			"LIST": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("element_type", true),
 			},
-			"OPTIONAL": []bindings.FieldData{
-				bindings.NewFieldData("element_type", true),
+			"OPTIONAL": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("element_type", true),
 			},
-			"SET": []bindings.FieldData{
-				bindings.NewFieldData("element_type", true),
+			"SET": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("element_type", true),
 			},
-			"MAP": []bindings.FieldData{
-				bindings.NewFieldData("map_key_type", true),
-				bindings.NewFieldData("map_value_type", true),
+			"MAP": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("map_key_type", true),
+				vapiBindings_.NewFieldData("map_value_type", true),
 			},
 		},
 	)
 	validators = append(validators, uv1)
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.generic_instantiation", fields, reflect.TypeOf(GenericInstantiation{}), fieldNameMap, validators)
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.generic_instantiation", fields, reflect.TypeOf(GenericInstantiation{}), fieldNameMap, validators)
 }
 
-func OperationInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func OperationInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["name"] = bindings.NewStringType()
+	fields["name"] = vapiBindings_.NewStringType()
 	fieldNameMap["name"] = "Name"
-	fields["params"] = bindings.NewListType(bindings.NewReferenceType(FieldInfoBindingType), reflect.TypeOf([]FieldInfo{}))
+	fields["params"] = vapiBindings_.NewListType(vapiBindings_.NewReferenceType(FieldInfoBindingType), reflect.TypeOf([]FieldInfo{}))
 	fieldNameMap["params"] = "Params"
-	fields["output"] = bindings.NewReferenceType(OperationResultInfoBindingType)
+	fields["output"] = vapiBindings_.NewReferenceType(OperationResultInfoBindingType)
 	fieldNameMap["output"] = "Output"
-	fields["errors"] = bindings.NewListType(bindings.NewReferenceType(ErrorInfoBindingType), reflect.TypeOf([]ErrorInfo{}))
+	fields["errors"] = vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ErrorInfoBindingType), reflect.TypeOf([]ErrorInfo{}))
 	fieldNameMap["errors"] = "Errors"
-	fields["metadata"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
+	fields["metadata"] = vapiBindings_.NewMapType(vapiBindings_.NewStringType(), vapiBindings_.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
 	fieldNameMap["metadata"] = "Metadata"
-	fields["documentation"] = bindings.NewStringType()
+	fields["documentation"] = vapiBindings_.NewStringType()
 	fieldNameMap["documentation"] = "Documentation"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.operation_info", fields, reflect.TypeOf(OperationInfo{}), fieldNameMap, validators)
+	fields["lifecycle"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vapiMetadata_.LifecycleInfoBindingType))
+	fieldNameMap["lifecycle"] = "Lifecycle"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.operation_info", fields, reflect.TypeOf(OperationInfo{}), fieldNameMap, validators)
 }
 
-func OperationResultInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func OperationResultInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["type"] = bindings.NewReferenceType(TypeBindingType)
+	fields["type"] = vapiBindings_.NewReferenceType(TypeBindingType)
 	fieldNameMap["type"] = "Type_"
-	fields["metadata"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
+	fields["metadata"] = vapiBindings_.NewMapType(vapiBindings_.NewStringType(), vapiBindings_.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
 	fieldNameMap["metadata"] = "Metadata"
-	fields["documentation"] = bindings.NewStringType()
+	fields["documentation"] = vapiBindings_.NewStringType()
 	fieldNameMap["documentation"] = "Documentation"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.operation_result_info", fields, reflect.TypeOf(OperationResultInfo{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.operation_result_info", fields, reflect.TypeOf(OperationResultInfo{}), fieldNameMap, validators)
 }
 
-func PackageInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func PackageInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["name"] = bindings.NewStringType()
+	fields["name"] = vapiBindings_.NewStringType()
 	fieldNameMap["name"] = "Name"
-	fields["structures"] = bindings.NewMapType(bindings.NewIdType([]string{"com.vmware.vapi.structure"}, ""), bindings.NewReferenceType(StructureInfoBindingType), reflect.TypeOf(map[string]StructureInfo{}))
+	fields["structures"] = vapiBindings_.NewMapType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.structure"}, ""), vapiBindings_.NewReferenceType(StructureInfoBindingType), reflect.TypeOf(map[string]StructureInfo{}))
 	fieldNameMap["structures"] = "Structures"
-	fields["enumerations"] = bindings.NewMapType(bindings.NewIdType([]string{"com.vmware.vapi.enumeration"}, ""), bindings.NewReferenceType(EnumerationInfoBindingType), reflect.TypeOf(map[string]EnumerationInfo{}))
+	fields["enumerations"] = vapiBindings_.NewMapType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.enumeration"}, ""), vapiBindings_.NewReferenceType(EnumerationInfoBindingType), reflect.TypeOf(map[string]EnumerationInfo{}))
 	fieldNameMap["enumerations"] = "Enumerations"
-	fields["services"] = bindings.NewMapType(bindings.NewIdType([]string{"com.vmware.vapi.service"}, ""), bindings.NewReferenceType(ServiceInfoBindingType), reflect.TypeOf(map[string]ServiceInfo{}))
+	fields["services"] = vapiBindings_.NewMapType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.service"}, ""), vapiBindings_.NewReferenceType(ServiceInfoBindingType), reflect.TypeOf(map[string]ServiceInfo{}))
 	fieldNameMap["services"] = "Services"
-	fields["metadata"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
+	fields["metadata"] = vapiBindings_.NewMapType(vapiBindings_.NewStringType(), vapiBindings_.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
 	fieldNameMap["metadata"] = "Metadata"
-	fields["documentation"] = bindings.NewStringType()
+	fields["documentation"] = vapiBindings_.NewStringType()
 	fieldNameMap["documentation"] = "Documentation"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.package_info", fields, reflect.TypeOf(PackageInfo{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.package_info", fields, reflect.TypeOf(PackageInfo{}), fieldNameMap, validators)
 }
 
-func PrimitiveValueBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func PrimitiveValueBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["type"] = bindings.NewEnumType("com.vmware.vapi.metadata.metamodel.primitive_value.type", reflect.TypeOf(PrimitiveValueTypeEnum(PrimitiveValueType_BOOLEAN)))
+	fields["type"] = vapiBindings_.NewEnumType("com.vmware.vapi.metadata.metamodel.primitive_value.type", reflect.TypeOf(PrimitiveValueTypeEnum(PrimitiveValueType_BOOLEAN)))
 	fieldNameMap["type"] = "Type_"
-	fields["boolean_value"] = bindings.NewOptionalType(bindings.NewBooleanType())
+	fields["boolean_value"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["boolean_value"] = "BooleanValue"
-	fields["double_value"] = bindings.NewOptionalType(bindings.NewDoubleType())
+	fields["double_value"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDoubleType())
 	fieldNameMap["double_value"] = "DoubleValue"
-	fields["long_value"] = bindings.NewOptionalType(bindings.NewIntegerType())
+	fields["long_value"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["long_value"] = "LongValue"
-	fields["string_value"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["string_value"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["string_value"] = "StringValue"
-	var validators = []bindings.Validator{}
-	uv1 := bindings.NewUnionValidator("type",
-		map[string][]bindings.FieldData{
-			"BOOLEAN": []bindings.FieldData{
-				bindings.NewFieldData("boolean_value", true),
+	var validators = []vapiBindings_.Validator{}
+	uv1 := vapiBindings_.NewUnionValidator("type",
+		map[string][]vapiBindings_.FieldData{
+			"BOOLEAN": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("boolean_value", true),
 			},
-			"DOUBLE": []bindings.FieldData{
-				bindings.NewFieldData("double_value", true),
+			"DOUBLE": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("double_value", true),
 			},
-			"LONG": []bindings.FieldData{
-				bindings.NewFieldData("long_value", true),
+			"LONG": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("long_value", true),
 			},
-			"STRING": []bindings.FieldData{
-				bindings.NewFieldData("string_value", true),
+			"STRING": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("string_value", true),
 			},
 		},
 	)
 	validators = append(validators, uv1)
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.primitive_value", fields, reflect.TypeOf(PrimitiveValue{}), fieldNameMap, validators)
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.primitive_value", fields, reflect.TypeOf(PrimitiveValue{}), fieldNameMap, validators)
 }
 
-func ServiceInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func ServiceInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["name"] = bindings.NewStringType()
+	fields["name"] = vapiBindings_.NewStringType()
 	fieldNameMap["name"] = "Name"
-	fields["operations"] = bindings.NewMapType(bindings.NewIdType([]string{"com.vmware.vapi.operation"}, ""), bindings.NewReferenceType(OperationInfoBindingType), reflect.TypeOf(map[string]OperationInfo{}))
+	fields["operations"] = vapiBindings_.NewMapType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.operation"}, ""), vapiBindings_.NewReferenceType(OperationInfoBindingType), reflect.TypeOf(map[string]OperationInfo{}))
 	fieldNameMap["operations"] = "Operations"
-	fields["structures"] = bindings.NewMapType(bindings.NewIdType([]string{"com.vmware.vapi.structure"}, ""), bindings.NewReferenceType(StructureInfoBindingType), reflect.TypeOf(map[string]StructureInfo{}))
+	fields["structures"] = vapiBindings_.NewMapType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.structure"}, ""), vapiBindings_.NewReferenceType(StructureInfoBindingType), reflect.TypeOf(map[string]StructureInfo{}))
 	fieldNameMap["structures"] = "Structures"
-	fields["enumerations"] = bindings.NewMapType(bindings.NewIdType([]string{"com.vmware.vapi.enumeration"}, ""), bindings.NewReferenceType(EnumerationInfoBindingType), reflect.TypeOf(map[string]EnumerationInfo{}))
+	fields["enumerations"] = vapiBindings_.NewMapType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.enumeration"}, ""), vapiBindings_.NewReferenceType(EnumerationInfoBindingType), reflect.TypeOf(map[string]EnumerationInfo{}))
 	fieldNameMap["enumerations"] = "Enumerations"
-	fields["constants"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(ConstantInfoBindingType), reflect.TypeOf(map[string]ConstantInfo{}))
+	fields["constants"] = vapiBindings_.NewMapType(vapiBindings_.NewStringType(), vapiBindings_.NewReferenceType(ConstantInfoBindingType), reflect.TypeOf(map[string]ConstantInfo{}))
 	fieldNameMap["constants"] = "Constants"
-	fields["metadata"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
+	fields["metadata"] = vapiBindings_.NewMapType(vapiBindings_.NewStringType(), vapiBindings_.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
 	fieldNameMap["metadata"] = "Metadata"
-	fields["documentation"] = bindings.NewStringType()
+	fields["documentation"] = vapiBindings_.NewStringType()
 	fieldNameMap["documentation"] = "Documentation"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.service_info", fields, reflect.TypeOf(ServiceInfo{}), fieldNameMap, validators)
+	fields["lifecycle"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vapiMetadata_.LifecycleInfoBindingType))
+	fieldNameMap["lifecycle"] = "Lifecycle"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.service_info", fields, reflect.TypeOf(ServiceInfo{}), fieldNameMap, validators)
 }
 
-func StructureInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func StructureInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["name"] = bindings.NewStringType()
+	fields["name"] = vapiBindings_.NewStringType()
 	fieldNameMap["name"] = "Name"
-	fields["type"] = bindings.NewEnumType("com.vmware.vapi.metadata.metamodel.structure_info.type", reflect.TypeOf(StructureInfoTypeEnum(StructureInfoType_STRUCTURE)))
+	fields["type"] = vapiBindings_.NewEnumType("com.vmware.vapi.metadata.metamodel.structure_info.type", reflect.TypeOf(StructureInfoTypeEnum(StructureInfoType_STRUCTURE)))
 	fieldNameMap["type"] = "Type_"
-	fields["enumerations"] = bindings.NewMapType(bindings.NewIdType([]string{"com.vmware.vapi.enumeration"}, ""), bindings.NewReferenceType(EnumerationInfoBindingType), reflect.TypeOf(map[string]EnumerationInfo{}))
+	fields["enumerations"] = vapiBindings_.NewMapType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.enumeration"}, ""), vapiBindings_.NewReferenceType(EnumerationInfoBindingType), reflect.TypeOf(map[string]EnumerationInfo{}))
 	fieldNameMap["enumerations"] = "Enumerations"
-	fields["constants"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(ConstantInfoBindingType), reflect.TypeOf(map[string]ConstantInfo{}))
+	fields["constants"] = vapiBindings_.NewMapType(vapiBindings_.NewStringType(), vapiBindings_.NewReferenceType(ConstantInfoBindingType), reflect.TypeOf(map[string]ConstantInfo{}))
 	fieldNameMap["constants"] = "Constants"
-	fields["fields"] = bindings.NewListType(bindings.NewReferenceType(FieldInfoBindingType), reflect.TypeOf([]FieldInfo{}))
+	fields["fields"] = vapiBindings_.NewListType(vapiBindings_.NewReferenceType(FieldInfoBindingType), reflect.TypeOf([]FieldInfo{}))
 	fieldNameMap["fields"] = "Fields"
-	fields["metadata"] = bindings.NewMapType(bindings.NewStringType(), bindings.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
+	fields["metadata"] = vapiBindings_.NewMapType(vapiBindings_.NewStringType(), vapiBindings_.NewReferenceType(ElementMapBindingType), reflect.TypeOf(map[string]ElementMap{}))
 	fieldNameMap["metadata"] = "Metadata"
-	fields["documentation"] = bindings.NewStringType()
+	fields["documentation"] = vapiBindings_.NewStringType()
 	fieldNameMap["documentation"] = "Documentation"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.structure_info", fields, reflect.TypeOf(StructureInfo{}), fieldNameMap, validators)
+	fields["lifecycle"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vapiMetadata_.LifecycleInfoBindingType))
+	fieldNameMap["lifecycle"] = "Lifecycle"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.structure_info", fields, reflect.TypeOf(StructureInfo{}), fieldNameMap, validators)
 }
 
-func TypeBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func TypeBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["category"] = bindings.NewEnumType("com.vmware.vapi.metadata.metamodel.type.category", reflect.TypeOf(TypeCategoryEnum(TypeCategory_BUILTIN)))
+	fields["category"] = vapiBindings_.NewEnumType("com.vmware.vapi.metadata.metamodel.type.category", reflect.TypeOf(TypeCategoryEnum(TypeCategory_BUILTIN)))
 	fieldNameMap["category"] = "Category"
-	fields["builtin_type"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vapi.metadata.metamodel.type.builtin_type", reflect.TypeOf(TypeBuiltinTypeEnum(TypeBuiltinType_VOID))))
+	fields["builtin_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewEnumType("com.vmware.vapi.metadata.metamodel.type.builtin_type", reflect.TypeOf(TypeBuiltinTypeEnum(TypeBuiltinType_VOID))))
 	fieldNameMap["builtin_type"] = "BuiltinType"
-	fields["user_defined_type"] = bindings.NewOptionalType(bindings.NewReferenceType(UserDefinedTypeBindingType))
+	fields["user_defined_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(UserDefinedTypeBindingType))
 	fieldNameMap["user_defined_type"] = "UserDefinedType"
-	fields["generic_instantiation"] = bindings.NewOptionalType(bindings.NewReferenceType(GenericInstantiationBindingType))
+	fields["generic_instantiation"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(GenericInstantiationBindingType))
 	fieldNameMap["generic_instantiation"] = "GenericInstantiation"
-	var validators = []bindings.Validator{}
-	uv1 := bindings.NewUnionValidator("category",
-		map[string][]bindings.FieldData{
-			"BUILTIN": []bindings.FieldData{
-				bindings.NewFieldData("builtin_type", true),
+	var validators = []vapiBindings_.Validator{}
+	uv1 := vapiBindings_.NewUnionValidator("category",
+		map[string][]vapiBindings_.FieldData{
+			"BUILTIN": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("builtin_type", true),
 			},
-			"USER_DEFINED": []bindings.FieldData{
-				bindings.NewFieldData("user_defined_type", true),
+			"USER_DEFINED": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("user_defined_type", true),
 			},
-			"GENERIC": []bindings.FieldData{
-				bindings.NewFieldData("generic_instantiation", true),
+			"GENERIC": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("generic_instantiation", true),
 			},
 		},
 	)
 	validators = append(validators, uv1)
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.type", fields, reflect.TypeOf(Type{}), fieldNameMap, validators)
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.type", fields, reflect.TypeOf(Type{}), fieldNameMap, validators)
 }
 
-func UserDefinedTypeBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func UserDefinedTypeBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["resource_type"] = bindings.NewStringType()
+	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
-	fields["resource_id"] = bindings.NewIdType([]string{"com.vmware.vapi.structure", "com.vmware.vapi.enumeration"}, "resource_type")
+	fields["resource_id"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.structure", "com.vmware.vapi.enumeration"}, "resource_type")
 	fieldNameMap["resource_id"] = "ResourceId"
-	var validators = []bindings.Validator{}
-	isv1 := bindings.NewIsOneOfValidator(
+	var validators = []vapiBindings_.Validator{}
+	isv1 := vapiBindings_.NewIsOneOfValidator(
 		"resource_type",
 		[]string{
 			"com.vmware.vapi.structure",
@@ -1208,5 +1222,5 @@ func UserDefinedTypeBindingType() bindings.BindingType {
 		},
 	)
 	validators = append(validators, isv1)
-	return bindings.NewStructType("com.vmware.vapi.metadata.metamodel.user_defined_type", fields, reflect.TypeOf(UserDefinedType{}), fieldNameMap, validators)
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.metamodel.user_defined_type", fields, reflect.TypeOf(UserDefinedType{}), fieldNameMap, validators)
 }

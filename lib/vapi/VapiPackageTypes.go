@@ -11,42 +11,41 @@
 package vapi
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/authentication"
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/cli"
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/metamodel"
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/privilege"
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/routing"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
+	vapiMetadataAuthentication_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/authentication"
+	vapiMetadataCli_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/cli"
+	vapiMetadataMetamodel_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/metamodel"
+	vapiMetadataPrivilege_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/privilege"
+	vapiMetadataRouting_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/metadata/routing"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiLog_ "github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"reflect"
 )
 
 // The ``ComponentInfo`` class holds component metadata of the different metadata types for an API component. The class allows any combination of metadata types to be aggregated into one instance.
 type ComponentInfo struct {
 	// The metamodel component data
-	Metamodel metamodel.ComponentInfo
+	Metamodel vapiMetadataMetamodel_.ComponentInfo
 	// The CLI component data
-	Cli *cli.ComponentInfo
+	Cli *vapiMetadataCli_.ComponentInfo
 	// The authentication component data
-	Authentication *authentication.ComponentInfo
+	Authentication *vapiMetadataAuthentication_.ComponentInfo
 	// The routing component data
-	Routing *routing.ComponentInfo
+	Routing *vapiMetadataRouting_.ComponentInfo
 	// The privilege component data
-	Privilege *privilege.ComponentInfo
+	Privilege *vapiMetadataPrivilege_.ComponentInfo
 }
 
-func (s *ComponentInfo) GetType__() bindings.BindingType {
+func (s *ComponentInfo) GetType__() vapiBindings_.BindingType {
 	return ComponentInfoBindingType()
 }
 
-func (s *ComponentInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *ComponentInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for ComponentInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for ComponentInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -60,46 +59,45 @@ type MetadataInfo struct {
 	Metadata map[string]ComponentInfo
 }
 
-func (s *MetadataInfo) GetType__() bindings.BindingType {
+func (s *MetadataInfo) GetType__() vapiBindings_.BindingType {
 	return MetadataInfoBindingType()
 }
 
-func (s *MetadataInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *MetadataInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for MetadataInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for MetadataInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
 }
 
-func ComponentInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func ComponentInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["metamodel"] = bindings.NewReferenceType(metamodel.ComponentInfoBindingType)
+	fields["metamodel"] = vapiBindings_.NewReferenceType(vapiMetadataMetamodel_.ComponentInfoBindingType)
 	fieldNameMap["metamodel"] = "Metamodel"
-	fields["cli"] = bindings.NewOptionalType(bindings.NewReferenceType(cli.ComponentInfoBindingType))
+	fields["cli"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vapiMetadataCli_.ComponentInfoBindingType))
 	fieldNameMap["cli"] = "Cli"
-	fields["authentication"] = bindings.NewOptionalType(bindings.NewReferenceType(authentication.ComponentInfoBindingType))
+	fields["authentication"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vapiMetadataAuthentication_.ComponentInfoBindingType))
 	fieldNameMap["authentication"] = "Authentication"
-	fields["routing"] = bindings.NewOptionalType(bindings.NewReferenceType(routing.ComponentInfoBindingType))
+	fields["routing"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vapiMetadataRouting_.ComponentInfoBindingType))
 	fieldNameMap["routing"] = "Routing"
-	fields["privilege"] = bindings.NewOptionalType(bindings.NewReferenceType(privilege.ComponentInfoBindingType))
+	fields["privilege"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vapiMetadataPrivilege_.ComponentInfoBindingType))
 	fieldNameMap["privilege"] = "Privilege"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.component_info", fields, reflect.TypeOf(ComponentInfo{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.component_info", fields, reflect.TypeOf(ComponentInfo{}), fieldNameMap, validators)
 }
 
-func MetadataInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func MetadataInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["version"] = bindings.NewStringType()
+	fields["version"] = vapiBindings_.NewStringType()
 	fieldNameMap["version"] = "Version"
-	fields["metadata"] = bindings.NewMapType(bindings.NewIdType([]string{"com.vmware.vapi.component"}, ""), bindings.NewReferenceType(ComponentInfoBindingType), reflect.TypeOf(map[string]ComponentInfo{}))
+	fields["metadata"] = vapiBindings_.NewMapType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.component"}, ""), vapiBindings_.NewReferenceType(ComponentInfoBindingType), reflect.TypeOf(map[string]ComponentInfo{}))
 	fieldNameMap["metadata"] = "Metadata"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata_info", fields, reflect.TypeOf(MetadataInfo{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata_info", fields, reflect.TypeOf(MetadataInfo{}), fieldNameMap, validators)
 }

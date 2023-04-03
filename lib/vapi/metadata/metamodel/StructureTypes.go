@@ -11,30 +11,30 @@
 package metamodel
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
 	"reflect"
 )
 
 // Resource type for structure.
 const Structure_RESOURCE_TYPE = "com.vmware.vapi.structure"
 
-func structureListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func structureListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func structureListOutputType() bindings.BindingType {
-	return bindings.NewListType(bindings.NewIdType([]string{"com.vmware.vapi.structure"}, ""), reflect.TypeOf([]string{}))
+func StructureListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewListType(vapiBindings_.NewIdType([]string{"com.vmware.vapi.structure"}, ""), reflect.TypeOf([]string{}))
 }
 
-func structureListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func structureListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -42,7 +42,7 @@ func structureListRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -63,36 +63,36 @@ func structureListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{})
 }
 
-func structureGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func structureGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["structure_id"] = bindings.NewIdType([]string{"com.vmware.vapi.structure"}, "")
+	fields["structure_id"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.structure"}, "")
 	fieldNameMap["structure_id"] = "StructureId"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func structureGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(StructureInfoBindingType)
+func StructureGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(StructureInfoBindingType)
 }
 
-func structureGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func structureGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["structure_id"] = bindings.NewIdType([]string{"com.vmware.vapi.structure"}, "")
+	fields["structure_id"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.structure"}, "")
 	fieldNameMap["structure_id"] = "StructureId"
-	paramsTypeMap["structure_id"] = bindings.NewIdType([]string{"com.vmware.vapi.structure"}, "")
-	paramsTypeMap["structureId"] = bindings.NewIdType([]string{"com.vmware.vapi.structure"}, "")
+	paramsTypeMap["structure_id"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.structure"}, "")
+	paramsTypeMap["structureId"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.structure"}, "")
 	pathParams["structure_id"] = "structureId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,

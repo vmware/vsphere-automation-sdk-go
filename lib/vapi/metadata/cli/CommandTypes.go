@@ -11,10 +11,10 @@
 package cli
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiLog_ "github.com/vmware/vsphere-automation-sdk-go/runtime/log"
+	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
 	"reflect"
 )
 
@@ -100,17 +100,16 @@ type CommandOutputFieldInfo struct {
 	DisplayName string
 }
 
-func (s *CommandOutputFieldInfo) GetType__() bindings.BindingType {
+func (s *CommandOutputFieldInfo) GetType__() vapiBindings_.BindingType {
 	return CommandOutputFieldInfoBindingType()
 }
 
-func (s *CommandOutputFieldInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *CommandOutputFieldInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for CommandOutputFieldInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for CommandOutputFieldInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -124,17 +123,16 @@ type CommandOutputInfo struct {
 	OutputFields []CommandOutputFieldInfo
 }
 
-func (s *CommandOutputInfo) GetType__() bindings.BindingType {
+func (s *CommandOutputInfo) GetType__() vapiBindings_.BindingType {
 	return CommandOutputInfoBindingType()
 }
 
-func (s *CommandOutputInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *CommandOutputInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for CommandOutputInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for CommandOutputInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -156,17 +154,16 @@ type CommandOptionInfo struct {
 	Generic CommandGenericTypeEnum
 }
 
-func (s *CommandOptionInfo) GetType__() bindings.BindingType {
+func (s *CommandOptionInfo) GetType__() vapiBindings_.BindingType {
 	return CommandOptionInfoBindingType()
 }
 
-func (s *CommandOptionInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *CommandOptionInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for CommandOptionInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for CommandOptionInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -180,17 +177,16 @@ type CommandIdentity struct {
 	Name string
 }
 
-func (s *CommandIdentity) GetType__() bindings.BindingType {
+func (s *CommandIdentity) GetType__() vapiBindings_.BindingType {
 	return CommandIdentityBindingType()
 }
 
-func (s *CommandIdentity) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *CommandIdentity) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for CommandIdentity._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for CommandIdentity._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -214,51 +210,50 @@ type CommandInfo struct {
 	OutputFieldList []CommandOutputInfo
 }
 
-func (s *CommandInfo) GetType__() bindings.BindingType {
+func (s *CommandInfo) GetType__() vapiBindings_.BindingType {
 	return CommandInfoBindingType()
 }
 
-func (s *CommandInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *CommandInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for CommandInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for CommandInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
 }
 
-func commandListInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func commandListInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["path"] = "Path"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func commandListOutputType() bindings.BindingType {
-	return bindings.NewListType(bindings.NewReferenceType(CommandIdentityBindingType), reflect.TypeOf([]CommandIdentity{}))
+func CommandListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewListType(vapiBindings_.NewReferenceType(CommandIdentityBindingType), reflect.TypeOf([]CommandIdentity{}))
 }
 
-func commandListRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func commandListRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["path"] = "Path"
-	paramsTypeMap["path"] = bindings.NewOptionalType(bindings.NewStringType())
+	paramsTypeMap["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	queryParams["path"] = "path"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -279,34 +274,34 @@ func commandListRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func commandGetInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func commandGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["identity"] = bindings.NewReferenceType(CommandIdentityBindingType)
+	fields["identity"] = vapiBindings_.NewReferenceType(CommandIdentityBindingType)
 	fieldNameMap["identity"] = "Identity"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func commandGetOutputType() bindings.BindingType {
-	return bindings.NewReferenceType(CommandInfoBindingType)
+func CommandGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(CommandInfoBindingType)
 }
 
-func commandGetRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func commandGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["identity"] = bindings.NewReferenceType(CommandIdentityBindingType)
+	fields["identity"] = vapiBindings_.NewReferenceType(CommandIdentityBindingType)
 	fieldNameMap["identity"] = "Identity"
 	bodyFieldsMap["identity"] = "identity"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -327,21 +322,21 @@ func commandGetRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func commandFingerprintInputType() bindings.StructType {
-	fields := make(map[string]bindings.BindingType)
+func commandFingerprintInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("operation-input", fields, reflect.TypeOf(data.StructValue{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func commandFingerprintOutputType() bindings.BindingType {
-	return bindings.NewStringType()
+func CommandFingerprintOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewStringType()
 }
 
-func commandFingerprintRestMetadata() protocol.OperationRestMetadata {
-	fields := map[string]bindings.BindingType{}
+func commandFingerprintRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]bindings.BindingType{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
 	pathParams := map[string]string{}
 	queryParams := map[string]string{}
 	headerParams := map[string]string{}
@@ -349,7 +344,7 @@ func commandFingerprintRestMetadata() protocol.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
-	return protocol.NewOperationRestMetadata(
+	return vapiProtocol_.NewOperationRestMetadata(
 		fields,
 		fieldNameMap,
 		paramsTypeMap,
@@ -370,75 +365,75 @@ func commandFingerprintRestMetadata() protocol.OperationRestMetadata {
 		map[string]int{})
 }
 
-func CommandOutputFieldInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func CommandOutputFieldInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["field_name"] = bindings.NewStringType()
+	fields["field_name"] = vapiBindings_.NewStringType()
 	fieldNameMap["field_name"] = "FieldName"
-	fields["display_name"] = bindings.NewStringType()
+	fields["display_name"] = vapiBindings_.NewStringType()
 	fieldNameMap["display_name"] = "DisplayName"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.cli.command.output_field_info", fields, reflect.TypeOf(CommandOutputFieldInfo{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.cli.command.output_field_info", fields, reflect.TypeOf(CommandOutputFieldInfo{}), fieldNameMap, validators)
 }
 
-func CommandOutputInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func CommandOutputInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["structure_id"] = bindings.NewIdType([]string{"com.vmware.vapi.structure"}, "")
+	fields["structure_id"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.structure"}, "")
 	fieldNameMap["structure_id"] = "StructureId"
-	fields["output_fields"] = bindings.NewListType(bindings.NewReferenceType(CommandOutputFieldInfoBindingType), reflect.TypeOf([]CommandOutputFieldInfo{}))
+	fields["output_fields"] = vapiBindings_.NewListType(vapiBindings_.NewReferenceType(CommandOutputFieldInfoBindingType), reflect.TypeOf([]CommandOutputFieldInfo{}))
 	fieldNameMap["output_fields"] = "OutputFields"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.cli.command.output_info", fields, reflect.TypeOf(CommandOutputInfo{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.cli.command.output_info", fields, reflect.TypeOf(CommandOutputInfo{}), fieldNameMap, validators)
 }
 
-func CommandOptionInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func CommandOptionInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["long_option"] = bindings.NewStringType()
+	fields["long_option"] = vapiBindings_.NewStringType()
 	fieldNameMap["long_option"] = "LongOption"
-	fields["short_option"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["short_option"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["short_option"] = "ShortOption"
-	fields["field_name"] = bindings.NewStringType()
+	fields["field_name"] = vapiBindings_.NewStringType()
 	fieldNameMap["field_name"] = "FieldName"
-	fields["description"] = bindings.NewStringType()
+	fields["description"] = vapiBindings_.NewStringType()
 	fieldNameMap["description"] = "Description"
-	fields["type"] = bindings.NewStringType()
+	fields["type"] = vapiBindings_.NewStringType()
 	fieldNameMap["type"] = "Type_"
-	fields["generic"] = bindings.NewEnumType("com.vmware.vapi.metadata.cli.command.generic_type", reflect.TypeOf(CommandGenericTypeEnum(CommandGenericType_NONE)))
+	fields["generic"] = vapiBindings_.NewEnumType("com.vmware.vapi.metadata.cli.command.generic_type", reflect.TypeOf(CommandGenericTypeEnum(CommandGenericType_NONE)))
 	fieldNameMap["generic"] = "Generic"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.cli.command.option_info", fields, reflect.TypeOf(CommandOptionInfo{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.cli.command.option_info", fields, reflect.TypeOf(CommandOptionInfo{}), fieldNameMap, validators)
 }
 
-func CommandIdentityBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func CommandIdentityBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["path"] = bindings.NewStringType()
+	fields["path"] = vapiBindings_.NewStringType()
 	fieldNameMap["path"] = "Path"
-	fields["name"] = bindings.NewStringType()
+	fields["name"] = vapiBindings_.NewStringType()
 	fieldNameMap["name"] = "Name"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.cli.command.identity", fields, reflect.TypeOf(CommandIdentity{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.cli.command.identity", fields, reflect.TypeOf(CommandIdentity{}), fieldNameMap, validators)
 }
 
-func CommandInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func CommandInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["identity"] = bindings.NewReferenceType(CommandIdentityBindingType)
+	fields["identity"] = vapiBindings_.NewReferenceType(CommandIdentityBindingType)
 	fieldNameMap["identity"] = "Identity"
-	fields["description"] = bindings.NewStringType()
+	fields["description"] = vapiBindings_.NewStringType()
 	fieldNameMap["description"] = "Description"
-	fields["service_id"] = bindings.NewIdType([]string{"com.vmware.vapi.service"}, "")
+	fields["service_id"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.service"}, "")
 	fieldNameMap["service_id"] = "ServiceId"
-	fields["operation_id"] = bindings.NewIdType([]string{"com.vmware.vapi.operation"}, "")
+	fields["operation_id"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.operation"}, "")
 	fieldNameMap["operation_id"] = "OperationId"
-	fields["options"] = bindings.NewListType(bindings.NewReferenceType(CommandOptionInfoBindingType), reflect.TypeOf([]CommandOptionInfo{}))
+	fields["options"] = vapiBindings_.NewListType(vapiBindings_.NewReferenceType(CommandOptionInfoBindingType), reflect.TypeOf([]CommandOptionInfo{}))
 	fieldNameMap["options"] = "Options"
-	fields["formatter"] = bindings.NewOptionalType(bindings.NewEnumType("com.vmware.vapi.metadata.cli.command.formatter_type", reflect.TypeOf(CommandFormatterTypeEnum(CommandFormatterType_SIMPLE))))
+	fields["formatter"] = vapiBindings_.NewOptionalType(vapiBindings_.NewEnumType("com.vmware.vapi.metadata.cli.command.formatter_type", reflect.TypeOf(CommandFormatterTypeEnum(CommandFormatterType_SIMPLE))))
 	fieldNameMap["formatter"] = "Formatter"
-	fields["output_field_list"] = bindings.NewListType(bindings.NewReferenceType(CommandOutputInfoBindingType), reflect.TypeOf([]CommandOutputInfo{}))
+	fields["output_field_list"] = vapiBindings_.NewListType(vapiBindings_.NewReferenceType(CommandOutputInfoBindingType), reflect.TypeOf([]CommandOutputInfo{}))
 	fieldNameMap["output_field_list"] = "OutputFieldList"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.vapi.metadata.cli.command.info", fields, reflect.TypeOf(CommandInfo{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.vapi.metadata.cli.command.info", fields, reflect.TypeOf(CommandInfo{}), fieldNameMap, validators)
 }

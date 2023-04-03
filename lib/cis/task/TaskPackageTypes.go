@@ -11,10 +11,10 @@
 package task
 
 import (
-	"github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
+	vapiStd_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
+	vapiLog_ "github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"reflect"
 	"time"
 )
@@ -61,20 +61,19 @@ type Progress struct {
 	// The amount of work completed for the operation. The value can only be incremented.
 	Completed int64
 	// Message about the work progress.
-	Message std.LocalizableMessage
+	Message vapiStd_.LocalizableMessage
 }
 
-func (s *Progress) GetType__() bindings.BindingType {
+func (s *Progress) GetType__() vapiBindings_.BindingType {
 	return ProgressBindingType()
 }
 
-func (s *Progress) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *Progress) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Progress._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for Progress._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -83,7 +82,7 @@ func (s *Progress) GetDataValue__() (data.DataValue, []error) {
 // The ``CommonInfo`` class contains information common to all tasks.
 type CommonInfo struct {
 	// Description of the operation associated with the task.
-	Description std.LocalizableMessage
+	Description vapiStd_.LocalizableMessage
 	// Identifier of the service containing the operation.
 	Service string
 	// Identifier of the operation associated with the task.
@@ -91,13 +90,13 @@ type CommonInfo struct {
 	// Parent of the current task.
 	Parent *string
 	// Identifier of the target created by the operation or an existing one the operation performed on.
-	Target *std.DynamicID
+	Target *vapiStd_.DynamicID
 	// Status of the operation associated with the task.
 	Status StatusEnum
 	// Flag to indicate whether or not the operation can be cancelled. The value may change as the operation progresses.
 	Cancelable bool
 	// Description of the error if the operation status is "FAILED".
-	Error_ *data.ErrorValue
+	Error_ *vapiData_.ErrorValue
 	// Time when the operation is started.
 	StartTime *time.Time
 	// Time when the operation is completed.
@@ -106,17 +105,16 @@ type CommonInfo struct {
 	User *string
 }
 
-func (s *CommonInfo) GetType__() bindings.BindingType {
+func (s *CommonInfo) GetType__() vapiBindings_.BindingType {
 	return CommonInfoBindingType()
 }
 
-func (s *CommonInfo) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *CommonInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for CommonInfo._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for CommonInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
@@ -126,10 +124,12 @@ func (s *CommonInfo) GetDataValue__() (data.DataValue, []error) {
 type Info struct {
 	// Progress of the operation.
 	Progress *Progress
-	// Result of the operation. If an operation reports partial results before it completes, this property could be map with bool value before the CommonInfo#status has the value StatusEnum#Status_SUCCEEDED. The value could change as the operation progresses.
-	Result data.DataValue
+	// Result of the operation.
+	//
+	//  If an operation reports partial results before it completes, this property could be map with bool value before the CommonInfo#status has the value StatusEnum#Status_SUCCEEDED. The value could change as the operation progresses.
+	Result vapiData_.DataValue
 	// Description of the operation associated with the task.
-	Description std.LocalizableMessage
+	Description vapiStd_.LocalizableMessage
 	// Identifier of the service containing the operation.
 	Service string
 	// Identifier of the operation associated with the task.
@@ -137,13 +137,13 @@ type Info struct {
 	// Parent of the current task.
 	Parent *string
 	// Identifier of the target created by the operation or an existing one the operation performed on.
-	Target *std.DynamicID
+	Target *vapiStd_.DynamicID
 	// Status of the operation associated with the task.
 	Status StatusEnum
 	// Flag to indicate whether or not the operation can be cancelled. The value may change as the operation progresses.
 	Cancelable bool
 	// Description of the error if the operation status is "FAILED".
-	Error_ *data.ErrorValue
+	Error_ *vapiData_.ErrorValue
 	// Time when the operation is started.
 	StartTime *time.Time
 	// Time when the operation is completed.
@@ -152,143 +152,142 @@ type Info struct {
 	User *string
 }
 
-func (s *Info) GetType__() bindings.BindingType {
+func (s *Info) GetType__() vapiBindings_.BindingType {
 	return InfoBindingType()
 }
 
-func (s *Info) GetDataValue__() (data.DataValue, []error) {
-	typeConverter := bindings.NewTypeConverter()
-	typeConverter.SetMode(bindings.JSONRPC)
+func (s *Info) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		log.Errorf("Error in ConvertToVapi for Info._GetDataValue method - %s",
-			bindings.VAPIerrorsToError(err).Error())
+		vapiLog_.Errorf("Error in ConvertToVapi for Info._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
 	return dataVal, nil
 }
 
-func ProgressBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func ProgressBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["total"] = bindings.NewIntegerType()
+	fields["total"] = vapiBindings_.NewIntegerType()
 	fieldNameMap["total"] = "Total"
-	fields["completed"] = bindings.NewIntegerType()
+	fields["completed"] = vapiBindings_.NewIntegerType()
 	fieldNameMap["completed"] = "Completed"
-	fields["message"] = bindings.NewReferenceType(std.LocalizableMessageBindingType)
+	fields["message"] = vapiBindings_.NewReferenceType(vapiStd_.LocalizableMessageBindingType)
 	fieldNameMap["message"] = "Message"
-	var validators = []bindings.Validator{}
-	return bindings.NewStructType("com.vmware.cis.task.progress", fields, reflect.TypeOf(Progress{}), fieldNameMap, validators)
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.cis.task.progress", fields, reflect.TypeOf(Progress{}), fieldNameMap, validators)
 }
 
-func CommonInfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func CommonInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["description"] = bindings.NewReferenceType(std.LocalizableMessageBindingType)
+	fields["description"] = vapiBindings_.NewReferenceType(vapiStd_.LocalizableMessageBindingType)
 	fieldNameMap["description"] = "Description"
-	fields["service"] = bindings.NewIdType([]string{"com.vmware.vapi.service"}, "")
+	fields["service"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.service"}, "")
 	fieldNameMap["service"] = "Service"
-	fields["operation"] = bindings.NewIdType([]string{"com.vmware.vapi.operation"}, "")
+	fields["operation"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.operation"}, "")
 	fieldNameMap["operation"] = "Operation"
-	fields["parent"] = bindings.NewOptionalType(bindings.NewIdType([]string{"com.vmware.cis.task"}, ""))
+	fields["parent"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIdType([]string{"com.vmware.cis.task"}, ""))
 	fieldNameMap["parent"] = "Parent"
-	fields["target"] = bindings.NewOptionalType(bindings.NewReferenceType(std.DynamicIDBindingType))
+	fields["target"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vapiStd_.DynamicIDBindingType))
 	fieldNameMap["target"] = "Target"
-	fields["status"] = bindings.NewEnumType("com.vmware.cis.task.status", reflect.TypeOf(StatusEnum(Status_PENDING)))
+	fields["status"] = vapiBindings_.NewEnumType("com.vmware.cis.task.status", reflect.TypeOf(StatusEnum(Status_PENDING)))
 	fieldNameMap["status"] = "Status"
-	fields["cancelable"] = bindings.NewBooleanType()
+	fields["cancelable"] = vapiBindings_.NewBooleanType()
 	fieldNameMap["cancelable"] = "Cancelable"
-	fields["error"] = bindings.NewOptionalType(bindings.NewAnyErrorType())
+	fields["error"] = vapiBindings_.NewOptionalType(vapiBindings_.NewAnyErrorType())
 	fieldNameMap["error"] = "Error_"
-	fields["start_time"] = bindings.NewOptionalType(bindings.NewDateTimeType())
+	fields["start_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDateTimeType())
 	fieldNameMap["start_time"] = "StartTime"
-	fields["end_time"] = bindings.NewOptionalType(bindings.NewDateTimeType())
+	fields["end_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDateTimeType())
 	fieldNameMap["end_time"] = "EndTime"
-	fields["user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["user"] = "User"
-	var validators = []bindings.Validator{}
-	uv1 := bindings.NewUnionValidator("status",
-		map[string][]bindings.FieldData{
-			"FAILED": []bindings.FieldData{
-				bindings.NewFieldData("error", false),
-				bindings.NewFieldData("start_time", true),
-				bindings.NewFieldData("end_time", true),
+	var validators = []vapiBindings_.Validator{}
+	uv1 := vapiBindings_.NewUnionValidator("status",
+		map[string][]vapiBindings_.FieldData{
+			"FAILED": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("error", false),
+				vapiBindings_.NewFieldData("start_time", true),
+				vapiBindings_.NewFieldData("end_time", true),
 			},
-			"RUNNING": []bindings.FieldData{
-				bindings.NewFieldData("start_time", true),
+			"RUNNING": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("start_time", true),
 			},
-			"BLOCKED": []bindings.FieldData{
-				bindings.NewFieldData("start_time", true),
+			"BLOCKED": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("start_time", true),
 			},
-			"SUCCEEDED": []bindings.FieldData{
-				bindings.NewFieldData("start_time", true),
-				bindings.NewFieldData("end_time", true),
+			"SUCCEEDED": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("start_time", true),
+				vapiBindings_.NewFieldData("end_time", true),
 			},
-			"PENDING": []bindings.FieldData{},
+			"PENDING": []vapiBindings_.FieldData{},
 		},
 	)
 	validators = append(validators, uv1)
-	return bindings.NewStructType("com.vmware.cis.task.common_info", fields, reflect.TypeOf(CommonInfo{}), fieldNameMap, validators)
+	return vapiBindings_.NewStructType("com.vmware.cis.task.common_info", fields, reflect.TypeOf(CommonInfo{}), fieldNameMap, validators)
 }
 
-func InfoBindingType() bindings.BindingType {
-	fields := make(map[string]bindings.BindingType)
+func InfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["progress"] = bindings.NewOptionalType(bindings.NewReferenceType(ProgressBindingType))
+	fields["progress"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ProgressBindingType))
 	fieldNameMap["progress"] = "Progress"
-	fields["result"] = bindings.NewOptionalType(bindings.NewOpaqueType())
+	fields["result"] = vapiBindings_.NewOptionalType(vapiBindings_.NewOpaqueType())
 	fieldNameMap["result"] = "Result"
-	fields["description"] = bindings.NewReferenceType(std.LocalizableMessageBindingType)
+	fields["description"] = vapiBindings_.NewReferenceType(vapiStd_.LocalizableMessageBindingType)
 	fieldNameMap["description"] = "Description"
-	fields["service"] = bindings.NewIdType([]string{"com.vmware.vapi.service"}, "")
+	fields["service"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.service"}, "")
 	fieldNameMap["service"] = "Service"
-	fields["operation"] = bindings.NewIdType([]string{"com.vmware.vapi.operation"}, "")
+	fields["operation"] = vapiBindings_.NewIdType([]string{"com.vmware.vapi.operation"}, "")
 	fieldNameMap["operation"] = "Operation"
-	fields["parent"] = bindings.NewOptionalType(bindings.NewIdType([]string{"com.vmware.cis.task"}, ""))
+	fields["parent"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIdType([]string{"com.vmware.cis.task"}, ""))
 	fieldNameMap["parent"] = "Parent"
-	fields["target"] = bindings.NewOptionalType(bindings.NewReferenceType(std.DynamicIDBindingType))
+	fields["target"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vapiStd_.DynamicIDBindingType))
 	fieldNameMap["target"] = "Target"
-	fields["status"] = bindings.NewEnumType("com.vmware.cis.task.status", reflect.TypeOf(StatusEnum(Status_PENDING)))
+	fields["status"] = vapiBindings_.NewEnumType("com.vmware.cis.task.status", reflect.TypeOf(StatusEnum(Status_PENDING)))
 	fieldNameMap["status"] = "Status"
-	fields["cancelable"] = bindings.NewBooleanType()
+	fields["cancelable"] = vapiBindings_.NewBooleanType()
 	fieldNameMap["cancelable"] = "Cancelable"
-	fields["error"] = bindings.NewOptionalType(bindings.NewAnyErrorType())
+	fields["error"] = vapiBindings_.NewOptionalType(vapiBindings_.NewAnyErrorType())
 	fieldNameMap["error"] = "Error_"
-	fields["start_time"] = bindings.NewOptionalType(bindings.NewDateTimeType())
+	fields["start_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDateTimeType())
 	fieldNameMap["start_time"] = "StartTime"
-	fields["end_time"] = bindings.NewOptionalType(bindings.NewDateTimeType())
+	fields["end_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDateTimeType())
 	fieldNameMap["end_time"] = "EndTime"
-	fields["user"] = bindings.NewOptionalType(bindings.NewStringType())
+	fields["user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["user"] = "User"
-	var validators = []bindings.Validator{}
-	uv1 := bindings.NewUnionValidator("status",
-		map[string][]bindings.FieldData{
-			"RUNNING": []bindings.FieldData{
-				bindings.NewFieldData("progress", true),
-				bindings.NewFieldData("result", false),
-				bindings.NewFieldData("start_time", true),
+	var validators = []vapiBindings_.Validator{}
+	uv1 := vapiBindings_.NewUnionValidator("status",
+		map[string][]vapiBindings_.FieldData{
+			"RUNNING": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("progress", true),
+				vapiBindings_.NewFieldData("result", false),
+				vapiBindings_.NewFieldData("start_time", true),
 			},
-			"BLOCKED": []bindings.FieldData{
-				bindings.NewFieldData("progress", true),
-				bindings.NewFieldData("result", false),
-				bindings.NewFieldData("start_time", true),
+			"BLOCKED": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("progress", true),
+				vapiBindings_.NewFieldData("result", false),
+				vapiBindings_.NewFieldData("start_time", true),
 			},
-			"SUCCEEDED": []bindings.FieldData{
-				bindings.NewFieldData("progress", true),
-				bindings.NewFieldData("result", false),
-				bindings.NewFieldData("start_time", true),
-				bindings.NewFieldData("end_time", true),
+			"SUCCEEDED": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("progress", true),
+				vapiBindings_.NewFieldData("result", false),
+				vapiBindings_.NewFieldData("start_time", true),
+				vapiBindings_.NewFieldData("end_time", true),
 			},
-			"FAILED": []bindings.FieldData{
-				bindings.NewFieldData("progress", true),
-				bindings.NewFieldData("result", false),
-				bindings.NewFieldData("error", false),
-				bindings.NewFieldData("start_time", true),
-				bindings.NewFieldData("end_time", true),
+			"FAILED": []vapiBindings_.FieldData{
+				vapiBindings_.NewFieldData("progress", true),
+				vapiBindings_.NewFieldData("result", false),
+				vapiBindings_.NewFieldData("error", false),
+				vapiBindings_.NewFieldData("start_time", true),
+				vapiBindings_.NewFieldData("end_time", true),
 			},
-			"PENDING": []bindings.FieldData{},
+			"PENDING": []vapiBindings_.FieldData{},
 		},
 	)
 	validators = append(validators, uv1)
-	return bindings.NewStructType("com.vmware.cis.task.info", fields, reflect.TypeOf(Info{}), fieldNameMap, validators)
+	return vapiBindings_.NewStructType("com.vmware.cis.task.info", fields, reflect.TypeOf(Info{}), fieldNameMap, validators)
 }
