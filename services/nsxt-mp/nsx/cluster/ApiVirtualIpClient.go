@@ -20,7 +20,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ApiVirtualIpClient interface {
 
-	//
+	// Clears the cluster virtual IPv4 or IPv6 address.
+	// Note, query parameter **?action=clear_virtual_ip** clears virtual IPv4 address and **?action=clear_virtual_ip6** clears virtual IPv6 address.
 	// @return com.vmware.nsx.model.ClusterVirtualIpProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -30,7 +31,8 @@ type ApiVirtualIpClient interface {
 	// @throws NotFound  Not Found
 	Clearvirtualip() (nsxModel.ClusterVirtualIpProperties, error)
 
-	//
+	// Clears the cluster virtual IPv4 or IPv6 address.
+	// Note, query parameter **?action=clear_virtual_ip** clears virtual IPv4 address and **?action=clear_virtual_ip6** clears virtual IPv6 address.
 	// @return com.vmware.nsx.model.ClusterVirtualIpProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -50,7 +52,9 @@ type ApiVirtualIpClient interface {
 	// @throws NotFound  Not Found
 	Get() (nsxModel.ClusterVirtualIpProperties, error)
 
-	//
+	// Sets the cluster virtual IPv4 and IPv6 address. Note, all nodes in the management cluster must be in the same subnet. If not, a 409 CONFLICT status is returned.
+	// Query parameter **ip_address** sets virtual IPv4 address and **ip6_address** sets virtual IPv6 address; either or both of the parameters can be specified to set virtual IP address(es).
+	// When updating either of any one parameter value this does not changes the value of other unspecified parameter.
 	//
 	// @param forceParam On enable it ignores duplicate address detection and DNS lookup validation check (optional, default to false)
 	// @param ip6AddressParam Virtual IPv6 address, :: if not configured (optional)
