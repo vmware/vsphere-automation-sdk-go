@@ -4,13 +4,14 @@
 package client
 
 import (
+	"net/http"
+
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data/serializers/rest"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client/internal"
 	vapiHttp "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/http"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/security"
-	"net/http"
 )
 
 type ConnectorOption func(*connector)
@@ -131,5 +132,14 @@ func WithResponseAcceptors(responseAcceptors ...core.ResponseAcceptor) Connector
 func WithAPIProvider(apiProvider core.APIProvider) ConnectorOption {
 	return func(connector *connector) {
 		connector.provider = apiProvider
+	}
+}
+
+// WithConnectionMetadata sets connection metadata fields for the connection
+func WithConnectionMetadata(metadata map[string]interface{}) ConnectorOption {
+	return func(connector *connector) {
+		for k, v := range metadata {
+			connector.connectionMetadata[k] = v
+		}
 	}
 }
