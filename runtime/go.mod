@@ -15,5 +15,3 @@ require (
 )
 
 require github.com/davecgh/go-spew v1.1.1 // indirect
-
-retract v0.5.0 //Invalid bindings
