@@ -12,5 +12,3 @@ require (
 	github.com/gorilla/mux v1.8.0 // indirect
 	golang.org/x/text v0.3.8 // indirect
 )
-
-retract v0.5.0 //Invalid bindings
