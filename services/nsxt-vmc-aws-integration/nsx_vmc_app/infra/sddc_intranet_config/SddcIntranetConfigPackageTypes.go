@@ -3,9 +3,9 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for package: com.vmware.nsx_vmc_app.infra.vmc.realized_state.
+// Data type definitions file for package: com.vmware.nsx_vmc_app.infra.sddc_intranet_config.
 // Includes binding types of a top level structures and enumerations.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package realized_state
+package sddc_intranet_config

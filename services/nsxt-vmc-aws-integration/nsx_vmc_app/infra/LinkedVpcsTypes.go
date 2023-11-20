@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,6 +23,12 @@ const LinkedVpcs_CREATE_ACTION_ENABLE_MANAGED_PREFIX_LIST_MODE = "enable_managed
 
 // Possible value for ``action`` of method LinkedVpcs#create.
 const LinkedVpcs_CREATE_ACTION_DISABLE_MANAGED_PREFIX_LIST_MODE = "disable_managed_prefix_list_mode"
+
+// Possible value for ``action`` of method LinkedVpcs#create.
+const LinkedVpcs_CREATE_ACTION_ENABLE_IPV6_MODE = "enable_ipv6_mode"
+
+// Possible value for ``action`` of method LinkedVpcs#create.
+const LinkedVpcs_CREATE_ACTION_DISABLE_IPV6_MODE = "disable_ipv6_mode"
 
 func linkedVpcsCreateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)

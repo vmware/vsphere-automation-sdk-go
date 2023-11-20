@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -71,6 +71,28 @@ func (s *AdvertisedRoute) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for AdvertisedRoute._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type AggregatedLogicalRouterPortCounters struct {
+	// Timestamp when the data was last updated; unset if data source has never updated the data. format: int64
+	LastUpdateTimestamp *int64
+	Rx                  *LogicalRouterPortCounters
+	Tx                  *LogicalRouterPortCounters
+}
+
+func (s *AggregatedLogicalRouterPortCounters) GetType__() vapiBindings_.BindingType {
+	return AggregatedLogicalRouterPortCountersBindingType()
+}
+
+func (s *AggregatedLogicalRouterPortCounters) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for AggregatedLogicalRouterPortCounters._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -548,6 +570,8 @@ type CloudProviderSddcNetworkingStateInfo struct {
 	TrafficGroupEniMappingInfos []TrafficGroupEniMappingInfo
 	// Information related to the subnets where linked ENIs were created.
 	Vpc []LinkedSubnetInfo
+	// VPC CIDR addresses
+	VpcCidr []string
 	// VPC id
 	VpcId *string
 }
@@ -815,6 +839,76 @@ func (s *CsvRecord) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for CsvRecord._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type CustomerBgpPeerInfo struct {
+	// BGP MD5 authentication key
+	BgpMd5AuthenticationKey *string
+	// Virtual Circuit display name
+	DisplayName *string
+	// Index of the Virtual Circuit format: int32
+	Index *int64
+	// SDDC Underlay BGP peer IP/prefix format: ipv4-cidr-block
+	LocalPeerIp *string
+	// Provider token
+	ProviderToken *string
+	// Provider token expiration format: int64
+	ProviderTokenExpiration *int64
+	// Customer BGP peer ASN
+	RemotePeerAsn *string
+	// Customer BGP peer IP/prefix format: ipv4-cidr-block
+	RemotePeerIp *string
+}
+
+func (s *CustomerBgpPeerInfo) GetType__() vapiBindings_.BindingType {
+	return CustomerBgpPeerInfoBindingType()
+}
+
+func (s *CustomerBgpPeerInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for CustomerBgpPeerInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type CustomerBgpPeerInfoStatus struct {
+	// Index of the Virtual Circuit format: int32
+	Index *int64
+	// Possible values are:
+	//
+	// * CustomerBgpPeerInfoStatus#CustomerBgpPeerInfoStatus_STATUS_PENDING
+	// * CustomerBgpPeerInfoStatus#CustomerBgpPeerInfoStatus_STATUS_CONNECTED
+	// * CustomerBgpPeerInfoStatus#CustomerBgpPeerInfoStatus_STATUS_DISCONNECTED
+	// * CustomerBgpPeerInfoStatus#CustomerBgpPeerInfoStatus_STATUS_UNKNOWN
+	//
+	//  Status of the Virtual Circuit
+	Status *string
+	// Detailed information of the status returned by the provider for the Virtual Circuit
+	StatusDetail *string
+}
+
+const CustomerBgpPeerInfoStatus_STATUS_PENDING = "PENDING"
+const CustomerBgpPeerInfoStatus_STATUS_CONNECTED = "CONNECTED"
+const CustomerBgpPeerInfoStatus_STATUS_DISCONNECTED = "DISCONNECTED"
+const CustomerBgpPeerInfoStatus_STATUS_UNKNOWN = "UNKNOWN"
+
+func (s *CustomerBgpPeerInfoStatus) GetType__() vapiBindings_.BindingType {
+	return CustomerBgpPeerInfoStatusBindingType()
+}
+
+func (s *CustomerBgpPeerInfoStatus) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for CustomerBgpPeerInfoStatus._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -1423,6 +1517,145 @@ func (s *InterfaceConfig) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Intranet connection configuration parameters.
+type IntranetConnectionConfiguration struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Intranet Connection description
+	Description *string
+	// Intranet Connection name
+	DisplayName *string
+	// Intranet Connection Identifier
+	Id *string
+	// The type of this resource.
+	ResourceType *string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// marked for delete identifier
+	MarkedForDelete *bool
+	// Path of its parent
+	ParentPath *string
+	// Absolute path of this object
+	Path *string
+	// Path relative from its parent
+	RelativePath *string
+	// Possible values are:
+	//
+	// * IntranetConnectionConfiguration#IntranetConnectionConfiguration_CONNECTION_REDUNDANCY_SINGLE
+	// * IntranetConnectionConfiguration#IntranetConnectionConfiguration_CONNECTION_REDUNDANCY_REDUNDANT
+	//
+	//  Connection Redundancy type
+	ConnectionRedundancy *string
+	// Customer BGP peer info list. Must contain 1 entry if connection_redundancy = SINGLE, two entries if connection_redundancy = REDUNDANT
+	VirtualCircuits []CustomerBgpPeerInfo
+}
+
+const IntranetConnectionConfiguration_CONNECTION_REDUNDANCY_SINGLE = "SINGLE"
+const IntranetConnectionConfiguration_CONNECTION_REDUNDANCY_REDUNDANT = "REDUNDANT"
+
+func (s *IntranetConnectionConfiguration) GetType__() vapiBindings_.BindingType {
+	return IntranetConnectionConfigurationBindingType()
+}
+
+func (s *IntranetConnectionConfiguration) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for IntranetConnectionConfiguration._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// List of Intranet Connection configuration
+type IntranetConnectionConfigurationListResult struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy *string
+	// List of Intranet Connection configurations
+	Results []IntranetConnectionConfiguration
+}
+
+func (s *IntranetConnectionConfigurationListResult) GetType__() vapiBindings_.BindingType {
+	return IntranetConnectionConfigurationListResultBindingType()
+}
+
+func (s *IntranetConnectionConfigurationListResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for IntranetConnectionConfigurationListResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type IntranetConnectivityStatus struct {
+	// Possible values are:
+	//
+	// * IntranetConnectivityStatus#IntranetConnectivityStatus_AGGREGATE_STATUS_PENDING
+	// * IntranetConnectivityStatus#IntranetConnectivityStatus_AGGREGATE_STATUS_CONNECTED
+	// * IntranetConnectivityStatus#IntranetConnectivityStatus_AGGREGATE_STATUS_DISCONNECTED
+	// * IntranetConnectivityStatus#IntranetConnectivityStatus_AGGREGATE_STATUS_UNKNOWN
+	// * IntranetConnectivityStatus#IntranetConnectivityStatus_AGGREGATE_STATUS_DEGRADED
+	//
+	//  Indicates aggregate status of all Virtual Circuits in an intranet connection.
+	AggregateStatus *string
+	// Intranet Connection Identifier
+	Id              *string
+	VirtualCircuits []CustomerBgpPeerInfoStatus
+}
+
+const IntranetConnectivityStatus_AGGREGATE_STATUS_PENDING = "PENDING"
+const IntranetConnectivityStatus_AGGREGATE_STATUS_CONNECTED = "CONNECTED"
+const IntranetConnectivityStatus_AGGREGATE_STATUS_DISCONNECTED = "DISCONNECTED"
+const IntranetConnectivityStatus_AGGREGATE_STATUS_UNKNOWN = "UNKNOWN"
+const IntranetConnectivityStatus_AGGREGATE_STATUS_DEGRADED = "DEGRADED"
+
+func (s *IntranetConnectivityStatus) GetType__() vapiBindings_.BindingType {
+	return IntranetConnectivityStatusBindingType()
+}
+
+func (s *IntranetConnectivityStatus) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for IntranetConnectivityStatus._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 type IpAttachmentPair struct {
 	// Attachment id which maps to management VM IP
 	AttachmentId *string
@@ -1455,6 +1688,8 @@ type LinkedSubnetInfo struct {
 	Cidr *string
 	// Linked subnet identifier
 	Id *string
+	// Linked subnet IPv6 CIDRs format: ipv6-cidr-block
+	Ipv6Cidr []string
 }
 
 func (s *LinkedSubnetInfo) GetType__() vapiBindings_.BindingType {
@@ -1466,6 +1701,37 @@ func (s *LinkedSubnetInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for LinkedSubnetInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Information related to linked VPC ipv6 enablement support including ipv6 enablement mode status etc.
+type LinkedVpciPv6ModeInfo struct {
+	// Possible values are:
+	//
+	// * LinkedVpciPv6ModeInfo#LinkedVpciPv6ModeInfo_IPV6MODE_DISABLED
+	// * LinkedVpciPv6ModeInfo#LinkedVpciPv6ModeInfo_IPV6MODE_PENDING
+	// * LinkedVpciPv6ModeInfo#LinkedVpciPv6ModeInfo_IPV6MODE_ENABLED
+	//
+	//  Current state of Linked VPC IPv6 enablement
+	Ipv6Mode *string
+}
+
+const LinkedVpciPv6ModeInfo_IPV6MODE_DISABLED = "DISABLED"
+const LinkedVpciPv6ModeInfo_IPV6MODE_PENDING = "PENDING"
+const LinkedVpciPv6ModeInfo_IPV6MODE_ENABLED = "ENABLED"
+
+func (s *LinkedVpciPv6ModeInfo) GetType__() vapiBindings_.BindingType {
+	return LinkedVpciPv6ModeInfoBindingType()
+}
+
+func (s *LinkedVpciPv6ModeInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for LinkedVpciPv6ModeInfo._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -1522,7 +1788,10 @@ type LinkedVpcInfo struct {
 	// Linked VPC CIDRs format: ipv4-cidr-block
 	LinkedVpcAddresses []string
 	// Linked VPC identifier
-	LinkedVpcId                    *string
+	LinkedVpcId *string
+	// Linked VPC IPv6 CIDRs format: ipv6-cidr-block
+	LinkedVpcIpv6Addresses         []string
+	LinkedVpcIpv6ModeInfo          *LinkedVpciPv6ModeInfo
 	LinkedVpcManagedPrefixListInfo *LinkedVpcManagedPrefixListSupportInfo
 	// The IPs of linked VPC NAT rule for service access. format: ipv4
 	LinkedVpcNatIps []string
@@ -1587,6 +1856,13 @@ func (s *LinkedVpcManagedPrefixListSupportInfo) GetDataValue__() (vapiData_.Data
 
 // Information of managed prefix lists which are shared with linked VPC account.
 type LinkedVpcSharedManagedPrefixListInfo struct {
+	// Possible values are:
+	//
+	// * LinkedVpcSharedManagedPrefixListInfo#LinkedVpcSharedManagedPrefixListInfo_ADDRESS_FAMILY_IPV4
+	// * LinkedVpcSharedManagedPrefixListInfo#LinkedVpcSharedManagedPrefixListInfo_ADDRESS_FAMILY_IPV6
+	//
+	//  Managed prefix list's address family
+	AddressFamily *string
 	// ID of managed prefix list.
 	Id *string
 	// Indicate that whether managed prefix list is currently in use or not.
@@ -1595,6 +1871,9 @@ type LinkedVpcSharedManagedPrefixListInfo struct {
 	Name            *string
 	ProgrammingInfo *ManagedPrefixListProgrammingInfo
 }
+
+const LinkedVpcSharedManagedPrefixListInfo_ADDRESS_FAMILY_IPV4 = "IPv4"
+const LinkedVpcSharedManagedPrefixListInfo_ADDRESS_FAMILY_IPV6 = "IPv6"
 
 func (s *LinkedVpcSharedManagedPrefixListInfo) GetType__() vapiBindings_.BindingType {
 	return LinkedVpcSharedManagedPrefixListInfoBindingType()
@@ -1671,6 +1950,104 @@ func (s *ListResult) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for ListResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type LogicalRouterPortCounters struct {
+	// The total number of packets blocked. format: int64
+	BlockedPackets *int64
+	// Number of duplicate address detected packets dropped. format: int64
+	DadDroppedPackets *int64
+	// Number of packtes dropped as destination is not supported. format: int64
+	DestinationUnsupportedDroppedPackets *int64
+	// The total number of packets dropped. format: int64
+	DroppedPackets *int64
+	// Number of firewall packets dropped. format: int64
+	FirewallDroppedPackets *int64
+	// Number of fragmentation needed packets dropped. format: int64
+	FragNeededDroppedPackets *int64
+	// Number of IPSec packets dropped format: int64
+	IpsecDroppedPackets *int64
+	// Number of IPSec no security association packets dropped. format: int64
+	IpsecNoSaDroppedPackets *int64
+	// Number of IPSec packets dropped as no VTI is present. format: int64
+	IpsecNoVtiDroppedPackets *int64
+	// Number of IPSec policy block packets dropped. format: int64
+	IpsecPolBlockDroppedPackets *int64
+	// Number of IPSec policy error packets dropped. format: int64
+	IpsecPolErrDroppedPackets *int64
+	// Number of IPV6 packets dropped. format: int64
+	Ipv6DroppedPackets *int64
+	// Number of DPDK kernal NIC interface packets dropped. format: int64
+	KniDroppedPackets *int64
+	// Number of packets dropped due to unsupported L4 port. format: int64
+	L4portUnsupportedDroppedPackets *int64
+	// Number of packtes dropped as they are malformed. format: int64
+	MalformedDroppedPackets *int64
+	// Number of no ARP packets dropped. format: int64
+	NoArpDroppedPackets *int64
+	// Number of packets dropped as no linked ports are present. format: int64
+	NoLinkedDroppedPackets *int64
+	// Number of packets dropped due to insufficient memory. format: int64
+	NoMemDroppedPackets *int64
+	// Number of packets dropped due to absence of receiver. format: int64
+	NoReceiverDroppedPackets *int64
+	// The number of no route packets dropped format: int64
+	NoRouteDroppedPackets *int64
+	// Number of non IP packets dropped. format: int64
+	NonIpDroppedPackets *int64
+	// Number of packets dropped as protocol is unsupported. format: int64
+	ProtoUnsupportedDroppedPackets *int64
+	// Number of redirect packets dropped. format: int64
+	RedirectDroppedPackets *int64
+	// Number of reverse-path forwarding check packets dropped. format: int64
+	RpfCheckDroppedPackets *int64
+	// Number of service insert packets dropped. format: int64
+	ServiceInsertDroppedPackets *int64
+	// The total number of bytes transferred. format: int64
+	TotalBytes *int64
+	// The total number of packets transferred. format: int64
+	TotalPackets *int64
+	// Number of time to live exceeded packets dropped. format: int64
+	TtlExceededDroppedPackets *int64
+}
+
+func (s *LogicalRouterPortCounters) GetType__() vapiBindings_.BindingType {
+	return LogicalRouterPortCountersBindingType()
+}
+
+func (s *LogicalRouterPortCounters) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for LogicalRouterPortCounters._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type LogicalRouterPortStatisticsSummary struct {
+	// Timestamp when the data was last updated; unset if data source has never updated the data. format: int64
+	LastUpdateTimestamp *int64
+	Rx                  *LogicalRouterPortCounters
+	Tx                  *LogicalRouterPortCounters
+	// The ID of the logical router port
+	LogicalRouterPortId *string
+}
+
+func (s *LogicalRouterPortStatisticsSummary) GetType__() vapiBindings_.BindingType {
+	return LogicalRouterPortStatisticsSummaryBindingType()
+}
+
+func (s *LogicalRouterPortStatisticsSummary) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for LogicalRouterPortStatisticsSummary._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -2107,6 +2484,33 @@ func (s *OutpostsConnectSddcNetworkingStateInfo) GetDataValue__() (vapiData_.Dat
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for OutpostsConnectSddcNetworkingStateInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Tier0 or Tier1 interface statistics on specific Enforcement Point.
+type PolicyInterfaceStatisticsSummary struct {
+	// Timestamp when the data was last updated; unset if data source has never updated the data. format: int64
+	LastUpdateTimestamp *int64
+	Rx                  *LogicalRouterPortCounters
+	Tx                  *LogicalRouterPortCounters
+	// The ID of the logical router port
+	LogicalRouterPortId *string
+	// Policy path for the interface
+	InterfacePolicyPath *string
+}
+
+func (s *PolicyInterfaceStatisticsSummary) GetType__() vapiBindings_.BindingType {
+	return PolicyInterfaceStatisticsSummaryBindingType()
+}
+
+func (s *PolicyInterfaceStatisticsSummary) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for PolicyInterfaceStatisticsSummary._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -3951,6 +4355,33 @@ func (s *VmcFeatureFlags) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Tier0 interface statistics for traffic-group edges.
+type VmcInterfaceStatistics struct {
+	// Timestamp when the data was last updated; unset if data source has never updated the data. format: int64
+	LastUpdateTimestamp *int64
+	Rx                  *LogicalRouterPortCounters
+	Tx                  *LogicalRouterPortCounters
+	// The ID of the logical router port
+	LogicalRouterPortId *string
+	// Policy path for the interface
+	InterfacePolicyPath *string
+}
+
+func (s *VmcInterfaceStatistics) GetType__() vapiBindings_.BindingType {
+	return VmcInterfaceStatisticsBindingType()
+}
+
+func (s *VmcInterfaceStatistics) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for VmcInterfaceStatistics._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // A consolidated object of realized entities given an intent path. This accounts for resources / entities which are realized under the intent path.
 type VmcRealizedEntities struct {
 	// Intent path
@@ -4115,6 +4546,19 @@ func AdvertisedRouteBindingType() vapiBindings_.BindingType {
 	fieldNameMap["cidr"] = "Cidr"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.advertised_route", fields, reflect.TypeOf(AdvertisedRoute{}), fieldNameMap, validators)
+}
+
+func AggregatedLogicalRouterPortCountersBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
+	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
+	fieldNameMap["rx"] = "Rx"
+	fields["tx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
+	fieldNameMap["tx"] = "Tx"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.aggregated_logical_router_port_counters", fields, reflect.TypeOf(AggregatedLogicalRouterPortCounters{}), fieldNameMap, validators)
 }
 
 func AggregationRouteConfigInfoBindingType() vapiBindings_.BindingType {
@@ -4406,6 +4850,8 @@ func CloudProviderSddcNetworkingStateInfoBindingType() vapiBindings_.BindingType
 	fieldNameMap["traffic_group_eni_mapping_infos"] = "TrafficGroupEniMappingInfos"
 	fields["vpc"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(LinkedSubnetInfoBindingType), reflect.TypeOf([]LinkedSubnetInfo{})))
 	fieldNameMap["vpc"] = "Vpc"
+	fields["vpc_cidr"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["vpc_cidr"] = "VpcCidr"
 	fields["vpc_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["vpc_id"] = "VpcId"
 	var validators = []vapiBindings_.Validator{}
@@ -4581,6 +5027,42 @@ func CsvRecordBindingType() vapiBindings_.BindingType {
 	fieldNameMap := make(map[string]string)
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.csv_record", fields, reflect.TypeOf(CsvRecord{}), fieldNameMap, validators)
+}
+
+func CustomerBgpPeerInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["bgp_md5_authentication_key"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["bgp_md5_authentication_key"] = "BgpMd5AuthenticationKey"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["index"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["index"] = "Index"
+	fields["local_peer_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["local_peer_ip"] = "LocalPeerIp"
+	fields["provider_token"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["provider_token"] = "ProviderToken"
+	fields["provider_token_expiration"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["provider_token_expiration"] = "ProviderTokenExpiration"
+	fields["remote_peer_asn"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["remote_peer_asn"] = "RemotePeerAsn"
+	fields["remote_peer_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["remote_peer_ip"] = "RemotePeerIp"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.customer_bgp_peer_info", fields, reflect.TypeOf(CustomerBgpPeerInfo{}), fieldNameMap, validators)
+}
+
+func CustomerBgpPeerInfoStatusBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["index"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["index"] = "Index"
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["status"] = "Status"
+	fields["status_detail"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["status_detail"] = "StatusDetail"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.customer_bgp_peer_info_status", fields, reflect.TypeOf(CustomerBgpPeerInfoStatus{}), fieldNameMap, validators)
 }
 
 func DirectConnectBgpInfoBindingType() vapiBindings_.BindingType {
@@ -4950,6 +5432,91 @@ func InterfaceConfigBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.interface_config", fields, reflect.TypeOf(InterfaceConfig{}), fieldNameMap, validators)
 }
 
+func IntranetConnectionConfigurationBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["marked_for_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["parent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["relative_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["connection_redundancy"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["connection_redundancy"] = "ConnectionRedundancy"
+	fields["virtual_circuits"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(CustomerBgpPeerInfoBindingType), reflect.TypeOf([]CustomerBgpPeerInfo{})))
+	fieldNameMap["virtual_circuits"] = "VirtualCircuits"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.intranet_connection_configuration", fields, reflect.TypeOf(IntranetConnectionConfiguration{}), fieldNameMap, validators)
+}
+
+func IntranetConnectionConfigurationListResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(IntranetConnectionConfigurationBindingType), reflect.TypeOf([]IntranetConnectionConfiguration{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.intranet_connection_configuration_list_result", fields, reflect.TypeOf(IntranetConnectionConfigurationListResult{}), fieldNameMap, validators)
+}
+
+func IntranetConnectivityStatusBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["aggregate_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["aggregate_status"] = "AggregateStatus"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["virtual_circuits"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(CustomerBgpPeerInfoStatusBindingType), reflect.TypeOf([]CustomerBgpPeerInfoStatus{})))
+	fieldNameMap["virtual_circuits"] = "VirtualCircuits"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.intranet_connectivity_status", fields, reflect.TypeOf(IntranetConnectivityStatus{}), fieldNameMap, validators)
+}
+
 func IpAttachmentPairBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -4972,8 +5539,19 @@ func LinkedSubnetInfoBindingType() vapiBindings_.BindingType {
 	fieldNameMap["cidr"] = "Cidr"
 	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["id"] = "Id"
+	fields["ipv6_cidr"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["ipv6_cidr"] = "Ipv6Cidr"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.linked_subnet_info", fields, reflect.TypeOf(LinkedSubnetInfo{}), fieldNameMap, validators)
+}
+
+func LinkedVpciPv6ModeInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["ipv6_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["ipv6_mode"] = "Ipv6Mode"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.linked_vpci_pv6_mode_info", fields, reflect.TypeOf(LinkedVpciPv6ModeInfo{}), fieldNameMap, validators)
 }
 
 func LinkedVpcInfoBindingType() vapiBindings_.BindingType {
@@ -5029,6 +5607,10 @@ func LinkedVpcInfoBindingType() vapiBindings_.BindingType {
 	fieldNameMap["linked_vpc_addresses"] = "LinkedVpcAddresses"
 	fields["linked_vpc_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["linked_vpc_id"] = "LinkedVpcId"
+	fields["linked_vpc_ipv6_addresses"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["linked_vpc_ipv6_addresses"] = "LinkedVpcIpv6Addresses"
+	fields["linked_vpc_ipv6_mode_info"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LinkedVpciPv6ModeInfoBindingType))
+	fieldNameMap["linked_vpc_ipv6_mode_info"] = "LinkedVpcIpv6ModeInfo"
 	fields["linked_vpc_managed_prefix_list_info"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LinkedVpcManagedPrefixListSupportInfoBindingType))
 	fieldNameMap["linked_vpc_managed_prefix_list_info"] = "LinkedVpcManagedPrefixListInfo"
 	fields["linked_vpc_nat_ips"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
@@ -5061,6 +5643,8 @@ func LinkedVpcManagedPrefixListSupportInfoBindingType() vapiBindings_.BindingTyp
 func LinkedVpcSharedManagedPrefixListInfoBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["address_family"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["address_family"] = "AddressFamily"
 	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["id"] = "Id"
 	fields["in_use"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
@@ -5115,6 +5699,84 @@ func ListResultBindingType() vapiBindings_.BindingType {
 	fieldNameMap["sort_by"] = "SortBy"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.list_result", fields, reflect.TypeOf(ListResult{}), fieldNameMap, validators)
+}
+
+func LogicalRouterPortCountersBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["blocked_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["blocked_packets"] = "BlockedPackets"
+	fields["dad_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["dad_dropped_packets"] = "DadDroppedPackets"
+	fields["destination_unsupported_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["destination_unsupported_dropped_packets"] = "DestinationUnsupportedDroppedPackets"
+	fields["dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["dropped_packets"] = "DroppedPackets"
+	fields["firewall_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["firewall_dropped_packets"] = "FirewallDroppedPackets"
+	fields["frag_needed_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["frag_needed_dropped_packets"] = "FragNeededDroppedPackets"
+	fields["ipsec_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["ipsec_dropped_packets"] = "IpsecDroppedPackets"
+	fields["ipsec_no_sa_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["ipsec_no_sa_dropped_packets"] = "IpsecNoSaDroppedPackets"
+	fields["ipsec_no_vti_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["ipsec_no_vti_dropped_packets"] = "IpsecNoVtiDroppedPackets"
+	fields["ipsec_pol_block_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["ipsec_pol_block_dropped_packets"] = "IpsecPolBlockDroppedPackets"
+	fields["ipsec_pol_err_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["ipsec_pol_err_dropped_packets"] = "IpsecPolErrDroppedPackets"
+	fields["ipv6_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["ipv6_dropped_packets"] = "Ipv6DroppedPackets"
+	fields["kni_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["kni_dropped_packets"] = "KniDroppedPackets"
+	fields["l4port_unsupported_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["l4port_unsupported_dropped_packets"] = "L4portUnsupportedDroppedPackets"
+	fields["malformed_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["malformed_dropped_packets"] = "MalformedDroppedPackets"
+	fields["no_arp_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["no_arp_dropped_packets"] = "NoArpDroppedPackets"
+	fields["no_linked_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["no_linked_dropped_packets"] = "NoLinkedDroppedPackets"
+	fields["no_mem_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["no_mem_dropped_packets"] = "NoMemDroppedPackets"
+	fields["no_receiver_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["no_receiver_dropped_packets"] = "NoReceiverDroppedPackets"
+	fields["no_route_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["no_route_dropped_packets"] = "NoRouteDroppedPackets"
+	fields["non_ip_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["non_ip_dropped_packets"] = "NonIpDroppedPackets"
+	fields["proto_unsupported_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["proto_unsupported_dropped_packets"] = "ProtoUnsupportedDroppedPackets"
+	fields["redirect_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["redirect_dropped_packets"] = "RedirectDroppedPackets"
+	fields["rpf_check_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["rpf_check_dropped_packets"] = "RpfCheckDroppedPackets"
+	fields["service_insert_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["service_insert_dropped_packets"] = "ServiceInsertDroppedPackets"
+	fields["total_bytes"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["total_bytes"] = "TotalBytes"
+	fields["total_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["total_packets"] = "TotalPackets"
+	fields["ttl_exceeded_dropped_packets"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["ttl_exceeded_dropped_packets"] = "TtlExceededDroppedPackets"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.logical_router_port_counters", fields, reflect.TypeOf(LogicalRouterPortCounters{}), fieldNameMap, validators)
+}
+
+func LogicalRouterPortStatisticsSummaryBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
+	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
+	fieldNameMap["rx"] = "Rx"
+	fields["tx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
+	fieldNameMap["tx"] = "Tx"
+	fields["logical_router_port_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["logical_router_port_id"] = "LogicalRouterPortId"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.logical_router_port_statistics_summary", fields, reflect.TypeOf(LogicalRouterPortStatisticsSummary{}), fieldNameMap, validators)
 }
 
 func ManagedPrefixListProgrammingInfoBindingType() vapiBindings_.BindingType {
@@ -5399,6 +6061,23 @@ func OutpostsConnectSddcNetworkingStateInfoBindingType() vapiBindings_.BindingTy
 	fieldNameMap["learned_routes"] = "LearnedRoutes"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.outposts_connect_sddc_networking_state_info", fields, reflect.TypeOf(OutpostsConnectSddcNetworkingStateInfo{}), fieldNameMap, validators)
+}
+
+func PolicyInterfaceStatisticsSummaryBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
+	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
+	fieldNameMap["rx"] = "Rx"
+	fields["tx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
+	fieldNameMap["tx"] = "Tx"
+	fields["logical_router_port_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["logical_router_port_id"] = "LogicalRouterPortId"
+	fields["interface_policy_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["interface_policy_path"] = "InterfacePolicyPath"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.policy_interface_statistics_summary", fields, reflect.TypeOf(PolicyInterfaceStatisticsSummary{}), fieldNameMap, validators)
 }
 
 func PrefixListInfoBindingType() vapiBindings_.BindingType {
@@ -6543,6 +7222,23 @@ func VmcFeatureFlagsBindingType() vapiBindings_.BindingType {
 	fieldNameMap["features"] = "Features"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.vmc_feature_flags", fields, reflect.TypeOf(VmcFeatureFlags{}), fieldNameMap, validators)
+}
+
+func VmcInterfaceStatisticsBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
+	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
+	fieldNameMap["rx"] = "Rx"
+	fields["tx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
+	fieldNameMap["tx"] = "Tx"
+	fields["logical_router_port_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["logical_router_port_id"] = "LogicalRouterPortId"
+	fields["interface_policy_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["interface_policy_path"] = "InterfacePolicyPath"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_vmc_app.model.vmc_interface_statistics", fields, reflect.TypeOf(VmcInterfaceStatistics{}), fieldNameMap, validators)
 }
 
 func VmcRealizedEntitiesBindingType() vapiBindings_.BindingType {

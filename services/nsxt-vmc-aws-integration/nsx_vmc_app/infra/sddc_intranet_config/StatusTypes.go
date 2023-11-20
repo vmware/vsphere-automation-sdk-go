@@ -3,12 +3,12 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: RealizedEntities.
+// Data type definitions file for service: Status.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package realized_state
+package sddc_intranet_config
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -18,22 +18,20 @@ import (
 	"reflect"
 )
 
-func realizedEntitiesGetInputType() vapiBindings_.StructType {
+func statusGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["intent_path"] = vapiBindings_.NewStringType()
-	fields["site_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["intent_path"] = "IntentPath"
-	fieldNameMap["site_path"] = "SitePath"
+	fields["intranet_config_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["intranet_config_id"] = "IntranetConfigId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func RealizedEntitiesGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_vmc_appModel.VmcRealizedEntitiesBindingType)
+func StatusGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_vmc_appModel.IntranetConnectivityStatusBindingType)
 }
 
-func realizedEntitiesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func statusGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -42,14 +40,11 @@ func realizedEntitiesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["intent_path"] = vapiBindings_.NewStringType()
-	fields["site_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["intent_path"] = "IntentPath"
-	fieldNameMap["site_path"] = "SitePath"
-	paramsTypeMap["site_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["intent_path"] = vapiBindings_.NewStringType()
-	queryParams["site_path"] = "site_path"
-	queryParams["intent_path"] = "intent_path"
+	fields["intranet_config_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["intranet_config_id"] = "IntranetConfigId"
+	paramsTypeMap["intranet_config_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["intranetConfigId"] = vapiBindings_.NewStringType()
+	pathParams["intranet_config_id"] = "intranetConfigId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -64,7 +59,7 @@ func realizedEntitiesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/cloud-service/api/v1/infra/vmc/realized-state/realized-entities",
+		"/cloud-service/api/v1/infra/sddc-intranet-config/{intranetConfigId}/status",
 		"",
 		resultHeaders,
 		200,

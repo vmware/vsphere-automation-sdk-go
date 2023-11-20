@@ -3,12 +3,12 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: ProviderResourceInfo.
+// Data type definitions file for service: Statistics.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package sddc
+package traffic_groups
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -18,32 +18,49 @@ import (
 	"reflect"
 )
 
-func providerResourceInfoListInputType() vapiBindings_.StructType {
+// Possible value for ``interfaceType`` of method Statistics#get.
+const Statistics_GET_INTERFACE_TYPE_PUBLIC = "public"
+
+// Possible value for ``interfaceType`` of method Statistics#get.
+const Statistics_GET_INTERFACE_TYPE_CROSS_VPC = "cross_vpc"
+
+// Possible value for ``interfaceType`` of method Statistics#get.
+const Statistics_GET_INTERFACE_TYPE_DIRECT_CONNECT = "direct_connect"
+
+// Possible value for ``prefixListId`` of method Statistics#get.
+const Statistics_GET_PREFIX_LIST_ID_0 = 0
+
+// Possible value for ``prefixListId`` of method Statistics#get.
+const Statistics_GET_PREFIX_LIST_ID_1 = 1
+
+func statisticsGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["resource_type"] = vapiBindings_.NewStringType()
+	fields["traffic_group_id"] = vapiBindings_.NewStringType()
+	fields["interface_type"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
-	fields["resource_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["prefix_list_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["resource_type"] = "ResourceType"
+	fieldNameMap["traffic_group_id"] = "TrafficGroupId"
+	fieldNameMap["interface_type"] = "InterfaceType"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
-	fieldNameMap["resource_id"] = "ResourceId"
+	fieldNameMap["prefix_list_id"] = "PrefixListId"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ProviderResourceInfoListOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_vmc_appModel.ResourceRuntimeInfoListResultBindingType)
+func StatisticsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_vmc_appModel.VmcInterfaceStatisticsBindingType)
 }
 
-func providerResourceInfoListRestMetadata() vapiProtocol_.OperationRestMetadata {
+func statisticsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -52,33 +69,38 @@ func providerResourceInfoListRestMetadata() vapiProtocol_.OperationRestMetadata 
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["resource_type"] = vapiBindings_.NewStringType()
+	fields["traffic_group_id"] = vapiBindings_.NewStringType()
+	fields["interface_type"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
-	fields["resource_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["prefix_list_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["resource_type"] = "ResourceType"
+	fieldNameMap["traffic_group_id"] = "TrafficGroupId"
+	fieldNameMap["interface_type"] = "InterfaceType"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
-	fieldNameMap["resource_id"] = "ResourceId"
+	fieldNameMap["prefix_list_id"] = "PrefixListId"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["resource_type"] = vapiBindings_.NewStringType()
-	paramsTypeMap["resource_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["traffic_group_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["interface_type"] = vapiBindings_.NewStringType()
+	paramsTypeMap["prefix_list_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["trafficGroupId"] = vapiBindings_.NewStringType()
+	pathParams["traffic_group_id"] = "trafficGroupId"
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
-	queryParams["resource_type"] = "resource_type"
-	queryParams["resource_id"] = "resource_id"
 	queryParams["sort_by"] = "sort_by"
+	queryParams["interface_type"] = "interface_type"
+	queryParams["prefix_list_id"] = "prefix_list_id"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
@@ -94,7 +116,7 @@ func providerResourceInfoListRestMetadata() vapiProtocol_.OperationRestMetadata 
 		"",
 		"",
 		"GET",
-		"/cloud-service/api/v1/infra/sddc/provider-resource-info",
+		"/cloud-service/api/v1/infra/traffic-groups/{trafficGroupId}/statistics",
 		"",
 		resultHeaders,
 		200,

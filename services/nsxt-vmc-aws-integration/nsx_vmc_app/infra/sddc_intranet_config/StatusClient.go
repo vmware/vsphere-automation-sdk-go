@@ -3,10 +3,10 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: SddcNetworkingStateInfo
+// Interface file for service: Status
 // Used by client-side stubs.
 
-package infra
+package sddc_intranet_config
 
 import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -18,66 +18,69 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-type SddcNetworkingStateInfoClient interface {
+type StatusClient interface {
 
-	// This will be used by VMC UI to return the network information such as VPN connectivity details, DX connectivity details, Transit Connect details, Management Gateway (MGW), Compute Gateway (default CGW) and Cloud Provider details. This is for read only UI.
-	// @return com.vmware.nsx_vmc_app.model.SddcNetworkingStateInfo
+	// This API is used to display status for an intranet connection.
+	//
+	// @param intranetConfigIdParam (required)
+	// @return com.vmware.nsx_vmc_app.model.IntranetConnectivityStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (nsx_vmc_appModel.SddcNetworkingStateInfo, error)
+	Get(intranetConfigIdParam string) (nsx_vmc_appModel.IntranetConnectivityStatus, error)
 }
 
-type sddcNetworkingStateInfoClient struct {
+type statusClient struct {
 	connector           vapiProtocolClient_.Connector
 	interfaceDefinition vapiCore_.InterfaceDefinition
 	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewSddcNetworkingStateInfoClient(connector vapiProtocolClient_.Connector) *sddcNetworkingStateInfoClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_vmc_app.infra.sddc_networking_state_info")
+func NewStatusClient(connector vapiProtocolClient_.Connector) *statusClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_vmc_app.infra.sddc_intranet_config.status")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
-	sIface := sddcNetworkingStateInfoClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	sIface := statusClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *sddcNetworkingStateInfoClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+func (sIface *statusClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *sddcNetworkingStateInfoClient) Get() (nsx_vmc_appModel.SddcNetworkingStateInfo, error) {
+func (sIface *statusClient) Get(intranetConfigIdParam string) (nsx_vmc_appModel.IntranetConnectivityStatus, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	operationRestMetaData := sddcNetworkingStateInfoGetRestMetadata()
+	operationRestMetaData := statusGetRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(sddcNetworkingStateInfoGetInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(statusGetInputType(), typeConverter)
+	sv.AddStructField("IntranetConfigId", intranetConfigIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_vmc_appModel.SddcNetworkingStateInfo
+		var emptyOutput nsx_vmc_appModel.IntranetConnectivityStatus
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_vmc_app.infra.sddc_networking_state_info", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_vmc_appModel.SddcNetworkingStateInfo
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_vmc_app.infra.sddc_intranet_config.status", "get", inputDataValue, executionContext)
+	var emptyOutput nsx_vmc_appModel.IntranetConnectivityStatus
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SddcNetworkingStateInfoGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatusGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_vmc_appModel.SddcNetworkingStateInfo), nil
+		return output.(nsx_vmc_appModel.IntranetConnectivityStatus), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

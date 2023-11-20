@@ -3,12 +3,12 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: Configs.
+// Data type definitions file for service: SddcIntranetConfig.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package route
+package infra
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -18,20 +18,20 @@ import (
 	"reflect"
 )
 
-func configsDeleteInputType() vapiBindings_.StructType {
+func sddcIntranetConfigDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["route_config_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["route_config_id"] = "RouteConfigId"
+	fields["intranet_config_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["intranet_config_id"] = "IntranetConfigId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ConfigsDeleteOutputType() vapiBindings_.BindingType {
+func SddcIntranetConfigDeleteOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewVoidType()
 }
 
-func configsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+func sddcIntranetConfigDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -40,11 +40,11 @@ func configsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["route_config_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["route_config_id"] = "RouteConfigId"
-	paramsTypeMap["route_config_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routeConfigId"] = vapiBindings_.NewStringType()
-	pathParams["route_config_id"] = "routeConfigId"
+	fields["intranet_config_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["intranet_config_id"] = "IntranetConfigId"
+	paramsTypeMap["intranet_config_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["intranetConfigId"] = vapiBindings_.NewStringType()
+	pathParams["intranet_config_id"] = "intranetConfigId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -59,7 +59,7 @@ func configsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"DELETE",
-		"/cloud-service/api/v1/infra/external/route/configs/{routeConfigId}",
+		"/cloud-service/api/v1/infra/sddc-intranet-config/{intranetConfigId}",
 		"",
 		resultHeaders,
 		204,
@@ -68,20 +68,20 @@ func configsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func configsGetInputType() vapiBindings_.StructType {
+func sddcIntranetConfigGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["route_config_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["route_config_id"] = "RouteConfigId"
+	fields["intranet_configuration_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["intranet_configuration_id"] = "IntranetConfigurationId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ConfigsGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_vmc_appModel.RouteConfigBindingType)
+func SddcIntranetConfigGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_vmc_appModel.IntranetConnectionConfigurationBindingType)
 }
 
-func configsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func sddcIntranetConfigGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -90,11 +90,11 @@ func configsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["route_config_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["route_config_id"] = "RouteConfigId"
-	paramsTypeMap["route_config_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routeConfigId"] = vapiBindings_.NewStringType()
-	pathParams["route_config_id"] = "routeConfigId"
+	fields["intranet_configuration_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["intranet_configuration_id"] = "IntranetConfigurationId"
+	paramsTypeMap["intranet_configuration_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["intranetConfigurationId"] = vapiBindings_.NewStringType()
+	pathParams["intranet_configuration_id"] = "intranetConfigurationId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -109,7 +109,7 @@ func configsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/cloud-service/api/v1/infra/external/route/configs/{routeConfigId}",
+		"/cloud-service/api/v1/infra/sddc-intranet-config/{intranetConfigurationId}",
 		"",
 		resultHeaders,
 		200,
@@ -118,28 +118,18 @@ func configsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func configsListInputType() vapiBindings_.StructType {
+func sddcIntranetConfigListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
-	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["cursor"] = "Cursor"
-	fieldNameMap["included_fields"] = "IncludedFields"
-	fieldNameMap["page_size"] = "PageSize"
-	fieldNameMap["sort_ascending"] = "SortAscending"
-	fieldNameMap["sort_by"] = "SortBy"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ConfigsListOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_vmc_appModel.RouteConfigListResultBindingType)
+func SddcIntranetConfigListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_vmc_appModel.IntranetConnectionConfigurationListResultBindingType)
 }
 
-func configsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+func sddcIntranetConfigListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -148,26 +138,6 @@ func configsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
-	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["cursor"] = "Cursor"
-	fieldNameMap["included_fields"] = "IncludedFields"
-	fieldNameMap["page_size"] = "PageSize"
-	fieldNameMap["sort_ascending"] = "SortAscending"
-	fieldNameMap["sort_by"] = "SortBy"
-	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
-	queryParams["cursor"] = "cursor"
-	queryParams["sort_ascending"] = "sort_ascending"
-	queryParams["included_fields"] = "included_fields"
-	queryParams["sort_by"] = "sort_by"
-	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -182,7 +152,7 @@ func configsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/cloud-service/api/v1/infra/external/route/configs",
+		"/cloud-service/api/v1/infra/sddc-intranet-config",
 		"",
 		resultHeaders,
 		200,
@@ -191,22 +161,22 @@ func configsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func configsUpdateInputType() vapiBindings_.StructType {
+func sddcIntranetConfigUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["route_config_id"] = vapiBindings_.NewStringType()
-	fields["route_config"] = vapiBindings_.NewReferenceType(nsx_vmc_appModel.RouteConfigBindingType)
-	fieldNameMap["route_config_id"] = "RouteConfigId"
-	fieldNameMap["route_config"] = "RouteConfig"
+	fields["intranet_configuration_id"] = vapiBindings_.NewStringType()
+	fields["intranet_connection_configuration"] = vapiBindings_.NewReferenceType(nsx_vmc_appModel.IntranetConnectionConfigurationBindingType)
+	fieldNameMap["intranet_configuration_id"] = "IntranetConfigurationId"
+	fieldNameMap["intranet_connection_configuration"] = "IntranetConnectionConfiguration"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ConfigsUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_vmc_appModel.RouteConfigBindingType)
+func SddcIntranetConfigUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_vmc_appModel.IntranetConnectionConfigurationBindingType)
 }
 
-func configsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+func sddcIntranetConfigUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -215,14 +185,14 @@ func configsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["route_config_id"] = vapiBindings_.NewStringType()
-	fields["route_config"] = vapiBindings_.NewReferenceType(nsx_vmc_appModel.RouteConfigBindingType)
-	fieldNameMap["route_config_id"] = "RouteConfigId"
-	fieldNameMap["route_config"] = "RouteConfig"
-	paramsTypeMap["route_config"] = vapiBindings_.NewReferenceType(nsx_vmc_appModel.RouteConfigBindingType)
-	paramsTypeMap["route_config_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routeConfigId"] = vapiBindings_.NewStringType()
-	pathParams["route_config_id"] = "routeConfigId"
+	fields["intranet_configuration_id"] = vapiBindings_.NewStringType()
+	fields["intranet_connection_configuration"] = vapiBindings_.NewReferenceType(nsx_vmc_appModel.IntranetConnectionConfigurationBindingType)
+	fieldNameMap["intranet_configuration_id"] = "IntranetConfigurationId"
+	fieldNameMap["intranet_connection_configuration"] = "IntranetConnectionConfiguration"
+	paramsTypeMap["intranet_configuration_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["intranet_connection_configuration"] = vapiBindings_.NewReferenceType(nsx_vmc_appModel.IntranetConnectionConfigurationBindingType)
+	paramsTypeMap["intranetConfigurationId"] = vapiBindings_.NewStringType()
+	pathParams["intranet_configuration_id"] = "intranetConfigurationId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -235,9 +205,9 @@ func configsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"route_config",
+		"intranet_connection_configuration",
 		"PUT",
-		"/cloud-service/api/v1/infra/external/route/configs/{routeConfigId}",
+		"/cloud-service/api/v1/infra/sddc-intranet-config/{intranetConfigurationId}",
 		"",
 		resultHeaders,
 		200,
