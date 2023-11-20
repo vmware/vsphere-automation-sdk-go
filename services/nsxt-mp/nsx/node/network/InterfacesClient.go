@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -42,7 +42,7 @@ type InterfacesClient interface {
 	// @throws NotFound  Not Found
 	List() (nsxModel.NodeNetworkInterfacePropertiesListResult, error)
 
-	// Updates the specified interface properties. You cannot change the properties ``ip_configuration``, ``ip_addresses``, or ``plane``. NSX Manager must have a static IP address. You must use NSX CLI to configure a controller or an edge node.
+	// Updates the specified interface properties. You cannot change the properties ``ip_configuration``, ``ip_addresses``, or ``plane``. NSX Manager must have a static IP address. You must use NSX CLI to configure a controller or an edge node. **Note:** NSX manager reboot is required after adding IPv6 address.
 	//
 	// @param interfaceIdParam ID of interface to update (required)
 	// @param nodeNetworkInterfacePropertiesParam (required)

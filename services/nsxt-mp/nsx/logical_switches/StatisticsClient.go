@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,10 +20,12 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatisticsClient interface {
 
-	// Returns statistics of a specified logical switch. The query parameter \"source=realtime\" is not supported.
+	// Returns statistics of a specified logical switch. For real time statistics source, transport_node_id and stats_type are mandatory.
 	//
 	// @param lswitchIdParam (required)
 	// @param sourceParam Data source type. (optional)
+	// @param statsTypeParam Logical switch statistics type. (optional)
+	// @param transportNodeIdParam TransportNode Id (optional)
 	// @return com.vmware.nsx.model.LogicalSwitchStatistics
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -31,7 +33,7 @@ type StatisticsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(lswitchIdParam string, sourceParam *string) (nsxModel.LogicalSwitchStatistics, error)
+	Get(lswitchIdParam string, sourceParam *string, statsTypeParam *string, transportNodeIdParam *string) (nsxModel.LogicalSwitchStatistics, error)
 }
 
 type statisticsClient struct {
@@ -59,7 +61,7 @@ func (sIface *statisticsClient) GetErrorBindingType(errorName string) vapiBindin
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statisticsClient) Get(lswitchIdParam string, sourceParam *string) (nsxModel.LogicalSwitchStatistics, error) {
+func (sIface *statisticsClient) Get(lswitchIdParam string, sourceParam *string, statsTypeParam *string, transportNodeIdParam *string) (nsxModel.LogicalSwitchStatistics, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := statisticsGetRestMetadata()
@@ -69,6 +71,8 @@ func (sIface *statisticsClient) Get(lswitchIdParam string, sourceParam *string) 
 	sv := vapiBindings_.NewStructValueBuilder(statisticsGetInputType(), typeConverter)
 	sv.AddStructField("LswitchId", lswitchIdParam)
 	sv.AddStructField("Source", sourceParam)
+	sv.AddStructField("StatsType", statsTypeParam)
+	sv.AddStructField("TransportNodeId", transportNodeIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsxModel.LogicalSwitchStatistics

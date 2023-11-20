@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -24,6 +24,7 @@ type StatsClient interface {
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param networkLayerParam Network layer for logical constructs phase (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
@@ -34,7 +35,7 @@ type StatsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Getall(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.LogicalConstructMigrationStatsListResult, error)
+	Getall(cursorParam *string, includedFieldsParam *string, networkLayerParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.LogicalConstructMigrationStatsListResult, error)
 }
 
 type statsClient struct {
@@ -62,7 +63,7 @@ func (sIface *statsClient) GetErrorBindingType(errorName string) vapiBindings_.B
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statsClient) Getall(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.LogicalConstructMigrationStatsListResult, error) {
+func (sIface *statsClient) Getall(cursorParam *string, includedFieldsParam *string, networkLayerParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.LogicalConstructMigrationStatsListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := statsGetallRestMetadata()
@@ -72,6 +73,7 @@ func (sIface *statsClient) Getall(cursorParam *string, includedFieldsParam *stri
 	sv := vapiBindings_.NewStructValueBuilder(statsGetallInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("NetworkLayer", networkLayerParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)

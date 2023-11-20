@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -18,16 +18,24 @@ import (
 	"reflect"
 )
 
+// Possible value for ``networkLayer`` of method Stats#getall.
+const Stats_GETALL_NETWORK_LAYER_L2 = "L2"
+
+// Possible value for ``networkLayer`` of method Stats#getall.
+const Stats_GETALL_NETWORK_LAYER_L3_L7 = "L3_L7"
+
 func statsGetallInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["network_layer"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["network_layer"] = "NetworkLayer"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
@@ -50,20 +58,24 @@ func statsGetallRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["network_layer"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["network_layer"] = "NetworkLayer"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["network_layer"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
+	queryParams["network_layer"] = "network_layer"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["sort_by"] = "sort_by"

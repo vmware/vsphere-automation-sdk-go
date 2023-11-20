@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -38,6 +38,9 @@ const LogicalRouterPorts_LIST_RESOURCE_TYPE_LOGICALROUTERIPTUNNELPORT = "Logical
 
 // Possible value for ``resourceType`` of method LogicalRouterPorts#list.
 const LogicalRouterPorts_LIST_RESOURCE_TYPE_LOGICALROUTERCENTRALIZEDSERVICEPORT = "LogicalRouterCentralizedServicePort"
+
+// Possible value for ``resourceType`` of method LogicalRouterPorts#list.
+const LogicalRouterPorts_LIST_RESOURCE_TYPE_LOGICALROUTERGRETUNNELPORT = "LogicalRouterGreTunnelPort"
 
 func logicalRouterPortsCreateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)

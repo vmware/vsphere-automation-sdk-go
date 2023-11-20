@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -44,6 +44,9 @@ const Data_GET_FILE_TYPE_BYOT_L3_MAPPING = "BYOT_L3_MAPPING"
 
 // Possible value for ``fileType`` of method Data#get.
 const Data_GET_FILE_TYPE_AVI_LB_MAPPING = "AVI_LB_MAPPING"
+
+// Possible value for ``fileType`` of method Data#get.
+const Data_GET_FILE_TYPE_MIGRATION_REPORT = "MIGRATION_REPORT"
 
 func dataDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)

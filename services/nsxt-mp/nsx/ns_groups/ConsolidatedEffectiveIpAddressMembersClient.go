@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ConsolidatedEffectiveIpAddressMembersClient interface {
 
-	// Returns consolidated effective ip address members of the specified NSGroup. Applicable in case of federated environment. The response contains site-wise list of consolidated effective IP address members. In the response, for the local-site, the list will contain static and dynamicaly translated IPs. For the remote sites, the list will contain only the dynamically translated IPs. The static IPs will not be seen in the response of this API. Hence, user can refer to the local-site Ip response in the API results or the group definition to see the static IP membership of the Group. This API is applicable only for NSGroups containing either VirtualMachine, VIF, LogicalSwitch, LogicalPort or IPSet member type. For NSGroups containing other member types,it returns an empty list. Use the cursor value in the response to fetch the next page. If there is no cursor value for a response, it implies the last page in the results for the query.
+	// Returns the consolidated effective IP address members of the specified NSGroup. This is applicable in the case of a federated/NSX+ environment. The response includes a site-wise list of static and dynamically translated effective IP address members. If the ns-group evaluation on a site is empty, the response will contain the site-id with empty list. If an ns-group is a reference group on a site, then its consolidated effective IP response will contain the effective IPs from other sites, and the response will contain an empty list of IPs for the sites where is it a reference group. This API is applicable only for Global and NSX+ Groups that contain (either directly or via nesting) VirtualMachine, VIF, Segment, SegmentPort, or IPSet member types. Please use the cursor value in the response to fetch the next page. If there is no cursor value in the response, it indicates that it is the last page of results for the query.
 	//
 	// @param nsGroupIdParam NSGroup Id (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)

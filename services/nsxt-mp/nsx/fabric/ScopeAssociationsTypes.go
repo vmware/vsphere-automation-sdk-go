@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -28,7 +28,7 @@ const ScopeAssociations_LIST_DISCOVERED_RESOURCE_TYPE_COMPUTECOLLECTION = "Compu
 const ScopeAssociations_LIST_SCOPE_TYPE_VPC = "VPC"
 
 // Possible value for ``scopeType`` of method ScopeAssociations#list.
-const ScopeAssociations_LIST_SCOPE_TYPE_PROJECT = "PROJECT"
+const ScopeAssociations_LIST_SCOPE_TYPE_PROJECT = "Project"
 
 func scopeAssociationsAddInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)

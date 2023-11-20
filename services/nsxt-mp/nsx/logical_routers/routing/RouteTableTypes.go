@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -28,21 +28,21 @@ func routeTableListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["logical_router_id"] = vapiBindings_.NewStringType()
-	fields["transport_node_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
-	fieldNameMap["transport_node_id"] = "TransportNodeId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["source"] = "Source"
+	fieldNameMap["transport_node_id"] = "TransportNodeId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -61,37 +61,37 @@ func routeTableListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["logical_router_id"] = vapiBindings_.NewStringType()
-	fields["transport_node_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["logical_router_id"] = "LogicalRouterId"
-	fieldNameMap["transport_node_id"] = "TransportNodeId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["source"] = "Source"
+	fieldNameMap["transport_node_id"] = "TransportNodeId"
 	paramsTypeMap["logical_router_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["transport_node_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["logicalRouterId"] = vapiBindings_.NewStringType()
 	pathParams["logical_router_id"] = "logicalRouterId"
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
-	queryParams["transport_node_id"] = "transport_node_id"
 	queryParams["sort_by"] = "sort_by"
 	queryParams["source"] = "source"
+	queryParams["transport_node_id"] = "transport_node_id"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}

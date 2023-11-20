@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -29,7 +29,6 @@ type RoutingTableClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param logicalRouterIdParam (required)
-	// @param transportNodeIdParam TransportNode Id (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
 	// @param networkPrefixParam IPAddress or CIDR Block (optional)
@@ -38,6 +37,7 @@ type RoutingTableClient interface {
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param sourceParam Data source type. (optional)
+	// @param transportNodeIdParam TransportNode Id (optional)
 	// @param vrfTableParam VRF filter parameter (optional)
 	// @return com.vmware.nsx.model.LogicalRouterRouteTable
 	//
@@ -46,7 +46,7 @@ type RoutingTableClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(logicalRouterIdParam string, transportNodeIdParam string, cursorParam *string, includedFieldsParam *string, networkPrefixParam *string, pageSizeParam *int64, routeSourceParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string, vrfTableParam *string) (nsxModel.LogicalRouterRouteTable, error)
+	List(logicalRouterIdParam string, cursorParam *string, includedFieldsParam *string, networkPrefixParam *string, pageSizeParam *int64, routeSourceParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string, transportNodeIdParam *string, vrfTableParam *string) (nsxModel.LogicalRouterRouteTable, error)
 }
 
 type routingTableClient struct {
@@ -74,7 +74,7 @@ func (rIface *routingTableClient) GetErrorBindingType(errorName string) vapiBind
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (rIface *routingTableClient) List(logicalRouterIdParam string, transportNodeIdParam string, cursorParam *string, includedFieldsParam *string, networkPrefixParam *string, pageSizeParam *int64, routeSourceParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string, vrfTableParam *string) (nsxModel.LogicalRouterRouteTable, error) {
+func (rIface *routingTableClient) List(logicalRouterIdParam string, cursorParam *string, includedFieldsParam *string, networkPrefixParam *string, pageSizeParam *int64, routeSourceParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string, transportNodeIdParam *string, vrfTableParam *string) (nsxModel.LogicalRouterRouteTable, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
 	operationRestMetaData := routingTableListRestMetadata()
@@ -83,7 +83,6 @@ func (rIface *routingTableClient) List(logicalRouterIdParam string, transportNod
 
 	sv := vapiBindings_.NewStructValueBuilder(routingTableListInputType(), typeConverter)
 	sv.AddStructField("LogicalRouterId", logicalRouterIdParam)
-	sv.AddStructField("TransportNodeId", transportNodeIdParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("NetworkPrefix", networkPrefixParam)
@@ -92,6 +91,7 @@ func (rIface *routingTableClient) List(logicalRouterIdParam string, transportNod
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
 	sv.AddStructField("Source", sourceParam)
+	sv.AddStructField("TransportNodeId", transportNodeIdParam)
 	sv.AddStructField("VrfTable", vrfTableParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {

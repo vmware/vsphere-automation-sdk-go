@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatsClient interface {
 
-	// On the specified interface, returns the number of received (rx), transmitted (tx), and dropped packets; the number of bytes and errors received and transmitted on the interface; and the number of detected collisions.
+	// This API returns the counters of the specified interface. The counters reset on reboot or redeploy of the appliance or restart of the data plane. NSX Manager polls the transport-node every minute (by default) to update the data returned on this API. If you need near realtime values, use the query parameter \\\"?source=realtime\\\" to the API and it will make NSX Manager collect the statistics from the transport node and returns the updated counters.
 	//
 	// @param transportNodeIdParam (required)
 	// @param interfaceIdParam (required)

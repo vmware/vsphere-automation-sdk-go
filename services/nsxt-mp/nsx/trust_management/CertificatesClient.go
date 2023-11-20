@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -112,7 +112,10 @@ type CertificatesClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, detailsParam *bool, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsxModel.CertificateList, error)
 
+	// Set a certificate that has been imported to be the Appliance Proxy certificate used for communicating with Appliance Proxies on other sites.
 	//
+	//  Please use below APIs.
+	//  POST https://<nsx-mgr>/api/v1/trust-management/certificates/<cert-id>?action=apply_certificate&service_type=APH
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -125,7 +128,11 @@ type CertificatesClient interface {
 	// @throws NotFound  Not Found
 	Setapplianceproxycertificateforintersitecommunication(setInterSiteAphCertificateRequestParam nsxModel.SetInterSiteAphCertificateRequest) error
 
+	// Set a certificate that has been imported to be either the principal identity certificate for the local cluster with either GM or LM service type. Currently, the service type specified must match the current service type of the local cluster.
 	//
+	//  Please use below APIs.
+	//  POST https://<nsx-mgr>/api/v1/trust-management/certificates/<cert-id>?action=apply_certificate&service_type=LOCAL_MANAGER
+	//  POST https://<nsx-mgr>/api/v1/trust-management/certificates/<cert-id>?action=apply_certificate&service_type=GLOBAL_MANAGER
 	//
 	// Deprecated: This API element is deprecated.
 	//

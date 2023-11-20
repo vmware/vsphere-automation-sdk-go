@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -110,6 +110,12 @@ const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_COMPUTE_MANAGER = "COMPUTE_MANA
 
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_CCP = "CCP"
+
+// Possible value for ``serviceType`` of method Certificates#applycertificate.
+const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_ANALYTICS_AGENT = "ANALYTICS_AGENT"
+
+// Possible value for ``serviceType`` of method Certificates#applycertificate.
+const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_ANALYTICS_KAFKA = "ANALYTICS_KAFKA"
 
 // Possible value for ``type`` of method Certificates#list.
 const Certificates_LIST_TYPE_CLUSTER_API_CERTIFICATE = "cluster_api_certificate"

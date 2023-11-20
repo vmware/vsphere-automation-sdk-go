@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,6 +20,18 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TransportNodesClient interface {
 
+	//
+	//
+	// @param nodeIdParam (required)
+	// @param transportNodePlacementConfigParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Addorupdateplacementreferences(nodeIdParam string, transportNodePlacementConfigParam nsxModel.TransportNodePlacementConfig) error
+
 	// Edge transport node maintains its entry in many internal tables. In some cases a few of these entries might not get cleaned up during edge transport node deletion. This api cleans up any stale entries that may exist in the internal tables that store the Edge Transport Node data.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -29,7 +41,7 @@ type TransportNodesClient interface {
 	// @throws NotFound  Not Found
 	Cleanstaleentries() error
 
-	// Transport nodes are hypervisor hosts and NSX Edges that will participate in an NSX-T overlay. For a hypervisor host, this means that it hosts VMs that will communicate over NSX-T logical switches. For NSX Edges, this means that it will have logical router uplinks and downlinks. This API creates transport node for a host node (hypervisor) or edge node (router) in the transport network. When you run this command for a host, NSX Manager attempts to install the NSX kernel modules, which are packaged as VIB, RPM, or DEB files. For the installation to succeed, you must provide the host login credentials and the host thumbprint. To get the ESXi host thumbprint, SSH to the host and run the **openssl x509 -in /etc/vmware/ssl/rui.crt -fingerprint -sha256 -noout** command. To generate host key thumbprint using SHA-256 algorithm please follow the steps below. Log into the host, making sure that the connection is not vulnerable to a man in the middle attack. Check whether a public key already exists. Host public key is generally located at '/etc/ssh/ssh_host_rsa_key.pub'. If the key is not present then generate a new key by running the following command and follow the instructions. **ssh-keygen -t rsa** Now generate a SHA256 hash of the key using the following command. Please make sure to pass the appropriate file name if the public key is stored with a different file name other than the default 'id_rsa.pub'. **awk '{print $2}' id_rsa.pub | base64 -d | sha256sum -b | sed 's/ .\*$//' | xxd -r -p | base64** This api is deprecated as part of FN+TN unification. Please use Transport Node API to install NSX components on a node. Additional documentation on creating a transport node can be found in the NSX-T Installation Guide. In order for the transport node to forward packets, the host_switch_spec property must be specified. Host switches (called bridges in OVS on KVM hypervisors) are the individual switches within the host virtual switch. Virtual machines are connected to the host switches. When creating a transport node, you need to specify if the host switches are already manually preconfigured on the node, or if NSX should create and manage the host switches. You specify this choice by the type of host switches you pass in the host_switch_spec property of the TransportNode request payload. For a KVM host, you can preconfigure the host switch, or you can have NSX Manager perform the configuration. For an ESXi host or NSX Edge node, NSX Manager always configures the host switch. To preconfigure the host switches on a KVM host, pass an array of PreconfiguredHostSwitchSpec objects that describes those host switches. In the current NSX-T release, only one prefonfigured host switch can be specified. See the PreconfiguredHostSwitchSpec schema definition for documentation on the properties that must be provided. Preconfigured host switches are only supported on KVM hosts, not on ESXi hosts or NSX Edge nodes. To allow NSX to manage the host switch configuration on KVM hosts, ESXi hosts, or NSX Edge nodes, pass an array of StandardHostSwitchSpec objects in the host_switch_spec property, and NSX will automatically create host switches with the properties you provide. In the current NSX-T release, up to 16 host switches can be automatically managed. See the StandardHostSwitchSpec schema definition for documentation on the properties that must be provided. Note: Previous versions of NSX-T also used a property named transport_zone_endpoints at TransportNode level. This property is deprecated which creates some combinations of new client along with old client payloads. Examples [1] & [2] show old/existing client request and response by populating transport_zone_endpoints property at TransportNode level. Example [3] shows TransportNode creation request/response by populating transport_zone_endpoints property at StandardHostSwitch level and other new properties. The request should either provide node_deployement_info or node_id. If the host node (hypervisor) or edge node (router) is already added in system then it can be converted to transport node by providing node_id in request. If host node (hypervisor) or edge node (router) is not already present in system then information should be provided under node_deployment_info. This api is now deprecated. Please use new api - /infra/sites/<site-id>/enforcement-points/<enforcementpoint-id>/host-transport-nodes/<host-transport-node-id>
+	// Transport nodes are hypervisor hosts and NSX Edges that will participate in an NSX-T overlay. For a hypervisor host, this means that it hosts VMs that will communicate over NSX-T logical switches. For NSX Edges, this means that it will have logical router uplinks and downlinks. This API creates transport node for a host node (hypervisor) or edge node (router) in the transport network. When you run this command for a host, NSX Manager attempts to install the NSX kernel modules, which are packaged as VIB, RPM, or DEB files. For the installation to succeed, you must provide the host login credentials and the host thumbprint. To get the ESXi host thumbprint, SSH to the host and run the **openssl x509 -in /etc/vmware/ssl/rui.crt -fingerprint -sha256 -noout** command. To generate host key thumbprint using SHA-256 algorithm please follow the steps below. Log into the host, making sure that the connection is not vulnerable to a man in the middle attack. Check whether a public key already exists. Host public key is generally located at '/etc/ssh/ssh_host_rsa_key.pub'. If the key is not present then generate a new key by running the following command and follow the instructions. **ssh-keygen -t rsa** Now generate a SHA256 hash of the key using the following command. Please make sure to pass the appropriate file name if the public key is stored with a different file name other than the default 'id_rsa.pub'. **awk '{print $2}' id_rsa.pub | base64 -d | sha256sum -b | sed 's/ .\*$//' | xxd -r -p | base64** Additional documentation on creating a transport node can be found in the NSX-T Installation Guide. In order for the transport node to forward packets, the host_switch_spec property must be specified. Host switches (called bridges in OVS on KVM hypervisors) are the individual switches within the host virtual switch. Virtual machines are connected to the host switches. When creating a transport node, you need to specify if the host switches are already manually preconfigured on the node, or if NSX should create and manage the host switches. You specify this choice by the type of host switches you pass in the host_switch_spec property of the TransportNode request payload. For a KVM host, you can preconfigure the host switch, or you can have NSX Manager perform the configuration. For an ESXi host or NSX Edge node, NSX Manager always configures the host switch. To preconfigure the host switches on a KVM host, pass an array of PreconfiguredHostSwitchSpec objects that describes those host switches. In the current NSX-T release, only one prefonfigured host switch can be specified. See the PreconfiguredHostSwitchSpec schema definition for documentation on the properties that must be provided. Preconfigured host switches are only supported on KVM hosts, not on ESXi hosts or NSX Edge nodes. To allow NSX to manage the host switch configuration on KVM hosts, ESXi hosts, or NSX Edge nodes, pass an array of StandardHostSwitchSpec objects in the host_switch_spec property, and NSX will automatically create host switches with the properties you provide. In the current NSX-T release, up to 16 host switches can be automatically managed. See the StandardHostSwitchSpec schema definition for documentation on the properties that must be provided. Note: Previous versions of NSX-T also used a property named transport_zone_endpoints at TransportNode level. This property is deprecated which creates some combinations of new client along with old client payloads. Examples [1] & [2] show old/existing client request and response by populating transport_zone_endpoints property at TransportNode level. Example [3] shows TransportNode creation request/response by populating transport_zone_endpoints property at StandardHostSwitch level and other new properties. The request should either provide node_deployement_info or node_id. If the host node (hypervisor) or edge node (router) is already added in system then it can be converted to transport node by providing node_id in request. If host node (hypervisor) or edge node (router) is not already present in system then information should be provided under node_deployment_info.
 	//
 	// @param transportNodeParam (required)
 	// @return com.vmware.nsx.model.TransportNode
@@ -41,7 +53,7 @@ type TransportNodesClient interface {
 	// @throws NotFound  Not Found
 	Create(transportNodeParam nsxModel.TransportNode) (nsxModel.TransportNode, error)
 
-	// Deletes the specified transport node. Query param force can be used to force delete the host nodes. Force deletion of edge and public cloud gateway nodes is not supported. Force delete is not supported if transport node is part of a cluster on which Transport node profile is applied. If transport node delete is called with query param force not being set or set to false and uninstall of NSX components in the host fails, TransportNodeState object will be retained. If transport node delete is called with query param force set to true and uninstall of NSX components in the host fails, TransportNodeState object will be deleted. It also removes the specified node (host or edge) from system. If unprepare_host option is set to false, then host will be deleted without uninstalling the NSX components from the host. This api is now deprecated. Please use new api - /infra/sites/<site-id>/enforcement-points/<enforcementpoint-id>/host-transport-nodes/<host-transport-node-id>
+	// Deletes the specified transport node. Query param force can be used to force delete the host nodes. Force deletion of edge and public cloud gateway nodes is not supported. Force delete is not supported if transport node is part of a cluster on which Transport node profile is applied. If transport node delete is called with query param force not being set or set to false and uninstall of NSX components in the host fails, TransportNodeState object will be retained. If transport node delete is called with query param force set to true and uninstall of NSX components in the host fails, TransportNodeState object will be deleted. It also removes the specified node (host or edge) from system. If unprepare_host option is set to false, then host will be deleted without uninstalling the NSX components from the host.
 	//
 	// @param transportNodeIdParam (required)
 	// @param forceParam Force delete the resource even if it is being used somewhere (optional, default to false)
@@ -89,7 +101,7 @@ type TransportNodesClient interface {
 	// @throws NotFound  Not Found
 	Enableflowcache(transportNodeIdParam string) error
 
-	// Returns information about a specified transport node. This api is now deprecated. Please use new api - /infra/sites/<site-id>/enforcement-points/<enforcementpoint-id>/host-transport-nodes/<host-transport-node-id>
+	// Returns information about a specified transport node.
 	//
 	// @param transportNodeIdParam (required)
 	// @return com.vmware.nsx.model.TransportNode
@@ -114,7 +126,7 @@ type TransportNodesClient interface {
 	// @throws NotFound  Not Found
 	Getontransportnode(targetNodeIdParam string, targetUriParam string) error
 
-	// Returns information about all transport nodes along with underlying host or edge details. A transport node is a host or edge that contains hostswitches. A hostswitch can have virtual machines connected to them. Because each transport node has hostswitches, transport nodes can also have virtual tunnel endpoints, which means that they can be part of the overlay. This api is now deprecated. Please use new api - /infra/sites/<site-id>/enforcement-points/<enforcementpoint-id>/host-transport-nodes
+	// Returns information about all transport nodes along with underlying host or edge details. A transport node is a host or edge that contains hostswitches. A hostswitch can have virtual machines connected to them. Because each transport node has hostswitches, transport nodes can also have virtual tunnel endpoints, which means that they can be part of the overlay.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param inMaintenanceModeParam maintenance mode flag (optional)
@@ -264,24 +276,25 @@ type transportNodesClient struct {
 func NewTransportNodesClient(connector vapiProtocolClient_.Connector) *transportNodesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.transport_nodes")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"cleanstaleentries":        vapiCore_.NewMethodIdentifier(interfaceIdentifier, "cleanstaleentries"),
-		"create":                   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete":                   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"deleteontransportnode":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "deleteontransportnode"),
-		"disableflowcache":         vapiCore_.NewMethodIdentifier(interfaceIdentifier, "disableflowcache"),
-		"enableflowcache":          vapiCore_.NewMethodIdentifier(interfaceIdentifier, "enableflowcache"),
-		"get":                      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"getontransportnode":       vapiCore_.NewMethodIdentifier(interfaceIdentifier, "getontransportnode"),
-		"list":                     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"postontransportnode":      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "postontransportnode"),
-		"putontransportnode":       vapiCore_.NewMethodIdentifier(interfaceIdentifier, "putontransportnode"),
-		"redeploy":                 vapiCore_.NewMethodIdentifier(interfaceIdentifier, "redeploy"),
-		"refreshnodeconfiguration": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "refreshnodeconfiguration"),
-		"restartinventorysync":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "restartinventorysync"),
-		"restoreclusterconfig":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "restoreclusterconfig"),
-		"resynchostconfig":         vapiCore_.NewMethodIdentifier(interfaceIdentifier, "resynchostconfig"),
-		"update":                   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
-		"updatemaintenancemode":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "updatemaintenancemode"),
+		"addorupdateplacementreferences": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "addorupdateplacementreferences"),
+		"cleanstaleentries":              vapiCore_.NewMethodIdentifier(interfaceIdentifier, "cleanstaleentries"),
+		"create":                         vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete":                         vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"deleteontransportnode":          vapiCore_.NewMethodIdentifier(interfaceIdentifier, "deleteontransportnode"),
+		"disableflowcache":               vapiCore_.NewMethodIdentifier(interfaceIdentifier, "disableflowcache"),
+		"enableflowcache":                vapiCore_.NewMethodIdentifier(interfaceIdentifier, "enableflowcache"),
+		"get":                            vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"getontransportnode":             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "getontransportnode"),
+		"list":                           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"postontransportnode":            vapiCore_.NewMethodIdentifier(interfaceIdentifier, "postontransportnode"),
+		"putontransportnode":             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "putontransportnode"),
+		"redeploy":                       vapiCore_.NewMethodIdentifier(interfaceIdentifier, "redeploy"),
+		"refreshnodeconfiguration":       vapiCore_.NewMethodIdentifier(interfaceIdentifier, "refreshnodeconfiguration"),
+		"restartinventorysync":           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "restartinventorysync"),
+		"restoreclusterconfig":           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "restoreclusterconfig"),
+		"resynchostconfig":               vapiCore_.NewMethodIdentifier(interfaceIdentifier, "resynchostconfig"),
+		"update":                         vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"updatemaintenancemode":          vapiCore_.NewMethodIdentifier(interfaceIdentifier, "updatemaintenancemode"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -295,6 +308,33 @@ func (tIface *transportNodesClient) GetErrorBindingType(errorName string) vapiBi
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
+}
+
+func (tIface *transportNodesClient) Addorupdateplacementreferences(nodeIdParam string, transportNodePlacementConfigParam nsxModel.TransportNodePlacementConfig) error {
+	typeConverter := tIface.connector.TypeConverter()
+	executionContext := tIface.connector.NewExecutionContext()
+	operationRestMetaData := transportNodesAddorupdateplacementreferencesRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(transportNodesAddorupdateplacementreferencesInputType(), typeConverter)
+	sv.AddStructField("NodeId", nodeIdParam)
+	sv.AddStructField("TransportNodePlacementConfig", transportNodePlacementConfigParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx.transport_nodes", "addorupdateplacementreferences", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
 }
 
 func (tIface *transportNodesClient) Cleanstaleentries() error {
