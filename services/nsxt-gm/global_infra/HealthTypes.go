@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,6 +20,8 @@ import (
 func healthGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["dependent_services_health"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["dependent_services_health"] = "DependentServicesHealth"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -37,6 +39,10 @@ func healthGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
+	fields["dependent_services_health"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["dependent_services_health"] = "DependentServicesHealth"
+	paramsTypeMap["dependent_services_health"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	queryParams["dependent_services_health"] = "dependent_services_health"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(

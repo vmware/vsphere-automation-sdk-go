@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,8 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type BatchClient interface {
 
-	// Enables you to make multiple API requests using a single request. The batch API takes in an array of logical HTTP requests represented as JSON arrays. Each request has a method (GET, PUT, POST, or DELETE), a relative_url (the portion of the URL after https://<nsx-mgr>/api/), optional headers array (corresponding to HTTP headers) and an optional body (for POST and PUT requests). The batch API returns an array of logical HTTP responses represented as JSON arrays. Each response has a status code, an optional headers array and an optional body (which is a JSON-encoded string). This API is deprecated. Instead, use the hierarchical API in the NSX-T policy API.
-	//  Support for batched operations will be removed from a future NSX release. For policy APIs, use the hierarchical API to submit a set of updates as a single operation. For other APIs, submit the operations as individual REST API calls.
+	//
 	//
 	// Deprecated: This API element is deprecated.
 	//

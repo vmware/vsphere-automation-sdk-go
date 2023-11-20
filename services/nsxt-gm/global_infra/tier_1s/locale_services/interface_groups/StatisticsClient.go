@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -33,6 +33,9 @@ type StatisticsClient interface {
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
+	// @param sourceParam Data source type. (optional)
+	// @param statsTypeParam Segment statistics type (optional)
+	// @param transportNodeIdParam Transport Node Id (optional)
 	// @return com.vmware.nsx_global_policy.model.PolicyInterfaceGroupStatistics
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -40,7 +43,7 @@ type StatisticsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(tier1IdParam string, localeServiceIdParam string, interfaceGroupIdParam string, cursorParam *string, edgePathParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_global_policyModel.PolicyInterfaceGroupStatistics, error)
+	Get(tier1IdParam string, localeServiceIdParam string, interfaceGroupIdParam string, cursorParam *string, edgePathParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statsTypeParam *string, transportNodeIdParam *string) (nsx_global_policyModel.PolicyInterfaceGroupStatistics, error)
 }
 
 type statisticsClient struct {
@@ -68,7 +71,7 @@ func (sIface *statisticsClient) GetErrorBindingType(errorName string) vapiBindin
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statisticsClient) Get(tier1IdParam string, localeServiceIdParam string, interfaceGroupIdParam string, cursorParam *string, edgePathParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_global_policyModel.PolicyInterfaceGroupStatistics, error) {
+func (sIface *statisticsClient) Get(tier1IdParam string, localeServiceIdParam string, interfaceGroupIdParam string, cursorParam *string, edgePathParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statsTypeParam *string, transportNodeIdParam *string) (nsx_global_policyModel.PolicyInterfaceGroupStatistics, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := statisticsGetRestMetadata()
@@ -87,6 +90,9 @@ func (sIface *statisticsClient) Get(tier1IdParam string, localeServiceIdParam st
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
+	sv.AddStructField("Source", sourceParam)
+	sv.AddStructField("StatsType", statsTypeParam)
+	sv.AddStructField("TransportNodeId", transportNodeIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_global_policyModel.PolicyInterfaceGroupStatistics

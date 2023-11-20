@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type HealthClient interface {
 
 	// Get health stats for policy modules with success and failure counters
+	//
+	// @param dependentServicesHealthParam Fetch the health of policy and it's dependent services. (optional)
 	// @return DynamicStructure
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -28,7 +30,7 @@ type HealthClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (*vapiData_.StructValue, error)
+	Get(dependentServicesHealthParam *bool) (*vapiData_.StructValue, error)
 }
 
 type healthClient struct {
@@ -56,7 +58,7 @@ func (hIface *healthClient) GetErrorBindingType(errorName string) vapiBindings_.
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (hIface *healthClient) Get() (*vapiData_.StructValue, error) {
+func (hIface *healthClient) Get(dependentServicesHealthParam *bool) (*vapiData_.StructValue, error) {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
 	operationRestMetaData := healthGetRestMetadata()
@@ -64,6 +66,7 @@ func (hIface *healthClient) Get() (*vapiData_.StructValue, error) {
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(healthGetInputType(), typeConverter)
+	sv.AddStructField("DependentServicesHealth", dependentServicesHealthParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput *vapiData_.StructValue
