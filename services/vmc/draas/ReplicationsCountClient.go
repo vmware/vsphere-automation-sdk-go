@@ -3,7 +3,7 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: ReplicaDiskCollections
+// Interface file for service: ReplicationsCount
 // Used by client-side stubs.
 
 package draas
@@ -18,70 +18,69 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-type ReplicaDiskCollectionsClient interface {
+type ReplicationsCountClient interface {
 
-	// Query replica disk collections
+	// Get replications count.
 	//
 	// @param orgParam Organization identifier (required)
 	// @param sddcParam sddc identifier (required)
-	// @param datastoreMoIdParam Represents the datastore moref id to search. (optional)
+	// @return com.vmware.vmc.draas.model.ReplicationsCount
 	//
 	// @throws Unauthenticated  Unauthorized
+	// @throws InvalidRequest  Bad Request
 	// @throws Unauthorized  Forbidden
-	// @throws NotFound  Not found
-	Get(orgParam string, sddcParam string, datastoreMoIdParam *string) ([]vmcDraasModel.ReplicaDiskCollection, error)
+	Get(orgParam string, sddcParam string) (vmcDraasModel.ReplicationsCount, error)
 }
 
-type replicaDiskCollectionsClient struct {
+type replicationsCountClient struct {
 	connector           vapiProtocolClient_.Connector
 	interfaceDefinition vapiCore_.InterfaceDefinition
 	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewReplicaDiskCollectionsClient(connector vapiProtocolClient_.Connector) *replicaDiskCollectionsClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vmc.draas.replica_disk_collections")
+func NewReplicationsCountClient(connector vapiProtocolClient_.Connector) *replicationsCountClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.vmc.draas.replications_count")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
-	rIface := replicaDiskCollectionsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	rIface := replicationsCountClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &rIface
 }
 
-func (rIface *replicaDiskCollectionsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+func (rIface *replicationsCountClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := rIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (rIface *replicaDiskCollectionsClient) Get(orgParam string, sddcParam string, datastoreMoIdParam *string) ([]vmcDraasModel.ReplicaDiskCollection, error) {
+func (rIface *replicationsCountClient) Get(orgParam string, sddcParam string) (vmcDraasModel.ReplicationsCount, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
-	operationRestMetaData := replicaDiskCollectionsGetRestMetadata()
+	operationRestMetaData := replicationsCountGetRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(replicaDiskCollectionsGetInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(replicationsCountGetInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
-	sv.AddStructField("DatastoreMoId", datastoreMoIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput []vmcDraasModel.ReplicaDiskCollection
+		var emptyOutput vmcDraasModel.ReplicationsCount
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.vmc.draas.replica_disk_collections", "get", inputDataValue, executionContext)
-	var emptyOutput []vmcDraasModel.ReplicaDiskCollection
+	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.vmc.draas.replications_count", "get", inputDataValue, executionContext)
+	var emptyOutput vmcDraasModel.ReplicationsCount
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ReplicaDiskCollectionsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ReplicationsCountGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.([]vmcDraasModel.ReplicaDiskCollection), nil
+		return output.(vmcDraasModel.ReplicationsCount), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -24,14 +24,13 @@ type SiteRecoveryVersionsClient interface {
 	//
 	// @param orgParam Organization identifier (required)
 	// @param sddcParam sddc identifier (required)
-	// @param versionSourceParam Represents the source for getting the version from. (optional)
 	// @return com.vmware.vmc.draas.model.SiteRecoveryVersions
 	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Invalid action or bad argument
 	// @throws Unauthorized  Forbidden
 	// @throws NotFound  Cannot find site recovery versions for sddc identifier
-	Get(orgParam string, sddcParam string, versionSourceParam *string) (vmcDraasModel.SiteRecoveryVersions, error)
+	Get(orgParam string, sddcParam string) (vmcDraasModel.SiteRecoveryVersions, error)
 }
 
 type siteRecoveryVersionsClient struct {
@@ -59,7 +58,7 @@ func (sIface *siteRecoveryVersionsClient) GetErrorBindingType(errorName string) 
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *siteRecoveryVersionsClient) Get(orgParam string, sddcParam string, versionSourceParam *string) (vmcDraasModel.SiteRecoveryVersions, error) {
+func (sIface *siteRecoveryVersionsClient) Get(orgParam string, sddcParam string) (vmcDraasModel.SiteRecoveryVersions, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := siteRecoveryVersionsGetRestMetadata()
@@ -69,7 +68,6 @@ func (sIface *siteRecoveryVersionsClient) Get(orgParam string, sddcParam string,
 	sv := vapiBindings_.NewStructValueBuilder(siteRecoveryVersionsGetInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
-	sv.AddStructField("VersionSource", versionSourceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput vmcDraasModel.SiteRecoveryVersions

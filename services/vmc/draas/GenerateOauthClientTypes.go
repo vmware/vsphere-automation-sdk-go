@@ -3,7 +3,7 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: VrSiteIssues.
+// Data type definitions file for service: GenerateOauthClient.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
@@ -14,26 +14,27 @@ import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	vmcDraasModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/draas/model"
 	"reflect"
 )
 
-func vrSiteIssuesGetInputType() vapiBindings_.StructType {
+func generateOauthClientPostInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org"] = vapiBindings_.NewStringType()
 	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["site_recovery_node"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
+	fieldNameMap["site_recovery_node"] = "SiteRecoveryNode"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func VrSiteIssuesGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewListType(vapiBindings_.NewReferenceType(vmcDraasModel.HmsSiteIssueInfoBindingType), reflect.TypeOf([]vmcDraasModel.HmsSiteIssueInfo{}))
+func GenerateOauthClientPostOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func vrSiteIssuesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func generateOauthClientPostRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -44,14 +45,19 @@ func vrSiteIssuesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["org"] = vapiBindings_.NewStringType()
 	fields["sddc"] = vapiBindings_.NewStringType()
+	fields["site_recovery_node"] = vapiBindings_.NewStringType()
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
+	fieldNameMap["site_recovery_node"] = "SiteRecoveryNode"
+	paramsTypeMap["site_recovery_node"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
+	paramsTypeMap["siteRecoveryNode"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
+	pathParams["site_recovery_node"] = "siteRecoveryNode"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
@@ -67,12 +73,12 @@ func vrSiteIssuesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		bodyFieldsMap,
 		"",
 		"",
-		"GET",
-		"/vmc/draas/api/orgs/{org}/sddcs/{sddc}/site-recovery/vr-site-issues",
+		"POST",
+		"/vmc/draas/api/orgs/{org}/sddcs/{sddc}/site-recovery/{siteRecoveryNode}/generate-oauth-client",
 		"",
 		resultHeaders,
-		200,
+		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.unauthenticated": 401, "com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403})
 }

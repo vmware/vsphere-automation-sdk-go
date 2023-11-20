@@ -3,7 +3,7 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: VrSiteIssues.
+// Data type definitions file for service: ReplicaData.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
@@ -14,11 +14,10 @@ import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	vmcDraasModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/draas/model"
 	"reflect"
 )
 
-func vrSiteIssuesGetInputType() vapiBindings_.StructType {
+func replicaDataGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org"] = vapiBindings_.NewStringType()
@@ -29,11 +28,11 @@ func vrSiteIssuesGetInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func VrSiteIssuesGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewListType(vapiBindings_.NewReferenceType(vmcDraasModel.HmsSiteIssueInfoBindingType), reflect.TypeOf([]vmcDraasModel.HmsSiteIssueInfo{}))
+func ReplicaDataGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewDynamicStructType(nil)
 }
 
-func vrSiteIssuesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func replicaDataGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -68,7 +67,7 @@ func vrSiteIssuesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/vmc/draas/api/orgs/{org}/sddcs/{sddc}/site-recovery/vr-site-issues",
+		"/vmc/draas/api/orgs/{org}/sddcs/{sddc}/site-recovery/replica-data",
 		"",
 		resultHeaders,
 		200,

@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -24,15 +24,14 @@ type SiteRecoveryClient interface {
 	//
 	// @param orgParam Organization identifier (required)
 	// @param sddcParam sddc identifier (required)
-	// @param forceParam If = 'true', will deactivate site recovery forcefully. (optional)
-	// @param deactivateHcxParam If = 'true', will deactivate HCX. (optional)
+	// @param deleteConfigInternalParam Customization, for example if deactivate site recovery forcefully and the CSSD/CSCM ticket number and the confirmation code. (optional)
 	// @return com.vmware.vmc.draas.model.Task
 	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Invalid action or bad argument
 	// @throws Unauthorized  Forbidden
 	// @throws NotFound  Cannot find site recovery configuration for sddc identifier
-	Delete(orgParam string, sddcParam string, forceParam *bool, deactivateHcxParam *bool) (vmcDraasModel.Task, error)
+	Delete(orgParam string, sddcParam string, deleteConfigInternalParam *vmcDraasModel.DeleteConfigInternal) (vmcDraasModel.Task, error)
 
 	// Query site recovery configuration for the specified sddc
 	//
@@ -86,7 +85,7 @@ func (sIface *siteRecoveryClient) GetErrorBindingType(errorName string) vapiBind
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *siteRecoveryClient) Delete(orgParam string, sddcParam string, forceParam *bool, deactivateHcxParam *bool) (vmcDraasModel.Task, error) {
+func (sIface *siteRecoveryClient) Delete(orgParam string, sddcParam string, deleteConfigInternalParam *vmcDraasModel.DeleteConfigInternal) (vmcDraasModel.Task, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := siteRecoveryDeleteRestMetadata()
@@ -96,8 +95,7 @@ func (sIface *siteRecoveryClient) Delete(orgParam string, sddcParam string, forc
 	sv := vapiBindings_.NewStructValueBuilder(siteRecoveryDeleteInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("Sddc", sddcParam)
-	sv.AddStructField("Force", forceParam)
-	sv.AddStructField("DeactivateHcx", deactivateHcxParam)
+	sv.AddStructField("DeleteConfigInternal", deleteConfigInternalParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput vmcDraasModel.Task
