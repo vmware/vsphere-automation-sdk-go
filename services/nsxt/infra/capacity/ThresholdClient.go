@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -30,7 +30,7 @@ type ThresholdClient interface {
 	// @throws NotFound  Not Found
 	Get() (nsx_policyModel.CapacityThresholdList, error)
 
-	// Updates the warning threshold(s) for NSX Objects specified, does not modify thresholds for any other objects.
+	// Updates the warning threshold(s) for NSX Objects specified, does not modify thresholds for any other objects. Threshold type NUMBER_OF_GATEWAY_POLICY is deprecated instead use NUMBER_OF_GATEWAY_FIREWALL_RULES.
 	//
 	// @param capacityThresholdParam (required)
 	//
@@ -41,7 +41,7 @@ type ThresholdClient interface {
 	// @throws NotFound  Not Found
 	Patch(capacityThresholdParam nsx_policyModel.CapacityThreshold) error
 
-	// Updates the warning threshold(s) for NSX Objects specified, and returns new threshold(s). Threshold list in the request must contain value for GLOBAL_DEFAULT threshold_type which represents global thresholds.
+	// Updates the warning threshold(s) for NSX Objects specified, and returns new threshold(s). Threshold list in the request must contain value for GLOBAL_DEFAULT threshold_type which represents global thresholds. Threshold type NUMBER_OF_GATEWAY_POLICY is deprecated instead use NUMBER_OF_GATEWAY_FIREWALL_RULES.
 	//
 	// @param capacityThresholdListParam (required)
 	// @return com.vmware.nsx_policy.model.CapacityThresholdList

@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SummaryClient interface {
 
-	// Get tier-0 interface statistics summary information.
+	// Get tier-0 interface statistics summary information. In case tier 1 is A/A, and the edge cluster is not the response will have interface_policy_path and logical_router_port_id empty because all logical router port stats are aggregated from all edge nodes.
 	//
 	// @param tier0IdParam (required)
 	// @param tier1PathParam Policy path of tier1 (required)

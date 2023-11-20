@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -59,6 +59,7 @@ type DeploymentsClient interface {
 
 	// Returns request information for every attempted deployment of a cluster node VM.
 	//
+	// @param clusteringIdParam Unique Id for NSX Advanced Load Balancer Controller Cluster used in VCF managed NSX. (optional)
 	// @param stateParam the current state of the Advanced Load Balancer controller VM (optional)
 	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequestList
 	//
@@ -67,7 +68,7 @@ type DeploymentsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(stateParam *string) (nsx_policyModel.ALBControllerNodeVMDeploymentRequestList, error)
+	List(clusteringIdParam *string, stateParam *string) (nsx_policyModel.ALBControllerNodeVMDeploymentRequestList, error)
 
 	// Update Advanced Load Balancer Controller node VM details
 	//
@@ -205,7 +206,7 @@ func (dIface *deploymentsClient) Get(nodeIdParam string) (nsx_policyModel.ALBCon
 	}
 }
 
-func (dIface *deploymentsClient) List(stateParam *string) (nsx_policyModel.ALBControllerNodeVMDeploymentRequestList, error) {
+func (dIface *deploymentsClient) List(clusteringIdParam *string, stateParam *string) (nsx_policyModel.ALBControllerNodeVMDeploymentRequestList, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := deploymentsListRestMetadata()
@@ -213,6 +214,7 @@ func (dIface *deploymentsClient) List(stateParam *string) (nsx_policyModel.ALBCo
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(deploymentsListInputType(), typeConverter)
+	sv.AddStructField("ClusteringId", clusteringIdParam)
 	sv.AddStructField("State", stateParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {

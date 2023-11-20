@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -18,16 +18,21 @@ import (
 	"reflect"
 )
 
+// Possible value for ``context`` of method AffectedVms#create.
+const AffectedVms_CREATE_CONTEXT_PROJECTS = "ALL_PROJECTS"
+
 func affectedVmsCreateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["policy_ids_event_data_request"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyIdsEventDataRequestBindingType)
+	fields["context"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["policy_ids_event_data_request"] = "PolicyIdsEventDataRequest"
+	fieldNameMap["context"] = "Context"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
@@ -51,12 +56,14 @@ func affectedVmsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["policy_ids_event_data_request"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyIdsEventDataRequestBindingType)
+	fields["context"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["policy_ids_event_data_request"] = "PolicyIdsEventDataRequest"
+	fieldNameMap["context"] = "Context"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
@@ -66,11 +73,13 @@ func affectedVmsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["context"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
+	queryParams["context"] = "context"
 	queryParams["sort_by"] = "sort_by"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}

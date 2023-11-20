@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -72,7 +72,9 @@ func ipBlocksGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["ip_block_id"] = vapiBindings_.NewStringType()
+	fields["ignore_ipblock_usage"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["ip_block_id"] = "IpBlockId"
+	fieldNameMap["ignore_ipblock_usage"] = "IgnoreIpblockUsage"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -91,10 +93,14 @@ func ipBlocksGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["ip_block_id"] = vapiBindings_.NewStringType()
+	fields["ignore_ipblock_usage"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["ip_block_id"] = "IpBlockId"
+	fieldNameMap["ignore_ipblock_usage"] = "IgnoreIpblockUsage"
 	paramsTypeMap["ip_block_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ignore_ipblock_usage"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["ipBlockId"] = vapiBindings_.NewStringType()
 	pathParams["ip_block_id"] = "ipBlockId"
+	queryParams["ignore_ipblock_usage"] = "ignore_ipblock_usage"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(

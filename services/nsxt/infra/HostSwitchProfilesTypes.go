@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -41,6 +41,9 @@ const HostSwitchProfiles_LIST_HOSTSWITCH_PROFILE_TYPE_POLICYEXTRACONFIGHOSTSWITC
 
 // Possible value for ``hostswitchProfileType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_HOSTSWITCH_PROFILE_TYPE_POLICYVTEPHAHOSTSWITCHPROFILE = "PolicyVtepHAHostSwitchProfile"
+
+// Possible value for ``hostswitchProfileType`` of method HostSwitchProfiles#list.
+const HostSwitchProfiles_LIST_HOSTSWITCH_PROFILE_TYPE_POLICYHIGHPERFORMANCEHOSTSWITCHPROFILE = "PolicyHighPerformanceHostSwitchProfile"
 
 // Possible value for ``nodeType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_NODE_TYPE_EDGENODE = "EdgeNode"

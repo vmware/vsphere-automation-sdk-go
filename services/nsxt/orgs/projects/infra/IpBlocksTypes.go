@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -88,9 +88,11 @@ func ipBlocksGetInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["ip_block_id"] = vapiBindings_.NewStringType()
+	fields["ignore_ipblock_usage"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["ip_block_id"] = "IpBlockId"
+	fieldNameMap["ignore_ipblock_usage"] = "IgnoreIpblockUsage"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -111,18 +113,22 @@ func ipBlocksGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["ip_block_id"] = vapiBindings_.NewStringType()
+	fields["ignore_ipblock_usage"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["ip_block_id"] = "IpBlockId"
+	fieldNameMap["ignore_ipblock_usage"] = "IgnoreIpblockUsage"
 	paramsTypeMap["ip_block_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ignore_ipblock_usage"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["ipBlockId"] = vapiBindings_.NewStringType()
 	pathParams["ip_block_id"] = "ipBlockId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
+	queryParams["ignore_ipblock_usage"] = "ignore_ipblock_usage"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(

@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -187,7 +187,9 @@ func deploymentsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 func deploymentsListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["clustering_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["clustering_id"] = "ClusteringId"
 	fieldNameMap["state"] = "State"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
@@ -206,9 +208,13 @@ func deploymentsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
+	fields["clustering_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["clustering_id"] = "ClusteringId"
 	fieldNameMap["state"] = "State"
+	paramsTypeMap["clustering_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	queryParams["clustering_id"] = "clustering_id"
 	queryParams["state"] = "state"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}

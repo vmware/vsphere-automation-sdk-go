@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,6 +22,7 @@ type FullSyncActionClient interface {
 	// Performs realized object actions specified in the action.
 	//
 	// @param actionParam (required)
+	// @param siteParam site id (optional)
 	// @param syncTypeParam Type of full sync being requested (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -29,7 +30,7 @@ type FullSyncActionClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(actionParam string, syncTypeParam *string) error
+	Create(actionParam string, siteParam *string, syncTypeParam *string) error
 }
 
 type fullSyncActionClient struct {
@@ -57,7 +58,7 @@ func (fIface *fullSyncActionClient) GetErrorBindingType(errorName string) vapiBi
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (fIface *fullSyncActionClient) Create(actionParam string, syncTypeParam *string) error {
+func (fIface *fullSyncActionClient) Create(actionParam string, siteParam *string, syncTypeParam *string) error {
 	typeConverter := fIface.connector.TypeConverter()
 	executionContext := fIface.connector.NewExecutionContext()
 	operationRestMetaData := fullSyncActionCreateRestMetadata()
@@ -66,6 +67,7 @@ func (fIface *fullSyncActionClient) Create(actionParam string, syncTypeParam *st
 
 	sv := vapiBindings_.NewStructValueBuilder(fullSyncActionCreateInputType(), typeConverter)
 	sv.AddStructField("Action", actionParam)
+	sv.AddStructField("Site", siteParam)
 	sv.AddStructField("SyncType", syncTypeParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {

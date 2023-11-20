@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type OpsGlobalConfigClient interface {
 
 	// Read global Operations Configuration
+	//
+	// @param applyLocallyParam Flag to check reaching NSX+ or LM resource (optional, default to false)
 	// @return com.vmware.nsx_policy.model.OpsGlobalConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -28,22 +30,24 @@ type OpsGlobalConfigClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (nsx_policyModel.OpsGlobalConfig, error)
+	Get(applyLocallyParam *bool) (nsx_policyModel.OpsGlobalConfig, error)
 
 	// Update the global Operationconfiguration
 	//
 	// @param opsGlobalConfigParam (required)
+	// @param applyLocallyParam Flag to check reaching NSX+ or LM resource (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(opsGlobalConfigParam nsx_policyModel.OpsGlobalConfig) error
+	Patch(opsGlobalConfigParam nsx_policyModel.OpsGlobalConfig, applyLocallyParam *bool) error
 
 	// Update the global Operations Configuration
 	//
 	// @param opsGlobalConfigParam (required)
+	// @param applyLocallyParam Flag to check reaching NSX+ or LM resource (optional, default to false)
 	// @return com.vmware.nsx_policy.model.OpsGlobalConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -51,7 +55,7 @@ type OpsGlobalConfigClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(opsGlobalConfigParam nsx_policyModel.OpsGlobalConfig) (nsx_policyModel.OpsGlobalConfig, error)
+	Update(opsGlobalConfigParam nsx_policyModel.OpsGlobalConfig, applyLocallyParam *bool) (nsx_policyModel.OpsGlobalConfig, error)
 }
 
 type opsGlobalConfigClient struct {
@@ -81,7 +85,7 @@ func (oIface *opsGlobalConfigClient) GetErrorBindingType(errorName string) vapiB
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (oIface *opsGlobalConfigClient) Get() (nsx_policyModel.OpsGlobalConfig, error) {
+func (oIface *opsGlobalConfigClient) Get(applyLocallyParam *bool) (nsx_policyModel.OpsGlobalConfig, error) {
 	typeConverter := oIface.connector.TypeConverter()
 	executionContext := oIface.connector.NewExecutionContext()
 	operationRestMetaData := opsGlobalConfigGetRestMetadata()
@@ -89,6 +93,7 @@ func (oIface *opsGlobalConfigClient) Get() (nsx_policyModel.OpsGlobalConfig, err
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(opsGlobalConfigGetInputType(), typeConverter)
+	sv.AddStructField("ApplyLocally", applyLocallyParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.OpsGlobalConfig
@@ -112,7 +117,7 @@ func (oIface *opsGlobalConfigClient) Get() (nsx_policyModel.OpsGlobalConfig, err
 	}
 }
 
-func (oIface *opsGlobalConfigClient) Patch(opsGlobalConfigParam nsx_policyModel.OpsGlobalConfig) error {
+func (oIface *opsGlobalConfigClient) Patch(opsGlobalConfigParam nsx_policyModel.OpsGlobalConfig, applyLocallyParam *bool) error {
 	typeConverter := oIface.connector.TypeConverter()
 	executionContext := oIface.connector.NewExecutionContext()
 	operationRestMetaData := opsGlobalConfigPatchRestMetadata()
@@ -121,6 +126,7 @@ func (oIface *opsGlobalConfigClient) Patch(opsGlobalConfigParam nsx_policyModel.
 
 	sv := vapiBindings_.NewStructValueBuilder(opsGlobalConfigPatchInputType(), typeConverter)
 	sv.AddStructField("OpsGlobalConfig", opsGlobalConfigParam)
+	sv.AddStructField("ApplyLocally", applyLocallyParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -138,7 +144,7 @@ func (oIface *opsGlobalConfigClient) Patch(opsGlobalConfigParam nsx_policyModel.
 	}
 }
 
-func (oIface *opsGlobalConfigClient) Update(opsGlobalConfigParam nsx_policyModel.OpsGlobalConfig) (nsx_policyModel.OpsGlobalConfig, error) {
+func (oIface *opsGlobalConfigClient) Update(opsGlobalConfigParam nsx_policyModel.OpsGlobalConfig, applyLocallyParam *bool) (nsx_policyModel.OpsGlobalConfig, error) {
 	typeConverter := oIface.connector.TypeConverter()
 	executionContext := oIface.connector.NewExecutionContext()
 	operationRestMetaData := opsGlobalConfigUpdateRestMetadata()
@@ -147,6 +153,7 @@ func (oIface *opsGlobalConfigClient) Update(opsGlobalConfigParam nsx_policyModel
 
 	sv := vapiBindings_.NewStructValueBuilder(opsGlobalConfigUpdateInputType(), typeConverter)
 	sv.AddStructField("OpsGlobalConfig", opsGlobalConfigParam)
+	sv.AddStructField("ApplyLocally", applyLocallyParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.OpsGlobalConfig

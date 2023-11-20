@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -95,6 +95,20 @@ type RoleBindingsClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, pathParam *string, roleParam *string, rootPathParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsx_policyModel.RoleBindingListResult, error)
+
+	// This API is used to assign a user/group any role(s) of choice on CSP. It is recommended to use the new property roles_for_paths instead of roles. When using the roles_for_paths, set the read_roles_for_paths as true. User has union of all the roles assigned to it on a particular path and its sub-tree. User name is dealt case-insensitively.
+	//
+	// @param orgIdParam (required)
+	// @param projectIdParam (required)
+	// @param roleBindingParam (required)
+	// @return com.vmware.nsx_policy.model.RoleBinding
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Patch(orgIdParam string, projectIdParam string, roleBindingParam nsx_policyModel.RoleBinding) (nsx_policyModel.RoleBinding, error)
 }
 
 type roleBindingsClient struct {
@@ -109,6 +123,7 @@ func NewRoleBindingsClient(connector vapiProtocolClient_.Connector) *roleBinding
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -246,6 +261,40 @@ func (rIface *roleBindingsClient) List(orgIdParam string, projectIdParam string,
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(nsx_policyModel.RoleBindingListResult), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (rIface *roleBindingsClient) Patch(orgIdParam string, projectIdParam string, roleBindingParam nsx_policyModel.RoleBinding) (nsx_policyModel.RoleBinding, error) {
+	typeConverter := rIface.connector.TypeConverter()
+	executionContext := rIface.connector.NewExecutionContext()
+	operationRestMetaData := roleBindingsPatchRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(roleBindingsPatchInputType(), typeConverter)
+	sv.AddStructField("OrgId", orgIdParam)
+	sv.AddStructField("ProjectId", projectIdParam)
+	sv.AddStructField("RoleBinding", roleBindingParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_policyModel.RoleBinding
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.aaa.role_bindings", "patch", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.RoleBinding
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RoleBindingsPatchOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_policyModel.RoleBinding), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

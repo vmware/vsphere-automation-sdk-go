@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -33,7 +33,7 @@ type FqdnAnalysisConfigClient interface {
 	// @throws NotFound  Not Found
 	Delete(siteIdParam string, enforcementPointIdParam string, edgeClusterIdParam string) error
 
-	// Gets a FqdnAnalysisConfig. This returns the details of the config like whether the FQDN Analysis is enabled or disabled for the given edge cluster.
+	// Gets a FqdnAnalysisConfig. This returns the details of the config like whether the FQDN Analysis is activated or deactivated for the given edge cluster.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementPointIdParam (required)

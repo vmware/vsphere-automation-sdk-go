@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -27,13 +27,14 @@ type IpSubnetsClient interface {
 	// @param projectIdParam The project ID (required)
 	// @param ipPoolIdParam (required)
 	// @param ipSubnetIdParam (required)
+	// @param ignoreIpAllocationsParam Flag to specify whether to ignore ip allocations. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(orgIdParam string, projectIdParam string, ipPoolIdParam string, ipSubnetIdParam string) error
+	Delete(orgIdParam string, projectIdParam string, ipPoolIdParam string, ipSubnetIdParam string, ignoreIpAllocationsParam *bool) error
 
 	// Read IpAddressPoolSubnet with given Id.
 	//
@@ -135,7 +136,7 @@ func (iIface *ipSubnetsClient) GetErrorBindingType(errorName string) vapiBinding
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (iIface *ipSubnetsClient) Delete(orgIdParam string, projectIdParam string, ipPoolIdParam string, ipSubnetIdParam string) error {
+func (iIface *ipSubnetsClient) Delete(orgIdParam string, projectIdParam string, ipPoolIdParam string, ipSubnetIdParam string, ignoreIpAllocationsParam *bool) error {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
 	operationRestMetaData := ipSubnetsDeleteRestMetadata()
@@ -147,6 +148,7 @@ func (iIface *ipSubnetsClient) Delete(orgIdParam string, projectIdParam string, 
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("IpPoolId", ipPoolIdParam)
 	sv.AddStructField("IpSubnetId", ipSubnetIdParam)
+	sv.AddStructField("IgnoreIpAllocations", ignoreIpAllocationsParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)

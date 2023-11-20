@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -26,7 +26,7 @@ type ContextProfilesClient interface {
 	// @param projectIdParam The project ID (required)
 	// @param contextProfileIdParam Policy Context Profile Id (required)
 	// @param forceParam Force delete the resource even if it is being used somewhere (optional, default to false)
-	// @param overrideParam Delete the locally overriden global object (optional, default to false)
+	// @param overrideParam Delete the locally overridden global object (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

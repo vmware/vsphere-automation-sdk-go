@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -18,6 +18,9 @@ import (
 	"reflect"
 )
 
+// Possible value for ``componentType`` of method ForwardingTable#list.
+const ForwardingTable_LIST_COMPONENT_TYPE_ROUTES = "DR_ROUTES"
+
 // Possible value for ``routeSource`` of method ForwardingTable#list.
 const ForwardingTable_LIST_ROUTE_SOURCE_BGP = "BGP"
 
@@ -34,6 +37,7 @@ func forwardingTableListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["tier1_id"] = vapiBindings_.NewStringType()
+	fields["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["edge_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["edge_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -45,6 +49,7 @@ func forwardingTableListInputType() vapiBindings_.StructType {
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["tier1_id"] = "Tier1Id"
+	fieldNameMap["component_type"] = "ComponentType"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["edge_id"] = "EdgeId"
 	fieldNameMap["edge_path"] = "EdgePath"
@@ -73,6 +78,7 @@ func forwardingTableListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["tier1_id"] = vapiBindings_.NewStringType()
+	fields["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["edge_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["edge_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -84,6 +90,7 @@ func forwardingTableListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["tier1_id"] = "Tier1Id"
+	fieldNameMap["component_type"] = "ComponentType"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["edge_id"] = "EdgeId"
 	fieldNameMap["edge_path"] = "EdgePath"
@@ -95,6 +102,7 @@ func forwardingTableListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["component_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["network_prefix"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["tier1_id"] = vapiBindings_.NewStringType()
@@ -108,6 +116,7 @@ func forwardingTableListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["tier1Id"] = vapiBindings_.NewStringType()
 	pathParams["tier1_id"] = "tier1Id"
 	queryParams["cursor"] = "cursor"
+	queryParams["component_type"] = "component_type"
 	queryParams["network_prefix"] = "network_prefix"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"

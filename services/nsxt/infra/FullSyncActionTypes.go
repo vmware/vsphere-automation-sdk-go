@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -36,8 +36,10 @@ func fullSyncActionCreateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["action"] = vapiBindings_.NewStringType()
+	fields["site"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["sync_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["action"] = "Action"
+	fieldNameMap["site"] = "Site"
 	fieldNameMap["sync_type"] = "SyncType"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
@@ -57,11 +59,15 @@ func fullSyncActionCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["action"] = vapiBindings_.NewStringType()
+	fields["site"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["sync_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["action"] = "Action"
+	fieldNameMap["site"] = "Site"
 	fieldNameMap["sync_type"] = "SyncType"
+	paramsTypeMap["site"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sync_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["action"] = vapiBindings_.NewStringType()
+	queryParams["site"] = "site"
 	queryParams["sync_type"] = "sync_type"
 	queryParams["action"] = "action"
 	resultHeaders := map[string]string{}

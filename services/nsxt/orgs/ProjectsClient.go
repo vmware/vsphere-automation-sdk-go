@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -24,18 +24,20 @@ type ProjectsClient interface {
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
+	// @param isRecursiveParam Recursively delete entire project tree. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(orgIdParam string, projectIdParam string) error
+	Delete(orgIdParam string, projectIdParam string, isRecursiveParam *bool) error
 
 	// Get PROJECT
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
+	// @param shortFormatParam Project API response is brief or descriptive (optional, default to false)
 	// @return com.vmware.nsx_policy.model.Project
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -43,7 +45,7 @@ type ProjectsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string) (nsx_policyModel.Project, error)
+	Get(orgIdParam string, projectIdParam string, shortFormatParam *bool) (nsx_policyModel.Project, error)
 
 	// Paginated list of Project.
 	//
@@ -51,7 +53,7 @@ type ProjectsClient interface {
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param instanceIdParam Instance id of PMaaS where to route this request to. (optional)
+	// @param instanceIdParam Instance id of NSX+ where to route this request to. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
@@ -121,7 +123,7 @@ func (pIface *projectsClient) GetErrorBindingType(errorName string) vapiBindings
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (pIface *projectsClient) Delete(orgIdParam string, projectIdParam string) error {
+func (pIface *projectsClient) Delete(orgIdParam string, projectIdParam string, isRecursiveParam *bool) error {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
 	operationRestMetaData := projectsDeleteRestMetadata()
@@ -131,6 +133,7 @@ func (pIface *projectsClient) Delete(orgIdParam string, projectIdParam string) e
 	sv := vapiBindings_.NewStructValueBuilder(projectsDeleteInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
+	sv.AddStructField("IsRecursive", isRecursiveParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -148,7 +151,7 @@ func (pIface *projectsClient) Delete(orgIdParam string, projectIdParam string) e
 	}
 }
 
-func (pIface *projectsClient) Get(orgIdParam string, projectIdParam string) (nsx_policyModel.Project, error) {
+func (pIface *projectsClient) Get(orgIdParam string, projectIdParam string, shortFormatParam *bool) (nsx_policyModel.Project, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
 	operationRestMetaData := projectsGetRestMetadata()
@@ -158,6 +161,7 @@ func (pIface *projectsClient) Get(orgIdParam string, projectIdParam string) (nsx
 	sv := vapiBindings_.NewStructValueBuilder(projectsGetInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
+	sv.AddStructField("ShortFormat", shortFormatParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.Project

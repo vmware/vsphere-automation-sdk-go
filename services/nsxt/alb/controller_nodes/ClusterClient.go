@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type ClusterClient interface {
 
 	// Returns information about Advanced Load Balancer controller cluster status
+	//
+	// @param clusteringIdParam Unique Id for NSX Advanced Load Balancer Controller Cluster used in VCF managed NSX. (optional)
 	// @return com.vmware.nsx_policy.model.ALBControllerClusterInfo
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -28,9 +30,11 @@ type ClusterClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (nsx_policyModel.ALBControllerClusterInfo, error)
+	Get(clusteringIdParam *string) (nsx_policyModel.ALBControllerClusterInfo, error)
 
 	// Re-trigger clustering for Advanced Load Balancer Nodes.
+	//
+	// @param clusteringIdParam Unique Id for NSX Advanced Load Balancer Controller Cluster used in VCF managed NSX. (optional)
 	// @return com.vmware.nsx_policy.model.ALBControllerClusterTrigger
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -38,7 +42,7 @@ type ClusterClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update() (nsx_policyModel.ALBControllerClusterTrigger, error)
+	Update(clusteringIdParam *string) (nsx_policyModel.ALBControllerClusterTrigger, error)
 }
 
 type clusterClient struct {
@@ -67,7 +71,7 @@ func (cIface *clusterClient) GetErrorBindingType(errorName string) vapiBindings_
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (cIface *clusterClient) Get() (nsx_policyModel.ALBControllerClusterInfo, error) {
+func (cIface *clusterClient) Get(clusteringIdParam *string) (nsx_policyModel.ALBControllerClusterInfo, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := clusterGetRestMetadata()
@@ -75,6 +79,7 @@ func (cIface *clusterClient) Get() (nsx_policyModel.ALBControllerClusterInfo, er
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(clusterGetInputType(), typeConverter)
+	sv.AddStructField("ClusteringId", clusteringIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.ALBControllerClusterInfo
@@ -98,7 +103,7 @@ func (cIface *clusterClient) Get() (nsx_policyModel.ALBControllerClusterInfo, er
 	}
 }
 
-func (cIface *clusterClient) Update() (nsx_policyModel.ALBControllerClusterTrigger, error) {
+func (cIface *clusterClient) Update(clusteringIdParam *string) (nsx_policyModel.ALBControllerClusterTrigger, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := clusterUpdateRestMetadata()
@@ -106,6 +111,7 @@ func (cIface *clusterClient) Update() (nsx_policyModel.ALBControllerClusterTrigg
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(clusterUpdateInputType(), typeConverter)
+	sv.AddStructField("ClusteringId", clusteringIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.ALBControllerClusterTrigger

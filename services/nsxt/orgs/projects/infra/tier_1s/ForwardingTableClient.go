@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -25,6 +25,7 @@ type ForwardingTableClient interface {
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
 	// @param tier1IdParam (required)
+	// @param componentTypeParam Define the DR routes. (optional)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param edgeIdParam UUID of edge node (optional)
 	// @param edgePathParam Policy path of edge node (optional)
@@ -42,7 +43,7 @@ type ForwardingTableClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, tier1IdParam string, cursorParam *string, edgeIdParam *string, edgePathParam *string, enforcementPointPathParam *string, includedFieldsParam *string, networkPrefixParam *string, pageSizeParam *int64, routeSourceParam *string, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.RoutingTableListResult, error)
+	List(orgIdParam string, projectIdParam string, tier1IdParam string, componentTypeParam *string, cursorParam *string, edgeIdParam *string, edgePathParam *string, enforcementPointPathParam *string, includedFieldsParam *string, networkPrefixParam *string, pageSizeParam *int64, routeSourceParam *string, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.RoutingTableListResult, error)
 }
 
 type forwardingTableClient struct {
@@ -70,7 +71,7 @@ func (fIface *forwardingTableClient) GetErrorBindingType(errorName string) vapiB
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (fIface *forwardingTableClient) List(orgIdParam string, projectIdParam string, tier1IdParam string, cursorParam *string, edgeIdParam *string, edgePathParam *string, enforcementPointPathParam *string, includedFieldsParam *string, networkPrefixParam *string, pageSizeParam *int64, routeSourceParam *string, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.RoutingTableListResult, error) {
+func (fIface *forwardingTableClient) List(orgIdParam string, projectIdParam string, tier1IdParam string, componentTypeParam *string, cursorParam *string, edgeIdParam *string, edgePathParam *string, enforcementPointPathParam *string, includedFieldsParam *string, networkPrefixParam *string, pageSizeParam *int64, routeSourceParam *string, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.RoutingTableListResult, error) {
 	typeConverter := fIface.connector.TypeConverter()
 	executionContext := fIface.connector.NewExecutionContext()
 	operationRestMetaData := forwardingTableListRestMetadata()
@@ -81,6 +82,7 @@ func (fIface *forwardingTableClient) List(orgIdParam string, projectIdParam stri
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("Tier1Id", tier1IdParam)
+	sv.AddStructField("ComponentType", componentTypeParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("EdgeId", edgeIdParam)
 	sv.AddStructField("EdgePath", edgePathParam)

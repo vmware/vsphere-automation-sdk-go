@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -18,6 +18,15 @@ import (
 	"reflect"
 )
 
+// Possible value for ``source`` of method Statistics#get.
+const Statistics_GET_SOURCE_REALTIME = "realtime"
+
+// Possible value for ``source`` of method Statistics#get.
+const Statistics_GET_SOURCE_CACHED = "cached"
+
+// Possible value for ``statsType`` of method Statistics#get.
+const Statistics_GET_STATS_TYPE_STATS = "DATAPATH_STATS"
+
 func statisticsGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -32,6 +41,9 @@ func statisticsGetInputType() vapiBindings_.StructType {
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["stats_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["tier1_id"] = "Tier1Id"
 	fieldNameMap["segments_id"] = "SegmentsId"
 	fieldNameMap["port_id"] = "PortId"
@@ -43,6 +55,9 @@ func statisticsGetInputType() vapiBindings_.StructType {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
+	fieldNameMap["source"] = "Source"
+	fieldNameMap["stats_type"] = "StatsType"
+	fieldNameMap["transport_node_id"] = "TransportNodeId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -71,6 +86,9 @@ func statisticsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["stats_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["tier1_id"] = "Tier1Id"
 	fieldNameMap["segments_id"] = "SegmentsId"
 	fieldNameMap["port_id"] = "PortId"
@@ -82,15 +100,21 @@ func statisticsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
+	fieldNameMap["source"] = "Source"
+	fieldNameMap["stats_type"] = "StatsType"
+	fieldNameMap["transport_node_id"] = "TransportNodeId"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["tier1_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["stats_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["edge_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["port_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["segments_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["tier1Id"] = vapiBindings_.NewStringType()
@@ -104,7 +128,10 @@ func statisticsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	queryParams["included_fields"] = "included_fields"
 	queryParams["edge_path"] = "edge_path"
 	queryParams["enforcement_point_path"] = "enforcement_point_path"
+	queryParams["stats_type"] = "stats_type"
 	queryParams["sort_by"] = "sort_by"
+	queryParams["source"] = "source"
+	queryParams["transport_node_id"] = "transport_node_id"
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}

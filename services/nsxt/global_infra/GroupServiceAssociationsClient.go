@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,13 +20,15 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type GroupServiceAssociationsClient interface {
 
-	// The API returns all the services associated with the given Group. It also returns the services associated with the parent groups of the given group.
+	// The API by default returns all the DFW services associated with the given Group. The API returns DFW or IPFIX services based on the service_type parameter. It also returns the services associated with the parent groups of the given group.
 	//
 	// @param intentPathParam Path of the entity (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
 	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param serviceTypeParam (optional)
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.PolicyResourceReferenceListResult
@@ -36,7 +38,7 @@ type GroupServiceAssociationsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(intentPathParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyResourceReferenceListResult, error)
+	List(intentPathParam string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, serviceTypeParam *string, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyResourceReferenceListResult, error)
 }
 
 type groupServiceAssociationsClient struct {
@@ -64,7 +66,7 @@ func (gIface *groupServiceAssociationsClient) GetErrorBindingType(errorName stri
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (gIface *groupServiceAssociationsClient) List(intentPathParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyResourceReferenceListResult, error) {
+func (gIface *groupServiceAssociationsClient) List(intentPathParam string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, serviceTypeParam *string, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyResourceReferenceListResult, error) {
 	typeConverter := gIface.connector.TypeConverter()
 	executionContext := gIface.connector.NewExecutionContext()
 	operationRestMetaData := groupServiceAssociationsListRestMetadata()
@@ -74,9 +76,11 @@ func (gIface *groupServiceAssociationsClient) List(intentPathParam string, curso
 	sv := vapiBindings_.NewStructValueBuilder(groupServiceAssociationsListInputType(), typeConverter)
 	sv.AddStructField("IntentPath", intentPathParam)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("ServiceType", serviceTypeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()

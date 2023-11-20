@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type OrgRootClient interface {
 
-	// Read Org Root. Returns only the org root related properties. Inner object are not populated.
+	// Read Org Root. Returns only the org root related properties. Inner object are not populated. For Hierarchical Get, base_path request parameter can be used.
 	//
 	// @param basePathParam Base Path for retrieving hierarchical intent (optional)
 	// @param filterParam Filter string as java regex (optional)

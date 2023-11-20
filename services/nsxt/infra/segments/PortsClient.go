@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type PortsClient interface {
 
-	// Delete an infra segment port by giving ID.
+	// Delete an infra segment port by giving ID. Please note that this operation will not delete the segment port from vCenter Server if the port was connected to a Virtual Machine. Please connect Virtual Machine to another network for the segment port to be deleted from vCenter Server.
 	//
 	// @param segmentIdParam (required)
 	// @param portIdParam (required)

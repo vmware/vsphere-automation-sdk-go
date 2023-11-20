@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -80,7 +80,7 @@ type NatRulesClient interface {
 	// @throws NotFound  Not Found
 	Patch(tier0IdParam string, natIdParam string, natRuleIdParam string, policyNatRuleParam nsx_policyModel.PolicyNatRule) error
 
-	// Update NAT Rule on Tier-0 denoted by Tier-0 ID, under NAT section denoted by <nat-id>. Under tier-0 there will be 3 different NATs(sections). (INTERNAL, USER and DEFAULT) For more details related to NAT section please refer to PolicyNAT schema. Note: IPSecVpnSession as Scope: Please note that old IPSecVpnSession policy path deprecated. If user specifiy old IPSecVpnSession path in the scope property in the PUT API, the path returned in the PUT/GET response payload will be a new path instead of the deprecated IPSecVpnSession path Both old and new IPSecVpnSession path refer to same resource. there is no functional impact.
+	// Create or update NAT Rule on Tier-0 denoted by Tier-0 ID, under NAT section denoted by <nat-id>. Under tier-0 there will be 3 different NATs(sections). (INTERNAL, USER and DEFAULT) For more details related to NAT section please refer to PolicyNAT schema. Note: IPSecVpnSession as Scope: Please note that old IPSecVpnSession policy path deprecated. If user specifiy old IPSecVpnSession path in the scope property in the PUT API, the path returned in the PUT/GET response payload will be a new path instead of the deprecated IPSecVpnSession path Both old and new IPSecVpnSession path refer to same resource. there is no functional impact.
 	//
 	// @param tier0IdParam Tier-0 ID (required)
 	// @param natIdParam NAT id (required)

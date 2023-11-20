@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -25,10 +25,12 @@ func ipSubnetsDeleteInputType() vapiBindings_.StructType {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["ip_pool_id"] = vapiBindings_.NewStringType()
 	fields["ip_subnet_id"] = vapiBindings_.NewStringType()
+	fields["ignore_ip_allocations"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["ip_pool_id"] = "IpPoolId"
 	fieldNameMap["ip_subnet_id"] = "IpSubnetId"
+	fieldNameMap["ignore_ip_allocations"] = "IgnoreIpAllocations"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -50,13 +52,16 @@ func ipSubnetsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["ip_pool_id"] = vapiBindings_.NewStringType()
 	fields["ip_subnet_id"] = vapiBindings_.NewStringType()
+	fields["ignore_ip_allocations"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["ip_pool_id"] = "IpPoolId"
 	fieldNameMap["ip_subnet_id"] = "IpSubnetId"
+	fieldNameMap["ignore_ip_allocations"] = "IgnoreIpAllocations"
 	paramsTypeMap["ip_pool_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["ip_subnet_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ignore_ip_allocations"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
@@ -66,6 +71,7 @@ func ipSubnetsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	pathParams["ip_subnet_id"] = "ipSubnetId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
+	queryParams["ignore_ip_allocations"] = "ignore_ip_allocations"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(

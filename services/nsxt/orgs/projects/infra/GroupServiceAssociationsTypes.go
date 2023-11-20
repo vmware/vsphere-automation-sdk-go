@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -18,6 +18,12 @@ import (
 	"reflect"
 )
 
+// Possible value for ``serviceType`` of method GroupServiceAssociations#list.
+const GroupServiceAssociations_LIST_SERVICE_TYPE_FIREWALL = "firewall"
+
+// Possible value for ``serviceType`` of method GroupServiceAssociations#list.
+const GroupServiceAssociations_LIST_SERVICE_TYPE_IPFIX = "ipfix"
+
 func groupServiceAssociationsListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -25,18 +31,22 @@ func groupServiceAssociationsListInputType() vapiBindings_.StructType {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["intent_path"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["service_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["intent_path"] = "IntentPath"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["service_type"] = "ServiceType"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	var validators = []vapiBindings_.Validator{}
@@ -60,25 +70,31 @@ func groupServiceAssociationsListRestMetadata() vapiProtocol_.OperationRestMetad
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["intent_path"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["service_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["intent_path"] = "IntentPath"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["service_type"] = "ServiceType"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["service_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["intent_path"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
@@ -88,8 +104,10 @@ func groupServiceAssociationsListRestMetadata() vapiProtocol_.OperationRestMetad
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	queryParams["cursor"] = "cursor"
+	queryParams["service_type"] = "service_type"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
+	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	queryParams["intent_path"] = "intent_path"
 	queryParams["sort_by"] = "sort_by"
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"

@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,6 +23,7 @@ type AffectedVmsClient interface {
 	// Get the list of the VMs affected pertaining to a specific signature.
 	//
 	// @param policyIdsEventDataRequestParam (required)
+	// @param contextParam Tenancy Context of the API request (optional)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
@@ -35,7 +36,7 @@ type AffectedVmsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(policyIdsEventDataRequestParam nsx_policyModel.PolicyIdsEventDataRequest, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyIdsVmList, error)
+	Create(policyIdsEventDataRequestParam nsx_policyModel.PolicyIdsEventDataRequest, contextParam *string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyIdsVmList, error)
 }
 
 type affectedVmsClient struct {
@@ -63,7 +64,7 @@ func (aIface *affectedVmsClient) GetErrorBindingType(errorName string) vapiBindi
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (aIface *affectedVmsClient) Create(policyIdsEventDataRequestParam nsx_policyModel.PolicyIdsEventDataRequest, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyIdsVmList, error) {
+func (aIface *affectedVmsClient) Create(policyIdsEventDataRequestParam nsx_policyModel.PolicyIdsEventDataRequest, contextParam *string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyIdsVmList, error) {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
 	operationRestMetaData := affectedVmsCreateRestMetadata()
@@ -72,6 +73,7 @@ func (aIface *affectedVmsClient) Create(policyIdsEventDataRequestParam nsx_polic
 
 	sv := vapiBindings_.NewStructValueBuilder(affectedVmsCreateInputType(), typeConverter)
 	sv.AddStructField("PolicyIdsEventDataRequest", policyIdsEventDataRequestParam)
+	sv.AddStructField("Context", contextParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)

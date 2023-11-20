@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -35,7 +35,7 @@ type StatisticsClient interface {
 	// @throws NotFound  Not Found
 	Create(tier0IdParam string, serviceIdParam string, sessionIdParam string, actionParam string, enforcementPointPathParam *string) error
 
-	// - no enforcement point path specified: statistics are evaluated on each enforcement point. - an enforcement point path is specified: statistics are evaluated only on the given enforcement point. - source=realtime: statistics are fetched realtime from the enforcement point. - source=cached: cached statistics from enforcement point are returned.
+	// - no enforcement point path specified: statistics are evaluated on each enforcement point. - an enforcement point path is specified: statistics are evaluated only on the given enforcement point. - source=realtime: statistics are fetched realtime from the enforcement point. - source=cached: cached statistics from enforcement point are returned. Please note that cache synchronization is based on triggering this API with source=realtime or empty source and not polling based.
 	//
 	// @param tier0IdParam (required)
 	// @param serviceIdParam (required)

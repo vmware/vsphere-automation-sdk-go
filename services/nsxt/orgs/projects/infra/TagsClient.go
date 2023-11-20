@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TagsClient interface {
 
-	// Returns paginated list of all unique tags. Supports filtering by scope, tag and source from which tags are synched. Supports starts with, equals and contains operators on scope and tag values. To filter tags by starts with on scope or tag, use '\*' as prefix before the value. To filter tags by ends with on scope or tag, use '\*' as suffix after the value. To filter tags by contain on scope or tag, use '\*' as prefix and suffix on the value. Below special characters in the filter value needs to be escaped with hex values. - Character '&' needs to be escaped as '%26' - Character '[' needs to be escaped as '%5B' - Character ']' needs to be escaped as '%5D' - Character '+' needs to be escaped as '%2B' - Character '#' needs to be escaped as '%23' Sort option for list of unique tags is available only on tag and scope properties.
+	// Returns paginated list of all unique tags. Supports filtering by scope, tag and source from which tags are synced. Supports starts with, ends with, equals and contains operators on scope and tag values. To filter tags by starts with on scope or tag, use '\*' as suffix after the value. To filter tags by ends with on scope or tag, use '\*' as prefix before the value. To filter tags by contain on scope or tag, use '\*' as prefix and suffix on the value. Below special characters in the filter value needs to be escaped with hex values. - Character '&' needs to be escaped as '%26' - Character '[' needs to be escaped as '%5B' - Character ']' needs to be escaped as '%5D' - Character '+' needs to be escaped as '%2B' - Character '#' needs to be escaped as '%23' Sort option for list of unique tags is available only on tag and scope properties.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

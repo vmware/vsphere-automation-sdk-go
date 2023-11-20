@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type GlobalConfigClient interface {
 
 	// This rest routine is deprecated. Use /infra/connectivity-global-config for Connectivity global config and /infra/ops-global-config for Operations global config. Read global configuration.
+	//
+	// @param applyLocallyParam Flag to check reaching NSX+ or LM resource (optional, default to false)
 	// @return com.vmware.nsx_policy.model.GlobalConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -28,7 +30,7 @@ type GlobalConfigClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (nsx_policyModel.GlobalConfig, error)
+	Get(applyLocallyParam *bool) (nsx_policyModel.GlobalConfig, error)
 
 	// Update the global configuration.
 	//  This rest routine is deprecated. Use /infra/connectivity-global-config for Connectivity global config and /infra/ops-global-config for Operations global config.
@@ -36,17 +38,19 @@ type GlobalConfigClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param globalConfigParam (required)
+	// @param applyLocallyParam Flag to check reaching NSX+ or LM resource (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(globalConfigParam nsx_policyModel.GlobalConfig) error
+	Patch(globalConfigParam nsx_policyModel.GlobalConfig, applyLocallyParam *bool) error
 
 	// This rest routine is deprecated. Use /infra/connectivity-global-config for Connectivity global config and /infra/ops-global-config for Operations global config. Update the global configuration.
 	//
 	// @param globalConfigParam (required)
+	// @param applyLocallyParam Flag to check reaching NSX+ or LM resource (optional, default to false)
 	// @return com.vmware.nsx_policy.model.GlobalConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -54,7 +58,7 @@ type GlobalConfigClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(globalConfigParam nsx_policyModel.GlobalConfig) (nsx_policyModel.GlobalConfig, error)
+	Update(globalConfigParam nsx_policyModel.GlobalConfig, applyLocallyParam *bool) (nsx_policyModel.GlobalConfig, error)
 }
 
 type globalConfigClient struct {
@@ -84,7 +88,7 @@ func (gIface *globalConfigClient) GetErrorBindingType(errorName string) vapiBind
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (gIface *globalConfigClient) Get() (nsx_policyModel.GlobalConfig, error) {
+func (gIface *globalConfigClient) Get(applyLocallyParam *bool) (nsx_policyModel.GlobalConfig, error) {
 	typeConverter := gIface.connector.TypeConverter()
 	executionContext := gIface.connector.NewExecutionContext()
 	operationRestMetaData := globalConfigGetRestMetadata()
@@ -92,6 +96,7 @@ func (gIface *globalConfigClient) Get() (nsx_policyModel.GlobalConfig, error) {
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(globalConfigGetInputType(), typeConverter)
+	sv.AddStructField("ApplyLocally", applyLocallyParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.GlobalConfig
@@ -115,7 +120,7 @@ func (gIface *globalConfigClient) Get() (nsx_policyModel.GlobalConfig, error) {
 	}
 }
 
-func (gIface *globalConfigClient) Patch(globalConfigParam nsx_policyModel.GlobalConfig) error {
+func (gIface *globalConfigClient) Patch(globalConfigParam nsx_policyModel.GlobalConfig, applyLocallyParam *bool) error {
 	typeConverter := gIface.connector.TypeConverter()
 	executionContext := gIface.connector.NewExecutionContext()
 	operationRestMetaData := globalConfigPatchRestMetadata()
@@ -124,6 +129,7 @@ func (gIface *globalConfigClient) Patch(globalConfigParam nsx_policyModel.Global
 
 	sv := vapiBindings_.NewStructValueBuilder(globalConfigPatchInputType(), typeConverter)
 	sv.AddStructField("GlobalConfig", globalConfigParam)
+	sv.AddStructField("ApplyLocally", applyLocallyParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -141,7 +147,7 @@ func (gIface *globalConfigClient) Patch(globalConfigParam nsx_policyModel.Global
 	}
 }
 
-func (gIface *globalConfigClient) Update(globalConfigParam nsx_policyModel.GlobalConfig) (nsx_policyModel.GlobalConfig, error) {
+func (gIface *globalConfigClient) Update(globalConfigParam nsx_policyModel.GlobalConfig, applyLocallyParam *bool) (nsx_policyModel.GlobalConfig, error) {
 	typeConverter := gIface.connector.TypeConverter()
 	executionContext := gIface.connector.NewExecutionContext()
 	operationRestMetaData := globalConfigUpdateRestMetadata()
@@ -150,6 +156,7 @@ func (gIface *globalConfigClient) Update(globalConfigParam nsx_policyModel.Globa
 
 	sv := vapiBindings_.NewStructValueBuilder(globalConfigUpdateInputType(), typeConverter)
 	sv.AddStructField("GlobalConfig", globalConfigParam)
+	sv.AddStructField("ApplyLocally", applyLocallyParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.GlobalConfig

@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StateClient interface {
 
-	// Returns information about the current state of the transport node configuration and information about the associated hostswitch.
+	// Returns information about the current state of the transport node configuration and information about the associated hostswitch. Change introduced in 4.1.2 for ESX Transport node - The vib details will not be retrieved in every state API call. It will be retrieved by periodical polling on the host. Therefore the nsx vib version mismatch or nsx vib absence will be reported by this API only after subsequent polling takes place. Currently, the poll frequency is 10 minutes.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
@@ -34,7 +34,7 @@ type StateClient interface {
 	// @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementpointIdParam string, hostTransportNodeIdParam string) (nsx_policyModel.TransportNodeState, error)
 
-	// Returns a list of transport node states that have realized state as provided as query parameter
+	// Returns a list of transport node states that have realized state as provided as query parameter. If this API is called multiple times in parallel then it will fail with error indicating that another request is already in progress. In such case, try the API on another NSX manager instance (if exists) or try again after some time.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)

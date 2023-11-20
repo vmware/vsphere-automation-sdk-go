@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -38,6 +38,7 @@ type IpBlocksClient interface {
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
 	// @param ipBlockIdParam (required)
+	// @param ignoreIpblockUsageParam Flag to specify whether to fetch block usage. (optional, default to false)
 	// @return com.vmware.nsx_policy.model.IpAddressBlock
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -45,7 +46,7 @@ type IpBlocksClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, ipBlockIdParam string) (nsx_policyModel.IpAddressBlock, error)
+	Get(orgIdParam string, projectIdParam string, ipBlockIdParam string, ignoreIpblockUsageParam *bool) (nsx_policyModel.IpAddressBlock, error)
 
 	// Paginated list of IpAddressBlocks.
 	//
@@ -153,7 +154,7 @@ func (iIface *ipBlocksClient) Delete(orgIdParam string, projectIdParam string, i
 	}
 }
 
-func (iIface *ipBlocksClient) Get(orgIdParam string, projectIdParam string, ipBlockIdParam string) (nsx_policyModel.IpAddressBlock, error) {
+func (iIface *ipBlocksClient) Get(orgIdParam string, projectIdParam string, ipBlockIdParam string, ignoreIpblockUsageParam *bool) (nsx_policyModel.IpAddressBlock, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
 	operationRestMetaData := ipBlocksGetRestMetadata()
@@ -164,6 +165,7 @@ func (iIface *ipBlocksClient) Get(orgIdParam string, projectIdParam string, ipBl
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("IpBlockId", ipBlockIdParam)
+	sv.AddStructField("IgnoreIpblockUsage", ignoreIpblockUsageParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.IpAddressBlock

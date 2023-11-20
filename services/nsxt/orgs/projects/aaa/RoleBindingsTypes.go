@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -473,6 +473,68 @@ func roleBindingsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/aaa/role-bindings",
+		"",
+		resultHeaders,
+		200,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
+func roleBindingsPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["org_id"] = vapiBindings_.NewStringType()
+	fields["project_id"] = vapiBindings_.NewStringType()
+	fields["role_binding"] = vapiBindings_.NewReferenceType(nsx_policyModel.RoleBindingBindingType)
+	fieldNameMap["org_id"] = "OrgId"
+	fieldNameMap["project_id"] = "ProjectId"
+	fieldNameMap["role_binding"] = "RoleBinding"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func RoleBindingsPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.RoleBindingBindingType)
+}
+
+func roleBindingsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["org_id"] = vapiBindings_.NewStringType()
+	fields["project_id"] = vapiBindings_.NewStringType()
+	fields["role_binding"] = vapiBindings_.NewReferenceType(nsx_policyModel.RoleBindingBindingType)
+	fieldNameMap["org_id"] = "OrgId"
+	fieldNameMap["project_id"] = "ProjectId"
+	fieldNameMap["role_binding"] = "RoleBinding"
+	paramsTypeMap["role_binding"] = vapiBindings_.NewReferenceType(nsx_policyModel.RoleBindingBindingType)
+	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
+	pathParams["project_id"] = "projectId"
+	pathParams["org_id"] = "orgId"
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"",
+		"role_binding",
+		"PATCH",
 		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/aaa/role-bindings",
 		"",
 		resultHeaders,
