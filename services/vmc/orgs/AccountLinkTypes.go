@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -14,6 +14,7 @@ import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 	"reflect"
 )
 
@@ -27,7 +28,7 @@ func accountLinkGetInputType() vapiBindings_.StructType {
 }
 
 func AccountLinkGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewVoidType()
+	return vapiBindings_.NewReferenceType(vmcModel.LinkRequestBindingType)
 }
 
 func accountLinkGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -61,7 +62,7 @@ func accountLinkGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"/vmc/api/orgs/{org}/account-link",
 		"",
 		resultHeaders,
-		204,
+		200,
 		"",
 		errorHeaders,
 		map[string]int{"com.vmware.vapi.std.errors.error": 500})

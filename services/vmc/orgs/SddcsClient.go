@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -61,10 +61,11 @@ type SddcsClient interface {
 	//
 	// @param orgParam Organization identifier (required)
 	// @param includeDeletedParam When true, forces the result to also include deleted SDDCs. (optional)
+	// @param filterParam Filter expression Binary Operators: 'eq', 'ne', 'lt', 'gt', 'le', 'ge', 'mul', 'div', 'mod', 'sub', 'add' Unary Operators: 'not', '-' (minus) String Operators: 'startswith', 'endswith', 'length', 'contains', 'tolower', 'toupper', Nested attributes are composed using '.' Dates must be formatted as yyyy-MM-dd or yyyy-MM-ddTHH:mm:ss[.SSS]Z Strings should enclosed in single quotes, escape single quote with two single quotes The special literal 'created' will be mapped to the time the resource was first created. Examples: - $filter=(updated gt 2016-08-09T13:00:00Z) and (org_id eq 278710ff4e-6b6d-4d4e-aefb-ca637f38609e) - $filter=(created eq 2016-08-09) - $filter=(created gt 2016-08-09) and (sddc.status eq 'READY') (optional)
 	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws Unauthorized  Forbidden
-	List(orgParam string, includeDeletedParam *bool) ([]vmcModel.Sddc, error)
+	List(orgParam string, includeDeletedParam *bool, filterParam *string) ([]vmcModel.Sddc, error)
 
 	// Patch SDDC
 	//
@@ -212,7 +213,7 @@ func (sIface *sddcsClient) Get(orgParam string, sddcParam string) (vmcModel.Sddc
 	}
 }
 
-func (sIface *sddcsClient) List(orgParam string, includeDeletedParam *bool) ([]vmcModel.Sddc, error) {
+func (sIface *sddcsClient) List(orgParam string, includeDeletedParam *bool, filterParam *string) ([]vmcModel.Sddc, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := sddcsListRestMetadata()
@@ -222,6 +223,7 @@ func (sIface *sddcsClient) List(orgParam string, includeDeletedParam *bool) ([]v
 	sv := vapiBindings_.NewStructValueBuilder(sddcsListInputType(), typeConverter)
 	sv.AddStructField("Org", orgParam)
 	sv.AddStructField("IncludeDeleted", includeDeletedParam)
+	sv.AddStructField("Filter", filterParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput []vmcModel.Sddc

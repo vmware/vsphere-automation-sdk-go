@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -13,6 +13,7 @@ import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vmcModel "github.com/vmware/vsphere-automation-sdk-go/services/vmc/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
@@ -22,9 +23,10 @@ type AccountLinkClient interface {
 	// Gets a link that can be used on a customer's account to start the linking process.
 	//
 	// @param orgParam Organization identifier (required)
+	// @return com.vmware.vmc.model.LinkRequest
 	//
 	// @throws Error  Generic Error
-	Get(orgParam string) error
+	Get(orgParam string) (vmcModel.LinkRequest, error)
 }
 
 type accountLinkClient struct {
@@ -52,7 +54,7 @@ func (aIface *accountLinkClient) GetErrorBindingType(errorName string) vapiBindi
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (aIface *accountLinkClient) Get(orgParam string) error {
+func (aIface *accountLinkClient) Get(orgParam string) (vmcModel.LinkRequest, error) {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
 	operationRestMetaData := accountLinkGetRestMetadata()
@@ -63,17 +65,23 @@ func (aIface *accountLinkClient) Get(orgParam string) error {
 	sv.AddStructField("Org", orgParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return vapiBindings_.VAPIerrorsToError(inputError)
+		var emptyOutput vmcModel.LinkRequest
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := aIface.connector.GetApiProvider().Invoke("com.vmware.vmc.orgs.account_link", "get", inputDataValue, executionContext)
+	var emptyOutput vmcModel.LinkRequest
 	if methodResult.IsSuccess() {
-		return nil
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), AccountLinkGetOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(vmcModel.LinkRequest), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), aIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return vapiBindings_.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
-		return methodError.(error)
+		return emptyOutput, methodError.(error)
 	}
 }
