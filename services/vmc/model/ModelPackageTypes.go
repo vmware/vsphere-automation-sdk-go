@@ -23,14 +23,14 @@ type AbstractEntity struct {
 	// User id that last updated this record
 	UserId string
 	// User id that last updated this record
-	UpdatedByUserId string
+	UpdatedByUserId *string
 	Created         time.Time
 	// Version of this entity format: int32
 	Version int64
 	// User name that last updated this record
 	UpdatedByUserName *string
 	// User name that last updated this record
-	UserName string
+	UserName *string
 	// Unique ID for this entity
 	Id string
 }
@@ -382,14 +382,14 @@ type AwsCustomerConnectedAccount struct {
 	// User id that last updated this record
 	UserId string
 	// User id that last updated this record
-	UpdatedByUserId string
+	UpdatedByUserId *string
 	Created         time.Time
 	// Version of this entity format: int32
 	Version int64
 	// User name that last updated this record
 	UpdatedByUserName *string
 	// User name that last updated this record
-	UserName string
+	UserName *string
 	// Unique ID for this entity
 	Id             string
 	PolicyPayerArn *string
@@ -563,6 +563,9 @@ type AwsSddcConfig struct {
 	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_R5_METAL
 	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_I3EN_METAL
 	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_I4I_METAL
+	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_C6I_METAL
+	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_M7I_METAL_48XL
+	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_M7I_METAL_24XL
 	//
 	//  The instance type for the esx hosts in the primary cluster of the SDDC.
 	HostInstanceType *string
@@ -627,14 +630,14 @@ type AwsSddcConnection struct {
 	// User id that last updated this record
 	UserId string
 	// User id that last updated this record
-	UpdatedByUserId string
+	UpdatedByUserId *string
 	Created         time.Time
 	// Version of this entity format: int32
 	Version int64
 	// User name that last updated this record
 	UpdatedByUserName *string
 	// User name that last updated this record
-	UserName string
+	UserName *string
 	// Unique ID for this entity
 	Id string
 	// The CIDR block of the customer's subnet this link is in.
@@ -1033,6 +1036,9 @@ type ClusterConfig struct {
 	// * ClusterConfig#ClusterConfig_HOST_INSTANCE_TYPE_R5_METAL
 	// * ClusterConfig#ClusterConfig_HOST_INSTANCE_TYPE_I3EN_METAL
 	// * ClusterConfig#ClusterConfig_HOST_INSTANCE_TYPE_I4I_METAL
+	// * ClusterConfig#ClusterConfig_HOST_INSTANCE_TYPE_C6I_METAL
+	// * ClusterConfig#ClusterConfig_HOST_INSTANCE_TYPE_M7I_METAL_48XL
+	// * ClusterConfig#ClusterConfig_HOST_INSTANCE_TYPE_M7I_METAL_24XL
 	//
 	//  The instance type for the esx hosts added to this cluster.
 	HostInstanceType *string
@@ -1049,6 +1055,9 @@ const ClusterConfig_HOST_INSTANCE_TYPE_I3_METAL = "i3.metal"
 const ClusterConfig_HOST_INSTANCE_TYPE_R5_METAL = "r5.metal"
 const ClusterConfig_HOST_INSTANCE_TYPE_I3EN_METAL = "i3en.metal"
 const ClusterConfig_HOST_INSTANCE_TYPE_I4I_METAL = "i4i.metal"
+const ClusterConfig_HOST_INSTANCE_TYPE_C6I_METAL = "c6i.metal"
+const ClusterConfig_HOST_INSTANCE_TYPE_M7I_METAL_48XL = "m7i.metal-48xl"
+const ClusterConfig_HOST_INSTANCE_TYPE_M7I_METAL_24XL = "m7i.metal-24xl"
 
 func (s *ClusterConfig) GetType__() vapiBindings_.BindingType {
 	return ClusterConfigBindingType()
@@ -2526,14 +2535,14 @@ type Organization struct {
 	// User id that last updated this record
 	UserId string
 	// User id that last updated this record
-	UpdatedByUserId string
+	UpdatedByUserId *string
 	Created         time.Time
 	// Version of this entity format: int32
 	Version int64
 	// User name that last updated this record
 	UpdatedByUserName *string
 	// User name that last updated this record
-	UserName string
+	UserName *string
 	// Unique ID for this entity
 	Id string
 	// ORG_TYPE to be associated with the org
@@ -3056,14 +3065,14 @@ type Sddc struct {
 	// User id that last updated this record
 	UserId string
 	// User id that last updated this record
-	UpdatedByUserId string
+	UpdatedByUserId *string
 	Created         time.Time
 	// Version of this entity format: int32
 	Version int64
 	// User name that last updated this record
 	UpdatedByUserName *string
 	// User name that last updated this record
-	UserName string
+	UserName *string
 	// Unique ID for this entity
 	Id string
 	// name for SDDC
@@ -3184,6 +3193,9 @@ type SddcConfig struct {
 	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_R5_METAL
 	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_I3EN_METAL
 	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_I4I_METAL
+	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_C6I_METAL
+	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_M7I_METAL_48XL
+	// * SddcConfig#SddcConfig_HOST_INSTANCE_TYPE_M7I_METAL_24XL
 	//
 	//  The instance type for the esx hosts in the primary cluster of the SDDC.
 	HostInstanceType *string
@@ -3235,6 +3247,9 @@ const SddcConfig_HOST_INSTANCE_TYPE_I3_METAL = "i3.metal"
 const SddcConfig_HOST_INSTANCE_TYPE_R5_METAL = "r5.metal"
 const SddcConfig_HOST_INSTANCE_TYPE_I3EN_METAL = "i3en.metal"
 const SddcConfig_HOST_INSTANCE_TYPE_I4I_METAL = "i4i.metal"
+const SddcConfig_HOST_INSTANCE_TYPE_C6I_METAL = "c6i.metal"
+const SddcConfig_HOST_INSTANCE_TYPE_M7I_METAL_48XL = "m7i.metal-48xl"
+const SddcConfig_HOST_INSTANCE_TYPE_M7I_METAL_24XL = "m7i.metal-24xl"
 const SddcConfig_VSAN_VERSION_VSAN1 = "vsan1"
 const SddcConfig_VSAN_VERSION_VSANESA = "vsanesa"
 const SddcConfig_VSAN_VERSION_NOVSAN = "novsan"
@@ -3721,14 +3736,14 @@ type SddcTemplate struct {
 	// User id that last updated this record
 	UserId string
 	// User id that last updated this record
-	UpdatedByUserId string
+	UpdatedByUserId *string
 	Created         time.Time
 	// Version of this entity format: int32
 	Version int64
 	// User name that last updated this record
 	UpdatedByUserName *string
 	// User name that last updated this record
-	UserName string
+	UserName *string
 	// Unique ID for this entity
 	Id string
 	// A list of the SDDC linking configurations to use.
@@ -3806,14 +3821,14 @@ type ServiceQuotaRequest struct {
 	// User id that last updated this record
 	UserId string
 	// User id that last updated this record
-	UpdatedByUserId string
+	UpdatedByUserId *string
 	Created         time.Time
 	// Version of this entity format: int32
 	Version int64
 	// User name that last updated this record
 	UpdatedByUserName *string
 	// User name that last updated this record
-	UserName string
+	UserName *string
 	// Unique ID for this entity
 	Id             string
 	RequesterEmail *string
@@ -4211,14 +4226,14 @@ type Task struct {
 	// User id that last updated this record
 	UserId string
 	// User id that last updated this record
-	UpdatedByUserId string
+	UpdatedByUserId *string
 	Created         time.Time
 	// Version of this entity format: int32
 	Version int64
 	// User name that last updated this record
 	UpdatedByUserName *string
 	// User name that last updated this record
-	UserName string
+	UserName *string
 	// Unique ID for this entity
 	Id string
 	// Possible values are:
@@ -4990,7 +5005,7 @@ func AbstractEntityBindingType() vapiBindings_.BindingType {
 	fieldNameMap["updated"] = "Updated"
 	fields["user_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["user_id"] = "UserId"
-	fields["updated_by_user_id"] = vapiBindings_.NewStringType()
+	fields["updated_by_user_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_id"] = "UpdatedByUserId"
 	fields["created"] = vapiBindings_.NewDateTimeType()
 	fieldNameMap["created"] = "Created"
@@ -4998,7 +5013,7 @@ func AbstractEntityBindingType() vapiBindings_.BindingType {
 	fieldNameMap["version"] = "Version"
 	fields["updated_by_user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
-	fields["user_name"] = vapiBindings_.NewStringType()
+	fields["user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["user_name"] = "UserName"
 	fields["id"] = vapiBindings_.NewStringType()
 	fieldNameMap["id"] = "Id"
@@ -5199,7 +5214,7 @@ func AwsCustomerConnectedAccountBindingType() vapiBindings_.BindingType {
 	fieldNameMap["updated"] = "Updated"
 	fields["user_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["user_id"] = "UserId"
-	fields["updated_by_user_id"] = vapiBindings_.NewStringType()
+	fields["updated_by_user_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_id"] = "UpdatedByUserId"
 	fields["created"] = vapiBindings_.NewDateTimeType()
 	fieldNameMap["created"] = "Created"
@@ -5207,7 +5222,7 @@ func AwsCustomerConnectedAccountBindingType() vapiBindings_.BindingType {
 	fieldNameMap["version"] = "Version"
 	fields["updated_by_user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
-	fields["user_name"] = vapiBindings_.NewStringType()
+	fields["user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["user_name"] = "UserName"
 	fields["id"] = vapiBindings_.NewStringType()
 	fieldNameMap["id"] = "Id"
@@ -5358,7 +5373,7 @@ func AwsSddcConnectionBindingType() vapiBindings_.BindingType {
 	fieldNameMap["updated"] = "Updated"
 	fields["user_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["user_id"] = "UserId"
-	fields["updated_by_user_id"] = vapiBindings_.NewStringType()
+	fields["updated_by_user_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_id"] = "UpdatedByUserId"
 	fields["created"] = vapiBindings_.NewDateTimeType()
 	fieldNameMap["created"] = "Created"
@@ -5366,7 +5381,7 @@ func AwsSddcConnectionBindingType() vapiBindings_.BindingType {
 	fieldNameMap["version"] = "Version"
 	fields["updated_by_user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
-	fields["user_name"] = vapiBindings_.NewStringType()
+	fields["user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["user_name"] = "UserName"
 	fields["id"] = vapiBindings_.NewStringType()
 	fieldNameMap["id"] = "Id"
@@ -6472,7 +6487,7 @@ func OrganizationBindingType() vapiBindings_.BindingType {
 	fieldNameMap["updated"] = "Updated"
 	fields["user_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["user_id"] = "UserId"
-	fields["updated_by_user_id"] = vapiBindings_.NewStringType()
+	fields["updated_by_user_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_id"] = "UpdatedByUserId"
 	fields["created"] = vapiBindings_.NewDateTimeType()
 	fieldNameMap["created"] = "Created"
@@ -6480,7 +6495,7 @@ func OrganizationBindingType() vapiBindings_.BindingType {
 	fieldNameMap["version"] = "Version"
 	fields["updated_by_user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
-	fields["user_name"] = vapiBindings_.NewStringType()
+	fields["user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["user_name"] = "UserName"
 	fields["id"] = vapiBindings_.NewStringType()
 	fieldNameMap["id"] = "Id"
@@ -6765,7 +6780,7 @@ func SddcBindingType() vapiBindings_.BindingType {
 	fieldNameMap["updated"] = "Updated"
 	fields["user_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["user_id"] = "UserId"
-	fields["updated_by_user_id"] = vapiBindings_.NewStringType()
+	fields["updated_by_user_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_id"] = "UpdatedByUserId"
 	fields["created"] = vapiBindings_.NewDateTimeType()
 	fieldNameMap["created"] = "Created"
@@ -6773,7 +6788,7 @@ func SddcBindingType() vapiBindings_.BindingType {
 	fieldNameMap["version"] = "Version"
 	fields["updated_by_user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
-	fields["user_name"] = vapiBindings_.NewStringType()
+	fields["user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["user_name"] = "UserName"
 	fields["id"] = vapiBindings_.NewStringType()
 	fieldNameMap["id"] = "Id"
@@ -7147,7 +7162,7 @@ func SddcTemplateBindingType() vapiBindings_.BindingType {
 	fieldNameMap["updated"] = "Updated"
 	fields["user_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["user_id"] = "UserId"
-	fields["updated_by_user_id"] = vapiBindings_.NewStringType()
+	fields["updated_by_user_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_id"] = "UpdatedByUserId"
 	fields["created"] = vapiBindings_.NewDateTimeType()
 	fieldNameMap["created"] = "Created"
@@ -7155,7 +7170,7 @@ func SddcTemplateBindingType() vapiBindings_.BindingType {
 	fieldNameMap["version"] = "Version"
 	fields["updated_by_user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
-	fields["user_name"] = vapiBindings_.NewStringType()
+	fields["user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["user_name"] = "UserName"
 	fields["id"] = vapiBindings_.NewStringType()
 	fieldNameMap["id"] = "Id"
@@ -7199,7 +7214,7 @@ func ServiceQuotaRequestBindingType() vapiBindings_.BindingType {
 	fieldNameMap["updated"] = "Updated"
 	fields["user_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["user_id"] = "UserId"
-	fields["updated_by_user_id"] = vapiBindings_.NewStringType()
+	fields["updated_by_user_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_id"] = "UpdatedByUserId"
 	fields["created"] = vapiBindings_.NewDateTimeType()
 	fieldNameMap["created"] = "Created"
@@ -7207,7 +7222,7 @@ func ServiceQuotaRequestBindingType() vapiBindings_.BindingType {
 	fieldNameMap["version"] = "Version"
 	fields["updated_by_user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
-	fields["user_name"] = vapiBindings_.NewStringType()
+	fields["user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["user_name"] = "UserName"
 	fields["id"] = vapiBindings_.NewStringType()
 	fieldNameMap["id"] = "Id"
@@ -7450,7 +7465,7 @@ func TaskBindingType() vapiBindings_.BindingType {
 	fieldNameMap["updated"] = "Updated"
 	fields["user_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["user_id"] = "UserId"
-	fields["updated_by_user_id"] = vapiBindings_.NewStringType()
+	fields["updated_by_user_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_id"] = "UpdatedByUserId"
 	fields["created"] = vapiBindings_.NewDateTimeType()
 	fieldNameMap["created"] = "Created"
@@ -7458,7 +7473,7 @@ func TaskBindingType() vapiBindings_.BindingType {
 	fieldNameMap["version"] = "Version"
 	fields["updated_by_user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["updated_by_user_name"] = "UpdatedByUserName"
-	fields["user_name"] = vapiBindings_.NewStringType()
+	fields["user_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["user_name"] = "UserName"
 	fields["id"] = vapiBindings_.NewStringType()
 	fieldNameMap["id"] = "Id"

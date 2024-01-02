@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,12 +23,10 @@ func siteRecoveryDeleteInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["org"] = vapiBindings_.NewStringType()
 	fields["sddc"] = vapiBindings_.NewStringType()
-	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fields["deactivate_hcx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["delete_config_internal"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vmcDraasModel.DeleteConfigInternalBindingType))
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
-	fieldNameMap["force"] = "Force"
-	fieldNameMap["deactivate_hcx"] = "DeactivateHcx"
+	fieldNameMap["delete_config_internal"] = "DeleteConfigInternal"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -48,22 +46,17 @@ func siteRecoveryDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["org"] = vapiBindings_.NewStringType()
 	fields["sddc"] = vapiBindings_.NewStringType()
-	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fields["deactivate_hcx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["delete_config_internal"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vmcDraasModel.DeleteConfigInternalBindingType))
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
-	fieldNameMap["force"] = "Force"
-	fieldNameMap["deactivate_hcx"] = "DeactivateHcx"
-	paramsTypeMap["deactivate_hcx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["delete_config_internal"] = "DeleteConfigInternal"
 	paramsTypeMap["org"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
-	paramsTypeMap["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["delete_config_internal"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(vmcDraasModel.DeleteConfigInternalBindingType))
 	paramsTypeMap["org"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
-	queryParams["deactivate_hcx"] = "deactivate_hcx"
-	queryParams["force"] = "force"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
@@ -78,7 +71,7 @@ func siteRecoveryDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"",
+		"delete_config_internal",
 		"DELETE",
 		"/vmc/draas/api/orgs/{org}/sddcs/{sddc}/site-recovery",
 		"",

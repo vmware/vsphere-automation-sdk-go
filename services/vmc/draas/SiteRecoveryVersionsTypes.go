@@ -1,4 +1,4 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -18,21 +18,13 @@ import (
 	"reflect"
 )
 
-// Possible value for ``versionSource`` of method SiteRecoveryVersions#get.
-const SiteRecoveryVersions_GET_VERSION_SOURCE_VAMICLI = "vamicli"
-
-// Possible value for ``versionSource`` of method SiteRecoveryVersions#get.
-const SiteRecoveryVersions_GET_VERSION_SOURCE_LS = "ls"
-
 func siteRecoveryVersionsGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org"] = vapiBindings_.NewStringType()
 	fields["sddc"] = vapiBindings_.NewStringType()
-	fields["version_source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
-	fieldNameMap["version_source"] = "VersionSource"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -52,18 +44,14 @@ func siteRecoveryVersionsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["org"] = vapiBindings_.NewStringType()
 	fields["sddc"] = vapiBindings_.NewStringType()
-	fields["version_source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org"] = "Org"
 	fieldNameMap["sddc"] = "Sddc"
-	fieldNameMap["version_source"] = "VersionSource"
-	paramsTypeMap["version_source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["org"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sddc"] = vapiBindings_.NewStringType()
 	pathParams["org"] = "org"
 	pathParams["sddc"] = "sddc"
-	queryParams["version_source"] = "version_source"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	errorHeaders["com.vmware.vapi.std.errors.unauthenticated"] = make(map[string]string)
