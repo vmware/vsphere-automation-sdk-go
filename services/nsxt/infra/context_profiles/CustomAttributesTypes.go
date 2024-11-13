@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -70,7 +71,7 @@ func customAttributesCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"policy_attributes",
 		"POST",
 		"/policy/api/v1/infra/context-profiles/custom-attributes",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -118,7 +119,7 @@ func customAttributesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"policy_attributes",
 		"PATCH",
 		"/policy/api/v1/infra/context-profiles/custom-attributes",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type PreDefinedPluginsClient interface {
 
-	// Read SHA dynamic plugin.
+	// Read SHA pre-defined plugin.
 	//
 	// @param pluginIdParam Sha pre-defined plugin (required)
 	// @return com.vmware.nsx_policy.model.ShaPredefinedPlugin
@@ -32,7 +33,7 @@ type PreDefinedPluginsClient interface {
 	// @throws NotFound  Not Found
 	Get(pluginIdParam string) (nsx_policyModel.ShaPredefinedPlugin, error)
 
-	// API will provide list of Sha dynamic plugins.
+	// API will provide list of Sha pre-defined plugins.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)

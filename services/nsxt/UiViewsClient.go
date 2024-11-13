@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +22,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type UiViewsClient interface {
 
 	// Creates a new View.
+	//  This API is deprecated and will be unavailable in later releases.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param viewParam (required)
 	// @return com.vmware.nsx_policy.model.View
@@ -33,6 +37,9 @@ type UiViewsClient interface {
 	Create(viewParam nsx_policyModel.View) (nsx_policyModel.View, error)
 
 	// Delete View
+	//  This API is deprecated and will be unavailable in later releases.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param viewIdParam (required)
 	//
@@ -44,6 +51,9 @@ type UiViewsClient interface {
 	Delete(viewIdParam string) error
 
 	// If no query params are specified then all the views entitled for the user are returned. The views to which a user is entitled to include the views created by the user and the shared views.
+	//  This API is deprecated and will be unavailable in later releases.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param tagParam The tag for which associated views to be queried. (optional)
 	// @param viewIdsParam Ids of the Views (optional)
@@ -58,6 +68,9 @@ type UiViewsClient interface {
 	Get(tagParam *string, viewIdsParam *string, widgetIdParam *string) (nsx_policyModel.ViewList, error)
 
 	// Returns Information about a specific View.
+	//  This API is deprecated and will be unavailable in later releases.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param viewIdParam (required)
 	// @return com.vmware.nsx_policy.model.View
@@ -70,6 +83,9 @@ type UiViewsClient interface {
 	Get0(viewIdParam string) (nsx_policyModel.View, error)
 
 	// Update View
+	//  This API is deprecated and will be unavailable in later releases.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param viewIdParam (required)
 	// @param viewParam (required)

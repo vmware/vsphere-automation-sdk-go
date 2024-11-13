@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,7 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LbAppProfilesClient interface {
 
-	// Delete the LBAppProfile along with all the entities contained by this LBAppProfile. This API is deprecated for the NSX-T Load Balancer, but not for the NSX-T Distributed Load Balancer.
+	// Delete the LBAppProfile along with all the entities contained by this LBAppProfile. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
 	//
 	// @param lbAppProfileIdParam LBAppProfile ID (required)
 	// @param forceParam Force delete the resource even if it is being used somewhere (optional, default to false)
@@ -33,7 +34,7 @@ type LbAppProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(lbAppProfileIdParam string, forceParam *bool) error
 
-	// Read a LBAppProfile. This API is deprecated for the NSX-T Load Balancer, but not for the NSX-T Distributed Load Balancer.
+	// Read a LBAppProfile. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
 	//
 	// @param lbAppProfileIdParam LBAppProfile ID (required)
 	// @return com.vmware.nsx_policy.model.LBAppProfile
@@ -46,7 +47,7 @@ type LbAppProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(lbAppProfileIdParam string) (*vapiData_.StructValue, error)
 
-	// Paginated list of all LBAppProfiles. This API is deprecated for the NSX-T Load Balancer, but not for the NSX-T Distributed Load Balancer.
+	// Paginated list of all LBAppProfiles. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
@@ -63,7 +64,7 @@ type LbAppProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.LBAppProfileListResult, error)
 
-	// If a LBAppProfile with the lb-app-profile-id is not already present, create a new LBAppProfile. If it already exists, update the LBAppProfile. This is a full replace. This API is deprecated for the NSX-T Load Balancer, but not for the NSX-T Distributed Load Balancer.
+	// If a LBAppProfile with the lb-app-profile-id is not already present, create a new LBAppProfile. If it already exists, update the LBAppProfile. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
 	//
 	// @param lbAppProfileIdParam LBAppProfile ID (required)
 	// @param lbAppProfileParam (required)
@@ -76,7 +77,7 @@ type LbAppProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(lbAppProfileIdParam string, lbAppProfileParam *vapiData_.StructValue) error
 
-	// If a LBAppProfile with the lb-app-profile-id is not already present, create a new LBAppProfile. If it already exists, update the LBAppProfile. This is a full replace. This API is deprecated for the NSX-T Load Balancer, but not for the NSX-T Distributed Load Balancer.
+	// If a LBAppProfile with the lb-app-profile-id is not already present, create a new LBAppProfile. If it already exists, update the LBAppProfile. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
 	//
 	// @param lbAppProfileIdParam LBAppProfile ID (required)
 	// @param lbAppProfileParam (required)

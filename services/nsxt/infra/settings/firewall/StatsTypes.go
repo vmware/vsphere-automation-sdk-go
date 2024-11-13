@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,6 +23,9 @@ const Stats_RESET_CATEGORY_DFW = "DFW"
 
 // Possible value for ``category`` of method Stats#reset.
 const Stats_RESET_CATEGORY_EDGE = "EDGE"
+
+// Possible value for ``category`` of method Stats#reset.
+const Stats_RESET_CATEGORY_BRIDGEFIREWALL = "BRIDGEFIREWALL"
 
 func statsResetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)

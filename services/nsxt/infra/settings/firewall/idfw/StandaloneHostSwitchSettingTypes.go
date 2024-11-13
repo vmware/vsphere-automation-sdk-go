@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -101,7 +102,7 @@ func standaloneHostSwitchSettingPatchRestMetadata() vapiProtocol_.OperationRestM
 		"standalone_host_idfw_configuration",
 		"PATCH",
 		"/policy/api/v1/infra/settings/firewall/idfw/standalone-host-switch-setting",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -149,7 +150,7 @@ func standaloneHostSwitchSettingUpdateRestMetadata() vapiProtocol_.OperationRest
 		"standalone_host_idfw_configuration",
 		"PUT",
 		"/policy/api/v1/infra/settings/firewall/idfw/standalone-host-switch-setting",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -300,7 +301,7 @@ func sessionsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"ip_sec_vpn_session",
 		"PATCH",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}/ipsec-vpn-services/{serviceId}/sessions/{sessionId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -433,7 +434,7 @@ func sessionsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"ip_sec_vpn_session",
 		"PUT",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}/ipsec-vpn-services/{serviceId}/sessions/{sessionId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

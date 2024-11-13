@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -228,7 +229,7 @@ func urlCategorizationConfigsPatchRestMetadata() vapiProtocol_.OperationRestMeta
 		"policy_url_categorization_config",
 		"PATCH",
 		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementPointId}/edge-clusters/{edgeClusterId}/url-categorization-configs/{urlCategorizationConfigId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
@@ -304,7 +305,7 @@ func urlCategorizationConfigsUpdateRestMetadata() vapiProtocol_.OperationRestMet
 		"policy_url_categorization_config",
 		"PUT",
 		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementPointId}/edge-clusters/{edgeClusterId}/url-categorization-configs/{urlCategorizationConfigId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

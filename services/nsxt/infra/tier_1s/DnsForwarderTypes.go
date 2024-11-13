@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -230,7 +231,7 @@ func dnsForwarderPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"policy_dns_forwarder",
 		"PATCH",
 		"/policy/api/v1/infra/tier-1s/{tier1Id}/dns-forwarder",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -285,7 +286,7 @@ func dnsForwarderUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"policy_dns_forwarder",
 		"PUT",
 		"/policy/api/v1/infra/tier-1s/{tier1Id}/dns-forwarder",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

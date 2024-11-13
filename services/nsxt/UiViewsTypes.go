@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -58,7 +59,7 @@ func uiViewsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"view",
 		"POST",
 		"/policy/api/v1/ui-views",
-		"",
+		"application/json",
 		resultHeaders,
 		201,
 		"",
@@ -274,7 +275,7 @@ func uiViewsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"view",
 		"PUT",
 		"/policy/api/v1/ui-views/{viewId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

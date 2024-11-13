@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RunbookArtifactsClient interface {
 
-	// Delete an Online Diagnostic System runbook invocation batch request.
+	// Delete an Online Diagnostic System Runbook invocation batch request.
 	//
 	// @param requestIdParam (required)
 	//
@@ -43,7 +44,7 @@ type RunbookArtifactsClient interface {
 	// @throws NotFound  Not Found
 	Get(requestIdParam string) (nsx_policyModel.OdsRunbookInvocationArtifactBatchResult, error)
 
-	// Get a paginated list of Online Diagnostic System runbook invocation artifacts.
+	// Get a paginated list of Online Diagnostic System Runbook invocation artifacts.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)

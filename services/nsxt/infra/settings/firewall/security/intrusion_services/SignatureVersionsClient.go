@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -19,6 +20,17 @@ import (
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SignatureVersionsClient interface {
+
+	// Delete the IDS Sgnature version along with signatures.
+	//
+	// @param versionIdParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Delete(versionIdParam string) error
 
 	// Intrusion detection system signature version.
 	//
@@ -70,6 +82,7 @@ type signatureVersionsClient struct {
 func NewSignatureVersionsClient(connector vapiProtocolClient_.Connector) *signatureVersionsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.settings.firewall.security.intrusion_services.signature_versions")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"delete":            vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		"get":               vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"list":              vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 		"makeactiveversion": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "makeactiveversion"),
@@ -86,6 +99,32 @@ func (sIface *signatureVersionsClient) GetErrorBindingType(errorName string) vap
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
+}
+
+func (sIface *signatureVersionsClient) Delete(versionIdParam string) error {
+	typeConverter := sIface.connector.TypeConverter()
+	executionContext := sIface.connector.NewExecutionContext()
+	operationRestMetaData := signatureVersionsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(signatureVersionsDeleteInputType(), typeConverter)
+	sv.AddStructField("VersionId", versionIdParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.intrusion_services.signature_versions", "delete", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
 }
 
 func (sIface *signatureVersionsClient) Get(versionIdParam string) (nsx_policyModel.IdsSignatureVersion, error) {

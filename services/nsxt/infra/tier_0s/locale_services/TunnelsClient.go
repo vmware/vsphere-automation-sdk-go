@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,7 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TunnelsClient interface {
 
-	// Delete Tunnel by given tunnel Id
+	// Delete Tunnel(GRE as of now) by given tunnel Id
 	//
 	// @param tier0IdParam tier0 id (required)
 	// @param localeSvcIdParam locale service id (required)
@@ -34,7 +35,7 @@ type TunnelsClient interface {
 	// @throws NotFound  Not Found
 	Delete(tier0IdParam string, localeSvcIdParam string, tunnelIdParam string) error
 
-	// Get Policy Tunnel
+	// Get Policy Tunnel(GRE as of now)
 	//
 	// @param tier0IdParam tier0 id (required)
 	// @param localeSvcIdParam locale service id (required)
@@ -49,7 +50,7 @@ type TunnelsClient interface {
 	// @throws NotFound  Not Found
 	Get(tier0IdParam string, localeSvcIdParam string, tunnelIdParam string) (*vapiData_.StructValue, error)
 
-	// List Tunnel
+	// List all policy tunnels(GRE as of now)
 	//
 	// @param tier0IdParam tier0 id (required)
 	// @param localeSvcIdParam locale service id (required)
@@ -67,7 +68,7 @@ type TunnelsClient interface {
 	// @throws NotFound  Not Found
 	List(tier0IdParam string, localeSvcIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyTunnelListResult, error)
 
-	// Patch Tunnel
+	// Patch Tunnel(GRE as of now)
 	//
 	// @param tier0IdParam tier0 id (required)
 	// @param localeSvcIdParam locale service id (required)
@@ -82,7 +83,7 @@ type TunnelsClient interface {
 	// @throws NotFound  Not Found
 	Patch(tier0IdParam string, localeSvcIdParam string, tunnelIdParam string, tunnelParam *vapiData_.StructValue) error
 
-	// Create or Update Tunnel
+	// Create or Update Tunnel(GRE as of now)
 	//
 	// @param tier0IdParam tier0 id (required)
 	// @param localeSvcIdParam locale service id (required)

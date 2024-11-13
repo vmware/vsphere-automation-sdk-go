@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LbVirtualServersClient interface {
 
-	// Delete the LBVirtualServer along with all the entities contained by this LBVirtualServer. This API is deprecated for the NSX-T Load Balancer, but not for the NSX-T Distributed Load Balancer.
+	// Delete the LBVirtualServer along with all the entities contained by this LBVirtualServer. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
 	//
 	// @param lbVirtualServerIdParam LBVirtualServer ID (required)
 	// @param forceParam Force delete the resource even if it is being used somewhere (optional, default to false)
@@ -32,7 +33,7 @@ type LbVirtualServersClient interface {
 	// @throws NotFound  Not Found
 	Delete(lbVirtualServerIdParam string, forceParam *bool) error
 
-	// Read a LBVirtualServer. This API is deprecated for the NSX-T Load Balancer, but not for the NSX-T Distributed Load Balancer.
+	// Read a LBVirtualServer. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
 	//
 	// @param lbVirtualServerIdParam LBVirtualServer ID (required)
 	// @return com.vmware.nsx_policy.model.LBVirtualServer
@@ -44,7 +45,7 @@ type LbVirtualServersClient interface {
 	// @throws NotFound  Not Found
 	Get(lbVirtualServerIdParam string) (nsx_policyModel.LBVirtualServer, error)
 
-	// Paginated list of all LBVirtualServers. This API is deprecated for the NSX-T Load Balancer, but not for the NSX-T Distributed Load Balancer.
+	// Paginated list of all LBVirtualServers. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
@@ -61,7 +62,7 @@ type LbVirtualServersClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.LBVirtualServerListResult, error)
 
-	// If a LBVirtualServer with the lb-virtual-server-id is not already present, create a new LBVirtualServer. If it already exists, update the LBVirtualServer. This is a full replace. This API is deprecated for the NSX-T Load Balancer, but not for the NSX-T Distributed Load Balancer.
+	// If a LBVirtualServer with the lb-virtual-server-id is not already present, create a new LBVirtualServer. If it already exists, update the LBVirtualServer. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
 	//
 	// @param lbVirtualServerIdParam LBVirtualServer ID (required)
 	// @param lbVirtualServerParam (required)
@@ -73,7 +74,7 @@ type LbVirtualServersClient interface {
 	// @throws NotFound  Not Found
 	Patch(lbVirtualServerIdParam string, lbVirtualServerParam nsx_policyModel.LBVirtualServer) error
 
-	// If a LBVirtualServer with the lb-virtual-server-id is not already present, create a new LBVirtualServer. If it already exists, update the LBVirtualServer. This is a full replace. This API is deprecated for the NSX-T Load Balancer, but not for the NSX-T Distributed Load Balancer.
+	// If a LBVirtualServer with the lb-virtual-server-id is not already present, create a new LBVirtualServer. If it already exists, update the LBVirtualServer. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
 	//
 	// @param lbVirtualServerIdParam LBVirtualServer ID (required)
 	// @param lbVirtualServerParam (required)

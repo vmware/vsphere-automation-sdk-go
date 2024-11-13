@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,6 +23,11 @@ type EventLogServersClient interface {
 
 	// Delete a Event Log server for Firewall Identity store
 	//
+	//  Use the following Policy API -
+	//  DELETE /infra/identity-firewall-stores/<identity-firewall-store-id>/event-log-servers/<event-log-server-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param eventLogServerIdParam Event Log server identifier (required)
 	// @param enforcementPointPathParam String Path of the enforcement point (optional)
@@ -34,6 +40,11 @@ type EventLogServersClient interface {
 	Delete(firewallIdentityStoreIdParam string, eventLogServerIdParam string, enforcementPointPathParam *string) error
 
 	// Get a specific Event Log server for a given Firewall Identity store
+	//
+	//  Use the following Policy API -
+	//  GET /infra/identity-firewall-stores/<identity-firewall-store-id>/event-log-servers/<event-log-server-id>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param eventLogServerIdParam Event Log server identifier (required)
@@ -49,6 +60,11 @@ type EventLogServersClient interface {
 
 	// More than one Event Log server can be created and only one event log server is used to synchronize directory objects. If more than one Event Log server is configured, NSX will try all the servers until it is able to successfully connect to one.
 	//
+	//  Use the following Policy API -
+	//  PATCH /infra/identity-firewall-stores/<identity-firewall-store-id>/event-log-servers/<event-log-server-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param eventLogServerIdParam Event Log server identifier (required)
 	// @param directoryEventLogServerParam (required)
@@ -62,6 +78,11 @@ type EventLogServersClient interface {
 	Patch(firewallIdentityStoreIdParam string, eventLogServerIdParam string, directoryEventLogServerParam nsx_policyModel.DirectoryEventLogServer, enforcementPointPathParam *string) error
 
 	// Update a event log server for Firewall Identity store
+	//
+	//  Use the following Policy API -
+	//  PUT /infra/identity-firewall-stores/<identity-firewall-store-id>/event-log-servers/<event-log-server-id>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param eventLogServerIdParam Event Log Server identifier (required)

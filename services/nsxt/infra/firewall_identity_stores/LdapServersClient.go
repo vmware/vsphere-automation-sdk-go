@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -36,6 +37,11 @@ type LdapServersClient interface {
 
 	// Delete a LDAP server for Firewall Identity store
 	//
+	//  Use the following Policy API -
+	//  DELETE /infra/identity-firewall-stores/<identity-firewall-store-id>/ldap-servers/<ldap-server-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param ldapServerIdParam LDAP server identifier (required)
 	// @param enforcementPointPathParam String Path of the enforcement point (optional)
@@ -48,6 +54,11 @@ type LdapServersClient interface {
 	Delete(firewallIdentityStoreIdParam string, ldapServerIdParam string, enforcementPointPathParam *string) error
 
 	// Get a specific LDAP server for a given Firewall Identity store
+	//
+	//  Use the following Policy API -
+	//  GET /infra/identity-firewall-stores/<identity-firewall-store-id>/ldap-servers/<ldap-server-id>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param ldapServerIdParam LDAP server identifier (required)
@@ -62,6 +73,11 @@ type LdapServersClient interface {
 	Get(firewallIdentityStoreIdParam string, ldapServerIdParam string, enforcementPointPathParam *string) (nsx_policyModel.DirectoryLdapServer, error)
 
 	// List all configured domain LDAP servers
+	//
+	//  Use the following Policy API -
+	//  GET /infra/identity-firewall-stores/<identity-firewall-store-id>/ldap-servers
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
@@ -81,6 +97,11 @@ type LdapServersClient interface {
 
 	// More than one LDAP server can be created and only one LDAP server is used to synchronize directory objects. If more than one LDAP server is configured, NSX will try all the servers until it is able to successfully connect to one.
 	//
+	//  Use the following Policy API -
+	//  PATCH /infra/identity-firewall-stores/<identity-firewall-store-id>/ldap-servers/<ldap-server-id>
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param ldapServerIdParam LDAP server identifier (required)
 	// @param directoryLdapServerParam (required)
@@ -95,6 +116,11 @@ type LdapServersClient interface {
 	Patch(firewallIdentityStoreIdParam string, ldapServerIdParam string, directoryLdapServerParam nsx_policyModel.DirectoryLdapServer, enforcementPointPathParam *string) (nsx_policyModel.DirectoryLdapServer, error)
 
 	// Update a LDAP server for Firewall Identity store
+	//
+	//  Use the following Policy API -
+	//  PUT /infra/identity-firewall-stores/<identity-firewall-store-id>/ldap-servers/<ldap-server-id>
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param ldapServerIdParam LDAP server identifier (required)

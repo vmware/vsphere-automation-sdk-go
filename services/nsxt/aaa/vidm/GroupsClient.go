@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +22,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type GroupsClient interface {
 
 	// Get all the User Groups where vIDM display name matches the search key case insensitively. The search key is checked to be a substring of display name. This is a non paginated API. This API will return as many results that vIDM returns to NSX during the search query. vIDM may not send all results at once so to zero in on the group of interest more characters need to be entered.
+	//  vIDM is deprecated by vIDB. Use API POST /api/v1/trust-management/oidc-uris/{id}/search.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param searchStringParam Search string to search for. (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -25,13 +26,14 @@ type ExportClient interface {
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
 	// @param idsPcapExportParam (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(orgIdParam string, projectIdParam string, idsPcapExportParam nsx_policyModel.IdsPcapExport) error
+	Create(orgIdParam string, projectIdParam string, idsPcapExportParam nsx_policyModel.IdsPcapExport, enforcementPointPathParam *string) error
 }
 
 type exportClient struct {
@@ -59,7 +61,7 @@ func (eIface *exportClient) GetErrorBindingType(errorName string) vapiBindings_.
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (eIface *exportClient) Create(orgIdParam string, projectIdParam string, idsPcapExportParam nsx_policyModel.IdsPcapExport) error {
+func (eIface *exportClient) Create(orgIdParam string, projectIdParam string, idsPcapExportParam nsx_policyModel.IdsPcapExport, enforcementPointPathParam *string) error {
 	typeConverter := eIface.connector.TypeConverter()
 	executionContext := eIface.connector.NewExecutionContext()
 	operationRestMetaData := exportCreateRestMetadata()
@@ -70,6 +72,7 @@ func (eIface *exportClient) Create(orgIdParam string, projectIdParam string, ids
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("IdsPcapExport", idsPcapExportParam)
+	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -300,7 +301,7 @@ func l2vpnsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"l2_vpn",
 		"PATCH",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}/locale-services/{localeServiceId}/l2vpn-context/l2vpns/{l2vpnId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -369,7 +370,7 @@ func l2vpnsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"l2_vpn",
 		"PUT",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}/locale-services/{localeServiceId}/l2vpn-context/l2vpns/{l2vpnId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +22,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type TraceflowsClient interface {
 
 	// This will retrace even if current traceflow has observations. Current observations will be lost. Traceflow configuration will be cleaned up by the system after two hours of inactivity.
+	//  Please use PUT API to start new Traceflow sessions. By default, traceflow observations will be cleanup every two hours, please use is_transient flag to avoid the cleanup.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -82,6 +86,9 @@ type TraceflowsClient interface {
 	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.TraceflowConfigListResult, error)
 
 	// If a traceflow config with the traceflow-id is not already present, create a new traceflow config. If it already exists, update the traceflow config. This is a full replace. This configuration will be cleaned up by the system after two hours of inactivity. To start traceflow on a DHCP port in a custom project, enforcement point path is required.
+	//  Please use PUT API to start new Traceflow sessions. By default, traceflow observations will be cleanup every two hours, please use is_transient flag to avoid the cleanup.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

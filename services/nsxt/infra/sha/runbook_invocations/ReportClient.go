@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ReportClient interface {
 
-	// Read the report of an Online Diagnostic System runbook invocation.
+	// Read the report of an Online Diagnostic System Runbook invocation.
 	//
 	// @param invocationIdParam (required)
 	// @return com.vmware.nsx_policy.model.OdsRunbookInvocationReport

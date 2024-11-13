@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,7 +23,9 @@ func statusCreateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["directory_event_log_server"] = vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryEventLogServerBindingType)
+	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["directory_event_log_server"] = "DirectoryEventLogServer"
+	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -41,8 +44,12 @@ func statusCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["directory_event_log_server"] = vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryEventLogServerBindingType)
+	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["directory_event_log_server"] = "DirectoryEventLogServer"
+	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	paramsTypeMap["directory_event_log_server"] = vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryEventLogServerBindingType)
+	paramsTypeMap["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -58,7 +65,7 @@ func statusCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"directory_event_log_server",
 		"POST",
 		"/policy/api/v1/infra/firewall-identity-store-event-log-servers/status",
-		"",
+		"application/json",
 		resultHeaders,
 		201,
 		"",

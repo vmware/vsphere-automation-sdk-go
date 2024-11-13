@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -207,7 +208,7 @@ func fqdnAnalysisConfigPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"fqdn_analysis_config",
 		"PATCH",
 		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementPointId}/edge-clusters/{edgeClusterId}/fqdn-analysis-config",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
@@ -276,7 +277,7 @@ func fqdnAnalysisConfigUpdateRestMetadata() vapiProtocol_.OperationRestMetadata 
 		"fqdn_analysis_config",
 		"PUT",
 		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementPointId}/edge-clusters/{edgeClusterId}/fqdn-analysis-config",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

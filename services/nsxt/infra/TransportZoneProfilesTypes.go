@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -244,7 +245,7 @@ func transportZoneProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadat
 		"policy_transport_zone_profile",
 		"PATCH",
 		"/policy/api/v1/infra/transport-zone-profiles/{tzProfileId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
@@ -299,7 +300,7 @@ func transportZoneProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetada
 		"policy_transport_zone_profile",
 		"PUT",
 		"/policy/api/v1/infra/transport-zone-profiles/{tzProfileId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

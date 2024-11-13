@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,6 +24,7 @@ type EffectiveSignaturesClient interface {
 	// Get all the IDS signatures attached to the Profile.
 	//
 	// @param profileIdParam Profile ID (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
 	// @return com.vmware.nsx_policy.model.IdsProfileSignatures
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -30,7 +32,7 @@ type EffectiveSignaturesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(profileIdParam string) (nsx_policyModel.IdsProfileSignatures, error)
+	Get(profileIdParam string, enforcementPointPathParam *string) (nsx_policyModel.IdsProfileSignatures, error)
 }
 
 type effectiveSignaturesClient struct {
@@ -58,7 +60,7 @@ func (eIface *effectiveSignaturesClient) GetErrorBindingType(errorName string) v
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (eIface *effectiveSignaturesClient) Get(profileIdParam string) (nsx_policyModel.IdsProfileSignatures, error) {
+func (eIface *effectiveSignaturesClient) Get(profileIdParam string, enforcementPointPathParam *string) (nsx_policyModel.IdsProfileSignatures, error) {
 	typeConverter := eIface.connector.TypeConverter()
 	executionContext := eIface.connector.NewExecutionContext()
 	operationRestMetaData := effectiveSignaturesGetRestMetadata()
@@ -67,6 +69,7 @@ func (eIface *effectiveSignaturesClient) Get(profileIdParam string) (nsx_policyM
 
 	sv := vapiBindings_.NewStructValueBuilder(effectiveSignaturesGetInputType(), typeConverter)
 	sv.AddStructField("ProfileId", profileIdParam)
+	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.IdsProfileSignatures

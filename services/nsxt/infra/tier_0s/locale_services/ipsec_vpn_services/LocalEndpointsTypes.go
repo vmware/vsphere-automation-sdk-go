@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -328,7 +329,7 @@ func localEndpointsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"ip_sec_vpn_local_endpoint",
 		"PATCH",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}/locale-services/{localeServiceId}/ipsec-vpn-services/{serviceId}/local-endpoints/{localEndpointId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -404,7 +405,7 @@ func localEndpointsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"ip_sec_vpn_local_endpoint",
 		"PUT",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}/locale-services/{localeServiceId}/ipsec-vpn-services/{serviceId}/local-endpoints/{localEndpointId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

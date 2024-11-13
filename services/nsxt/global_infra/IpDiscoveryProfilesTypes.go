@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -256,7 +257,7 @@ func ipDiscoveryProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata 
 		"ip_discovery_profile",
 		"PATCH",
 		"/policy/api/v1/global-infra/ip-discovery-profiles/{ipDiscoveryProfileId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -317,7 +318,7 @@ func ipDiscoveryProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata
 		"ip_discovery_profile",
 		"PUT",
 		"/policy/api/v1/global-infra/ip-discovery-profiles/{ipDiscoveryProfileId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

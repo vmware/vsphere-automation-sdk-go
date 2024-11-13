@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ProfilesClient interface {
 
-	// Delete intrusion detection profile.
+	// This routine will delete IDS profile for provided profile id
 	//
 	// @param profileIdParam Profile ID (required)
 	//
@@ -31,7 +32,7 @@ type ProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(profileIdParam string) error
 
-	// Read intrusion detection profile
+	// This routine will read intrusion detection profile for provided profile id
 	//
 	// @param profileIdParam Profile ID (required)
 	// @return com.vmware.nsx_policy.model.IdsProfile
@@ -43,7 +44,7 @@ type ProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(profileIdParam string) (nsx_policyModel.IdsProfile, error)
 
-	// List intrusion detection profiles.
+	// This routine will list all IDS profiles present in system.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
@@ -60,7 +61,7 @@ type ProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IdsProfileListResult, error)
 
-	// Patch intrusion detection system profile.
+	// User can provide Profile Severity, Criteria and Override the Signature in the request
 	//
 	// @param profileIdParam Profile ID (required)
 	// @param idsProfileParam (required)
@@ -72,7 +73,7 @@ type ProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(profileIdParam string, idsProfileParam nsx_policyModel.IdsProfile) error
 
-	// Update intrusion detection profile.
+	// This routine will create or update IDS profile. User can provide Profile Severity, Criteria and can also Override the Signature in the request
 	//
 	// @param profileIdParam Profile ID (required)
 	// @param idsProfileParam (required)

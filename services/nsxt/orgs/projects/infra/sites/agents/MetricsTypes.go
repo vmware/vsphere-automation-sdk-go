@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -129,7 +130,7 @@ func metricsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"metrics_agent",
 		"PUT",
 		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/sites/agents/metrics",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

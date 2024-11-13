@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -328,7 +329,7 @@ func portsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"segment_port",
 		"PATCH",
 		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/segments/{segmentId}/ports/{portId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -404,7 +405,7 @@ func portsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"segment_port",
 		"PUT",
 		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/segments/{segmentId}/ports/{portId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

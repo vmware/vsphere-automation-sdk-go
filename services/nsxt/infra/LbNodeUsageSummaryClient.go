@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,13 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LbNodeUsageSummaryClient interface {
 
-	// The API is used to retrieve the load balancer node usage summary of all nodes for every enforcement point. - If the parameter ?include_usages=true exists, the property node_usages are included in response. By default, the property node_usages is not included in response. - If parameter ?enforcement_point_path=<enforcement-point-path> exists, only node usage summary from specific enforcement point is included in response. If no enforcement point path is specified, information will be aggregated from each enforcement point.
-	//
-	//  NSX-T Load Balancer is deprecated.
-	//  Please take advantage of NSX Advanced Load Balancer.
-	//  Refer to Policy > Networking > Network Services > Advanced Load Balancing section of the API guide.
-	//
-	// Deprecated: This API element is deprecated.
+	// The API is used to retrieve the load balancer node usage summary of all nodes for every enforcement point. - If the parameter ?include_usages=true exists, the property node_usages are included in response. By default, the property node_usages is not included in response. - If parameter ?enforcement_point_path=<enforcement-point-path> exists, only node usage summary from specific enforcement point is included in response. If no enforcement point path is specified, information will be aggregated from each enforcement point. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
 	//
 	// @param enforcementPointPathParam enforcement point path (optional)
 	// @param includeUsagesParam Whether to include usages (optional)

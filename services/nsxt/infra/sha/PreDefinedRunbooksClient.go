@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,9 +21,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type PreDefinedRunbooksClient interface {
 
-	// Read Online Diagnostic System predefined runbook.
+	// Read Online Diagnostic System Predefined Runbook.
 	//
-	// @param runbookIdParam Identifier of a predefined runbook (required)
+	// @param runbookIdParam Identifier of a Predefined Runbook (required)
 	// @return com.vmware.nsx_policy.model.OdsPredefinedRunbook
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -32,7 +33,7 @@ type PreDefinedRunbooksClient interface {
 	// @throws NotFound  Not Found
 	Get(runbookIdParam string) (nsx_policyModel.OdsPredefinedRunbook, error)
 
-	// List Online Diagnostic System predefined runbooks.
+	// List Online Diagnostic System Predefined Runbooks.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)

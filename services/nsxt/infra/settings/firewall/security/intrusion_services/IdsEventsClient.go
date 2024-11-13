@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -24,6 +25,7 @@ type IdsEventsClient interface {
 	//
 	// @param policyIdsEventDataRequestParam (required)
 	// @param contextParam Tenancy Context of the API request (optional)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
 	// @return com.vmware.nsx_policy.model.PolicyIdsEventsBySignatureResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -31,7 +33,7 @@ type IdsEventsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(policyIdsEventDataRequestParam nsx_policyModel.PolicyIdsEventDataRequest, contextParam *string) (nsx_policyModel.PolicyIdsEventsBySignatureResult, error)
+	Create(policyIdsEventDataRequestParam nsx_policyModel.PolicyIdsEventDataRequest, contextParam *string, enforcementPointPathParam *string) (nsx_policyModel.PolicyIdsEventsBySignatureResult, error)
 }
 
 type idsEventsClient struct {
@@ -59,7 +61,7 @@ func (iIface *idsEventsClient) GetErrorBindingType(errorName string) vapiBinding
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (iIface *idsEventsClient) Create(policyIdsEventDataRequestParam nsx_policyModel.PolicyIdsEventDataRequest, contextParam *string) (nsx_policyModel.PolicyIdsEventsBySignatureResult, error) {
+func (iIface *idsEventsClient) Create(policyIdsEventDataRequestParam nsx_policyModel.PolicyIdsEventDataRequest, contextParam *string, enforcementPointPathParam *string) (nsx_policyModel.PolicyIdsEventsBySignatureResult, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
 	operationRestMetaData := idsEventsCreateRestMetadata()
@@ -69,6 +71,7 @@ func (iIface *idsEventsClient) Create(policyIdsEventDataRequestParam nsx_policyM
 	sv := vapiBindings_.NewStructValueBuilder(idsEventsCreateInputType(), typeConverter)
 	sv.AddStructField("PolicyIdsEventDataRequest", policyIdsEventDataRequestParam)
 	sv.AddStructField("Context", contextParam)
+	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.PolicyIdsEventsBySignatureResult

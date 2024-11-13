@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -244,7 +245,7 @@ func ipsecVpnIkeProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata 
 		"ip_sec_vpn_ike_profile",
 		"PATCH",
 		"/policy/api/v1/infra/ipsec-vpn-ike-profiles/{ikeProfileId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -299,7 +300,7 @@ func ipsecVpnIkeProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata
 		"ip_sec_vpn_ike_profile",
 		"PUT",
 		"/policy/api/v1/infra/ipsec-vpn-ike-profiles/{ikeProfileId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

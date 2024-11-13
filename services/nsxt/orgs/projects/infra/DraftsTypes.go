@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -306,7 +307,7 @@ func draftsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"policy_draft",
 		"PATCH",
 		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/drafts/{draftId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -375,7 +376,7 @@ func draftsPublishRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"infra",
 		"POST",
 		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/drafts/{draftId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -444,7 +445,7 @@ func draftsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"policy_draft",
 		"PUT",
 		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/drafts/{draftId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

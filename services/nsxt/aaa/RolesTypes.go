@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -77,7 +78,7 @@ func rolesCloneRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"new_role",
 		"POST",
 		"/policy/api/v1/aaa/roles/{role}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
@@ -311,7 +312,7 @@ func rolesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"role_with_features",
 		"PUT",
 		"/policy/api/v1/aaa/roles/{role}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
@@ -359,7 +360,7 @@ func rolesValidateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"feature_permission_array",
 		"POST",
 		"/policy/api/v1/aaa/roles",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

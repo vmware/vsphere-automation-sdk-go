@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -45,14 +46,14 @@ type PluginProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(shaProfileIdParam string) (*vapiData_.StructValue, error)
 
-	// API will provide list of SHA profile.
+	// API will provide list of SHA profiles.
 	//
-	// @param appliedToGroupPathParam String Path of the Policy group path (optional)
+	// @param appliedToGroupPathParam The path of the Policy group object (optional)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param pluginPathParam String Path of the sha plugin (optional)
+	// @param pluginPathParam String path of the Sha plugin (optional)
 	// @param sortAscendingParam (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.ShaPluginProfileListResult

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -108,7 +109,7 @@ func ldapIdentitySourcesFetchcertificateRestMetadata() vapiProtocol_.OperationRe
 		"identity_source_ldap_server_endpoint",
 		"POST",
 		"/policy/api/v1/aaa/ldap-identity-sources",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
@@ -329,7 +330,7 @@ func ldapIdentitySourcesProbeidentitysourceRestMetadata() vapiProtocol_.Operatio
 		"ldap_identity_source",
 		"POST",
 		"/policy/api/v1/aaa/ldap-identity-sources",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
@@ -377,7 +378,7 @@ func ldapIdentitySourcesProbeldapserverRestMetadata() vapiProtocol_.OperationRes
 		"identity_source_ldap_server",
 		"POST",
 		"/policy/api/v1/aaa/ldap-identity-sources",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
@@ -432,7 +433,7 @@ func ldapIdentitySourcesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata
 		"ldap_identity_source",
 		"PUT",
 		"/policy/api/v1/aaa/ldap-identity-sources/{ldapIdentitySourceId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

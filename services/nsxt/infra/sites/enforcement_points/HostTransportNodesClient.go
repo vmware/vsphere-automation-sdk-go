@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -71,6 +72,22 @@ type HostTransportNodesClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(siteIdParam string, enforcementpointIdParam string, cursorParam *string, discoveredNodeIdParam *string, inMaintenanceModeParam *bool, includedFieldsParam *string, nodeIpParam *string, nodeTypesParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, transportZonePathParam *string) (nsx_policyModel.HostTransportNodeListResult, error)
+
+	// Migrates all NVDS to VDS on given TransportNode. Upgrade precheck apis should have been run prior to invoking this API on transport node and a migration topology should be created. Please refer to Migration guide for details about migration APIs.
+	//
+	// Deprecated: This API element is deprecated.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementpointIdParam (required)
+	// @param hostTransportNodeIdParam (required)
+	// @param skipMaintmodeParam Skip Maintenance mode check (optional, default to false)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Migratetovds(siteIdParam string, enforcementpointIdParam string, hostTransportNodeIdParam string, skipMaintmodeParam *bool) error
 
 	// Transport nodes are hypervisor hosts that will participate in an NSX-T overlay. For a hypervisor host, this means that it hosts VMs that will communicate over NSX-T logical switches. This API creates transport node for a host node (hypervisor) in the transport network. When you run this command for a host, NSX Manager attempts to install the NSX kernel modules, which are packaged as VIB, RPM, or DEB files. For the installation to succeed, you must provide the host login credentials and the host thumbprint. To get the ESXi host thumbprint, SSH to the host and run the **openssl x509 -in /etc/vmware/ssl/rui.crt -fingerprint -sha256 -noout** command. To generate host key thumbprint using SHA-256 algorithm please follow the steps below. Log into the host, making sure that the connection is not vulnerable to a man in the middle attack. Check whether a public key already exists. Host public key is generally located at '/etc/ssh/ssh_host_rsa_key.pub'. If the key is not present then generate a new key by running the following command and follow the instructions. **ssh-keygen -t rsa** Now generate a SHA256 hash of the key using the following command. Please make sure to pass the appropriate file name if the public key is stored with a different file name other than the default 'id_rsa.pub'. **awk '{print $2}' id_rsa.pub | base64 -d | sha256sum -b | sed 's/ .\*$//' | xxd -r -p | base64** Additional documentation on creating a transport node can be found in the NSX-T Installation Guide. In order for the transport node to forward packets, the host_switch_spec property must be specified. Host switches (called bridges in OVS on KVM hypervisors) are the individual switches within the host virtual switch. Virtual machines are connected to the host switches. When creating a transport node, you need to specify if the host switches are already manually preconfigured on the node, or if NSX should create and manage the host switches. You specify this choice by the type of host switches you pass in the host_switch_spec property of the TransportNode request payload. For a KVM host, you can preconfigure the host switch, or you can have NSX Manager perform the configuration. For an ESXi host NSX Manager always configures the host switch. To preconfigure the host switches on a KVM host, pass an array of PreconfiguredHostSwitchSpec objects that describes those host switches. In the current NSX-T release, only one prefonfigured host switch can be specified. See the PreconfiguredHostSwitchSpec schema definition for documentation on the properties that must be provided. Preconfigured host switches are only supported on KVM hosts, not on ESXi hosts. To allow NSX to manage the host switch configuration on KVM hosts, ESXi hosts, pass an array of StandardHostSwitchSpec objects in the host_switch_spec property, and NSX will automatically create host switches with the properties you provide. In the current NSX-T release, up to 16 host switches can be automatically managed. See the StandardHostSwitchSpec schema definition for documentation on the properties that must be provided. The request should provide node_deployement_info.
 	//
@@ -168,6 +185,7 @@ func NewHostTransportNodesClient(connector vapiProtocolClient_.Connector) *hostT
 		"delete":                vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		"get":                   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"list":                  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"migratetovds":          vapiCore_.NewMethodIdentifier(interfaceIdentifier, "migratetovds"),
 		"patch":                 vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"restoreclusterconfig":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "restoreclusterconfig"),
 		"resynchostconfig":      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "resynchostconfig"),
@@ -292,6 +310,35 @@ func (hIface *hostTransportNodesClient) List(siteIdParam string, enforcementpoin
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
+	}
+}
+
+func (hIface *hostTransportNodesClient) Migratetovds(siteIdParam string, enforcementpointIdParam string, hostTransportNodeIdParam string, skipMaintmodeParam *bool) error {
+	typeConverter := hIface.connector.TypeConverter()
+	executionContext := hIface.connector.NewExecutionContext()
+	operationRestMetaData := hostTransportNodesMigratetovdsRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(hostTransportNodesMigratetovdsInputType(), typeConverter)
+	sv.AddStructField("SiteId", siteIdParam)
+	sv.AddStructField("EnforcementpointId", enforcementpointIdParam)
+	sv.AddStructField("HostTransportNodeId", hostTransportNodeIdParam)
+	sv.AddStructField("SkipMaintmode", skipMaintmodeParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_transport_nodes", "migratetovds", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), hIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
 	}
 }
 

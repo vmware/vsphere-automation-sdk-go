@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -85,7 +86,7 @@ type CsrsClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.TlsCsrListResult, error)
 
-	// Self-signs the previously generated CSR. This action is similar to the import certificate action, but instead of using a public certificate signed by a CA, the self_sign POST action uses a certificate that is signed with NSX's own private key. For validity of non-CA certificates, if a value greater than 825 days is provided, it will be set to 825 days. No limit is set for CA certificates.
+	// Self-signs the previously generated CSR. This action is similar to the import certificate action, but instead of using a public certificate signed by a CA, the self_sign POST action uses a certificate that is signed with NSX's own private key. The maximum validity limit for non-CA certificates is 825 days, except that values of 3,650 and 36,500 days are allowed. No limit is set for CA certificates.
 	//
 	// @param csrIdParam CSR this certificate is associated with (required)
 	// @param daysValidParam Number of days the certificate will be valid, default 825 days (required)
@@ -98,7 +99,7 @@ type CsrsClient interface {
 	// @throws NotFound  Not Found
 	Selfsign(csrIdParam string, daysValidParam int64) (nsx_policyModel.TlsCertificate, error)
 
-	// Creates a new self-signed certificate. A private key is also created at the same time. This is convenience call that will generate a CSR and then self-sign it. For validity of non-CA certificates, if a value greater than 825 days is provided, it will be set to 825 days. No limit is set for CA certificates.
+	// Creates a new self-signed certificate. A private key is also created at the same time. This is convenience call that will generate a CSR and then self-sign it. The maximum validity limit for non-CA certificates is 825 days, except that values of 3,650 and 36,500 days are allowed. No limit is set for CA certificates.
 	//
 	// @param tlsCsrWithDaysValidParam (required)
 	// @return com.vmware.nsx_policy.model.TlsCertificate

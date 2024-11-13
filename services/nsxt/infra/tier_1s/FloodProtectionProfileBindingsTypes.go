@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -186,7 +187,7 @@ func floodProtectionProfileBindingsPatchRestMetadata() vapiProtocol_.OperationRe
 		"flood_protection_profile_binding_map",
 		"PATCH",
 		"/policy/api/v1/infra/tier-1s/{tier1Id}/flood-protection-profile-bindings/{floodProtectionProfileBindingId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -248,7 +249,7 @@ func floodProtectionProfileBindingsUpdateRestMetadata() vapiProtocol_.OperationR
 		"flood_protection_profile_binding_map",
 		"PUT",
 		"/policy/api/v1/infra/tier-1s/{tier1Id}/flood-protection-profile-bindings/{floodProtectionProfileBindingId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

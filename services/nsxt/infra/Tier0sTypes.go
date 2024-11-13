@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -244,7 +245,7 @@ func tier0sPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"tier0",
 		"PATCH",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -348,7 +349,7 @@ func tier0sSitefailoverRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"gateway_site_failover_action_config",
 		"POST",
 		"/policy/api/v1/infra/tier-0s",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -403,7 +404,7 @@ func tier0sUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"tier0",
 		"PUT",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

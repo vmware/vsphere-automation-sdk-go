@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RunbookSettingsClient interface {
 
-	// Delete an Online Diagnostic System runbook setting with the specified identifier.
+	// Delete an Online Diagnostic System Runbook setting with the specified identifier.
 	//
 	// @param runbookSettingIdParam Identifier of a runbook setting (required)
 	//
@@ -31,7 +32,7 @@ type RunbookSettingsClient interface {
 	// @throws NotFound  Not Found
 	Delete(runbookSettingIdParam string) error
 
-	// Read an Online Diagnostic System runbook setting with the specified identifier.
+	// Read an Online Diagnostic System Runbook setting with the specified identifier.
 	//
 	// @param runbookSettingIdParam Identifier of a runbook setting (required)
 	// @return com.vmware.nsx_policy.model.OdsRunbookSetting
@@ -43,7 +44,7 @@ type RunbookSettingsClient interface {
 	// @throws NotFound  Not Found
 	Get(runbookSettingIdParam string) (nsx_policyModel.OdsRunbookSetting, error)
 
-	// Get a paginated list of Online Diagnostic System runbook setting entities.
+	// Get a paginated list of Online Diagnostic System Runbook setting entities.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
@@ -60,7 +61,7 @@ type RunbookSettingsClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.OdsRunbookSettingListResult, error)
 
-	// Create an Online Diagnostic System runbook setting with the specified identifier if not existed, or update an existing Online Diagnostic System runbook profle otherwise.
+	// Create an Online Diagnostic System Runbook setting with the specified identifier if not existed, update an existing Online Diagnostic System runbook profile otherwise.
 	//
 	// @param runbookSettingIdParam Identifier of a runbook setting (required)
 	// @param odsRunbookSettingParam (required)
@@ -72,7 +73,7 @@ type RunbookSettingsClient interface {
 	// @throws NotFound  Not Found
 	Patch(runbookSettingIdParam string, odsRunbookSettingParam nsx_policyModel.OdsRunbookSetting) error
 
-	// Create an Online Diagnostic System runbook setting with the specified identifier if not existed, or update an existing Online Diagnostic System runbook profle otherwise.
+	// Create an Online Diagnostic System Runbook setting with the specified identifier
 	//
 	// @param runbookSettingIdParam Identifier of a runbook setting (required)
 	// @param odsRunbookSettingParam (required)

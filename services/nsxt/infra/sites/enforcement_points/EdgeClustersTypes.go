@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -17,6 +18,70 @@ import (
 	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	"reflect"
 )
+
+func edgeClustersDeleteInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["edge_cluster_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["site_id"] = "SiteId"
+	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
+	fieldNameMap["edge_cluster_id"] = "EdgeClusterId"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func EdgeClustersDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
+}
+
+func edgeClustersDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["edge_cluster_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["site_id"] = "SiteId"
+	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
+	fieldNameMap["edge_cluster_id"] = "EdgeClusterId"
+	paramsTypeMap["edge_cluster_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["edgeClusterId"] = vapiBindings_.NewStringType()
+	pathParams["enforcementpoint_id"] = "enforcementpointId"
+	pathParams["site_id"] = "siteId"
+	pathParams["edge_cluster_id"] = "edgeClusterId"
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"",
+		"",
+		"DELETE",
+		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/edge-clusters/{edgeClusterId}",
+		"",
+		resultHeaders,
+		204,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
 
 func edgeClustersGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -168,6 +233,144 @@ func edgeClustersListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"GET",
 		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/edge-clusters",
 		"",
+		resultHeaders,
+		200,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
+func edgeClustersPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["edge_cluster_id"] = vapiBindings_.NewStringType()
+	fields["policy_edge_cluster"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyEdgeClusterBindingType)
+	fieldNameMap["site_id"] = "SiteId"
+	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
+	fieldNameMap["edge_cluster_id"] = "EdgeClusterId"
+	fieldNameMap["policy_edge_cluster"] = "PolicyEdgeCluster"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func EdgeClustersPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
+}
+
+func edgeClustersPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["edge_cluster_id"] = vapiBindings_.NewStringType()
+	fields["policy_edge_cluster"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyEdgeClusterBindingType)
+	fieldNameMap["site_id"] = "SiteId"
+	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
+	fieldNameMap["edge_cluster_id"] = "EdgeClusterId"
+	fieldNameMap["policy_edge_cluster"] = "PolicyEdgeCluster"
+	paramsTypeMap["edge_cluster_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["policy_edge_cluster"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyEdgeClusterBindingType)
+	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["edgeClusterId"] = vapiBindings_.NewStringType()
+	pathParams["enforcementpoint_id"] = "enforcementpointId"
+	pathParams["site_id"] = "siteId"
+	pathParams["edge_cluster_id"] = "edgeClusterId"
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"",
+		"policy_edge_cluster",
+		"PATCH",
+		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/edge-clusters/{edgeClusterId}",
+		"application/json",
+		resultHeaders,
+		204,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
+func edgeClustersUpdateInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["edge_cluster_id"] = vapiBindings_.NewStringType()
+	fields["policy_edge_cluster"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyEdgeClusterBindingType)
+	fieldNameMap["site_id"] = "SiteId"
+	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
+	fieldNameMap["edge_cluster_id"] = "EdgeClusterId"
+	fieldNameMap["policy_edge_cluster"] = "PolicyEdgeCluster"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func EdgeClustersUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.PolicyEdgeClusterBindingType)
+}
+
+func edgeClustersUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["edge_cluster_id"] = vapiBindings_.NewStringType()
+	fields["policy_edge_cluster"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyEdgeClusterBindingType)
+	fieldNameMap["site_id"] = "SiteId"
+	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
+	fieldNameMap["edge_cluster_id"] = "EdgeClusterId"
+	fieldNameMap["policy_edge_cluster"] = "PolicyEdgeCluster"
+	paramsTypeMap["edge_cluster_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["policy_edge_cluster"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyEdgeClusterBindingType)
+	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["edgeClusterId"] = vapiBindings_.NewStringType()
+	pathParams["enforcementpoint_id"] = "enforcementpointId"
+	pathParams["site_id"] = "siteId"
+	pathParams["edge_cluster_id"] = "edgeClusterId"
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"",
+		"policy_edge_cluster",
+		"PUT",
+		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/edge-clusters/{edgeClusterId}",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

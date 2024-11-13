@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DefaultClient interface {
 
-	// This API adds/removes custom attribute values from list for a given attribute key.
+	// This API adds/removes custom attribute values from list for a given attribute key. The values in the request will be added or removed from the existing list.
 	//
 	// @param policyCustomAttributesParam (required)
 	// @param actionParam Add or Remove Custom Context Profile Attribute values. (required)
@@ -32,7 +33,7 @@ type DefaultClient interface {
 	// @throws NotFound  Not Found
 	Create(policyCustomAttributesParam nsx_policyModel.PolicyCustomAttributes, actionParam string) error
 
-	// This API updates custom attribute value list for given key.
+	// This API lists all the custom attribute values defined in the system for the attribute_key mentioned as part of the url.
 	//
 	// @param attributeKeyParam Fetch attributes and sub-attributes for the given attribute key (optional)
 	// @param attributeSourceParam Source of the attribute, System Defined or custom (optional, default to SYSTEM)
@@ -51,7 +52,7 @@ type DefaultClient interface {
 	// @throws NotFound  Not Found
 	List(attributeKeyParam *string, attributeSourceParam *string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyContextProfileListResult, error)
 
-	// This API updates custom attribute value list for given key.
+	// This API updates custom attribute value list for given key in the request. This replaces the existing list with the list provided in the request
 	//
 	// @param policyCustomAttributesParam (required)
 	//

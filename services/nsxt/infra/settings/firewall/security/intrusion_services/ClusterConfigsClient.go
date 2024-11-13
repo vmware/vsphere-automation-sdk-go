@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,6 +24,7 @@ type ClusterConfigsClient interface {
 	// Read intrusion detection system cluster config
 	//
 	// @param clusterConfigIdParam User entered ID (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
 	// @return com.vmware.nsx_policy.model.IdsClusterConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -30,11 +32,12 @@ type ClusterConfigsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(clusterConfigIdParam string) (nsx_policyModel.IdsClusterConfig, error)
+	Get(clusterConfigIdParam string, enforcementPointPathParam *string) (nsx_policyModel.IdsClusterConfig, error)
 
 	// List intrusion detection system cluster configs.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
 	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
@@ -47,7 +50,7 @@ type ClusterConfigsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IdsClusterConfigListResult, error)
+	List(cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IdsClusterConfigListResult, error)
 
 	// Patch intrusion detection system on cluster level.
 	//
@@ -103,7 +106,7 @@ func (cIface *clusterConfigsClient) GetErrorBindingType(errorName string) vapiBi
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (cIface *clusterConfigsClient) Get(clusterConfigIdParam string) (nsx_policyModel.IdsClusterConfig, error) {
+func (cIface *clusterConfigsClient) Get(clusterConfigIdParam string, enforcementPointPathParam *string) (nsx_policyModel.IdsClusterConfig, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := clusterConfigsGetRestMetadata()
@@ -112,6 +115,7 @@ func (cIface *clusterConfigsClient) Get(clusterConfigIdParam string) (nsx_policy
 
 	sv := vapiBindings_.NewStructValueBuilder(clusterConfigsGetInputType(), typeConverter)
 	sv.AddStructField("ClusterConfigId", clusterConfigIdParam)
+	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.IdsClusterConfig
@@ -135,7 +139,7 @@ func (cIface *clusterConfigsClient) Get(clusterConfigIdParam string) (nsx_policy
 	}
 }
 
-func (cIface *clusterConfigsClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IdsClusterConfigListResult, error) {
+func (cIface *clusterConfigsClient) List(cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IdsClusterConfigListResult, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := clusterConfigsListRestMetadata()
@@ -144,6 +148,7 @@ func (cIface *clusterConfigsClient) List(cursorParam *string, includeMarkForDele
 
 	sv := vapiBindings_.NewStructValueBuilder(clusterConfigsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -207,7 +208,7 @@ func transportNodeCollectionsInstallformicrosegRestMetadata() vapiProtocol_.Oper
 		"host_transport_node_collection",
 		"POST",
 		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/transport-node-collections/{transportNodeCollectionId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -351,7 +352,7 @@ func transportNodeCollectionsPatchRestMetadata() vapiProtocol_.OperationRestMeta
 		"host_transport_node_collection",
 		"PATCH",
 		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/transport-node-collections/{transportNodeCollectionId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -560,7 +561,7 @@ func transportNodeCollectionsUpdateRestMetadata() vapiProtocol_.OperationRestMet
 		"host_transport_node_collection",
 		"PUT",
 		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/transport-node-collections/{transportNodeCollectionsId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

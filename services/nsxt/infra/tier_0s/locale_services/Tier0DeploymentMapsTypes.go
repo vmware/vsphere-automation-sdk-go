@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -300,7 +301,7 @@ func tier0DeploymentMapsPatchRestMetadata() vapiProtocol_.OperationRestMetadata 
 		"tier0_deployment_map",
 		"PATCH",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}/locale-services/{localeServiceId}/tier-0-deployment-maps/{tier0DeploymentMapId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
@@ -369,7 +370,7 @@ func tier0DeploymentMapsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata
 		"tier0_deployment_map",
 		"PUT",
 		"/policy/api/v1/infra/tier-0s/{tier0Id}/locale-services/{localeServiceId}/tier-0-deployment-maps/{tier0DeploymentMapId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

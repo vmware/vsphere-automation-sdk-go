@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -284,6 +285,76 @@ func hostTransportNodesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
+func hostTransportNodesMigratetovdsInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["host_transport_node_id"] = vapiBindings_.NewStringType()
+	fields["skip_maintmode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["site_id"] = "SiteId"
+	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
+	fieldNameMap["host_transport_node_id"] = "HostTransportNodeId"
+	fieldNameMap["skip_maintmode"] = "SkipMaintmode"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func HostTransportNodesMigratetovdsOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
+}
+
+func hostTransportNodesMigratetovdsRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["site_id"] = vapiBindings_.NewStringType()
+	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	fields["host_transport_node_id"] = vapiBindings_.NewStringType()
+	fields["skip_maintmode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["site_id"] = "SiteId"
+	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
+	fieldNameMap["host_transport_node_id"] = "HostTransportNodeId"
+	fieldNameMap["skip_maintmode"] = "SkipMaintmode"
+	paramsTypeMap["host_transport_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["skip_maintmode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["hostTransportNodeId"] = vapiBindings_.NewStringType()
+	pathParams["enforcementpoint_id"] = "enforcementpointId"
+	pathParams["site_id"] = "siteId"
+	pathParams["host_transport_node_id"] = "hostTransportNodeId"
+	queryParams["skip_maintmode"] = "skip_maintmode"
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"action=migrate_to_vds",
+		"",
+		"POST",
+		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/host-transport-nodes/{hostTransportNodeId}",
+		"",
+		resultHeaders,
+		204,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
 func hostTransportNodesPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -387,7 +458,7 @@ func hostTransportNodesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"host_transport_node",
 		"PATCH",
 		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/host-transport-nodes/{hostTransportNodeId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -626,7 +697,7 @@ func hostTransportNodesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata 
 		"host_transport_node",
 		"PUT",
 		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/host-transport-nodes/{hostTransportNodeId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

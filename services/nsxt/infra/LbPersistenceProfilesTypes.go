@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -250,7 +251,7 @@ func lbPersistenceProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadat
 		"lb_persistence_profile",
 		"PATCH",
 		"/policy/api/v1/infra/lb-persistence-profiles/{lbPersistenceProfileId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -305,7 +306,7 @@ func lbPersistenceProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetada
 		"lb_persistence_profile",
 		"PUT",
 		"/policy/api/v1/infra/lb-persistence-profiles/{lbPersistenceProfileId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -26,6 +27,7 @@ type TransportNodeStatusClient interface {
 	// @param enforcementPointIdParam enforcement point ID (required)
 	// @param zoneIdParam ID of transport zone (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includeDfwHeapStatsParam Include DFW Heap stats information (optional, default to false)
 	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam (optional)
@@ -39,7 +41,7 @@ type TransportNodeStatusClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(siteIdParam string, enforcementPointIdParam string, zoneIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsx_policyModel.TransportNodeStatusListResult, error)
+	List(siteIdParam string, enforcementPointIdParam string, zoneIdParam string, cursorParam *string, includeDfwHeapStatsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsx_policyModel.TransportNodeStatusListResult, error)
 }
 
 type transportNodeStatusClient struct {
@@ -67,7 +69,7 @@ func (tIface *transportNodeStatusClient) GetErrorBindingType(errorName string) v
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (tIface *transportNodeStatusClient) List(siteIdParam string, enforcementPointIdParam string, zoneIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsx_policyModel.TransportNodeStatusListResult, error) {
+func (tIface *transportNodeStatusClient) List(siteIdParam string, enforcementPointIdParam string, zoneIdParam string, cursorParam *string, includeDfwHeapStatsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsx_policyModel.TransportNodeStatusListResult, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
 	operationRestMetaData := transportNodeStatusListRestMetadata()
@@ -79,6 +81,7 @@ func (tIface *transportNodeStatusClient) List(siteIdParam string, enforcementPoi
 	sv.AddStructField("EnforcementPointId", enforcementPointIdParam)
 	sv.AddStructField("ZoneId", zoneIdParam)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeDfwHeapStats", includeDfwHeapStatsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)

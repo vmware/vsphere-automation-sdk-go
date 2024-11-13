@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -244,7 +245,7 @@ func cpuMemThresholdsProfileBindingMapsPatchRestMetadata() vapiProtocol_.Operati
 		"policy_firewall_CPU_mem_thresholds_profile_binding_map",
 		"PATCH",
 		"/policy/api/v1/infra/settings/firewall/cpu-mem-thresholds-profile-binding-maps/{cpuMemThresholdsProfileBindingMapId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -299,7 +300,7 @@ func cpuMemThresholdsProfileBindingMapsUpdateRestMetadata() vapiProtocol_.Operat
 		"policy_firewall_CPU_mem_thresholds_profile_binding_map",
 		"PUT",
 		"/policy/api/v1/infra/settings/firewall/cpu-mem-thresholds-profile-binding-maps/{cpuMemThresholdsProfileBindingMapId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

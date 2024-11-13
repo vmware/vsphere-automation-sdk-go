@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -362,7 +363,7 @@ func ldapServersPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"directory_ldap_server",
 		"PATCH",
 		"/policy/api/v1/infra/firewall-identity-stores/{firewallIdentityStoreId}/ldap-servers/{ldapServerId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
@@ -430,7 +431,7 @@ func ldapServersUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"directory_ldap_server",
 		"PUT",
 		"/policy/api/v1/infra/firewall-identity-stores/{firewallIdentityStoreId}/ldap-servers/{ldapServerId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

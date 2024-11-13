@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -346,7 +347,7 @@ func intrusionServicePoliciesPatchRestMetadata() vapiProtocol_.OperationRestMeta
 		"ids_security_policy",
 		"PATCH",
 		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/domains/{domainId}/intrusion-service-policies/{policyId}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -434,7 +435,7 @@ func intrusionServicePoliciesReviseRestMetadata() vapiProtocol_.OperationRestMet
 		"ids_security_policy",
 		"POST",
 		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/domains/{domainId}/intrusion-service-policies/{policyId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
@@ -510,7 +511,7 @@ func intrusionServicePoliciesUpdateRestMetadata() vapiProtocol_.OperationRestMet
 		"ids_security_policy",
 		"PUT",
 		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/domains/{domainId}/intrusion-service-policies/{policyId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
