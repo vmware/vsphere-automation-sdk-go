@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/vmware/vsphere-automation-sdk-go/lib v0.7.0
-	gitlab.com/vmware/vsphere-automation-sdk-go/runtime v0.7.0
+	github.com/vmware/vsphere-automation-sdk-go/runtime v0.7.0
 )
 
 require (
