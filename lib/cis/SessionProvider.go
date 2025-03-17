@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -12,17 +13,13 @@ import (
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 )
 
-// The ``Session`` interface allows API clients to manage session tokens including creating, deleting and obtaining information about sessions.
-//
-//
+// The “Session“ interface allows API clients to manage session tokens including creating, deleting and obtaining information about sessions.
 //
 // * The Session#create method creates session token in exchange for another authentication token.
 // * The Session#delete method invalidates a session token.
 // * The Session#get retrieves information about a session token.
 //
-//
-//
-//  The call to the Session#create method is part of the overall authentication process for API clients. For example, the sequence of steps for establishing a session with SAML token is:
+//	The call to the Session#create method is part of the overall authentication process for API clients. For example, the sequence of steps for establishing a session with SAML token is:
 //
 // * Connect to lookup service.
 // * Discover the secure token service (STS) endpoint URL.
@@ -31,31 +28,28 @@ import (
 // * Discover the API endpoint URL from lookup service.
 // * Call the Session#create method. The Session#create call must include the SAML token.
 //
+//	See the programming guide and samples for additional information about establishing API sessions.
 //
+//	**Execution Context and Security Context**
 //
-//  See the programming guide and samples for additional information about establishing API sessions.
+//	To use session based authentication a client should supply the session token obtained through the Session#create method. The client should add the session token in the security context when using SDK classes. Clients using the REST API should supply the session token using the ``vmware-api-session-id`` HTTP header field.
 //
-//  **Execution Context and Security Context**
+//	**Session Lifetime**
 //
-//  To use session based authentication a client should supply the session token obtained through the Session#create method. The client should add the session token in the security context when using SDK classes. Clients using the REST API should supply the session token using the ``vmware-api-session-id`` HTTP header field.
-//
-//  **Session Lifetime**
-//
-//  A session begins with call to the Session#create method to exchange a SAML token for a API session token. A session ends under the following circumstances:
+//	A session begins with call to the Session#create method to exchange a SAML token for a API session token. A session ends under the following circumstances:
 //
 // * Call to the Session#delete method.
 // * The session expires. Session expiration may be caused by one of the following situations:
 //
-//     * Client inactivity - For a particular session identified by client requests that specify the associated session ID, the lapsed time since the last request exceeds the maximum interval between requests.
-//     * Unconditional or absolute session expiration time: At the beginning of the session, the session logic uses the SAML token and the system configuration to calculate absolute expiration time.
+//   - Client inactivity - For a particular session identified by client requests that specify the associated session ID, the lapsed time since the last request exceeds the maximum interval between requests.
 //
+//   - Unconditional or absolute session expiration time: At the beginning of the session, the session logic uses the SAML token and the system configuration to calculate absolute expiration time.
 //
+//     When a session ends, the authentication logic will reject any subsequent client requests that specify that session. Any operations in progress will continue to completion.
 //
-//  When a session ends, the authentication logic will reject any subsequent client requests that specify that session. Any operations in progress will continue to completion.
+//     **Error Handling**
 //
-//  **Error Handling**
-//
-//  The Session returns the following exceptions:
+//     The Session returns the following exceptions:
 //
 // * vapiStdErrors_.Unauthenticated exception for any exceptions related to the request.
 // * vapiStdErrors_.ServiceUnavailable exception for all exceptions caused by internal service failure.

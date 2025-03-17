@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,7 +24,7 @@ import (
 // Resource type for metadata source.
 const Source_RESOURCE_TYPE = "com.vmware.vapi.metadata.metamodel.source"
 
-// The ``Info`` class contains the metadata source information.
+// The “Info“ class contains the metadata source information.
 type SourceInfo struct {
 	// English language human readable description of the source.
 	Description string
@@ -52,7 +53,7 @@ func (s *SourceInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``CreateSpec`` class contains the registration information of a metamodel source.
+// The “CreateSpec“ class contains the registration information of a metamodel source.
 type SourceCreateSpec struct {
 	// English language human readable description of the source.
 	Description string
@@ -126,7 +127,7 @@ func sourceCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"POST",
 		"/vapi/metadata/metamodel/source",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -317,7 +318,7 @@ func sourceReloadRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"POST",
 		"/vapi/metadata/metamodel/source",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -365,7 +366,7 @@ func sourceFingerprintRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"POST",
 		"/vapi/metadata/metamodel/source",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

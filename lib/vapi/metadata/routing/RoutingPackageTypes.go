@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -63,7 +64,7 @@ func (s *ComponentInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 
 // Information about a vAPI operation that contains routing information.
 //
-//  For an explanation of containment within operations, see Operation
+//	For an explanation of containment within operations, see Operation
 type OperationInfo struct {
 	// The routing information assigned for this operation.
 	//
@@ -88,7 +89,7 @@ func (s *OperationInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 
 // Information about a vAPI package containing routing information.
 //
-//  For an explanation of routing information within packages, see Package
+//	For an explanation of routing information within packages, see Package
 type PackageInfo struct {
 	// The routing information to be used for all the operations present in this package. If a particular operation has no explicit routing information defined in the routing definition file, this routing info will be used for enforcing routing.
 	RoutingInfo RoutingInfo

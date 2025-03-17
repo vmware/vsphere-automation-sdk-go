@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -17,9 +18,9 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-// The ``Service`` interface provides methods to retrieve metamodel information about a service element in the interface definition language.
+// The “Service“ interface provides methods to retrieve metamodel information about a service element in the interface definition language.
 //
-//  A service is a logical grouping of operations that operate on some entity. A service element describes a service. It contains operation elements that describe the operations grouped in the service. It also contains structure elements and enumeration elements corresponding to the structures and enumerations defined in the service.
+//	A service is a logical grouping of operations that operate on some entity. A service element describes a service. It contains operation elements that describe the operations grouped in the service. It also contains structure elements and enumeration elements corresponding to the structures and enumerations defined in the service.
 type ServiceClient interface {
 
 	// Returns the identifiers for the service elements that are currently registered with the infrastructure.

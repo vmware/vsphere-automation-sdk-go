@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -27,10 +28,10 @@ type SourceClient interface {
 	// @param specParam  create specification.
 	//
 	// @throws AlreadyExists  If the metadata source identifier is already present.
-	// @throws InvalidArgument  If type of the source specified in \\\\@{link CreateSpec#type} is invalid.
-	// @throws InvalidArgument  If the file specified in \\\\@{link CreateSpec#filepath} is not a valid json file.
-	// @throws InvalidArgument  If the URI specified in \\\\@{link CreateSpec#address} is unreachable or not a vAPI compatible server.
-	// @throws NotFound  If the file specified in \\\\@{link CreateSpec#filepath} does not exist.
+	// @throws InvalidArgument  If type of the source specified in vapiMetadata_.SourceCreateSpec#type is invalid.
+	// @throws InvalidArgument  If the file specified in vapiMetadata_.SourceCreateSpec#filepath is not a valid json file.
+	// @throws InvalidArgument  If the URI specified in vapiMetadata_.SourceCreateSpec#address is unreachable or not a vAPI compatible server.
+	// @throws NotFound  If the file specified in vapiMetadata_.SourceCreateSpec#filepath does not exist.
 	Create(sourceIdParam string, specParam SourceCreateSpec) error
 
 	// Delete a metadata source.

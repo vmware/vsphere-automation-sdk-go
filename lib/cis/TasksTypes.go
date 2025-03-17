@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,7 +24,7 @@ import (
 // Resource type for task.
 const Tasks_RESOURCE_TYPE = "com.vmware.cis.task"
 
-// The ``GetSpec`` class describes what data should be included when retrieving information about a task.
+// The “GetSpec“ class describes what data should be included when retrieving information about a task.
 type TasksGetSpec struct {
 	// If true, all data, including operation-specific data, will be returned, otherwise only the data described in cisTask_.Info will be returned.
 	ReturnAll *bool
@@ -46,9 +47,9 @@ func (s *TasksGetSpec) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``FilterSpec`` class contains properties used to filter the results when listing tasks (see Tasks#list). If multiple properties are specified, only tasks matching all of the properties match the filter.
+// The “FilterSpec“ class contains properties used to filter the results when listing tasks (see Tasks#list). If multiple properties are specified, only tasks matching all of the properties match the filter.
 //
-//  Currently at least one of TasksFilterSpec#tasks or TasksFilterSpec#services must be specified and not empty.
+//	Currently at least one of TasksFilterSpec#tasks or TasksFilterSpec#services must be specified and not empty.
 type TasksFilterSpec struct {
 	// Identifiers of tasks that can match the filter.
 	Tasks map[string]bool
@@ -188,7 +189,7 @@ func tasksListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"POST",
 		"/cis/tasks",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

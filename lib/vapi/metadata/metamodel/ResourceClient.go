@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -19,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 // The Resource interface provides methods to retrieve information about resource types.
 //
-//  A service is a logical grouping of operations that operate on an entity. Each entity is identifier by a namespace (or resource type) and an unique identifier.
+//	A service is a logical grouping of operations that operate on an entity. Each entity is identifier by a namespace (or resource type) and an unique identifier.
 type ResourceClient interface {
 
 	// Returns the set of resource types present across all the service elements contained in all the package elements.

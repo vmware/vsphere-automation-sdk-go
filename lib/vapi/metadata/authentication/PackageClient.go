@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -17,9 +18,9 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-// The ``Package`` interface provides methods to retrieve authentication information of a package element.
+// The “Package“ interface provides methods to retrieve authentication information of a package element.
 //
-//  A package element is said to contain authentication information if there is a default authentication assigned to all service elements contained in the package element or if one of the service element contained in this package element has authentication information.
+//	A package element is said to contain authentication information if there is a default authentication assigned to all service elements contained in the package element or if one of the service element contained in this package element has authentication information.
 type PackageClient interface {
 
 	// Returns the identifiers for the package elements that have authentication information.

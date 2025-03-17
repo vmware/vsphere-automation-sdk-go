@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -19,7 +20,7 @@ import (
 	"time"
 )
 
-// The ``Status`` enumeration class defines the status values that can be reported for an operation.
+// The “Status“ enumeration class defines the status values that can be reported for an operation.
 //
 // <p> See {@link com.vmware.vapi.bindings.ApiEnumeration enumerated types description}.
 type StatusEnum string
@@ -54,7 +55,7 @@ func (s StatusEnum) StatusEnum() bool {
 	}
 }
 
-// The ``Progress`` class contains information describe the progress of an operation.
+// The “Progress“ class contains information describe the progress of an operation.
 type Progress struct {
 	// Total amount of the work for the operation.
 	Total int64
@@ -79,7 +80,7 @@ func (s *Progress) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``CommonInfo`` class contains information common to all tasks.
+// The “CommonInfo“ class contains information common to all tasks.
 type CommonInfo struct {
 	// Description of the operation associated with the task.
 	Description vapiStd_.LocalizableMessage
@@ -120,7 +121,7 @@ func (s *CommonInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``Info`` class contains information about a task.
+// The “Info“ class contains information about a task.
 type Info struct {
 	// Progress of the operation.
 	Progress *Progress

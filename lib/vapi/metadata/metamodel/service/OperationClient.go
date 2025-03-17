@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -18,7 +19,7 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-// The ``Operation`` interface provides methods to retrieve metamodel information of an operation element in the interface definition language.
+// The “Operation“ interface provides methods to retrieve metamodel information of an operation element in the interface definition language.
 type OperationClient interface {
 
 	// Returns the identifiers for the operation elements that are defined in the scope of ``service_id``.

@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -17,9 +18,9 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-// The ``Enumeration`` interface provides methods to retrieve metamodel information about an enumeration element in the interface definition language.
+// The “Enumeration“ interface provides methods to retrieve metamodel information about an enumeration element in the interface definition language.
 //
-//  The ``Enumeration`` has a list of enumeration value elements.
+//	The ``Enumeration`` has a list of enumeration value elements.
 type EnumerationClient interface {
 
 	// Returns the identifiers for the enumeration elements that are contained in all the package elements, service elements and structure elements.

@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -18,7 +19,7 @@ import (
 	"reflect"
 )
 
-// The ``Identity`` class uniquely identifies a namespace in the CLI namespace tree.
+// The “Identity“ class uniquely identifies a namespace in the CLI namespace tree.
 type NamespaceIdentity struct {
 	// The dot-separated path of the namespace containing the namespace in the CLI node tree. For top-level namespace this will be empty.
 	Path string
@@ -41,7 +42,7 @@ func (s *NamespaceIdentity) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``Info`` class contains information about a namespace. It includes the identity of the namespace, a description, information children namespaces.
+// The “Info“ class contains information about a namespace. It includes the identity of the namespace, a description, information children namespaces.
 type NamespaceInfo struct {
 	// Basic namespace identity.
 	Identity NamespaceIdentity
@@ -149,7 +150,7 @@ func namespaceGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"POST",
 		"/vapi/metadata/cli/namespace",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

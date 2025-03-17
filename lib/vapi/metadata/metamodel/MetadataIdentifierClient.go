@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -17,9 +18,9 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-// The ``MetadataIdentifier`` interface provides string constants that can be used as identifiers for the metadata elements.
+// The “MetadataIdentifier“ interface provides string constants that can be used as identifiers for the metadata elements.
 //
-//  Most of the types in com.vmware.vapi.metadata.metamodel package has a metadata field whose type is ``Map<String, ElementMap>``. MetadataIdentifier contains the identifiers used in the keys of the above Map type.
+//	Most of the types in com.vmware.vapi.metadata.metamodel package has a metadata field whose type is ``Map<String, ElementMap>``. MetadataIdentifier contains the identifiers used in the keys of the above Map type.
 type MetadataIdentifierClient interface {
 }
 

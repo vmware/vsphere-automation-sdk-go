@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -17,7 +18,7 @@ import (
 	"reflect"
 )
 
-// The ``ComponentData`` class contains the privilege information of the component along with its fingerprint.
+// The “ComponentData“ class contains the privilege information of the component along with its fingerprint.
 type ComponentData struct {
 	// Privilege information of the component. This includes information about all the packages in the component.
 	Info ComponentInfo
@@ -44,9 +45,9 @@ func (s *ComponentData) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``ComponentInfo`` class contains the privilege information of a component element.
+// The “ComponentInfo“ class contains the privilege information of a component element.
 //
-//  For an explanation of privilege information contained within component elements, see Component.
+//	For an explanation of privilege information contained within component elements, see Component.
 type ComponentInfo struct {
 	// Privilege information of all the package elements. The key in the map is the identifier of the package element and the value in the map is the privilege information for the package element.
 	//
@@ -69,9 +70,9 @@ func (s *ComponentInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``OperationInfo`` class contains privilege information of an operation element.
+// The “OperationInfo“ class contains privilege information of an operation element.
 //
-//  For an explanation of containment within operation elements, see Operation.
+//	For an explanation of containment within operation elements, see Operation.
 type OperationInfo struct {
 	// List of all privileges assigned to the operation element.
 	Privileges []string
@@ -96,9 +97,9 @@ func (s *OperationInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``PackageInfo`` class contains the privilege information of a package element.
+// The “PackageInfo“ class contains the privilege information of a package element.
 //
-//  For an explanation of privilege information contained within package elements, see Package.
+//	For an explanation of privilege information contained within package elements, see Package.
 type PackageInfo struct {
 	// List of default privileges to be used for all the operations present in this package. If a particular operation element has no explicit privileges defined in the privilege definition file, these privileges are used for enforcing authorization.
 	Privileges []string
@@ -123,7 +124,7 @@ func (s *PackageInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``PrivilegeInfo`` class contains the privilege information for a parameter element in an operation element.
+// The “PrivilegeInfo“ class contains the privilege information for a parameter element in an operation element.
 type PrivilegeInfo struct {
 	// The ``propertyPath`` points to an entity that is used in the operation element. An entity can either be present in one of the parameter elements or if a parameter is a structure element, it could also be present in one of the field elements.
 	//
@@ -148,9 +149,9 @@ func (s *PrivilegeInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``ServiceInfo`` class contains privilege information of a service element.
+// The “ServiceInfo“ class contains privilege information of a service element.
 //
-//  For an explanation of privilege information contained within service elements, see Service.
+//	For an explanation of privilege information contained within service elements, see Service.
 type ServiceInfo struct {
 	// Information about all operation elements contained in this service element that contain privilege information. The key in the map is the identifier of the operation element and the value in the map is the privilege information for the operation element.
 	//

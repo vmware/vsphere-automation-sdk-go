@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -17,7 +18,7 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-// The ``Command`` interface provides methods to get information about command line interface (CLI) commands.
+// The “Command“ interface provides methods to get information about command line interface (CLI) commands.
 type CommandClient interface {
 
 	// Returns the identifiers of all commands, or commands in a specific namespace.

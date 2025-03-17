@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -17,9 +18,9 @@ import (
 	"reflect"
 )
 
-// The ``AuthenticationInfo`` class describes the authentication information. Authentication information could be specified for a package element, service elenent or an operation element.
+// The “AuthenticationInfo“ class describes the authentication information. Authentication information could be specified for a package element, service elenent or an operation element.
 //
-//  Using the authentication scheme information, a client invoking an API call from any interface can figure out what kind of credentials are needed for that API call.
+//	Using the authentication scheme information, a client invoking an API call from any interface can figure out what kind of credentials are needed for that API call.
 type AuthenticationInfo struct {
 	// The type of the authentication scheme.
 	SchemeType AuthenticationInfoSchemeTypeEnum
@@ -51,7 +52,7 @@ func (s *AuthenticationInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``SchemeType`` enumeration class provides enumeration constants for the set of valid authentication scheme types.
+// The “SchemeType“ enumeration class provides enumeration constants for the set of valid authentication scheme types.
 //
 // <p> See {@link com.vmware.vapi.bindings.ApiEnumeration enumerated types description}.
 type AuthenticationInfoSchemeTypeEnum string
@@ -74,7 +75,7 @@ func (s AuthenticationInfoSchemeTypeEnum) AuthenticationInfoSchemeTypeEnum() boo
 	}
 }
 
-// The ``ComponentData`` class contains the authentication information of the component along with its fingerprint.
+// The “ComponentData“ class contains the authentication information of the component along with its fingerprint.
 type ComponentData struct {
 	// Authentication information of the component. This includes information about all the packages in the component.
 	Info ComponentInfo
@@ -101,9 +102,9 @@ func (s *ComponentData) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``ComponentInfo`` class contains authentication information of a component element.
+// The “ComponentInfo“ class contains authentication information of a component element.
 //
-//  For an explanation of authentication information contained within component elements, see Component.
+//	For an explanation of authentication information contained within component elements, see Component.
 type ComponentInfo struct {
 	// Authentication information of all the package elements. The key in the map is the identifier of the package element and the value in the map is the authentication information for the package element.
 	//
@@ -126,7 +127,7 @@ func (s *ComponentInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``OperationInfo`` class contains authentication information of an operation element.
+// The “OperationInfo“ class contains authentication information of an operation element.
 type OperationInfo struct {
 	// List of authentication schemes used by an operation element. The authentication scheme specified on the service element corresponding to this operation element is ignored.
 	Schemes []AuthenticationInfo
@@ -147,9 +148,9 @@ func (s *OperationInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``PackageInfo`` class contains authentication information of a package element.
+// The “PackageInfo“ class contains authentication information of a package element.
 //
-//  For an explanation of authentication information contained within package elements, see Package.
+//	For an explanation of authentication information contained within package elements, see Package.
 type PackageInfo struct {
 	// List of authentication schemes to be used for all the operation elements contained in this package element. If a particular service or operation element has no explicit authentications defined in the authentication defintion file, these authentication schemes are used for authenticating the user.
 	Schemes []AuthenticationInfo
@@ -174,9 +175,9 @@ func (s *PackageInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``ServiceInfo`` class contains authentication information of a service element.
+// The “ServiceInfo“ class contains authentication information of a service element.
 //
-//  For an explanation of authentication information contained within service elements, see Service.
+//	For an explanation of authentication information contained within service elements, see Service.
 type ServiceInfo struct {
 	// List of authentication schemes to be used for all the operation elements contained in this service element. The authentication scheme specified on the package element corresponding to this service element is ignored.
 	Schemes []AuthenticationInfo

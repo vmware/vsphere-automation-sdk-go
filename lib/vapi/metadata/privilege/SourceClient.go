@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -17,13 +18,13 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-// The ``Source`` interface provides methods to manage the sources of privilege metadata information.
+// The “Source“ interface provides methods to manage the sources of privilege metadata information.
 //
-//  The interface definition language infrastructure provides tools to generate various kinds of metadata in JSON format from the interface definition files and additional properties files. One of the generated files contains privilege information. The generated file can be registered as a source of metadata.
+//	The interface definition language infrastructure provides tools to generate various kinds of metadata in JSON format from the interface definition files and additional properties files. One of the generated files contains privilege information. The generated file can be registered as a source of metadata.
 //
-//  The privilege file contains all the data present in the interface definition files. Each privilege file contains data about one component element. When a privilege file is added as a source, each source contributes only one component element's metadata.
+//	The privilege file contains all the data present in the interface definition files. Each privilege file contains data about one component element. When a privilege file is added as a source, each source contributes only one component element's metadata.
 //
-//  Privilege metadata can also be discovered from a remote server that supports the privilege metadata interfaces (see com.vmware.vapi.metadata.privilege). Since multiple components can be registered with a single metadata server, when a remote server is registered as a source, that source can contribute more than one component.
+//	Privilege metadata can also be discovered from a remote server that supports the privilege metadata interfaces (see com.vmware.vapi.metadata.privilege). Since multiple components can be registered with a single metadata server, when a remote server is registered as a source, that source can contribute more than one component.
 type SourceClient interface {
 
 	// Creates a new metadata source. Once the server validates the registration information of the metadata source, the privilege metadata is retrieved from the source. This populates elements in all the interfaces defined in com.vmware.vapi.metadata.privilege package.

@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -13,7 +14,7 @@ import (
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 )
 
-// The ``Tasks`` interface provides methods for managing the task related to a long running operation.
+// The “Tasks“ interface provides methods for managing the task related to a long running operation.
 type TasksProvider interface {
 
 	// Returns information about a task.

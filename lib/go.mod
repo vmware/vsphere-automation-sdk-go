@@ -2,7 +2,7 @@ module github.com/vmware/vsphere-automation-sdk-go/lib
 
 go 1.17
 
-require github.com/vmware/vsphere-automation-sdk-go/runtime v0.7.0
+require github.com/vmware/vsphere-automation-sdk-go/runtime v0.8.0
 
 require (
 	github.com/beevik/etree v1.1.0 // indirect
@@ -12,5 +12,3 @@ require (
 	github.com/gorilla/mux v1.8.0 // indirect
 	golang.org/x/text v0.3.8 // indirect
 )
-
-retract v0.5.0 //Invalid bindings

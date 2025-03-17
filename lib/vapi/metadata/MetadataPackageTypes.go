@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -18,7 +19,7 @@ import (
 	"reflect"
 )
 
-// The ``SourceType`` enumeration class defines the types of sources for API metadata. You specify the type of source when adding a metadata source to a metadata service.
+// The “SourceType“ enumeration class defines the types of sources for API metadata. You specify the type of source when adding a metadata source to a metadata service.
 //
 // <p> See {@link com.vmware.vapi.bindings.ApiEnumeration enumerated types description}.
 type SourceTypeEnum string
@@ -41,9 +42,11 @@ func (s SourceTypeEnum) SourceTypeEnum() bool {
 	}
 }
 
-// The ``LyfecycleInfo`` class contains information about the lifecycle of an API element. **Warning:** This class is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+// The “LyfecycleInfo“ class contains information about the lifecycle of an API element.
+// **Warning:** this class is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
 type LifecycleInfo struct {
-	// Indicates whether the API element is deprecated. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	// Indicates whether the API element is deprecated.
+	// **Warning:** this property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
 	Deprecated bool
 }
 
@@ -62,7 +65,7 @@ func (s *LifecycleInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``SourceCreateSpec`` class contains the registration information for a metadata source.
+// The “SourceCreateSpec“ class contains the registration information for a metadata source.
 type SourceCreateSpec struct {
 	// English language human readable description of the source.
 	Description string

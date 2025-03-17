@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +21,7 @@ import (
 
 // The AuthenticationScheme class defines constants for authentication scheme identifiers for authentication mechanisms present in the vAPI infrastructure shipped by VMware.
 //
-//  A third party extension can define and implements it's own authentication mechanism and define a constant in a different IDL file.
+//	A third party extension can define and implements it's own authentication mechanism and define a constant in a different IDL file.
 type AuthenticationScheme struct {
 }
 
@@ -29,82 +30,87 @@ const AuthenticationScheme_NO_AUTHENTICATION = "com.vmware.vapi.std.security.no_
 
 // Indicates that the security context in a request is using a SAML bearer token based authentication scheme.
 //
-//  In this scheme, the following pieces of information has to be passed in the SecurityContext structure in the execution context of the request:
+//	In this scheme, the following pieces of information has to be passed in the SecurityContext structure in the execution context of the request:
 //
 // * The scheme identifier: com.vmware.vapi.std.security.saml_bearer_token
 // * The token itself
 //
+//	Sample security context in JSON format that matches the specification: ``{
 //
-//
-//  Sample security context in JSON format that matches the specification: ``{
 // 'schemeId': 'com.vmware.vapi.std.security.saml_bearer_token',
 // 'token': 'the token itself'
-// }`` vAPI runtime provide convenient factory methods that take SAML bearer token and to create the security context that conforms to the above mentioned format.
+// }“ vAPI runtime provide convenient factory methods that take SAML bearer token and to create the security context that conforms to the above mentioned format.
 const AuthenticationScheme_SAML_BEARER_TOKEN = "com.vmware.vapi.std.security.saml_bearer_token"
 
 // Indicates that the security context in a request is using a SAML holder-of-key token based authentication scheme.
 //
-//  In this scheme, the following pieces of information has to be passed in the SecurityContext structure in the execution context of the request:
+//	In this scheme, the following pieces of information has to be passed in the SecurityContext structure in the execution context of the request:
 //
 // * The scheme identifier: com.vmware.vapi.std.security.saml_hok_token
 // * Signature of the request: This includes - algorithm used for signing the request, SAML holder of key token and signature digest
-// * Request timestamp: This includes the ``created`` and ``expires`` timestamp of the request. The timestamp should match the following format - YYYY-MM-DDThh:mm:ss.sssZ (e.g. 1878-03-03T19:20:30.451Z).
+// * Request timestamp: This includes the “created“ and “expires“ timestamp of the request. The timestamp should match the following format - YYYY-MM-DDThh:mm:ss.sssZ (e.g. 1878-03-03T19:20:30.451Z).
 //
+//	Sample security context in JSON format that matches the specification: ``{
 //
-//
-//  Sample security context in JSON format that matches the specification: ``{
 // 'schemeId': 'com.vmware.vapi.std.security.saml_hok_token',
 // 'signature': {
 // 'alg': 'RS256',
 // 'samlToken': ...,
-// 'value': ...,``, 'timestamp': { 'created': '2012-10-26T12:24:18.941Z', 'expires': '2012-10-26T12:44:18.941Z', } } } vAPI runtime provide convenient factory methods that take SAML holder of key token and private key to create the security context that conforms to the above mentioned format.
+// 'value': ...,
+// },
+// 'timestamp': {
+// 'created': '2012-10-26T12:24:18.941Z',
+// 'expires': '2012-10-26T12:44:18.941Z',
+// }
+// }“ vAPI runtime provide convenient factory methods that take SAML holder of key token and private key to create the security context that conforms to the above mentioned format.
 const AuthenticationScheme_SAML_HOK_TOKEN = "com.vmware.vapi.std.security.saml_hok_token"
 
 // Indicates that the security context in a request is using a session identifier based authentication scheme.
 //
-//  In this scheme, the following pieces of information has to be passed in the SecurityContext structure in the execution context of the request:
+//	In this scheme, the following pieces of information has to be passed in the SecurityContext structure in the execution context of the request:
 //
 // * The scheme identifier - com.vmware.vapi.std.security.session_id
 // * Valid session identifier - This is usually returned by a login method of a session manager interface for a particular vAPI service of this authentication scheme
 //
-//  Sample security context in JSON format that matches the specification: ``{
+//	Sample security context in JSON format that matches the specification: ``{
+//
 // 'schemeId': 'com.vmware.vapi.std.security.session_id',
 // 'sessionId': ....,
-// }`` vAPI runtime provides convenient factory methods that take session identifier as input parameter and create a security context that conforms to the above format.
+// }“ vAPI runtime provides convenient factory methods that take session identifier as input parameter and create a security context that conforms to the above format.
 const AuthenticationScheme_SESSION_ID = "com.vmware.vapi.std.security.session_id"
 
 // Indicates that the security context in a request is using username/password based authentication scheme.
 //
-//  In this scheme, the following pieces of information has to be passed in the SecurityContext structure in the execution context of the request:
+//	In this scheme, the following pieces of information has to be passed in the SecurityContext structure in the execution context of the request:
 //
 // * The scheme identifier - com.vmware.vapi.std.security.user_pass
 // * Username
 // * Password
 //
+//	Sample security context in JSON format that matches the specification: ``{
 //
-//
-//  Sample security context in JSON format that matches the specification: ``{
 // 'schemeId': 'com.vmware.vapi.std.security.user_pass',
 // 'userName': ....,
 // 'password': ...
-// }``
-//  vAPI runtime provides convenient factory methods that take username and password as input parameters and create a security context that conforms to the above format.
+// }“
+//
+//	vAPI runtime provides convenient factory methods that take username and password as input parameters and create a security context that conforms to the above format.
 const AuthenticationScheme_USER_PASSWORD = "com.vmware.vapi.std.security.user_pass"
 
 // Indicates that the security context in a request is using OAuth2 based authentication scheme.
 //
-//  In this scheme, the following pieces of information has to be passed in the SecurityContext structure in the execution context of the request:
+//	In this scheme, the following pieces of information has to be passed in the SecurityContext structure in the execution context of the request:
 //
 // * The scheme identifier - com.vmware.vapi.std.security.oauth
 // * Valid OAuth2 access token - This is usually acquired by OAuth2 Authorization Server after successful authentication of the end user.
 //
+//	Sample security context in JSON format that matches the specification: ``{
 //
-//
-//  Sample security context in JSON format that matches the specification: ``{
 // 'schemeId': 'com.vmware.vapi.std.security.oauth',
 // 'accesstoken': ....
-// }``
-//  vAPI runtime provides convenient factory methods that takes OAuth2 access token as input parameter and creates a security context that conforms to the above format.
+// }“
+//
+//	vAPI runtime provides convenient factory methods that takes OAuth2 access token as input parameter and creates a security context that conforms to the above format.
 const AuthenticationScheme_OAUTH_ACCESS_TOKEN = "com.vmware.vapi.std.security.oauth"
 
 func (s *AuthenticationScheme) GetType__() vapiBindings_.BindingType {
@@ -122,7 +128,7 @@ func (s *AuthenticationScheme) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``DynamicID`` class represents an identifier for a resource of an arbitrary type.
+// The “DynamicID“ class represents an identifier for a resource of an arbitrary type.
 type DynamicID struct {
 	// The type of resource being identified (for example ``com.acme.Person``).
 	//
@@ -147,7 +153,7 @@ func (s *DynamicID) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``LocalizableMessage`` class represents localizable string and message template. Interfaces include one or more localizable message templates in the exceptions they report so that clients can display diagnostic messages in the native language of the user. Interfaces can include localizable strings in the data returned from methods to allow clients to display localized status information in the native language of the user.
+// The “LocalizableMessage“ class represents localizable string and message template. Interfaces include one or more localizable message templates in the exceptions they report so that clients can display diagnostic messages in the native language of the user. Interfaces can include localizable strings in the data returned from methods to allow clients to display localized status information in the native language of the user.
 type LocalizableMessage struct {
 	// Unique identifier of the localizable string or message template.
 	//
@@ -211,7 +217,7 @@ func (s *LocalizationParam) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``DateTimeFormat`` enumeration class lists possible date and time formatting options. It combines the Unicode CLDR format types - full, long, medium and short with 3 different presentations - date only, time only and combined date and time presentation.
+// The “DateTimeFormat“ enumeration class lists possible date and time formatting options. It combines the Unicode CLDR format types - full, long, medium and short with 3 different presentations - date only, time only and combined date and time presentation.
 //
 // <p> See {@link com.vmware.vapi.bindings.ApiEnumeration enumerated types description}.
 type LocalizationParamDateTimeFormatEnum string
@@ -274,7 +280,7 @@ func (d LocalizationParamDateTimeFormatEnum) LocalizationParamDateTimeFormatEnum
 	}
 }
 
-// The ``NestedLocalizableMessage`` class represents a nested within a parameter localizable string or message template. This class is useful for modeling composite messages. Such messages are necessary to do correct pluralization of phrases, represent lists of several items etc.
+// The “NestedLocalizableMessage“ class represents a nested within a parameter localizable string or message template. This class is useful for modeling composite messages. Such messages are necessary to do correct pluralization of phrases, represent lists of several items etc.
 type NestedLocalizableMessage struct {
 	// Unique identifier of the localizable string or message template.
 	//

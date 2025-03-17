@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,7 +23,7 @@ import (
 	"reflect"
 )
 
-// The ``ComponentInfo`` class holds component metadata of the different metadata types for an API component. The class allows any combination of metadata types to be aggregated into one instance.
+// The “ComponentInfo“ class holds component metadata of the different metadata types for an API component. The class allows any combination of metadata types to be aggregated into one instance.
 type ComponentInfo struct {
 	// The metamodel component data
 	Metamodel vapiMetadataMetamodel_.ComponentInfo
@@ -51,7 +52,7 @@ func (s *ComponentInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``MetadataInfo`` is a class which holds a map of the available metadata aggregated in a ComponentInfo class.
+// The “MetadataInfo“ is a class which holds a map of the available metadata aggregated in a ComponentInfo class.
 type MetadataInfo struct {
 	// Version of the current ``MetadataInfo`` class. Property value changes when the content of the ``MetadataInfo`` or referenced classes changes. This enables class processing adjustments.
 	Version string

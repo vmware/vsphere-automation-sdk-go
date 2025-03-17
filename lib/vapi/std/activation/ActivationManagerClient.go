@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -19,9 +20,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 // **WARNING:** Use only as a sample. The API is experimental and subject to change in future versions.
 //
-//  Activation tracking/management service.
+//	Activation tracking/management service.
 //
-//  An activation describes a method invocation in the runtime.
+//	An activation describes a method invocation in the runtime.
 type ActivationManagerClient interface {
 
 	// Asks for cancellation of a running activation. Whether or not the cancellation request will have any effect depends on the implementation of the method that has to be canceled.

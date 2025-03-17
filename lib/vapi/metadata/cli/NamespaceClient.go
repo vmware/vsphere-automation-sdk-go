@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -17,7 +18,7 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-// The ``Namespace`` interface provides methods to get information about command line interface (CLI) namespaces.
+// The “Namespace“ interface provides methods to get information about command line interface (CLI) namespaces.
 type NamespaceClient interface {
 
 	// Returns the identifiers of all namespaces registered with the infrastructure.

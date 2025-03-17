@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -18,9 +19,9 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-// The ``Operation`` interface provides methods to retrieve authentication information of an operation element.
+// The “Operation“ interface provides methods to retrieve authentication information of an operation element.
 //
-//  An operation element is said to contain authentication information if authentication schemes are specified in the authentication definition file.
+//	An operation element is said to contain authentication information if authentication schemes are specified in the authentication definition file.
 type OperationClient interface {
 
 	// Returns the identifiers for the operation elements contained in the service element corresponding to ``service_id`` that have authentication information.

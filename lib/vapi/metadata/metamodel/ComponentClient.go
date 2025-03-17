@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -17,11 +18,11 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-// The ``Component`` interface providers methods to retrieve metamodel information of a component element.
+// The “Component“ interface providers methods to retrieve metamodel information of a component element.
 //
-//  A component defines a set of functionality that is deployed together and versioned together. For example, all the interfaces that belong to VMware Content Library are part of a single component. A component element describes a component. A component element contains one or more package elements.
+//	A component defines a set of functionality that is deployed together and versioned together. For example, all the interfaces that belong to VMware Content Library are part of a single component. A component element describes a component. A component element contains one or more package elements.
 //
-//  The methods for package elements are provided by interface Package.
+//	The methods for package elements are provided by interface Package.
 type ComponentClient interface {
 
 	// Returns the identifiers for the component elements that are registered with the infrastructure.

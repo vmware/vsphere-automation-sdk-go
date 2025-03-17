@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -18,7 +19,7 @@ import (
 	"reflect"
 )
 
-// The ``ComponentData`` class contains the metamodel metadata information of a component element along with its fingerprint.
+// The “ComponentData“ class contains the metamodel metadata information of a component element along with its fingerprint.
 type ComponentData struct {
 	// Metamodel information of the component element. This includes information about all the package elements contained in this component element.
 	//
@@ -49,7 +50,7 @@ func (s *ComponentData) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``ComponentInfo`` class contains metamodel metadata information about a component element.
+// The “ComponentInfo“ class contains metamodel metadata information about a component element.
 type ComponentInfo struct {
 	// Dot separated name of the component element. The segments in the name reflect the organization of the APIs. The format of each segment is lower case with underscores. Each underscore represents a word boundary. If there are acronyms in the word, the capitalization is preserved. This format makes it easy to translate the segment into a different naming convention.
 	Name string
@@ -78,7 +79,7 @@ func (s *ComponentInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``ConstantInfo`` class contains metamodel information of the constant elements.
+// The “ConstantInfo“ class contains metamodel information of the constant elements.
 type ConstantInfo struct {
 	// Type of the constant element.
 	Type_ Type
@@ -86,7 +87,8 @@ type ConstantInfo struct {
 	Value ConstantValue
 	// English language documentation for the constant element. It can contain HTML markup and documentation tags (similar to Javadoc tags).
 	Documentation string
-	// Lifecycle information for the constant element. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	// Lifecycle information for the constant element.
+	// **Warning:** this property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
 	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
@@ -105,7 +107,7 @@ func (s *ConstantInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``ConstantValue`` class contains the metamodel information of the constant element.
+// The “ConstantValue“ class contains the metamodel information of the constant element.
 type ConstantValue struct {
 	// Category of the type of constant value.
 	Category ConstantValueCategoryEnum
@@ -130,7 +132,7 @@ func (s *ConstantValue) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``Category`` enumeration class defines enumeration constants for the valid kinds of values.
+// The “Category“ enumeration class defines enumeration constants for the valid kinds of values.
 //
 // <p> See {@link com.vmware.vapi.bindings.ApiEnumeration enumerated types description}.
 type ConstantValueCategoryEnum string
@@ -153,11 +155,11 @@ func (c ConstantValueCategoryEnum) ConstantValueCategoryEnum() bool {
 	}
 }
 
-// The ``ElementMap`` class contains the metadata elements.
+// The “ElementMap“ class contains the metadata elements.
 //
-//  One of the sources for metadata is the annotations present in the interface definition language. When an annotation is represented in the ``ElementMap``, ``ElementMap`` describes the data specified in the arguments for the annotation.
+//	One of the sources for metadata is the annotations present in the interface definition language. When an annotation is represented in the ``ElementMap``, ``ElementMap`` describes the data specified in the arguments for the annotation.
 //
-//  For example, in ``\\\\@UnionCase(tag="tag", value="SELECT")``, ElementMap describes the keyword arguments tag and value.
+//	For example, in ``\\\\@UnionCase(tag="tag", value="SELECT")``, ElementMap describes the keyword arguments tag and value.
 type ElementMap struct {
 	// Metamodel information of the metadata elements. The key parameter of the map is the identifier for the element and the value corresponds to the element value.
 	Elements map[string]ElementValue
@@ -178,7 +180,7 @@ func (s *ElementMap) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``ElementValue`` class describes the value of the metadata element.
+// The “ElementValue“ class describes the value of the metadata element.
 type ElementValue struct {
 	// Type of the value.
 	Type_ ElementValueTypeEnum
@@ -209,7 +211,7 @@ func (s *ElementValue) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``Type`` enumeration class defines the valid types for values in metadata elements.
+// The “Type“ enumeration class defines the valid types for values in metadata elements.
 //
 // <p> See {@link com.vmware.vapi.bindings.ApiEnumeration enumerated types description}.
 type ElementValueTypeEnum string
@@ -244,7 +246,7 @@ func (t ElementValueTypeEnum) ElementValueTypeEnum() bool {
 	}
 }
 
-// The ``EnumerationInfo`` class contains the metamodel information of an enumeration element.
+// The “EnumerationInfo“ class contains the metamodel information of an enumeration element.
 type EnumerationInfo struct {
 	// Dot separated name of the enumeration element. The segments in the name reflect the organization of the APIs. The format of each segment is lower case with underscores. Each underscore represents a word boundary. If there are acronyms in the word, the capitalization is preserved. This format makes it easy to translate the segment into a different naming convention.
 	Name string
@@ -258,7 +260,8 @@ type EnumerationInfo struct {
 	//
 	//  The documentation also contains references to the context in which the enumeration is used. But if the enumeration is used in many contexts, the references may not be present.
 	Documentation string
-	// Lifecycle information for the enumeration element. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	// Lifecycle information for the enumeration element.
+	// **Warning:** this property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
 	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
@@ -277,7 +280,7 @@ func (s *EnumerationInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``EnumerationValueInfo`` class describes the enumeration constant in the enumeration class.
+// The “EnumerationValueInfo“ class describes the enumeration constant in the enumeration class.
 type EnumerationValueInfo struct {
 	// Value in the enumerated type. All the characters in the string are capitalized.
 	Value string
@@ -287,7 +290,8 @@ type EnumerationValueInfo struct {
 	Metadata map[string]ElementMap
 	// English language documentation for an enumeration value. It can contain HTML markup and documentation tags (similar to Javadoc tags). The first statement will be a noun or verb phrase that describes the purpose of the enumeration value.
 	Documentation string
-	// Lifecycle information for the enumeration value. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	// Lifecycle information for the enumeration value.
+	// **Warning:** this property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
 	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
@@ -306,13 +310,14 @@ func (s *EnumerationValueInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``ErrorInfo`` class contains the metadata information about the error elements contained in an operation element.
+// The “ErrorInfo“ class contains the metadata information about the error elements contained in an operation element.
 type ErrorInfo struct {
 	// Identifier for the structure element corresponding to the error that is being reported by the operation.
 	StructureId string
 	// The English language documentation for the error element. It can contain HTML markup and Javadoc tags.
 	Documentation string
-	// Lifecycle information for the error element contained in an operation element. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	// Lifecycle information for the error element contained in an operation element.
+	// **Warning:** this property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
 	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
@@ -331,7 +336,7 @@ func (s *ErrorInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``FieldInfo`` class contains metamodel information of a field element contained in a structure element.
+// The “FieldInfo“ class contains metamodel information of a field element contained in a structure element.
 type FieldInfo struct {
 	// Name of the field element in a canonical format. The format is lower case with underscores. Each underscore represents a word boundary. If there are acronyms in the word, the capitalization is preserved. This format makes it easy to translate the segment into a different naming convention.
 	Name string
@@ -343,7 +348,8 @@ type FieldInfo struct {
 	Metadata map[string]ElementMap
 	// English language documentation for the field element. It can contain HTML markup and Javadoc tags.
 	Documentation string
-	// Lifecycle information for the field element. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	// Lifecycle information for the field element.
+	// **Warning:** this property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
 	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
@@ -362,7 +368,7 @@ func (s *FieldInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``GenericInstantiation`` class describes the type information of a typed element when the type is an instantiation of one of the generic types provided by the infrastructure.
+// The “GenericInstantiation“ class describes the type information of a typed element when the type is an instantiation of one of the generic types provided by the infrastructure.
 type GenericInstantiation struct {
 	// The generic type that is being instantiated.
 	GenericType GenericInstantiationGenericTypeEnum
@@ -389,7 +395,7 @@ func (s *GenericInstantiation) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``GenericType`` enumeration class provides enumeration constants for each of the generic types provided by the infrastructure.
+// The “GenericType“ enumeration class provides enumeration constants for each of the generic types provided by the infrastructure.
 //
 // <p> See {@link com.vmware.vapi.bindings.ApiEnumeration enumerated types description}.
 type GenericInstantiationGenericTypeEnum string
@@ -420,7 +426,7 @@ func (g GenericInstantiationGenericTypeEnum) GenericInstantiationGenericTypeEnum
 	}
 }
 
-// The ``OperationInfo`` class contains metamodel information of an operation element.
+// The “OperationInfo“ class contains metamodel information of an operation element.
 type OperationInfo struct {
 	// Name of the operation element in a canonical format. The format is lower case with underscores. Each underscore represents a word boundary. If there are acronyms in the word, the capitalization is preserved. This format makes it easy to translate the segment into a different naming convention.
 	Name string
@@ -436,7 +442,8 @@ type OperationInfo struct {
 	Metadata map[string]ElementMap
 	// English language documentation for the operation element. It can contain HTML markup and Javadoc tags.
 	Documentation string
-	// Lifecycle information for the operation element. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	// Lifecycle information for the operation element.
+	// **Warning:** this property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
 	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
@@ -455,9 +462,9 @@ func (s *OperationInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``OperationResultInfo`` class contains the metamodel information of an operation result element.
+// The “OperationResultInfo“ class contains the metamodel information of an operation result element.
 //
-//  An operation accepts a list of parameters and returns a result or an error. The ``OperationResultInfo`` describes the result element of an operation.
+//	An operation accepts a list of parameters and returns a result or an error. The ``OperationResultInfo`` describes the result element of an operation.
 type OperationResultInfo struct {
 	// Type information of the operation result element.
 	Type_ Type
@@ -484,7 +491,7 @@ func (s *OperationResultInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``PackageInfo`` class contains the metamodel information of all the service elements, structure elements and enumeration elements contained in the package element.
+// The “PackageInfo“ class contains the metamodel information of all the service elements, structure elements and enumeration elements contained in the package element.
 type PackageInfo struct {
 	// Dot separated name of the package element. The segments in the name reflect the organization of the APIs. The format of each segment is lower case with underscores. Each underscore represents a word boundary. If there are acronyms in the word, the capitalization is preserved. This format makes it easy to translate the segment into a different naming convention.
 	Name string
@@ -523,7 +530,7 @@ func (s *PackageInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``PrimitiveValue`` class contains value of the constant element.
+// The “PrimitiveValue“ class contains value of the constant element.
 type PrimitiveValue struct {
 	// Type of the constant value.
 	Type_ PrimitiveValueTypeEnum
@@ -552,7 +559,7 @@ func (s *PrimitiveValue) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``Type`` enumeration class defines the valid types for values in constant elements.
+// The “Type“ enumeration class defines the valid types for values in constant elements.
 //
 // <p> See {@link com.vmware.vapi.bindings.ApiEnumeration enumerated types description}.
 type PrimitiveValueTypeEnum string
@@ -583,7 +590,7 @@ func (t PrimitiveValueTypeEnum) PrimitiveValueTypeEnum() bool {
 	}
 }
 
-// The ``ServiceInfo`` class contains the metamodel information of all the operation elements, structure elements and enumeration elements containted in a service element.
+// The “ServiceInfo“ class contains the metamodel information of all the operation elements, structure elements and enumeration elements containted in a service element.
 type ServiceInfo struct {
 	// Dot separated name of the service element. The segments in the name reflect the organization of the APIs. The format of each segment is lower case with underscores. Each underscore represents a word boundary. If there are acronyms in the word, the capitalization is preserved. This format makes it easy to translate the segment into a different naming convention.
 	Name string
@@ -601,7 +608,8 @@ type ServiceInfo struct {
 	Metadata map[string]ElementMap
 	// English language documentation for the service element. It can contain HTML markup and Javadoc tags. The first sentence of the service documentation is a complete sentence that identifies the service by name and summarizes the purpose of the service. The remaining part of the documentation provides a summary of how to use the operations defined in the service.
 	Documentation string
-	// Lifecycle information for the service element. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	// Lifecycle information for the service element.
+	// **Warning:** this property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
 	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
@@ -620,9 +628,9 @@ func (s *ServiceInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``StructureInfo`` class contains the metamodel information of all the field elements, constant elements and enumeration elements contained in the structure element.
+// The “StructureInfo“ class contains the metamodel information of all the field elements, constant elements and enumeration elements contained in the structure element.
 //
-//  In the interface definition language, API designers have the ability to include all the fields from one structure to another structure. This is done by using an annotation ``\\\\@Include`` on the structure in which we want to add the fields. If this annotation is present, the list of fields in the ``StructureInfo`` will also contain the fields that are being included. The annotation information is also retained in the StructureInfo#metadata element as well.
+//	In the interface definition language, API designers have the ability to include all the fields from one structure to another structure. This is done by using an annotation ``\\\\@Include`` on the structure in which we want to add the fields. If this annotation is present, the list of fields in the ``StructureInfo`` will also contain the fields that are being included. The annotation information is also retained in the StructureInfo#metadata element as well.
 type StructureInfo struct {
 	// Dot separated name of the structure element. The segments in the name reflect the organization of the APIs. The format of each segment is lower case with underscores. Each underscore represents a word boundary. If there are acronyms in the word, the capitalization is preserved. This format makes it easy to translate the segment into a different naming convention.
 	Name string
@@ -640,7 +648,8 @@ type StructureInfo struct {
 	Metadata map[string]ElementMap
 	// English language documentation for a structure element. It can contain HTML markup and Javadoc tags. The first sentence of the structure documentation is a complete sentence that identifies the structure by name and summarizes the purpose of the structure.
 	Documentation string
-	// Lifecycle information for the structure element. **Warning:** This property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
+	// Lifecycle information for the structure element.
+	// **Warning:** this property is part of a new feature in development. It may be changed at any time and may not have all supported functionality implemented.
 	Lifecycle *vapiMetadata_.LifecycleInfo
 }
 
@@ -659,7 +668,7 @@ func (s *StructureInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``Type`` enumeration class defines the kind of this structure element. In the interface definition language, structure element and error element have similar characteristics. The difference is that only error elements can be used to describe the exceptions of an operation element.
+// The “Type“ enumeration class defines the kind of this structure element. In the interface definition language, structure element and error element have similar characteristics. The difference is that only error elements can be used to describe the exceptions of an operation element.
 //
 // <p> See {@link com.vmware.vapi.bindings.ApiEnumeration enumerated types description}.
 type StructureInfoTypeEnum string
@@ -682,13 +691,13 @@ func (t StructureInfoTypeEnum) StructureInfoTypeEnum() bool {
 	}
 }
 
-// The ``Type`` class describes the type information of a typed element in the interface definiton language. The following elements in the metamodel are typed:
+// The “Type“ class describes the type information of a typed element in the interface definiton language. The following elements in the metamodel are typed:
 //
 // * Field element in a structure element. See StructureInfo#fields
 // * Parameter element in an operation element. See OperationInfo#params
 // * Result element in an operation element. See OperationInfo#output
 //
-//  The type could be one of the three following categories:
+//	The type could be one of the three following categories:
 //
 // * Built-in types: These are types present in the interface definition language type system. They are provided by the infrastructure.
 // * User defined named type: API designers can create custom types and use them for the typed elements. These types have a unique identifier.
@@ -719,7 +728,7 @@ func (s *Type) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``Category`` enumeration class provides enumeration constant for each category of the type.
+// The “Category“ enumeration class provides enumeration constant for each category of the type.
 //
 // <p> See {@link com.vmware.vapi.bindings.ApiEnumeration enumerated types description}.
 type TypeCategoryEnum string
@@ -746,7 +755,7 @@ func (c TypeCategoryEnum) TypeCategoryEnum() bool {
 	}
 }
 
-// The ``BuiltinType`` enumeration class provides enumeration constant for each of the built-in types present in the interface definition language type system.
+// The “BuiltinType“ enumeration class provides enumeration constant for each of the built-in types present in the interface definition language type system.
 //
 // <p> See {@link com.vmware.vapi.bindings.ApiEnumeration enumerated types description}.
 type TypeBuiltinTypeEnum string
@@ -813,7 +822,7 @@ func (b TypeBuiltinTypeEnum) TypeBuiltinTypeEnum() bool {
 	}
 }
 
-// The ``UserDefinedType`` class contains the metamodel type information of a typed element whose type is a user defined named type.
+// The “UserDefinedType“ class contains the metamodel type information of a typed element whose type is a user defined named type.
 type UserDefinedType struct {
 	// Category of the user defined named type. The named type could be a structure element or an enumeration element.
 	ResourceType string

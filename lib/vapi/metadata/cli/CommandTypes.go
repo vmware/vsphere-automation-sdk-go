@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -18,7 +19,7 @@ import (
 	"reflect"
 )
 
-// The ``FormatterType`` enumeration class defines supported CLI output formatter types. See CommandInfo#formatter.
+// The “FormatterType“ enumeration class defines supported CLI output formatter types. See CommandInfo#formatter.
 //
 // <p> See {@link com.vmware.vapi.bindings.ApiEnumeration enumerated types description}.
 type CommandFormatterTypeEnum string
@@ -57,7 +58,7 @@ func (f CommandFormatterTypeEnum) CommandFormatterTypeEnum() bool {
 	}
 }
 
-// The ``GenericType`` enumeration class defines generic types supported by ``Command`` interface. See CommandOptionInfo#generic.
+// The “GenericType“ enumeration class defines generic types supported by “Command“ interface. See CommandOptionInfo#generic.
 //
 // <p> See {@link com.vmware.vapi.bindings.ApiEnumeration enumerated types description}.
 type CommandGenericTypeEnum string
@@ -92,7 +93,7 @@ func (g CommandGenericTypeEnum) CommandGenericTypeEnum() bool {
 	}
 }
 
-// The ``OutputFieldInfo`` class describes the name used by the CLI to display a single property of a class element in the interface definition language.
+// The “OutputFieldInfo“ class describes the name used by the CLI to display a single property of a class element in the interface definition language.
 type CommandOutputFieldInfo struct {
 	// Name of the property.
 	FieldName string
@@ -115,7 +116,7 @@ func (s *CommandOutputFieldInfo) GetDataValue__() (vapiData_.DataValue, []error)
 	return dataVal, nil
 }
 
-// The ``OutputInfo`` class describes the names used by the CLI to display the properties of a class element in the interface definition language as well as the order in which the properties will be displayed.
+// The “OutputInfo“ class describes the names used by the CLI to display the properties of a class element in the interface definition language as well as the order in which the properties will be displayed.
 type CommandOutputInfo struct {
 	// Name of the class.
 	StructureId string
@@ -138,7 +139,7 @@ func (s *CommandOutputInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``OptionInfo`` class describes information about a specific input option of a command.
+// The “OptionInfo“ class describes information about a specific input option of a command.
 type CommandOptionInfo struct {
 	// The long option name of the parameter as used by the user.
 	LongOption string
@@ -169,7 +170,7 @@ func (s *CommandOptionInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``Identity`` class uniquely identifies a command in the CLI commands tree.
+// The “Identity“ class uniquely identifies a command in the CLI commands tree.
 type CommandIdentity struct {
 	// The dot-separated path of the namespace containing the command in the CLI command tree.
 	Path string
@@ -192,7 +193,7 @@ func (s *CommandIdentity) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// The ``Info`` class contains information about a command. It includes the identity of the command, a description, information about the interface and method that implement the command, and CLI-specific information for the command.
+// The “Info“ class contains information about a command. It includes the identity of the command, a description, information about the interface and method that implement the command, and CLI-specific information for the command.
 type CommandInfo struct {
 	// Basic command identity.
 	Identity CommandIdentity
@@ -314,7 +315,7 @@ func commandGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"POST",
 		"/vapi/metadata/cli/command",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",

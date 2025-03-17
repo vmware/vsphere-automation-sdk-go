@@ -1,4 +1,5 @@
-// Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -17,13 +18,13 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-// The ``Source`` interface provides methods to manage the sources of authentication metadata information.
+// The “Source“ interface provides methods to manage the sources of authentication metadata information.
 //
-//  The interface definition language infrastructure provides tools to generate various kinds of metadata in JSON format from the interface definition files and additional properties files. One of the generated files contains authentication information. The generated file can be registered as a source of metadata.
+//	The interface definition language infrastructure provides tools to generate various kinds of metadata in JSON format from the interface definition files and additional properties files. One of the generated files contains authentication information. The generated file can be registered as a source of metadata.
 //
-//  The authentication file contains all the data present in the interface definition files. Each authentication file contains data about one component element. When a authentication file is added as a source, each source contributes only one component element's metadata.
+//	The authentication file contains all the data present in the interface definition files. Each authentication file contains data about one component element. When a authentication file is added as a source, each source contributes only one component element's metadata.
 //
-//  Authentication metadata can also be discovered from a remote server that supports the authentication metadata interfaces (see com.vmware.vapi.metadata.authentication). Since multiple components can be registered with a single metadata server, when a remote server is registered as a source, that source can contribute more than one component.
+//	Authentication metadata can also be discovered from a remote server that supports the authentication metadata interfaces (see com.vmware.vapi.metadata.authentication). Since multiple components can be registered with a single metadata server, when a remote server is registered as a source, that source can contribute more than one component.
 type SourceClient interface {
 
 	// Creates a new metadata source. Once the server validates the registration information of the metadata source, the authentication metadata is retrieved from the source. This populates elements in all the interfaces defined in com.vmware.vapi.metadata.authentication package.

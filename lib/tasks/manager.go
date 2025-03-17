@@ -1,5 +1,6 @@
-/* Copyright © 2021-2023 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2021-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package tasks
 
@@ -22,10 +23,11 @@ import (
 )
 
 // CreateSpec provides information on tasks specifics when it is initialized by CreateTask method
-// 	BaseId - dictates how a task id would look like. If not set a newly generated UUID is used;
+//
+//	BaseId - dictates how a task id would look like. If not set a newly generated UUID is used;
 //		next to the BaseId service id is concatenated, separated by managerOptions.TaskIdDelimiter
 //	Description - simple task description string
-// 	Cancelable - boolean specifying whether a task can be canceled or not
+//	Cancelable - boolean specifying whether a task can be canceled or not
 type CreateSpec struct {
 	BaseId      string
 	Description std.LocalizableMessage
@@ -106,14 +108,14 @@ type serverTaskWrapper struct {
 
 // InMemoryManager is a default implementation of core.TaskManager
 // It provides functionality to:
-// 	- create task - by using CreateTask method and provided necessary CreateSpec information
-// 	- start task - by using StartTaskWithContext method
-// 	- edit task - done by SetError method
-// 	- end task - by using either SetError or SetResult methods
-// 	- retrieve task information - through GetTaskInfo or GetTasksInfo methods
-// 	- mark task for cancellation - by using MarkForCancellation, at which point a task provider can listen for this
-//		event and do the actual task cancel actions
-// 	- retrieve task result information - GetTaskResult is used by bindings to block on waiting for a task end
+//   - create task - by using CreateTask method and provided necessary CreateSpec information
+//   - start task - by using StartTaskWithContext method
+//   - edit task - done by SetError method
+//   - end task - by using either SetError or SetResult methods
+//   - retrieve task information - through GetTaskInfo or GetTasksInfo methods
+//   - mark task for cancellation - by using MarkForCancellation, at which point a task provider can listen for this
+//     event and do the actual task cancel actions
+//   - retrieve task result information - GetTaskResult is used by bindings to block on waiting for a task end
 type InMemoryManager struct {
 	options       *managerOptions
 	lock          sync.RWMutex
