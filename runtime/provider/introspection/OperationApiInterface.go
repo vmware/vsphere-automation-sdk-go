@@ -1,5 +1,6 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package introspection
 
@@ -73,8 +74,8 @@ func (operationApiInterface *OperationApiInterface) registerGetMethod() {
 func (operationApiInterface *OperationApiInterface) get(ctx *core.ExecutionContext,
 	md core.MethodIdentifier, inputValue data.DataValue) core.MethodResult {
 	var structValue = inputValue.(*data.StructValue)
-	var serviceID, _ = structValue.String("service_id")
-	var operationID, _ = structValue.String("operation_id")
+	var serviceID, _ = structValue.StringField("service_id")
+	var operationID, _ = structValue.StringField("operation_id")
 	return operationApiInterface.introspection.GetOperationInfo(serviceID, operationID)
 }
 
@@ -92,7 +93,7 @@ func (operationApiInterface *OperationApiInterface) registerListMethod() {
 func (operationApiInterface *OperationApiInterface) list(ctx *core.ExecutionContext,
 	methodId core.MethodIdentifier, input data.DataValue) core.MethodResult {
 	var structValue = (input).(*data.StructValue)
-	var serviceID, _ = structValue.String("service_id")
+	var serviceID, _ = structValue.StringField("service_id")
 	var methodResult = operationApiInterface.introspection.GetOperations(serviceID)
 	return methodResult
 }
@@ -115,8 +116,8 @@ func (operationApiInterface *OperationApiInterface) Invoke(ctx *core.ExecutionCo
 	return method(ctx, methodID, input)
 }
 
-//TODO:
-//refactor this
+// TODO:
+// refactor this
 func (operationApiInterface *OperationApiInterface) getListOfMethodIds() map[string]core.MethodIdentifier {
 	var methods = make(map[string]core.MethodIdentifier)
 	for key, _ := range operationApiInterface.methods {

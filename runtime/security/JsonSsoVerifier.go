@@ -1,5 +1,6 @@
-/* Copyright © 2019, 2022 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package security
 
@@ -7,6 +8,7 @@ import (
 	"crypto"
 	"crypto/rsa"
 	"encoding/base64"
+
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/l10n"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 )
@@ -47,11 +49,13 @@ func NewJSONSsoVerifier() *JSONSsoVerifier {
 //           }
 //       }
 
-func (j *JSONSsoVerifier) Process(jsonMessage *map[string]interface{}) error {
+func (j *JSONSsoVerifier) Process(jsonMessage map[string]interface{}) error {
 	securityContext, err := GetSecurityContext(jsonMessage)
 	if err != nil {
-		// does not have to propogated to higher layers.
-		// it is okay for some requests to not include security context.
+		return err
+	}
+	if securityContext == nil {
+		// anonymous requests have no security context
 		return nil
 	}
 	if schemeId, ok := securityContext[AUTHENTICATION_SCHEME_ID]; ok {
@@ -135,7 +139,7 @@ func (j *JSONSsoVerifier) Process(jsonMessage *map[string]interface{}) error {
 		return exErr
 	}
 	jce := NewJSONCanonicalEncoder()
-	canonicalizedMsg, canError := jce.Marshal(*jsonMessage)
+	canonicalizedMsg, canError := jce.Marshal(jsonMessage)
 	if canError != nil {
 		return canError
 	}

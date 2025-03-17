@@ -1,5 +1,6 @@
-/* Copyright © 2019-2022 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package security
 
@@ -25,6 +26,7 @@ func NewAuthorizationFilter(provider core.APIProvider, privilegeProv PrivilegePr
 	return &aFilter, nil
 }
 
+// Deprecated: No longer necessary.
 func (a *AuthorizationFilter) AddHandler(handler AuthorizationHandler) {
 	a.handlers = append(a.handlers, handler)
 }

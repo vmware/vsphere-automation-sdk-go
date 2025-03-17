@@ -1,5 +1,6 @@
-/* Copyright © 2021-2023 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2021-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package opentracing
 
@@ -8,10 +9,10 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/opentracing/opentracing-go"
-	"github.com/opentracing/opentracing-go/ext"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/server/tracing"
+	"github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go/ext"
 )
 
 const (

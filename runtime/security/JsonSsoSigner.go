@@ -1,11 +1,17 @@
-/* Copyright © 2019, 2022 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package security
 
 import (
 	"crypto"
+	"crypto/rsa"
 	"encoding/base64"
+	"reflect"
+
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/l10n"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 )
@@ -23,101 +29,80 @@ func NewJSONSsoSigner() *JSONSsoSigner {
 // token is then added to the security context block of the execution
 // context. A timestamp is also added to guard against replay attacks
 // Sample input security context:
-// {
-//    'schemeId': 'SAML_TOKEN',
-//    'privateKey': <PRIVATE_KEY>,
-//    'samlToken': <SAML_TOKEN>,
-//    'signatureAlgorithm': <ALGORITHM>,
-// }
+//
+//	{
+//	   'schemeId': 'SAML_TOKEN',
+//	   'privateKey': <PRIVATE_KEY>,
+//	   'samlToken': <SAML_TOKEN>,
+//	   'signatureAlgorithm': <ALGORITHM>,
+//	}
 //
 // Security context block before signing:
-// {
-//    'schemeId': 'SAML_TOKEN',
-//    'signatureAlgorithm': <ALGORITHM>,
-//    'timestamp': {
-//        'created': '2012-10-26T12:24:18.941Z',
-//        'expires': '2012-10-26T12:44:18.941Z',
-// }
 //
+//	{
+//	   'schemeId': 'SAML_TOKEN',
+//	   'signatureAlgorithm': <ALGORITHM>,
+//	   'timestamp': {
+//	       'created': '2012-10-26T12:24:18.941Z',
+//	       'expires': '2012-10-26T12:44:18.941Z',
+//	}
 //
 // Security context block after signing:
-// {
-//    'schemeId': 'SAML_TOKEN',
-//    'signatureAlgorithm': <ALGORITHM>,
-//    'signature': {
-//        'samlToken': <SAML_TOKEN>,
-//        'value': <DIGEST>
-//    }
-//    'timestamp': {
-//        'created': '2012-10-26T12:24:18.941Z',
-//        'expires': '2012-10-26T12:44:18.941Z',
-//    }
-// }
-func (j *JSONSsoSigner) Process(jsonRequestBody *map[string]interface{}) error {
-	securityContext, err := GetSecurityContext(jsonRequestBody)
+//
+//	{
+//	   'schemeId': 'SAML_TOKEN',
+//	   'signatureAlgorithm': <ALGORITHM>,
+//	   'signature': {
+//	       'samlToken': <SAML_TOKEN>,
+//	       'value': <DIGEST>
+//	   }
+//	   'timestamp': {
+//	       'created': '2012-10-26T12:24:18.941Z',
+//	       'expires': '2012-10-26T12:44:18.941Z',
+//	   }
+//	}
+func (j *JSONSsoSigner) Process(jsonRequestBody map[string]interface{}, serviceId string, operationId string, inputValue data.DataValue, ctx *core.ExecutionContext) error {
+	if ctx == nil || ctx.SecurityContext() == nil {
+		// anonymous requests have no security context
+		return nil
+	}
+	if SAML_HOK_SCHEME_ID != ctx.SecurityContext().Property(AUTHENTICATION_SCHEME_ID) {
+		return nil
+	}
+
+	securityContext := ctx.SecurityContext().GetAllProperties()
+
+	samlToken, err := getSamlToken(securityContext)
 	if err != nil {
-		// does not have to be propagated to higher layers.
-		// it is okay for some requests to not include security context.
 		return nil
 	}
 
-	newSecurityContext := map[string]interface{}{}
-	if schemeId, ok := securityContext[AUTHENTICATION_SCHEME_ID]; ok {
-		if schemeId != SAML_HOK_SCHEME_ID {
-			return nil
-		}
-		newSecurityContext[AUTHENTICATION_SCHEME_ID] = SAML_HOK_SCHEME_ID
-	} else {
-		log.Debugf("Security Context does not contain authentication scheme ID")
-		return nil
-	}
-
-	err = SetSecurityContext(jsonRequestBody, newSecurityContext)
+	jwsAlgorithm, hashAlgorithm, err := getSignatureAlgorithm(securityContext)
 	if err != nil {
 		return err
 	}
 
-	newSecurityContext[TIMESTAMP] = GenerateRequestTimeStamp()
-
-	var jwsAlgorithm string
-	if _, ok := securityContext[SIGNATURE_ALGORITHM]; ok {
-		if temp, ok := securityContext[SIGNATURE_ALGORITHM].(string); ok {
-			jwsAlgorithm = temp
-		} else {
-			log.Error("Value of signature algorithm extracted from Security Context failed assertion of type string")
-			return l10n.NewRuntimeErrorNoParam("vapi.security.sso.signature.invalid")
-		}
-	} else {
-		log.Debugf("Security Context does not contain signature algorithm")
-		return l10n.NewRuntimeErrorNoParam("vapi.security.sso.signature.invalid")
+	privateKey, err := getPrivateKey(securityContext)
+	if err != nil {
+		return err
 	}
 
-	var algorithm crypto.Hash
-	if temp, ok := algorithmMap[jwsAlgorithm]; ok {
-		algorithm = temp
-	} else {
-		log.Error("Invalid Hash algorithm was passed")
-		return l10n.NewRuntimeErrorNoParam("vapi.security.sso.hash.invalid")
-	}
-
-	newSecurityContext[SIGNATURE_ALGORITHM] = jwsAlgorithm
-
-	var privateKey string
-	if pvtK, ok := securityContext[PRIVATE_KEY]; ok {
-		if temp, ok := pvtK.(string); ok {
-			privateKey = temp
-		} else {
-			log.Error("Value of private key extracted from Security Context failed assertion of type string")
-			return l10n.NewRuntimeErrorNoParam("vapi.security.sso.pvtkey.invalid")
-		}
-	} else {
-		log.Debugf("Security Context does not contain private key")
+	rsaPrivateKey, ok := privateKey.(*rsa.PrivateKey)
+	if !ok {
+		log.Errorf("Security Context for SAML HoK contains private key of unsupported type '%v'", reflect.TypeOf(privateKey))
 		return l10n.NewRuntimeErrorNoParam("vapi.security.sso.pvtkey.invalid")
 	}
 
-	rsaPrivateKey, parseErr := ParsePrivateKey(preparePrivateKey(privateKey))
-	if parseErr != nil {
-		return parseErr
+	// The JSON body which will be canonicalized and signed needs to have
+	// a security context with fields 'schemeId', 'signatureAlgorithm' and 'timestamp'.
+	// The SAML token is not included in the content to be signed.
+	newSecurityContext := map[string]interface{}{}
+	newSecurityContext[AUTHENTICATION_SCHEME_ID] = SAML_HOK_SCHEME_ID
+	newSecurityContext[TIMESTAMP] = GenerateRequestTimeStamp()
+	newSecurityContext[SIGNATURE_ALGORITHM] = jwsAlgorithm
+	err = SetSecurityContext(jsonRequestBody, newSecurityContext)
+	if err != nil {
+		return err
 	}
 
 	jce := JSONCanonicalEncoder{}
@@ -126,19 +111,58 @@ func (j *JSONSsoSigner) Process(jsonRequestBody *map[string]interface{}) error {
 		return canonErr
 	}
 
-	signedBytes, err := Sign(toSign, algorithm, rsaPrivateKey)
+	signedBytes, err := Sign(toSign, hashAlgorithm, rsaPrivateKey)
 	if err != nil {
 		return err
 	}
 	sig := base64.StdEncoding.EncodeToString(signedBytes)
-	var samlToken interface{}
-	if temp, ok := securityContext[SAML_TOKEN]; ok {
-		samlToken = temp
-	} else {
-		log.Error("Security Context does not contain saml token")
-		return l10n.NewRuntimeErrorNoParam("vapi.security.sso.samltoken.invalid")
-	}
+	// Include the SAML token and the signature before sending the request
 	newSecurityContext[SIGNATURE] = map[string]interface{}{SAML_TOKEN: samlToken, DIGEST: sig}
-	err = SetSecurityContext(jsonRequestBody, newSecurityContext)
-	return err
+	return nil
+}
+
+func getSamlToken(securityContext map[string]interface{}) (string, error) {
+	tokenProperty, ok := securityContext[SAML_TOKEN]
+	if !ok {
+		log.Error("Security Context for SAML HoK does not contain SAML token")
+		return "", l10n.NewRuntimeErrorNoParam("vapi.security.sso.samltoken.invalid")
+	}
+	samlToken, ok := tokenProperty.(string)
+	if !ok {
+		log.Errorf("Security Context for SAML HoK contains SAML token of unsupported type '%v'", reflect.TypeOf(tokenProperty))
+		return "", l10n.NewRuntimeErrorNoParam("vapi.security.sso.samltoken.invalid")
+	}
+	return samlToken, nil
+}
+
+func getSignatureAlgorithm(securityContext map[string]interface{}) (string, crypto.Hash, error) {
+	algoProperty, ok := securityContext[SIGNATURE_ALGORITHM]
+	if !ok {
+		log.Error("Security Context for SAML HoK does not contain signature algorithm")
+		return "", 0, l10n.NewRuntimeErrorNoParam("vapi.security.sso.signature.invalid")
+	}
+	jwsAlgorithm, ok := algoProperty.(string)
+	if !ok {
+		log.Errorf("Security Context for SAML HoK contains signature algorithm of unsupported type '%v'", reflect.TypeOf(algoProperty))
+		return "", 0, l10n.NewRuntimeErrorNoParam("vapi.security.sso.signature.invalid")
+	}
+	algorithm, ok := algorithmMap[jwsAlgorithm]
+	if !ok {
+		log.Errorf("Security Context for SAML HoK contains unsupported signature algorithm: '%v'", jwsAlgorithm)
+		return "", 0, l10n.NewRuntimeErrorNoParam("vapi.security.sso.hash.invalid")
+	}
+	return jwsAlgorithm, algorithm, nil
+}
+
+func getPrivateKey(securityContext map[string]interface{}) (crypto.PrivateKey, error) {
+	keyProperty, ok := securityContext[PRIVATE_KEY]
+	if !ok {
+		log.Error("Security Context for SAML HoK does not contain private key")
+		return nil, l10n.NewRuntimeErrorNoParam("vapi.security.sso.pvtkey.invalid")
+	}
+	pemKey, isPemKey := keyProperty.(string)
+	if isPemKey {
+		return ParsePrivateKey(preparePrivateKey(pemKey))
+	}
+	return keyProperty, nil
 }

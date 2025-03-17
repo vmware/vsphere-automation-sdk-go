@@ -1,5 +1,6 @@
-/* Copyright © 2019-2020 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package protocol
 
@@ -55,6 +56,7 @@ func (meta OperationMetadata) RestMetadata() OperationRestMetadata {
 // fields and fieldsNameMap defines the bindingtype and name of field respectively of @BodyField annotation
 // Rest metadata for name and types of query, header and
 // body parameters of an operation. Example:
+//
 //	meta.ParamsTypeMap["input.nested.bparam"] = bindings.NewListType(bindings.NewStringType(), reflect.TypeOf([]string{}))
 //	meta.ParamsTypeMap["input.nested.hparam"] = bindings.NewStringType()
 //	meta.ParamsTypeMap["input.nested.qparam"] = bindings.NewStringType()
@@ -230,11 +232,14 @@ func (meta OperationRestMetadata) GetUrlPath(
 	// Add other operation query parameters
 	for fieldName, fieldStr := range queryParamFields {
 		for _, e := range fieldStr {
-			// use PathEscape instead of QueryEscape as QueryEscape does not follow VAPI REST standard
-			// most significantly it escapes space characters with '+' sign.
-			// Most probably it follows this standard instead https://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.1
-			qpKey := url.PathEscape(fieldName)
-			qpVal := url.PathEscape(e)
+			qpKey := url.QueryEscape(fieldName)
+			// In QueryEscape, space character in query params get converted to '+' sign.
+			// This may result in issue as the server will fail to convert the '+' sign back to space.
+			// So, to convert the space into its corresponding percent encoded representation,
+			// replacing '+' with '%20'.
+			qpKey = strings.ReplaceAll(qpKey, "+", "%20")
+			qpVal := url.QueryEscape(e)
+			qpVal = strings.ReplaceAll(qpVal, "+", "%20")
 			qparam := fmt.Sprintf("%s=%s", qpKey, qpVal)
 			queryPrams = append(queryPrams, qparam)
 		}

@@ -1,16 +1,18 @@
-/* Copyright © 2021-2022 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2021-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package client
 
 import (
+	"net/http"
+
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data/serializers/rest"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client/internal"
 	vapiHttp "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/http"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/security"
-	"net/http"
 )
 
 type ConnectorOption func(*connector)
@@ -26,6 +28,7 @@ func UsingRest(restOptions protocol.RestClientOptions) ConnectorOption {
 					security.USER_PASSWORD_SCHEME_ID: rest.NewUserPwdSecContextSerializer(),
 					security.SESSION_SCHEME_ID:       rest.NewSessionSecContextSerializer(),
 					security.OAUTH_SCHEME_ID:         rest.NewOauthSecContextSerializer(),
+					security.SAML_BEARER_SCHEME_ID:   rest.NewSamlBearerSecContextSerializer(),
 				})
 		}
 		connector.protocol = internal.NewRESTHttpProtocol(connector, restOptions)

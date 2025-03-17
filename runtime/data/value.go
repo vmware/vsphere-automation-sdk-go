@@ -1,5 +1,6 @@
-/* Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package data
 
@@ -7,8 +8,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"strconv"
+
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 )
 
 type DataValue interface {
@@ -174,7 +176,7 @@ func (optionalValue *OptionalValue) Value() DataValue {
 	return optionalValue.value
 }
 
-func (optionalValue *OptionalValue) String() (string, error) {
+func (optionalValue *OptionalValue) StringValue() (string, error) {
 	var value = optionalValue.Value()
 	if optionalValue.IsSet() {
 		if value.Type() == STRING {
@@ -186,7 +188,11 @@ func (optionalValue *OptionalValue) String() (string, error) {
 	} else {
 		return "", errors.New("vapi.data.optional.getvalue.unset")
 	}
+}
 
+// Deprecated: Use StringValue()
+func (optionalValue *OptionalValue) String() (string, error) {
+	return optionalValue.StringValue()
 }
 
 func (optionalValue *OptionalValue) Struct() (*StructValue, error) {
@@ -313,8 +319,7 @@ func (structValue *StructValue) Struct(fieldName string) (*StructValue, error) {
 	return nil, errors.New("vapi.data.structure.getfield.mismatch " + fieldName)
 }
 
-func (structValue *StructValue) String(fieldName string) (string, error) {
-
+func (structValue *StructValue) StringField(fieldName string) (string, error) {
 	var result string
 	var value, err = structValue.Field(fieldName)
 	if err != nil {
@@ -327,10 +332,14 @@ func (structValue *StructValue) String(fieldName string) (string, error) {
 		}
 	}
 	return result, errors.New("vapi.data.structure.getfield.mismatch. Expected string but got " + (value).Type().String())
-
 }
 
-func (structValue *StructValue) Error(fieldName string) (*ErrorValue, error) {
+// Deprecated: Use StringField()
+func (structValue *StructValue) String(fieldName string) (string, error) {
+	return structValue.StringField(fieldName)
+}
+
+func (structValue *StructValue) ErrorField(fieldName string) (*ErrorValue, error) {
 	var value, err = structValue.Field(fieldName)
 	if err != nil {
 		return nil, err
@@ -342,7 +351,11 @@ func (structValue *StructValue) Error(fieldName string) (*ErrorValue, error) {
 		}
 	}
 	return nil, errors.New("vapi.data.structure.getfield.mismatch. Expected Error but got " + (value).Type().String())
+}
 
+// Deprecated: Use ErrorField()
+func (structValue *StructValue) Error(fieldName string) (*ErrorValue, error) {
+	return structValue.ErrorField(fieldName)
 }
 
 func (structValue *StructValue) Optional(field string) (*OptionalValue, error) {

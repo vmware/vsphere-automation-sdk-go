@@ -1,5 +1,6 @@
-/* Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package msg
 
@@ -70,19 +71,18 @@ func (j *JsonRpcHandler) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 		j.sendResponse(jsonRpcRequestError, rw, nil)
 		return
 	}
-	var request, requestDeserializationError = getJsonRpc20Request(requestObj)
-	if requestDeserializationError != nil {
-		log.Error("Error deserializing jsonrpc request")
-		var jsonRpcRequestError = NewJsonRpcRequestError(NewJsonRpcErrorInvalidRequest("Error deserializing jsonrpc request"), nil)
+	request, rpcerr := getJsonRpc20Request(requestObj)
+	if rpcerr != nil {
+		log.Errorf("Error deserializing jsonrpc request: %v: %v", rpcerr.message, rpcerr.data)
+		var jsonRpcRequestError = NewJsonRpcRequestError(rpcerr, nil)
 		j.sendResponse(jsonRpcRequestError, rw, nil)
 		return
 	}
 	for _, reqProcessor := range j.requestProcessors {
-		err := reqProcessor.Process(&requestObj)
+		err := reqProcessor.Process(requestObj)
 		if err != nil {
-			log.Error("Encountered error during preprocessing of json request")
-			log.Error(err)
-			var jsonRpcRequestError = NewJsonRpcRequestError(NewJsonRpcErrorInvalidRequest(err), &request)
+			log.Errorf("Error while preprocessing jsonrpc request: %v", err)
+			var jsonRpcRequestError = NewJsonRpcRequestError(NewJsonRpcErrorInvalidRequest(err.Error()), &request)
 			j.sendResponse(jsonRpcRequestError, rw, nil)
 			return
 		}
@@ -269,7 +269,7 @@ func (j *JsonRpcHandler) SendResponseFrame(response interface{}, rw http.Respons
 func (j *JsonRpcHandler) sendTerminalFrame(request *JsonRpc20Request, rw http.ResponseWriter, flusher http.Flusher) {
 	log.Debug("Sending terminal frame")
 	terminalFrame := make(map[string]interface{})
-	terminalFrame[lib.JSONRPC] = request.version
+	terminalFrame[lib.JSONRPC] = lib.JSONRPC_VERSION
 	terminalFrame[lib.JSONRPC_ID] = request.id
 	terminalFrame[lib.METHOD_RESULT] = map[string]interface{}{}
 	frameBytes, _ := json.Marshal(terminalFrame)
@@ -355,8 +355,5 @@ func (j *JsonRpcHandler) prepareResponseBody(request JsonRpc20Request, methodRes
 		log.Debugf("Sending response with output %+v", string(encodedMethodResult))
 
 	}
-	var version = request.version
-	var id = request.id
-	var jsonRpc20Response = NewJsonRpc20Response(version, id, methodResult, nil)
-	return jsonRpc20Response
+	return NewJsonRpc20Response(request.id, methodResult, nil)
 }

@@ -1,5 +1,6 @@
-/* Copyright © 2019-2020 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package rest
 
@@ -14,7 +15,6 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/gorilla/mux"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data/serializers/cleanjson"
@@ -22,6 +22,7 @@ import (
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	"github.com/gorilla/mux"
 )
 
 type ParamsType string

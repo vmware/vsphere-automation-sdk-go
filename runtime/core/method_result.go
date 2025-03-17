@@ -1,5 +1,6 @@
-/* Copyright © 2019, 2021 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package core
 
@@ -73,7 +74,7 @@ func createMonoStream(output data.DataValue, error *data.ErrorValue) chan MonoRe
 	return responseStream
 }
 
-//Deprecated: use NewErrorResult or NewDataResult
+// Deprecated: use NewErrorResult or NewDataResult
 func NewMethodResult(output data.DataValue, error *data.ErrorValue) MethodResult {
 	if output != nil && error != nil {
 		panic("Can not set both output and error in MethodResult")

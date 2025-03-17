@@ -1,5 +1,6 @@
-/* Copyright © 2019, 2021 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package msg
 
@@ -10,10 +11,12 @@ var JSONRPC_INTERNAL_ERROR = int64(-32603)
 var JSONRPC_PARSE_ERROR = int64(-32700)
 var JSONRPC_OPERATION_ID_MISMATCH = int64(-31001)
 
-/* TRANSPORT_ERROR is defined in xmlrpc error code
- *  http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php
- * but not JSON RPC 2.0
-  Need this for server connection error */
+/*
+TRANSPORT_ERROR is defined in xmlrpc error code
+  - http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php
+  - but not JSON RPC 2.0
+    Need this for server connection error
+*/
 var JSONRPC_TRANSPORT_ERROR = int64(-32300)
 var SERVER_ERROR_RANGE_MIN = int64(-32768)
 var SERVER_ERROR_RANGE_MAX = int64(-32000)

@@ -1,5 +1,6 @@
-/* Copyright © 2021-2022 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2021-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 // Package retry provides Decorator which can be setup for a retry of
 // operation calls for various reasons.
@@ -8,10 +9,10 @@
 // To set it up provide connector option through WithDecorators function and
 // inside call NewRetryDecorator function:
 //
-//		connector := client.NewConnector(
-//			url,
-//			client.WithDecorators(
-//				retry.NewRetryDecorator(2, retryFunc)))
+//	connector := client.NewConnector(
+//		url,
+//		client.WithDecorators(
+//			retry.NewRetryDecorator(2, retryFunc)))
 //
 // Setting up a retry decorator requires maximum number of retry attempts (
 // this does not include first attempt), and a retry boolean function.
@@ -23,26 +24,25 @@
 // retries on returned response status of 503 and sleeps for 10 seconds
 // between each attempt:
 //
-//	retryFunc := func(retryContext retry.RetryContext) bool {
-//		if retryContext.Response.StatusCode != 503 {
-//			return false
+//		retryFunc := func(retryContext retry.RetryContext) bool {
+//			if retryContext.Response.StatusCode != 503 {
+//				return false
+//			}
+//
+//			// sleeping for some time before next retry
+//			time.Sleep(10 * time.Second)
+//
+//			return true
 //		}
 //
-//		// sleeping for some time before next retry
-//		time.Sleep(10 * time.Second)
-//
-//		return true
-//	}
-//
-//  // retries each request maximum two times in case of 503 response from server
-//	connector := client.NewConnector(
-//		url,
-//		client.UsingRest(nil),
-//		client.WithDecorators(
-//			retry.NewRetryDecorator(
-//				2,
-//				retryFunc)))
-//
+//	 // retries each request maximum two times in case of 503 response from server
+//		connector := client.NewConnector(
+//			url,
+//			client.UsingRest(nil),
+//			client.WithDecorators(
+//				retry.NewRetryDecorator(
+//					2,
+//					retryFunc)))
 package retry
 
 import (

@@ -1,5 +1,6 @@
-/* Copyright © 2019, 2021-2022 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package internal
 
@@ -7,6 +8,11 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"io"
+	"io/ioutil"
+	"net/http"
+	"strings"
+
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/common"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
@@ -18,29 +24,33 @@ import (
 	vapiHttp "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/http"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/server/rpc/msg"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/security"
-	"io"
-	"io/ioutil"
-	"net/http"
-	"strings"
+	"github.com/google/uuid"
 )
 
 // JsonRpcHttpProtocol provides functionality for making and handling http JSON-RPC calls to a server
 type JsonRpcHttpProtocol struct {
 	Connector
 	*HttpTransport
-	requestPreProcessors  []core.JSONRPCRequestPreProcessor
+	requestPreProcessors  []ClientJSONRPCRequestProcessor
 	responseHandlers      []vapiHttp.ClientResponseHandler
 	streamingAcceptHeader string
 }
 
 var _ StreamingTransport = NewJsonRpcHttpProtocol(nil)
 
+// ClientJSONRPCRequestProcessor allows to customize request serialization.
+// For example, signing the API request with a private key for authentication
+// via SAML HoK token.
+type ClientJSONRPCRequestProcessor interface {
+	Process(requestBody map[string]interface{}, serviceId string, operationId string, inputValue data.DataValue, ctx *core.ExecutionContext) error
+}
+
 // NewJsonRpcHttpProtocol instantiates instance of JsonRpcHttpProtocol
 func NewJsonRpcHttpProtocol(c Connector) *JsonRpcHttpProtocol {
 	return &JsonRpcHttpProtocol{
 		Connector:     c,
 		HttpTransport: NewHttpTransport(),
-		requestPreProcessors: []core.JSONRPCRequestPreProcessor{
+		requestPreProcessors: []ClientJSONRPCRequestProcessor{
 			security.NewJSONSsoSigner(),
 		},
 		responseHandlers: []vapiHttp.ClientResponseHandler{
@@ -101,7 +111,6 @@ func (j *JsonRpcHttpProtocol) buildRequest(
 	if !ctx.ApplicationContext().HasProperty(lib.OPID) {
 		common.InsertOperationId(ctx.ApplicationContext())
 	}
-	opId := ctx.ApplicationContext().GetProperty(lib.OPID)
 
 	var jsonRpcEncoder = msg.NewJsonRpcEncoder()
 	encodedInput, err := jsonRpcEncoder.Encode(inputValue)
@@ -122,16 +131,17 @@ func (j *JsonRpcHttpProtocol) buildRequest(
 		return nil, err
 	}
 
-	var params = make(map[string]interface{})
+	params := make(map[string]interface{})
 	params[lib.REQUEST_INPUT] = encodedInputMap
 	params[lib.EXECUTION_CONTEXT] = executionCtxJson
 	params[lib.REQUEST_OPERATION_ID] = operationId
 	params[lib.REQUEST_SERVICE_ID] = serviceId
-	var jsonRpcRequest = msg.NewJsonRpc20Request(lib.JSONRPC_VERSION, lib.JSONRPC_INVOKE, params, opId, false)
+	jsonRpcRequestId := uuid.NewString()
+	jsonRpcRequest := msg.NewJsonRpc20Request(params, jsonRpcRequestId)
 
 	var requestJson = jsonRpcRequest.JSON()
 	for _, preProcessor := range j.requestPreProcessors {
-		err = preProcessor.Process(&requestJson)
+		err = preProcessor.Process(requestJson, serviceId, operationId, inputValue, ctx)
 		if err != nil {
 			return nil, err
 		}

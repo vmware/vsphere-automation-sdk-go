@@ -1,5 +1,6 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package introspection
 
@@ -76,7 +77,7 @@ func (serviceApiInterface *ServiceApiInterface) get(ctx *core.ExecutionContext,
 	methodDef core.MethodDefinition, inputValue data.DataValue) core.MethodResult {
 
 	var structVal = inputValue.(*data.StructValue)
-	var result, error = structVal.String("id")
+	var result, error = structVal.StringField("id")
 	if error != nil {
 		//TODO
 	}

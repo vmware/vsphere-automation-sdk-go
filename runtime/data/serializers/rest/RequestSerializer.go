@@ -1,5 +1,6 @@
-/* Copyright © 2019-2021 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package rest
 
@@ -429,7 +430,8 @@ func getSessionCtxHeaders(securityContext core.SecurityContext) (map[string]inte
 }
 
 // Deprecated: use OauthSecContextSerializer instead
-//  Get the authorization headers for oauth security context.
+//
+//	Get the authorization headers for oauth security context.
 func getOauthCtxHeaders(securityContext core.SecurityContext) (map[string]interface{}, error) {
 	oauthToken, err := GetSecurityCtxStrValue(securityContext, security.ACCESS_TOKEN)
 	if err != nil {

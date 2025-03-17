@@ -1,5 +1,6 @@
-/* Copyright © 2019-2020, 2022 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package security
 
@@ -11,40 +12,54 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
-	"github.com/beevik/etree"
+	"strings"
+	"time"
+
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
-	"reflect"
-	"strings"
-	"time"
+	"github.com/beevik/etree"
 )
 
-// Extracts Security Context from request.
-func GetSecurityContext(jsonRequestBody *map[string]interface{}) (map[string]interface{}, error) {
-	if paramValue, ok := (*jsonRequestBody)[lib.JSONRPC_PARAMS]; ok {
-		if paramMap, ok := paramValue.(map[string]interface{}); ok {
-			if execContext, ok := paramMap[lib.EXECUTION_CONTEXT]; ok {
-				execContext := execContext.(map[string]interface{})
-				if securityContext, ok := execContext[lib.SECURITY_CONTEXT]; ok {
-					return securityContext.(map[string]interface{}), nil
-				}
-				log.Error("Security Context missing in the request")
-				return nil, errors.New("Security Context missing in the request")
-			}
-			log.Error("Execution Context missing in the request")
-			return nil, errors.New("Execution Context missing in the request")
-		}
-		log.Errorf("Expected params of type map[string]interface{} but found %s", reflect.TypeOf(paramValue))
-		return nil, errors.New(fmt.Sprintf("Expected params of type map[string]interface{} but found %s", reflect.TypeOf(paramValue)))
+// GetSecurityContext retrieves the security context fields from the given
+// JSON-RPC request. Will return nil security context for an anonymous request.
+func GetSecurityContext(jsonRequestBody map[string]interface{}) (map[string]interface{}, error) {
+	paramValue, ok := jsonRequestBody[lib.JSONRPC_PARAMS]
+	if !ok {
+		log.Error("Field 'params' missing in the request")
+		return nil, errors.New("field 'params' missing in the request")
 	}
-	log.Error("Execution Context missing in the request")
-	return nil, errors.New("Execution Context missing in the request")
+	paramMap, ok := paramValue.(map[string]interface{})
+	if !ok {
+		log.Errorf("Field 'params' must be a JSON object")
+		return nil, errors.New("field 'params' must be a JSON object")
+	}
+	execContext, ok := paramMap[lib.EXECUTION_CONTEXT]
+	if !ok {
+		log.Error("Execution context missing in the request")
+		return nil, errors.New("execution context missing in the request")
+	}
+	execContextMap, ok := execContext.(map[string]interface{})
+	if !ok {
+		log.Error("Execution context must be a JSON object")
+		return nil, errors.New("execution context must be a JSON object")
+	}
+	securityContext, ok := execContextMap[lib.SECURITY_CONTEXT]
+	if !ok {
+		// anonymous API requests contain no security context
+		return nil, nil
+	}
+	securityContextMap, ok := securityContext.(map[string]interface{})
+	if !ok {
+		log.Error("Security context must be a JSON object")
+		return nil, errors.New("security context must be a JSON object")
+	}
+	return securityContextMap, nil
 }
 
 // Sets given security context to request body.
-func SetSecurityContext(jsonRequestBody *map[string]interface{}, securityContext map[string]interface{}) error {
-	if paramValue, ok := (*jsonRequestBody)[lib.JSONRPC_PARAMS]; ok {
+func SetSecurityContext(jsonRequestBody map[string]interface{}, securityContext map[string]interface{}) error {
+	if paramValue, ok := jsonRequestBody[lib.JSONRPC_PARAMS]; ok {
 		if _, ok := paramValue.(map[string]interface{}); !ok {
 			log.Error("Value of json rpc parameter extracted from json request body failed assertion of type map[string]interface")
 			return errors.New("Error setting security context")
@@ -141,11 +156,11 @@ func Sign(toSign []byte, algorithm crypto.Hash, privateKey *rsa.PrivateKey) ([]b
 	return rsa.SignPKCS1v15(rand.Reader, privateKey, algorithm, hashedData)
 }
 
-// ParsePrivateKey parses private key from given input string and returns RSA private key.
-func ParsePrivateKey(pemData string) (*rsa.PrivateKey, error) {
+// ParsePrivateKey parses private key from given input string.
+func ParsePrivateKey(pemData string) (crypto.PrivateKey, error) {
 	block, _ := pem.Decode([]byte(pemData))
 	if block == nil {
-		return nil, errors.New("Error decoding private key")
+		return nil, errors.New("error decoding private key")
 	}
 
 	key1, err0 := x509.ParsePKCS1PrivateKey(block.Bytes)
@@ -155,12 +170,7 @@ func ParsePrivateKey(pemData string) (*rsa.PrivateKey, error) {
 
 	key2, err1 := x509.ParsePKCS8PrivateKey(block.Bytes)
 	if err1 == nil {
-		switch key2.(type) {
-		case *rsa.PrivateKey:
-			return key2.(*rsa.PrivateKey), nil
-		default:
-			return nil, errors.New("non-supported private key provided")
-		}
+		return key2, nil
 	}
 
 	return nil, fmt.Errorf("private key parse error, got '%s' and '%s'", err0, err1)

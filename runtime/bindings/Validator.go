@@ -1,5 +1,6 @@
-/* Copyright © 2019,2021 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package bindings
 
@@ -135,7 +136,7 @@ func NewHasFieldsOfValidator(hasFieldsOfTypes []ReferenceType) HasFieldsOfValida
 	return HasFieldsOfValidator{hasFieldsOfTypes: hasFieldsOfTypes}
 }
 
-//Validates whether a StructValue satisfies the HasFieldsOf constraint
+// Validates whether a StructValue satisfies the HasFieldsOf constraint
 func (hv HasFieldsOfValidator) Validate(structValue *data.StructValue) []error {
 	if structValue == nil {
 		return nil
@@ -178,7 +179,7 @@ func NewIsOneOfValidator(fieldName string, allowedValues []string) IsOneOfValida
 	return IsOneOfValidator{fieldName: fieldName, allowedValues: allowedValuesSet}
 }
 
-//Validates whether a StructValue satisfies the HasFieldsOf constraint
+// Validates whether a StructValue satisfies the HasFieldsOf constraint
 func (is IsOneOfValidator) Validate(structValue *data.StructValue) []error {
 	// @IsOneOf is only allowed on String fields, and not on Optional<String>
 	// ones (this is enforced by the idl toolkit. So it is safe to assume the

@@ -1,5 +1,6 @@
-/* Copyright © 2019, 2021, 2023 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package client
 
@@ -24,13 +25,12 @@ type Connector interface {
 }
 
 type connector struct {
-	address            string
-	protocol           core.APIProvider
-	provider           core.APIProvider
-	decorators         []core.APIProviderDecorator
-	appContext         *core.ApplicationContext
-	connectionMetadata map[string]interface{}
-	typeConverter      *bindings.TypeConverter
+	address       string
+	protocol      core.APIProvider
+	provider      core.APIProvider
+	decorators    []core.APIProviderDecorator
+	appContext    *core.ApplicationContext
+	typeConverter *bindings.TypeConverter
 	// mu guards the SecurityContext
 	mu              sync.Mutex
 	securityContext core.SecurityContext
@@ -58,6 +58,7 @@ func getDefaultConnector(address string) *connector {
 	c := &connector{
 		address:       address,
 		typeConverter: bindings.NewTypeConverter(),
+		appContext:    core.NewApplicationContext(nil),
 	}
 	c.protocol = internal.NewJsonRpcHttpProtocol(c)
 
@@ -112,9 +113,6 @@ func (c *connector) TypeConverter() *bindings.TypeConverter {
 
 // NewExecutionContext creates vAPI execution context from connector's security and application contexts
 func (c *connector) NewExecutionContext() *core.ExecutionContext {
-	if c.appContext == nil {
-		c.appContext = core.NewApplicationContext(nil)
-	}
 	// use application context copy for thread safety
 	appContextCopy := c.appContext.Copy()
 	common.InsertOperationId(appContextCopy)

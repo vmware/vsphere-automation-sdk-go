@@ -1,5 +1,6 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package data
 
@@ -7,8 +8,8 @@ import "github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
 
 var DATA_DEFINITION = "com.vmware.vapi.std.introspection.operation.data_definition"
 
-//this is not datadefinition interface. Its is type DataDefinition in Operation class.
-//So this method takes ErrorDefinition as input and outputs DataValue for d
+// this is not datadefinition interface. Its is type DataDefinition in Operation class.
+// So this method takes ErrorDefinition as input and outputs DataValue for d
 func ConvertOperationDataDefinitionToDataValue(dataDef DataDefinition) DataValue {
 	var result = NewStructValue(DATA_DEFINITION, nil)
 	var dataType = dataDef.Type().String()

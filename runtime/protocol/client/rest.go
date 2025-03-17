@@ -1,5 +1,6 @@
-/* Copyright © 2019-2021, 2023 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package client
 
@@ -76,9 +77,11 @@ func NewRestConnector(url string, client http.Client, options ...ConnectorOption
 // AddRequestProcessor adds request processor to connector.
 // Request processors are executed right before request is made to the server
 // Deprecated: use WithRequestProcessors instead, e.g.:
-// myProcessor := func(r *http.Request) error {
-// 		// your request processing logic goes here
-// }
+//
+//	myProcessor := func(r *http.Request) error {
+//			// your request processing logic goes here
+//	}
+//
 // NewConnector(address, UsingRest(nil), WithRequestProcessors(myProcessor)) instead
 func (r *RestConnector) AddRequestProcessor(processor rest.RequestProcessor) {
 	deprecatedProcessorWrapper := func(r *http.Request) error {
@@ -96,9 +99,11 @@ func (r *RestConnector) StatusCode() int {
 // SetEnableDefaultContentType specifies whether header parameters which maps to Content-Type to be overwritten
 // to value 'application/json'
 // Deprecated: enabling default content type should only be set when initializing connector:
-// rOptions = &RestClientOptions{
-//     enableDefaultContentType: false,
-// }
+//
+//	rOptions = &RestClientOptions{
+//	    enableDefaultContentType: false,
+//	}
+//
 // NewConnector(address, UsingRest(rOptions))
 func (r *RestConnector) SetEnableDefaultContentType(enableDefaultContentType bool) {
 	r.Options.(*DefaultRestClientOptions).enableDefaultContentType = enableDefaultContentType
@@ -106,9 +111,11 @@ func (r *RestConnector) SetEnableDefaultContentType(enableDefaultContentType boo
 
 // SetSecCtxSerializer sets a serializer to be used for specified authentication schemeID
 // Deprecated: security context serializers should only be set when initializing connector:
-// rOptions = &RestClientOptions{
-//     securityContextSerializerMap: securityContextSerializerMap,
-// }
+//
+//	rOptions = &RestClientOptions{
+//	    securityContextSerializerMap: securityContextSerializerMap,
+//	}
+//
 // NewConnector(address, UsingRest(rOptions))
 func (r *RestConnector) SetSecCtxSerializer(schemeID string, serializer protocol.SecurityContextSerializer) {
 	r.Options.(*DefaultRestClientOptions).securityContextSerializerMap[schemeID] = serializer

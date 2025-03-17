@@ -1,5 +1,6 @@
-/* Copyright © 2019, 2021 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package lib
 
@@ -42,10 +43,9 @@ const ERROR_DATA = "data"
 
 // Constants for REST presentation Layer
 const REST_OP_ID_HEADER = "X-Request-ID"
-const LOCALE = "locale"
 const AUTH_HEADER = "Authorization"
 
-//HTTP headers
+// HTTP headers
 const FORM_URL_CONTENT_TYPE = "application/x-www-form-urlencoded"
 const JSON_CONTENT_TYPE = "application/json"
 const TEXT_PLAIN_CONTENT_TYPE = "text/plain"

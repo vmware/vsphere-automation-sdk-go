@@ -1,9 +1,11 @@
-/* Copyright © 2019, 2021-2022 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package security
 
 import (
+	"crypto"
 	"encoding/json"
 )
 
@@ -35,7 +37,7 @@ func (s *SessionSecurityContext) SetProperty(property string, value interface{})
 	s.properties[property] = value
 }
 
-//UserPasswordSecurityContext represents a security context suitable for user/password authentication.
+// UserPasswordSecurityContext represents a security context suitable for user/password authentication.
 type UserPasswordSecurityContext struct {
 	properties map[string]interface{}
 }
@@ -109,23 +111,81 @@ type SAMLSecurityContext struct {
 	properties map[string]interface{}
 }
 
-// NewSAMLSecurityContext creates SAML security context to sign request with provided token and private key
-// 	example:
+// NewSAMLSecurityContext creates a security context for the given SAML
+// holder-of-key (HoK) token.
+//
+// When an API request is authenticated via a SAML HoK token, the request needs
+// to be signed with the private key associated with the SAML HoK token. This
+// signature is meant to prove that the sender of the request indeed holds the
+// private key.
+//
+// The given private key must be in PEM format. The given signature algorithm
+// must match the type of the private key, e.g. use security.RS256,
+// security.RS384 or security.RS512 for RSA private keys.
+//
+//	example:
 //		connector := client.NewConnector(
-//		"",
+//		"https://www.example.com/api",
 //		client.WithSecurityContext(NewSAMLSecurityContext(
-//			"myToken",
-//			"myKey",
+//			mySamlHolderOfKeyToken,
+//			myPEMencodedRSAkey,
 //			security.RS256)))
 //		client := NewSampleClient(connector)
 //		client.MyOperation()
-func NewSAMLSecurityContext(token, privateKey, signAlgorithm string) *SAMLSecurityContext {
-	properties := map[string]interface{}{}
-	properties[AUTHENTICATION_SCHEME_ID] = SAML_HOK_SCHEME_ID
-	properties[SAML_TOKEN] = token
-	properties[PRIVATE_KEY] = privateKey
-	properties[SIGNATURE_ALGORITHM] = signAlgorithm
-	return &SAMLSecurityContext{properties: properties}
+func NewSAMLSecurityContext(samlHokToken, privateKey, signAlgorithm string) *SAMLSecurityContext {
+	return &SAMLSecurityContext{
+		properties: map[string]interface{}{
+			AUTHENTICATION_SCHEME_ID: SAML_HOK_SCHEME_ID,
+			SAML_TOKEN:               samlHokToken,
+			PRIVATE_KEY:              privateKey,
+			SIGNATURE_ALGORITHM:      signAlgorithm,
+		},
+	}
+}
+
+// NewSAMLPrivateKeySecurityContext creates a security context for the given
+// SAML holder-of-key (HoK) token.
+//
+// When an API request is authenticated via a SAML HoK token, the request needs
+// to be signed with the private key associated with the SAML HoK token. This
+// signature is meant to prove that the sender of the request indeed holds the
+// private key.
+//
+// The given private key must be in PEM format. The given signature algorithm
+// must match the type of the private key, e.g. use security.RS256,
+// security.RS384 or security.RS512 for RSA private keys.
+//
+//		example:
+//	     var myRSAPrivateKey rsa.PrivateKey
+//	     ...
+//			connector := client.NewConnector(
+//			"https://www.example.com/api",
+//			client.WithSecurityContext(NewSAMLPrivateKeySecurityContext(
+//				mySamlHolderOfKeyToken,
+//				myRSAPrivateKey,
+//				security.RS256)))
+//			client := NewSampleClient(connector)
+//			client.MyOperation()
+func NewSAMLPrivateKeySecurityContext(samlHokToken string, privateKey crypto.PrivateKey, signAlgorithm string) *SAMLSecurityContext {
+	return &SAMLSecurityContext{
+		properties: map[string]interface{}{
+			AUTHENTICATION_SCHEME_ID: SAML_HOK_SCHEME_ID,
+			SAML_TOKEN:               samlHokToken,
+			PRIVATE_KEY:              privateKey,
+			SIGNATURE_ALGORITHM:      signAlgorithm,
+		},
+	}
+}
+
+// NewSAMLBearerSecurityContext creates a security context for the given SAML
+// bearer token.
+func NewSAMLBearerSecurityContext(samlBearerToken string) *SAMLSecurityContext {
+	return &SAMLSecurityContext{
+		properties: map[string]interface{}{
+			AUTHENTICATION_SCHEME_ID: SAML_BEARER_SCHEME_ID,
+			SAML_TOKEN:               samlBearerToken,
+		},
+	}
 }
 
 func (o *SAMLSecurityContext) Property(key string) interface{} {
@@ -133,7 +193,7 @@ func (o *SAMLSecurityContext) Property(key string) interface{} {
 }
 
 func (o *SAMLSecurityContext) Token() string {
-	return o.properties[ACCESS_TOKEN].(string)
+	return o.properties[SAML_TOKEN].(string)
 }
 
 func (o *SAMLSecurityContext) GetAllProperties() map[string]interface{} {
@@ -145,5 +205,13 @@ func (o *SAMLSecurityContext) SetProperty(key string, value interface{}) {
 }
 
 func (o *SAMLSecurityContext) MarshalJSON() ([]byte, error) {
-	return json.Marshal(o.properties)
+	var marshallable map[string]interface{}
+	if SAML_HOK_SCHEME_ID == o.properties[AUTHENTICATION_SCHEME_ID] {
+		// SAML HoK requires sophisticated serialization - see JsonSsoSigner.
+		// Here just include the scheme id for easier troubleshooting.
+		marshallable = map[string]interface{}{AUTHENTICATION_SCHEME_ID: SAML_HOK_SCHEME_ID}
+	} else {
+		marshallable = o.properties
+	}
+	return json.Marshal(marshallable)
 }

@@ -1,15 +1,17 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package l10n
 
 import (
 	"fmt"
+	"strings"
+	"time"
+
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
-	"strings"
-	"time"
 )
 
 // Localizes values and strings with particular localization settings including
@@ -65,8 +67,6 @@ func NewMessageFormatter(acceptLocale *language.Tag,
 	}
 	floatFormat := fmt.Sprintf("%%.%df", *precision)
 	messagePrinter := message.NewPrinter(*acceptLocale, message.Catalog(catalog))
-	log.Infof("Message formatter created for %v, %v, %v, %v, %v",
-		*acceptLocale, *formatLocale, timezone.String(), *precision, *dateTimeFormat)
 	return MessageFormatter{*acceptLocale, messagePrinter,
 		*formatLocale, *timezone, *precision,
 		floatFormat, *dateTimeFormat}

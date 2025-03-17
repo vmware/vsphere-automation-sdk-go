@@ -1,12 +1,17 @@
-/* Copyright © 2020-2021 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2020-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package rest
 
 import (
+	"bytes"
+	"compress/gzip"
 	"encoding/base64"
 	"errors"
 	"fmt"
+
+	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
 
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
@@ -91,3 +96,54 @@ func (o *OauthSecContextSerializer) Serialize(ctx core.SecurityContext) (map[str
 }
 
 var _ protocol.SecurityContextSerializer = NewOauthSecContextSerializer()
+
+type SamlBearerSecContextSerializer struct {
+}
+
+func NewSamlBearerSecContextSerializer() *SamlBearerSecContextSerializer {
+	return &SamlBearerSecContextSerializer{}
+}
+
+// Serialize a SAML bearer token into an HTTP Authorization header
+func (s *SamlBearerSecContextSerializer) Serialize(ctx core.SecurityContext) (map[string]interface{}, error) {
+	// see https://wiki.eng.vmware.com/SSO/REST
+	// see https://wiki.eng.vmware.com/VAPI/APIEndpoint/REST_API_Authentication
+	samlToken, err := GetSecurityCtxStrValue(ctx, security.SAML_TOKEN)
+	if err != nil {
+		return nil, err
+	}
+	if samlToken == nil || *samlToken == "" {
+		err := errors.New("missing SAML token")
+		return nil, err
+	}
+	encodedToken, err := encodeSamlToken(*samlToken)
+	if err != nil {
+		return nil, err
+	}
+	headerVal := fmt.Sprintf("SIGN token=\"%s\"", encodedToken)
+	return map[string]interface{}{lib.AUTH_HEADER: headerVal}, nil
+}
+
+func encodeSamlToken(samlToken string) (string, error) {
+	gzipped, err := gzipString(samlToken)
+	if err != nil {
+		return "", err
+	}
+	return base64.StdEncoding.EncodeToString(gzipped), nil
+}
+
+func gzipString(s string) ([]byte, error) {
+	var buffer bytes.Buffer
+	gzipWriter := gzip.NewWriter(&buffer)
+	_, err := gzipWriter.Write([]byte(s))
+	if err != nil {
+		return nil, err
+	}
+	err = gzipWriter.Close()
+	if err != nil {
+		return nil, err
+	}
+	return buffer.Bytes(), nil
+}
+
+var _ protocol.SecurityContextSerializer = NewSamlBearerSecContextSerializer()

@@ -1,5 +1,6 @@
-/* Copyright © 2019, 2022 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package msg
 
@@ -8,13 +9,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"reflect"
+	"strconv"
+	"strings"
+
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/log"
-	"reflect"
-	"strconv"
-	"strings"
 )
 
 var structValuePtr = reflect.TypeOf((*data.StructValue)(nil))
@@ -152,13 +154,11 @@ func NewJsonRpcRequestErrorSerializer(requestError *JsonRpcRequestError) *JsonRp
 
 func (j *JsonRpcRequestErrorSerializer) MarshalJSON() ([]byte, error) {
 
-	var result = make(map[string]interface{})
+	result := make(map[string]interface{})
+	result[lib.JSONRPC] = lib.JSONRPC_VERSION
 	jsonRpcRequest := j.jsonRpcRequestError.jsonRpc20Request
 	if jsonRpcRequest != nil {
-		result[lib.JSONRPC] = jsonRpcRequest.version
-		if !j.jsonRpcRequestError.jsonRpc20Request.notification {
-			result[lib.JSONRPC_ID] = j.jsonRpcRequestError.jsonRpc20Request.id
-		}
+		result[lib.JSONRPC_ID] = j.jsonRpcRequestError.jsonRpc20Request.id
 	}
 	jsonRpc20Error := j.jsonRpcRequestError.jsonRpc20Error
 	if jsonRpc20Error != nil {
@@ -404,12 +404,10 @@ func NewJsonRpc20RequestSerializer(jsonRequest JsonRpc20Request) JsonRpc20Reques
 
 func (jsonreq JsonRpc20RequestSerializer) MarshalJSON() ([]byte, error) {
 	var result = make(map[string]interface{})
-	result[lib.JSONRPC] = jsonreq.jsonRequest.version
-	result[lib.JSONRPC_METHOD] = jsonreq.jsonRequest.method
+	result[lib.JSONRPC] = lib.JSONRPC_VERSION
+	result[lib.JSONRPC_METHOD] = lib.JSONRPC_INVOKE
 	result[lib.JSONRPC_PARAMS] = jsonreq.jsonRequest.params
-	if !jsonreq.jsonRequest.notification {
-		result[lib.JSONRPC_ID] = jsonreq.jsonRequest.id
-	}
+	result[lib.JSONRPC_ID] = jsonreq.jsonRequest.id
 	return json.Marshal(result)
 }
 
@@ -424,7 +422,7 @@ func NewJsonRpc20ResponseSerializer(response JsonRpc20Response, redactSecret boo
 
 func (jsonResp JsonRpc20ResponseSerializer) MarshalJSON() ([]byte, error) {
 	var result = make(map[string]interface{})
-	result[lib.JSONRPC] = jsonResp.jsonResponse.version
+	result[lib.JSONRPC] = lib.JSONRPC_VERSION
 	result[lib.JSONRPC_ID] = jsonResp.jsonResponse.id
 	if jsonResp.jsonResponse.result != nil {
 		result[lib.METHOD_RESULT] = getCustomSerializer(jsonResp.jsonResponse.result, jsonResp.redactSecret)

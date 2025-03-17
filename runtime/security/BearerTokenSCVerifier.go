@@ -1,5 +1,6 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package security
 
@@ -17,12 +18,14 @@ func NewBearerTokenSCVerifier() *BearerTokenSCVerifier {
 }
 
 // verify if the json payload that is passed contains valid bearer token and corresponding scheme ID
-func (j *BearerTokenSCVerifier) Process(jsonMessage *map[string]interface{}) error {
+func (j *BearerTokenSCVerifier) Process(jsonMessage map[string]interface{}) error {
 
 	securityContext, err := GetSecurityContext(jsonMessage)
 	if err != nil {
-		// does not have to propogated to higher layers.
-		// it is okay for some requests to not include security context.
+		return err
+	}
+	if securityContext == nil {
+		// anonymous requests have no security context
 		return nil
 	}
 

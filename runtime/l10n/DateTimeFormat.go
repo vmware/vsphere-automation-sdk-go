@@ -1,5 +1,6 @@
-/* Copyright © 2019 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package l10n
 
@@ -54,7 +55,7 @@ const (
 // full, long, medium and short with 3 different presentations - date only,
 // time only and combined date and time presentation.
 // Each layout string (used for formatting) is a representation of the time stamp,
-//Mon Jan 2 15:04:05 -0700 MST 2006
+// Mon Jan 2 15:04:05 -0700 MST 2006
 var DateTimeFormats map[string]string
 
 func initDateTimeFormats() {

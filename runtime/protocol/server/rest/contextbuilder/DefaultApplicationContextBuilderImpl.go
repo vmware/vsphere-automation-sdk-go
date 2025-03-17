@@ -1,14 +1,16 @@
-/* Copyright © 2020 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2020-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package contextbuilder
 
 import (
+	"net/http"
+	"strings"
+
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/common"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	"github.com/vmware/vsphere-automation-sdk-go/runtime/lib"
-	"net/http"
-	"strings"
 )
 
 type DefaultApplicationContextBuilderImpl struct {
@@ -31,10 +33,10 @@ func (appCtx *DefaultApplicationContextBuilderImpl) BuildApplicationContext(r *h
 
 	wireData := make(map[string]*string)
 	headerTokeyMap := map[string]string{
-		lib.REST_OP_ID_HEADER:       lib.OPID,
-		lib.HTTP_ACCEPT_LANGUAGE:    lib.LOCALE,
-		lib.VAPI_L10N_FORMAT_LOCALE: lib.VAPI_L10N_FORMAT_LOCALE,
-		lib.VAPI_L10N_TIMEZONE:      lib.VAPI_L10N_TIMEZONE,
+		lib.REST_OP_ID_HEADER:                                lib.OPID,
+		lib.HTTP_ACCEPT_LANGUAGE:                             lib.HTTP_ACCEPT_LANGUAGE,
+		lib.VAPI_HEADER_PREFIX + lib.VAPI_L10N_FORMAT_LOCALE: lib.VAPI_L10N_FORMAT_LOCALE,
+		lib.VAPI_HEADER_PREFIX + lib.VAPI_L10N_TIMEZONE:      lib.VAPI_L10N_TIMEZONE,
 	}
 
 	canonicalHeaderTokeyMap := appCtx.canonicalKeyMap(headerTokeyMap)

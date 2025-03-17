@@ -1,5 +1,6 @@
-/* Copyright © 2019, 2021 VMware, Inc. All Rights Reserved.
-   SPDX-License-Identifier: BSD-2-Clause */
+// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
 
 package l10n
 
@@ -15,7 +16,7 @@ func NewError(id string, defaultMessage string, args map[string]string) *Error {
 	return &Error{id: id, defaultMessage: defaultMessage, args: args}
 }
 
-//Creates a Error by looking for id in the runtime message bundle
+// Creates a Error by looking for id in the runtime message bundle
 func NewRuntimeError(id string, args map[string]string) *Error {
 	if args == nil {
 		args = map[string]string{}
