@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,62 +10,63 @@
 package mac_sets
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type MacSetsNsxtClient interface {
 
-	// Read an MACSet
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param enforcementPointNameParam Enforcement Point Name (required)
-	// @param macSetNameParam MACSet name (required)
-	// @return com.vmware.nsx_policy.model.GenericPolicyRealizedResource
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read an MACSet
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param enforcementPointNameParam Enforcement Point Name (required)
+    // @param macSetNameParam MACSet name (required)
+    // @return com.vmware.nsx_policy.model.GenericPolicyRealizedResource
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(enforcementPointNameParam string, macSetNameParam string) (nsx_policyModel.GenericPolicyRealizedResource, error)
 
-	// Paginated list of all Realized MACSets
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param enforcementPointNameParam Enforcement Point Name (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.GenericPolicyRealizedResourceListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Paginated list of all Realized MACSets
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param enforcementPointNameParam Enforcement Point Name (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.GenericPolicyRealizedResourceListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(enforcementPointNameParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.GenericPolicyRealizedResourceListResult, error)
 }
 
+
 type macSetsNsxtClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewMacSetsNsxtClient(connector vapiProtocolClient_.Connector) *macSetsNsxtClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.realized_state.enforcement_points.mac_sets.mac_sets_nsxt")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -151,3 +152,4 @@ func (mIface *macSetsNsxtClient) List(enforcementPointNameParam string, cursorPa
 		return emptyOutput, methodError.(error)
 	}
 }
+

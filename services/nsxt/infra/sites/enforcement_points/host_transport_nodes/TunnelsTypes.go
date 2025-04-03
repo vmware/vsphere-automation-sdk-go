@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -12,93 +12,70 @@
 package host_transport_nodes
 
 import (
+	"reflect"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
-	"reflect"
 )
 
 // Possible value for ``source`` of method Tunnels#get.
 const Tunnels_GET_SOURCE_REALTIME = "realtime"
-
 // Possible value for ``source`` of method Tunnels#get.
 const Tunnels_GET_SOURCE_CACHED = "cached"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_0 = "0"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_NO_DIAGNOSTIC = "NO_DIAGNOSTIC"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_1 = "1"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_CONTROL_DETECTION_TIME_EXPIRED = "CONTROL_DETECTION_TIME_EXPIRED"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_2 = "2"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_ECHO_FUNCTION_FAILED = "ECHO_FUNCTION_FAILED"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_3 = "3"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_NEIGHBOR_SIGNALED_SESSION_DOWN = "NEIGHBOR_SIGNALED_SESSION_DOWN"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_4 = "4"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_FORWARDING_PLANE_RESET = "FORWARDING_PLANE_RESET"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_5 = "5"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_PATH_DOWN = "PATH_DOWN"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_6 = "6"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_CONCATENATED_PATH_DOWN = "CONCATENATED_PATH_DOWN"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_7 = "7"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_ADMINISTRATIVELY_DOWN = "ADMINISTRATIVELY_DOWN"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_8 = "8"
-
 // Possible value for ``bfdDiagnosticCode`` of method Tunnels#list.
 const Tunnels_LIST_BFD_DIAGNOSTIC_CODE_REVERSE_CONCATENATED_PATH_DOWN = "REVERSE_CONCATENATED_PATH_DOWN"
-
 // Possible value for ``encap`` of method Tunnels#list.
 const Tunnels_LIST_ENCAP_UNKNOWN_ENCAP = "UNKNOWN_ENCAP"
-
 // Possible value for ``encap`` of method Tunnels#list.
 const Tunnels_LIST_ENCAP_GENEVE = "GENEVE"
-
 // Possible value for ``encap`` of method Tunnels#list.
 const Tunnels_LIST_ENCAP_VXLAN = "VXLAN"
-
 // Possible value for ``source`` of method Tunnels#list.
 const Tunnels_LIST_SOURCE_REALTIME = "realtime"
-
 // Possible value for ``source`` of method Tunnels#list.
 const Tunnels_LIST_SOURCE_CACHED = "cached"
-
 // Possible value for ``status`` of method Tunnels#list.
 const Tunnels_LIST_STATUS_UP = "UP"
-
 // Possible value for ``status`` of method Tunnels#list.
 const Tunnels_LIST_STATUS_DOWN = "DOWN"
+
+
+
 
 func tunnelsGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -174,7 +151,7 @@ func tunnelsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func tunnelsListInputType() vapiBindings_.StructType {
@@ -298,5 +275,7 @@ func tunnelsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
+
+

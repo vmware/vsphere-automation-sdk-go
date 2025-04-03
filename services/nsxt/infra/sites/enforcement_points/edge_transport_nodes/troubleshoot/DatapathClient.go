@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,54 +10,55 @@
 package troubleshoot
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DatapathClient interface {
 
-	// This API used to fetch the control packet drop log config at enforcement Point level.
-	//
-	// @param siteIdParam (required)
-	// @param enforcementPointIdParam (required)
-	// @return com.vmware.nsx_policy.model.PolicyEdgeTransportNodeDatapathTroubleshooting
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This API is used to fetch the control packet drop log config at enforcement Point level.
+    //
+    // @param siteIdParam (required)
+    // @param enforcementPointIdParam (required)
+    // @return com.vmware.nsx_policy.model.PolicyEdgeTransportNodeDatapathTroubleshooting
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementPointIdParam string) (nsx_policyModel.PolicyEdgeTransportNodeDatapathTroubleshooting, error)
 
-	// This API is used to enable/disable the control packet drop log config in all edge transport nodes at the enforcement Point level.
-	//
-	// @param siteIdParam (required)
-	// @param enforcementPointIdParam (required)
-	// @param policyEdgeTransportNodeDatapathTroubleshootingParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This API is used to enable/disable the control packet drop log config in all edge transport nodes at the enforcement Point level.
+    //
+    // @param siteIdParam (required)
+    // @param enforcementPointIdParam (required)
+    // @param policyEdgeTransportNodeDatapathTroubleshootingParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(siteIdParam string, enforcementPointIdParam string, policyEdgeTransportNodeDatapathTroubleshootingParam nsx_policyModel.PolicyEdgeTransportNodeDatapathTroubleshooting) error
 }
 
+
 type datapathClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewDatapathClient(connector vapiProtocolClient_.Connector) *datapathClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.enforcement_points.edge_transport_nodes.troubleshoot.datapath")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -134,3 +135,4 @@ func (dIface *datapathClient) Patch(siteIdParam string, enforcementPointIdParam 
 		return methodError.(error)
 	}
 }
+

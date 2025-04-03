@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,106 +10,107 @@
 package infra
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type IpsecVpnIkeProfilesClient interface {
 
-	// Delete custom IKE Profile. Profile can not be deleted if profile has references to it.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param ikeProfileIdParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete custom IKE Profile. Profile can not be deleted if profile has references to it.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param ikeProfileIdParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, ikeProfileIdParam string) error
 
-	// Get custom IKE Profile, given the particular id.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param ikeProfileIdParam (required)
-	// @return com.vmware.nsx_policy.model.IPSecVpnIkeProfile
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get custom IKE Profile, given the particular id.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param ikeProfileIdParam (required)
+    // @return com.vmware.nsx_policy.model.IPSecVpnIkeProfile
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, ikeProfileIdParam string) (nsx_policyModel.IPSecVpnIkeProfile, error)
 
-	// Get paginated list of all IKE Profiles.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.IPSecVpnIkeProfileListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get paginated list of all IKE Profiles.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.IPSecVpnIkeProfileListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPSecVpnIkeProfileListResult, error)
 
-	// Create or patch custom internet key exchange (IKE) Profile. IKE Profile is a reusable profile that captures IKE and phase one negotiation parameters. System will be pre provisioned with system owned editable default IKE profile and suggested set of profiles that can be used for peering with popular remote peers like AWS VPN. User can create custom profiles as needed. Any change in profile affects all sessions consuming this profile.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param ikeProfileIdParam (required)
-	// @param ipSecVpnIkeProfileParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create or patch custom internet key exchange (IKE) Profile. IKE Profile is a reusable profile that captures IKE and phase one negotiation parameters. System will be pre provisioned with system owned editable default IKE profile and suggested set of profiles that can be used for peering with popular remote peers like AWS VPN. User can create custom profiles as needed. Any change in profile affects all sessions consuming this profile.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param ikeProfileIdParam (required)
+    // @param ipSecVpnIkeProfileParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, ikeProfileIdParam string, ipSecVpnIkeProfileParam nsx_policyModel.IPSecVpnIkeProfile) error
 
-	// Create or fully replace custom internet key exchange (IKE) Profile. IKE Profile is a reusable profile that captures IKE and phase one negotiation parameters. System will be pre provisioned with system owned editable default IKE profile and suggested set of profiles that can be used for peering with popular remote peers like AWS VPN. User can create custom profiles as needed. Any change in profile affects all sessions consuming this profile. Revision is optional for creation and required for update.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param ikeProfileIdParam (required)
-	// @param ipSecVpnIkeProfileParam (required)
-	// @return com.vmware.nsx_policy.model.IPSecVpnIkeProfile
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create or fully replace custom internet key exchange (IKE) Profile. IKE Profile is a reusable profile that captures IKE and phase one negotiation parameters. System will be pre provisioned with system owned editable default IKE profile and suggested set of profiles that can be used for peering with popular remote peers like AWS VPN. User can create custom profiles as needed. Any change in profile affects all sessions consuming this profile. Revision is optional for creation and required for update.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param ikeProfileIdParam (required)
+    // @param ipSecVpnIkeProfileParam (required)
+    // @return com.vmware.nsx_policy.model.IPSecVpnIkeProfile
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(orgIdParam string, projectIdParam string, ikeProfileIdParam string, ipSecVpnIkeProfileParam nsx_policyModel.IPSecVpnIkeProfile) (nsx_policyModel.IPSecVpnIkeProfile, error)
 }
 
+
 type ipsecVpnIkeProfilesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewIpsecVpnIkeProfilesClient(connector vapiProtocolClient_.Connector) *ipsecVpnIkeProfilesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.infra.ipsec_vpn_ike_profiles")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -290,3 +291,4 @@ func (iIface *ipsecVpnIkeProfilesClient) Update(orgIdParam string, projectIdPara
 		return emptyOutput, methodError.(error)
 	}
 }
+

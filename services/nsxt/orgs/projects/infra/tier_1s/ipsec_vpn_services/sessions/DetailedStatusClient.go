@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,40 +10,41 @@
 package sessions
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DetailedStatusClient interface {
 
-	// - no enforcement point path specified: detailed status is evaluated on each enforcement point. - an enforcement point path is specified: detailed status is evaluated only on the given enforcement point. - source=realtime: detailed status is fetched realtime from the enforcement point. - source=cached: cached detailed status from enforcement point is returned.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param tier1IdParam (required)
-	// @param serviceIdParam (required)
-	// @param sessionIdParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @param sourceParam Data source type. (optional)
-	// @return com.vmware.nsx_policy.model.AggregateIPSecVpnSessionStatus
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // - no enforcement point path specified: detailed status is evaluated on each enforcement point. - an enforcement point path is specified: detailed status is evaluated only on the given enforcement point. - source=realtime: detailed status is fetched realtime from the enforcement point. - source=cached: cached detailed status from enforcement point is returned.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param tier1IdParam (required)
+    // @param serviceIdParam (required)
+    // @param sessionIdParam (required)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    // @param sourceParam Data source type. (optional)
+    // @return com.vmware.nsx_policy.model.AggregateIPSecVpnSessionStatus
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, tier1IdParam string, serviceIdParam string, sessionIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.AggregateIPSecVpnSessionStatus, error)
 }
 
+
 type detailedStatusClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewDetailedStatusClient(connector vapiProtocolClient_.Connector) *detailedStatusClient {
@@ -102,3 +103,4 @@ func (dIface *detailedStatusClient) Get(orgIdParam string, projectIdParam string
 		return emptyOutput, methodError.(error)
 	}
 }
+

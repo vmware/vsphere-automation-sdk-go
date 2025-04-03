@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -12,20 +12,26 @@
 package enforcement_points
 
 import (
+	"reflect"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
-	"reflect"
 )
+
+
+
+
 
 func transportZonesAggstatusGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
+	fields["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
+	fieldNameMap["include_system_owned"] = "IncludeSystemOwned"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -45,14 +51,18 @@ func transportZonesAggstatusGetRestMetadata() vapiProtocol_.OperationRestMetadat
 	bodyFieldsMap := map[string]string{}
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
+	fields["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
+	fieldNameMap["include_system_owned"] = "IncludeSystemOwned"
+	paramsTypeMap["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["enforcement_point_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["enforcementPointId"] = vapiBindings_.NewStringType()
 	pathParams["site_id"] = "siteId"
 	pathParams["enforcement_point_id"] = "enforcementPointId"
+	queryParams["include_system_owned"] = "include_system_owned"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -73,5 +83,7 @@ func transportZonesAggstatusGetRestMetadata() vapiProtocol_.OperationRestMetadat
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
+
+

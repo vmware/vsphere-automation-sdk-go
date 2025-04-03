@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,35 +10,36 @@
 package infra
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LbNodeUsageClient interface {
 
-	// API is used to retrieve node usage for load balancer which contains basic information, LB entity usages and capacities for the given node. Currently only edge node is supported. The parameter ?node_path=<node-path> is required. For example, ?node_path= /infra/sites/default/enforcement-points/default/edge-clusters/ 85175e0b-4d74-461d-83e1-f3b785adef9c/edge-nodes/0. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
-	//
-	// @param nodePathParam The node path for load balancer node usage (required)
-	// @return com.vmware.nsx_policy.model.LBNodeUsage
-	// The return value will contain all the properties defined in nsx_policyModel.LBNodeUsage.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // API is used to retrieve node usage for load balancer which contains basic information, LB entity usages and capacities for the given node. Currently only edge node is supported. The parameter ?node_path=<node-path> is required. For example, ?node_path= /infra/sites/default/enforcement-points/default/edge-clusters/ 85175e0b-4d74-461d-83e1-f3b785adef9c/edge-nodes/0. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+    //
+    // @param nodePathParam The node path for load balancer node usage (required)
+    // @return com.vmware.nsx_policy.model.LBNodeUsage
+    // The return value will contain all the properties defined in nsx_policyModel.LBNodeUsage.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(nodePathParam string) (*vapiData_.StructValue, error)
 }
 
+
 type lbNodeUsageClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewLbNodeUsageClient(connector vapiProtocolClient_.Connector) *lbNodeUsageClient {
@@ -91,3 +92,4 @@ func (lIface *lbNodeUsageClient) Get(nodePathParam string) (*vapiData_.StructVal
 		return emptyOutput, methodError.(error)
 	}
 }
+

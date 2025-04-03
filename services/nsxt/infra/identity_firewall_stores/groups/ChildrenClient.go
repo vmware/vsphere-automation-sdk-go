@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,36 +10,37 @@
 package groups
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ChildrenClient interface {
 
-	// A member group could be either direct member of the group specified by group_id or nested member of it. Both direct member groups and nested member groups are returned.
-	//
-	// @param identityFirewallStoreIdParam Firewall Identity store identifier (required)
-	// @param groupIdParam Directory group identifier (required)
-	// @param includeUsersParam include users filter (required)
-	// @return com.vmware.nsx_policy.model.IdentityFirewallStoreUserOrGrouptListResults
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // A member group could be either direct member of the group specified by group_id or nested member of it. Both direct member groups and nested member groups are returned.
+    //
+    // @param identityFirewallStoreIdParam Firewall Identity store identifier (required)
+    // @param groupIdParam Directory group identifier (required)
+    // @param includeUsersParam include users filter (required)
+    // @return com.vmware.nsx_policy.model.IdentityFirewallStoreUserOrGrouptListResults
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(identityFirewallStoreIdParam string, groupIdParam string, includeUsersParam bool) (nsx_policyModel.IdentityFirewallStoreUserOrGrouptListResults, error)
 }
 
+
 type childrenClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewChildrenClient(connector vapiProtocolClient_.Connector) *childrenClient {
@@ -94,3 +95,4 @@ func (cIface *childrenClient) List(identityFirewallStoreIdParam string, groupIdP
 		return emptyOutput, methodError.(error)
 	}
 }
+

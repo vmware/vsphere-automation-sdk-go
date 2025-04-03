@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,99 +10,100 @@
 package infra
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type CabundlesClient interface {
 
-	// Deletes the specified bundle of trusted CA certificates.
-	//
-	// @param cabundleIdParam ID of the CA bundle to delete (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Deletes the specified bundle of trusted CA certificates.
+    //
+    // @param cabundleIdParam ID of the CA bundle to delete (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(cabundleIdParam string) error
 
-	// Returns information about the specified bundle of trusted CA certificates.
-	//
-	// @param cabundleIdParam ID of the CA bundle to retrieve (required)
-	// @return com.vmware.nsx_policy.model.CaBundle
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Returns information about the specified bundle of trusted CA certificates.
+    //
+    // @param cabundleIdParam ID of the CA bundle to retrieve (required)
+    // @return com.vmware.nsx_policy.model.CaBundle
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(cabundleIdParam string) (nsx_policyModel.CaBundle, error)
 
-	// Returns information about all the bundles of trusted CA certificates.
-	//
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param detailsParam whether to expand the pem data and show all its details (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param nodeIdParam Node ID of certificate to return (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @param type_Param Type of certificate to return (optional)
-	// @return com.vmware.nsx_policy.model.CaBundleListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Returns information about all the bundles of trusted CA certificates.
+    //
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param detailsParam whether to expand the pem data and show all its details (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param nodeIdParam Node ID of certificate to return (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @param type_Param Type of certificate to return (optional)
+    // @return com.vmware.nsx_policy.model.CaBundleListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(cursorParam *string, detailsParam *bool, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsx_policyModel.CaBundleListResult, error)
 
-	// Adds or updates a new bundle of trusted CA certificates. The bundle must be a concatenation of one or more PEM-encoded certificates. The PEM-encoded bundle is replaced with the one provided in the request.
-	//
-	// @param cabundleIdParam ID of the CA bundle being updated (required)
-	// @param caBundleParam (required)
-	// @return com.vmware.nsx_policy.model.CaBundle
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Adds or updates a new bundle of trusted CA certificates. The bundle must be a concatenation of one or more PEM-encoded certificates. The PEM-encoded bundle is replaced with the one provided in the request.
+    //
+    // @param cabundleIdParam ID of the CA bundle being updated (required)
+    // @param caBundleParam (required)
+    // @return com.vmware.nsx_policy.model.CaBundle
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(cabundleIdParam string, caBundleParam nsx_policyModel.CaBundle) (nsx_policyModel.CaBundle, error)
 
-	// Adds or replaces a new bundle of trusted CA certificates. The bundle must be a concatenation of one or more PEM-encoded certificates.
-	//
-	// @param cabundleIdParam ID of the CA bundle being uploaded (required)
-	// @param caBundleParam (required)
-	// @return com.vmware.nsx_policy.model.CaBundle
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Adds or replaces a new bundle of trusted CA certificates. The bundle must be a concatenation of one or more PEM-encoded certificates.
+    //
+    // @param cabundleIdParam ID of the CA bundle being uploaded (required)
+    // @param caBundleParam (required)
+    // @return com.vmware.nsx_policy.model.CaBundle
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(cabundleIdParam string, caBundleParam nsx_policyModel.CaBundle) (nsx_policyModel.CaBundle, error)
 }
 
+
 type cabundlesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewCabundlesClient(connector vapiProtocolClient_.Connector) *cabundlesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.cabundles")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -281,3 +282,4 @@ func (cIface *cabundlesClient) Update(cabundleIdParam string, caBundleParam nsx_
 		return emptyOutput, methodError.(error)
 	}
 }
+

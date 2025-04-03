@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,109 +10,110 @@
 package infra
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SegmentSecurityProfilesClient interface {
 
-	// API will delete segment security profile with the given id.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param segmentSecurityProfileIdParam Segment security profile id (required)
-	// @param overrideParam Locally override the global object (optional, default to false)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // API will delete segment security profile with the given id.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param segmentSecurityProfileIdParam Segment security profile id (required)
+    // @param overrideParam Locally override the global object (optional, default to false)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, segmentSecurityProfileIdParam string, overrideParam *bool) error
 
-	// API will return details of the segment security profile with given id. If the profile does not exist, it will return 404.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param segmentSecurityProfileIdParam Segment security profile id (required)
-	// @return com.vmware.nsx_policy.model.SegmentSecurityProfile
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // API will return details of the segment security profile with given id. If the profile does not exist, it will return 404.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param segmentSecurityProfileIdParam Segment security profile id (required)
+    // @return com.vmware.nsx_policy.model.SegmentSecurityProfile
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, segmentSecurityProfileIdParam string) (nsx_policyModel.SegmentSecurityProfile, error)
 
-	// API will list all segment security profiles.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.SegmentSecurityProfileListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // API will list all segment security profiles.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.SegmentSecurityProfileListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SegmentSecurityProfileListResult, error)
 
-	// Create a new segment security profile if the segment security profile with given id does not exist. Otherwise, PATCH the existing segment security profile
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param segmentSecurityProfileIdParam Segment security profile id (required)
-	// @param segmentSecurityProfileParam (required)
-	// @param overrideParam Locally override the global object (optional, default to false)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create a new segment security profile if the segment security profile with given id does not exist. Otherwise, PATCH the existing segment security profile
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param segmentSecurityProfileIdParam Segment security profile id (required)
+    // @param segmentSecurityProfileParam (required)
+    // @param overrideParam Locally override the global object (optional, default to false)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, segmentSecurityProfileIdParam string, segmentSecurityProfileParam nsx_policyModel.SegmentSecurityProfile, overrideParam *bool) error
 
-	// Create or replace a segment security profile
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param segmentSecurityProfileIdParam Segment security profile id (required)
-	// @param segmentSecurityProfileParam (required)
-	// @param overrideParam Locally override the global object (optional, default to false)
-	// @return com.vmware.nsx_policy.model.SegmentSecurityProfile
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create or replace a segment security profile
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param segmentSecurityProfileIdParam Segment security profile id (required)
+    // @param segmentSecurityProfileParam (required)
+    // @param overrideParam Locally override the global object (optional, default to false)
+    // @return com.vmware.nsx_policy.model.SegmentSecurityProfile
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(orgIdParam string, projectIdParam string, segmentSecurityProfileIdParam string, segmentSecurityProfileParam nsx_policyModel.SegmentSecurityProfile, overrideParam *bool) (nsx_policyModel.SegmentSecurityProfile, error)
 }
 
+
 type segmentSecurityProfilesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewSegmentSecurityProfilesClient(connector vapiProtocolClient_.Connector) *segmentSecurityProfilesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.infra.segment_security_profiles")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -296,3 +297,4 @@ func (sIface *segmentSecurityProfilesClient) Update(orgIdParam string, projectId
 		return emptyOutput, methodError.(error)
 	}
 }
+

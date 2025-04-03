@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -12,12 +12,16 @@
 package infra
 
 import (
+	"reflect"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
-	"reflect"
 )
+
+
+
+
 
 func identityFirewallStoresDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -72,7 +76,7 @@ func identityFirewallStoresDeleteRestMetadata() vapiProtocol_.OperationRestMetad
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func identityFirewallStoresGetInputType() vapiBindings_.StructType {
@@ -87,7 +91,7 @@ func identityFirewallStoresGetInputType() vapiBindings_.StructType {
 }
 
 func IdentityFirewallStoresGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType),})
 }
 
 func identityFirewallStoresGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -128,7 +132,7 @@ func identityFirewallStoresGetRestMetadata() vapiProtocol_.OperationRestMetadata
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func identityFirewallStoresListInputType() vapiBindings_.StructType {
@@ -207,14 +211,14 @@ func identityFirewallStoresListRestMetadata() vapiProtocol_.OperationRestMetadat
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func identityFirewallStoresPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["identity_firewall_store_id"] = vapiBindings_.NewStringType()
-	fields["identity_firewall_store"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType)})
+	fields["identity_firewall_store"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType),})
 	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["identity_firewall_store_id"] = "IdentityFirewallStoreId"
 	fieldNameMap["identity_firewall_store"] = "IdentityFirewallStore"
@@ -237,12 +241,12 @@ func identityFirewallStoresPatchRestMetadata() vapiProtocol_.OperationRestMetada
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["identity_firewall_store_id"] = vapiBindings_.NewStringType()
-	fields["identity_firewall_store"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType)})
+	fields["identity_firewall_store"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType),})
 	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["identity_firewall_store_id"] = "IdentityFirewallStoreId"
 	fieldNameMap["identity_firewall_store"] = "IdentityFirewallStore"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
-	paramsTypeMap["identity_firewall_store"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType)})
+	paramsTypeMap["identity_firewall_store"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType),})
 	paramsTypeMap["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["identity_firewall_store_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["identityFirewallStoreId"] = vapiBindings_.NewStringType()
@@ -268,14 +272,14 @@ func identityFirewallStoresPatchRestMetadata() vapiProtocol_.OperationRestMetada
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func identityFirewallStoresUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["identity_firewall_store_id"] = vapiBindings_.NewStringType()
-	fields["identity_firewall_store"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType)})
+	fields["identity_firewall_store"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType),})
 	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["identity_firewall_store_id"] = "IdentityFirewallStoreId"
 	fieldNameMap["identity_firewall_store"] = "IdentityFirewallStore"
@@ -285,7 +289,7 @@ func identityFirewallStoresUpdateInputType() vapiBindings_.StructType {
 }
 
 func IdentityFirewallStoresUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType),})
 }
 
 func identityFirewallStoresUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -298,12 +302,12 @@ func identityFirewallStoresUpdateRestMetadata() vapiProtocol_.OperationRestMetad
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["identity_firewall_store_id"] = vapiBindings_.NewStringType()
-	fields["identity_firewall_store"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType)})
+	fields["identity_firewall_store"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType),})
 	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["identity_firewall_store_id"] = "IdentityFirewallStoreId"
 	fieldNameMap["identity_firewall_store"] = "IdentityFirewallStore"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
-	paramsTypeMap["identity_firewall_store"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType)})
+	paramsTypeMap["identity_firewall_store"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IdentityFirewallStoreBindingType),})
 	paramsTypeMap["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["identity_firewall_store_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["identityFirewallStoreId"] = vapiBindings_.NewStringType()
@@ -329,5 +333,7 @@ func identityFirewallStoresUpdateRestMetadata() vapiProtocol_.OperationRestMetad
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
+
+

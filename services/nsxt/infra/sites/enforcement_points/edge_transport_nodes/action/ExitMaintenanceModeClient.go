@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,34 +10,35 @@
 package action
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ExitMaintenanceModeClient interface {
 
-	// This APi will exit from maintenance mode
-	//
-	// @param siteIdParam (required)
-	// @param enforcementpointIdParam (required)
-	// @param edgeTransportNodeIdParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This APi will exit from maintenance mode
+    //
+    // @param siteIdParam (required)
+    // @param enforcementpointIdParam (required)
+    // @param edgeTransportNodeIdParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(siteIdParam string, enforcementpointIdParam string, edgeTransportNodeIdParam string) error
 }
 
+
 type exitMaintenanceModeClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewExitMaintenanceModeClient(connector vapiProtocolClient_.Connector) *exitMaintenanceModeClient {
@@ -86,3 +87,4 @@ func (eIface *exitMaintenanceModeClient) Create(siteIdParam string, enforcementp
 		return methodError.(error)
 	}
 }
+

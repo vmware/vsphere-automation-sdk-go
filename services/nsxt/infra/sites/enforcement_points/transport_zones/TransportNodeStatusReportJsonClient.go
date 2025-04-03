@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,38 +10,39 @@
 package transport_zones
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TransportNodeStatusReportJsonClient interface {
 
-	// Creates a status json report of transport nodes in a transport zone
-	//
-	// @param siteIdParam site ID (required)
-	// @param enforcementPointIdParam enforcement point ID (required)
-	// @param zoneIdParam ID of transport zone (required)
-	// @param sourceParam Data source type. (optional)
-	// @param statusParam Transport node (optional)
-	// @return com.vmware.nsx_policy.model.TransportNodeStatusReportListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Creates a status json report of transport nodes in a transport zone
+    //
+    // @param siteIdParam site ID (required)
+    // @param enforcementPointIdParam enforcement point ID (required)
+    // @param zoneIdParam ID of transport zone (required)
+    // @param sourceParam Data source type. (optional)
+    // @param statusParam Transport node (optional)
+    // @return com.vmware.nsx_policy.model.TransportNodeStatusReportListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(siteIdParam string, enforcementPointIdParam string, zoneIdParam string, sourceParam *string, statusParam *string) (nsx_policyModel.TransportNodeStatusReportListResult, error)
 }
 
+
 type transportNodeStatusReportJsonClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewTransportNodeStatusReportJsonClient(connector vapiProtocolClient_.Connector) *transportNodeStatusReportJsonClient {
@@ -98,3 +99,4 @@ func (tIface *transportNodeStatusReportJsonClient) List(siteIdParam string, enfo
 		return emptyOutput, methodError.(error)
 	}
 }
+

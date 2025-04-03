@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,137 +10,138 @@
 package infra
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type CsrsClient interface {
 
-	// Creates a new certificate signing request (CSR). A CSR is encrypted text that contains information about your organization (organization name, country, and so on) and your Web server's public key, which is a public certificate the is generated on the server that can be used to forward this request to a certificate authority (CA). A private key is also usually created at the same time as the CSR.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param csrIdParam ID of CSR to create (required)
-	// @param tlsCsrParam (required)
-	// @return com.vmware.nsx_policy.model.TlsCsr
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Creates a new certificate signing request (CSR). A CSR is encrypted text that contains information about your organization (organization name, country, and so on) and your Web server's public key, which is a public certificate the is generated on the server that can be used to forward this request to a certificate authority (CA). A private key is also usually created at the same time as the CSR.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param csrIdParam ID of CSR to create (required)
+    // @param tlsCsrParam (required)
+    // @return com.vmware.nsx_policy.model.TlsCsr
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(orgIdParam string, projectIdParam string, csrIdParam string, tlsCsrParam nsx_policyModel.TlsCsr) (nsx_policyModel.TlsCsr, error)
 
-	// Removes a specified CSR. If a CSR is not used for verification, you can delete it. Note that the CSR import and upload POST actions automatically delete the associated CSR.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param csrIdParam ID of CSR to delete (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Removes a specified CSR. If a CSR is not used for verification, you can delete it. Note that the CSR import and upload POST actions automatically delete the associated CSR.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param csrIdParam ID of CSR to delete (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, csrIdParam string) error
 
-	// Returns information about the specified CSR.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param csrIdParam ID of CSR to read (required)
-	// @return com.vmware.nsx_policy.model.TlsCsr
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Returns information about the specified CSR.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param csrIdParam ID of CSR to read (required)
+    // @return com.vmware.nsx_policy.model.TlsCsr
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, csrIdParam string) (nsx_policyModel.TlsCsr, error)
 
-	// Imports a certificate authority (CA)-signed certificate for a CSR. This action links the certificate to the private key created by the CSR. The pem_encoded string in the request body is the signed certificate provided by your CA in response to the CSR that you provide to them. The import POST action automatically deletes the associated CSR.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param csrIdParam CSR this certificate is associated with (required)
-	// @param tlsTrustDataParam (required)
-	// @return com.vmware.nsx_policy.model.TlsCertificate
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Imports a certificate authority (CA)-signed certificate for a CSR. This action links the certificate to the private key created by the CSR. The pem_encoded string in the request body is the signed certificate provided by your CA in response to the CSR that you provide to them. The import POST action automatically deletes the associated CSR.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param csrIdParam CSR this certificate is associated with (required)
+    // @param tlsTrustDataParam (required)
+    // @return com.vmware.nsx_policy.model.TlsCertificate
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Importcsr(orgIdParam string, projectIdParam string, csrIdParam string, tlsTrustDataParam nsx_policyModel.TlsTrustData) (nsx_policyModel.TlsCertificate, error)
 
-	// Returns information about all of the CSRs that have been created.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.TlsCsrListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Returns information about all of the CSRs that have been created.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.TlsCsrListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.TlsCsrListResult, error)
 
-	// Self-signs the previously generated CSR. This action is similar to the import certificate action, but instead of using a public certificate signed by a CA, the self_sign POST action uses a certificate that is signed with NSX's own private key. The maximum validity limit for non-CA certificates is 825 days, except that values of 3,650 and 36,500 days are allowed. No limit is set for CA certificates.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param csrIdParam CSR this certificate is associated with (required)
-	// @param daysValidParam Number of days the certificate will be valid, default 825 days (required)
-	// @return com.vmware.nsx_policy.model.TlsCertificate
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Self-signs the previously generated CSR. This action is similar to the import certificate action, but instead of using a public certificate signed by a CA, the self_sign POST action uses a certificate that is signed with NSX's own private key. The maximum validity limit for non-CA certificates is 825 days, except that values of 3,650 and 36,500 days are allowed. No limit is set for CA certificates.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param csrIdParam CSR this certificate is associated with (required)
+    // @param daysValidParam Number of days the certificate will be valid, default 825 days (required)
+    // @return com.vmware.nsx_policy.model.TlsCertificate
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Selfsign(orgIdParam string, projectIdParam string, csrIdParam string, daysValidParam int64) (nsx_policyModel.TlsCertificate, error)
 
-	// Creates a new self-signed certificate. A private key is also created at the same time. This is convenience call that will generate a CSR and then self-sign it. The maximum validity limit for non-CA certificates is 825 days, except that values of 3,650 and 36,500 days are allowed. No limit is set for CA certificates.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param tlsCsrWithDaysValidParam (required)
-	// @return com.vmware.nsx_policy.model.TlsCertificate
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Creates a new self-signed certificate. A private key is also created at the same time. This is convenience call that will generate a CSR and then self-sign it. The maximum validity limit for non-CA certificates is 825 days, except that values of 3,650 and 36,500 days are allowed. No limit is set for CA certificates.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param tlsCsrWithDaysValidParam (required)
+    // @return com.vmware.nsx_policy.model.TlsCertificate
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Selfsign0(orgIdParam string, projectIdParam string, tlsCsrWithDaysValidParam nsx_policyModel.TlsCsrWithDaysValid) (nsx_policyModel.TlsCertificate, error)
 }
 
+
 type csrsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewCsrsClient(connector vapiProtocolClient_.Connector) *csrsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.infra.csrs")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"create":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":        vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"importcsr":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "importcsr"),
-		"list":       vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"selfsign":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "selfsign"),
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"importcsr": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "importcsr"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"selfsign": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "selfsign"),
 		"selfsign_0": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "selfsign_0"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -395,3 +396,4 @@ func (cIface *csrsClient) Selfsign0(orgIdParam string, projectIdParam string, tl
 		return emptyOutput, methodError.(error)
 	}
 }
+

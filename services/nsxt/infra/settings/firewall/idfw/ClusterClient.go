@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,95 +10,96 @@
 package idfw
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ClusterClient interface {
 
-	// Delete compute cluster identity firewall configuration.
-	//
-	// @param clusterIdParam Cluster ID (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete compute cluster identity firewall configuration.
+    //
+    // @param clusterIdParam Cluster ID (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(clusterIdParam string) error
 
-	// Read compute cluster identity firewall configuration
-	//
-	// @param clusterIdParam Cluster ID (required)
-	// @return com.vmware.nsx_policy.model.ComputeClusterIdfwConfiguration
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read compute cluster identity firewall configuration
+    //
+    // @param clusterIdParam Cluster ID (required)
+    // @return com.vmware.nsx_policy.model.ComputeClusterIdfwConfiguration
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(clusterIdParam string) (nsx_policyModel.ComputeClusterIdfwConfiguration, error)
 
-	// API will list all compute cluster wise identity firewall configuration
-	//
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.ComputeClusterIdfwConfigurationListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // API will list all compute cluster wise identity firewall configuration
+    //
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.ComputeClusterIdfwConfigurationListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ComputeClusterIdfwConfigurationListResult, error)
 
-	// Patch compute cluster identity firewall configuration.
-	//
-	// @param clusterIdParam Cluster ID (required)
-	// @param computeClusterIdfwConfigurationParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Patch compute cluster identity firewall configuration.
+    //
+    // @param clusterIdParam Cluster ID (required)
+    // @param computeClusterIdfwConfigurationParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(clusterIdParam string, computeClusterIdfwConfigurationParam nsx_policyModel.ComputeClusterIdfwConfiguration) error
 
-	// Update the compute cluster idfw configuration
-	//
-	// @param clusterIdParam Cluster ID (required)
-	// @param computeClusterIdfwConfigurationParam (required)
-	// @return com.vmware.nsx_policy.model.ComputeClusterIdfwConfiguration
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Update the compute cluster idfw configuration
+    //
+    // @param clusterIdParam Cluster ID (required)
+    // @param computeClusterIdfwConfigurationParam (required)
+    // @return com.vmware.nsx_policy.model.ComputeClusterIdfwConfiguration
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(clusterIdParam string, computeClusterIdfwConfigurationParam nsx_policyModel.ComputeClusterIdfwConfiguration) (nsx_policyModel.ComputeClusterIdfwConfiguration, error)
 }
 
+
 type clusterClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewClusterClient(connector vapiProtocolClient_.Connector) *clusterClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.settings.firewall.idfw.cluster")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -268,3 +269,4 @@ func (cIface *clusterClient) Update(clusterIdParam string, computeClusterIdfwCon
 		return emptyOutput, methodError.(error)
 	}
 }
+

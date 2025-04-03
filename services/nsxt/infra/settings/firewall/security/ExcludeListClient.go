@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,88 +10,89 @@
 package security
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ExcludeListClient interface {
 
-	// Filter the firewall exclude list by the given object, to check whether the object is a member of this exclude list.
-	//
-	// @param intentPathParam Path of the intent object to be searched in the exclude list (required)
-	// @param deepCheckParam Check all parents (optional, default to false)
-	// @param enforcementPointPathParam Path of the enforcement point (optional)
-	// @return com.vmware.nsx_policy.model.PolicyResourceReference
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Filter the firewall exclude list by the given object, to check whether the object is a member of this exclude list.
+    //
+    // @param intentPathParam Path of the intent object to be searched in the exclude list (required)
+    // @param deepCheckParam Check all parents (optional, default to false)
+    // @param enforcementPointPathParam Path of the enforcement point (optional)
+    // @return com.vmware.nsx_policy.model.PolicyResourceReference
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Filter(intentPathParam string, deepCheckParam *bool, enforcementPointPathParam *string) (nsx_policyModel.PolicyResourceReference, error)
 
-	// Read exclude list for firewall
-	// @return com.vmware.nsx_policy.model.PolicyExcludeList
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read exclude list for firewall
+    // @return com.vmware.nsx_policy.model.PolicyExcludeList
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get() (nsx_policyModel.PolicyExcludeList, error)
 
-	// Read security policy exclude list including system and user excluded members.
-	// @return com.vmware.nsx_policy.model.PolicyExcludeList
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read security policy exclude list including system and user excluded members.
+    // @return com.vmware.nsx_policy.model.PolicyExcludeList
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get0() (nsx_policyModel.PolicyExcludeList, error)
 
-	// Patch exclusion list for security policy.
-	//
-	// @param policyExcludeListParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Patch exclusion list for security policy.
+    //
+    // @param policyExcludeListParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(policyExcludeListParam nsx_policyModel.PolicyExcludeList) error
 
-	// Update the exclusion list for security policy
-	//
-	// @param policyExcludeListParam (required)
-	// @return com.vmware.nsx_policy.model.PolicyExcludeList
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Update the exclusion list for security policy
+    //
+    // @param policyExcludeListParam (required)
+    // @return com.vmware.nsx_policy.model.PolicyExcludeList
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(policyExcludeListParam nsx_policyModel.PolicyExcludeList) (nsx_policyModel.PolicyExcludeList, error)
 }
 
+
 type excludeListClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewExcludeListClient(connector vapiProtocolClient_.Connector) *excludeListClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.settings.firewall.security.exclude_list")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"filter": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "filter"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"get_0":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get_0"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get_0": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get_0"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -261,3 +262,4 @@ func (eIface *excludeListClient) Update(policyExcludeListParam nsx_policyModel.P
 		return emptyOutput, methodError.(error)
 	}
 }
+

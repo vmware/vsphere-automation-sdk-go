@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,37 +10,38 @@
 package service_instances
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatisticsClient interface {
 
-	// Get statistics for all data NICs on all runtimes associated with this Tier1 PolicyServiceInstance.
-	//
-	// @param tier1IdParam Tier-1 id (required)
-	// @param localeServiceIdParam Locale service id (required)
-	// @param serviceInstanceIdParam Tier1 Service instance id (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @return com.vmware.nsx_policy.model.PolicyServiceInstanceStatistics
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get statistics for all data NICs on all runtimes associated with this Tier1 PolicyServiceInstance.
+    //
+    // @param tier1IdParam Tier-1 id (required)
+    // @param localeServiceIdParam Locale service id (required)
+    // @param serviceInstanceIdParam Tier1 Service instance id (required)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    // @return com.vmware.nsx_policy.model.PolicyServiceInstanceStatistics
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(tier1IdParam string, localeServiceIdParam string, serviceInstanceIdParam string, enforcementPointPathParam *string) (nsx_policyModel.PolicyServiceInstanceStatistics, error)
 }
 
+
 type statisticsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewStatisticsClient(connector vapiProtocolClient_.Connector) *statisticsClient {
@@ -96,3 +97,4 @@ func (sIface *statisticsClient) Get(tier1IdParam string, localeServiceIdParam st
 		return emptyOutput, methodError.(error)
 	}
 }
+

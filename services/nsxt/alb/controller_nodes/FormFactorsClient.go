@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,32 +10,35 @@
 package controller_nodes
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FormFactorsClient interface {
 
-	// Returns information about all form factors available for Advanced Load Balancer controller nodes.
-	// @return com.vmware.nsx_policy.model.ALBControllerNodeFormFactors
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Get() (nsx_policyModel.ALBControllerNodeFormFactors, error)
+    // Returns information about all form factors available for Avi Load Balancer Controller nodes.
+    //
+    // @param albMajorVersionParam Major release version of Avi Load Balancer Controller for which form factor details will be returned. (optional)
+    // @return com.vmware.nsx_policy.model.ALBControllerNodeFormFactors
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
+	Get(albMajorVersionParam *string) (nsx_policyModel.ALBControllerNodeFormFactors, error)
 }
 
+
 type formFactorsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewFormFactorsClient(connector vapiProtocolClient_.Connector) *formFactorsClient {
@@ -57,7 +60,7 @@ func (fIface *formFactorsClient) GetErrorBindingType(errorName string) vapiBindi
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (fIface *formFactorsClient) Get() (nsx_policyModel.ALBControllerNodeFormFactors, error) {
+func (fIface *formFactorsClient) Get(albMajorVersionParam *string) (nsx_policyModel.ALBControllerNodeFormFactors, error) {
 	typeConverter := fIface.connector.TypeConverter()
 	executionContext := fIface.connector.NewExecutionContext()
 	operationRestMetaData := formFactorsGetRestMetadata()
@@ -65,6 +68,7 @@ func (fIface *formFactorsClient) Get() (nsx_policyModel.ALBControllerNodeFormFac
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(formFactorsGetInputType(), typeConverter)
+	sv.AddStructField("AlbMajorVersion", albMajorVersionParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.ALBControllerNodeFormFactors
@@ -87,3 +91,4 @@ func (fIface *formFactorsClient) Get() (nsx_policyModel.ALBControllerNodeFormFac
 		return emptyOutput, methodError.(error)
 	}
 }
+

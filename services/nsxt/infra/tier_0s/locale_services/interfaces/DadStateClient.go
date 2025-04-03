@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,37 +10,38 @@
 package interfaces
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DadStateClient interface {
 
-	// Get tier-0 interface DAD state information.
-	//
-	// @param tier0IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param interfaceIdParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @return com.vmware.nsx_policy.model.InterfaceDADState
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get tier-0 interface DAD state information.
+    //
+    // @param tier0IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param interfaceIdParam (required)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    // @return com.vmware.nsx_policy.model.InterfaceDADState
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(tier0IdParam string, localeServiceIdParam string, interfaceIdParam string, enforcementPointPathParam *string) (nsx_policyModel.InterfaceDADState, error)
 }
 
+
 type dadStateClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewDadStateClient(connector vapiProtocolClient_.Connector) *dadStateClient {
@@ -96,3 +97,4 @@ func (dIface *dadStateClient) Get(tier0IdParam string, localeServiceIdParam stri
 		return emptyOutput, methodError.(error)
 	}
 }
+

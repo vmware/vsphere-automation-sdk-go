@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -12,12 +12,16 @@
 package ip_pools
 
 import (
+	"reflect"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
-	"reflect"
 )
+
+
+
+
 
 func ipSubnetsDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -79,7 +83,7 @@ func ipSubnetsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func ipSubnetsGetInputType() vapiBindings_.StructType {
@@ -94,7 +98,7 @@ func ipSubnetsGetInputType() vapiBindings_.StructType {
 }
 
 func IpSubnetsGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType),})
 }
 
 func ipSubnetsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -136,7 +140,7 @@ func ipSubnetsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func ipSubnetsListInputType() vapiBindings_.StructType {
@@ -222,7 +226,7 @@ func ipSubnetsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func ipSubnetsPatchInputType() vapiBindings_.StructType {
@@ -230,7 +234,7 @@ func ipSubnetsPatchInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["ip_pool_id"] = vapiBindings_.NewStringType()
 	fields["ip_subnet_id"] = vapiBindings_.NewStringType()
-	fields["ip_address_pool_subnet"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType)})
+	fields["ip_address_pool_subnet"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType),})
 	fieldNameMap["ip_pool_id"] = "IpPoolId"
 	fieldNameMap["ip_subnet_id"] = "IpSubnetId"
 	fieldNameMap["ip_address_pool_subnet"] = "IpAddressPoolSubnet"
@@ -253,13 +257,13 @@ func ipSubnetsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["ip_pool_id"] = vapiBindings_.NewStringType()
 	fields["ip_subnet_id"] = vapiBindings_.NewStringType()
-	fields["ip_address_pool_subnet"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType)})
+	fields["ip_address_pool_subnet"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType),})
 	fieldNameMap["ip_pool_id"] = "IpPoolId"
 	fieldNameMap["ip_subnet_id"] = "IpSubnetId"
 	fieldNameMap["ip_address_pool_subnet"] = "IpAddressPoolSubnet"
 	paramsTypeMap["ip_pool_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["ip_subnet_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["ip_address_pool_subnet"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType)})
+	paramsTypeMap["ip_address_pool_subnet"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType),})
 	paramsTypeMap["ipPoolId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["ipSubnetId"] = vapiBindings_.NewStringType()
 	pathParams["ip_pool_id"] = "ipPoolId"
@@ -284,7 +288,7 @@ func ipSubnetsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func ipSubnetsUpdateInputType() vapiBindings_.StructType {
@@ -292,7 +296,7 @@ func ipSubnetsUpdateInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["ip_pool_id"] = vapiBindings_.NewStringType()
 	fields["ip_subnet_id"] = vapiBindings_.NewStringType()
-	fields["ip_address_pool_subnet"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType)})
+	fields["ip_address_pool_subnet"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType),})
 	fieldNameMap["ip_pool_id"] = "IpPoolId"
 	fieldNameMap["ip_subnet_id"] = "IpSubnetId"
 	fieldNameMap["ip_address_pool_subnet"] = "IpAddressPoolSubnet"
@@ -301,7 +305,7 @@ func ipSubnetsUpdateInputType() vapiBindings_.StructType {
 }
 
 func IpSubnetsUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType),})
 }
 
 func ipSubnetsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -315,13 +319,13 @@ func ipSubnetsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["ip_pool_id"] = vapiBindings_.NewStringType()
 	fields["ip_subnet_id"] = vapiBindings_.NewStringType()
-	fields["ip_address_pool_subnet"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType)})
+	fields["ip_address_pool_subnet"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType),})
 	fieldNameMap["ip_pool_id"] = "IpPoolId"
 	fieldNameMap["ip_subnet_id"] = "IpSubnetId"
 	fieldNameMap["ip_address_pool_subnet"] = "IpAddressPoolSubnet"
 	paramsTypeMap["ip_pool_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["ip_subnet_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["ip_address_pool_subnet"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType)})
+	paramsTypeMap["ip_address_pool_subnet"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressPoolSubnetBindingType),})
 	paramsTypeMap["ipPoolId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["ipSubnetId"] = vapiBindings_.NewStringType()
 	pathParams["ip_pool_id"] = "ipPoolId"
@@ -346,5 +350,7 @@ func ipSubnetsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
+
+

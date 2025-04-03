@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,80 +10,81 @@
 package pktcap
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SessionClient interface {
 
-	// Create an new packet capture session on given node with specified options
-	//
-	// @param pktCaptureRequestParam (required)
-	// @return com.vmware.nsx_policy.model.PktCaptureSession
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create an new packet capture session on given node with specified options
+    //
+    // @param pktCaptureRequestParam (required)
+    // @return com.vmware.nsx_policy.model.PktCaptureSession
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(pktCaptureRequestParam nsx_policyModel.PktCaptureRequest) (nsx_policyModel.PktCaptureSession, error)
 
-	// Restart the packet capture session
-	//
-	// @param sessionIdParam Packet capture session id (required)
-	// @param actionParam Indicates which action will be taken by session conduction. (required)
-	// @return com.vmware.nsx_policy.model.PktCaptureSession
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Restart the packet capture session
+    //
+    // @param sessionIdParam Packet capture session id (required)
+    // @param actionParam Indicates which action will be taken by session conduction. (required)
+    // @return com.vmware.nsx_policy.model.PktCaptureSession
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create0(sessionIdParam string, actionParam string) (nsx_policyModel.PktCaptureSession, error)
 
-	// Before calling this method, terminate any running capture session.
-	//
-	// @param sessionIdParam Packet capture session id (required)
-	// @return com.vmware.nsx_policy.model.PktCaptureSession
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Before calling this method, terminate any running capture session.
+    //
+    // @param sessionIdParam Packet capture session id (required)
+    // @return com.vmware.nsx_policy.model.PktCaptureSession
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(sessionIdParam string) (nsx_policyModel.PktCaptureSession, error)
 
-	// Get the packet capture status information by session id.
-	//
-	// @param sessionIdParam Packet capture session id (required)
-	// @return com.vmware.nsx_policy.model.PktCaptureSession
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get the packet capture status information by session id.
+    //
+    // @param sessionIdParam Packet capture session id (required)
+    // @return com.vmware.nsx_policy.model.PktCaptureSession
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(sessionIdParam string) (nsx_policyModel.PktCaptureSession, error)
 }
 
+
 type sessionClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewSessionClient(connector vapiProtocolClient_.Connector) *sessionClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.pktcap.session")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"create":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 		"create_0": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create_0"),
-		"delete":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -227,3 +228,4 @@ func (sIface *sessionClient) Get(sessionIdParam string) (nsx_policyModel.PktCapt
 		return emptyOutput, methodError.(error)
 	}
 }
+

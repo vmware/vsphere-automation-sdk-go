@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,57 +10,58 @@
 package controller_nodes
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ClusterconfigClient interface {
 
-	// Set the cluster configuration for Advanced Load Balancer controller cluster.
-	//
-	// @param aLBControllerNodeVMClusterConfigParam (required)
-	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMClusterConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Set the cluster configuration for Avi Load Balancer Controller cluster.
+    //
+    // @param aLBControllerNodeVMClusterConfigParam (required)
+    // @return com.vmware.nsx_policy.model.ALBControllerNodeVMClusterConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(aLBControllerNodeVMClusterConfigParam nsx_policyModel.ALBControllerNodeVMClusterConfig) (nsx_policyModel.ALBControllerNodeVMClusterConfig, error)
 
-	// Delete the cluster configuration for Advanced Load Balancer controller cluster. This API is for VCF deployments only.
-	//
-	// @param clusteringIdParam Unique Id for NSX Advanced Load Balancer Controller Cluster used in VCF managed NSX. (optional)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete the cluster configuration for Avi Load Balancer Controller cluster. This API is for VCF deployments only.
+    //
+    // @param clusteringIdParam Unique Id for Avi Load Balancer Controller Cluster used in VCF managed NSX (optional)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(clusteringIdParam *string) error
 
-	// Returns cluster configuration for the Advanced Load Balancer controller cluster.
-	//
-	// @param clusteringIdParam Unique Id for NSX Advanced Load Balancer Controller Cluster used in VCF managed NSX. (optional)
-	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMClusterConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Returns cluster configuration for the Avi Load Balancer Controller cluster.
+    //
+    // @param clusteringIdParam Unique Id for Avi Load Balancer Controller Cluster used in VCF managed NSX (optional)
+    // @return com.vmware.nsx_policy.model.ALBControllerNodeVMClusterConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(clusteringIdParam *string) (nsx_policyModel.ALBControllerNodeVMClusterConfig, error)
 }
 
+
 type clusterconfigClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewClusterconfigClient(connector vapiProtocolClient_.Connector) *clusterconfigClient {
@@ -68,7 +69,7 @@ func NewClusterconfigClient(connector vapiProtocolClient_.Connector) *clustercon
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -173,3 +174,4 @@ func (cIface *clusterconfigClient) Get(clusteringIdParam *string) (nsx_policyMod
 		return emptyOutput, methodError.(error)
 	}
 }
+

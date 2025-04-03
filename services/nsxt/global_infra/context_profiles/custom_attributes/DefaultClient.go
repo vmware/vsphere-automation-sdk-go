@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,72 +10,73 @@
 package custom_attributes
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DefaultClient interface {
 
-	// This API adds/removes custom attribute values from list for a given attribute key. The values in the request will be added or removed from the existing list.
-	//
-	// @param policyCustomAttributesParam (required)
-	// @param actionParam Add or Remove Custom Context Profile Attribute values. (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This API adds/removes custom attribute values from list for a given attribute key. The values in the request will be added or removed from the existing list.
+    //
+    // @param policyCustomAttributesParam (required)
+    // @param actionParam Add or Remove Custom Context Profile Attribute values. (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(policyCustomAttributesParam nsx_policyModel.PolicyCustomAttributes, actionParam string) error
 
-	// This API lists all the custom attribute values defined in the system for the attribute_key mentioned as part of the url.
-	//
-	// @param attributeKeyParam Fetch attributes and sub-attributes for the given attribute key (optional)
-	// @param attributeSourceParam Source of the attribute, System Defined or custom (optional, default to SYSTEM)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.PolicyContextProfileListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This API lists all the custom attribute values defined in the system for the attribute_key mentioned as part of the url.
+    //
+    // @param attributeKeyParam Fetch attributes and sub-attributes for the given attribute key (optional)
+    // @param attributeSourceParam Source of the attribute, System Defined or custom (optional, default to SYSTEM)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.PolicyContextProfileListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(attributeKeyParam *string, attributeSourceParam *string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyContextProfileListResult, error)
 
-	// This API updates custom attribute value list for given key in the request. This replaces the existing list with the list provided in the request
-	//
-	// @param policyCustomAttributesParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This API updates custom attribute value list for given key in the request. This replaces the existing list with the list provided in the request
+    //
+    // @param policyCustomAttributesParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(policyCustomAttributesParam nsx_policyModel.PolicyCustomAttributes) error
 }
 
+
 type defaultClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewDefaultClient(connector vapiProtocolClient_.Connector) *defaultClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.context_profiles.custom_attributes.default")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -182,3 +183,4 @@ func (dIface *defaultClient) Patch(policyCustomAttributesParam nsx_policyModel.P
 		return methodError.(error)
 	}
 }
+

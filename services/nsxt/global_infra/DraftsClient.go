@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,111 +10,112 @@
 package global_infra
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DraftsClient interface {
 
-	// Delete a manual draft.
-	//
-	// @param draftIdParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete a manual draft.
+    //
+    // @param draftIdParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(draftIdParam string) error
 
-	// Read a draft for a given draft identifier.
-	//
-	// @param draftIdParam (required)
-	// @return com.vmware.nsx_policy.model.PolicyDraft
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read a draft for a given draft identifier.
+    //
+    // @param draftIdParam (required)
+    // @return com.vmware.nsx_policy.model.PolicyDraft
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(draftIdParam string) (nsx_policyModel.PolicyDraft, error)
 
-	// List policy drafts.
-	//
-	// @param autoDraftsParam Fetch list of draft based on is_auto_draft flag (optional)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.PolicyDraftListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // List policy drafts.
+    //
+    // @param autoDraftsParam Fetch list of draft based on is_auto_draft flag (optional)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.PolicyDraftListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(autoDraftsParam *bool, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyDraftListResult, error)
 
-	// Create a new manual draft if the specified draft id does not correspond to an existing draft. Update the manual draft otherwise. Auto draft can not be updated.
-	//
-	// @param draftIdParam (required)
-	// @param policyDraftParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create a new manual draft if the specified draft id does not correspond to an existing draft. Update the manual draft otherwise. Auto draft can not be updated.
+    //
+    // @param draftIdParam (required)
+    // @param policyDraftParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(draftIdParam string, policyDraftParam nsx_policyModel.PolicyDraft) error
 
-	// Read a draft and publish it by applying changes onto current configuration. If there are additional changes on top of draft configuration, pass it as a request body, in form of Infra object. Otherwise, if there are no additional changes, then pass empty Infra object as a request body.
-	//
-	// @param draftIdParam (required)
-	// @param infraParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read a draft and publish it by applying changes onto current configuration. If there are additional changes on top of draft configuration, pass it as a request body, in form of Infra object. Otherwise, if there are no additional changes, then pass empty Infra object as a request body.
+    //
+    // @param draftIdParam (required)
+    // @param infraParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Publish(draftIdParam string, infraParam nsx_policyModel.Infra) error
 
-	// Create a new manual draft if the specified draft id does not correspond to an existing draft. Update the manual draft otherwise. Auto draft can not be updated.
-	//
-	// @param draftIdParam (required)
-	// @param policyDraftParam (required)
-	// @return com.vmware.nsx_policy.model.PolicyDraft
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create a new manual draft if the specified draft id does not correspond to an existing draft. Update the manual draft otherwise. Auto draft can not be updated.
+    //
+    // @param draftIdParam (required)
+    // @param policyDraftParam (required)
+    // @return com.vmware.nsx_policy.model.PolicyDraft
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(draftIdParam string, policyDraftParam nsx_policyModel.PolicyDraft) (nsx_policyModel.PolicyDraft, error)
 }
 
+
 type draftsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewDraftsClient(connector vapiProtocolClient_.Connector) *draftsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.drafts")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"delete":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"publish": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "publish"),
-		"update":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -312,3 +313,4 @@ func (dIface *draftsClient) Update(draftIdParam string, policyDraftParam nsx_pol
 		return emptyOutput, methodError.(error)
 	}
 }
+

@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,36 +10,37 @@
 package host_transport_nodes
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ModulesClient interface {
 
-	// Get the module details of a host transport node
-	//
-	// @param siteIdParam (required)
-	// @param enforcementpointIdParam (required)
-	// @param hostTransportNodeIdParam (required)
-	// @return com.vmware.nsx_policy.model.SoftwareModuleResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get the module details of a host transport node
+    //
+    // @param siteIdParam (required)
+    // @param enforcementpointIdParam (required)
+    // @param hostTransportNodeIdParam (required)
+    // @return com.vmware.nsx_policy.model.SoftwareModuleResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementpointIdParam string, hostTransportNodeIdParam string) (nsx_policyModel.SoftwareModuleResult, error)
 }
 
+
 type modulesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewModulesClient(connector vapiProtocolClient_.Connector) *modulesClient {
@@ -94,3 +95,4 @@ func (mIface *modulesClient) Get(siteIdParam string, enforcementpointIdParam str
 		return emptyOutput, methodError.(error)
 	}
 }
+

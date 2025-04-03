@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,111 +10,112 @@
 package tier_1s
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LocaleServicesClient interface {
 
-	// Delete Tier-1 locale-services
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param tier1IdParam (required)
-	// @param localeServicesIdParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete Tier-1 locale-services
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param tier1IdParam (required)
+    // @param localeServicesIdParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, tier1IdParam string, localeServicesIdParam string) error
 
-	// Read Tier-1 locale-services
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param tier1IdParam (required)
-	// @param localeServicesIdParam (required)
-	// @return com.vmware.nsx_policy.model.LocaleServices
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read Tier-1 locale-services
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param tier1IdParam (required)
+    // @param localeServicesIdParam (required)
+    // @return com.vmware.nsx_policy.model.LocaleServices
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, tier1IdParam string, localeServicesIdParam string) (nsx_policyModel.LocaleServices, error)
 
-	// Paginated list of all Tier-1 locale-services
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param tier1IdParam (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.LocaleServicesListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Paginated list of all Tier-1 locale-services
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param tier1IdParam (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.LocaleServicesListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, tier1IdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.LocaleServicesListResult, error)
 
-	// If a Tier-1 locale services with the locale-services-id is not already present, create a new locale services. If it already exists, update Tier-1 locale services with specified attributes.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param tier1IdParam (required)
-	// @param localeServicesIdParam (required)
-	// @param localeServicesParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If a Tier-1 locale services with the locale-services-id is not already present, create a new locale services. If it already exists, update Tier-1 locale services with specified attributes.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param tier1IdParam (required)
+    // @param localeServicesIdParam (required)
+    // @param localeServicesParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, tier1IdParam string, localeServicesIdParam string, localeServicesParam nsx_policyModel.LocaleServices) error
 
-	// If a Tier-1 locale services with the locale-services-id is not already present, create a new locale-services. If it already exists, replace the Tier-1 locale services instance with the new object. Modifying edge cluster re-allocates NSX service routers of TIER1 to a different edge cluster. You can also place edge nodes manually and provide maximum two indices for HA mode ACTIVE_STANDBY. To re-allocating edge cluster is a disruptive operation and all existing statistics of Tier1 gateway will be removed.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param tier1IdParam (required)
-	// @param localeServicesIdParam (required)
-	// @param localeServicesParam (required)
-	// @return com.vmware.nsx_policy.model.LocaleServices
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If a Tier-1 locale services with the locale-services-id is not already present, create a new locale-services. If it already exists, replace the Tier-1 locale services instance with the new object. Modifying edge cluster re-allocates NSX service routers of TIER1 to a different edge cluster. You can also place edge nodes manually and provide maximum two indices for HA mode ACTIVE_STANDBY. To re-allocating edge cluster is a disruptive operation and all existing statistics of Tier1 gateway will be removed.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param tier1IdParam (required)
+    // @param localeServicesIdParam (required)
+    // @param localeServicesParam (required)
+    // @return com.vmware.nsx_policy.model.LocaleServices
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(orgIdParam string, projectIdParam string, tier1IdParam string, localeServicesIdParam string, localeServicesParam nsx_policyModel.LocaleServices) (nsx_policyModel.LocaleServices, error)
 }
 
+
 type localeServicesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewLocaleServicesClient(connector vapiProtocolClient_.Connector) *localeServicesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.infra.tier_1s.locale_services")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -300,3 +301,4 @@ func (lIface *localeServicesClient) Update(orgIdParam string, projectIdParam str
 		return emptyOutput, methodError.(error)
 	}
 }
+

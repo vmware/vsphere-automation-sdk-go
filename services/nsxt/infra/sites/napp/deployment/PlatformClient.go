@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,53 +10,54 @@
 package deployment
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type PlatformClient interface {
 
-	// Get input parameters required to deploy NSX Application Platform.
-	//
-	// @param siteIdParam (required)
-	// @return com.vmware.nsx_policy.model.PlatformDeploymentConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get input parameters required to deploy NSX Application Platform.
+    //
+    // @param siteIdParam (required)
+    // @return com.vmware.nsx_policy.model.PlatformDeploymentConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(siteIdParam string) (nsx_policyModel.PlatformDeploymentConfig, error)
 
-	// Update input parameters required to deploy platform related pods. The UI has option to deploy kubernetes tools. You need to get this file from VMware website. File contains kubectl binary, helm binary and signature to verify them.
-	//
-	// @param siteIdParam (required)
-	// @param platformDeploymentConfigParam (required)
-	// @return com.vmware.nsx_policy.model.PlatformDeploymentConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Update input parameters required to deploy platform related pods. The UI has option to deploy kubernetes tools. You need to get this file from VMware website. File contains kubectl binary, helm binary and signature to verify them.
+    //
+    // @param siteIdParam (required)
+    // @param platformDeploymentConfigParam (required)
+    // @return com.vmware.nsx_policy.model.PlatformDeploymentConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(siteIdParam string, platformDeploymentConfigParam nsx_policyModel.PlatformDeploymentConfig) (nsx_policyModel.PlatformDeploymentConfig, error)
 }
 
+
 type platformClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewPlatformClient(connector vapiProtocolClient_.Connector) *platformClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.napp.deployment.platform")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -137,3 +138,4 @@ func (pIface *platformClient) Patch(siteIdParam string, platformDeploymentConfig
 		return emptyOutput, methodError.(error)
 	}
 }
+

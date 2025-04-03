@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,85 +10,86 @@
 package locale_services
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type BgpClient interface {
 
-	// Deletes the specified overridden BgpRoutingConfig. If the BgpRoutingConfig is not overridden, it won't get deleted.
-	//
-	// @param tier0IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param overrideParam Locally override the global object (optional, default to false)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Deletes the specified overridden BgpRoutingConfig. If the BgpRoutingConfig is not overridden, it won't get deleted.
+    //
+    // @param tier0IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param overrideParam Locally override the global object (optional, default to false)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(tier0IdParam string, localeServiceIdParam string, overrideParam *bool) error
 
-	// Read BGP routing config
-	//
-	// @param tier0IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @return com.vmware.nsx_policy.model.BgpRoutingConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read BGP routing config
+    //
+    // @param tier0IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @return com.vmware.nsx_policy.model.BgpRoutingConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(tier0IdParam string, localeServiceIdParam string) (nsx_policyModel.BgpRoutingConfig, error)
 
-	// If an BGP routing config not present, create BGP routing config. If it already exists, update the routing config.
-	//
-	// @param tier0IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param bgpRoutingConfigParam (required)
-	// @param overrideParam Locally override the global object (optional, default to false)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If an BGP routing config not present, create BGP routing config. If it already exists, update the routing config.
+    //
+    // @param tier0IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param bgpRoutingConfigParam (required)
+    // @param overrideParam Locally override the global object (optional, default to false)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(tier0IdParam string, localeServiceIdParam string, bgpRoutingConfigParam nsx_policyModel.BgpRoutingConfig, overrideParam *bool) error
 
-	// If BGP routing config is not already present, create BGP routing config. If it already exists, replace the BGP routing config with this object.
-	//
-	// @param tier0IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param bgpRoutingConfigParam (required)
-	// @param overrideParam Locally override the global object (optional, default to false)
-	// @return com.vmware.nsx_policy.model.BgpRoutingConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If BGP routing config is not already present, create BGP routing config. If it already exists, replace the BGP routing config with this object.
+    //
+    // @param tier0IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param bgpRoutingConfigParam (required)
+    // @param overrideParam Locally override the global object (optional, default to false)
+    // @return com.vmware.nsx_policy.model.BgpRoutingConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(tier0IdParam string, localeServiceIdParam string, bgpRoutingConfigParam nsx_policyModel.BgpRoutingConfig, overrideParam *bool) (nsx_policyModel.BgpRoutingConfig, error)
 }
 
+
 type bgpClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewBgpClient(connector vapiProtocolClient_.Connector) *bgpClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.tier_0s.locale_services.bgp")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -229,3 +230,4 @@ func (bIface *bgpClient) Update(tier0IdParam string, localeServiceIdParam string
 		return emptyOutput, methodError.(error)
 	}
 }
+

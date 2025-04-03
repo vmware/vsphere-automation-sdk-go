@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,106 +10,107 @@
 package endpoint_policies
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type EndpointRulesClient interface {
 
-	// Delete EndpointRule
-	//
-	// @param domainIdParam Domain ID (required)
-	// @param endpointPolicyIdParam EndpointPolicy ID (required)
-	// @param endpointRuleIdParam EndpointRule ID (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete EndpointRule
+    //
+    // @param domainIdParam Domain ID (required)
+    // @param endpointPolicyIdParam EndpointPolicy ID (required)
+    // @param endpointRuleIdParam EndpointRule ID (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(domainIdParam string, endpointPolicyIdParam string, endpointRuleIdParam string) error
 
-	// Read Endpoint rule
-	//
-	// @param domainIdParam Domain id (required)
-	// @param endpointPolicyIdParam Endpoint policy id (required)
-	// @param endpointRuleIdParam Endpoint rule id (required)
-	// @return com.vmware.nsx_policy.model.EndpointRule
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read Endpoint rule
+    //
+    // @param domainIdParam Domain id (required)
+    // @param endpointPolicyIdParam Endpoint policy id (required)
+    // @param endpointRuleIdParam Endpoint rule id (required)
+    // @return com.vmware.nsx_policy.model.EndpointRule
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(domainIdParam string, endpointPolicyIdParam string, endpointRuleIdParam string) (nsx_policyModel.EndpointRule, error)
 
-	// List Endpoint rules
-	//
-	// @param domainIdParam Domain id (required)
-	// @param endpointPolicyIdParam Endpoint policy id (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.EndpointRuleListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // List Endpoint rules
+    //
+    // @param domainIdParam Domain id (required)
+    // @param endpointPolicyIdParam Endpoint policy id (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.EndpointRuleListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(domainIdParam string, endpointPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.EndpointRuleListResult, error)
 
-	// Create a Endpoint rule with the endpoint-rule-id is not already present, otherwise update the Endpoint Rule.
-	//
-	// @param domainIdParam Domain id (required)
-	// @param endpointPolicyIdParam Endpoint policy id (required)
-	// @param endpointRuleIdParam Endpoint rule id (required)
-	// @param endpointRuleParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create a Endpoint rule with the endpoint-rule-id is not already present, otherwise update the Endpoint Rule.
+    //
+    // @param domainIdParam Domain id (required)
+    // @param endpointPolicyIdParam Endpoint policy id (required)
+    // @param endpointRuleIdParam Endpoint rule id (required)
+    // @param endpointRuleParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(domainIdParam string, endpointPolicyIdParam string, endpointRuleIdParam string, endpointRuleParam nsx_policyModel.EndpointRule) error
 
-	// Create a Endpoint rule with the endpoint-rule-id is not already present, otherwise update the Endpoint Rule.
-	//
-	// @param domainIdParam Domain id (required)
-	// @param endpointPolicyIdParam Endpoint policy id (required)
-	// @param endpointRuleIdParam Endpoint rule id (required)
-	// @param endpointRuleParam (required)
-	// @return com.vmware.nsx_policy.model.EndpointRule
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create a Endpoint rule with the endpoint-rule-id is not already present, otherwise update the Endpoint Rule.
+    //
+    // @param domainIdParam Domain id (required)
+    // @param endpointPolicyIdParam Endpoint policy id (required)
+    // @param endpointRuleIdParam Endpoint rule id (required)
+    // @param endpointRuleParam (required)
+    // @return com.vmware.nsx_policy.model.EndpointRule
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(domainIdParam string, endpointPolicyIdParam string, endpointRuleIdParam string, endpointRuleParam nsx_policyModel.EndpointRule) (nsx_policyModel.EndpointRule, error)
 }
 
+
 type endpointRulesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewEndpointRulesClient(connector vapiProtocolClient_.Connector) *endpointRulesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.domains.endpoint_policies.endpoint_rules")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -290,3 +291,4 @@ func (eIface *endpointRulesClient) Update(domainIdParam string, endpointPolicyId
 		return emptyOutput, methodError.(error)
 	}
 }
+

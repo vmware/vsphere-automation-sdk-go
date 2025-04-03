@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,52 +10,53 @@
 package global_infra
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FirewallIpReputationFeedClient interface {
 
-	// This API can be used to activate or deactivate auto-download of IP reputation feed, it can also be used to trigger download of IP reputation feed when required. Once auto-download is activated, IP reputation feed will be downloaded at regular intervals of 720 mins(12 hrs). Auto-download of IP reputation feed can be activated using the action 'enable_auto_download', to deactivate use action 'disable_auto_download' and to trigger a download use action 'download'. For Global Manager, the only action that is supported is action=download. The enforcement_point_path of the site where the feed is to be downloaded should be provided along with the action
-	//
-	// @param operationParam action (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @return com.vmware.nsx_policy.model.PolicyFirewallIpReputationConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This API can be used to activate or deactivate auto-download of IP reputation feed, it can also be used to trigger download of IP reputation feed when required. Once auto-download is activated, IP reputation feed will be downloaded at regular intervals of 720 mins(12 hrs). Auto-download of IP reputation feed can be activated using the action 'enable_auto_download', to deactivate use action 'disable_auto_download' and to trigger a download use action 'download'. For Global Manager, the only action that is supported is action=download. The enforcement_point_path of the site where the feed is to be downloaded should be provided along with the action
+    //
+    // @param operationParam action (required)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    // @return com.vmware.nsx_policy.model.PolicyFirewallIpReputationConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(operationParam string, enforcementPointPathParam *string) (nsx_policyModel.PolicyFirewallIpReputationConfig, error)
 
-	// API to retrieve the current IP Reputation feed configuration.
-	// @return com.vmware.nsx_policy.model.PolicyFirewallIpReputationConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // API to retrieve the current IP Reputation feed configuration.
+    // @return com.vmware.nsx_policy.model.PolicyFirewallIpReputationConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get() (nsx_policyModel.PolicyFirewallIpReputationConfig, error)
 }
 
+
 type firewallIpReputationFeedClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewFirewallIpReputationFeedClient(connector vapiProtocolClient_.Connector) *firewallIpReputationFeedClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.firewall_ip_reputation_feed")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -134,3 +135,4 @@ func (fIface *firewallIpReputationFeedClient) Get() (nsx_policyModel.PolicyFirew
 		return emptyOutput, methodError.(error)
 	}
 }
+

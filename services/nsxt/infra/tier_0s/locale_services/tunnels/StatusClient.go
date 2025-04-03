@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,49 +10,50 @@
 package tunnels
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatusClient interface {
 
-	// Get policy Tunnel(GRE as of now) status for given tunnel-id
-	//
-	// @param tier0IdParam (required)
-	// @param localeSvcIdParam (required)
-	// @param tunnelIdParam (required)
-	// @param bgpNeighborTypeParam Bgp neighbor type (optional)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param edgePathParam Policy path of edge node (optional)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @param sourceParam Data source type. (optional)
-	// @param statsTypeParam Segment statistics type (optional)
-	// @param transportNodeIdParam Transport Node Id (optional)
-	// @return com.vmware.nsx_policy.model.TunnelStatus
-	// The return value will contain all the properties defined in nsx_policyModel.TunnelStatus.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get policy Tunnel(GRE as of now) status for given tunnel-id
+    //
+    // @param tier0IdParam (required)
+    // @param localeSvcIdParam (required)
+    // @param tunnelIdParam (required)
+    // @param bgpNeighborTypeParam Bgp neighbor type (optional)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param edgePathParam Policy path of edge node (optional)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @param sourceParam Data source type. (optional)
+    // @param statsTypeParam Segment statistics type (optional)
+    // @param transportNodeIdParam Transport Node Id (optional)
+    // @return com.vmware.nsx_policy.model.TunnelStatus
+    // The return value will contain all the properties defined in nsx_policyModel.TunnelStatus.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(tier0IdParam string, localeSvcIdParam string, tunnelIdParam string, bgpNeighborTypeParam *string, cursorParam *string, edgePathParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statsTypeParam *string, transportNodeIdParam *string) (*vapiData_.StructValue, error)
 }
 
+
 type statusClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewStatusClient(connector vapiProtocolClient_.Connector) *statusClient {
@@ -119,3 +120,4 @@ func (sIface *statusClient) Get(tier0IdParam string, localeSvcIdParam string, tu
 		return emptyOutput, methodError.(error)
 	}
 }
+

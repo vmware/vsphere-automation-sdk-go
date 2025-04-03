@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,52 +10,53 @@
 package backups
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ConfigClient interface {
 
-	// Get a configuration of a file server and timers for automated backup. Fields that contain secrets (password, passphrase) are not returned.
-	// @return com.vmware.nsx_policy.model.BackupConfiguration
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get a configuration of a file server and timers for automated backup. Fields that contain secrets (password, passphrase) are not returned.
+    // @return com.vmware.nsx_policy.model.BackupConfiguration
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get() (nsx_policyModel.BackupConfiguration, error)
 
-	// Configure file server and timers for automated backup. If secret fields are omitted (password, passphrase) then use the previously set value.
-	//
-	// @param backupConfigurationParam (required)
-	// @param frameTypeParam Frame type (optional, default to LOCAL_LOCAL_MANAGER)
-	// @param siteIdParam Site ID (optional, default to localhost)
-	// @return com.vmware.nsx_policy.model.BackupConfiguration
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Configure file server and timers for automated backup. If secret fields are omitted (password, passphrase) then use the previously set value.
+    //
+    // @param backupConfigurationParam (required)
+    // @param frameTypeParam Frame type (optional, default to LOCAL_LOCAL_MANAGER)
+    // @param siteIdParam Site ID (optional, default to localhost)
+    // @return com.vmware.nsx_policy.model.BackupConfiguration
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(backupConfigurationParam nsx_policyModel.BackupConfiguration, frameTypeParam *string, siteIdParam *string) (nsx_policyModel.BackupConfiguration, error)
 }
 
+
 type configClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewConfigClient(connector vapiProtocolClient_.Connector) *configClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.cluster.backups.config")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -136,3 +137,4 @@ func (cIface *configClient) Update(backupConfigurationParam nsx_policyModel.Back
 		return emptyOutput, methodError.(error)
 	}
 }
+

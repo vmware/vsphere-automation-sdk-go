@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,42 +10,43 @@
 package sessions
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatisticsClient interface {
 
-	// - no enforcement point path specified: statistics are evaluated on each enforcement point. - an enforcement point path is specified: statistics are evaluated only on the given enforcement point. - source=realtime: statistics are fetched realtime from the enforcement point. - source=cached: cached statistics from the enforcement point are returned.
-	//  This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/l2vpn-services/<service-id>/ sessions/<session-id>/statistics instead.
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param tier0IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param serviceIdParam (required)
-	// @param sessionIdParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @param sourceParam Data source type. (optional)
-	// @return com.vmware.nsx_policy.model.AggregateL2VPNSessionStatistics
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // - no enforcement point path specified: statistics are evaluated on each enforcement point. - an enforcement point path is specified: statistics are evaluated only on the given enforcement point. - source=realtime: statistics are fetched realtime from the enforcement point. - source=cached: cached statistics from the enforcement point are returned. 
+    //  This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/l2vpn-services/<service-id>/ sessions/<session-id>/statistics instead.
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param tier0IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param serviceIdParam (required)
+    // @param sessionIdParam (required)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    // @param sourceParam Data source type. (optional)
+    // @return com.vmware.nsx_policy.model.AggregateL2VPNSessionStatistics
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(tier0IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.AggregateL2VPNSessionStatistics, error)
 }
 
+
 type statisticsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewStatisticsClient(connector vapiProtocolClient_.Connector) *statisticsClient {
@@ -103,3 +104,4 @@ func (sIface *statisticsClient) Get(tier0IdParam string, localeServiceIdParam st
 		return emptyOutput, methodError.(error)
 	}
 }
+

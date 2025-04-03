@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,59 +10,60 @@
 package tags
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VpcTagOperationsClient interface {
 
-	// Get details of tag bulk operation request with which tag is applied or removed on virtual machines.
-	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @param vpcIdParam (required)
-	// @param operationIdParam (required)
-	// @return com.vmware.nsx_policy.model.TagBulkOperation
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get details of tag bulk operation request with which tag is applied or removed on virtual machines.
+    //
+    // @param orgIdParam (required)
+    // @param projectIdParam (required)
+    // @param vpcIdParam (required)
+    // @param operationIdParam (required)
+    // @return com.vmware.nsx_policy.model.TagBulkOperation
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, vpcIdParam string, operationIdParam string) (nsx_policyModel.TagBulkOperation, error)
 
-	// Tag can be assigned or unassigned on multiple objects. Supported object type is restricted to Virtual Machine for now and support for other objects will be added later. Permissions for tag bulk operation would be similar to virtual machine tag permissions.
-	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @param vpcIdParam (required)
-	// @param operationIdParam (required)
-	// @param tagBulkOperationParam (required)
-	// @return com.vmware.nsx_policy.model.TagBulkOperation
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Tag can be assigned or unassigned on multiple objects. Supported object type is restricted to Virtual Machine for now and support for other objects will be added later. Permissions for tag bulk operation would be similar to virtual machine tag permissions.
+    //
+    // @param orgIdParam (required)
+    // @param projectIdParam (required)
+    // @param vpcIdParam (required)
+    // @param operationIdParam (required)
+    // @param tagBulkOperationParam (required)
+    // @return com.vmware.nsx_policy.model.TagBulkOperation
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(orgIdParam string, projectIdParam string, vpcIdParam string, operationIdParam string, tagBulkOperationParam nsx_policyModel.TagBulkOperation) (nsx_policyModel.TagBulkOperation, error)
 }
 
+
 type vpcTagOperationsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewVpcTagOperationsClient(connector vapiProtocolClient_.Connector) *vpcTagOperationsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.vpcs.tags.vpc_tag_operations")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -149,3 +150,4 @@ func (vIface *vpcTagOperationsClient) Update(orgIdParam string, projectIdParam s
 		return emptyOutput, methodError.(error)
 	}
 }
+

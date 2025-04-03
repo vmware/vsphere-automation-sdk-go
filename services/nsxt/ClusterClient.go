@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,48 +10,49 @@
 package nsx_policy
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ClusterClient interface {
 
-	// Request one-time backup. The backup will be uploaded using the same server configuration as for automatic backup.
-	//
-	// @param frameTypeParam Frame type (optional, default to LOCAL_LOCAL_MANAGER)
-	// @param siteIdParam Site ID (optional, default to localhost)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Request one-time backup. The backup will be uploaded using the same server configuration as for automatic backup.
+    //
+    // @param frameTypeParam Frame type (optional, default to LOCAL_LOCAL_MANAGER)
+    // @param siteIdParam Site ID (optional, default to localhost)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Backuptoremote(frameTypeParam *string, siteIdParam *string) error
 
-	// Request one-time inventory summary. The backup will be uploaded using the same server configuration as for an automatic backup.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Request one-time inventory summary. The backup will be uploaded using the same server configuration as for an automatic backup.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Summarizeinventorytoremote() error
 }
 
+
 type clusterClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewClusterClient(connector vapiProtocolClient_.Connector) *clusterClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.cluster")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"backuptoremote":             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "backuptoremote"),
+		"backuptoremote": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "backuptoremote"),
 		"summarizeinventorytoremote": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "summarizeinventorytoremote"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -119,3 +120,4 @@ func (cIface *clusterClient) Summarizeinventorytoremote() error {
 		return methodError.(error)
 	}
 }
+

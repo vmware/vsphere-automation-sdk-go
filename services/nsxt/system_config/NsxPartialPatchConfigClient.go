@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,49 +10,50 @@
 package system_config
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type NsxPartialPatchConfigClient interface {
 
-	// Read Configuration values for nsx-partial-patch. By default partial patch is deactivated (i.e false). Please refer to the description of PartialPatchConfig for more information.
-	// @return com.vmware.nsx_policy.model.PartialPatchConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read Configuration values for nsx-partial-patch. By default partial patch is deactivated (i.e false). Please refer to the description of PartialPatchConfig for more information.
+    // @return com.vmware.nsx_policy.model.PartialPatchConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get() (nsx_policyModel.PartialPatchConfig, error)
 
-	// Update partial patch configuration values. Only boolean value is allowed for enable_partial_patch. Please refer to the description of PartialPatchConfig for more information.
-	//
-	// @param partialPatchConfigParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Update partial patch configuration values. Only boolean value is allowed for enable_partial_patch. Please refer to the description of PartialPatchConfig for more information.
+    //
+    // @param partialPatchConfigParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(partialPatchConfigParam nsx_policyModel.PartialPatchConfig) error
 }
 
+
 type nsxPartialPatchConfigClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewNsxPartialPatchConfigClient(connector vapiProtocolClient_.Connector) *nsxPartialPatchConfigClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.system_config.nsx_partial_patch_config")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -125,3 +126,4 @@ func (nIface *nsxPartialPatchConfigClient) Patch(partialPatchConfigParam nsx_pol
 		return methodError.(error)
 	}
 }
+

@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,64 +10,65 @@
 package enforcement_points
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VirtualMachinesClient interface {
 
-	// This API filters objects of type virtual machines from the specified NSX Manager.
-	//  This API has been deprecated. Please use the new API GET /infra/realized-state/virtual-machines
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param enforcementPointNameParam (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param dslParam Search DSL (domain specific language) query (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param queryParam Search query (optional)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.SearchResponse
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This API filters objects of type virtual machines from the specified NSX Manager. 
+    //  This API has been deprecated. Please use the new API GET /infra/realized-state/virtual-machines
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param enforcementPointNameParam (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param dslParam Search DSL (domain specific language) query (optional)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param queryParam Search query (optional)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.SearchResponse
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(enforcementPointNameParam string, cursorParam *string, dslParam *string, includedFieldsParam *string, pageSizeParam *int64, queryParam *string, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SearchResponse, error)
 
-	//
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param enforcementPointNameParam (required)
-	// @param virtualMachineTagsUpdateParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    //
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param enforcementPointNameParam (required)
+    // @param virtualMachineTagsUpdateParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Updatetags(enforcementPointNameParam string, virtualMachineTagsUpdateParam nsx_policyModel.VirtualMachineTagsUpdate) error
 }
 
+
 type virtualMachinesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewVirtualMachinesClient(connector vapiProtocolClient_.Connector) *virtualMachinesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.realized_state.enforcement_points.virtual_machines")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"list":       vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 		"updatetags": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "updatetags"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -149,3 +150,4 @@ func (vIface *virtualMachinesClient) Updatetags(enforcementPointNameParam string
 		return methodError.(error)
 	}
 }
+

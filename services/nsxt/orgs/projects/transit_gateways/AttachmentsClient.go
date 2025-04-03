@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,111 +10,112 @@
 package transit_gateways
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AttachmentsClient interface {
 
-	// Delete transit gateway attachment
-	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @param transitGatewayIdParam (required)
-	// @param attachmentIdParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete transit gateway attachment
+    //
+    // @param orgIdParam (required)
+    // @param projectIdParam (required)
+    // @param transitGatewayIdParam (required)
+    // @param attachmentIdParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, attachmentIdParam string) error
 
-	// Read transit gateway attachment
-	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @param transitGatewayIdParam (required)
-	// @param attachmentIdParam (required)
-	// @return com.vmware.nsx_policy.model.TransitGatewayAttachment
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read transit gateway attachment
+    //
+    // @param orgIdParam (required)
+    // @param projectIdParam (required)
+    // @param transitGatewayIdParam (required)
+    // @param attachmentIdParam (required)
+    // @return com.vmware.nsx_policy.model.TransitGatewayAttachment
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, attachmentIdParam string) (nsx_policyModel.TransitGatewayAttachment, error)
 
-	// List transit gateway attachments
-	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @param transitGatewayIdParam (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.TransitGatewayAttachmentListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // List transit gateway attachments
+    //
+    // @param orgIdParam (required)
+    // @param projectIdParam (required)
+    // @param transitGatewayIdParam (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.TransitGatewayAttachmentListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, transitGatewayIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.TransitGatewayAttachmentListResult, error)
 
-	// Create or Update transit gateway attachment
-	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @param transitGatewayIdParam (required)
-	// @param attachmentIdParam (required)
-	// @param transitGatewayAttachmentParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create or Update transit gateway attachment
+    //
+    // @param orgIdParam (required)
+    // @param projectIdParam (required)
+    // @param transitGatewayIdParam (required)
+    // @param attachmentIdParam (required)
+    // @param transitGatewayAttachmentParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, attachmentIdParam string, transitGatewayAttachmentParam nsx_policyModel.TransitGatewayAttachment) error
 
-	// Create or Update transit gateway attachment
-	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @param transitGatewayIdParam (required)
-	// @param attachmentIdParam (required)
-	// @param transitGatewayAttachmentParam (required)
-	// @return com.vmware.nsx_policy.model.TransitGatewayAttachment
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create or Update transit gateway attachment
+    //
+    // @param orgIdParam (required)
+    // @param projectIdParam (required)
+    // @param transitGatewayIdParam (required)
+    // @param attachmentIdParam (required)
+    // @param transitGatewayAttachmentParam (required)
+    // @return com.vmware.nsx_policy.model.TransitGatewayAttachment
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, attachmentIdParam string, transitGatewayAttachmentParam nsx_policyModel.TransitGatewayAttachment) (nsx_policyModel.TransitGatewayAttachment, error)
 }
 
+
 type attachmentsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewAttachmentsClient(connector vapiProtocolClient_.Connector) *attachmentsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.transit_gateways.attachments")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -300,3 +301,4 @@ func (aIface *attachmentsClient) Update(orgIdParam string, projectIdParam string
 		return emptyOutput, methodError.(error)
 	}
 }
+

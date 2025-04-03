@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,62 +10,63 @@
 package geo_ip
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SettingClient interface {
 
-	// API to retrieve the current Geo IP Setting Configuration.
-	// @return com.vmware.nsx_policy.model.GeoIpSetting
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // API to retrieve the current Geo IP Setting Configuration.
+    // @return com.vmware.nsx_policy.model.GeoIpSetting
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get() (nsx_policyModel.GeoIpSetting, error)
 
-	// This API can be used to activate or deactivate auto-download of Geo IP Bundle. Once auto-download is activated, Geo IP Bundle will be downloaded at regular intervals of 720 minutes (12 hrs).
-	//
-	// @param geoIpSettingParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This API can be used to activate or deactivate auto-download of Geo IP Bundle. Once auto-download is activated, Geo IP Bundle will be downloaded at regular intervals of 720 minutes (12 hrs).
+    //
+    // @param geoIpSettingParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(geoIpSettingParam nsx_policyModel.GeoIpSetting) error
 
-	// This API can be used to activate or deactivate auto-download of Geo IP Bundle. Once auto-download is activated, Geo IP Bundle will be downloaded at regular intervals of 720 minutes (12 hrs).
-	//
-	// @param geoIpSettingParam (required)
-	// @return com.vmware.nsx_policy.model.GeoIpSetting
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This API can be used to activate or deactivate auto-download of Geo IP Bundle. Once auto-download is activated, Geo IP Bundle will be downloaded at regular intervals of 720 minutes (12 hrs).
+    //
+    // @param geoIpSettingParam (required)
+    // @return com.vmware.nsx_policy.model.GeoIpSetting
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(geoIpSettingParam nsx_policyModel.GeoIpSetting) (nsx_policyModel.GeoIpSetting, error)
 }
 
+
 type settingClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewSettingClient(connector vapiProtocolClient_.Connector) *settingClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.geo_ip.setting")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -170,3 +171,4 @@ func (sIface *settingClient) Update(geoIpSettingParam nsx_policyModel.GeoIpSetti
 		return emptyOutput, methodError.(error)
 	}
 }
+

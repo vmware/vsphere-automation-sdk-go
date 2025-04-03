@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,40 +10,41 @@
 package rules
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatisticsClient interface {
 
-	// Get statistics of a IDS-IPS rule. - no enforcement point path specified: Stats will be evaluated on each enforcement point. - {enforcement_point_path}: Stats are evaluated only on the given enforcement point.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param domainIdParam Domain id (required)
-	// @param idsPolicyIdParam IDS policy id (required)
-	// @param ruleIdParam Rule id (required)
-	// @param containerClusterPathParam String Path of the Container Cluster entity (optional)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @return com.vmware.nsx_policy.model.IdsRuleStatisticsListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get statistics of a IDS-IPS rule. - no enforcement point path specified: Stats will be evaluated on each enforcement point. - {enforcement_point_path}: Stats are evaluated only on the given enforcement point.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param domainIdParam Domain id (required)
+    // @param idsPolicyIdParam IDS policy id (required)
+    // @param ruleIdParam Rule id (required)
+    // @param containerClusterPathParam String Path of the Container Cluster entity (optional)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    // @return com.vmware.nsx_policy.model.IdsRuleStatisticsListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, domainIdParam string, idsPolicyIdParam string, ruleIdParam string, containerClusterPathParam *string, enforcementPointPathParam *string) (nsx_policyModel.IdsRuleStatisticsListResult, error)
 }
 
+
 type statisticsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewStatisticsClient(connector vapiProtocolClient_.Connector) *statisticsClient {
@@ -102,3 +103,4 @@ func (sIface *statisticsClient) List(orgIdParam string, projectIdParam string, d
 		return emptyOutput, methodError.(error)
 	}
 }
+

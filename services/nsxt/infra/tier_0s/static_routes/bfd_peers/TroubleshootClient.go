@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,68 +10,69 @@
 package bfd_peers
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TroubleshootClient interface {
 
-	// Read a StaticRouteBfdTroubleshootConfig
-	//
-	// @param tier0IdParam Tier-0 ID (required)
-	// @return com.vmware.nsx_policy.model.StaticRouteBfdTroubleshootConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read a StaticRouteBfdTroubleshootConfig
+    //
+    // @param tier0IdParam Tier-0 ID (required)
+    // @return com.vmware.nsx_policy.model.StaticRouteBfdTroubleshootConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(tier0IdParam string) (nsx_policyModel.StaticRouteBfdTroubleshootConfig, error)
 
-	// If a StaticRouteBfdTroubleshootConfig is not already present, create a new StaticRouteBfdTroubleshootConfig. If it already exists, update the StaticRouteBfdTroubleshootConfig. This is a full replace.
-	//
-	// @param tier0IdParam Tier-0 ID (required)
-	// @param staticRouteBfdTroubleshootConfigParam (required)
-	// @param overrideParam Locally override the global object (optional, default to false)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If a StaticRouteBfdTroubleshootConfig is not already present, create a new StaticRouteBfdTroubleshootConfig. If it already exists, update the StaticRouteBfdTroubleshootConfig. This is a full replace.
+    //
+    // @param tier0IdParam Tier-0 ID (required)
+    // @param staticRouteBfdTroubleshootConfigParam (required)
+    // @param overrideParam Locally override the global object (optional, default to false)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(tier0IdParam string, staticRouteBfdTroubleshootConfigParam nsx_policyModel.StaticRouteBfdTroubleshootConfig, overrideParam *bool) error
 
-	// If a StaticRouteBfdTroubleshootConfig is not already present, create a new StaticRouteBfdTroubleshootConfig. If it already exists, update the StaticRouteBfdTroubleshootConfig. This operation will fully replace the object.
-	//
-	// @param tier0IdParam Tier-0 ID (required)
-	// @param staticRouteBfdTroubleshootConfigParam (required)
-	// @param overrideParam Locally override the global object (optional, default to false)
-	// @return com.vmware.nsx_policy.model.StaticRouteBfdTroubleshootConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If a StaticRouteBfdTroubleshootConfig is not already present, create a new StaticRouteBfdTroubleshootConfig. If it already exists, update the StaticRouteBfdTroubleshootConfig. This operation will fully replace the object.
+    //
+    // @param tier0IdParam Tier-0 ID (required)
+    // @param staticRouteBfdTroubleshootConfigParam (required)
+    // @param overrideParam Locally override the global object (optional, default to false)
+    // @return com.vmware.nsx_policy.model.StaticRouteBfdTroubleshootConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(tier0IdParam string, staticRouteBfdTroubleshootConfigParam nsx_policyModel.StaticRouteBfdTroubleshootConfig, overrideParam *bool) (nsx_policyModel.StaticRouteBfdTroubleshootConfig, error)
 }
 
+
 type troubleshootClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewTroubleshootClient(connector vapiProtocolClient_.Connector) *troubleshootClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.tier_0s.static_routes.bfd_peers.troubleshoot")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -181,3 +182,4 @@ func (tIface *troubleshootClient) Update(tier0IdParam string, staticRouteBfdTrou
 		return emptyOutput, methodError.(error)
 	}
 }
+

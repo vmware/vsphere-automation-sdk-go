@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,129 +10,130 @@
 package sites
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type EnforcementPointsClient interface {
 
-	// Delete EnforcementPoint from Site
-	//
-	// @param siteIdParam (required)
-	// @param enforcementpointIdParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete EnforcementPoint from Site
+    //
+    // @param siteIdParam (required)
+    // @param enforcementpointIdParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(siteIdParam string, enforcementpointIdParam string) error
 
-	// Full sync EnforcementPoint from Site
-	//
-	// @param siteIdParam (required)
-	// @param enforcementPointIdParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Full sync EnforcementPoint from Site
+    //
+    // @param siteIdParam (required)
+    // @param enforcementPointIdParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Fullsync(siteIdParam string, enforcementPointIdParam string) error
 
-	// Read an Enforcement Point under Infra/Site
-	//
-	// @param siteIdParam (required)
-	// @param enforcementpointIdParam (required)
-	// @return com.vmware.nsx_policy.model.EnforcementPoint
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read an Enforcement Point under Infra/Site
+    //
+    // @param siteIdParam (required)
+    // @param enforcementpointIdParam (required)
+    // @return com.vmware.nsx_policy.model.EnforcementPoint
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementpointIdParam string) (nsx_policyModel.EnforcementPoint, error)
 
-	// Paginated list of all enforcementpoints under Site.
-	//
-	// @param siteIdParam (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.EnforcementPointListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Paginated list of all enforcementpoints under Site.
+    //
+    // @param siteIdParam (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.EnforcementPointListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(siteIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.EnforcementPointListResult, error)
 
-	// If the passed Enforcement Point does not already exist, create a new Enforcement Point. If it already exists, patch it.
-	//
-	// @param siteIdParam (required)
-	// @param enforcementpointIdParam (required)
-	// @param enforcementPointParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If the passed Enforcement Point does not already exist, create a new Enforcement Point. If it already exists, patch it.
+    //
+    // @param siteIdParam (required)
+    // @param enforcementpointIdParam (required)
+    // @param enforcementPointParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(siteIdParam string, enforcementpointIdParam string, enforcementPointParam nsx_policyModel.EnforcementPoint) error
 
-	// Reload an Enforcement Point under Site. This will read and update fabric configs from enforcement point.
-	//
-	// @param siteIdParam (required)
-	// @param enforcementpointIdParam (required)
-	// @return com.vmware.nsx_policy.model.EnforcementPoint
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Reload an Enforcement Point under Site. This will read and update fabric configs from enforcement point.
+    //
+    // @param siteIdParam (required)
+    // @param enforcementpointIdParam (required)
+    // @return com.vmware.nsx_policy.model.EnforcementPoint
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Reload(siteIdParam string, enforcementpointIdParam string) (nsx_policyModel.EnforcementPoint, error)
 
-	// If the passed Enforcement Point does not already exist, create a new Enforcement Point. If it already exists, replace it.
-	//
-	// @param siteIdParam (required)
-	// @param enforcementpointIdParam (required)
-	// @param enforcementPointParam (required)
-	// @return com.vmware.nsx_policy.model.EnforcementPoint
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If the passed Enforcement Point does not already exist, create a new Enforcement Point. If it already exists, replace it.
+    //
+    // @param siteIdParam (required)
+    // @param enforcementpointIdParam (required)
+    // @param enforcementPointParam (required)
+    // @return com.vmware.nsx_policy.model.EnforcementPoint
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(siteIdParam string, enforcementpointIdParam string, enforcementPointParam nsx_policyModel.EnforcementPoint) (nsx_policyModel.EnforcementPoint, error)
 }
 
+
 type enforcementPointsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewEnforcementPointsClient(connector vapiProtocolClient_.Connector) *enforcementPointsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.enforcement_points")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"delete":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		"fullsync": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "fullsync"),
-		"get":      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"reload":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "reload"),
-		"update":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"reload": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "reload"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -367,3 +368,4 @@ func (eIface *enforcementPointsClient) Update(siteIdParam string, enforcementpoi
 		return emptyOutput, methodError.(error)
 	}
 }
+

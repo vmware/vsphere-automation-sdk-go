@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,118 +10,119 @@
 package domains
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SecurityPoliciesClient interface {
 
-	// Deletes the security policy along with all the rules
-	//
-	// @param domainIdParam (required)
-	// @param securityPolicyIdParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Deletes the security policy along with all the rules
+    //
+    // @param domainIdParam (required)
+    // @param securityPolicyIdParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(domainIdParam string, securityPolicyIdParam string) error
 
-	// Read security policy for a domain.
-	//
-	// @param domainIdParam (required)
-	// @param securityPolicyIdParam (required)
-	// @return com.vmware.nsx_policy.model.SecurityPolicy
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read security policy for a domain.
+    //
+    // @param domainIdParam (required)
+    // @param securityPolicyIdParam (required)
+    // @return com.vmware.nsx_policy.model.SecurityPolicy
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(domainIdParam string, securityPolicyIdParam string) (nsx_policyModel.SecurityPolicy, error)
 
-	// List all security policies for a domain.
-	//
-	// @param domainIdParam (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includeRuleCountParam Include the count of rules in policy (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.SecurityPolicyListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // List all security policies for a domain.
+    //
+    // @param domainIdParam (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includeRuleCountParam Include the count of rules in policy (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.SecurityPolicyListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(domainIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includeRuleCountParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityPolicyListResult, error)
 
-	// Patch the security policy for a domain. If a security policy for the given security-policy-id is not present, the object will get created and if it is present it will be updated. This is a full replace. Performance Note: If you want to edit several rules in a security policy use this API. It will perform better than several individual rule APIs. Just pass all the rules which you wish to edit as embedded rules to it.
-	//
-	// @param domainIdParam (required)
-	// @param securityPolicyIdParam (required)
-	// @param securityPolicyParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Patch the security policy for a domain. If a security policy for the given security-policy-id is not present, the object will get created and if it is present it will be updated. This is a full replace. Performance Note: If you want to edit several rules in a security policy use this API. It will perform better than several individual rule APIs. Just pass all the rules which you wish to edit as embedded rules to it.
+    //
+    // @param domainIdParam (required)
+    // @param securityPolicyIdParam (required)
+    // @param securityPolicyParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(domainIdParam string, securityPolicyIdParam string, securityPolicyParam nsx_policyModel.SecurityPolicy) error
 
-	// This is used to set a precedence of a security policy w.r.t others.
-	//
-	// @param domainIdParam (required)
-	// @param securityPolicyIdParam (required)
-	// @param securityPolicyParam (required)
-	// @param anchorPathParam The security policy/rule path if operation is 'insert_after' or 'insert_before' (optional)
-	// @param operationParam Operation (optional, default to insert_top)
-	// @return com.vmware.nsx_policy.model.SecurityPolicy
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This is used to set a precedence of a security policy w.r.t others.
+    //
+    // @param domainIdParam (required)
+    // @param securityPolicyIdParam (required)
+    // @param securityPolicyParam (required)
+    // @param anchorPathParam The security policy/rule path if operation is 'insert_after' or 'insert_before' (optional)
+    // @param operationParam Operation (optional, default to insert_top)
+    // @return com.vmware.nsx_policy.model.SecurityPolicy
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Revise(domainIdParam string, securityPolicyIdParam string, securityPolicyParam nsx_policyModel.SecurityPolicy, anchorPathParam *string, operationParam *string) (nsx_policyModel.SecurityPolicy, error)
 
-	// Create or Update the security policy for a domain. This is a full replace. All the rules are replaced. Performance Note: If you want to edit several rules in a security policy, use this API. It will perform better than several individual rule APIs. Just pass all the rules which you wish to edit as embedded rules to it.
-	//
-	// @param domainIdParam (required)
-	// @param securityPolicyIdParam (required)
-	// @param securityPolicyParam (required)
-	// @return com.vmware.nsx_policy.model.SecurityPolicy
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create or Update the security policy for a domain. This is a full replace. All the rules are replaced. Performance Note: If you want to edit several rules in a security policy, use this API. It will perform better than several individual rule APIs. Just pass all the rules which you wish to edit as embedded rules to it.
+    //
+    // @param domainIdParam (required)
+    // @param securityPolicyIdParam (required)
+    // @param securityPolicyParam (required)
+    // @return com.vmware.nsx_policy.model.SecurityPolicy
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(domainIdParam string, securityPolicyIdParam string, securityPolicyParam nsx_policyModel.SecurityPolicy) (nsx_policyModel.SecurityPolicy, error)
 }
 
+
 type securityPoliciesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewSecurityPoliciesClient(connector vapiProtocolClient_.Connector) *securityPoliciesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.domains.security_policies")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"revise": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "revise"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
@@ -335,3 +336,4 @@ func (sIface *securityPoliciesClient) Update(domainIdParam string, securityPolic
 		return emptyOutput, methodError.(error)
 	}
 }
+

@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,62 +10,63 @@
 package context_profiles
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type CustomAttributesClient interface {
 
-	// This API adds/removes custom attribute values from list for a given attribute key.
-	//  This rest routine is deprecated. Use /infra/context-profiles/custom-attributes/default to Adds/Removes custom attribute values from list
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param policyAttributesParam (required)
-	// @param actionParam Add or Remove Custom Context Profile Attribute values. (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This API adds/removes custom attribute values from list for a given attribute key. 
+    //  This rest routine is deprecated. Use /infra/context-profiles/custom-attributes/default to Adds/Removes custom attribute values from list
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param policyAttributesParam (required)
+    // @param actionParam Add or Remove Custom Context Profile Attribute values. (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(orgIdParam string, projectIdParam string, policyAttributesParam nsx_policyModel.PolicyAttributes, actionParam string) error
 
-	// This API updates custom attribute value list for given key.
-	//  This rest routine is deprecated. Use /infra/context-profiles/custom-attributes/default for create/update custom object attribute value list for given attribute key
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param policyAttributesParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This API updates custom attribute value list for given key. 
+    //  This rest routine is deprecated. Use /infra/context-profiles/custom-attributes/default for create/update custom object attribute value list for given attribute key
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param policyAttributesParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, policyAttributesParam nsx_policyModel.PolicyAttributes) error
 }
 
+
 type customAttributesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewCustomAttributesClient(connector vapiProtocolClient_.Connector) *customAttributesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.infra.context_profiles.custom_attributes")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -137,3 +138,4 @@ func (cIface *customAttributesClient) Patch(orgIdParam string, projectIdParam st
 		return methodError.(error)
 	}
 }
+

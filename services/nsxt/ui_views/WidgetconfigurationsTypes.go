@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -12,18 +12,22 @@
 package ui_views
 
 import (
+	"reflect"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
-	"reflect"
 )
+
+
+
+
 
 func widgetconfigurationsCreateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["view_id"] = vapiBindings_.NewStringType()
-	fields["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType)})
+	fields["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType),})
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widget_configuration"] = "WidgetConfiguration"
 	var validators = []vapiBindings_.Validator{}
@@ -31,7 +35,7 @@ func widgetconfigurationsCreateInputType() vapiBindings_.StructType {
 }
 
 func WidgetconfigurationsCreateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType),})
 }
 
 func widgetconfigurationsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -44,10 +48,10 @@ func widgetconfigurationsCreateRestMetadata() vapiProtocol_.OperationRestMetadat
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["view_id"] = vapiBindings_.NewStringType()
-	fields["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType)})
+	fields["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType),})
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widget_configuration"] = "WidgetConfiguration"
-	paramsTypeMap["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType)})
+	paramsTypeMap["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType),})
 	paramsTypeMap["view_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["viewId"] = vapiBindings_.NewStringType()
 	pathParams["view_id"] = "viewId"
@@ -71,7 +75,7 @@ func widgetconfigurationsCreateRestMetadata() vapiProtocol_.OperationRestMetadat
 		201,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func widgetconfigurationsDeleteInputType() vapiBindings_.StructType {
@@ -128,7 +132,7 @@ func widgetconfigurationsDeleteRestMetadata() vapiProtocol_.OperationRestMetadat
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func widgetconfigurationsGetInputType() vapiBindings_.StructType {
@@ -190,7 +194,7 @@ func widgetconfigurationsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func widgetconfigurationsGet0InputType() vapiBindings_.StructType {
@@ -205,7 +209,7 @@ func widgetconfigurationsGet0InputType() vapiBindings_.StructType {
 }
 
 func WidgetconfigurationsGet0OutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType),})
 }
 
 func widgetconfigurationsGet0RestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -247,7 +251,7 @@ func widgetconfigurationsGet0RestMetadata() vapiProtocol_.OperationRestMetadata 
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func widgetconfigurationsUpdateInputType() vapiBindings_.StructType {
@@ -255,7 +259,7 @@ func widgetconfigurationsUpdateInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["view_id"] = vapiBindings_.NewStringType()
 	fields["widgetconfiguration_id"] = vapiBindings_.NewStringType()
-	fields["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType)})
+	fields["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType),})
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widgetconfiguration_id"] = "WidgetconfigurationId"
 	fieldNameMap["widget_configuration"] = "WidgetConfiguration"
@@ -264,7 +268,7 @@ func widgetconfigurationsUpdateInputType() vapiBindings_.StructType {
 }
 
 func WidgetconfigurationsUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType),})
 }
 
 func widgetconfigurationsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -278,11 +282,11 @@ func widgetconfigurationsUpdateRestMetadata() vapiProtocol_.OperationRestMetadat
 	bodyFieldsMap := map[string]string{}
 	fields["view_id"] = vapiBindings_.NewStringType()
 	fields["widgetconfiguration_id"] = vapiBindings_.NewStringType()
-	fields["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType)})
+	fields["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType),})
 	fieldNameMap["view_id"] = "ViewId"
 	fieldNameMap["widgetconfiguration_id"] = "WidgetconfigurationId"
 	fieldNameMap["widget_configuration"] = "WidgetConfiguration"
-	paramsTypeMap["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType)})
+	paramsTypeMap["widget_configuration"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.WidgetConfigurationBindingType),})
 	paramsTypeMap["widgetconfiguration_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["view_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["viewId"] = vapiBindings_.NewStringType()
@@ -309,5 +313,7 @@ func widgetconfigurationsUpdateRestMetadata() vapiProtocol_.OperationRestMetadat
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
+
+

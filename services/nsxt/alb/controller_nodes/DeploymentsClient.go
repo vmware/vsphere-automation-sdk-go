@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,86 +10,87 @@
 package controller_nodes
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DeploymentsClient interface {
 
-	// Deploys a Advanced Load Balancer controller node VM as specified by the deployment config.
-	//
-	// @param addALBControllerNodeVMInfoParam (required)
-	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequestList
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Deploys a Avi Load Balancer Controller node as specified by the deployment config.
+    //
+    // @param addALBControllerNodeVMInfoParam (required)
+    // @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequestList
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(addALBControllerNodeVMInfoParam nsx_policyModel.AddALBControllerNodeVMInfo) (nsx_policyModel.ALBControllerNodeVMDeploymentRequestList, error)
 
-	// Attempts to unregister and undeploy a specified auto-deployed cluster node VM. If it is a member of a cluster, then the VM will be automatically detached from the cluster before being unregistered and undeployed. Alternatively, if the original deployment attempt failed or the VM is not found, cleans up the deployment information associated with the deployment attempt. Note: If a VM has been successfully auto-deployed, then the associated deployment information will not be deleted unless and until the VM is successfully deleted.
-	//
-	// @param nodeIdParam (required)
-	// @param forceDeleteParam Delete by force (optional)
-	// @param inaccessibleParam Delete when controller is inaccessible (optional)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Attempts to unregister and undeploy a specified auto-deployed cluster node. If it is a member of a cluster, then the node will be automatically detached from the cluster before being unregistered and undeployed. Alternatively, if the original deployment attempt failed or the node is not found, cleans up the deployment information associated with the deployment attempt. Note: If a node has been successfully auto-deployed, then the associated deployment information will not be deleted unless and until the node is successfully deleted.
+    //
+    // @param nodeIdParam (required)
+    // @param forceDeleteParam Delete by force (optional)
+    // @param inaccessibleParam Delete when controller is inaccessible (optional)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(nodeIdParam string, forceDeleteParam *bool, inaccessibleParam *string) error
 
-	// Returns deployment request information for a specific attempted deployment of a cluster node VM.
-	//
-	// @param nodeIdParam (required)
-	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequest
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Returns deployment request information for a specific attempted deployment of a cluster node.
+    //
+    // @param nodeIdParam (required)
+    // @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequest
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(nodeIdParam string) (nsx_policyModel.ALBControllerNodeVMDeploymentRequest, error)
 
-	// Returns request information for every attempted deployment of a cluster node VM.
-	//
-	// @param clusteringIdParam Unique Id for NSX Advanced Load Balancer Controller Cluster used in VCF managed NSX. (optional)
-	// @param stateParam the current state of the Advanced Load Balancer controller VM (optional)
-	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequestList
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Returns request information for every attempted deployment of a Avi Load Balancer cluster node.
+    //
+    // @param clusteringIdParam Unique Id for Avi Load Balancer Controller Cluster used in VCF managed NSX (optional)
+    // @param stateParam The current state of the Avi Load Balancer Controller node deployment (optional)
+    // @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequestList
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(clusteringIdParam *string, stateParam *string) (nsx_policyModel.ALBControllerNodeVMDeploymentRequestList, error)
 
-	// Update Advanced Load Balancer Controller node VM details
-	//
-	// @param nodeIdParam (required)
-	// @param aLBControllerNodeVMDeploymentRequestParam (required)
-	// @param runningConfigParam Update Advanced Load Balancer Controller runtime config as well (optional)
-	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequest
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Update Avi Load Balancer Controller node details
+    //
+    // @param nodeIdParam (required)
+    // @param aLBControllerNodeVMDeploymentRequestParam (required)
+    // @param runningConfigParam Update Avi Load Balancer Controller runtime config as well (optional)
+    // @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequest
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(nodeIdParam string, aLBControllerNodeVMDeploymentRequestParam nsx_policyModel.ALBControllerNodeVMDeploymentRequest, runningConfigParam *bool) (nsx_policyModel.ALBControllerNodeVMDeploymentRequest, error)
 }
 
+
 type deploymentsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewDeploymentsClient(connector vapiProtocolClient_.Connector) *deploymentsClient {
@@ -97,8 +98,8 @@ func NewDeploymentsClient(connector vapiProtocolClient_.Connector) *deploymentsC
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -273,3 +274,4 @@ func (dIface *deploymentsClient) Update(nodeIdParam string, aLBControllerNodeVMD
 		return emptyOutput, methodError.(error)
 	}
 }
+

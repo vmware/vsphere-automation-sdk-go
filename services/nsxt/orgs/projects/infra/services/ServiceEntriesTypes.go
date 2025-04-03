@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -12,12 +12,16 @@
 package services
 
 import (
+	"reflect"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
-	"reflect"
 )
+
+
+
+
 
 func serviceEntriesDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -87,7 +91,7 @@ func serviceEntriesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func serviceEntriesGetInputType() vapiBindings_.StructType {
@@ -106,7 +110,7 @@ func serviceEntriesGetInputType() vapiBindings_.StructType {
 }
 
 func ServiceEntriesGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType),})
 }
 
 func serviceEntriesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -158,7 +162,7 @@ func serviceEntriesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func serviceEntriesListInputType() vapiBindings_.StructType {
@@ -258,7 +262,7 @@ func serviceEntriesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func serviceEntriesPatchInputType() vapiBindings_.StructType {
@@ -268,7 +272,7 @@ func serviceEntriesPatchInputType() vapiBindings_.StructType {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["service_id"] = vapiBindings_.NewStringType()
 	fields["service_entry_id"] = vapiBindings_.NewStringType()
-	fields["service_entry"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType)})
+	fields["service_entry"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType),})
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["service_id"] = "ServiceId"
@@ -295,7 +299,7 @@ func serviceEntriesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["service_id"] = vapiBindings_.NewStringType()
 	fields["service_entry_id"] = vapiBindings_.NewStringType()
-	fields["service_entry"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType)})
+	fields["service_entry"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType),})
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["service_id"] = "ServiceId"
@@ -304,7 +308,7 @@ func serviceEntriesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["service_entry_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["service_entry"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType)})
+	paramsTypeMap["service_entry"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType),})
 	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
@@ -334,7 +338,7 @@ func serviceEntriesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func serviceEntriesUpdateInputType() vapiBindings_.StructType {
@@ -344,7 +348,7 @@ func serviceEntriesUpdateInputType() vapiBindings_.StructType {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["service_id"] = vapiBindings_.NewStringType()
 	fields["service_entry_id"] = vapiBindings_.NewStringType()
-	fields["service_entry"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType)})
+	fields["service_entry"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType),})
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["service_id"] = "ServiceId"
@@ -355,7 +359,7 @@ func serviceEntriesUpdateInputType() vapiBindings_.StructType {
 }
 
 func ServiceEntriesUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType),})
 }
 
 func serviceEntriesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -371,7 +375,7 @@ func serviceEntriesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["service_id"] = vapiBindings_.NewStringType()
 	fields["service_entry_id"] = vapiBindings_.NewStringType()
-	fields["service_entry"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType)})
+	fields["service_entry"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType),})
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["service_id"] = "ServiceId"
@@ -380,7 +384,7 @@ func serviceEntriesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["service_entry_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["service_entry"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType)})
+	paramsTypeMap["service_entry"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ServiceEntryBindingType),})
 	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
@@ -410,5 +414,7 @@ func serviceEntriesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
+
+

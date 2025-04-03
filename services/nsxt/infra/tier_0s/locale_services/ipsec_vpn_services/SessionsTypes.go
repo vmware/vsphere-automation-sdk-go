@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -12,12 +12,16 @@
 package ipsec_vpn_services
 
 import (
+	"reflect"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
-	"reflect"
 )
+
+
+
+
 
 func sessionsDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -87,7 +91,7 @@ func sessionsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsGetInputType() vapiBindings_.StructType {
@@ -106,7 +110,7 @@ func sessionsGetInputType() vapiBindings_.StructType {
 }
 
 func SessionsGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType),})
 }
 
 func sessionsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -158,7 +162,7 @@ func sessionsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsListInputType() vapiBindings_.StructType {
@@ -258,7 +262,7 @@ func sessionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsPatchInputType() vapiBindings_.StructType {
@@ -268,7 +272,7 @@ func sessionsPatchInputType() vapiBindings_.StructType {
 	fields["locale_service_id"] = vapiBindings_.NewStringType()
 	fields["service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
-	fields["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
+	fields["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType),})
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_id"] = "ServiceId"
@@ -295,13 +299,13 @@ func sessionsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["locale_service_id"] = vapiBindings_.NewStringType()
 	fields["service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
-	fields["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
+	fields["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType),})
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["session_id"] = "SessionId"
 	fieldNameMap["ip_sec_vpn_session"] = "IpSecVpnSession"
-	paramsTypeMap["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
+	paramsTypeMap["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType),})
 	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["locale_service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
@@ -334,7 +338,7 @@ func sessionsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsShowsensitivedataInputType() vapiBindings_.StructType {
@@ -353,7 +357,7 @@ func sessionsShowsensitivedataInputType() vapiBindings_.StructType {
 }
 
 func SessionsShowsensitivedataOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType),})
 }
 
 func sessionsShowsensitivedataRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -405,7 +409,7 @@ func sessionsShowsensitivedataRestMetadata() vapiProtocol_.OperationRestMetadata
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func sessionsUpdateInputType() vapiBindings_.StructType {
@@ -415,7 +419,7 @@ func sessionsUpdateInputType() vapiBindings_.StructType {
 	fields["locale_service_id"] = vapiBindings_.NewStringType()
 	fields["service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
-	fields["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
+	fields["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType),})
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_id"] = "ServiceId"
@@ -426,7 +430,7 @@ func sessionsUpdateInputType() vapiBindings_.StructType {
 }
 
 func SessionsUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType),})
 }
 
 func sessionsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -442,13 +446,13 @@ func sessionsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["locale_service_id"] = vapiBindings_.NewStringType()
 	fields["service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
-	fields["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
+	fields["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType),})
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_service_id"] = "LocaleServiceId"
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["session_id"] = "SessionId"
 	fieldNameMap["ip_sec_vpn_session"] = "IpSecVpnSession"
-	paramsTypeMap["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
+	paramsTypeMap["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType),})
 	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["locale_service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
@@ -481,5 +485,7 @@ func sessionsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
+
+

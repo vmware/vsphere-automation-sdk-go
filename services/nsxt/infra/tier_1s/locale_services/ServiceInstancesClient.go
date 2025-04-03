@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,106 +10,107 @@
 package locale_services
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ServiceInstancesClient interface {
 
-	// Delete Tier1 policy service instance
-	//
-	// @param tier1IdParam Tier-0 id (required)
-	// @param localeServiceIdParam Locale service id (required)
-	// @param serviceInstanceIdParam Tier1 Service instance id (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete Tier1 policy service instance
+    //
+    // @param tier1IdParam Tier-0 id (required)
+    // @param localeServiceIdParam Locale service id (required)
+    // @param serviceInstanceIdParam Tier1 Service instance id (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(tier1IdParam string, localeServiceIdParam string, serviceInstanceIdParam string) error
 
-	// Read Tier1 service instance
-	//
-	// @param tier1IdParam Tier-1 id (required)
-	// @param localeServiceIdParam Locale service id (required)
-	// @param serviceInstanceIdParam Service instance id (required)
-	// @return com.vmware.nsx_policy.model.PolicyServiceInstance
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read Tier1 service instance
+    //
+    // @param tier1IdParam Tier-1 id (required)
+    // @param localeServiceIdParam Locale service id (required)
+    // @param serviceInstanceIdParam Service instance id (required)
+    // @return com.vmware.nsx_policy.model.PolicyServiceInstance
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(tier1IdParam string, localeServiceIdParam string, serviceInstanceIdParam string) (nsx_policyModel.PolicyServiceInstance, error)
 
-	// Read all service instance objects under a tier-1
-	//
-	// @param tier1IdParam Tier-1 id (required)
-	// @param localeServiceIdParam Locale service id (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.PolicyServiceInstanceListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read all service instance objects under a tier-1
+    //
+    // @param tier1IdParam Tier-1 id (required)
+    // @param localeServiceIdParam Locale service id (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.PolicyServiceInstanceListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(tier1IdParam string, localeServiceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyServiceInstanceListResult, error)
 
-	// Create Tier1 Service Instance. Please note that, only display_name, description and deployment_spec_name are allowed to be modified in an exisiting entity. If the deployment spec name is changed, it will trigger the upgrade operation for the SVMs.
-	//
-	// @param tier1IdParam Tier-1 id (required)
-	// @param localeServiceIdParam Locale service id (required)
-	// @param serviceInstanceIdParam Tier1 Service instance id (required)
-	// @param policyServiceInstanceParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create Tier1 Service Instance. Please note that, only display_name, description and deployment_spec_name are allowed to be modified in an exisiting entity. If the deployment spec name is changed, it will trigger the upgrade operation for the SVMs.
+    //
+    // @param tier1IdParam Tier-1 id (required)
+    // @param localeServiceIdParam Locale service id (required)
+    // @param serviceInstanceIdParam Tier1 Service instance id (required)
+    // @param policyServiceInstanceParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(tier1IdParam string, localeServiceIdParam string, serviceInstanceIdParam string, policyServiceInstanceParam nsx_policyModel.PolicyServiceInstance) error
 
-	// Create Tier1 service instance. Please note that, only display_name, description and deployment_spec_name are allowed to be modified in an exisiting entity. If the deployment spec name is changed, it will trigger the upgrade operation for the SVMs.
-	//
-	// @param tier1IdParam Tier-1 id (required)
-	// @param localeServiceIdParam Locale service id (required)
-	// @param serviceInstanceIdParam Tier1 Service instance id (required)
-	// @param policyServiceInstanceParam (required)
-	// @return com.vmware.nsx_policy.model.PolicyServiceInstance
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create Tier1 service instance. Please note that, only display_name, description and deployment_spec_name are allowed to be modified in an exisiting entity. If the deployment spec name is changed, it will trigger the upgrade operation for the SVMs.
+    //
+    // @param tier1IdParam Tier-1 id (required)
+    // @param localeServiceIdParam Locale service id (required)
+    // @param serviceInstanceIdParam Tier1 Service instance id (required)
+    // @param policyServiceInstanceParam (required)
+    // @return com.vmware.nsx_policy.model.PolicyServiceInstance
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(tier1IdParam string, localeServiceIdParam string, serviceInstanceIdParam string, policyServiceInstanceParam nsx_policyModel.PolicyServiceInstance) (nsx_policyModel.PolicyServiceInstance, error)
 }
 
+
 type serviceInstancesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewServiceInstancesClient(connector vapiProtocolClient_.Connector) *serviceInstancesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.tier_1s.locale_services.service_instances")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -290,3 +291,4 @@ func (sIface *serviceInstancesClient) Update(tier1IdParam string, localeServiceI
 		return emptyOutput, methodError.(error)
 	}
 }
+

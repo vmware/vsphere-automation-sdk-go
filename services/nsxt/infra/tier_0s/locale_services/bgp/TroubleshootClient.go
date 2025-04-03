@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,71 +10,72 @@
 package bgp
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TroubleshootClient interface {
 
-	// Read BGP troubleshoot config
-	//
-	// @param tier0IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @return com.vmware.nsx_policy.model.BgpTroubleshootConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read BGP troubleshoot config
+    //
+    // @param tier0IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @return com.vmware.nsx_policy.model.BgpTroubleshootConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(tier0IdParam string, localeServiceIdParam string) (nsx_policyModel.BgpTroubleshootConfig, error)
 
-	// If BGP troubleshoot config is not present in BGP configuration, create a new BGP troubleshoot config with default value. If it already exists, update the BGP troubleshoot config with this object.
-	//
-	// @param tier0IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param bgpTroubleshootConfigParam (required)
-	// @param overrideParam Locally override the global object (optional, default to false)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If BGP troubleshoot config is not present in BGP configuration, create a new BGP troubleshoot config with default value. If it already exists, update the BGP troubleshoot config with this object.
+    //
+    // @param tier0IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param bgpTroubleshootConfigParam (required)
+    // @param overrideParam Locally override the global object (optional, default to false)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(tier0IdParam string, localeServiceIdParam string, bgpTroubleshootConfigParam nsx_policyModel.BgpTroubleshootConfig, overrideParam *bool) error
 
-	// If BGP troubleshoot config is not present in BGP configuration, create a new BGP troubleshoot config with default value. If it already exists, update the BGP troubleshoot config with this object.
-	//
-	// @param tier0IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param bgpTroubleshootConfigParam (required)
-	// @param overrideParam Locally override the global object (optional, default to false)
-	// @return com.vmware.nsx_policy.model.BgpTroubleshootConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If BGP troubleshoot config is not present in BGP configuration, create a new BGP troubleshoot config with default value. If it already exists, update the BGP troubleshoot config with this object.
+    //
+    // @param tier0IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param bgpTroubleshootConfigParam (required)
+    // @param overrideParam Locally override the global object (optional, default to false)
+    // @return com.vmware.nsx_policy.model.BgpTroubleshootConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(tier0IdParam string, localeServiceIdParam string, bgpTroubleshootConfigParam nsx_policyModel.BgpTroubleshootConfig, overrideParam *bool) (nsx_policyModel.BgpTroubleshootConfig, error)
 }
 
+
 type troubleshootClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewTroubleshootClient(connector vapiProtocolClient_.Connector) *troubleshootClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.tier_0s.locale_services.bgp.troubleshoot")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -187,3 +188,4 @@ func (tIface *troubleshootClient) Update(tier0IdParam string, localeServiceIdPar
 		return emptyOutput, methodError.(error)
 	}
 }
+

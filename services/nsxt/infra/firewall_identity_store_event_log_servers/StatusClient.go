@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,35 +10,36 @@
 package firewall_identity_store_event_log_servers
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatusClient interface {
 
-	// This API tests a event log server connectivity before the actual domain or event log server is configured. If the connectivity is good, the response will be HTTP status 200. Otherwise the response will be HTTP status 200 and a corresponding error message will be returned. Note - Query param 'enforcement_point_path' would be honoured only in case of Global manager.
-	//
-	// @param directoryEventLogServerParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @return com.vmware.nsx_policy.model.DirectoryEventLogServerStatus
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This API tests a event log server connectivity before the actual domain or event log server is configured. If the connectivity is good, the response will be HTTP status 200. Otherwise the response will be HTTP status 200 and a corresponding error message will be returned. Note - Query param 'enforcement_point_path' would be honoured only in case of Global manager.
+    //
+    // @param directoryEventLogServerParam (required)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    // @return com.vmware.nsx_policy.model.DirectoryEventLogServerStatus
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(directoryEventLogServerParam nsx_policyModel.DirectoryEventLogServer, enforcementPointPathParam *string) (nsx_policyModel.DirectoryEventLogServerStatus, error)
 }
 
+
 type statusClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewStatusClient(connector vapiProtocolClient_.Connector) *statusClient {
@@ -92,3 +93,4 @@ func (sIface *statusClient) Create(directoryEventLogServerParam nsx_policyModel.
 		return emptyOutput, methodError.(error)
 	}
 }
+

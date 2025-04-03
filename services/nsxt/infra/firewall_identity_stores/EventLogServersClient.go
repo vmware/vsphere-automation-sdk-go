@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,106 +10,107 @@
 package firewall_identity_stores
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type EventLogServersClient interface {
 
-	// Delete a Event Log server for Firewall Identity store
-	//
-	//  Use the following Policy API -
-	//  DELETE /infra/identity-firewall-stores/<identity-firewall-store-id>/event-log-servers/<event-log-server-id>
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
-	// @param eventLogServerIdParam Event Log server identifier (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete a Event Log server for Firewall Identity store 
+    //  
+    //  Use the following Policy API - 
+    //  DELETE /infra/identity-firewall-stores/<identity-firewall-store-id>/event-log-servers/<event-log-server-id>
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
+    // @param eventLogServerIdParam Event Log server identifier (required)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(firewallIdentityStoreIdParam string, eventLogServerIdParam string, enforcementPointPathParam *string) error
 
-	// Get a specific Event Log server for a given Firewall Identity store
-	//
-	//  Use the following Policy API -
-	//  GET /infra/identity-firewall-stores/<identity-firewall-store-id>/event-log-servers/<event-log-server-id>
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
-	// @param eventLogServerIdParam Event Log server identifier (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @return com.vmware.nsx_policy.model.DirectoryEventLogServer
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get a specific Event Log server for a given Firewall Identity store 
+    //  
+    //  Use the following Policy API - 
+    //  GET /infra/identity-firewall-stores/<identity-firewall-store-id>/event-log-servers/<event-log-server-id>
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
+    // @param eventLogServerIdParam Event Log server identifier (required)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    // @return com.vmware.nsx_policy.model.DirectoryEventLogServer
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(firewallIdentityStoreIdParam string, eventLogServerIdParam string, enforcementPointPathParam *string) (nsx_policyModel.DirectoryEventLogServer, error)
 
-	// More than one Event Log server can be created and only one event log server is used to synchronize directory objects. If more than one Event Log server is configured, NSX will try all the servers until it is able to successfully connect to one.
-	//
-	//  Use the following Policy API -
-	//  PATCH /infra/identity-firewall-stores/<identity-firewall-store-id>/event-log-servers/<event-log-server-id>
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
-	// @param eventLogServerIdParam Event Log server identifier (required)
-	// @param directoryEventLogServerParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // More than one Event Log server can be created and only one event log server is used to synchronize directory objects. If more than one Event Log server is configured, NSX will try all the servers until it is able to successfully connect to one. 
+    //  
+    //  Use the following Policy API - 
+    //  PATCH /infra/identity-firewall-stores/<identity-firewall-store-id>/event-log-servers/<event-log-server-id>
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
+    // @param eventLogServerIdParam Event Log server identifier (required)
+    // @param directoryEventLogServerParam (required)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(firewallIdentityStoreIdParam string, eventLogServerIdParam string, directoryEventLogServerParam nsx_policyModel.DirectoryEventLogServer, enforcementPointPathParam *string) error
 
-	// Update a event log server for Firewall Identity store
-	//
-	//  Use the following Policy API -
-	//  PUT /infra/identity-firewall-stores/<identity-firewall-store-id>/event-log-servers/<event-log-server-id>
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
-	// @param eventLogServerIdParam Event Log Server identifier (required)
-	// @param directoryEventLogServerParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @return com.vmware.nsx_policy.model.DirectoryEventLogServer
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Update a event log server for Firewall Identity store 
+    //  
+    //  Use the following Policy API - 
+    //  PUT /infra/identity-firewall-stores/<identity-firewall-store-id>/event-log-servers/<event-log-server-id>
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
+    // @param eventLogServerIdParam Event Log Server identifier (required)
+    // @param directoryEventLogServerParam (required)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    // @return com.vmware.nsx_policy.model.DirectoryEventLogServer
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(firewallIdentityStoreIdParam string, eventLogServerIdParam string, directoryEventLogServerParam nsx_policyModel.DirectoryEventLogServer, enforcementPointPathParam *string) (nsx_policyModel.DirectoryEventLogServer, error)
 }
 
+
 type eventLogServersClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewEventLogServersClient(connector vapiProtocolClient_.Connector) *eventLogServersClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.firewall_identity_stores.event_log_servers")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -251,3 +252,4 @@ func (eIface *eventLogServersClient) Update(firewallIdentityStoreIdParam string,
 		return emptyOutput, methodError.(error)
 	}
 }
+

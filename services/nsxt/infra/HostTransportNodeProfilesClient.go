@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,83 +10,84 @@
 package infra
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type HostTransportNodeProfilesClient interface {
 
-	// Deletes the specified host transport node profile. A host transport node profile can be deleted only when it is not attached to any compute collection.
-	//
-	// @param transportNodeProfileIdParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Deletes the specified host transport node profile. A host transport node profile can be deleted only when it is not attached to any compute collection.
+    //
+    // @param transportNodeProfileIdParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(transportNodeProfileIdParam string) error
 
-	// Returns information about a specified host transport node profile.
-	//
-	// @param hostTransportNodeProfileIdParam (required)
-	// @return com.vmware.nsx_policy.model.PolicyHostTransportNodeProfile
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Returns information about a specified host transport node profile.
+    //
+    // @param hostTransportNodeProfileIdParam (required)
+    // @return com.vmware.nsx_policy.model.PolicyHostTransportNodeProfile
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(hostTransportNodeProfileIdParam string) (nsx_policyModel.PolicyHostTransportNodeProfile, error)
 
-	// Returns information about all host transport node profiles.
-	//
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.PolicyHostTransportNodeProfileListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Returns information about all host transport node profiles.
+    //
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.PolicyHostTransportNodeProfileListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyHostTransportNodeProfileListResult, error)
 
-	// Host transport node profile captures the configuration needed to create a host transport node. A host transport node profile can be attached to compute collections for automatic host transport node creation of member hosts. When configurations of a host transport node profile(TNP) are updated, all the host transport nodes in all the compute collections to which this TNP is attached are updated to reflect the updated configuration.
-	//
-	// @param transportNodeProfileIdParam (required)
-	// @param policyHostTransportNodeProfileParam (required)
-	// @param overrideNsxOwnershipParam Override NSX Ownership (optional, default to false)
-	// @return com.vmware.nsx_policy.model.PolicyHostTransportNodeProfile
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Host transport node profile captures the configuration needed to create a host transport node. A host transport node profile can be attached to compute collections for automatic host transport node creation of member hosts. When configurations of a host transport node profile(TNP) are updated, all the host transport nodes in all the compute collections to which this TNP is attached are updated to reflect the updated configuration.
+    //
+    // @param transportNodeProfileIdParam (required)
+    // @param policyHostTransportNodeProfileParam (required)
+    // @param overrideNsxOwnershipParam Override NSX Ownership (optional, default to false)
+    // @return com.vmware.nsx_policy.model.PolicyHostTransportNodeProfile
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(transportNodeProfileIdParam string, policyHostTransportNodeProfileParam nsx_policyModel.PolicyHostTransportNodeProfile, overrideNsxOwnershipParam *bool) (nsx_policyModel.PolicyHostTransportNodeProfile, error)
 }
 
+
 type hostTransportNodeProfilesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewHostTransportNodeProfilesClient(connector vapiProtocolClient_.Connector) *hostTransportNodeProfilesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.host_transport_node_profiles")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -230,3 +231,4 @@ func (hIface *hostTransportNodeProfilesClient) Update(transportNodeProfileIdPara
 		return emptyOutput, methodError.(error)
 	}
 }
+

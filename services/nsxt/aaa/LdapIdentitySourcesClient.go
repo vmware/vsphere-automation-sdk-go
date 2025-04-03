@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,140 +10,141 @@
 package aaa
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LdapIdentitySourcesClient interface {
 
-	// Delete an LDAP identity source. Users defined in that source will no longer be able to access NSX.
-	//
-	// @param ldapIdentitySourceIdParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete an LDAP identity source. Users defined in that source will no longer be able to access NSX.
+    //
+    // @param ldapIdentitySourceIdParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(ldapIdentitySourceIdParam string) error
 
-	// Attempt to connect to an LDAP server and retrieve the server certificate it presents.
-	//
-	// @param identitySourceLdapServerEndpointParam (required)
-	// @return com.vmware.nsx_policy.model.PeerCertificateChain
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Attempt to connect to an LDAP server and retrieve the server certificate it presents.
+    //
+    // @param identitySourceLdapServerEndpointParam (required)
+    // @return com.vmware.nsx_policy.model.PeerCertificateChain
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Fetchcertificate(identitySourceLdapServerEndpointParam nsx_policyModel.IdentitySourceLdapServerEndpoint) (nsx_policyModel.PeerCertificateChain, error)
 
-	// Return details about one LDAP identity source
-	//
-	// @param ldapIdentitySourceIdParam (required)
-	// @return com.vmware.nsx_policy.model.LdapIdentitySource
-	// The return value will contain all the properties defined in nsx_policyModel.LdapIdentitySource.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Return details about one LDAP identity source
+    //
+    // @param ldapIdentitySourceIdParam (required)
+    // @return com.vmware.nsx_policy.model.LdapIdentitySource
+    // The return value will contain all the properties defined in nsx_policyModel.LdapIdentitySource.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(ldapIdentitySourceIdParam string) (*vapiData_.StructValue, error)
 
-	// Return a list of all configured LDAP identity sources.
-	//
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.LdapIdentitySourceListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Return a list of all configured LDAP identity sources.
+    //
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.LdapIdentitySourceListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.LdapIdentitySourceListResult, error)
 
-	// Attempt to connect to an existing LDAP identity source and report any errors encountered.
-	//
-	// @param ldapIdentitySourceIdParam (required)
-	// @return com.vmware.nsx_policy.model.LdapIdentitySourceProbeResults
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Attempt to connect to an existing LDAP identity source and report any errors encountered.
+    //
+    // @param ldapIdentitySourceIdParam (required)
+    // @return com.vmware.nsx_policy.model.LdapIdentitySourceProbeResults
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Probe(ldapIdentitySourceIdParam string) (nsx_policyModel.LdapIdentitySourceProbeResults, error)
 
-	// Verify that the configuration of an LDAP identity source is correct before actually creating the source.
-	//
-	// @param ldapIdentitySourceParam (required)
-	// The parameter must contain all the properties defined in nsx_policyModel.LdapIdentitySource.
-	// @return com.vmware.nsx_policy.model.LdapIdentitySourceProbeResults
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Verify that the configuration of an LDAP identity source is correct before actually creating the source.
+    //
+    // @param ldapIdentitySourceParam (required)
+    // The parameter must contain all the properties defined in nsx_policyModel.LdapIdentitySource.
+    // @return com.vmware.nsx_policy.model.LdapIdentitySourceProbeResults
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Probeidentitysource(ldapIdentitySourceParam *vapiData_.StructValue) (nsx_policyModel.LdapIdentitySourceProbeResults, error)
 
-	// Attempt to connect to an LDAP server and ensure that the server can be contacted using the given URL and authentication credentials.
-	//
-	// @param identitySourceLdapServerParam (required)
-	// @return com.vmware.nsx_policy.model.IdentitySourceLdapServerProbeResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Attempt to connect to an LDAP server and ensure that the server can be contacted using the given URL and authentication credentials.
+    //
+    // @param identitySourceLdapServerParam (required)
+    // @return com.vmware.nsx_policy.model.IdentitySourceLdapServerProbeResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Probeldapserver(identitySourceLdapServerParam nsx_policyModel.IdentitySourceLdapServer) (nsx_policyModel.IdentitySourceLdapServerProbeResult, error)
 
-	// Create a new LDAP identity source or update the configuration of an existing LDAP identity source. You may wish to verify the new configuration using the POST /aaa/ldap-identity-sources?action=probe API before creating or changing the configuration. Note that if you are using LDAP on an active and standby NSX-T Global Manager in a federated environment, you must use the same name for your LDAP identity sources on the active and standby Global Managers.
-	//
-	// @param ldapIdentitySourceIdParam (required)
-	// @param ldapIdentitySourceParam (required)
-	// The parameter must contain all the properties defined in nsx_policyModel.LdapIdentitySource.
-	// @return com.vmware.nsx_policy.model.LdapIdentitySource
-	// The return value will contain all the properties defined in nsx_policyModel.LdapIdentitySource.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create a new LDAP identity source or update the configuration of an existing LDAP identity source. You may wish to verify the new configuration using the POST /aaa/ldap-identity-sources?action=probe API before creating or changing the configuration. Note that if you are using LDAP on an active and standby NSX-T Global Manager in a federated environment, you must use the same name for your LDAP identity sources on the active and standby Global Managers.
+    //
+    // @param ldapIdentitySourceIdParam (required)
+    // @param ldapIdentitySourceParam (required)
+    // The parameter must contain all the properties defined in nsx_policyModel.LdapIdentitySource.
+    // @return com.vmware.nsx_policy.model.LdapIdentitySource
+    // The return value will contain all the properties defined in nsx_policyModel.LdapIdentitySource.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(ldapIdentitySourceIdParam string, ldapIdentitySourceParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 }
 
+
 type ldapIdentitySourcesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewLdapIdentitySourcesClient(connector vapiProtocolClient_.Connector) *ldapIdentitySourcesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.aaa.ldap_identity_sources")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"delete":              vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"fetchcertificate":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "fetchcertificate"),
-		"get":                 vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":                vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"probe":               vapiCore_.NewMethodIdentifier(interfaceIdentifier, "probe"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"fetchcertificate": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "fetchcertificate"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"probe": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "probe"),
 		"probeidentitysource": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "probeidentitysource"),
-		"probeldapserver":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "probeldapserver"),
-		"update":              vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"probeldapserver": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "probeldapserver"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -413,3 +414,4 @@ func (lIface *ldapIdentitySourcesClient) Update(ldapIdentitySourceIdParam string
 		return emptyOutput, methodError.(error)
 	}
 }
+

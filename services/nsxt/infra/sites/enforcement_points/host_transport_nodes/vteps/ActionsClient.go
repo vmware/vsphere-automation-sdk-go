@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,39 +10,40 @@
 package vteps
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ActionsClient interface {
 
-	// Submit a new VTEP action for a particular TransportNode. The status of submitted actions could be retrieved using the ListTransportNodeVtepActionsStatus API.
-	//
-	// @param siteIdParam (required)
-	// @param enforcementpointIdParam (required)
-	// @param hostTransportNodeIdParam (required)
-	// @param transportNodeVtepActionParam (required)
-	// The parameter must contain all the properties defined in nsx_policyModel.TransportNodeVtepAction.
-	// @return com.vmware.nsx_policy.model.TransportNodeVtepActionReference
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Submit a new VTEP action for a particular TransportNode. The status of submitted actions could be retrieved using the ListTransportNodeVtepActionsStatus API.
+    //
+    // @param siteIdParam (required)
+    // @param enforcementpointIdParam (required)
+    // @param hostTransportNodeIdParam (required)
+    // @param transportNodeVtepActionParam (required)
+    // The parameter must contain all the properties defined in nsx_policyModel.TransportNodeVtepAction.
+    // @return com.vmware.nsx_policy.model.TransportNodeVtepActionReference
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(siteIdParam string, enforcementpointIdParam string, hostTransportNodeIdParam string, transportNodeVtepActionParam *vapiData_.StructValue) (nsx_policyModel.TransportNodeVtepActionReference, error)
 }
 
+
 type actionsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewActionsClient(connector vapiProtocolClient_.Connector) *actionsClient {
@@ -98,3 +99,4 @@ func (aIface *actionsClient) Create(siteIdParam string, enforcementpointIdParam 
 		return emptyOutput, methodError.(error)
 	}
 }
+

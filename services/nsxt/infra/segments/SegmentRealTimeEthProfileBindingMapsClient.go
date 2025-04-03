@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,100 +10,101 @@
 package segments
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SegmentRealTimeEthProfileBindingMapsClient interface {
 
-	// API will delete Segment Real Time Eth Profile Binding Profile.
-	//
-	// @param segmentIdParam Segment ID (required)
-	// @param segmentRealTimeEthProfileBindingMapIdParam Segment Real Time Eth Profile Binding Map ID (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // API will delete Segment Real Time Eth Profile Binding Profile.
+    //
+    // @param segmentIdParam Segment ID (required)
+    // @param segmentRealTimeEthProfileBindingMapIdParam Segment Real Time Eth Profile Binding Map ID (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(segmentIdParam string, segmentRealTimeEthProfileBindingMapIdParam string) error
 
-	// API will get Segment Real Time Eth Profile Binding Map.
-	//
-	// @param segmentIdParam Segment ID (required)
-	// @param segmentRealTimeEthProfileBindingMapIdParam Segment Real Time Eth Profile Binding Map ID (required)
-	// @return com.vmware.nsx_policy.model.SegmentRealTimeEthProfileBindingMap
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // API will get Segment Real Time Eth Profile Binding Map.
+    //
+    // @param segmentIdParam Segment ID (required)
+    // @param segmentRealTimeEthProfileBindingMapIdParam Segment Real Time Eth Profile Binding Map ID (required)
+    // @return com.vmware.nsx_policy.model.SegmentRealTimeEthProfileBindingMap
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(segmentIdParam string, segmentRealTimeEthProfileBindingMapIdParam string) (nsx_policyModel.SegmentRealTimeEthProfileBindingMap, error)
 
-	// API will list all Segment Real Time Eth Profile Binding Maps in current segment id.
-	//
-	// @param segmentIdParam (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.SegmentRealTimeEthProfileBindingMapListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // API will list all Segment Real Time Eth Profile Binding Maps in current segment id.
+    //
+    // @param segmentIdParam (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.SegmentRealTimeEthProfileBindingMapListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(segmentIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SegmentRealTimeEthProfileBindingMapListResult, error)
 
-	// API will create Segment Real Time Eth profile binding map. For objects with no binding maps, default profile is applied.
-	//
-	// @param segmentIdParam Segment ID (required)
-	// @param segmentRealTimeEthProfileBindingMapIdParam Segment Real Time Eth Profile Binding Map ID (required)
-	// @param segmentRealTimeEthProfileBindingMapParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // API will create Segment Real Time Eth profile binding map. For objects with no binding maps, default profile is applied.
+    //
+    // @param segmentIdParam Segment ID (required)
+    // @param segmentRealTimeEthProfileBindingMapIdParam Segment Real Time Eth Profile Binding Map ID (required)
+    // @param segmentRealTimeEthProfileBindingMapParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(segmentIdParam string, segmentRealTimeEthProfileBindingMapIdParam string, segmentRealTimeEthProfileBindingMapParam nsx_policyModel.SegmentRealTimeEthProfileBindingMap) error
 
-	// API will update Segment Real Time Eth Profile Binding Map. For objects with no binding maps, default profile is applied.
-	//
-	// @param segmentIdParam Segment ID (required)
-	// @param segmentRealTimeEthProfileBindingMapIdParam Segment Real Time Eth Profile Binding Map ID (required)
-	// @param segmentRealTimeEthProfileBindingMapParam (required)
-	// @return com.vmware.nsx_policy.model.SegmentRealTimeEthProfileBindingMap
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // API will update Segment Real Time Eth Profile Binding Map. For objects with no binding maps, default profile is applied.
+    //
+    // @param segmentIdParam Segment ID (required)
+    // @param segmentRealTimeEthProfileBindingMapIdParam Segment Real Time Eth Profile Binding Map ID (required)
+    // @param segmentRealTimeEthProfileBindingMapParam (required)
+    // @return com.vmware.nsx_policy.model.SegmentRealTimeEthProfileBindingMap
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(segmentIdParam string, segmentRealTimeEthProfileBindingMapIdParam string, segmentRealTimeEthProfileBindingMapParam nsx_policyModel.SegmentRealTimeEthProfileBindingMap) (nsx_policyModel.SegmentRealTimeEthProfileBindingMap, error)
 }
 
+
 type segmentRealTimeEthProfileBindingMapsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewSegmentRealTimeEthProfileBindingMapsClient(connector vapiProtocolClient_.Connector) *segmentRealTimeEthProfileBindingMapsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.segments.segment_real_time_eth_profile_binding_maps")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -278,3 +279,4 @@ func (sIface *segmentRealTimeEthProfileBindingMapsClient) Update(segmentIdParam 
 		return emptyOutput, methodError.(error)
 	}
 }
+

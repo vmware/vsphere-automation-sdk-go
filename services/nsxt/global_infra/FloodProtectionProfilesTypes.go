@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -12,12 +12,16 @@
 package global_infra
 
 import (
+	"reflect"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
-	"reflect"
 )
+
+
+
+
 
 func floodProtectionProfilesDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -72,7 +76,7 @@ func floodProtectionProfilesDeleteRestMetadata() vapiProtocol_.OperationRestMeta
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func floodProtectionProfilesGetInputType() vapiBindings_.StructType {
@@ -85,7 +89,7 @@ func floodProtectionProfilesGetInputType() vapiBindings_.StructType {
 }
 
 func FloodProtectionProfilesGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType),})
 }
 
 func floodProtectionProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -122,7 +126,7 @@ func floodProtectionProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadat
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func floodProtectionProfilesListInputType() vapiBindings_.StructType {
@@ -201,14 +205,14 @@ func floodProtectionProfilesListRestMetadata() vapiProtocol_.OperationRestMetada
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func floodProtectionProfilesPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["flood_protection_profile_id"] = vapiBindings_.NewStringType()
-	fields["flood_protection_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType)})
+	fields["flood_protection_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType),})
 	fields["override"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["flood_protection_profile_id"] = "FloodProtectionProfileId"
 	fieldNameMap["flood_protection_profile"] = "FloodProtectionProfile"
@@ -231,12 +235,12 @@ func floodProtectionProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetad
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["flood_protection_profile_id"] = vapiBindings_.NewStringType()
-	fields["flood_protection_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType)})
+	fields["flood_protection_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType),})
 	fields["override"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["flood_protection_profile_id"] = "FloodProtectionProfileId"
 	fieldNameMap["flood_protection_profile"] = "FloodProtectionProfile"
 	fieldNameMap["override"] = "Override"
-	paramsTypeMap["flood_protection_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType)})
+	paramsTypeMap["flood_protection_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType),})
 	paramsTypeMap["flood_protection_profile_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["override"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["floodProtectionProfileId"] = vapiBindings_.NewStringType()
@@ -262,14 +266,14 @@ func floodProtectionProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetad
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func floodProtectionProfilesUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["flood_protection_profile_id"] = vapiBindings_.NewStringType()
-	fields["flood_protection_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType)})
+	fields["flood_protection_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType),})
 	fields["override"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["flood_protection_profile_id"] = "FloodProtectionProfileId"
 	fieldNameMap["flood_protection_profile"] = "FloodProtectionProfile"
@@ -279,7 +283,7 @@ func floodProtectionProfilesUpdateInputType() vapiBindings_.StructType {
 }
 
 func FloodProtectionProfilesUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType),})
 }
 
 func floodProtectionProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -292,12 +296,12 @@ func floodProtectionProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMeta
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["flood_protection_profile_id"] = vapiBindings_.NewStringType()
-	fields["flood_protection_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType)})
+	fields["flood_protection_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType),})
 	fields["override"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["flood_protection_profile_id"] = "FloodProtectionProfileId"
 	fieldNameMap["flood_protection_profile"] = "FloodProtectionProfile"
 	fieldNameMap["override"] = "Override"
-	paramsTypeMap["flood_protection_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType)})
+	paramsTypeMap["flood_protection_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.FloodProtectionProfileBindingType),})
 	paramsTypeMap["flood_protection_profile_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["override"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["floodProtectionProfileId"] = vapiBindings_.NewStringType()
@@ -323,5 +327,7 @@ func floodProtectionProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMeta
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
+
+

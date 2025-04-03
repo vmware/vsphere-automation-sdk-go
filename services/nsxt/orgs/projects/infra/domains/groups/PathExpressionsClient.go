@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,70 +10,71 @@
 package groups
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type PathExpressionsClient interface {
 
-	// It will add or remove the specified members having path for a given expression of a group.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param domainIdParam (required)
-	// @param groupIdParam (required)
-	// @param expressionIdParam (required)
-	// @param groupMemberListParam (required)
-	// @param actionParam Add or Remove group members. (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // It will add or remove the specified members having path for a given expression of a group.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param domainIdParam (required)
+    // @param groupIdParam (required)
+    // @param expressionIdParam (required)
+    // @param groupMemberListParam (required)
+    // @param actionParam Add or Remove group members. (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(orgIdParam string, projectIdParam string, domainIdParam string, groupIdParam string, expressionIdParam string, groupMemberListParam nsx_policyModel.GroupMemberList, actionParam string) error
 
-	// Delete Group Path Expression
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param domainIdParam Domain ID (required)
-	// @param groupIdParam Group ID (required)
-	// @param expressionIdParam PathExpression ID (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete Group Path Expression
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param domainIdParam Domain ID (required)
+    // @param groupIdParam Group ID (required)
+    // @param expressionIdParam PathExpression ID (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, domainIdParam string, groupIdParam string, expressionIdParam string) error
 
-	// If a group path_expression with the expression-id is not already present, create a new pathexpresison. If it already exists, replace the existing pathexpression.
-	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
-	// @param domainIdParam Domain ID (required)
-	// @param groupIdParam Group ID (required)
-	// @param expressionIdParam PathExpression ID (required)
-	// @param pathExpressionParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If a group path_expression with the expression-id is not already present, create a new pathexpresison. If it already exists, replace the existing pathexpression.
+    //
+    // @param orgIdParam The organization ID (required)
+    // @param projectIdParam The project ID (required)
+    // @param domainIdParam Domain ID (required)
+    // @param groupIdParam Group ID (required)
+    // @param expressionIdParam PathExpression ID (required)
+    // @param pathExpressionParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, domainIdParam string, groupIdParam string, expressionIdParam string, pathExpressionParam nsx_policyModel.PathExpression) error
 }
 
+
 type pathExpressionsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewPathExpressionsClient(connector vapiProtocolClient_.Connector) *pathExpressionsClient {
@@ -81,7 +82,7 @@ func NewPathExpressionsClient(connector vapiProtocolClient_.Connector) *pathExpr
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -189,3 +190,4 @@ func (pIface *pathExpressionsClient) Patch(orgIdParam string, projectIdParam str
 		return methodError.(error)
 	}
 }
+

@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,57 +10,58 @@
 package lldp
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type InterfacesClient interface {
 
-	// Read LLDP Neighbor Properties of transport node by Interface Name
-	//
-	// @param siteIdParam site ID (required)
-	// @param enforcementPointIdParam enforcement point ID (required)
-	// @param nodeIdParam ID of transport node (required)
-	// @param interfaceNameParam Interface name to read (required)
-	// @return com.vmware.nsx_policy.model.InterfaceNeighborProperties
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read LLDP Neighbor Properties of transport node by Interface Name
+    //
+    // @param siteIdParam site ID (required)
+    // @param enforcementPointIdParam enforcement point ID (required)
+    // @param nodeIdParam ID of transport node (required)
+    // @param interfaceNameParam Interface name to read (required)
+    // @return com.vmware.nsx_policy.model.InterfaceNeighborProperties
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementPointIdParam string, nodeIdParam string, interfaceNameParam string) (nsx_policyModel.InterfaceNeighborProperties, error)
 
-	// List LLDP Neighbor Properties of given Node
-	//
-	// @param siteIdParam site ID (required)
-	// @param enforcementPointIdParam enforcement point ID (required)
-	// @param nodeIdParam ID of transport node (required)
-	// @return com.vmware.nsx_policy.model.InterfaceNeighborPropertyListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // List LLDP Neighbor Properties of given Node
+    //
+    // @param siteIdParam site ID (required)
+    // @param enforcementPointIdParam enforcement point ID (required)
+    // @param nodeIdParam ID of transport node (required)
+    // @return com.vmware.nsx_policy.model.InterfaceNeighborPropertyListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(siteIdParam string, enforcementPointIdParam string, nodeIdParam string) (nsx_policyModel.InterfaceNeighborPropertyListResult, error)
 }
 
+
 type interfacesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewInterfacesClient(connector vapiProtocolClient_.Connector) *interfacesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.enforcement_points.host_transport_nodes.lldp.interfaces")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -145,3 +146,4 @@ func (iIface *interfacesClient) List(siteIdParam string, enforcementPointIdParam
 		return emptyOutput, methodError.(error)
 	}
 }
+

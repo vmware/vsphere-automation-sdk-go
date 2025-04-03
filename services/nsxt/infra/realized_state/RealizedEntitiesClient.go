@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,35 +10,36 @@
 package realized_state
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RealizedEntitiesClient interface {
 
-	// Get list of realized entities associated with intent object, specified by path in query parameter
-	//
-	// @param intentPathParam String Path of the intent object (required)
-	// @param sitePathParam Policy Path of the site (optional)
-	// @return com.vmware.nsx_policy.model.GenericPolicyRealizedResourceListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get list of realized entities associated with intent object, specified by path in query parameter
+    //
+    // @param intentPathParam String Path of the intent object (required)
+    // @param sitePathParam Policy Path of the site (optional)
+    // @return com.vmware.nsx_policy.model.GenericPolicyRealizedResourceListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(intentPathParam string, sitePathParam *string) (nsx_policyModel.GenericPolicyRealizedResourceListResult, error)
 }
 
+
 type realizedEntitiesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewRealizedEntitiesClient(connector vapiProtocolClient_.Connector) *realizedEntitiesClient {
@@ -92,3 +93,4 @@ func (rIface *realizedEntitiesClient) List(intentPathParam string, sitePathParam
 		return emptyOutput, methodError.(error)
 	}
 }
+

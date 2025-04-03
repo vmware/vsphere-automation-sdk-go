@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,86 +10,87 @@
 package enforcement_points
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ServiceDefinitionsClient interface {
 
-	// Create a Service Definition on given enforcement point.
-	//
-	// @param enforcementPointIdParam Enforcement point id (required)
-	// @param serviceDefinitionParam (required)
-	// @return com.vmware.nsx_policy.model.ServiceDefinition
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create a Service Definition on given enforcement point.
+    //
+    // @param enforcementPointIdParam Enforcement point id (required)
+    // @param serviceDefinitionParam (required)
+    // @return com.vmware.nsx_policy.model.ServiceDefinition
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(enforcementPointIdParam string, serviceDefinitionParam nsx_policyModel.ServiceDefinition) (nsx_policyModel.ServiceDefinition, error)
 
-	// Delete an existing Service Definition on the given enforcement point.
-	//
-	// @param enforcementPointIdParam Enforcement point id (required)
-	// @param serviceDefinitionIdParam Id of service definition (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete an existing Service Definition on the given enforcement point.
+    //
+    // @param enforcementPointIdParam Enforcement point id (required)
+    // @param serviceDefinitionIdParam Id of service definition (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(enforcementPointIdParam string, serviceDefinitionIdParam string) error
 
-	// Read Service Definition with given service-definition-id.
-	//
-	// @param enforcementPointIdParam Enforcement point id (required)
-	// @param serviceDefinitionIdParam Id of service definition (required)
-	// @return com.vmware.nsx_policy.model.ServiceDefinition
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read Service Definition with given service-definition-id.
+    //
+    // @param enforcementPointIdParam Enforcement point id (required)
+    // @param serviceDefinitionIdParam Id of service definition (required)
+    // @return com.vmware.nsx_policy.model.ServiceDefinition
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(enforcementPointIdParam string, serviceDefinitionIdParam string) (nsx_policyModel.ServiceDefinition, error)
 
-	// List all Service Definitions registered on given enforcement point.
-	//
-	// @param enforcementPointIdParam Enforcement point id (required)
-	// @return com.vmware.nsx_policy.model.ServiceInsertionServiceListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // List all Service Definitions registered on given enforcement point.
+    //
+    // @param enforcementPointIdParam Enforcement point id (required)
+    // @return com.vmware.nsx_policy.model.ServiceInsertionServiceListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(enforcementPointIdParam string) (nsx_policyModel.ServiceInsertionServiceListResult, error)
 
-	// Update an existing Service Definition on the given enforcement point.
-	//
-	// @param enforcementPointIdParam Enforcement point id (required)
-	// @param serviceDefinitionIdParam Id of service definition (required)
-	// @param serviceDefinitionParam (required)
-	// @return com.vmware.nsx_policy.model.ServiceDefinition
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Update an existing Service Definition on the given enforcement point.
+    //
+    // @param enforcementPointIdParam Enforcement point id (required)
+    // @param serviceDefinitionIdParam Id of service definition (required)
+    // @param serviceDefinitionParam (required)
+    // @return com.vmware.nsx_policy.model.ServiceDefinition
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(enforcementPointIdParam string, serviceDefinitionIdParam string, serviceDefinitionParam nsx_policyModel.ServiceDefinition) (nsx_policyModel.ServiceDefinition, error)
 }
 
+
 type serviceDefinitionsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewServiceDefinitionsClient(connector vapiProtocolClient_.Connector) *serviceDefinitionsClient {
@@ -97,8 +98,8 @@ func NewServiceDefinitionsClient(connector vapiProtocolClient_.Connector) *servi
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -273,3 +274,4 @@ func (sIface *serviceDefinitionsClient) Update(enforcementPointIdParam string, s
 		return emptyOutput, methodError.(error)
 	}
 }
+

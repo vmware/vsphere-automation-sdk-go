@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -12,54 +12,44 @@
 package segments
 
 import (
+	"reflect"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
-	"reflect"
 )
 
 // Possible value for ``bgpNeighborType`` of method State#get.
 const State_GET_BGP_NEIGHBOR_TYPE_INTER_SR = "INTER_SR"
-
 // Possible value for ``bgpNeighborType`` of method State#get.
 const State_GET_BGP_NEIGHBOR_TYPE_USER = "USER"
-
 // Possible value for ``source`` of method State#get.
 const State_GET_SOURCE_REALTIME = "realtime"
-
 // Possible value for ``source`` of method State#get.
 const State_GET_SOURCE_CACHED = "cached"
-
 // Possible value for ``statsType`` of method State#get.
 const State_GET_STATS_TYPE_STATS = "DATAPATH_STATS"
-
 // Possible value for ``configurationState`` of method State#list.
 const State_LIST_CONFIGURATION_STATE_PENDING = "pending"
-
 // Possible value for ``configurationState`` of method State#list.
 const State_LIST_CONFIGURATION_STATE_IN_PROGRESS = "in_progress"
-
 // Possible value for ``configurationState`` of method State#list.
 const State_LIST_CONFIGURATION_STATE_SUCCESS = "success"
-
 // Possible value for ``configurationState`` of method State#list.
 const State_LIST_CONFIGURATION_STATE_FAILED = "failed"
-
 // Possible value for ``configurationState`` of method State#list.
 const State_LIST_CONFIGURATION_STATE_PARTIAL_SUCCESS = "partial_success"
-
 // Possible value for ``configurationState`` of method State#list.
 const State_LIST_CONFIGURATION_STATE_ORPHANED = "orphaned"
-
 // Possible value for ``configurationState`` of method State#list.
 const State_LIST_CONFIGURATION_STATE_UNKNOWN = "unknown"
-
 // Possible value for ``source`` of method State#list.
 const State_LIST_SOURCE_REALTIME = "realtime"
-
 // Possible value for ``source`` of method State#list.
 const State_LIST_SOURCE_CACHED = "cached"
+
+
+
 
 func stateGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -194,7 +184,7 @@ func stateGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func stateListInputType() vapiBindings_.StructType {
@@ -269,5 +259,7 @@ func stateListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
+
+

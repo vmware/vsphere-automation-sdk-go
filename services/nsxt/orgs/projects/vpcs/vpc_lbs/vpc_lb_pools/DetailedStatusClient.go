@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,40 +10,41 @@
 package vpc_lb_pools
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DetailedStatusClient interface {
 
-	// Get LBPool detailed status information. - no enforcement point path specified: Information will be aggregated from each enforcement point. - {enforcement_point_path}: Information will be retrieved only from the given enforcement point. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
-	//
-	// @param orgIdParam Org ID (required)
-	// @param projectIdParam Project ID (required)
-	// @param vpcIdParam VPC ID (required)
-	// @param vpcLbIdParam Load Balancer ID (required)
-	// @param vpcLbPoolIdParam LBPool id (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @param sourceParam Data source type. (optional)
-	// @return com.vmware.nsx_policy.model.AggregateLBPoolStatus
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get LBPool detailed status information. - no enforcement point path specified: Information will be aggregated from each enforcement point. - {enforcement_point_path}: Information will be retrieved only from the given enforcement point. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+    //
+    // @param orgIdParam Org ID (required)
+    // @param projectIdParam Project ID (required)
+    // @param vpcIdParam VPC ID (required)
+    // @param vpcLbIdParam Load Balancer ID (required)
+    // @param vpcLbPoolIdParam LBPool id (required)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    // @param sourceParam Data source type. (optional)
+    // @return com.vmware.nsx_policy.model.AggregateLBPoolStatus
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, vpcIdParam string, vpcLbIdParam string, vpcLbPoolIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.AggregateLBPoolStatus, error)
 }
 
+
 type detailedStatusClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewDetailedStatusClient(connector vapiProtocolClient_.Connector) *detailedStatusClient {
@@ -102,3 +103,4 @@ func (dIface *detailedStatusClient) Get(orgIdParam string, projectIdParam string
 		return emptyOutput, methodError.(error)
 	}
 }
+

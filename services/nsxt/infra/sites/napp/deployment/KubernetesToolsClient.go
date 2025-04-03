@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,34 +10,35 @@
 package deployment
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type KubernetesToolsClient interface {
 
-	// To show information about Kubernetes tools version. It will list kubectl client version, kube-apiserver version. Also show, whether kubectl client version is compatible with kube-apiserver version.kubectl is supported within one minor version (older or newer) of kube-apiserver.
-	//
-	// @param siteIdParam (required)
-	// @return com.vmware.nsx_policy.model.KubernetesToolsInfo
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // To show information about Kubernetes tools version. It will list kubectl client version, kube-apiserver version. Also show, whether kubectl client version is compatible with kube-apiserver version.kubectl is supported within one minor version (older or newer) of kube-apiserver.
+    //
+    // @param siteIdParam (required)
+    // @return com.vmware.nsx_policy.model.KubernetesToolsInfo
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(siteIdParam string) (nsx_policyModel.KubernetesToolsInfo, error)
 }
 
+
 type kubernetesToolsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewKubernetesToolsClient(connector vapiProtocolClient_.Connector) *kubernetesToolsClient {
@@ -90,3 +91,4 @@ func (kIface *kubernetesToolsClient) Get(siteIdParam string) (nsx_policyModel.Ku
 		return emptyOutput, methodError.(error)
 	}
 }
+

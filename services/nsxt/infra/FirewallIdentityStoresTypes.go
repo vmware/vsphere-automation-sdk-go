@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -12,21 +12,22 @@
 package infra
 
 import (
+	"reflect"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
-	"reflect"
 )
 
 // Possible value for ``action`` of method FirewallIdentityStores#create.
 const FirewallIdentityStores_CREATE_ACTION_FULL_SYNC = "FULL_SYNC"
-
 // Possible value for ``action`` of method FirewallIdentityStores#create.
 const FirewallIdentityStores_CREATE_ACTION_DELTA_SYNC = "DELTA_SYNC"
-
 // Possible value for ``action`` of method FirewallIdentityStores#create.
 const FirewallIdentityStores_CREATE_ACTION_STOP_SYNC = "STOP_SYNC"
+
+
+
 
 func firewallIdentityStoresCreateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -93,7 +94,7 @@ func firewallIdentityStoresCreateRestMetadata() vapiProtocol_.OperationRestMetad
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func firewallIdentityStoresDeleteInputType() vapiBindings_.StructType {
@@ -149,7 +150,7 @@ func firewallIdentityStoresDeleteRestMetadata() vapiProtocol_.OperationRestMetad
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func firewallIdentityStoresGetInputType() vapiBindings_.StructType {
@@ -164,7 +165,7 @@ func firewallIdentityStoresGetInputType() vapiBindings_.StructType {
 }
 
 func FirewallIdentityStoresGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType),})
 }
 
 func firewallIdentityStoresGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -205,7 +206,7 @@ func firewallIdentityStoresGetRestMetadata() vapiProtocol_.OperationRestMetadata
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func firewallIdentityStoresListInputType() vapiBindings_.StructType {
@@ -284,14 +285,14 @@ func firewallIdentityStoresListRestMetadata() vapiProtocol_.OperationRestMetadat
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func firewallIdentityStoresPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["firewall_identity_store_id"] = vapiBindings_.NewStringType()
-	fields["directory_domain"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType)})
+	fields["directory_domain"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType),})
 	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["firewall_identity_store_id"] = "FirewallIdentityStoreId"
 	fieldNameMap["directory_domain"] = "DirectoryDomain"
@@ -314,12 +315,12 @@ func firewallIdentityStoresPatchRestMetadata() vapiProtocol_.OperationRestMetada
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["firewall_identity_store_id"] = vapiBindings_.NewStringType()
-	fields["directory_domain"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType)})
+	fields["directory_domain"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType),})
 	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["firewall_identity_store_id"] = "FirewallIdentityStoreId"
 	fieldNameMap["directory_domain"] = "DirectoryDomain"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
-	paramsTypeMap["directory_domain"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType)})
+	paramsTypeMap["directory_domain"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType),})
 	paramsTypeMap["firewall_identity_store_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["firewallIdentityStoreId"] = vapiBindings_.NewStringType()
@@ -345,14 +346,14 @@ func firewallIdentityStoresPatchRestMetadata() vapiProtocol_.OperationRestMetada
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func firewallIdentityStoresUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["firewall_identity_store_id"] = vapiBindings_.NewStringType()
-	fields["directory_domain"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType)})
+	fields["directory_domain"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType),})
 	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["firewall_identity_store_id"] = "FirewallIdentityStoreId"
 	fieldNameMap["directory_domain"] = "DirectoryDomain"
@@ -362,7 +363,7 @@ func firewallIdentityStoresUpdateInputType() vapiBindings_.StructType {
 }
 
 func FirewallIdentityStoresUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType),})
 }
 
 func firewallIdentityStoresUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -375,12 +376,12 @@ func firewallIdentityStoresUpdateRestMetadata() vapiProtocol_.OperationRestMetad
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["firewall_identity_store_id"] = vapiBindings_.NewStringType()
-	fields["directory_domain"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType)})
+	fields["directory_domain"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType),})
 	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["firewall_identity_store_id"] = "FirewallIdentityStoreId"
 	fieldNameMap["directory_domain"] = "DirectoryDomain"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
-	paramsTypeMap["directory_domain"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType)})
+	paramsTypeMap["directory_domain"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DirectoryDomainBindingType),})
 	paramsTypeMap["firewall_identity_store_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["firewallIdentityStoreId"] = vapiBindings_.NewStringType()
@@ -406,5 +407,7 @@ func firewallIdentityStoresUpdateRestMetadata() vapiProtocol_.OperationRestMetad
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
+
+

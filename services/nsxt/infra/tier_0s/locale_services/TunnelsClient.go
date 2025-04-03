@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,110 +10,111 @@
 package locale_services
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TunnelsClient interface {
 
-	// Delete Tunnel(GRE as of now) by given tunnel Id
-	//
-	// @param tier0IdParam tier0 id (required)
-	// @param localeSvcIdParam locale service id (required)
-	// @param tunnelIdParam tunnel id (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete Tunnel(GRE as of now) by given tunnel Id
+    //
+    // @param tier0IdParam tier0 id (required)
+    // @param localeSvcIdParam locale service id (required)
+    // @param tunnelIdParam tunnel id (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(tier0IdParam string, localeSvcIdParam string, tunnelIdParam string) error
 
-	// Get Policy Tunnel(GRE as of now)
-	//
-	// @param tier0IdParam tier0 id (required)
-	// @param localeSvcIdParam locale service id (required)
-	// @param tunnelIdParam tunnel id (required)
-	// @return com.vmware.nsx_policy.model.Tunnel
-	// The return value will contain all the properties defined in nsx_policyModel.Tunnel.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get Policy Tunnel(GRE as of now)
+    //
+    // @param tier0IdParam tier0 id (required)
+    // @param localeSvcIdParam locale service id (required)
+    // @param tunnelIdParam tunnel id (required)
+    // @return com.vmware.nsx_policy.model.Tunnel
+    // The return value will contain all the properties defined in nsx_policyModel.Tunnel.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(tier0IdParam string, localeSvcIdParam string, tunnelIdParam string) (*vapiData_.StructValue, error)
 
-	// List all policy tunnels(GRE as of now)
-	//
-	// @param tier0IdParam tier0 id (required)
-	// @param localeSvcIdParam locale service id (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.PolicyTunnelListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // List all policy tunnels(GRE as of now)
+    //
+    // @param tier0IdParam tier0 id (required)
+    // @param localeSvcIdParam locale service id (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.PolicyTunnelListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(tier0IdParam string, localeSvcIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyTunnelListResult, error)
 
-	// Patch Tunnel(GRE as of now)
-	//
-	// @param tier0IdParam tier0 id (required)
-	// @param localeSvcIdParam locale service id (required)
-	// @param tunnelIdParam tunnel id (required)
-	// @param tunnelParam (required)
-	// The parameter must contain all the properties defined in nsx_policyModel.Tunnel.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Patch Tunnel(GRE as of now)
+    //
+    // @param tier0IdParam tier0 id (required)
+    // @param localeSvcIdParam locale service id (required)
+    // @param tunnelIdParam tunnel id (required)
+    // @param tunnelParam (required)
+    // The parameter must contain all the properties defined in nsx_policyModel.Tunnel.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(tier0IdParam string, localeSvcIdParam string, tunnelIdParam string, tunnelParam *vapiData_.StructValue) error
 
-	// Create or Update Tunnel(GRE as of now)
-	//
-	// @param tier0IdParam tier0 id (required)
-	// @param localeSvcIdParam locale service id (required)
-	// @param tunnelIdParam tunnel id (required)
-	// @param tunnelParam (required)
-	// The parameter must contain all the properties defined in nsx_policyModel.Tunnel.
-	// @return com.vmware.nsx_policy.model.Tunnel
-	// The return value will contain all the properties defined in nsx_policyModel.Tunnel.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create or Update Tunnel(GRE as of now)
+    //
+    // @param tier0IdParam tier0 id (required)
+    // @param localeSvcIdParam locale service id (required)
+    // @param tunnelIdParam tunnel id (required)
+    // @param tunnelParam (required)
+    // The parameter must contain all the properties defined in nsx_policyModel.Tunnel.
+    // @return com.vmware.nsx_policy.model.Tunnel
+    // The return value will contain all the properties defined in nsx_policyModel.Tunnel.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(tier0IdParam string, localeSvcIdParam string, tunnelIdParam string, tunnelParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 }
 
+
 type tunnelsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewTunnelsClient(connector vapiProtocolClient_.Connector) *tunnelsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.tier_0s.locale_services.tunnels")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -293,3 +294,4 @@ func (tIface *tunnelsClient) Update(tier0IdParam string, localeSvcIdParam string
 		return emptyOutput, methodError.(error)
 	}
 }
+

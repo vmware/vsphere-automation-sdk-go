@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -12,45 +12,38 @@
 package infra
 
 import (
+	"reflect"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
-	"reflect"
 )
 
 // Possible value for ``deploymentType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_DEPLOYMENT_TYPE_VIRTUAL_MACHINE = "VIRTUAL_MACHINE"
-
 // Possible value for ``deploymentType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_DEPLOYMENT_TYPE_PHYSICAL_MACHINE = "PHYSICAL_MACHINE"
-
 // Possible value for ``deploymentType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_DEPLOYMENT_TYPE_UNKNOWN = "UNKNOWN"
-
 // Possible value for ``hostswitchProfileType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_HOSTSWITCH_PROFILE_TYPE_POLICYUPLINKHOSTSWITCHPROFILE = "PolicyUplinkHostSwitchProfile"
-
 // Possible value for ``hostswitchProfileType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_HOSTSWITCH_PROFILE_TYPE_POLICYLLDPHOSTSWITCHPROFILE = "PolicyLldpHostSwitchProfile"
-
 // Possible value for ``hostswitchProfileType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_HOSTSWITCH_PROFILE_TYPE_POLICYNIOCPROFILE = "PolicyNiocProfile"
-
 // Possible value for ``hostswitchProfileType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_HOSTSWITCH_PROFILE_TYPE_POLICYEXTRACONFIGHOSTSWITCHPROFILE = "PolicyExtraConfigHostSwitchProfile"
-
 // Possible value for ``hostswitchProfileType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_HOSTSWITCH_PROFILE_TYPE_POLICYVTEPHAHOSTSWITCHPROFILE = "PolicyVtepHAHostSwitchProfile"
-
 // Possible value for ``hostswitchProfileType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_HOSTSWITCH_PROFILE_TYPE_POLICYHIGHPERFORMANCEHOSTSWITCHPROFILE = "PolicyHighPerformanceHostSwitchProfile"
-
 // Possible value for ``nodeType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_NODE_TYPE_EDGENODE = "EdgeNode"
-
 // Possible value for ``nodeType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_NODE_TYPE_PUBLICCLOUDGATEWAYNODE = "PublicCloudGatewayNode"
+
+
+
 
 func hostSwitchProfilesDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -99,7 +92,7 @@ func hostSwitchProfilesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata 
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func hostSwitchProfilesGetInputType() vapiBindings_.StructType {
@@ -112,7 +105,7 @@ func hostSwitchProfilesGetInputType() vapiBindings_.StructType {
 }
 
 func HostSwitchProfilesGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType),})
 }
 
 func hostSwitchProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -149,7 +142,7 @@ func hostSwitchProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func hostSwitchProfilesListInputType() vapiBindings_.StructType {
@@ -264,14 +257,14 @@ func hostSwitchProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func hostSwitchProfilesPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["host_switch_profile_id"] = vapiBindings_.NewStringType()
-	fields["policy_base_host_switch_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType)})
+	fields["policy_base_host_switch_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType),})
 	fieldNameMap["host_switch_profile_id"] = "HostSwitchProfileId"
 	fieldNameMap["policy_base_host_switch_profile"] = "PolicyBaseHostSwitchProfile"
 	var validators = []vapiBindings_.Validator{}
@@ -279,7 +272,7 @@ func hostSwitchProfilesPatchInputType() vapiBindings_.StructType {
 }
 
 func HostSwitchProfilesPatchOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType),})
 }
 
 func hostSwitchProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -292,11 +285,11 @@ func hostSwitchProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["host_switch_profile_id"] = vapiBindings_.NewStringType()
-	fields["policy_base_host_switch_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType)})
+	fields["policy_base_host_switch_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType),})
 	fieldNameMap["host_switch_profile_id"] = "HostSwitchProfileId"
 	fieldNameMap["policy_base_host_switch_profile"] = "PolicyBaseHostSwitchProfile"
 	paramsTypeMap["host_switch_profile_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["policy_base_host_switch_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType)})
+	paramsTypeMap["policy_base_host_switch_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType),})
 	paramsTypeMap["hostSwitchProfileId"] = vapiBindings_.NewStringType()
 	pathParams["host_switch_profile_id"] = "hostSwitchProfileId"
 	resultHeaders := map[string]string{}
@@ -319,14 +312,14 @@ func hostSwitchProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func hostSwitchProfilesUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["host_switch_profile_id"] = vapiBindings_.NewStringType()
-	fields["policy_base_host_switch_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType)})
+	fields["policy_base_host_switch_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType),})
 	fieldNameMap["host_switch_profile_id"] = "HostSwitchProfileId"
 	fieldNameMap["policy_base_host_switch_profile"] = "PolicyBaseHostSwitchProfile"
 	var validators = []vapiBindings_.Validator{}
@@ -334,7 +327,7 @@ func hostSwitchProfilesUpdateInputType() vapiBindings_.StructType {
 }
 
 func HostSwitchProfilesUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType),})
 }
 
 func hostSwitchProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -347,11 +340,11 @@ func hostSwitchProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata 
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["host_switch_profile_id"] = vapiBindings_.NewStringType()
-	fields["policy_base_host_switch_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType)})
+	fields["policy_base_host_switch_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType),})
 	fieldNameMap["host_switch_profile_id"] = "HostSwitchProfileId"
 	fieldNameMap["policy_base_host_switch_profile"] = "PolicyBaseHostSwitchProfile"
 	paramsTypeMap["host_switch_profile_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["policy_base_host_switch_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType)})
+	paramsTypeMap["policy_base_host_switch_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyBaseHostSwitchProfileBindingType),})
 	paramsTypeMap["hostSwitchProfileId"] = vapiBindings_.NewStringType()
 	pathParams["host_switch_profile_id"] = "hostSwitchProfileId"
 	resultHeaders := map[string]string{}
@@ -374,5 +367,7 @@ func hostSwitchProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata 
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
+
+

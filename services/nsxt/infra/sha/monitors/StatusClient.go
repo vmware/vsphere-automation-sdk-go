@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,35 +10,37 @@
 package monitors
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatusClient interface {
 
-	// Read the SHA monitor status on certain transport node.
-	//
-	// @param monitorIdParam (required)
-	// @param transportNodeIdParam (required)
-	// @return com.vmware.nsx_policy.model.ShaMonitorStatus
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Get(monitorIdParam string, transportNodeIdParam string) (nsx_policyModel.ShaMonitorStatus, error)
+    // Read the SHA monitor status on certain transport node.
+    //
+    // @param monitorIdParam (required)
+    // @param transportNodeIdParam (optional)
+    // @param uaNodeIdParam (optional)
+    // @return com.vmware.nsx_policy.model.ShaMonitorStatus
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
+	Get(monitorIdParam string, transportNodeIdParam *string, uaNodeIdParam *string) (nsx_policyModel.ShaMonitorStatus, error)
 }
 
+
 type statusClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewStatusClient(connector vapiProtocolClient_.Connector) *statusClient {
@@ -60,7 +62,7 @@ func (sIface *statusClient) GetErrorBindingType(errorName string) vapiBindings_.
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statusClient) Get(monitorIdParam string, transportNodeIdParam string) (nsx_policyModel.ShaMonitorStatus, error) {
+func (sIface *statusClient) Get(monitorIdParam string, transportNodeIdParam *string, uaNodeIdParam *string) (nsx_policyModel.ShaMonitorStatus, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := statusGetRestMetadata()
@@ -70,6 +72,7 @@ func (sIface *statusClient) Get(monitorIdParam string, transportNodeIdParam stri
 	sv := vapiBindings_.NewStructValueBuilder(statusGetInputType(), typeConverter)
 	sv.AddStructField("MonitorId", monitorIdParam)
 	sv.AddStructField("TransportNodeId", transportNodeIdParam)
+	sv.AddStructField("UaNodeId", uaNodeIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.ShaMonitorStatus
@@ -92,3 +95,4 @@ func (sIface *statusClient) Get(monitorIdParam string, transportNodeIdParam stri
 		return emptyOutput, methodError.(error)
 	}
 }
+

@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,68 +10,69 @@
 package host_transport_nodes
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TunnelsClient interface {
 
-	// Tunnel properties
-	//
-	// @param siteIdParam site ID (required)
-	// @param enforcementPointIdParam enforcement point ID (required)
-	// @param nodeIdParam ID of transport node (required)
-	// @param tunnelNameParam Tunnel name (required)
-	// @param sourceParam Data source type. (optional)
-	// @return com.vmware.nsx_policy.model.TunnelProperties
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Tunnel properties
+    //
+    // @param siteIdParam site ID (required)
+    // @param enforcementPointIdParam enforcement point ID (required)
+    // @param nodeIdParam ID of transport node (required)
+    // @param tunnelNameParam Tunnel name (required)
+    // @param sourceParam Data source type. (optional)
+    // @return com.vmware.nsx_policy.model.TunnelProperties
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementPointIdParam string, nodeIdParam string, tunnelNameParam string, sourceParam *string) (nsx_policyModel.TunnelProperties, error)
 
-	// List of tunnels
-	//
-	// @param siteIdParam site ID (required)
-	// @param enforcementPointIdParam enforcement point ID (required)
-	// @param nodeIdParam ID of transport node (required)
-	// @param bfdDiagnosticCodeParam BFD diagnostic code of Tunnel as defined in RFC 5880 (optional)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param encapParam Tunnel encapsulation type (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param remoteNodeIdParam (optional)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @param sourceParam Data source type. (optional)
-	// @param statusParam Tunnel status (optional)
-	// @return com.vmware.nsx_policy.model.TunnelList
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // List of tunnels
+    //
+    // @param siteIdParam site ID (required)
+    // @param enforcementPointIdParam enforcement point ID (required)
+    // @param nodeIdParam ID of transport node (required)
+    // @param bfdDiagnosticCodeParam BFD diagnostic code of Tunnel as defined in RFC 5880 (optional)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param encapParam Tunnel encapsulation type (optional)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param remoteNodeIdParam (optional)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @param sourceParam Data source type. (optional)
+    // @param statusParam Tunnel status (optional)
+    // @return com.vmware.nsx_policy.model.TunnelList
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(siteIdParam string, enforcementPointIdParam string, nodeIdParam string, bfdDiagnosticCodeParam *string, cursorParam *string, encapParam *string, includedFieldsParam *string, pageSizeParam *int64, remoteNodeIdParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsx_policyModel.TunnelList, error)
 }
 
+
 type tunnelsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewTunnelsClient(connector vapiProtocolClient_.Connector) *tunnelsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.enforcement_points.host_transport_nodes.tunnels")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -167,3 +168,4 @@ func (tIface *tunnelsClient) List(siteIdParam string, enforcementPointIdParam st
 		return emptyOutput, methodError.(error)
 	}
 }
+

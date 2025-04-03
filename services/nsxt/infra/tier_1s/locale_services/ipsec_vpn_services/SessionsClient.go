@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,152 +10,153 @@
 package ipsec_vpn_services
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SessionsClient interface {
 
-	// Delete IPSec VPN session for a given locale service under Tier-1.
-	//  This API is deprecated. Please use DELETE /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/ sessions/<session-id> instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource. Also VPN path returned in the Alarm, GPRR payload may include the new VPN path.
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param tier1IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param serviceIdParam (required)
-	// @param sessionIdParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete IPSec VPN session for a given locale service under Tier-1. 
+    //  This API is deprecated. Please use DELETE /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/ sessions/<session-id> instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource. Also VPN path returned in the Alarm, GPRR payload may include the new VPN path.
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param tier1IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param serviceIdParam (required)
+    // @param sessionIdParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(tier1IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string) error
 
-	// Get IPSec VPN session without sensitive data for a given locale service under Tier-1.
-	//  This API is deprecated. Please use GET /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions/<session-id> instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource.
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param tier1IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param serviceIdParam (required)
-	// @param sessionIdParam (required)
-	// @return com.vmware.nsx_policy.model.IPSecVpnSession
-	// The return value will contain all the properties defined in nsx_policyModel.IPSecVpnSession.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get IPSec VPN session without sensitive data for a given locale service under Tier-1. 
+    //  This API is deprecated. Please use GET /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions/<session-id> instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource.
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param tier1IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param serviceIdParam (required)
+    // @param sessionIdParam (required)
+    // @return com.vmware.nsx_policy.model.IPSecVpnSession
+    // The return value will contain all the properties defined in nsx_policyModel.IPSecVpnSession.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(tier1IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string) (*vapiData_.StructValue, error)
 
-	// Get paginated list of all IPSec VPN sessions for a given locale service under Tier-1.
-	//  This API is deprecated. Please use GET /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource.
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param tier1IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param serviceIdParam (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.IPSecVpnSessionListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get paginated list of all IPSec VPN sessions for a given locale service under Tier-1. 
+    //  This API is deprecated. Please use GET /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource.
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param tier1IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param serviceIdParam (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.IPSecVpnSessionListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(tier1IdParam string, localeServiceIdParam string, serviceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPSecVpnSessionListResult, error)
 
-	// Create or patch an IPSec VPN session for a given locale service under Tier-1.
-	//  This API is deprecated. Please use PATCH /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions/<session-id> instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource. Also VPN path returned in the Alarm, GPRR payload may include the new VPN path
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param tier1IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param serviceIdParam (required)
-	// @param sessionIdParam (required)
-	// @param ipSecVpnSessionParam (required)
-	// The parameter must contain all the properties defined in nsx_policyModel.IPSecVpnSession.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create or patch an IPSec VPN session for a given locale service under Tier-1. 
+    //  This API is deprecated. Please use PATCH /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions/<session-id> instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource. Also VPN path returned in the Alarm, GPRR payload may include the new VPN path
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param tier1IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param serviceIdParam (required)
+    // @param sessionIdParam (required)
+    // @param ipSecVpnSessionParam (required)
+    // The parameter must contain all the properties defined in nsx_policyModel.IPSecVpnSession.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(tier1IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string, ipSecVpnSessionParam *vapiData_.StructValue) error
 
-	// Get IPSec VPN session with senstive data for a given locale service under Tier-1.
-	//  This API is deprecated. Please use GET /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions/<session-id>?action=show_sensitive_data instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource.
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param tier1IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param serviceIdParam (required)
-	// @param sessionIdParam (required)
-	// @return com.vmware.nsx_policy.model.IPSecVpnSession
-	// The return value will contain all the properties defined in nsx_policyModel.IPSecVpnSession.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get IPSec VPN session with senstive data for a given locale service under Tier-1. 
+    //  This API is deprecated. Please use GET /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions/<session-id>?action=show_sensitive_data instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource.
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param tier1IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param serviceIdParam (required)
+    // @param sessionIdParam (required)
+    // @return com.vmware.nsx_policy.model.IPSecVpnSession
+    // The return value will contain all the properties defined in nsx_policyModel.IPSecVpnSession.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Showsensitivedata(tier1IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string) (*vapiData_.StructValue, error)
 
-	// Create or fully replace IPSec VPN session for a given locale service under Tier-1. Revision is optional for creation and required for update.
-	//  This API is deprecated. Please use PUT /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions/<session-id> instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource. Also VPN path returned in the Alarm, GPRR payload may include the new VPN path.
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param tier1IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param serviceIdParam (required)
-	// @param sessionIdParam (required)
-	// @param ipSecVpnSessionParam (required)
-	// The parameter must contain all the properties defined in nsx_policyModel.IPSecVpnSession.
-	// @return com.vmware.nsx_policy.model.IPSecVpnSession
-	// The return value will contain all the properties defined in nsx_policyModel.IPSecVpnSession.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Create or fully replace IPSec VPN session for a given locale service under Tier-1. Revision is optional for creation and required for update. 
+    //  This API is deprecated. Please use PUT /infra/tier-1s/<tier-1-id>/ipsec-vpn-services/<service-id>/sessions/<session-id> instead. Note: Please note that request is validated and any error messages returned from validation may include the new VPN path instead of the deprecated path. Both new path and old path refer to same resource. Also VPN path returned in the Alarm, GPRR payload may include the new VPN path.
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param tier1IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param serviceIdParam (required)
+    // @param sessionIdParam (required)
+    // @param ipSecVpnSessionParam (required)
+    // The parameter must contain all the properties defined in nsx_policyModel.IPSecVpnSession.
+    // @return com.vmware.nsx_policy.model.IPSecVpnSession
+    // The return value will contain all the properties defined in nsx_policyModel.IPSecVpnSession.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(tier1IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string, ipSecVpnSessionParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 }
 
+
 type sessionsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewSessionsClient(connector vapiProtocolClient_.Connector) *sessionsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.tier_1s.locale_services.ipsec_vpn_services.sessions")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"delete":            vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":               vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":              vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"showsensitivedata": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "showsensitivedata"),
-		"update":            vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -375,3 +376,4 @@ func (sIface *sessionsClient) Update(tier1IdParam string, localeServiceIdParam s
 		return emptyOutput, methodError.(error)
 	}
 }
+

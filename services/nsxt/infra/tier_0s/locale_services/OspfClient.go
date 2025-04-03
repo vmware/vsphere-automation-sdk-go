@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,70 +10,71 @@
 package locale_services
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type OspfClient interface {
 
-	// Read OSPF routing config
-	//
-	// @param tier0IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @return com.vmware.nsx_policy.model.OspfRoutingConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read OSPF routing config
+    //
+    // @param tier0IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @return com.vmware.nsx_policy.model.OspfRoutingConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(tier0IdParam string, localeServiceIdParam string) (nsx_policyModel.OspfRoutingConfig, error)
 
-	// If OSPF routing config is not already present, create OSPF routing config. If it already exists, replace the OSPF routing config with this object.
-	//
-	// @param tier0IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param ospfRoutingConfigParam (required)
-	// @return com.vmware.nsx_policy.model.OspfRoutingConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If OSPF routing config is not already present, create OSPF routing config. If it already exists, replace the OSPF routing config with this object.
+    //
+    // @param tier0IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param ospfRoutingConfigParam (required)
+    // @return com.vmware.nsx_policy.model.OspfRoutingConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(tier0IdParam string, localeServiceIdParam string, ospfRoutingConfigParam nsx_policyModel.OspfRoutingConfig) (nsx_policyModel.OspfRoutingConfig, error)
 
-	// If OSPF routing config is not already present, create OSPF routing config. If it already exists, replace the OSPF routing config with this object.
-	//
-	// @param tier0IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param ospfRoutingConfigParam (required)
-	// @return com.vmware.nsx_policy.model.OspfRoutingConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If OSPF routing config is not already present, create OSPF routing config. If it already exists, replace the OSPF routing config with this object.
+    //
+    // @param tier0IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param ospfRoutingConfigParam (required)
+    // @return com.vmware.nsx_policy.model.OspfRoutingConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(tier0IdParam string, localeServiceIdParam string, ospfRoutingConfigParam nsx_policyModel.OspfRoutingConfig) (nsx_policyModel.OspfRoutingConfig, error)
 }
 
+
 type ospfClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewOspfClient(connector vapiProtocolClient_.Connector) *ospfClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.tier_0s.locale_services.ospf")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -190,3 +191,4 @@ func (oIface *ospfClient) Update(tier0IdParam string, localeServiceIdParam strin
 		return emptyOutput, methodError.(error)
 	}
 }
+

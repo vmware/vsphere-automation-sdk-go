@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,35 +10,36 @@
 package aaa
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type UserInfoClient interface {
 
-	// This API will return the name and role information of the user invoking this API request. This API is available for all NSX users no matter their authentication method (Local account, VIDM, LDAP etc). The permissions parameter of the NsxRole has been deprecated. The request parameter root_path has been introduced for multi-tenancy to get user's role at any path that the user desires. The response will contain the roles_for_paths to indicate roles at various paths.
-	//
-	// @param provideFlatListingParam Whether the output provides flat listing of all roles at each level or not (optional, default to false)
-	// @param rootPathParam Prefix path of the context (optional)
-	// @return com.vmware.nsx_policy.model.UserInfo
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This API will return the name and role information of the user invoking this API request. This API is available for all NSX users no matter their authentication method (Local account, VIDM, LDAP etc). The permissions parameter of the NsxRole has been deprecated. The request parameter root_path has been introduced for multi-tenancy to get user's role at any path that the user desires. The response will contain the roles_for_paths to indicate roles at various paths.
+    //
+    // @param provideFlatListingParam Whether the output provides flat listing of all roles at each level or not (optional, default to false)
+    // @param rootPathParam Prefix path of the context (optional)
+    // @return com.vmware.nsx_policy.model.UserInfo
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(provideFlatListingParam *bool, rootPathParam *string) (nsx_policyModel.UserInfo, error)
 }
 
+
 type userInfoClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewUserInfoClient(connector vapiProtocolClient_.Connector) *userInfoClient {
@@ -92,3 +93,4 @@ func (uIface *userInfoClient) Get(provideFlatListingParam *bool, rootPathParam *
 		return emptyOutput, methodError.(error)
 	}
 }
+

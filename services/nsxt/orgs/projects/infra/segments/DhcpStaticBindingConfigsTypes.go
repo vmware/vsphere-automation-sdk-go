@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -12,12 +12,16 @@
 package segments
 
 import (
+	"reflect"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
-	"reflect"
 )
+
+
+
+
 
 func dhcpStaticBindingConfigsDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -87,7 +91,7 @@ func dhcpStaticBindingConfigsDeleteRestMetadata() vapiProtocol_.OperationRestMet
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func dhcpStaticBindingConfigsGetInputType() vapiBindings_.StructType {
@@ -106,7 +110,7 @@ func dhcpStaticBindingConfigsGetInputType() vapiBindings_.StructType {
 }
 
 func DhcpStaticBindingConfigsGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType),})
 }
 
 func dhcpStaticBindingConfigsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -158,7 +162,7 @@ func dhcpStaticBindingConfigsGetRestMetadata() vapiProtocol_.OperationRestMetada
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func dhcpStaticBindingConfigsListInputType() vapiBindings_.StructType {
@@ -258,7 +262,7 @@ func dhcpStaticBindingConfigsListRestMetadata() vapiProtocol_.OperationRestMetad
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func dhcpStaticBindingConfigsPatchInputType() vapiBindings_.StructType {
@@ -268,7 +272,7 @@ func dhcpStaticBindingConfigsPatchInputType() vapiBindings_.StructType {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["segment_id"] = vapiBindings_.NewStringType()
 	fields["binding_id"] = vapiBindings_.NewStringType()
-	fields["dhcp_static_binding_config"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType)})
+	fields["dhcp_static_binding_config"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType),})
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["segment_id"] = "SegmentId"
@@ -295,7 +299,7 @@ func dhcpStaticBindingConfigsPatchRestMetadata() vapiProtocol_.OperationRestMeta
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["segment_id"] = vapiBindings_.NewStringType()
 	fields["binding_id"] = vapiBindings_.NewStringType()
-	fields["dhcp_static_binding_config"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType)})
+	fields["dhcp_static_binding_config"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType),})
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["segment_id"] = "SegmentId"
@@ -303,7 +307,7 @@ func dhcpStaticBindingConfigsPatchRestMetadata() vapiProtocol_.OperationRestMeta
 	fieldNameMap["dhcp_static_binding_config"] = "DhcpStaticBindingConfig"
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["dhcp_static_binding_config"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType)})
+	paramsTypeMap["dhcp_static_binding_config"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType),})
 	paramsTypeMap["segment_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["binding_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
@@ -334,7 +338,7 @@ func dhcpStaticBindingConfigsPatchRestMetadata() vapiProtocol_.OperationRestMeta
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func dhcpStaticBindingConfigsUpdateInputType() vapiBindings_.StructType {
@@ -344,7 +348,7 @@ func dhcpStaticBindingConfigsUpdateInputType() vapiBindings_.StructType {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["segment_id"] = vapiBindings_.NewStringType()
 	fields["binding_id"] = vapiBindings_.NewStringType()
-	fields["dhcp_static_binding_config"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType)})
+	fields["dhcp_static_binding_config"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType),})
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["segment_id"] = "SegmentId"
@@ -355,7 +359,7 @@ func dhcpStaticBindingConfigsUpdateInputType() vapiBindings_.StructType {
 }
 
 func DhcpStaticBindingConfigsUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType)})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType),})
 }
 
 func dhcpStaticBindingConfigsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -371,7 +375,7 @@ func dhcpStaticBindingConfigsUpdateRestMetadata() vapiProtocol_.OperationRestMet
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["segment_id"] = vapiBindings_.NewStringType()
 	fields["binding_id"] = vapiBindings_.NewStringType()
-	fields["dhcp_static_binding_config"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType)})
+	fields["dhcp_static_binding_config"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType),})
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["segment_id"] = "SegmentId"
@@ -379,7 +383,7 @@ func dhcpStaticBindingConfigsUpdateRestMetadata() vapiProtocol_.OperationRestMet
 	fieldNameMap["dhcp_static_binding_config"] = "DhcpStaticBindingConfig"
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["dhcp_static_binding_config"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType)})
+	paramsTypeMap["dhcp_static_binding_config"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.DhcpStaticBindingConfigBindingType),})
 	paramsTypeMap["segment_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["binding_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
@@ -410,5 +414,7 @@ func dhcpStaticBindingConfigsUpdateRestMetadata() vapiProtocol_.OperationRestMet
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
 }
+
+

@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,108 +10,109 @@
 package infra
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TraceflowsClient interface {
 
-	// This will retrace even if current traceflow has observations. Current observations will be lost. Traceflow configuration will be cleaned up by the system after two hours of inactivity.
-	//  Please use PUT API to start new Traceflow sessions. By default, traceflow observations will be cleanup every two hours, please use is_transient flag to avoid the cleanup.
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param traceflowIdParam (required)
-	// @param actionParam Action to be performed (optional)
-	// @return com.vmware.nsx_policy.model.TraceflowConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This will retrace even if current traceflow has observations. Current observations will be lost. Traceflow configuration will be cleaned up by the system after two hours of inactivity. 
+    //  Please use PUT API to start new Traceflow sessions. By default, traceflow observations will be cleanup every two hours, please use is_transient flag to avoid the cleanup.
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param traceflowIdParam (required)
+    // @param actionParam Action to be performed (optional)
+    // @return com.vmware.nsx_policy.model.TraceflowConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(traceflowIdParam string, actionParam *string) (nsx_policyModel.TraceflowConfig, error)
 
-	// Delete traceflow config with id traceflow-id
-	//
-	// @param traceflowIdParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete traceflow config with id traceflow-id
+    //
+    // @param traceflowIdParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(traceflowIdParam string) error
 
-	// Read traceflow config with id traceflow-id. This configuration will be cleaned up by the system after two hours of inactivity.
-	//
-	// @param traceflowIdParam (required)
-	// @return com.vmware.nsx_policy.model.TraceflowConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read traceflow config with id traceflow-id. This configuration will be cleaned up by the system after two hours of inactivity.
+    //
+    // @param traceflowIdParam (required)
+    // @return com.vmware.nsx_policy.model.TraceflowConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(traceflowIdParam string) (nsx_policyModel.TraceflowConfig, error)
 
-	// Paginated list of all TraceflowConfig for infra.
-	//
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.TraceflowConfigListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Paginated list of all TraceflowConfig for infra.
+    //
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.TraceflowConfigListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.TraceflowConfigListResult, error)
 
-	// If a traceflow config with the traceflow-id is not already present, create a new traceflow config. If it already exists, update the traceflow config. This is a full replace. This configuration will be cleaned up by the system after two hours of inactivity. To start traceflow on a DHCP port in a custom project, enforcement point path is required.
-	//  Please use PUT API to start new Traceflow sessions. By default, traceflow observations will be cleanup every two hours, please use is_transient flag to avoid the cleanup.
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param traceflowIdParam (required)
-	// @param traceflowConfigParam (required)
-	// @param enforcementPointPathParam Enforcement point path (optional)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If a traceflow config with the traceflow-id is not already present, create a new traceflow config. If it already exists, update the traceflow config. This is a full replace. This configuration will be cleaned up by the system after two hours of inactivity. To start traceflow on a DHCP port in a custom project, enforcement point path is required. 
+    //  Please use PUT API to start new Traceflow sessions. By default, traceflow observations will be cleanup every two hours, please use is_transient flag to avoid the cleanup.
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param traceflowIdParam (required)
+    // @param traceflowConfigParam (required)
+    // @param enforcementPointPathParam Enforcement point path (optional)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(traceflowIdParam string, traceflowConfigParam nsx_policyModel.TraceflowConfig, enforcementPointPathParam *string) error
 
-	// If a traceflow config with the traceflow-id is not already present, create a new traceflow config. If it already exists, update the traceflow config. This is a full replace. This configuration will be cleaned up by the system after two hours of inactivity. To start traceflow on a DHCP port in a custom project, enforcement point path is required. User needs to update the in-band network telemetry (INT) configuration to specify the DSCP bit/value for traceflow crafted packet, if the source port of traceflow is on VLAN logical network. The INT configuration is under global operations configuration so please refer NSX-T API document Policy > Networking > Networking Profiles > Global Gateway Configuration to check how to set the DSCP bit/value via global operations configuration related API.
-	//
-	// @param traceflowIdParam (required)
-	// @param traceflowConfigParam (required)
-	// @param enforcementPointPathParam Enforcement point path (optional)
-	// @return com.vmware.nsx_policy.model.TraceflowConfig
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // If a traceflow config with the traceflow-id is not already present, create a new traceflow config. If it already exists, update the traceflow config. This is a full replace. This configuration will be cleaned up by the system after two hours of inactivity. To start traceflow on a DHCP port in a custom project, enforcement point path is required. User needs to update the in-band network telemetry (INT) configuration to specify the DSCP bit/value for traceflow crafted packet, if the source port of traceflow is on VLAN logical network. The INT configuration is under global operations configuration so please refer NSX-T API document Policy > Networking > Networking Profiles > Global Gateway Configuration to check how to set the DSCP bit/value via global operations configuration related API.
+    //
+    // @param traceflowIdParam (required)
+    // @param traceflowConfigParam (required)
+    // @param enforcementPointPathParam Enforcement point path (optional)
+    // @return com.vmware.nsx_policy.model.TraceflowConfig
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(traceflowIdParam string, traceflowConfigParam nsx_policyModel.TraceflowConfig, enforcementPointPathParam *string) (nsx_policyModel.TraceflowConfig, error)
 }
 
+
 type traceflowsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewTraceflowsClient(connector vapiProtocolClient_.Connector) *traceflowsClient {
@@ -119,9 +120,9 @@ func NewTraceflowsClient(connector vapiProtocolClient_.Connector) *traceflowsCli
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -327,3 +328,4 @@ func (tIface *traceflowsClient) Update(traceflowIdParam string, traceflowConfigP
 		return emptyOutput, methodError.(error)
 	}
 }
+

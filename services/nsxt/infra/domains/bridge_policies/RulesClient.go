@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,112 +10,113 @@
 package bridge_policies
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RulesClient interface {
 
-	// This is used to re-order a bridge firewall rule within a bridge firewall policy.
-	//
-	// @param domainIdParam (required)
-	// @param bridgeFirewallPolicyIdParam (required)
-	// @param ruleIdParam (required)
-	// @param ruleParam (required)
-	// @return com.vmware.nsx_policy.model.Rule
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This is used to re-order a bridge firewall rule within a bridge firewall policy.
+    //
+    // @param domainIdParam (required)
+    // @param bridgeFirewallPolicyIdParam (required)
+    // @param ruleIdParam (required)
+    // @param ruleParam (required)
+    // @return com.vmware.nsx_policy.model.Rule
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(domainIdParam string, bridgeFirewallPolicyIdParam string, ruleIdParam string, ruleParam nsx_policyModel.Rule) (nsx_policyModel.Rule, error)
 
-	// Delete Bridge Firewall Rule.
-	//
-	// @param domainIdParam (required)
-	// @param bridgeFirewallPolicyIdParam (required)
-	// @param ruleIdParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete Bridge Firewall Rule.
+    //
+    // @param domainIdParam (required)
+    // @param bridgeFirewallPolicyIdParam (required)
+    // @param ruleIdParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(domainIdParam string, bridgeFirewallPolicyIdParam string, ruleIdParam string) error
 
-	// Read Bridge Firewall Rule.
-	//
-	// @param domainIdParam (required)
-	// @param bridgeFirewallPolicyIdParam (required)
-	// @param ruleIdParam (required)
-	// @return com.vmware.nsx_policy.model.Rule
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read Bridge Firewall Rule.
+    //
+    // @param domainIdParam (required)
+    // @param bridgeFirewallPolicyIdParam (required)
+    // @param ruleIdParam (required)
+    // @return com.vmware.nsx_policy.model.Rule
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(domainIdParam string, bridgeFirewallPolicyIdParam string, ruleIdParam string) (nsx_policyModel.Rule, error)
 
-	// Paginated list of all Bridge Firewall Rules.
-	//
-	// @param domainIdParam (required)
-	// @param bridgeFirewallPolicyIdParam (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.RuleListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Paginated list of all Bridge Firewall Rules.
+    //
+    // @param domainIdParam (required)
+    // @param bridgeFirewallPolicyIdParam (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.RuleListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(domainIdParam string, bridgeFirewallPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.RuleListResult, error)
 
-	// Patch the Bridge Firewall Rule. If a Rule for the given Rule-id is not present, the object will get created and if it is present it will be updated. Performance Note: If you want to edit several rules in a bridge firewall policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/bridge-policies/<bridge-firewall-policy-id>
-	//
-	// @param domainIdParam (required)
-	// @param bridgeFirewallPolicyIdParam (required)
-	// @param ruleIdParam (required)
-	// @param ruleParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Patch the Bridge Firewall Rule. If a Rule for the given Rule-id is not present, the object will get created and if it is present it will be updated. Performance Note: If you want to edit several rules in a bridge firewall policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/bridge-policies/<bridge-firewall-policy-id>
+    //
+    // @param domainIdParam (required)
+    // @param bridgeFirewallPolicyIdParam (required)
+    // @param ruleIdParam (required)
+    // @param ruleParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(domainIdParam string, bridgeFirewallPolicyIdParam string, ruleIdParam string, ruleParam nsx_policyModel.Rule) error
 
-	// Update the Bridge Firewall Rule. This is a full replace. All the rules are replaced. Create new BridgeFirewallRule if a rule with the rule-id is not already present. Performance Note: If you wish to edit several rules in a bridge firewall policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/bridge-policies/<bridge-firewall-policy-id>
-	//
-	// @param domainIdParam (required)
-	// @param bridgeFirewallPolicyIdParam (required)
-	// @param ruleIdParam (required)
-	// @param ruleParam (required)
-	// @return com.vmware.nsx_policy.model.Rule
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Update the Bridge Firewall Rule. This is a full replace. All the rules are replaced. Create new BridgeFirewallRule if a rule with the rule-id is not already present. Performance Note: If you wish to edit several rules in a bridge firewall policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/bridge-policies/<bridge-firewall-policy-id>
+    //
+    // @param domainIdParam (required)
+    // @param bridgeFirewallPolicyIdParam (required)
+    // @param ruleIdParam (required)
+    // @param ruleParam (required)
+    // @return com.vmware.nsx_policy.model.Rule
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(domainIdParam string, bridgeFirewallPolicyIdParam string, ruleIdParam string, ruleParam nsx_policyModel.Rule) (nsx_policyModel.Rule, error)
 }
 
+
 type rulesClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewRulesClient(connector vapiProtocolClient_.Connector) *rulesClient {
@@ -123,9 +124,9 @@ func NewRulesClient(connector vapiProtocolClient_.Connector) *rulesClient {
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -341,3 +342,4 @@ func (rIface *rulesClient) Update(domainIdParam string, bridgeFirewallPolicyIdPa
 		return emptyOutput, methodError.(error)
 	}
 }
+

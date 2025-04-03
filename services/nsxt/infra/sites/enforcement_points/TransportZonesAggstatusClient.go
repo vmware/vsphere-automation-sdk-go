@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,35 +10,37 @@
 package enforcement_points
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TransportZonesAggstatusClient interface {
 
-	// Get high-level summary of all transport zone status. The service layer does not support source = realtime or cached.
-	//
-	// @param siteIdParam site ID (required)
-	// @param enforcementPointIdParam enforcement point ID (required)
-	// @return com.vmware.nsx_policy.model.HeatMapTransportNodesAggregateStatus
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Get(siteIdParam string, enforcementPointIdParam string) (nsx_policyModel.HeatMapTransportNodesAggregateStatus, error)
+    // Get high-level summary of all transport zone status. The service layer does not support source = realtime or cached.
+    //
+    // @param siteIdParam site ID (required)
+    // @param enforcementPointIdParam enforcement point ID (required)
+    // @param includeSystemOwnedParam Include system owned transport zones (optional)
+    // @return com.vmware.nsx_policy.model.HeatMapTransportNodesAggregateStatus
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
+	Get(siteIdParam string, enforcementPointIdParam string, includeSystemOwnedParam *bool) (nsx_policyModel.HeatMapTransportNodesAggregateStatus, error)
 }
 
+
 type transportZonesAggstatusClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewTransportZonesAggstatusClient(connector vapiProtocolClient_.Connector) *transportZonesAggstatusClient {
@@ -60,7 +62,7 @@ func (tIface *transportZonesAggstatusClient) GetErrorBindingType(errorName strin
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (tIface *transportZonesAggstatusClient) Get(siteIdParam string, enforcementPointIdParam string) (nsx_policyModel.HeatMapTransportNodesAggregateStatus, error) {
+func (tIface *transportZonesAggstatusClient) Get(siteIdParam string, enforcementPointIdParam string, includeSystemOwnedParam *bool) (nsx_policyModel.HeatMapTransportNodesAggregateStatus, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
 	operationRestMetaData := transportZonesAggstatusGetRestMetadata()
@@ -70,6 +72,7 @@ func (tIface *transportZonesAggstatusClient) Get(siteIdParam string, enforcement
 	sv := vapiBindings_.NewStructValueBuilder(transportZonesAggstatusGetInputType(), typeConverter)
 	sv.AddStructField("SiteId", siteIdParam)
 	sv.AddStructField("EnforcementPointId", enforcementPointIdParam)
+	sv.AddStructField("IncludeSystemOwned", includeSystemOwnedParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.HeatMapTransportNodesAggregateStatus
@@ -92,3 +95,4 @@ func (tIface *transportZonesAggstatusClient) Get(siteIdParam string, enforcement
 		return emptyOutput, methodError.(error)
 	}
 }
+

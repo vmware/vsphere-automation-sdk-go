@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,34 +10,35 @@
 package infra
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AlbAuthTokenClient interface {
 
-	// Passthorugh API calls to Avi controller using the Auth of policy API request send to this API will be passthrough to Avi controller and Avi controller response will be embedded for this API.
-	//
-	// @param aLBAuthTokenParam (required)
-	// @return com.vmware.nsx_policy.model.ALBAuthToken
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Passthorugh API calls to Avi controller using the Auth of policy API request send to this API will be passthrough to Avi controller and Avi controller response will be embedded for this API.
+    //
+    // @param aLBAuthTokenParam (required)
+    // @return com.vmware.nsx_policy.model.ALBAuthToken
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(aLBAuthTokenParam nsx_policyModel.ALBAuthToken) (nsx_policyModel.ALBAuthToken, error)
 }
 
+
 type albAuthTokenClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewAlbAuthTokenClient(connector vapiProtocolClient_.Connector) *albAuthTokenClient {
@@ -90,3 +91,4 @@ func (aIface *albAuthTokenClient) Update(aLBAuthTokenParam nsx_policyModel.ALBAu
 		return emptyOutput, methodError.(error)
 	}
 }
+

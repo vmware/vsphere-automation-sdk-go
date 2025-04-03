@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,34 +10,35 @@
 package roles
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RoleAssignmentPermissionConfigClient interface {
 
-	// Provides a means to allow or disallow project administrators and VPC administrators to assign roles to other users on projects and VPCs.
-	//
-	// @param roleParam role id (either \"project_admin\" or \"vpc_admin\") (required)
-	// @param roleAssignmentPermissionConfigParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Provides a means to allow or disallow project administrators and VPC administrators to assign roles to other users on projects and VPCs.
+    //
+    // @param roleParam role id (either \"project_admin\" or \"vpc_admin\") (required)
+    // @param roleAssignmentPermissionConfigParam (required)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(roleParam string, roleAssignmentPermissionConfigParam nsx_policyModel.RoleAssignmentPermissionConfig) error
 }
 
+
 type roleAssignmentPermissionConfigClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewRoleAssignmentPermissionConfigClient(connector vapiProtocolClient_.Connector) *roleAssignmentPermissionConfigClient {
@@ -85,3 +86,4 @@ func (rIface *roleAssignmentPermissionConfigClient) Update(roleParam string, rol
 		return methodError.(error)
 	}
 }
+

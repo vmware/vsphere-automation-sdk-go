@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,36 +10,37 @@
 package transport_node_collections
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StateClient interface {
 
-	// Returns the state of transport node collection based on the states of transport nodes of the hosts which are part of compute collection.
-	//
-	// @param siteIdParam (required)
-	// @param enforcementpointIdParam (required)
-	// @param transportNodeCollectionIdParam (required)
-	// @return com.vmware.nsx_policy.model.TransportNodeCollectionState
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Returns the state of transport node collection based on the states of transport nodes of the hosts which are part of compute collection.
+    //
+    // @param siteIdParam (required)
+    // @param enforcementpointIdParam (required)
+    // @param transportNodeCollectionIdParam (required)
+    // @return com.vmware.nsx_policy.model.TransportNodeCollectionState
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementpointIdParam string, transportNodeCollectionIdParam string) (nsx_policyModel.TransportNodeCollectionState, error)
 }
 
+
 type stateClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewStateClient(connector vapiProtocolClient_.Connector) *stateClient {
@@ -94,3 +95,4 @@ func (sIface *stateClient) Get(siteIdParam string, enforcementpointIdParam strin
 		return emptyOutput, methodError.(error)
 	}
 }
+

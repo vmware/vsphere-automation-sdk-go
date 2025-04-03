@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,121 +10,122 @@
 package aaa
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RoleBindingsClient interface {
 
-	// Delete the user/group's role assignment on CSP. If the path is provided then deletes only the roles_for_paths that matches the path. If path is provided for the last roles_for_paths then the whole role binding is deleted provided it is not that of a local user.
-	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @param bindingIdParam (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param identitySourceIdParam Identity source ID (optional)
-	// @param identitySourceTypeParam Identity source type (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param nameParam User/Group name (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param pathParam Exact path of the context (optional)
-	// @param roleParam Role ID (optional)
-	// @param rootPathParam Prefix path of the context (optional)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @param type_Param Type (optional)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete the user/group's role assignment on CSP. If the path is provided then deletes only the roles_for_paths that matches the path. If path is provided for the last roles_for_paths then the whole role binding is deleted provided it is not that of a local user.
+    //
+    // @param orgIdParam (required)
+    // @param projectIdParam (required)
+    // @param bindingIdParam (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param identitySourceIdParam Identity source ID (optional)
+    // @param identitySourceTypeParam Identity source type (optional)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param nameParam User/Group name (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param pathParam Exact path of the context (optional)
+    // @param roleParam Role ID (optional)
+    // @param rootPathParam Prefix path of the context (optional)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @param type_Param Type (optional)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, bindingIdParam string, cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, pathParam *string, roleParam *string, rootPathParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) error
 
-	// Get user/group's role information from CSP
-	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @param bindingIdParam (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param identitySourceIdParam Identity source ID (optional)
-	// @param identitySourceTypeParam Identity source type (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param nameParam User/Group name (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param pathParam Exact path of the context (optional)
-	// @param roleParam Role ID (optional)
-	// @param rootPathParam Prefix path of the context (optional)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @param type_Param Type (optional)
-	// @return com.vmware.nsx_policy.model.RoleBinding
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get user/group's role information from CSP
+    //
+    // @param orgIdParam (required)
+    // @param projectIdParam (required)
+    // @param bindingIdParam (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param identitySourceIdParam Identity source ID (optional)
+    // @param identitySourceTypeParam Identity source type (optional)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param nameParam User/Group name (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param pathParam Exact path of the context (optional)
+    // @param roleParam Role ID (optional)
+    // @param rootPathParam Prefix path of the context (optional)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @param type_Param Type (optional)
+    // @return com.vmware.nsx_policy.model.RoleBinding
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, bindingIdParam string, cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, pathParam *string, roleParam *string, rootPathParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsx_policyModel.RoleBinding, error)
 
-	// Get all users and groups with their roles from CSP. If the root_path is provided then only return role bindings that start-with or are sub-trees of the provided root path. Also filter the roles_for_paths such that only those roles_for_paths appear that start-with or are sub-tree of the provided root path.
-	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param identitySourceIdParam Identity source ID (optional)
-	// @param identitySourceTypeParam Identity source type (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param nameParam User/Group name (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param pathParam Exact path of the context (optional)
-	// @param roleParam Role ID (optional)
-	// @param rootPathParam Prefix path of the context (optional)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @param type_Param Type (optional)
-	// @return com.vmware.nsx_policy.model.RoleBindingListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get all users and groups with their roles from CSP. If the root_path is provided then only return role bindings that start-with or are sub-trees of the provided root path. Also filter the roles_for_paths such that only those roles_for_paths appear that start-with or are sub-tree of the provided root path.
+    //
+    // @param orgIdParam (required)
+    // @param projectIdParam (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param identitySourceIdParam Identity source ID (optional)
+    // @param identitySourceTypeParam Identity source type (optional)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param nameParam User/Group name (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param pathParam Exact path of the context (optional)
+    // @param roleParam Role ID (optional)
+    // @param rootPathParam Prefix path of the context (optional)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @param type_Param Type (optional)
+    // @return com.vmware.nsx_policy.model.RoleBindingListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, cursorParam *string, identitySourceIdParam *string, identitySourceTypeParam *string, includedFieldsParam *string, nameParam *string, pageSizeParam *int64, pathParam *string, roleParam *string, rootPathParam *string, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsx_policyModel.RoleBindingListResult, error)
 
-	// This API is used to assign a user/group any role(s) of choice on CSP. It is recommended to use the new property roles_for_paths instead of roles. When using the roles_for_paths, set the read_roles_for_paths as true. User has union of all the roles assigned to it on a particular path and its sub-tree. User name is dealt case-insensitively.
-	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @param roleBindingParam (required)
-	// @return com.vmware.nsx_policy.model.RoleBinding
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // This API is used to assign a user/group any role(s) of choice on CSP. It is recommended to use the new property roles_for_paths instead of roles. When using the roles_for_paths, set the read_roles_for_paths as true. User has union of all the roles assigned to it on a particular path and its sub-tree. User name is dealt case-insensitively.
+    //
+    // @param orgIdParam (required)
+    // @param projectIdParam (required)
+    // @param roleBindingParam (required)
+    // @return com.vmware.nsx_policy.model.RoleBinding
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, roleBindingParam nsx_policyModel.RoleBinding) (nsx_policyModel.RoleBinding, error)
 }
 
+
 type roleBindingsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewRoleBindingsClient(connector vapiProtocolClient_.Connector) *roleBindingsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.aaa.role_bindings")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -304,3 +305,4 @@ func (rIface *roleBindingsClient) Patch(orgIdParam string, projectIdParam string
 		return emptyOutput, methodError.(error)
 	}
 }
+

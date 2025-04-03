@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,37 +10,38 @@
 package action
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RedeployClient interface {
 
-	// Redeploys an edge transport node at NSX Manager that replaces the edge transport node with identifier <node-id>. If NSX Manager can access the specified edge node, then the node is put into maintenance mode and then the associated VM is deleted. This is a means to reset all configuration on the edge node. The communication channel between NSX Manager and edge is established after this operation.
-	//
-	// @param siteIdParam (required)
-	// @param enforcementpointIdParam (required)
-	// @param edgeTransportNodeIdParam (required)
-	// @param policyEdgeTransportNodeParam (required)
-	// @return com.vmware.nsx_policy.model.PolicyEdgeTransportNode
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Redeploys an edge transport node at NSX Manager that replaces the edge transport node with identifier <node-id>. If NSX Manager can access the specified edge node, then the node is put into maintenance mode and then the associated VM is deleted. This is a means to reset all configuration on the edge node. The communication channel between NSX Manager and edge is established after this operation.
+    //
+    // @param siteIdParam (required)
+    // @param enforcementpointIdParam (required)
+    // @param edgeTransportNodeIdParam (required)
+    // @param policyEdgeTransportNodeParam (required)
+    // @return com.vmware.nsx_policy.model.PolicyEdgeTransportNode
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(siteIdParam string, enforcementpointIdParam string, edgeTransportNodeIdParam string, policyEdgeTransportNodeParam nsx_policyModel.PolicyEdgeTransportNode) (nsx_policyModel.PolicyEdgeTransportNode, error)
 }
 
+
 type redeployClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewRedeployClient(connector vapiProtocolClient_.Connector) *redeployClient {
@@ -96,3 +97,4 @@ func (rIface *redeployClient) Create(siteIdParam string, enforcementpointIdParam
 		return emptyOutput, methodError.(error)
 	}
 }
+

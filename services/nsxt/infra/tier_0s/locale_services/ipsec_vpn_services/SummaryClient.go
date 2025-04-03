@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,41 +10,42 @@
 package ipsec_vpn_services
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SummaryClient interface {
 
-	// Summarized view of all tier-0 IPSec VPN sessions for a specified service.
-	//  This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/ipsec-vpn-services/<service-id>/summary instead.
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param tier0IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param serviceIdParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @param sourceParam Data source type. (optional)
-	// @return com.vmware.nsx_policy.model.PolicyIpsecVpnIkeServiceSummary
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Summarized view of all tier-0 IPSec VPN sessions for a specified service. 
+    //  This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/ipsec-vpn-services/<service-id>/summary instead.
+    //
+    // Deprecated: This API element is deprecated. 
+    //
+    // @param tier0IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param serviceIdParam (required)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    // @param sourceParam Data source type. (optional)
+    // @return com.vmware.nsx_policy.model.PolicyIpsecVpnIkeServiceSummary
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(tier0IdParam string, localeServiceIdParam string, serviceIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.PolicyIpsecVpnIkeServiceSummary, error)
 }
 
+
 type summaryClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewSummaryClient(connector vapiProtocolClient_.Connector) *summaryClient {
@@ -101,3 +102,4 @@ func (sIface *summaryClient) Get(tier0IdParam string, localeServiceIdParam strin
 		return emptyOutput, methodError.(error)
 	}
 }
+

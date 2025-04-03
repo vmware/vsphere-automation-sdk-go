@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,47 +10,48 @@
 package neighbors
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatusClient interface {
 
-	// Returns the status of all the BGP neighbors for the given Tier0. To get BGP neighbor status for a particular enforcement point, parameter \"enforcement_point_path=<enforcement_point_path>\" needs to be specified. If an enforcement_point is unspecified, then bgp neighbor status for all enforcement points is fetched. To get BGP neighbors status for the logical router from particular edge node, parameter \"edge_path=<edge_path>\" needs to be specified. If an edge_path is unspecified, then bgp neighbor status for all edges is fetched.
-	//
-	// @param tier0IdParam (required)
-	// @param localeServiceIdParam (required)
-	// @param bgpNeighborTypeParam Bgp neighbor type (optional)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param edgePathParam Policy path of edge node (optional)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @param sourceParam Data source type. (optional)
-	// @param statsTypeParam Segment statistics type (optional)
-	// @param transportNodeIdParam Transport Node Id (optional)
-	// @return com.vmware.nsx_policy.model.PolicyBgpNeighborsStatusListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Returns the status of all the BGP neighbors for the given Tier0. To get BGP neighbor status for a particular enforcement point, parameter \"enforcement_point_path=<enforcement_point_path>\" needs to be specified. If an enforcement_point is unspecified, then bgp neighbor status for all enforcement points is fetched. To get BGP neighbors status for the logical router from particular edge node, parameter \"edge_path=<edge_path>\" needs to be specified. If an edge_path is unspecified, then bgp neighbor status for all edges is fetched.
+    //
+    // @param tier0IdParam (required)
+    // @param localeServiceIdParam (required)
+    // @param bgpNeighborTypeParam Bgp neighbor type (optional)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param edgePathParam Policy path of edge node (optional)
+    // @param enforcementPointPathParam String Path of the enforcement point (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @param sourceParam Data source type. (optional)
+    // @param statsTypeParam Segment statistics type (optional)
+    // @param transportNodeIdParam Transport Node Id (optional)
+    // @return com.vmware.nsx_policy.model.PolicyBgpNeighborsStatusListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(tier0IdParam string, localeServiceIdParam string, bgpNeighborTypeParam *string, cursorParam *string, edgePathParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statsTypeParam *string, transportNodeIdParam *string) (nsx_policyModel.PolicyBgpNeighborsStatusListResult, error)
 }
 
+
 type statusClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewStatusClient(connector vapiProtocolClient_.Connector) *statusClient {
@@ -116,3 +117,4 @@ func (sIface *statusClient) List(tier0IdParam string, localeServiceIdParam strin
 		return emptyOutput, methodError.(error)
 	}
 }
+

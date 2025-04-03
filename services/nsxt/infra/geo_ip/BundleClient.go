@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,51 +10,52 @@
 package geo_ip
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type BundleClient interface {
 
-	// Using this API, with request parameter download_now - User can request on demand to download latest Geo IP bundle to be used on the edge nodes. This will try to get latest bundle regardless auto_download is ON or OFF. If new bundle available, it will download the latest bundle. If no new bundle, it will indicate in message. check_latest - User can check the latest Geo IP bundle available.
-	//
-	// @param actionParam Geo IP Bundle Action (required)
-	// @return com.vmware.nsx_policy.model.GeoIpBundleInfo
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Using this API, with request parameter download_now - User can request on demand to download latest Geo IP bundle to be used on the edge nodes. This will try to get latest bundle regardless auto_download is ON or OFF. If new bundle available, it will download the latest bundle. If no new bundle, it will indicate in message. check_latest - User can check the latest Geo IP bundle available.
+    //
+    // @param actionParam Geo IP Bundle Action (required)
+    // @return com.vmware.nsx_policy.model.GeoIpBundleInfo
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Create(actionParam string) (nsx_policyModel.GeoIpBundleInfo, error)
 
-	// Get current Geo IP Bundle information that is downloaded in the system.
-	// @return com.vmware.nsx_policy.model.GeoIpBundleInfo
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get current Geo IP Bundle information that is downloaded in the system.
+    // @return com.vmware.nsx_policy.model.GeoIpBundleInfo
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get() (nsx_policyModel.GeoIpBundleInfo, error)
 }
 
+
 type bundleClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewBundleClient(connector vapiProtocolClient_.Connector) *bundleClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.geo_ip.bundle")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -132,3 +133,4 @@ func (bIface *bundleClient) Get() (nsx_policyModel.GeoIpBundleInfo, error) {
 		return emptyOutput, methodError.(error)
 	}
 }
+

@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,38 +10,39 @@
 package vpcs
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type QuotaStatsClient interface {
 
-	// Get quota details
-	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @param vpcIdParam (required)
-	// @param pathPrefixParam Path prefix for retriving the quota details. (required)
-	// @param constraintPathParam Constraint path to retrive the quota details. (optional)
-	// @return com.vmware.nsx_policy.model.QuotaStatsListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Get quota details
+    //
+    // @param orgIdParam (required)
+    // @param projectIdParam (required)
+    // @param vpcIdParam (required)
+    // @param pathPrefixParam Path prefix for retriving the quota details. (required)
+    // @param constraintPathParam Constraint path to retrive the quota details. (optional)
+    // @return com.vmware.nsx_policy.model.QuotaStatsListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, vpcIdParam string, pathPrefixParam string, constraintPathParam *string) (nsx_policyModel.QuotaStatsListResult, error)
 }
 
+
 type quotaStatsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewQuotaStatsClient(connector vapiProtocolClient_.Connector) *quotaStatsClient {
@@ -98,3 +99,4 @@ func (qIface *quotaStatsClient) Get(orgIdParam string, projectIdParam string, vp
 		return emptyOutput, methodError.(error)
 	}
 }
+

@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2024 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -10,107 +10,108 @@
 package ip_pools
 
 import (
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type IpSubnetsClient interface {
 
-	// Delete the IpAddressPoolSubnet with the given id.
-	//
-	// @param ipPoolIdParam (required)
-	// @param ipSubnetIdParam (required)
-	// @param ignoreIpAllocationsParam Flag to specify whether to ignore ip allocations. (optional, default to false)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Delete the IpAddressPoolSubnet with the given id.
+    //
+    // @param ipPoolIdParam (required)
+    // @param ipSubnetIdParam (required)
+    // @param ignoreIpAllocationsParam Flag to specify whether to ignore ip allocations. (optional, default to false)
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Delete(ipPoolIdParam string, ipSubnetIdParam string, ignoreIpAllocationsParam *bool) error
 
-	// Read IpAddressPoolSubnet with given Id.
-	//
-	// @param ipPoolIdParam (required)
-	// @param ipSubnetIdParam (required)
-	// @return com.vmware.nsx_policy.model.IpAddressPoolSubnet
-	// The return value will contain all the properties defined in nsx_policyModel.IpAddressPoolSubnet.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Read IpAddressPoolSubnet with given Id.
+    //
+    // @param ipPoolIdParam (required)
+    // @param ipSubnetIdParam (required)
+    // @return com.vmware.nsx_policy.model.IpAddressPoolSubnet
+    // The return value will contain all the properties defined in nsx_policyModel.IpAddressPoolSubnet.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Get(ipPoolIdParam string, ipSubnetIdParam string) (*vapiData_.StructValue, error)
 
-	// Paginated list of IpAddressPoolSubnets.
-	//
-	// @param ipPoolIdParam (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
-	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.IpAddressPoolSubnetListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Paginated list of IpAddressPoolSubnets.
+    //
+    // @param ipPoolIdParam (required)
+    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+    // @param sortAscendingParam (optional)
+    // @param sortByParam Field by which records are sorted (optional)
+    // @return com.vmware.nsx_policy.model.IpAddressPoolSubnetListResult
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	List(ipPoolIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IpAddressPoolSubnetListResult, error)
 
-	// Creates a new IpAddressPoolSubnet with the specified ID if it does not already exist. If a IpAddressPoolSubnet of the given ID already exists, IpAddressPoolSubnet will be updated. This is a full replace.
-	//
-	// @param ipPoolIdParam (required)
-	// @param ipSubnetIdParam (required)
-	// @param ipAddressPoolSubnetParam (required)
-	// The parameter must contain all the properties defined in nsx_policyModel.IpAddressPoolSubnet.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Creates a new IpAddressPoolSubnet with the specified ID if it does not already exist. If a IpAddressPoolSubnet of the given ID already exists, IpAddressPoolSubnet will be updated. This is a full replace.
+    //
+    // @param ipPoolIdParam (required)
+    // @param ipSubnetIdParam (required)
+    // @param ipAddressPoolSubnetParam (required)
+    // The parameter must contain all the properties defined in nsx_policyModel.IpAddressPoolSubnet.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Patch(ipPoolIdParam string, ipSubnetIdParam string, ipAddressPoolSubnetParam *vapiData_.StructValue) error
 
-	// Creates a new IpAddressPoolSubnet with the specified ID if it does not already exist. If a IpAddressPoolSubnet of the given ID already exists, IpAddressPoolSubnet will be updated. This is a full replace.
-	//
-	// @param ipPoolIdParam (required)
-	// @param ipSubnetIdParam (required)
-	// @param ipAddressPoolSubnetParam (required)
-	// The parameter must contain all the properties defined in nsx_policyModel.IpAddressPoolSubnet.
-	// @return com.vmware.nsx_policy.model.IpAddressPoolSubnet
-	// The return value will contain all the properties defined in nsx_policyModel.IpAddressPoolSubnet.
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
+    // Creates a new IpAddressPoolSubnet with the specified ID if it does not already exist. If a IpAddressPoolSubnet of the given ID already exists, IpAddressPoolSubnet will be updated. This is a full replace.
+    //
+    // @param ipPoolIdParam (required)
+    // @param ipSubnetIdParam (required)
+    // @param ipAddressPoolSubnetParam (required)
+    // The parameter must contain all the properties defined in nsx_policyModel.IpAddressPoolSubnet.
+    // @return com.vmware.nsx_policy.model.IpAddressPoolSubnet
+    // The return value will contain all the properties defined in nsx_policyModel.IpAddressPoolSubnet.
+    //
+    // @throws InvalidRequest  Bad Request, Precondition Failed
+    // @throws Unauthorized  Forbidden
+    // @throws ServiceUnavailable  Service Unavailable
+    // @throws InternalServerError  Internal Server Error
+    // @throws NotFound  Not Found
 	Update(ipPoolIdParam string, ipSubnetIdParam string, ipAddressPoolSubnetParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 }
 
+
 type ipSubnetsClient struct {
-	connector           vapiProtocolClient_.Connector
-	interfaceDefinition vapiCore_.InterfaceDefinition
-	errorsBindingMap    map[string]vapiBindings_.BindingType
+	connector           	   vapiProtocolClient_.Connector
+	interfaceDefinition 	   vapiCore_.InterfaceDefinition
+	errorsBindingMap           map[string]vapiBindings_.BindingType
 }
 
 func NewIpSubnetsClient(connector vapiProtocolClient_.Connector) *ipSubnetsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.ip_pools.ip_subnets")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -287,3 +288,4 @@ func (iIface *ipSubnetsClient) Update(ipPoolIdParam string, ipSubnetIdParam stri
 		return emptyOutput, methodError.(error)
 	}
 }
+
