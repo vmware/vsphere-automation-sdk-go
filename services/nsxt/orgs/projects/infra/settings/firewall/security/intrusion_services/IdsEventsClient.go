@@ -10,39 +10,38 @@
 package intrusion_services
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type IdsEventsClient interface {
 
-    // Get the list of the IDS events that are detected with the total number of intrusions detected, their severity and the time they occurred, grouped by signature id.
-    //
-    // @param orgIdParam The organization ID (required)
-    // @param projectIdParam The project ID (required)
-    // @param policyIdsEventDataRequestParam (required)
-    // @param contextParam Tenancy Context of the API request (optional)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    // @return com.vmware.nsx_policy.model.PolicyIdsEventsBySignatureResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get the list of the IDS events that are detected with the total number of intrusions detected, their severity and the time they occurred, grouped by signature id.
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param policyIdsEventDataRequestParam (required)
+	// @param contextParam Tenancy Context of the API request (optional)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @return com.vmware.nsx_policy.model.PolicyIdsEventsBySignatureResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(orgIdParam string, projectIdParam string, policyIdsEventDataRequestParam nsx_policyModel.PolicyIdsEventDataRequest, contextParam *string, enforcementPointPathParam *string) (nsx_policyModel.PolicyIdsEventsBySignatureResult, error)
 }
 
-
 type idsEventsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewIdsEventsClient(connector vapiProtocolClient_.Connector) *idsEventsClient {
@@ -99,4 +98,3 @@ func (iIface *idsEventsClient) Create(orgIdParam string, projectIdParam string, 
 		return emptyOutput, methodError.(error)
 	}
 }
-

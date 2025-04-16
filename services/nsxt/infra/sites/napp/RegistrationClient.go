@@ -10,51 +10,50 @@
 package napp
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RegistrationClient interface {
 
-    // Get all registered NSX Application Platforms.
-    // @return com.vmware.nsx_policy.model.NappRegistrationList
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get all registered NSX Application Platforms.
+	// @return com.vmware.nsx_policy.model.NappRegistrationList
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get() (nsx_policyModel.NappRegistrationList, error)
 
-    // Get the registered NSX Application Platform as specified.
-    //
-    // @param clusterIdParam (required)
-    // @return com.vmware.nsx_policy.model.NappRegistration
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get the registered NSX Application Platform as specified.
+	//
+	// @param clusterIdParam (required)
+	// @return com.vmware.nsx_policy.model.NappRegistration
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get0(clusterIdParam string) (nsx_policyModel.NappRegistration, error)
 }
 
-
 type registrationClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewRegistrationClient(connector vapiProtocolClient_.Connector) *registrationClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.napp.registration")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"get_0": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get_0"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -133,4 +132,3 @@ func (rIface *registrationClient) Get0(clusterIdParam string) (nsx_policyModel.N
 		return emptyOutput, methodError.(error)
 	}
 }
-

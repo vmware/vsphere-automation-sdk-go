@@ -10,62 +10,61 @@
 package intrusion_service_policies
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RulesClient interface {
 
-    // Read intrusion detection rule
-    //
-    // @param domainIdParam Domain ID (required)
-    // @param policyIdParam Policy ID (required)
-    // @param ruleIdParam Rule ID (required)
-    // @return com.vmware.nsx_policy.model.IdsRule
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Read intrusion detection rule
+	//
+	// @param domainIdParam Domain ID (required)
+	// @param policyIdParam Policy ID (required)
+	// @param ruleIdParam Rule ID (required)
+	// @return com.vmware.nsx_policy.model.IdsRule
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(domainIdParam string, policyIdParam string, ruleIdParam string) (nsx_policyModel.IdsRule, error)
 
-    // List intrusion detection rules.
-    //
-    // @param domainIdParam Domain ID (required)
-    // @param policyIdParam Policy ID (required)
-    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-    // @param sortAscendingParam (optional)
-    // @param sortByParam Field by which records are sorted (optional)
-    // @return com.vmware.nsx_policy.model.IdsRuleListResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// List intrusion detection rules.
+	//
+	// @param domainIdParam Domain ID (required)
+	// @param policyIdParam Policy ID (required)
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param sortAscendingParam (optional)
+	// @param sortByParam Field by which records are sorted (optional)
+	// @return com.vmware.nsx_policy.model.IdsRuleListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	List(domainIdParam string, policyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IdsRuleListResult, error)
 }
 
-
 type rulesClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewRulesClient(connector vapiProtocolClient_.Connector) *rulesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.domains.intrusion_service_policies.rules")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -154,4 +153,3 @@ func (rIface *rulesClient) List(domainIdParam string, policyIdParam string, curs
 		return emptyOutput, methodError.(error)
 	}
 }
-

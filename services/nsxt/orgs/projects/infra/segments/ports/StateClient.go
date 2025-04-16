@@ -10,40 +10,39 @@
 package ports
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StateClient interface {
 
-    // Returns infra segment port state on enforcement point
-    //
-    // @param orgIdParam The organization ID (required)
-    // @param projectIdParam The project ID (required)
-    // @param segmentIdParam (required)
-    // @param portIdParam (required)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    // @param sourceParam Data source type. (optional)
-    // @return com.vmware.nsx_policy.model.SegmentPortState
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Returns infra segment port state on enforcement point
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param segmentIdParam (required)
+	// @param portIdParam (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param sourceParam Data source type. (optional)
+	// @return com.vmware.nsx_policy.model.SegmentPortState
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, segmentIdParam string, portIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.SegmentPortState, error)
 }
 
-
 type stateClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewStateClient(connector vapiProtocolClient_.Connector) *stateClient {
@@ -101,4 +100,3 @@ func (sIface *stateClient) Get(orgIdParam string, projectIdParam string, segment
 		return emptyOutput, methodError.(error)
 	}
 }
-

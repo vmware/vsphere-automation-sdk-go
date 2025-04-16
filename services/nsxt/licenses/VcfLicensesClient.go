@@ -10,33 +10,32 @@
 package licenses
 
 import (
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VcfLicensesClient interface {
 
-    // Synchronize VCF licenses from all registered vCenters and update licenses in NSX. This API will not return synchronized VCF licenses and just update them in NSX.
-    //
-    // Deprecated: This API element is deprecated. 
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Synchronize VCF licenses from all registered vCenters and update licenses in NSX. This API will not return synchronized VCF licenses and just update them in NSX.
+	//
+	// Deprecated: This API element is deprecated.
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create() error
 }
 
-
 type vcfLicensesClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewVcfLicensesClient(connector vapiProtocolClient_.Connector) *vcfLicensesClient {
@@ -82,4 +81,3 @@ func (vIface *vcfLicensesClient) Create() error {
 		return methodError.(error)
 	}
 }
-

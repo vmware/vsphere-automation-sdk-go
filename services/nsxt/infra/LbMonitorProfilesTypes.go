@@ -12,16 +12,12 @@
 package infra
 
 import (
-	"reflect"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	"reflect"
 )
-
-
-
-
 
 func lbMonitorProfilesDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -76,7 +72,7 @@ func lbMonitorProfilesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func lbMonitorProfilesGetInputType() vapiBindings_.StructType {
@@ -89,7 +85,7 @@ func lbMonitorProfilesGetInputType() vapiBindings_.StructType {
 }
 
 func LbMonitorProfilesGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType),})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType)})
 }
 
 func lbMonitorProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -126,7 +122,7 @@ func lbMonitorProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func lbMonitorProfilesListInputType() vapiBindings_.StructType {
@@ -205,14 +201,14 @@ func lbMonitorProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func lbMonitorProfilesPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["lb_monitor_profile_id"] = vapiBindings_.NewStringType()
-	fields["lb_monitor_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType),})
+	fields["lb_monitor_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType)})
 	fieldNameMap["lb_monitor_profile_id"] = "LbMonitorProfileId"
 	fieldNameMap["lb_monitor_profile"] = "LbMonitorProfile"
 	var validators = []vapiBindings_.Validator{}
@@ -233,11 +229,11 @@ func lbMonitorProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["lb_monitor_profile_id"] = vapiBindings_.NewStringType()
-	fields["lb_monitor_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType),})
+	fields["lb_monitor_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType)})
 	fieldNameMap["lb_monitor_profile_id"] = "LbMonitorProfileId"
 	fieldNameMap["lb_monitor_profile"] = "LbMonitorProfile"
 	paramsTypeMap["lb_monitor_profile_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["lb_monitor_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType),})
+	paramsTypeMap["lb_monitor_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType)})
 	paramsTypeMap["lbMonitorProfileId"] = vapiBindings_.NewStringType()
 	pathParams["lb_monitor_profile_id"] = "lbMonitorProfileId"
 	resultHeaders := map[string]string{}
@@ -260,14 +256,14 @@ func lbMonitorProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func lbMonitorProfilesUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["lb_monitor_profile_id"] = vapiBindings_.NewStringType()
-	fields["lb_monitor_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType),})
+	fields["lb_monitor_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType)})
 	fieldNameMap["lb_monitor_profile_id"] = "LbMonitorProfileId"
 	fieldNameMap["lb_monitor_profile"] = "LbMonitorProfile"
 	var validators = []vapiBindings_.Validator{}
@@ -275,7 +271,7 @@ func lbMonitorProfilesUpdateInputType() vapiBindings_.StructType {
 }
 
 func LbMonitorProfilesUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType),})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType)})
 }
 
 func lbMonitorProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -288,11 +284,11 @@ func lbMonitorProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["lb_monitor_profile_id"] = vapiBindings_.NewStringType()
-	fields["lb_monitor_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType),})
+	fields["lb_monitor_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType)})
 	fieldNameMap["lb_monitor_profile_id"] = "LbMonitorProfileId"
 	fieldNameMap["lb_monitor_profile"] = "LbMonitorProfile"
 	paramsTypeMap["lb_monitor_profile_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["lb_monitor_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType),})
+	paramsTypeMap["lb_monitor_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBMonitorProfileBindingType)})
 	paramsTypeMap["lbMonitorProfileId"] = vapiBindings_.NewStringType()
 	pathParams["lb_monitor_profile_id"] = "lbMonitorProfileId"
 	resultHeaders := map[string]string{}
@@ -315,7 +311,5 @@ func lbMonitorProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-

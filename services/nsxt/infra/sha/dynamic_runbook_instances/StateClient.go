@@ -10,35 +10,34 @@
 package dynamic_runbook_instances
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StateClient interface {
 
-    // Read Online Diagnostic System Dynamic Runbook Instance state
-    //
-    // @param instanceIdParam Identifier of a Dynamic Runbook Instance state (required)
-    // @return com.vmware.nsx_policy.model.OdsDynamicRunbookInstanceState
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Read Online Diagnostic System Dynamic Runbook Instance state
+	//
+	// @param instanceIdParam Identifier of a Dynamic Runbook Instance state (required)
+	// @return com.vmware.nsx_policy.model.OdsDynamicRunbookInstanceState
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(instanceIdParam string) (nsx_policyModel.OdsDynamicRunbookInstanceState, error)
 }
 
-
 type stateClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewStateClient(connector vapiProtocolClient_.Connector) *stateClient {
@@ -91,4 +90,3 @@ func (sIface *stateClient) Get(instanceIdParam string) (nsx_policyModel.OdsDynam
 		return emptyOutput, methodError.(error)
 	}
 }
-

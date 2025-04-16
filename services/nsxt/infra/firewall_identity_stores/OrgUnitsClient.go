@@ -10,36 +10,35 @@
 package firewall_identity_stores
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type OrgUnitsClient interface {
 
-    // Fetch all organization units for a Firewall Identity Store.
-    //
-    // @param firewallIdentityStoreIdParam Firewall Identity Store identifier (required)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    // @return com.vmware.nsx_policy.model.DirectoryOrgUnitListResults
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Fetch all organization units for a Firewall Identity Store.
+	//
+	// @param firewallIdentityStoreIdParam Firewall Identity Store identifier (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @return com.vmware.nsx_policy.model.DirectoryOrgUnitListResults
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	List(firewallIdentityStoreIdParam string, enforcementPointPathParam *string) (nsx_policyModel.DirectoryOrgUnitListResults, error)
 }
 
-
 type orgUnitsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewOrgUnitsClient(connector vapiProtocolClient_.Connector) *orgUnitsClient {
@@ -93,4 +92,3 @@ func (oIface *orgUnitsClient) List(firewallIdentityStoreIdParam string, enforcem
 		return emptyOutput, methodError.(error)
 	}
 }
-

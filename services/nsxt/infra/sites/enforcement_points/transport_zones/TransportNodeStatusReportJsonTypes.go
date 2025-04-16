@@ -12,26 +12,27 @@
 package transport_zones
 
 import (
-	"reflect"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	"reflect"
 )
 
 // Possible value for ``source`` of method TransportNodeStatusReportJson#list.
 const TransportNodeStatusReportJson_LIST_SOURCE_REALTIME = "realtime"
+
 // Possible value for ``source`` of method TransportNodeStatusReportJson#list.
 const TransportNodeStatusReportJson_LIST_SOURCE_CACHED = "cached"
+
 // Possible value for ``status`` of method TransportNodeStatusReportJson#list.
 const TransportNodeStatusReportJson_LIST_STATUS_UP = "UP"
+
 // Possible value for ``status`` of method TransportNodeStatusReportJson#list.
 const TransportNodeStatusReportJson_LIST_STATUS_DOWN = "DOWN"
+
 // Possible value for ``status`` of method TransportNodeStatusReportJson#list.
 const TransportNodeStatusReportJson_LIST_STATUS_DEGRADED = "DEGRADED"
-
-
-
 
 func transportNodeStatusReportJsonListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -106,7 +107,5 @@ func transportNodeStatusReportJsonListRestMetadata() vapiProtocol_.OperationRest
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-

@@ -10,36 +10,35 @@
 package aaa
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type UserInfoClient interface {
 
-    // This API will return the name and role information of the user invoking this API request on the particular project. The permissions parameter of the NsxRole has been deprecated. The response will contain the roles_for_paths to indicate roles of the user at various paths .
-    //
-    // @param orgIdParam (required)
-    // @param projectIdParam (required)
-    // @return com.vmware.nsx_policy.model.UserInfo
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// This API will return the name and role information of the user invoking this API request on the particular project. The permissions parameter of the NsxRole has been deprecated. The response will contain the roles_for_paths to indicate roles of the user at various paths .
+	//
+	// @param orgIdParam (required)
+	// @param projectIdParam (required)
+	// @return com.vmware.nsx_policy.model.UserInfo
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string) (nsx_policyModel.UserInfo, error)
 }
 
-
 type userInfoClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewUserInfoClient(connector vapiProtocolClient_.Connector) *userInfoClient {
@@ -93,4 +92,3 @@ func (uIface *userInfoClient) Get(orgIdParam string, projectIdParam string) (nsx
 		return emptyOutput, methodError.(error)
 	}
 }
-

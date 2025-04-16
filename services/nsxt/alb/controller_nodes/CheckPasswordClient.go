@@ -10,34 +10,33 @@
 package controller_nodes
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type CheckPasswordClient interface {
 
-    // Use this API to validate admin password in Avi Load Balancer Controller. This API is for VCF deployments only.
-    //
-    // @param aLBControllerAdminCredentialParam (required)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Use this API to validate admin password in Avi Load Balancer Controller. This API is for VCF deployments only.
+	//
+	// @param aLBControllerAdminCredentialParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Update(aLBControllerAdminCredentialParam nsx_policyModel.ALBControllerAdminCredential) error
 }
 
-
 type checkPasswordClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewCheckPasswordClient(connector vapiProtocolClient_.Connector) *checkPasswordClient {
@@ -84,4 +83,3 @@ func (cIface *checkPasswordClient) Update(aLBControllerAdminCredentialParam nsx_
 		return methodError.(error)
 	}
 }
-

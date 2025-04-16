@@ -12,16 +12,12 @@
 package sha
 
 import (
-	"reflect"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	"reflect"
 )
-
-
-
-
 
 func pluginProfilesDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -70,7 +66,7 @@ func pluginProfilesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func pluginProfilesGetInputType() vapiBindings_.StructType {
@@ -83,7 +79,7 @@ func pluginProfilesGetInputType() vapiBindings_.StructType {
 }
 
 func PluginProfilesGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType),})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType)})
 }
 
 func pluginProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -120,7 +116,7 @@ func pluginProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func pluginProfilesListInputType() vapiBindings_.StructType {
@@ -211,14 +207,14 @@ func pluginProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func pluginProfilesPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["sha_profile_id"] = vapiBindings_.NewStringType()
-	fields["sha_plugin_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType),})
+	fields["sha_plugin_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType)})
 	fieldNameMap["sha_profile_id"] = "ShaProfileId"
 	fieldNameMap["sha_plugin_profile"] = "ShaPluginProfile"
 	var validators = []vapiBindings_.Validator{}
@@ -226,7 +222,7 @@ func pluginProfilesPatchInputType() vapiBindings_.StructType {
 }
 
 func PluginProfilesPatchOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType),})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType)})
 }
 
 func pluginProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -239,11 +235,11 @@ func pluginProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["sha_profile_id"] = vapiBindings_.NewStringType()
-	fields["sha_plugin_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType),})
+	fields["sha_plugin_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType)})
 	fieldNameMap["sha_profile_id"] = "ShaProfileId"
 	fieldNameMap["sha_plugin_profile"] = "ShaPluginProfile"
 	paramsTypeMap["sha_profile_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["sha_plugin_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType),})
+	paramsTypeMap["sha_plugin_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType)})
 	paramsTypeMap["shaProfileId"] = vapiBindings_.NewStringType()
 	pathParams["sha_profile_id"] = "shaProfileId"
 	resultHeaders := map[string]string{}
@@ -266,14 +262,14 @@ func pluginProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func pluginProfilesUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["sha_profile_id"] = vapiBindings_.NewStringType()
-	fields["sha_plugin_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType),})
+	fields["sha_plugin_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType)})
 	fieldNameMap["sha_profile_id"] = "ShaProfileId"
 	fieldNameMap["sha_plugin_profile"] = "ShaPluginProfile"
 	var validators = []vapiBindings_.Validator{}
@@ -281,7 +277,7 @@ func pluginProfilesUpdateInputType() vapiBindings_.StructType {
 }
 
 func PluginProfilesUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType),})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType)})
 }
 
 func pluginProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -294,11 +290,11 @@ func pluginProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["sha_profile_id"] = vapiBindings_.NewStringType()
-	fields["sha_plugin_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType),})
+	fields["sha_plugin_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType)})
 	fieldNameMap["sha_profile_id"] = "ShaProfileId"
 	fieldNameMap["sha_plugin_profile"] = "ShaPluginProfile"
 	paramsTypeMap["sha_profile_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["sha_plugin_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType),})
+	paramsTypeMap["sha_plugin_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.ShaPluginProfileBindingType)})
 	paramsTypeMap["shaProfileId"] = vapiBindings_.NewStringType()
 	pathParams["sha_profile_id"] = "shaProfileId"
 	resultHeaders := map[string]string{}
@@ -321,7 +317,5 @@ func pluginProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-

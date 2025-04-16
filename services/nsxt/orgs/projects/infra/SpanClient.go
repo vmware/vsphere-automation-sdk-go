@@ -10,38 +10,37 @@
 package infra
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SpanClient interface {
 
-    // Get span for an entity with specified path.
-    //
-    // @param orgIdParam The organization ID (required)
-    // @param projectIdParam The project ID (required)
-    // @param intentPathParam String Path of the intent object (required)
-    // @param sitePathParam Policy Path of the site (optional)
-    // @return com.vmware.nsx_policy.model.Span
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get span for an entity with specified path.
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param intentPathParam String Path of the intent object (required)
+	// @param sitePathParam Policy Path of the site (optional)
+	// @return com.vmware.nsx_policy.model.Span
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, intentPathParam string, sitePathParam *string) (nsx_policyModel.Span, error)
 }
 
-
 type spanClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewSpanClient(connector vapiProtocolClient_.Connector) *spanClient {
@@ -97,4 +96,3 @@ func (sIface *spanClient) Get(orgIdParam string, projectIdParam string, intentPa
 		return emptyOutput, methodError.(error)
 	}
 }
-

@@ -10,100 +10,99 @@
 package nsx_policy
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type UiViewsClient interface {
 
-    // Creates a new View. 
-    //  This API is deprecated and will be unavailable in later releases.
-    //
-    // Deprecated: This API element is deprecated. 
-    //
-    // @param viewParam (required)
-    // @return com.vmware.nsx_policy.model.View
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Creates a new View.
+	//  This API is deprecated and will be unavailable in later releases.
+	//
+	// Deprecated: This API element is deprecated.
+	//
+	// @param viewParam (required)
+	// @return com.vmware.nsx_policy.model.View
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(viewParam nsx_policyModel.View) (nsx_policyModel.View, error)
 
-    // Delete View 
-    //  This API is deprecated and will be unavailable in later releases.
-    //
-    // Deprecated: This API element is deprecated. 
-    //
-    // @param viewIdParam (required)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Delete View
+	//  This API is deprecated and will be unavailable in later releases.
+	//
+	// Deprecated: This API element is deprecated.
+	//
+	// @param viewIdParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Delete(viewIdParam string) error
 
-    // If no query params are specified then all the views entitled for the user are returned. The views to which a user is entitled to include the views created by the user and the shared views. 
-    //  This API is deprecated and will be unavailable in later releases.
-    //
-    // Deprecated: This API element is deprecated. 
-    //
-    // @param tagParam The tag for which associated views to be queried. (optional)
-    // @param viewIdsParam Ids of the Views (optional)
-    // @param widgetIdParam Id of widget configuration (optional)
-    // @return com.vmware.nsx_policy.model.ViewList
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// If no query params are specified then all the views entitled for the user are returned. The views to which a user is entitled to include the views created by the user and the shared views.
+	//  This API is deprecated and will be unavailable in later releases.
+	//
+	// Deprecated: This API element is deprecated.
+	//
+	// @param tagParam The tag for which associated views to be queried. (optional)
+	// @param viewIdsParam Ids of the Views (optional)
+	// @param widgetIdParam Id of widget configuration (optional)
+	// @return com.vmware.nsx_policy.model.ViewList
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(tagParam *string, viewIdsParam *string, widgetIdParam *string) (nsx_policyModel.ViewList, error)
 
-    // Returns Information about a specific View. 
-    //  This API is deprecated and will be unavailable in later releases.
-    //
-    // Deprecated: This API element is deprecated. 
-    //
-    // @param viewIdParam (required)
-    // @return com.vmware.nsx_policy.model.View
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Returns Information about a specific View.
+	//  This API is deprecated and will be unavailable in later releases.
+	//
+	// Deprecated: This API element is deprecated.
+	//
+	// @param viewIdParam (required)
+	// @return com.vmware.nsx_policy.model.View
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get0(viewIdParam string) (nsx_policyModel.View, error)
 
-    // Update View 
-    //  This API is deprecated and will be unavailable in later releases.
-    //
-    // Deprecated: This API element is deprecated. 
-    //
-    // @param viewIdParam (required)
-    // @param viewParam (required)
-    // @return com.vmware.nsx_policy.model.View
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Update View
+	//  This API is deprecated and will be unavailable in later releases.
+	//
+	// Deprecated: This API element is deprecated.
+	//
+	// @param viewIdParam (required)
+	// @param viewParam (required)
+	// @return com.vmware.nsx_policy.model.View
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Update(viewIdParam string, viewParam nsx_policyModel.View) (nsx_policyModel.View, error)
 }
 
-
 type uiViewsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewUiViewsClient(connector vapiProtocolClient_.Connector) *uiViewsClient {
@@ -111,8 +110,8 @@ func NewUiViewsClient(connector vapiProtocolClient_.Connector) *uiViewsClient {
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"get_0": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get_0"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get_0":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get_0"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -285,4 +284,3 @@ func (uIface *uiViewsClient) Update(viewIdParam string, viewParam nsx_policyMode
 		return emptyOutput, methodError.(error)
 	}
 }
-

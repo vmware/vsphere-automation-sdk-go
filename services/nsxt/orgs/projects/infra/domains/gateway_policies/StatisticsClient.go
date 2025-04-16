@@ -10,40 +10,39 @@
 package gateway_policies
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatisticsClient interface {
 
-    // Get statistics of a gateay policy. - no enforcement point path specified: Stats will be evaluated on each enforcement. point. - {enforcement_point_path}: Stats are evaluated only on the given enforcement point.
-    //
-    // @param orgIdParam The organization ID (required)
-    // @param projectIdParam The project ID (required)
-    // @param domainIdParam (required)
-    // @param gatewayPolicyIdParam (required)
-    // @param containerClusterPathParam String Path of the Container Cluster entity (optional)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    // @return com.vmware.nsx_policy.model.SecurityPolicyStatisticsListResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get statistics of a gateay policy. - no enforcement point path specified: Stats will be evaluated on each enforcement. point. - {enforcement_point_path}: Stats are evaluated only on the given enforcement point.
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param domainIdParam (required)
+	// @param gatewayPolicyIdParam (required)
+	// @param containerClusterPathParam String Path of the Container Cluster entity (optional)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @return com.vmware.nsx_policy.model.SecurityPolicyStatisticsListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, domainIdParam string, gatewayPolicyIdParam string, containerClusterPathParam *string, enforcementPointPathParam *string) (nsx_policyModel.SecurityPolicyStatisticsListResult, error)
 }
 
-
 type statisticsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewStatisticsClient(connector vapiProtocolClient_.Connector) *statisticsClient {
@@ -101,4 +100,3 @@ func (sIface *statisticsClient) List(orgIdParam string, projectIdParam string, d
 		return emptyOutput, methodError.(error)
 	}
 }
-

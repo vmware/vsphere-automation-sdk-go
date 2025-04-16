@@ -12,16 +12,12 @@
 package infra
 
 import (
-	"reflect"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	"reflect"
 )
-
-
-
-
 
 func lbPersistenceProfilesDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -76,7 +72,7 @@ func lbPersistenceProfilesDeleteRestMetadata() vapiProtocol_.OperationRestMetada
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func lbPersistenceProfilesGetInputType() vapiBindings_.StructType {
@@ -89,7 +85,7 @@ func lbPersistenceProfilesGetInputType() vapiBindings_.StructType {
 }
 
 func LbPersistenceProfilesGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType),})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType)})
 }
 
 func lbPersistenceProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -126,7 +122,7 @@ func lbPersistenceProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata 
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func lbPersistenceProfilesListInputType() vapiBindings_.StructType {
@@ -205,14 +201,14 @@ func lbPersistenceProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func lbPersistenceProfilesPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["lb_persistence_profile_id"] = vapiBindings_.NewStringType()
-	fields["lb_persistence_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType),})
+	fields["lb_persistence_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType)})
 	fieldNameMap["lb_persistence_profile_id"] = "LbPersistenceProfileId"
 	fieldNameMap["lb_persistence_profile"] = "LbPersistenceProfile"
 	var validators = []vapiBindings_.Validator{}
@@ -233,11 +229,11 @@ func lbPersistenceProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadat
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["lb_persistence_profile_id"] = vapiBindings_.NewStringType()
-	fields["lb_persistence_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType),})
+	fields["lb_persistence_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType)})
 	fieldNameMap["lb_persistence_profile_id"] = "LbPersistenceProfileId"
 	fieldNameMap["lb_persistence_profile"] = "LbPersistenceProfile"
 	paramsTypeMap["lb_persistence_profile_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["lb_persistence_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType),})
+	paramsTypeMap["lb_persistence_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType)})
 	paramsTypeMap["lbPersistenceProfileId"] = vapiBindings_.NewStringType()
 	pathParams["lb_persistence_profile_id"] = "lbPersistenceProfileId"
 	resultHeaders := map[string]string{}
@@ -260,14 +256,14 @@ func lbPersistenceProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadat
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func lbPersistenceProfilesUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["lb_persistence_profile_id"] = vapiBindings_.NewStringType()
-	fields["lb_persistence_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType),})
+	fields["lb_persistence_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType)})
 	fieldNameMap["lb_persistence_profile_id"] = "LbPersistenceProfileId"
 	fieldNameMap["lb_persistence_profile"] = "LbPersistenceProfile"
 	var validators = []vapiBindings_.Validator{}
@@ -275,7 +271,7 @@ func lbPersistenceProfilesUpdateInputType() vapiBindings_.StructType {
 }
 
 func LbPersistenceProfilesUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType),})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType)})
 }
 
 func lbPersistenceProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -288,11 +284,11 @@ func lbPersistenceProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetada
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["lb_persistence_profile_id"] = vapiBindings_.NewStringType()
-	fields["lb_persistence_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType),})
+	fields["lb_persistence_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType)})
 	fieldNameMap["lb_persistence_profile_id"] = "LbPersistenceProfileId"
 	fieldNameMap["lb_persistence_profile"] = "LbPersistenceProfile"
 	paramsTypeMap["lb_persistence_profile_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["lb_persistence_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType),})
+	paramsTypeMap["lb_persistence_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.LBPersistenceProfileBindingType)})
 	paramsTypeMap["lbPersistenceProfileId"] = vapiBindings_.NewStringType()
 	pathParams["lb_persistence_profile_id"] = "lbPersistenceProfileId"
 	resultHeaders := map[string]string{}
@@ -315,7 +311,5 @@ func lbPersistenceProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetada
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-

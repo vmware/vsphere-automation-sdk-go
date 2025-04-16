@@ -10,37 +10,36 @@
 package remote_tep_connectivity
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatusClient interface {
 
-    // Returns the aggregated status for the Edge cluster along with status of all edge nodes in the cluster.
-    //
-    // @param siteIdParam (required)
-    // @param enforcementpointIdParam (required)
-    // @param edgeClusterIdParam (required)
-    // @return com.vmware.nsx_policy.model.PolicyEdgeClusterRemoteTunnelConnectivityStatus
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Returns the aggregated status for the Edge cluster along with status of all edge nodes in the cluster.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementpointIdParam (required)
+	// @param edgeClusterIdParam (required)
+	// @return com.vmware.nsx_policy.model.PolicyEdgeClusterRemoteTunnelConnectivityStatus
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementpointIdParam string, edgeClusterIdParam string) (nsx_policyModel.PolicyEdgeClusterRemoteTunnelConnectivityStatus, error)
 }
 
-
 type statusClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewStatusClient(connector vapiProtocolClient_.Connector) *statusClient {
@@ -95,4 +94,3 @@ func (sIface *statusClient) Get(siteIdParam string, enforcementpointIdParam stri
 		return emptyOutput, methodError.(error)
 	}
 }
-

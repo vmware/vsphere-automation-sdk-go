@@ -10,38 +10,37 @@
 package traceflows
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ObservationsClient interface {
 
-    // Read traceflow observations for id traceflow-id. Traceflow configuration will be cleaned up by the system after two hours of inactivity. Enforcement Path is optional parameter.
-    //
-    // @param orgIdParam The organization ID (required)
-    // @param projectIdParam The project ID (required)
-    // @param traceflowIdParam (required)
-    // @param enforcementPointPathParam Enforcement point path (optional)
-    // @return com.vmware.nsx_policy.model.TraceflowObservationListResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Read traceflow observations for id traceflow-id. Traceflow configuration will be cleaned up by the system after two hours of inactivity. Enforcement Path is optional parameter.
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param traceflowIdParam (required)
+	// @param enforcementPointPathParam Enforcement point path (optional)
+	// @return com.vmware.nsx_policy.model.TraceflowObservationListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, traceflowIdParam string, enforcementPointPathParam *string) (nsx_policyModel.TraceflowObservationListResult, error)
 }
 
-
 type observationsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewObservationsClient(connector vapiProtocolClient_.Connector) *observationsClient {
@@ -97,4 +96,3 @@ func (oIface *observationsClient) List(orgIdParam string, projectIdParam string,
 		return emptyOutput, methodError.(error)
 	}
 }
-

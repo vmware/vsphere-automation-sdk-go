@@ -10,36 +10,35 @@
 package controller_nodes
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SystemConfigurationClient interface {
 
-    // Use this API to update DNS, NTP and Backup server config in Avi Load Balancer Controller. This API is for VCF deployments only.
-    //
-    // @param aLBControllerSystemConfigurationParam (required)
-    // @param runningConfigParam Update Avi Load Balancer Controller runtime config as well (optional)
-    // @return com.vmware.nsx_policy.model.ALBControllerSystemConfigurationResponse
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Use this API to update DNS, NTP and Backup server config in Avi Load Balancer Controller. This API is for VCF deployments only.
+	//
+	// @param aLBControllerSystemConfigurationParam (required)
+	// @param runningConfigParam Update Avi Load Balancer Controller runtime config as well (optional)
+	// @return com.vmware.nsx_policy.model.ALBControllerSystemConfigurationResponse
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Update(aLBControllerSystemConfigurationParam nsx_policyModel.ALBControllerSystemConfiguration, runningConfigParam *bool) (nsx_policyModel.ALBControllerSystemConfigurationResponse, error)
 }
 
-
 type systemConfigurationClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewSystemConfigurationClient(connector vapiProtocolClient_.Connector) *systemConfigurationClient {
@@ -93,4 +92,3 @@ func (sIface *systemConfigurationClient) Update(aLBControllerSystemConfiguration
 		return emptyOutput, methodError.(error)
 	}
 }
-

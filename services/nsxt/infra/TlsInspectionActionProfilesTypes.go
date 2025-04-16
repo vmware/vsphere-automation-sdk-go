@@ -12,16 +12,12 @@
 package infra
 
 import (
-	"reflect"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	"reflect"
 )
-
-
-
-
 
 func tlsInspectionActionProfilesDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -70,7 +66,7 @@ func tlsInspectionActionProfilesDeleteRestMetadata() vapiProtocol_.OperationRest
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func tlsInspectionActionProfilesGetInputType() vapiBindings_.StructType {
@@ -83,7 +79,7 @@ func tlsInspectionActionProfilesGetInputType() vapiBindings_.StructType {
 }
 
 func TlsInspectionActionProfilesGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType),})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType)})
 }
 
 func tlsInspectionActionProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -120,7 +116,7 @@ func tlsInspectionActionProfilesGetRestMetadata() vapiProtocol_.OperationRestMet
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func tlsInspectionActionProfilesListInputType() vapiBindings_.StructType {
@@ -199,14 +195,14 @@ func tlsInspectionActionProfilesListRestMetadata() vapiProtocol_.OperationRestMe
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func tlsInspectionActionProfilesPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["action_profile_id"] = vapiBindings_.NewStringType()
-	fields["tls_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType),})
+	fields["tls_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType)})
 	fieldNameMap["action_profile_id"] = "ActionProfileId"
 	fieldNameMap["tls_profile"] = "TlsProfile"
 	var validators = []vapiBindings_.Validator{}
@@ -214,7 +210,7 @@ func tlsInspectionActionProfilesPatchInputType() vapiBindings_.StructType {
 }
 
 func TlsInspectionActionProfilesPatchOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType),})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType)})
 }
 
 func tlsInspectionActionProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -227,10 +223,10 @@ func tlsInspectionActionProfilesPatchRestMetadata() vapiProtocol_.OperationRestM
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["action_profile_id"] = vapiBindings_.NewStringType()
-	fields["tls_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType),})
+	fields["tls_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType)})
 	fieldNameMap["action_profile_id"] = "ActionProfileId"
 	fieldNameMap["tls_profile"] = "TlsProfile"
-	paramsTypeMap["tls_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType),})
+	paramsTypeMap["tls_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType)})
 	paramsTypeMap["action_profile_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["actionProfileId"] = vapiBindings_.NewStringType()
 	pathParams["action_profile_id"] = "actionProfileId"
@@ -254,14 +250,14 @@ func tlsInspectionActionProfilesPatchRestMetadata() vapiProtocol_.OperationRestM
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func tlsInspectionActionProfilesUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["action_profile_id"] = vapiBindings_.NewStringType()
-	fields["tls_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType),})
+	fields["tls_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType)})
 	fieldNameMap["action_profile_id"] = "ActionProfileId"
 	fieldNameMap["tls_profile"] = "TlsProfile"
 	var validators = []vapiBindings_.Validator{}
@@ -269,7 +265,7 @@ func tlsInspectionActionProfilesUpdateInputType() vapiBindings_.StructType {
 }
 
 func TlsInspectionActionProfilesUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType),})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType)})
 }
 
 func tlsInspectionActionProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -282,10 +278,10 @@ func tlsInspectionActionProfilesUpdateRestMetadata() vapiProtocol_.OperationRest
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["action_profile_id"] = vapiBindings_.NewStringType()
-	fields["tls_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType),})
+	fields["tls_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType)})
 	fieldNameMap["action_profile_id"] = "ActionProfileId"
 	fieldNameMap["tls_profile"] = "TlsProfile"
-	paramsTypeMap["tls_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType),})
+	paramsTypeMap["tls_profile"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TlsProfileBindingType)})
 	paramsTypeMap["action_profile_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["actionProfileId"] = vapiBindings_.NewStringType()
 	pathParams["action_profile_id"] = "actionProfileId"
@@ -309,7 +305,5 @@ func tlsInspectionActionProfilesUpdateRestMetadata() vapiProtocol_.OperationRest
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-

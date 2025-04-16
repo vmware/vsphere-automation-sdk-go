@@ -10,9 +10,3 @@
 // compatibility.
 
 package l2vpns
-
-
-
-
-
-

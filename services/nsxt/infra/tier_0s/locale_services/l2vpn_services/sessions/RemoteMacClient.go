@@ -10,43 +10,42 @@
 package sessions
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RemoteMacClient interface {
 
-    // Returns L2Vpn session remote macs for a logical switch. Data is fetched from enforcement point. 
-    //  This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/l2vpn-services/<service-id>/ sessions/<session-id>/remote-mac instead.
-    //
-    // Deprecated: This API element is deprecated. 
-    //
-    // @param tier0IdParam (required)
-    // @param localeServiceIdParam (required)
-    // @param serviceIdParam (required)
-    // @param sessionIdParam (required)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    // @param segmentPathParam Segment Path (optional)
-    // @return com.vmware.nsx_policy.model.AggregateL2VpnSessionRemoteMac
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Returns L2Vpn session remote macs for a logical switch. Data is fetched from enforcement point.
+	//  This API is deprecated. Please use GET /infra/tier-0s/<tier-0-id>/l2vpn-services/<service-id>/ sessions/<session-id>/remote-mac instead.
+	//
+	// Deprecated: This API element is deprecated.
+	//
+	// @param tier0IdParam (required)
+	// @param localeServiceIdParam (required)
+	// @param serviceIdParam (required)
+	// @param sessionIdParam (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param segmentPathParam Segment Path (optional)
+	// @return com.vmware.nsx_policy.model.AggregateL2VpnSessionRemoteMac
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(tier0IdParam string, localeServiceIdParam string, serviceIdParam string, sessionIdParam string, enforcementPointPathParam *string, segmentPathParam *string) (nsx_policyModel.AggregateL2VpnSessionRemoteMac, error)
 }
 
-
 type remoteMacClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewRemoteMacClient(connector vapiProtocolClient_.Connector) *remoteMacClient {
@@ -104,4 +103,3 @@ func (rIface *remoteMacClient) Get(tier0IdParam string, localeServiceIdParam str
 		return emptyOutput, methodError.(error)
 	}
 }
-

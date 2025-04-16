@@ -10,37 +10,36 @@
 package service_profiles
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type GroupAssociationsClient interface {
 
-    // List of Groups used in Redirection rules for a given Service Profile.
-    //
-    // @param serviceReferenceIdParam Service reference id (required)
-    // @param serviceProfileIdParam Service profile id (required)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    // @return com.vmware.nsx_policy.model.ServiceProfileGroups
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// List of Groups used in Redirection rules for a given Service Profile.
+	//
+	// @param serviceReferenceIdParam Service reference id (required)
+	// @param serviceProfileIdParam Service profile id (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @return com.vmware.nsx_policy.model.ServiceProfileGroups
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(serviceReferenceIdParam string, serviceProfileIdParam string, enforcementPointPathParam *string) (nsx_policyModel.ServiceProfileGroups, error)
 }
 
-
 type groupAssociationsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewGroupAssociationsClient(connector vapiProtocolClient_.Connector) *groupAssociationsClient {
@@ -95,4 +94,3 @@ func (gIface *groupAssociationsClient) Get(serviceReferenceIdParam string, servi
 		return emptyOutput, methodError.(error)
 	}
 }
-

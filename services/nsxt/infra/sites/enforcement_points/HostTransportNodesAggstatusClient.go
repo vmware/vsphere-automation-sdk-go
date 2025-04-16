@@ -10,37 +10,36 @@
 package enforcement_points
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type HostTransportNodesAggstatusClient interface {
 
-    // Get high-level summary of all transport nodes. The service layer does not support source = realtime or cached.
-    //
-    // @param siteIdParam site ID (required)
-    // @param enforcementPointIdParam enforcement point ID (required)
-    // @param nodeTypeParam Transport node type (optional)
-    // @return com.vmware.nsx_policy.model.HeatMapTransportZoneStatus
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get high-level summary of all transport nodes. The service layer does not support source = realtime or cached.
+	//
+	// @param siteIdParam site ID (required)
+	// @param enforcementPointIdParam enforcement point ID (required)
+	// @param nodeTypeParam Transport node type (optional)
+	// @return com.vmware.nsx_policy.model.HeatMapTransportZoneStatus
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementPointIdParam string, nodeTypeParam *string) (nsx_policyModel.HeatMapTransportZoneStatus, error)
 }
 
-
 type hostTransportNodesAggstatusClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewHostTransportNodesAggstatusClient(connector vapiProtocolClient_.Connector) *hostTransportNodesAggstatusClient {
@@ -95,4 +94,3 @@ func (hIface *hostTransportNodesAggstatusClient) Get(siteIdParam string, enforce
 		return emptyOutput, methodError.(error)
 	}
 }
-

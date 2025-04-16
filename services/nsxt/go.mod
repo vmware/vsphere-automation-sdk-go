@@ -2,8 +2,12 @@ module github.com/vmware/vsphere-automation-sdk-go/services/nsxt
 
 go 1.17
 
+replace github.com/vmware/vsphere-automation-sdk-go/runtime => /builds/vapi-sdk/unified-sdk-generator/vsphere-automation-sdk-go/runtime
+
+replace github.com/vmware/vsphere-automation-sdk-go/lib => /builds/vapi-sdk/unified-sdk-generator/vsphere-automation-sdk-go/lib
+
 require (
-	github.com/vmware/vsphere-automation-sdk-go/lib v0.7.0
+	github.com/vmware/vsphere-automation-sdk-go/lib v0.0.0-00010101000000-000000000000
 	github.com/vmware/vsphere-automation-sdk-go/runtime v0.7.0
 )
 

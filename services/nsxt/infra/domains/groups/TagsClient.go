@@ -10,36 +10,35 @@
 package groups
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TagsClient interface {
 
-    // Get tags used to define conditions inside a Group. Also includes tags inside nested groups.
-    //
-    // @param domainIdParam Domain id (required)
-    // @param groupIdParam Group Id (required)
-    // @return com.vmware.nsx_policy.model.GroupTagsList
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get tags used to define conditions inside a Group. Also includes tags inside nested groups.
+	//
+	// @param domainIdParam Domain id (required)
+	// @param groupIdParam Group Id (required)
+	// @return com.vmware.nsx_policy.model.GroupTagsList
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(domainIdParam string, groupIdParam string) (nsx_policyModel.GroupTagsList, error)
 }
 
-
 type tagsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewTagsClient(connector vapiProtocolClient_.Connector) *tagsClient {
@@ -93,4 +92,3 @@ func (tIface *tagsClient) Get(domainIdParam string, groupIdParam string) (nsx_po
 		return emptyOutput, methodError.(error)
 	}
 }
-

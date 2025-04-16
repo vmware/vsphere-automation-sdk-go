@@ -10,40 +10,39 @@
 package interfaces
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatisticsClient interface {
 
-    // This API returns the counters of the specified interface. The counters reset on reboot or redeploy of the appliance or restart of the data plane. NSX Manager polls the edge-transport-node every minute (by default) to update the data returned on this API. If you need near realtime values, use the query parameter \\\"?source=realtime\\\" to the API and it will make NSX Manager collect the statistics from the edge transport node and returns the updated counters.
-    //
-    // @param siteIdParam (required)
-    // @param enforcementpointIdParam (required)
-    // @param edgeTransportNodeIdParam (required)
-    // @param interfaceIdParam (required)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    // @param sourceParam Data source type. (optional)
-    // @return com.vmware.nsx_policy.model.NodeInterfaceStatisticsProperties
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// This API returns the counters of the specified interface. The counters reset on reboot or redeploy of the appliance or restart of the data plane. NSX Manager polls the edge-transport-node every minute (by default) to update the data returned on this API. If you need near realtime values, use the query parameter \\\"?source=realtime\\\" to the API and it will make NSX Manager collect the statistics from the edge transport node and returns the updated counters.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementpointIdParam (required)
+	// @param edgeTransportNodeIdParam (required)
+	// @param interfaceIdParam (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param sourceParam Data source type. (optional)
+	// @return com.vmware.nsx_policy.model.NodeInterfaceStatisticsProperties
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementpointIdParam string, edgeTransportNodeIdParam string, interfaceIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.NodeInterfaceStatisticsProperties, error)
 }
 
-
 type statisticsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewStatisticsClient(connector vapiProtocolClient_.Connector) *statisticsClient {
@@ -101,4 +100,3 @@ func (sIface *statisticsClient) Get(siteIdParam string, enforcementpointIdParam 
 		return emptyOutput, methodError.(error)
 	}
 }
-

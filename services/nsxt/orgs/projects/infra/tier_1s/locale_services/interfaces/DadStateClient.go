@@ -10,40 +10,39 @@
 package interfaces
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DadStateClient interface {
 
-    // Get tier-1 interface DAD state information.
-    //
-    // @param orgIdParam The organization ID (required)
-    // @param projectIdParam The project ID (required)
-    // @param tier1IdParam (required)
-    // @param localeServiceIdParam (required)
-    // @param interfaceIdParam (required)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    // @return com.vmware.nsx_policy.model.InterfaceDADState
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get tier-1 interface DAD state information.
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param tier1IdParam (required)
+	// @param localeServiceIdParam (required)
+	// @param interfaceIdParam (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @return com.vmware.nsx_policy.model.InterfaceDADState
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, tier1IdParam string, localeServiceIdParam string, interfaceIdParam string, enforcementPointPathParam *string) (nsx_policyModel.InterfaceDADState, error)
 }
 
-
 type dadStateClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewDadStateClient(connector vapiProtocolClient_.Connector) *dadStateClient {
@@ -101,4 +100,3 @@ func (dIface *dadStateClient) Get(orgIdParam string, projectIdParam string, tier
 		return emptyOutput, methodError.(error)
 	}
 }
-

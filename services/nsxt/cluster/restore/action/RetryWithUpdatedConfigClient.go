@@ -10,34 +10,33 @@
 package action
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type Retry_with_updated_configClient interface {
 
-    // Retry currently failed restore operation due to incorrect passphrase. User needs to call this api after passphrase is corrected in Backup config. This operation is only valid when a GET cluster/restore/status returns a status with value FAILED. Otherwise, a 409 response is returned. Calling this api without passphrase update will result in restore failure due to bad passphrase.
-    // @return com.vmware.nsx_policy.model.ClusterRestoreStatus
-    //
-    // @throws ConcurrentChange  Conflict
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Retry currently failed restore operation due to incorrect passphrase. User needs to call this api after passphrase is corrected in Backup config. This operation is only valid when a GET cluster/restore/status returns a status with value FAILED. Otherwise, a 409 response is returned. Calling this api without passphrase update will result in restore failure due to bad passphrase.
+	// @return com.vmware.nsx_policy.model.ClusterRestoreStatus
+	//
+	// @throws ConcurrentChange  Conflict
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create() (nsx_policyModel.ClusterRestoreStatus, error)
 }
 
-
 type retry_with_updated_configClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewRetry_with_updated_configClient(connector vapiProtocolClient_.Connector) *retry_with_updated_configClient {
@@ -89,4 +88,3 @@ func (rIface *retry_with_updated_configClient) Create() (nsx_policyModel.Cluster
 		return emptyOutput, methodError.(error)
 	}
 }
-

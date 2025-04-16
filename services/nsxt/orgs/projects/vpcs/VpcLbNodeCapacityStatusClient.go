@@ -10,40 +10,39 @@
 package vpcs
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VpcLbNodeCapacityStatusClient interface {
 
-    // API is used to retrieve available load balancer capacity status for all service clusters shared with VPC. Currently Edge cluster is supported as service cluster. If the parameter ?service_cluster_path=<service-cluster-path> exists, then API only shows the available load balancer capacity status for this specific service cluster. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
-    //
-    // @param orgIdParam Org ID (required)
-    // @param projectIdParam Project ID (required)
-    // @param vpcIdParam VPC ID (required)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    // @param serviceClusterPathParam The service cluster path (optional)
-    // @param sourceParam Data source type. (optional)
-    // @return com.vmware.nsx_policy.model.AggregateLBNodeCapacitySummary
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// API is used to retrieve available load balancer capacity status for all service clusters shared with VPC. Currently Edge cluster is supported as service cluster. If the parameter ?service_cluster_path=<service-cluster-path> exists, then API only shows the available load balancer capacity status for this specific service cluster. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	//
+	// @param orgIdParam Org ID (required)
+	// @param projectIdParam Project ID (required)
+	// @param vpcIdParam VPC ID (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param serviceClusterPathParam The service cluster path (optional)
+	// @param sourceParam Data source type. (optional)
+	// @return com.vmware.nsx_policy.model.AggregateLBNodeCapacitySummary
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, vpcIdParam string, enforcementPointPathParam *string, serviceClusterPathParam *string, sourceParam *string) (nsx_policyModel.AggregateLBNodeCapacitySummary, error)
 }
 
-
 type vpcLbNodeCapacityStatusClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewVpcLbNodeCapacityStatusClient(connector vapiProtocolClient_.Connector) *vpcLbNodeCapacityStatusClient {
@@ -101,4 +100,3 @@ func (vIface *vpcLbNodeCapacityStatusClient) Get(orgIdParam string, projectIdPar
 		return emptyOutput, methodError.(error)
 	}
 }
-

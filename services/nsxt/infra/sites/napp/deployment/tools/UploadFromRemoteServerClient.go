@@ -10,36 +10,35 @@
 package tools
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type Upload_from_remote_serverClient interface {
 
-    // Upload the Kubernetes tools on NSX Manager via remote url. You need to get this file from VMware website. File contains kubectl binary, helm binary and signature to verify them.
-    //
-    // @param siteIdParam (required)
-    // @param uploadBundleRemoteServerParam (required)
-    // @return com.vmware.nsx_policy.model.UploadBundleId
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Upload the Kubernetes tools on NSX Manager via remote url. You need to get this file from VMware website. File contains kubectl binary, helm binary and signature to verify them.
+	//
+	// @param siteIdParam (required)
+	// @param uploadBundleRemoteServerParam (required)
+	// @return com.vmware.nsx_policy.model.UploadBundleId
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(siteIdParam string, uploadBundleRemoteServerParam nsx_policyModel.UploadBundleRemoteServer) (nsx_policyModel.UploadBundleId, error)
 }
 
-
 type upload_from_remote_serverClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewUpload_from_remote_serverClient(connector vapiProtocolClient_.Connector) *upload_from_remote_serverClient {
@@ -93,4 +92,3 @@ func (uIface *upload_from_remote_serverClient) Create(siteIdParam string, upload
 		return emptyOutput, methodError.(error)
 	}
 }
-

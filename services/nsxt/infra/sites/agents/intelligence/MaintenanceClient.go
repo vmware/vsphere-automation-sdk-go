@@ -10,51 +10,50 @@
 package intelligence
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type MaintenanceClient interface {
 
-    // Get current status of maintenance mode for Analytics agents
-    // @return com.vmware.nsx_policy.model.AnalyticsMaintenanceMode
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get current status of maintenance mode for Analytics agents
+	// @return com.vmware.nsx_policy.model.AnalyticsMaintenanceMode
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get() (nsx_policyModel.AnalyticsMaintenanceMode, error)
 
-    // Activate/deactivate maintenance mode for Analytics agents
-    //
-    // @param analyticsMaintenanceModeParam (required)
-    // @return com.vmware.nsx_policy.model.AnalyticsMaintenanceMode
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Activate/deactivate maintenance mode for Analytics agents
+	//
+	// @param analyticsMaintenanceModeParam (required)
+	// @return com.vmware.nsx_policy.model.AnalyticsMaintenanceMode
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Update(analyticsMaintenanceModeParam nsx_policyModel.AnalyticsMaintenanceMode) (nsx_policyModel.AnalyticsMaintenanceMode, error)
 }
 
-
 type maintenanceClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewMaintenanceClient(connector vapiProtocolClient_.Connector) *maintenanceClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.agents.intelligence.maintenance")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -133,4 +132,3 @@ func (mIface *maintenanceClient) Update(analyticsMaintenanceModeParam nsx_policy
 		return emptyOutput, methodError.(error)
 	}
 }
-

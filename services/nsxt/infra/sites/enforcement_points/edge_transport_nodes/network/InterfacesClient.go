@@ -10,39 +10,38 @@
 package network
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type InterfacesClient interface {
 
-    // Returns the number of interfaces on the edge transport node and detailed information about each interface. Interface information includes MTU, broadcast and host IP addresses, link and admin status, MAC address, network mask, and the IP configuration method (static or DHCP).
-    //
-    // @param siteIdParam (required)
-    // @param enforcementpointIdParam (required)
-    // @param edgeTransportNodeIdParam (required)
-    // @param adminStatusParam Admin status of the interface (optional)
-    // @param sourceParam Data source type. (optional)
-    // @return com.vmware.nsx_policy.model.NodeInterfacePropertiesListResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Returns the number of interfaces on the edge transport node and detailed information about each interface. Interface information includes MTU, broadcast and host IP addresses, link and admin status, MAC address, network mask, and the IP configuration method (static or DHCP).
+	//
+	// @param siteIdParam (required)
+	// @param enforcementpointIdParam (required)
+	// @param edgeTransportNodeIdParam (required)
+	// @param adminStatusParam Admin status of the interface (optional)
+	// @param sourceParam Data source type. (optional)
+	// @return com.vmware.nsx_policy.model.NodeInterfacePropertiesListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	List(siteIdParam string, enforcementpointIdParam string, edgeTransportNodeIdParam string, adminStatusParam *string, sourceParam *string) (nsx_policyModel.NodeInterfacePropertiesListResult, error)
 }
 
-
 type interfacesClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewInterfacesClient(connector vapiProtocolClient_.Connector) *interfacesClient {
@@ -99,4 +98,3 @@ func (iIface *interfacesClient) List(siteIdParam string, enforcementpointIdParam
 		return emptyOutput, methodError.(error)
 	}
 }
-

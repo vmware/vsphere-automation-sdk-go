@@ -10,36 +10,35 @@
 package locale_services
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type GatewayFirewallClient interface {
 
-    // Get filtered view of Gateway Firewall rules associated with the Tier-0 Locale Services. The gateway policies are returned in the order of category and sequence number.
-    //
-    // @param tier0IdParam (required)
-    // @param localeServicesIdParam (required)
-    // @return com.vmware.nsx_policy.model.GatewayPolicyListResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get filtered view of Gateway Firewall rules associated with the Tier-0 Locale Services. The gateway policies are returned in the order of category and sequence number.
+	//
+	// @param tier0IdParam (required)
+	// @param localeServicesIdParam (required)
+	// @return com.vmware.nsx_policy.model.GatewayPolicyListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	List(tier0IdParam string, localeServicesIdParam string) (nsx_policyModel.GatewayPolicyListResult, error)
 }
 
-
 type gatewayFirewallClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewGatewayFirewallClient(connector vapiProtocolClient_.Connector) *gatewayFirewallClient {
@@ -93,4 +92,3 @@ func (gIface *gatewayFirewallClient) List(tier0IdParam string, localeServicesIdP
 		return emptyOutput, methodError.(error)
 	}
 }
-

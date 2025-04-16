@@ -10,53 +10,52 @@
 package realized_state
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RealizedEntityClient interface {
 
-    // Get realized entity uniquely identified by realized path, specified by query parameter
-    //
-    // @param realizedPathParam String Path of the realized object (required)
-    // @return com.vmware.nsx_policy.model.GenericPolicyRealizedResource
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get realized entity uniquely identified by realized path, specified by query parameter
+	//
+	// @param realizedPathParam String Path of the realized object (required)
+	// @return com.vmware.nsx_policy.model.GenericPolicyRealizedResource
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(realizedPathParam string) (nsx_policyModel.GenericPolicyRealizedResource, error)
 
-    // Refresh the status and statistics of all realized entities associated with given intent path synchronously. The vmw-async: True HTTP header cannot be used with this API.
-    //
-    // @param intentPathParam String Path of the intent object (required)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Refresh the status and statistics of all realized entities associated with given intent path synchronously. The vmw-async: True HTTP header cannot be used with this API.
+	//
+	// @param intentPathParam String Path of the intent object (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Refresh(intentPathParam string, enforcementPointPathParam *string) error
 }
 
-
 type realizedEntityClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewRealizedEntityClient(connector vapiProtocolClient_.Connector) *realizedEntityClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.realized_state.realized_entity")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"refresh": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "refresh"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -131,4 +130,3 @@ func (rIface *realizedEntityClient) Refresh(intentPathParam string, enforcementP
 		return methodError.(error)
 	}
 }
-

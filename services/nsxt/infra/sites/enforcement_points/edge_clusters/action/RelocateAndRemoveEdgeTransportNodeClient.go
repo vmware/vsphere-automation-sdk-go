@@ -10,37 +10,36 @@
 package action
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RelocateAndRemoveEdgeTransportNodeClient interface {
 
-    // Relocate auto allocated service contexts from policy edge node at given id. For API to perform relocate and remove action the edge node at given id must only have auto allocated service contexts. If any manually allocated service context is present on the edge cluster member, then the task will not be performed. Also, it is recommended to move the edge node for which relocate and remove action is being performed into maintenance mode,before executing the API. If edge is not moved into maintenance mode, then API will move edge node into maintenance mode before performing the actual relocate and remove task.To maintain high availability, Edge cluster should have at least two healthy edge nodes for relocation and removal. Once relocate action is performed successfully, the policy edge node will be removed from the edge cluster.
-    //
-    // @param siteIdParam (required)
-    // @param enforcementpointIdParam (required)
-    // @param edgeClusterIdParam (required)
-    // @param policyEdgeNodeRelocateAndRemoveMemberParam (required)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Relocate auto allocated service contexts from policy edge node at given id. For API to perform relocate and remove action the edge node at given id must only have auto allocated service contexts. If any manually allocated service context is present on the edge cluster member, then the task will not be performed. Also, it is recommended to move the edge node for which relocate and remove action is being performed into maintenance mode,before executing the API. If edge is not moved into maintenance mode, then API will move edge node into maintenance mode before performing the actual relocate and remove task.To maintain high availability, Edge cluster should have at least two healthy edge nodes for relocation and removal. Once relocate action is performed successfully, the policy edge node will be removed from the edge cluster.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementpointIdParam (required)
+	// @param edgeClusterIdParam (required)
+	// @param policyEdgeNodeRelocateAndRemoveMemberParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(siteIdParam string, enforcementpointIdParam string, edgeClusterIdParam string, policyEdgeNodeRelocateAndRemoveMemberParam nsx_policyModel.PolicyEdgeNodeRelocateAndRemoveMember) error
 }
 
-
 type relocateAndRemoveEdgeTransportNodeClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewRelocateAndRemoveEdgeTransportNodeClient(connector vapiProtocolClient_.Connector) *relocateAndRemoveEdgeTransportNodeClient {
@@ -90,4 +89,3 @@ func (rIface *relocateAndRemoveEdgeTransportNodeClient) Create(siteIdParam strin
 		return methodError.(error)
 	}
 }
-

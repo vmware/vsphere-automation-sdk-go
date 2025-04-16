@@ -10,37 +10,36 @@
 package transit_gateways
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RealizationFailuresClient interface {
 
-    // Retrieves only the resources with the reason not \"SUCCESS\". In case of failure or warning of the resource a reason object explaining the type of failure (ERROR, WARNING) and the detailed message of what the user could do to remediate is captured.
-    //
-    // @param orgIdParam (required)
-    // @param projectIdParam (required)
-    // @param transitGatewayIdParam (required)
-    // @return com.vmware.nsx_policy.model.PolicyTransitGatewayAlarm
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Retrieves only the resources with the reason not \"SUCCESS\". In case of failure or warning of the resource a reason object explaining the type of failure (ERROR, WARNING) and the detailed message of what the user could do to remediate is captured.
+	//
+	// @param orgIdParam (required)
+	// @param projectIdParam (required)
+	// @param transitGatewayIdParam (required)
+	// @return com.vmware.nsx_policy.model.PolicyTransitGatewayAlarm
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string) (nsx_policyModel.PolicyTransitGatewayAlarm, error)
 }
 
-
 type realizationFailuresClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewRealizationFailuresClient(connector vapiProtocolClient_.Connector) *realizationFailuresClient {
@@ -95,4 +94,3 @@ func (rIface *realizationFailuresClient) Get(orgIdParam string, projectIdParam s
 		return emptyOutput, methodError.(error)
 	}
 }
-

@@ -10,37 +10,36 @@
 package export
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatusClient interface {
 
-    // Get the status of the latest gateway firewall export task.
-    //
-    // @param categoryParam Type of export category (optional)
-    // @param draftPathParam Policy Path of gateway draft (optional)
-    // @param scopePathParam Scope path (optional)
-    // @return com.vmware.nsx_policy.model.FirewallExportTask
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get the status of the latest gateway firewall export task.
+	//
+	// @param categoryParam Type of export category (optional)
+	// @param draftPathParam Policy Path of gateway draft (optional)
+	// @param scopePathParam Scope path (optional)
+	// @return com.vmware.nsx_policy.model.FirewallExportTask
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(categoryParam *string, draftPathParam *string, scopePathParam *string) (nsx_policyModel.FirewallExportTask, error)
 }
 
-
 type statusClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewStatusClient(connector vapiProtocolClient_.Connector) *statusClient {
@@ -95,4 +94,3 @@ func (sIface *statusClient) Get(categoryParam *string, draftPathParam *string, s
 		return emptyOutput, methodError.(error)
 	}
 }
-

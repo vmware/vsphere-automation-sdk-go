@@ -10,37 +10,36 @@
 package baremetal_servers
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TagsClient interface {
 
-    // Allows an admin to apply multiple tags to a bare metal server. This operation does not store the intent on the policy side. This operation will replace the existing tags on the bare metal server with the ones that have been passed. If the application of tag fails, then an error is reported. The admin will have to retry the operation again. Policy framework does not perform a retry. Failure could occur due to multiple reasons. For e.g constraints like max tags limit exceeded, etc.
-    //
-    // @param orgIdParam The organization ID (required)
-    // @param projectIdParam The project ID (required)
-    // @param bareMetalServerTagListParam (required)
-    // @return com.vmware.nsx_policy.model.BareMetalServerTagList
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Allows an admin to apply multiple tags to a bare metal server. This operation does not store the intent on the policy side. This operation will replace the existing tags on the bare metal server with the ones that have been passed. If the application of tag fails, then an error is reported. The admin will have to retry the operation again. Policy framework does not perform a retry. Failure could occur due to multiple reasons. For e.g constraints like max tags limit exceeded, etc.
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param bareMetalServerTagListParam (required)
+	// @return com.vmware.nsx_policy.model.BareMetalServerTagList
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(orgIdParam string, projectIdParam string, bareMetalServerTagListParam nsx_policyModel.BareMetalServerTagList) (nsx_policyModel.BareMetalServerTagList, error)
 }
 
-
 type tagsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewTagsClient(connector vapiProtocolClient_.Connector) *tagsClient {
@@ -95,4 +94,3 @@ func (tIface *tagsClient) Create(orgIdParam string, projectIdParam string, bareM
 		return emptyOutput, methodError.(error)
 	}
 }
-

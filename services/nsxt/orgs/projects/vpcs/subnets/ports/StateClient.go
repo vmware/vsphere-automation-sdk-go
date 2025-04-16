@@ -10,41 +10,40 @@
 package ports
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StateClient interface {
 
-    // Returns VPC Subnet port state on enforcement point
-    //
-    // @param orgIdParam (required)
-    // @param projectIdParam (required)
-    // @param vpcIdParam (required)
-    // @param subnetIdParam (required)
-    // @param portIdParam (required)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    // @param sourceParam Data source type. (optional)
-    // @return com.vmware.nsx_policy.model.SegmentPortState
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Returns VPC Subnet port state on enforcement point
+	//
+	// @param orgIdParam (required)
+	// @param projectIdParam (required)
+	// @param vpcIdParam (required)
+	// @param subnetIdParam (required)
+	// @param portIdParam (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param sourceParam Data source type. (optional)
+	// @return com.vmware.nsx_policy.model.SegmentPortState
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.SegmentPortState, error)
 }
 
-
 type stateClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewStateClient(connector vapiProtocolClient_.Connector) *stateClient {
@@ -103,4 +102,3 @@ func (sIface *stateClient) Get(orgIdParam string, projectIdParam string, vpcIdPa
 		return emptyOutput, methodError.(error)
 	}
 }
-

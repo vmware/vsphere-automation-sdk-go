@@ -10,39 +10,38 @@
 package neighbors
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AdvertisedRoutesClient interface {
 
-    // Returns routes advertised by BGP neighbor from the given edge transport node. It always returns realtime response.
-    //
-    // @param siteIdParam (required)
-    // @param enforcementpointIdParam (required)
-    // @param edgeClusterIdParam (required)
-    // @param policyEdgeNodeIdParam (required)
-    // @param neighborIdParam (required)
-    // @return com.vmware.nsx_policy.model.PolicyEdgeNodeBgpNeighborAdvertisedRoutes
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Returns routes advertised by BGP neighbor from the given edge transport node. It always returns realtime response.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementpointIdParam (required)
+	// @param edgeClusterIdParam (required)
+	// @param policyEdgeNodeIdParam (required)
+	// @param neighborIdParam (required)
+	// @return com.vmware.nsx_policy.model.PolicyEdgeNodeBgpNeighborAdvertisedRoutes
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementpointIdParam string, edgeClusterIdParam string, policyEdgeNodeIdParam string, neighborIdParam string) (nsx_policyModel.PolicyEdgeNodeBgpNeighborAdvertisedRoutes, error)
 }
 
-
 type advertisedRoutesClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewAdvertisedRoutesClient(connector vapiProtocolClient_.Connector) *advertisedRoutesClient {
@@ -99,4 +98,3 @@ func (aIface *advertisedRoutesClient) Get(siteIdParam string, enforcementpointId
 		return emptyOutput, methodError.(error)
 	}
 }
-

@@ -10,36 +10,35 @@
 package livetraces
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatusClient interface {
 
-    // Read status for a livetrace config with the specified identifier.
-    //
-    // @param livetraceIdParam (required)
-    // @param enforcementPointPathParam Enforcement point path (optional)
-    // @return com.vmware.nsx_policy.model.LiveTraceStatus
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Read status for a livetrace config with the specified identifier.
+	//
+	// @param livetraceIdParam (required)
+	// @param enforcementPointPathParam Enforcement point path (optional)
+	// @return com.vmware.nsx_policy.model.LiveTraceStatus
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(livetraceIdParam string, enforcementPointPathParam *string) (nsx_policyModel.LiveTraceStatus, error)
 }
 
-
 type statusClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewStatusClient(connector vapiProtocolClient_.Connector) *statusClient {
@@ -93,4 +92,3 @@ func (sIface *statusClient) Get(livetraceIdParam string, enforcementPointPathPar
 		return emptyOutput, methodError.(error)
 	}
 }
-

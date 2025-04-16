@@ -10,36 +10,35 @@
 package global_infra
 
 import (
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FirewallIdentityStoresClient interface {
 
-    // Invoke full sync or delta sync for a specific domain, with additional delay in seconds if needed. Stop sync will try to stop any pending sync if any to return to idle state.
-    //
-    // @param firewallIdentityStoreIdParam Firewall identity store identifier (required)
-    // @param actionParam Sync type requested (required)
-    // @param delayParam Request to execute the sync with some delay in seconds (optional, default to 0)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Invoke full sync or delta sync for a specific domain, with additional delay in seconds if needed. Stop sync will try to stop any pending sync if any to return to idle state.
+	//
+	// @param firewallIdentityStoreIdParam Firewall identity store identifier (required)
+	// @param actionParam Sync type requested (required)
+	// @param delayParam Request to execute the sync with some delay in seconds (optional, default to 0)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(firewallIdentityStoreIdParam string, actionParam string, delayParam *int64, enforcementPointPathParam *string) error
 }
 
-
 type firewallIdentityStoresClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewFirewallIdentityStoresClient(connector vapiProtocolClient_.Connector) *firewallIdentityStoresClient {
@@ -89,4 +88,3 @@ func (fIface *firewallIdentityStoresClient) Create(firewallIdentityStoreIdParam 
 		return methodError.(error)
 	}
 }
-

@@ -10,37 +10,36 @@
 package limits
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StateClient interface {
 
-    // This API returns the consumption and other operational state for limits. For example, in case of IPBlock quota limits, it returns the quotas applied on a VPC and how much quota is consumed.
-    //
-    // @param orgIdParam (required)
-    // @param projectIdParam (required)
-    // @param vpcIdParam (required)
-    // @return com.vmware.nsx_policy.model.LimitStateListResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// This API returns the consumption and other operational state for limits. For example, in case of IPBlock quota limits, it returns the quotas applied on a VPC and how much quota is consumed.
+	//
+	// @param orgIdParam (required)
+	// @param projectIdParam (required)
+	// @param vpcIdParam (required)
+	// @return com.vmware.nsx_policy.model.LimitStateListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, vpcIdParam string) (nsx_policyModel.LimitStateListResult, error)
 }
 
-
 type stateClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewStateClient(connector vapiProtocolClient_.Connector) *stateClient {
@@ -95,4 +94,3 @@ func (sIface *stateClient) List(orgIdParam string, projectIdParam string, vpcIdP
 		return emptyOutput, methodError.(error)
 	}
 }
-

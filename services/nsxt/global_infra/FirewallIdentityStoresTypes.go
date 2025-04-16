@@ -12,21 +12,20 @@
 package global_infra
 
 import (
-	"reflect"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	"reflect"
 )
 
 // Possible value for ``action`` of method FirewallIdentityStores#create.
 const FirewallIdentityStores_CREATE_ACTION_FULL_SYNC = "FULL_SYNC"
+
 // Possible value for ``action`` of method FirewallIdentityStores#create.
 const FirewallIdentityStores_CREATE_ACTION_DELTA_SYNC = "DELTA_SYNC"
+
 // Possible value for ``action`` of method FirewallIdentityStores#create.
 const FirewallIdentityStores_CREATE_ACTION_STOP_SYNC = "STOP_SYNC"
-
-
-
 
 func firewallIdentityStoresCreateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -93,7 +92,5 @@ func firewallIdentityStoresCreateRestMetadata() vapiProtocol_.OperationRestMetad
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-

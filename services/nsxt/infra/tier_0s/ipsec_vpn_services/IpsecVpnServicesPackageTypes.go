@@ -10,9 +10,3 @@
 // compatibility.
 
 package ipsec_vpn_services
-
-
-
-
-
-

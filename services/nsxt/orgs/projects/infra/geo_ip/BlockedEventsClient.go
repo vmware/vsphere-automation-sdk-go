@@ -10,45 +10,44 @@
 package geo_ip
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type BlockedEventsClient interface {
 
-    // Get Geo IP Blocked Events. The system will return the latest 25k events stored. User can use optional request parameters like source_country_code or source_ip_address to filter the response.
-    //
-    // @param orgIdParam The organization ID (required)
-    // @param projectIdParam The project ID (required)
-    // @param cursorParam Cursor for getting next page of records (optional)
-    // @param destinationCountryCodeParam Comma Separated Destination Country Codes of Geo IP Blocked Event (optional)
-    // @param destinationIpAddressParam Comma Separated Destination IP Addresses of Geo IP Blocked Event (optional)
-    // @param directionParam Comma Separated Directions of Traffic (optional)
-    // @param includeAllProjectsParam (optional, default to false)
-    // @param pageSizeParam Maximum number of results to return in this page (optional, default to 500)
-    // @param ruleIdParam Comma Separated Gateway Firewall Rule Ids of Geo IP Blocked Event (optional)
-    // @param sourceCountryCodeParam Comma Separated Source Country Codes of Geo IP Blocked Event (optional)
-    // @param sourceIpAddressParam Comma Separated Source IP Addresses of Geo IP Blocked Event (optional)
-    // @return com.vmware.nsx_policy.model.GeoIpBlockedEventsList
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get Geo IP Blocked Events. The system will return the latest 25k events stored. User can use optional request parameters like source_country_code or source_ip_address to filter the response.
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param cursorParam Cursor for getting next page of records (optional)
+	// @param destinationCountryCodeParam Comma Separated Destination Country Codes of Geo IP Blocked Event (optional)
+	// @param destinationIpAddressParam Comma Separated Destination IP Addresses of Geo IP Blocked Event (optional)
+	// @param directionParam Comma Separated Directions of Traffic (optional)
+	// @param includeAllProjectsParam (optional, default to false)
+	// @param pageSizeParam Maximum number of results to return in this page (optional, default to 500)
+	// @param ruleIdParam Comma Separated Gateway Firewall Rule Ids of Geo IP Blocked Event (optional)
+	// @param sourceCountryCodeParam Comma Separated Source Country Codes of Geo IP Blocked Event (optional)
+	// @param sourceIpAddressParam Comma Separated Source IP Addresses of Geo IP Blocked Event (optional)
+	// @return com.vmware.nsx_policy.model.GeoIpBlockedEventsList
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, cursorParam *string, destinationCountryCodeParam *string, destinationIpAddressParam *string, directionParam *string, includeAllProjectsParam *bool, pageSizeParam *int64, ruleIdParam *string, sourceCountryCodeParam *string, sourceIpAddressParam *string) (nsx_policyModel.GeoIpBlockedEventsList, error)
 }
 
-
 type blockedEventsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewBlockedEventsClient(connector vapiProtocolClient_.Connector) *blockedEventsClient {
@@ -111,4 +110,3 @@ func (bIface *blockedEventsClient) Get(orgIdParam string, projectIdParam string,
 		return emptyOutput, methodError.(error)
 	}
 }
-

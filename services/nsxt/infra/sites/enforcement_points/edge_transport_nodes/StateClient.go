@@ -10,59 +10,58 @@
 package edge_transport_nodes
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StateClient interface {
 
-    // Returns information about the current state of the edge transport node configuration and information about the associated edge tn switches.
-    //
-    // @param siteIdParam (required)
-    // @param enforcementpointIdParam (required)
-    // @param edgeTransportNodeIdParam (required)
-    // @return com.vmware.nsx_policy.model.PolicyEdgeTransportNodeState
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Returns information about the current state of the edge transport node configuration and information about the associated edge tn switches.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementpointIdParam (required)
+	// @param edgeTransportNodeIdParam (required)
+	// @return com.vmware.nsx_policy.model.PolicyEdgeTransportNodeState
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementpointIdParam string, edgeTransportNodeIdParam string) (nsx_policyModel.PolicyEdgeTransportNodeState, error)
 
-    // Returns information about the current state of the edge transport node configuration and information about the associated edge tn switches.
-    //
-    // @param siteIdParam (required)
-    // @param enforcementpointIdParam (required)
-    // @param mmStateParam maintenance mode state (optional)
-    // @param statusParam Realized state of transport nodes (optional)
-    // @param vtepIpParam Virtual tunnel endpoint ip address of transport node (optional)
-    // @return com.vmware.nsx_policy.model.PolicyEdgeTransportNodeStateListResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Returns information about the current state of the edge transport node configuration and information about the associated edge tn switches.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementpointIdParam (required)
+	// @param mmStateParam maintenance mode state (optional)
+	// @param statusParam Realized state of transport nodes (optional)
+	// @param vtepIpParam Virtual tunnel endpoint ip address of transport node (optional)
+	// @return com.vmware.nsx_policy.model.PolicyEdgeTransportNodeStateListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	List(siteIdParam string, enforcementpointIdParam string, mmStateParam *string, statusParam *string, vtepIpParam *string) (nsx_policyModel.PolicyEdgeTransportNodeStateListResult, error)
 }
 
-
 type stateClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewStateClient(connector vapiProtocolClient_.Connector) *stateClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.enforcement_points.edge_transport_nodes.state")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -148,4 +147,3 @@ func (sIface *stateClient) List(siteIdParam string, enforcementpointIdParam stri
 		return emptyOutput, methodError.(error)
 	}
 }
-

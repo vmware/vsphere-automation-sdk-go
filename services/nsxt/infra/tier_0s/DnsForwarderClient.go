@@ -10,84 +10,83 @@
 package tier_0s
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DnsForwarderClient interface {
 
-    // Perform the specified action for Tier0 DNS forwarder on specified enforcement point.
-    //
-    // @param tier0IdParam (required)
-    // @param actionParam An action to be performed for DNS forwarder on EP (required)
-    // @param enforcementPointPathParam An enforcement point path, on which the action is to be performed (optional, default to /infra/sites/default/enforcement-points/default)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Perform the specified action for Tier0 DNS forwarder on specified enforcement point.
+	//
+	// @param tier0IdParam (required)
+	// @param actionParam An action to be performed for DNS forwarder on EP (required)
+	// @param enforcementPointPathParam An enforcement point path, on which the action is to be performed (optional, default to /infra/sites/default/enforcement-points/default)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(tier0IdParam string, actionParam string, enforcementPointPathParam *string) error
 
-    // Delete DNS configuration for tier-0 instance
-    //
-    // @param tier0IdParam Tier-0 ID (required)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Delete DNS configuration for tier-0 instance
+	//
+	// @param tier0IdParam Tier-0 ID (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Delete(tier0IdParam string) error
 
-    // Read the DNS Forwarder for the given tier-0 instance
-    //
-    // @param tier0IdParam Tier-0 ID (required)
-    // @return com.vmware.nsx_policy.model.PolicyDnsForwarder
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Read the DNS Forwarder for the given tier-0 instance
+	//
+	// @param tier0IdParam Tier-0 ID (required)
+	// @return com.vmware.nsx_policy.model.PolicyDnsForwarder
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(tier0IdParam string) (nsx_policyModel.PolicyDnsForwarder, error)
 
-    // Update the DNS Forwarder
-    //
-    // @param tier0IdParam Tier-0 ID (required)
-    // @param policyDnsForwarderParam (required)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Update the DNS Forwarder
+	//
+	// @param tier0IdParam Tier-0 ID (required)
+	// @param policyDnsForwarderParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Patch(tier0IdParam string, policyDnsForwarderParam nsx_policyModel.PolicyDnsForwarder) error
 
-    // Update the DNS Forwarder
-    //
-    // @param tier0IdParam Tier-0 ID (required)
-    // @param policyDnsForwarderParam (required)
-    // @return com.vmware.nsx_policy.model.PolicyDnsForwarder
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Update the DNS Forwarder
+	//
+	// @param tier0IdParam Tier-0 ID (required)
+	// @param policyDnsForwarderParam (required)
+	// @return com.vmware.nsx_policy.model.PolicyDnsForwarder
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Update(tier0IdParam string, policyDnsForwarderParam nsx_policyModel.PolicyDnsForwarder) (nsx_policyModel.PolicyDnsForwarder, error)
 }
 
-
 type dnsForwarderClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewDnsForwarderClient(connector vapiProtocolClient_.Connector) *dnsForwarderClient {
@@ -95,8 +94,8 @@ func NewDnsForwarderClient(connector vapiProtocolClient_.Connector) *dnsForwarde
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -258,4 +257,3 @@ func (dIface *dnsForwarderClient) Update(tier0IdParam string, policyDnsForwarder
 		return emptyOutput, methodError.(error)
 	}
 }
-

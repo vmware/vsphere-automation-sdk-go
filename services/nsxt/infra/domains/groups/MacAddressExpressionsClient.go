@@ -10,65 +10,64 @@
 package groups
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type MacAddressExpressionsClient interface {
 
-    // It will add or remove the specified MAC Addresses from a given expression of a group.
-    //
-    // @param domainIdParam (required)
-    // @param groupIdParam (required)
-    // @param expressionIdParam (required)
-    // @param mACAddressListParam (required)
-    // @param actionParam Add or Remove group members. (required)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// It will add or remove the specified MAC Addresses from a given expression of a group.
+	//
+	// @param domainIdParam (required)
+	// @param groupIdParam (required)
+	// @param expressionIdParam (required)
+	// @param mACAddressListParam (required)
+	// @param actionParam Add or Remove group members. (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(domainIdParam string, groupIdParam string, expressionIdParam string, mACAddressListParam nsx_policyModel.MACAddressList, actionParam string) error
 
-    // Delete Group MACAddressExpression
-    //
-    // @param domainIdParam Domain ID (required)
-    // @param groupIdParam Group ID (required)
-    // @param expressionIdParam MACAddressExpression ID (required)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Delete Group MACAddressExpression
+	//
+	// @param domainIdParam Domain ID (required)
+	// @param groupIdParam Group ID (required)
+	// @param expressionIdParam MACAddressExpression ID (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Delete(domainIdParam string, groupIdParam string, expressionIdParam string) error
 
-    // If a group MACAddressExpression with the expression-id is not already present, create a new MACAddressExpression. If it already exists, replace the existing MACAddressExpression.
-    //
-    // @param domainIdParam Domain ID (required)
-    // @param groupIdParam Group ID (required)
-    // @param expressionIdParam MACAddressExpression ID (required)
-    // @param mACAddressExpressionParam (required)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// If a group MACAddressExpression with the expression-id is not already present, create a new MACAddressExpression. If it already exists, replace the existing MACAddressExpression.
+	//
+	// @param domainIdParam Domain ID (required)
+	// @param groupIdParam Group ID (required)
+	// @param expressionIdParam MACAddressExpression ID (required)
+	// @param mACAddressExpressionParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Patch(domainIdParam string, groupIdParam string, expressionIdParam string, mACAddressExpressionParam nsx_policyModel.MACAddressExpression) error
 }
 
-
 type macAddressExpressionsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewMacAddressExpressionsClient(connector vapiProtocolClient_.Connector) *macAddressExpressionsClient {
@@ -76,7 +75,7 @@ func NewMacAddressExpressionsClient(connector vapiProtocolClient_.Connector) *ma
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -178,4 +177,3 @@ func (mIface *macAddressExpressionsClient) Patch(domainIdParam string, groupIdPa
 		return methodError.(error)
 	}
 }
-

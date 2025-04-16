@@ -10,37 +10,36 @@
 package export
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type CancelClient interface {
 
-    // This operation cancels an gateway firewall export task. Task needs to be in running state. The request have scope_path and category as query param to cancel the particular gateway firewall export task.
-    //
-    // @param categoryParam Type of export category (optional)
-    // @param draftPathParam Policy Path of gateway draft (optional)
-    // @param scopePathParam Scope path (optional)
-    // @return com.vmware.nsx_policy.model.FirewallExportTask
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// This operation cancels an gateway firewall export task. Task needs to be in running state. The request have scope_path and category as query param to cancel the particular gateway firewall export task.
+	//
+	// @param categoryParam Type of export category (optional)
+	// @param draftPathParam Policy Path of gateway draft (optional)
+	// @param scopePathParam Scope path (optional)
+	// @return com.vmware.nsx_policy.model.FirewallExportTask
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(categoryParam *string, draftPathParam *string, scopePathParam *string) (nsx_policyModel.FirewallExportTask, error)
 }
 
-
 type cancelClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewCancelClient(connector vapiProtocolClient_.Connector) *cancelClient {
@@ -95,4 +94,3 @@ func (cIface *cancelClient) Create(categoryParam *string, draftPathParam *string
 		return emptyOutput, methodError.(error)
 	}
 }
-

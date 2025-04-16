@@ -10,36 +10,35 @@
 package tier_1s
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FloodProtectionProfileBindingsClient interface {
 
-    // API will get Flood Protection Profile Binding Map for Tier-1 Logical Router.
-    //
-    // @param tier1IdParam (required)
-    // @param floodProtectionProfileBindingIdParam (required)
-    // @return com.vmware.nsx_policy.model.FloodProtectionProfileBindingMap
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// API will get Flood Protection Profile Binding Map for Tier-1 Logical Router.
+	//
+	// @param tier1IdParam (required)
+	// @param floodProtectionProfileBindingIdParam (required)
+	// @return com.vmware.nsx_policy.model.FloodProtectionProfileBindingMap
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(tier1IdParam string, floodProtectionProfileBindingIdParam string) (nsx_policyModel.FloodProtectionProfileBindingMap, error)
 }
 
-
 type floodProtectionProfileBindingsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewFloodProtectionProfileBindingsClient(connector vapiProtocolClient_.Connector) *floodProtectionProfileBindingsClient {
@@ -93,4 +92,3 @@ func (fIface *floodProtectionProfileBindingsClient) Get(tier1IdParam string, flo
 		return emptyOutput, methodError.(error)
 	}
 }
-

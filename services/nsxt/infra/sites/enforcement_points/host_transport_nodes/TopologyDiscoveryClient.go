@@ -10,37 +10,36 @@
 package host_transport_nodes
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TopologyDiscoveryClient interface {
 
-    // List the interface-neighbor properties of a given node.
-    //
-    // @param siteIdParam (required)
-    // @param enforcementPointIdParam (required)
-    // @param nodeIdParam (required)
-    // @return com.vmware.nsx_policy.model.NodeInterfaceNeighborProperties
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// List the interface-neighbor properties of a given node.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementPointIdParam (required)
+	// @param nodeIdParam (required)
+	// @return com.vmware.nsx_policy.model.NodeInterfaceNeighborProperties
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementPointIdParam string, nodeIdParam string) (nsx_policyModel.NodeInterfaceNeighborProperties, error)
 }
 
-
 type topologyDiscoveryClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewTopologyDiscoveryClient(connector vapiProtocolClient_.Connector) *topologyDiscoveryClient {
@@ -95,4 +94,3 @@ func (tIface *topologyDiscoveryClient) Get(siteIdParam string, enforcementPointI
 		return emptyOutput, methodError.(error)
 	}
 }
-

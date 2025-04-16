@@ -10,9 +10,3 @@
 // compatibility.
 
 package dhcp_static_bindings
-
-
-
-
-
-

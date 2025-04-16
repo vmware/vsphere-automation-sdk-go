@@ -10,9 +10,3 @@
 // compatibility.
 
 package registration_token
-
-
-
-
-
-

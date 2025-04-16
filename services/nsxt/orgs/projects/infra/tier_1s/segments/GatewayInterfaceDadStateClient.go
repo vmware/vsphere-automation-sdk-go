@@ -10,40 +10,39 @@
 package segments
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type GatewayInterfaceDadStateClient interface {
 
-    // Segment ID is the ID of the segment that is connected to the the tier-1
-    //
-    // @param orgIdParam The organization ID (required)
-    // @param projectIdParam The project ID (required)
-    // @param tier1IdParam (required)
-    // @param segmentIdParam (required)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    // @param sourceParam Data source type. (optional)
-    // @return com.vmware.nsx_policy.model.InterfaceDADState
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Segment ID is the ID of the segment that is connected to the the tier-1
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param tier1IdParam (required)
+	// @param segmentIdParam (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param sourceParam Data source type. (optional)
+	// @return com.vmware.nsx_policy.model.InterfaceDADState
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, tier1IdParam string, segmentIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.InterfaceDADState, error)
 }
 
-
 type gatewayInterfaceDadStateClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewGatewayInterfaceDadStateClient(connector vapiProtocolClient_.Connector) *gatewayInterfaceDadStateClient {
@@ -101,4 +100,3 @@ func (gIface *gatewayInterfaceDadStateClient) Get(orgIdParam string, projectIdPa
 		return emptyOutput, methodError.(error)
 	}
 }
-

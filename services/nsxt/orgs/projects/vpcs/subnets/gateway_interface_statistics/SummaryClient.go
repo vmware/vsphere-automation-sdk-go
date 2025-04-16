@@ -10,42 +10,41 @@
 package gateway_interface_statistics
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SummaryClient interface {
 
-    //
-    //
-    // Deprecated: This API element is deprecated. 
-    //
-    // @param orgIdParam (required)
-    // @param projectIdParam (required)
-    // @param vpcIdParam (required)
-    // @param subnetIdParam (required)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    // @param sourceParam Data source type. (optional)
-    // @return com.vmware.nsx_policy.model.PolicyInterfaceStatisticsSummary
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	//
+	//
+	// Deprecated: This API element is deprecated.
+	//
+	// @param orgIdParam (required)
+	// @param projectIdParam (required)
+	// @param vpcIdParam (required)
+	// @param subnetIdParam (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param sourceParam Data source type. (optional)
+	// @return com.vmware.nsx_policy.model.PolicyInterfaceStatisticsSummary
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.PolicyInterfaceStatisticsSummary, error)
 }
 
-
 type summaryClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewSummaryClient(connector vapiProtocolClient_.Connector) *summaryClient {
@@ -103,4 +102,3 @@ func (sIface *summaryClient) Get(orgIdParam string, projectIdParam string, vpcId
 		return emptyOutput, methodError.(error)
 	}
 }
-

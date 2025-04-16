@@ -10,9 +10,3 @@
 // compatibility.
 
 package vpc_tag_operations
-
-
-
-
-
-

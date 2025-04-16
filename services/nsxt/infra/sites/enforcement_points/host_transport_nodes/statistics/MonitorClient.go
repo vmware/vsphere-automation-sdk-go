@@ -10,38 +10,37 @@
 package statistics
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type MonitorClient interface {
 
-    // Get the counter values for cached datapath statistics. Support multiple types in one query. Query types should be declared inside query parameters. By default the query type is packet_stats.
-    //
-    // @param siteIdParam (required)
-    // @param enforcementpointIdParam (required)
-    // @param hostTransportNodeIdParam (required)
-    // @param type_Param type (optional)
-    // @return com.vmware.nsx_policy.model.ObservabilityCounterMonitorQueryResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get the counter values for cached datapath statistics. Support multiple types in one query. Query types should be declared inside query parameters. By default the query type is packet_stats.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementpointIdParam (required)
+	// @param hostTransportNodeIdParam (required)
+	// @param type_Param type (optional)
+	// @return com.vmware.nsx_policy.model.ObservabilityCounterMonitorQueryResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementpointIdParam string, hostTransportNodeIdParam string, type_Param *string) (nsx_policyModel.ObservabilityCounterMonitorQueryResult, error)
 }
 
-
 type monitorClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewMonitorClient(connector vapiProtocolClient_.Connector) *monitorClient {
@@ -97,4 +96,3 @@ func (mIface *monitorClient) Get(siteIdParam string, enforcementpointIdParam str
 		return emptyOutput, methodError.(error)
 	}
 }
-

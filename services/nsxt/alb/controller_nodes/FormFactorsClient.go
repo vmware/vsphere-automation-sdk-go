@@ -10,35 +10,34 @@
 package controller_nodes
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FormFactorsClient interface {
 
-    // Returns information about all form factors available for Avi Load Balancer Controller nodes.
-    //
-    // @param albMajorVersionParam Major release version of Avi Load Balancer Controller for which form factor details will be returned. (optional)
-    // @return com.vmware.nsx_policy.model.ALBControllerNodeFormFactors
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Returns information about all form factors available for Avi Load Balancer Controller nodes.
+	//
+	// @param albMajorVersionParam Major release version of Avi Load Balancer Controller for which form factor details will be returned. (optional)
+	// @return com.vmware.nsx_policy.model.ALBControllerNodeFormFactors
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(albMajorVersionParam *string) (nsx_policyModel.ALBControllerNodeFormFactors, error)
 }
 
-
 type formFactorsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewFormFactorsClient(connector vapiProtocolClient_.Connector) *formFactorsClient {
@@ -91,4 +90,3 @@ func (fIface *formFactorsClient) Get(albMajorVersionParam *string) (nsx_policyMo
 		return emptyOutput, methodError.(error)
 	}
 }
-

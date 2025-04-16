@@ -10,9 +10,3 @@
 // compatibility.
 
 package communication_maps
-
-
-
-
-
-

@@ -10,36 +10,35 @@
 package projects
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VcFolderStatusClient interface {
 
-    // Returns the VC Folder Status on vCenter for the Project.
-    //
-    // @param orgIdParam (required)
-    // @param projectIdParam (required)
-    // @return com.vmware.nsx_policy.model.VCFolderStatus
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Returns the VC Folder Status on vCenter for the Project.
+	//
+	// @param orgIdParam (required)
+	// @param projectIdParam (required)
+	// @return com.vmware.nsx_policy.model.VCFolderStatus
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string) (nsx_policyModel.VCFolderStatus, error)
 }
 
-
 type vcFolderStatusClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewVcFolderStatusClient(connector vapiProtocolClient_.Connector) *vcFolderStatusClient {
@@ -93,4 +92,3 @@ func (vIface *vcFolderStatusClient) Get(orgIdParam string, projectIdParam string
 		return emptyOutput, methodError.(error)
 	}
 }
-

@@ -10,78 +10,77 @@
 package scrx
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ClusterConfigsClient interface {
 
-    // Read SCRX cluster config
-    //
-    // @param clusterIdParam User entered ID (required)
-    // @return com.vmware.nsx_policy.model.ScrxClusterConfig
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Read SCRX cluster config
+	//
+	// @param clusterIdParam User entered ID (required)
+	// @return com.vmware.nsx_policy.model.ScrxClusterConfig
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(clusterIdParam string) (nsx_policyModel.ScrxClusterConfig, error)
 
-    // List all SCRX cluster configs
-    // @return com.vmware.nsx_policy.model.ScrxClusterConfigListResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// List all SCRX cluster configs
+	// @return com.vmware.nsx_policy.model.ScrxClusterConfigListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	List() (nsx_policyModel.ScrxClusterConfigListResult, error)
 
-    // Patch HighLatencySensitivityMode on cluster level.
-    //
-    // @param clusterIdParam User entered ID (required)
-    // @param scrxClusterConfigParam (required)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Patch HighLatencySensitivityMode on cluster level.
+	//
+	// @param clusterIdParam User entered ID (required)
+	// @param scrxClusterConfigParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Patch(clusterIdParam string, scrxClusterConfigParam nsx_policyModel.ScrxClusterConfig) error
 
-    // Update HighLatencySensitivityMode on cluster level.
-    //
-    // @param clusterIdParam User entered ID (required)
-    // @param scrxClusterConfigParam (required)
-    // @return com.vmware.nsx_policy.model.ScrxClusterConfig
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Update HighLatencySensitivityMode on cluster level.
+	//
+	// @param clusterIdParam User entered ID (required)
+	// @param scrxClusterConfigParam (required)
+	// @return com.vmware.nsx_policy.model.ScrxClusterConfig
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Update(clusterIdParam string, scrxClusterConfigParam nsx_policyModel.ScrxClusterConfig) (nsx_policyModel.ScrxClusterConfig, error)
 }
 
-
 type clusterConfigsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewClusterConfigsClient(connector vapiProtocolClient_.Connector) *clusterConfigsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.settings.scrx.cluster_configs")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -220,4 +219,3 @@ func (cIface *clusterConfigsClient) Update(clusterIdParam string, scrxClusterCon
 		return emptyOutput, methodError.(error)
 	}
 }
-

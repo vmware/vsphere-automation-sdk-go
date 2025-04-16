@@ -10,35 +10,34 @@
 package gateway_policies
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ExportClient interface {
 
-    // Invoke gateway firewall export task. There can be only one export gateway firewall task run at any point of time. Hence invocation of another export task will be discarded when there exist an already running export task. Exported configuration will be in a CSV format. This CSV file will be zipped into a ZIP file, that can be downloaded after the completion of export task through download api i.e. GET /infra/security/gateway-policies/export/download. The status of the export task can be checked through status api i.e GET /infra/security/gateway-policies/export/status
-    //
-    // @param gatewayFirewallExportRequestParam (required)
-    // @return com.vmware.nsx_policy.model.FirewallExportTask
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Invoke gateway firewall export task. There can be only one export gateway firewall task run at any point of time. Hence invocation of another export task will be discarded when there exist an already running export task. Exported configuration will be in a CSV format. This CSV file will be zipped into a ZIP file, that can be downloaded after the completion of export task through download api i.e. GET /infra/security/gateway-policies/export/download. The status of the export task can be checked through status api i.e GET /infra/security/gateway-policies/export/status
+	//
+	// @param gatewayFirewallExportRequestParam (required)
+	// @return com.vmware.nsx_policy.model.FirewallExportTask
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(gatewayFirewallExportRequestParam nsx_policyModel.GatewayFirewallExportRequest) (nsx_policyModel.FirewallExportTask, error)
 }
 
-
 type exportClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewExportClient(connector vapiProtocolClient_.Connector) *exportClient {
@@ -91,4 +90,3 @@ func (eIface *exportClient) Create(gatewayFirewallExportRequestParam nsx_policyM
 		return emptyOutput, methodError.(error)
 	}
 }
-

@@ -10,35 +10,34 @@
 package gateway_policies
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type PublishClient interface {
 
-    // Invoke publish task. There can be only one publish task run at any point of time. Hence invocation of another publish task will be discarded, when there exist an already running import task.
-    //
-    // @param publishRequestParam (required)
-    // @return com.vmware.nsx_policy.model.PublishTask
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Invoke publish task. There can be only one publish task run at any point of time. Hence invocation of another publish task will be discarded, when there exist an already running import task.
+	//
+	// @param publishRequestParam (required)
+	// @return com.vmware.nsx_policy.model.PublishTask
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(publishRequestParam nsx_policyModel.PublishRequest) (nsx_policyModel.PublishTask, error)
 }
 
-
 type publishClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewPublishClient(connector vapiProtocolClient_.Connector) *publishClient {
@@ -91,4 +90,3 @@ func (pIface *publishClient) Create(publishRequestParam nsx_policyModel.PublishR
 		return emptyOutput, methodError.(error)
 	}
 }
-

@@ -10,36 +10,35 @@
 package ldap_identity_sources
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SearchClient interface {
 
-    // Search the LDAP identity source for users and groups that match the given filter_value. In most cases, the LDAP source performs a case-insensitive search.
-    //
-    // @param ldapIdentitySourceIdParam (required)
-    // @param filterValueParam Search filter value (required)
-    // @return com.vmware.nsx_policy.model.LdapIdentitySourceSearchResultList
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Search the LDAP identity source for users and groups that match the given filter_value. In most cases, the LDAP source performs a case-insensitive search.
+	//
+	// @param ldapIdentitySourceIdParam (required)
+	// @param filterValueParam Search filter value (required)
+	// @return com.vmware.nsx_policy.model.LdapIdentitySourceSearchResultList
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(ldapIdentitySourceIdParam string, filterValueParam string) (nsx_policyModel.LdapIdentitySourceSearchResultList, error)
 }
 
-
 type searchClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewSearchClient(connector vapiProtocolClient_.Connector) *searchClient {
@@ -93,4 +92,3 @@ func (sIface *searchClient) Create(ldapIdentitySourceIdParam string, filterValue
 		return emptyOutput, methodError.(error)
 	}
 }
-

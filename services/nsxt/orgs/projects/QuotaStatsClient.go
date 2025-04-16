@@ -10,38 +10,37 @@
 package projects
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type QuotaStatsClient interface {
 
-    // Get quota details To create, update, list and delete the Quota, please refer to Constraint APIs with 'constraint_expressions' as 'EntityInstanceCountConstraintExpression'.
-    //
-    // @param orgIdParam (required)
-    // @param projectIdParam (required)
-    // @param pathPrefixParam Path prefix for retriving the quota details. (required)
-    // @param constraintPathParam Constraint path to retrive the quota details. (optional)
-    // @return com.vmware.nsx_policy.model.QuotaStatsListResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get quota details To create, update, list and delete the Quota, please refer to Constraint APIs with 'constraint_expressions' as 'EntityInstanceCountConstraintExpression'.
+	//
+	// @param orgIdParam (required)
+	// @param projectIdParam (required)
+	// @param pathPrefixParam Path prefix for retriving the quota details. (required)
+	// @param constraintPathParam Constraint path to retrive the quota details. (optional)
+	// @return com.vmware.nsx_policy.model.QuotaStatsListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, pathPrefixParam string, constraintPathParam *string) (nsx_policyModel.QuotaStatsListResult, error)
 }
 
-
 type quotaStatsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewQuotaStatsClient(connector vapiProtocolClient_.Connector) *quotaStatsClient {
@@ -97,4 +96,3 @@ func (qIface *quotaStatsClient) Get(orgIdParam string, projectIdParam string, pa
 		return emptyOutput, methodError.(error)
 	}
 }
-

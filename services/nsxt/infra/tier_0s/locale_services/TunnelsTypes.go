@@ -12,16 +12,12 @@
 package locale_services
 
 import (
-	"reflect"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocol_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	"reflect"
 )
-
-
-
-
 
 func tunnelsDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -84,7 +80,7 @@ func tunnelsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func tunnelsGetInputType() vapiBindings_.StructType {
@@ -101,7 +97,7 @@ func tunnelsGetInputType() vapiBindings_.StructType {
 }
 
 func TunnelsGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType),})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType)})
 }
 
 func tunnelsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -148,7 +144,7 @@ func tunnelsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func tunnelsListInputType() vapiBindings_.StructType {
@@ -235,7 +231,7 @@ func tunnelsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func tunnelsPatchInputType() vapiBindings_.StructType {
@@ -244,7 +240,7 @@ func tunnelsPatchInputType() vapiBindings_.StructType {
 	fields["tier0_id"] = vapiBindings_.NewStringType()
 	fields["locale_svc_id"] = vapiBindings_.NewStringType()
 	fields["tunnel_id"] = vapiBindings_.NewStringType()
-	fields["tunnel"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType),})
+	fields["tunnel"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType)})
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_svc_id"] = "LocaleSvcId"
 	fieldNameMap["tunnel_id"] = "TunnelId"
@@ -269,7 +265,7 @@ func tunnelsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["tier0_id"] = vapiBindings_.NewStringType()
 	fields["locale_svc_id"] = vapiBindings_.NewStringType()
 	fields["tunnel_id"] = vapiBindings_.NewStringType()
-	fields["tunnel"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType),})
+	fields["tunnel"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType)})
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_svc_id"] = "LocaleSvcId"
 	fieldNameMap["tunnel_id"] = "TunnelId"
@@ -277,7 +273,7 @@ func tunnelsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["tunnel_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["locale_svc_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["tunnel"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType),})
+	paramsTypeMap["tunnel"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType)})
 	paramsTypeMap["tier0Id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["localeSvcId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["tunnelId"] = vapiBindings_.NewStringType()
@@ -304,7 +300,7 @@ func tunnelsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func tunnelsUpdateInputType() vapiBindings_.StructType {
@@ -313,7 +309,7 @@ func tunnelsUpdateInputType() vapiBindings_.StructType {
 	fields["tier0_id"] = vapiBindings_.NewStringType()
 	fields["locale_svc_id"] = vapiBindings_.NewStringType()
 	fields["tunnel_id"] = vapiBindings_.NewStringType()
-	fields["tunnel"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType),})
+	fields["tunnel"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType)})
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_svc_id"] = "LocaleSvcId"
 	fieldNameMap["tunnel_id"] = "TunnelId"
@@ -323,7 +319,7 @@ func tunnelsUpdateInputType() vapiBindings_.StructType {
 }
 
 func TunnelsUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType),})
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType)})
 }
 
 func tunnelsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -338,7 +334,7 @@ func tunnelsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["tier0_id"] = vapiBindings_.NewStringType()
 	fields["locale_svc_id"] = vapiBindings_.NewStringType()
 	fields["tunnel_id"] = vapiBindings_.NewStringType()
-	fields["tunnel"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType),})
+	fields["tunnel"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType)})
 	fieldNameMap["tier0_id"] = "Tier0Id"
 	fieldNameMap["locale_svc_id"] = "LocaleSvcId"
 	fieldNameMap["tunnel_id"] = "TunnelId"
@@ -346,7 +342,7 @@ func tunnelsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["tier0_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["tunnel_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["locale_svc_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["tunnel"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType),})
+	paramsTypeMap["tunnel"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.TunnelBindingType)})
 	paramsTypeMap["tier0Id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["localeSvcId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["tunnelId"] = vapiBindings_.NewStringType()
@@ -373,7 +369,5 @@ func tunnelsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400,"com.vmware.vapi.std.errors.unauthorized": 403,"com.vmware.vapi.std.errors.service_unavailable": 503,"com.vmware.vapi.std.errors.internal_server_error": 500,"com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
-
-

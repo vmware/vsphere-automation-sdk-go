@@ -10,38 +10,37 @@
 package action
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ReplaceEdgeTransportNodeClient interface {
 
-    // Replace the Policy Edge Node present at the specified member-index in the edge-cluster. This is a disruptive action. This will move all the Interfaces(uplink and routerLink) hosted on the old Policy Edge Node to the new Policy Edge Node. The same Policy Edge Node cannot be present as a member of any edge cluster.
-    //
-    // @param siteIdParam (required)
-    // @param enforcementpointIdParam (required)
-    // @param edgeClusterIdParam (required)
-    // @param policyEdgeNodeReplaceMemberParam (required)
-    // @return com.vmware.nsx_policy.model.PolicyEdgeCluster
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Replace the Policy Edge Node present at the specified member-index in the edge-cluster. This is a disruptive action. This will move all the Interfaces(uplink and routerLink) hosted on the old Policy Edge Node to the new Policy Edge Node. The same Policy Edge Node cannot be present as a member of any edge cluster.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementpointIdParam (required)
+	// @param edgeClusterIdParam (required)
+	// @param policyEdgeNodeReplaceMemberParam (required)
+	// @return com.vmware.nsx_policy.model.PolicyEdgeCluster
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(siteIdParam string, enforcementpointIdParam string, edgeClusterIdParam string, policyEdgeNodeReplaceMemberParam nsx_policyModel.PolicyEdgeNodeReplaceMember) (nsx_policyModel.PolicyEdgeCluster, error)
 }
 
-
 type replaceEdgeTransportNodeClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewReplaceEdgeTransportNodeClient(connector vapiProtocolClient_.Connector) *replaceEdgeTransportNodeClient {
@@ -97,4 +96,3 @@ func (rIface *replaceEdgeTransportNodeClient) Create(siteIdParam string, enforce
 		return emptyOutput, methodError.(error)
 	}
 }
-

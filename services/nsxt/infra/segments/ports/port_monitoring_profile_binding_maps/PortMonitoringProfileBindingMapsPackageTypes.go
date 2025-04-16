@@ -10,9 +10,3 @@
 // compatibility.
 
 package port_monitoring_profile_binding_maps
-
-
-
-
-
-

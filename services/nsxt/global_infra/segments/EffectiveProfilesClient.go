@@ -10,36 +10,35 @@
 package segments
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type EffectiveProfilesClient interface {
 
-    // List all effective profiles for this segment on given enforcement point.
-    //
-    // @param segmentIdParam (required)
-    // @param enforcementPointPathParam Enforcement point path (optional)
-    // @return com.vmware.nsx_policy.model.EffectiveProfilesResponse
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// List all effective profiles for this segment on given enforcement point.
+	//
+	// @param segmentIdParam (required)
+	// @param enforcementPointPathParam Enforcement point path (optional)
+	// @return com.vmware.nsx_policy.model.EffectiveProfilesResponse
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(segmentIdParam string, enforcementPointPathParam *string) (nsx_policyModel.EffectiveProfilesResponse, error)
 }
 
-
 type effectiveProfilesClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewEffectiveProfilesClient(connector vapiProtocolClient_.Connector) *effectiveProfilesClient {
@@ -93,4 +92,3 @@ func (eIface *effectiveProfilesClient) Get(segmentIdParam string, enforcementPoi
 		return emptyOutput, methodError.(error)
 	}
 }
-

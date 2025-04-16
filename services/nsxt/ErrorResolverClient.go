@@ -10,63 +10,62 @@
 package nsx_policy
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ErrorResolverClient interface {
 
-    // Returns some metadata about the given error_id. This includes information of whether there is a resolver present for the given error_id and its associated user input data
-    //
-    // @param errorIdParam (required)
-    // @return com.vmware.nsx_policy.model.ErrorResolverInfo
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Returns some metadata about the given error_id. This includes information of whether there is a resolver present for the given error_id and its associated user input data
+	//
+	// @param errorIdParam (required)
+	// @return com.vmware.nsx_policy.model.ErrorResolverInfo
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(errorIdParam string) (nsx_policyModel.ErrorResolverInfo, error)
 
-    // Returns a list of metadata for all the error resolvers registered.
-    // @return com.vmware.nsx_policy.model.ErrorResolverInfoList
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Returns a list of metadata for all the error resolvers registered.
+	// @return com.vmware.nsx_policy.model.ErrorResolverInfoList
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	List() (nsx_policyModel.ErrorResolverInfoList, error)
 
-    // Invokes the corresponding error resolver for the given error(s) present in the payload
-    //
-    // @param errorResolverMetadataListParam (required)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Invokes the corresponding error resolver for the given error(s) present in the payload
+	//
+	// @param errorResolverMetadataListParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Resolveerror(errorResolverMetadataListParam nsx_policyModel.ErrorResolverMetadataList) error
 }
 
-
 type errorResolverClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewErrorResolverClient(connector vapiProtocolClient_.Connector) *errorResolverClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.error_resolver")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"get":          vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":         vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 		"resolveerror": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "resolveerror"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -171,4 +170,3 @@ func (eIface *errorResolverClient) Resolveerror(errorResolverMetadataListParam n
 		return methodError.(error)
 	}
 }
-

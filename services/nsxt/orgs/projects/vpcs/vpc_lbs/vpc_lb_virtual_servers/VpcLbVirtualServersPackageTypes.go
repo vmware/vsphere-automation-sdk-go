@@ -10,9 +10,3 @@
 // compatibility.
 
 package vpc_lb_virtual_servers
-
-
-
-
-
-

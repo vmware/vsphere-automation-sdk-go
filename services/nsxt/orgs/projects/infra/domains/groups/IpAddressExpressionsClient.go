@@ -10,71 +10,70 @@
 package groups
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type IpAddressExpressionsClient interface {
 
-    // It will add or remove the specified IP Addresses from a given expression of a group.
-    //
-    // @param orgIdParam The organization ID (required)
-    // @param projectIdParam The project ID (required)
-    // @param domainIdParam (required)
-    // @param groupIdParam (required)
-    // @param expressionIdParam (required)
-    // @param ipAddressListParam (required)
-    // @param actionParam Add or Remove group members. (required)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// It will add or remove the specified IP Addresses from a given expression of a group.
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param domainIdParam (required)
+	// @param groupIdParam (required)
+	// @param expressionIdParam (required)
+	// @param ipAddressListParam (required)
+	// @param actionParam Add or Remove group members. (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(orgIdParam string, projectIdParam string, domainIdParam string, groupIdParam string, expressionIdParam string, ipAddressListParam nsx_policyModel.IPAddressList, actionParam string) error
 
-    // Delete Group IPAddressExpression
-    //
-    // @param orgIdParam The organization ID (required)
-    // @param projectIdParam The project ID (required)
-    // @param domainIdParam Domain ID (required)
-    // @param groupIdParam Group ID (required)
-    // @param expressionIdParam IPAddressExpression ID (required)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Delete Group IPAddressExpression
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param domainIdParam Domain ID (required)
+	// @param groupIdParam Group ID (required)
+	// @param expressionIdParam IPAddressExpression ID (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, domainIdParam string, groupIdParam string, expressionIdParam string) error
 
-    // If a group IPAddressExpression with the expression-id is not already present, create a new IPAddressExpression. If it already exists, replace the existing IPAddressExpression.
-    //
-    // @param orgIdParam The organization ID (required)
-    // @param projectIdParam The project ID (required)
-    // @param domainIdParam Domain ID (required)
-    // @param groupIdParam Group ID (required)
-    // @param expressionIdParam IPAddressExpression ID (required)
-    // @param ipAddressExpressionParam (required)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// If a group IPAddressExpression with the expression-id is not already present, create a new IPAddressExpression. If it already exists, replace the existing IPAddressExpression.
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param domainIdParam Domain ID (required)
+	// @param groupIdParam Group ID (required)
+	// @param expressionIdParam IPAddressExpression ID (required)
+	// @param ipAddressExpressionParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, domainIdParam string, groupIdParam string, expressionIdParam string, ipAddressExpressionParam nsx_policyModel.IPAddressExpression) error
 }
 
-
 type ipAddressExpressionsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewIpAddressExpressionsClient(connector vapiProtocolClient_.Connector) *ipAddressExpressionsClient {
@@ -82,7 +81,7 @@ func NewIpAddressExpressionsClient(connector vapiProtocolClient_.Connector) *ipA
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -190,4 +189,3 @@ func (iIface *ipAddressExpressionsClient) Patch(orgIdParam string, projectIdPara
 		return methodError.(error)
 	}
 }
-

@@ -10,36 +10,35 @@
 package tier_0s
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SessionTimerProfileBindingsClient interface {
 
-    // API will get Session Timer Profile Binding Map for Tier-0 Logical Router.
-    //
-    // @param tier0IdParam (required)
-    // @param sessionTimerProfileBindingIdParam (required)
-    // @return com.vmware.nsx_policy.model.SessionTimerProfileBindingMap
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// API will get Session Timer Profile Binding Map for Tier-0 Logical Router.
+	//
+	// @param tier0IdParam (required)
+	// @param sessionTimerProfileBindingIdParam (required)
+	// @return com.vmware.nsx_policy.model.SessionTimerProfileBindingMap
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(tier0IdParam string, sessionTimerProfileBindingIdParam string) (nsx_policyModel.SessionTimerProfileBindingMap, error)
 }
 
-
 type sessionTimerProfileBindingsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewSessionTimerProfileBindingsClient(connector vapiProtocolClient_.Connector) *sessionTimerProfileBindingsClient {
@@ -93,4 +92,3 @@ func (sIface *sessionTimerProfileBindingsClient) Get(tier0IdParam string, sessio
 		return emptyOutput, methodError.(error)
 	}
 }
-

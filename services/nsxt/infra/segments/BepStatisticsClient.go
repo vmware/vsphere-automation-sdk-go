@@ -10,37 +10,36 @@
 package segments
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type BepStatisticsClient interface {
 
-    // Get detailed information on infra segment bridge end point statistics using segment ID and profile path.
-    //
-    // @param segmentIdParam (required)
-    // @param bridgeProfilePathParam Bridge profile path (required)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    // @return com.vmware.nsx_policy.model.BridgeEndpointStatistics
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get detailed information on infra segment bridge end point statistics using segment ID and profile path.
+	//
+	// @param segmentIdParam (required)
+	// @param bridgeProfilePathParam Bridge profile path (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @return com.vmware.nsx_policy.model.BridgeEndpointStatistics
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(segmentIdParam string, bridgeProfilePathParam string, enforcementPointPathParam *string) (nsx_policyModel.BridgeEndpointStatistics, error)
 }
 
-
 type bepStatisticsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewBepStatisticsClient(connector vapiProtocolClient_.Connector) *bepStatisticsClient {
@@ -95,4 +94,3 @@ func (bIface *bepStatisticsClient) Get(segmentIdParam string, bridgeProfilePathP
 		return emptyOutput, methodError.(error)
 	}
 }
-

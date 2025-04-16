@@ -10,36 +10,35 @@
 package infra
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LbNodeUsageSummaryClient interface {
 
-    // The API is used to retrieve the load balancer node usage summary of all nodes for every enforcement point. - If the parameter ?include_usages=true exists, the property node_usages are included in response. By default, the property node_usages is not included in response. - If parameter ?enforcement_point_path=<enforcement-point-path> exists, only node usage summary from specific enforcement point is included in response. If no enforcement point path is specified, information will be aggregated from each enforcement point. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
-    //
-    // @param enforcementPointPathParam enforcement point path (optional)
-    // @param includeUsagesParam Whether to include usages (optional)
-    // @return com.vmware.nsx_policy.model.AggregateLBNodeUsageSummary
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// The API is used to retrieve the load balancer node usage summary of all nodes for every enforcement point. - If the parameter ?include_usages=true exists, the property node_usages are included in response. By default, the property node_usages is not included in response. - If parameter ?enforcement_point_path=<enforcement-point-path> exists, only node usage summary from specific enforcement point is included in response. If no enforcement point path is specified, information will be aggregated from each enforcement point. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	//
+	// @param enforcementPointPathParam enforcement point path (optional)
+	// @param includeUsagesParam Whether to include usages (optional)
+	// @return com.vmware.nsx_policy.model.AggregateLBNodeUsageSummary
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(enforcementPointPathParam *string, includeUsagesParam *bool) (nsx_policyModel.AggregateLBNodeUsageSummary, error)
 }
 
-
 type lbNodeUsageSummaryClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewLbNodeUsageSummaryClient(connector vapiProtocolClient_.Connector) *lbNodeUsageSummaryClient {
@@ -93,4 +92,3 @@ func (lIface *lbNodeUsageSummaryClient) Get(enforcementPointPathParam *string, i
 		return emptyOutput, methodError.(error)
 	}
 }
-

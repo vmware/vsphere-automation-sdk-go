@@ -10,36 +10,35 @@
 package infra
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SandboxedResourcesClient interface {
 
-    // Get sandbox resources
-    //
-    // @param intentPathParam intent path (optional)
-    // @param sitePathParam site path (optional)
-    // @return com.vmware.nsx_policy.model.SandboxedResourceListResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get sandbox resources
+	//
+	// @param intentPathParam intent path (optional)
+	// @param sitePathParam site path (optional)
+	// @return com.vmware.nsx_policy.model.SandboxedResourceListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	List(intentPathParam *string, sitePathParam *string) (nsx_policyModel.SandboxedResourceListResult, error)
 }
 
-
 type sandboxedResourcesClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewSandboxedResourcesClient(connector vapiProtocolClient_.Connector) *sandboxedResourcesClient {
@@ -93,4 +92,3 @@ func (sIface *sandboxedResourcesClient) List(intentPathParam *string, sitePathPa
 		return emptyOutput, methodError.(error)
 	}
 }
-

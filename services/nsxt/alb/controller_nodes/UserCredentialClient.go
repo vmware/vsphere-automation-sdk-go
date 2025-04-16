@@ -10,61 +10,60 @@
 package controller_nodes
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type UserCredentialClient interface {
 
-    // Use this API to create service user object credential in Avi Load Balancer Controller cluster. This API is for VCF deployments only.
-    //
-    // @param aLBControllerUserCredentialParam (required)
-    // @return com.vmware.nsx_policy.model.ALBControllerUserCredentialResponse
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Use this API to create service user object credential in Avi Load Balancer Controller cluster. This API is for VCF deployments only.
+	//
+	// @param aLBControllerUserCredentialParam (required)
+	// @return com.vmware.nsx_policy.model.ALBControllerUserCredentialResponse
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(aLBControllerUserCredentialParam nsx_policyModel.ALBControllerUserCredential) (nsx_policyModel.ALBControllerUserCredentialResponse, error)
 
-    // Use this API to delete user credentials in Avi Load Balancer Controller cluster. This API is for VCF deployments only.
-    //
-    // @param usernameParam Credentials to be deleted. (required)
-    // @param userCredentialTypeParam Type of user credential (required)
-    // @param clusteringIdParam Unique Id for Avi Load Balancer Controller Cluster used in VCF managed NSX (optional)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Use this API to delete user credentials in Avi Load Balancer Controller cluster. This API is for VCF deployments only.
+	//
+	// @param usernameParam Credentials to be deleted. (required)
+	// @param userCredentialTypeParam Type of user credential (required)
+	// @param clusteringIdParam Unique Id for Avi Load Balancer Controller Cluster used in VCF managed NSX (optional)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Delete(usernameParam string, userCredentialTypeParam string, clusteringIdParam *string) error
 
-    // Use this API to update admin user password or service user object password in Avi Load Balancer Controller. This API is for VCF deployments only.
-    //
-    // @param aLBControllerUserCredentialParam (required)
-    // @param runningConfigParam Update Avi Load Balancer Controller runtime config as well (optional)
-    // @return com.vmware.nsx_policy.model.ALBControllerUserCredentialResponse
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Use this API to update admin user password or service user object password in Avi Load Balancer Controller. This API is for VCF deployments only.
+	//
+	// @param aLBControllerUserCredentialParam (required)
+	// @param runningConfigParam Update Avi Load Balancer Controller runtime config as well (optional)
+	// @return com.vmware.nsx_policy.model.ALBControllerUserCredentialResponse
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Update(aLBControllerUserCredentialParam nsx_policyModel.ALBControllerUserCredential, runningConfigParam *bool) (nsx_policyModel.ALBControllerUserCredentialResponse, error)
 }
 
-
 type userCredentialClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewUserCredentialClient(connector vapiProtocolClient_.Connector) *userCredentialClient {
@@ -180,4 +179,3 @@ func (uIface *userCredentialClient) Update(aLBControllerUserCredentialParam nsx_
 		return emptyOutput, methodError.(error)
 	}
 }
-

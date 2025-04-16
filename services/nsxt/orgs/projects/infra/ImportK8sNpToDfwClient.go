@@ -10,38 +10,37 @@
 package infra
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ImportK8sNpToDfwClient interface {
 
-    // This is used to import a set of K8s network policies into DFW security policies
-    //
-    // @param orgIdParam The organization ID (required)
-    // @param projectIdParam The project ID (required)
-    // @param networkPolicyImportRequestParam (required)
-    // @param onErrorParam Action to take when error occurs (optional, default to ABORT)
-    // @return com.vmware.nsx_policy.model.NetworkPolicyImportResponse
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// This is used to import a set of K8s network policies into DFW security policies
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param networkPolicyImportRequestParam (required)
+	// @param onErrorParam Action to take when error occurs (optional, default to ABORT)
+	// @return com.vmware.nsx_policy.model.NetworkPolicyImportResponse
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Create(orgIdParam string, projectIdParam string, networkPolicyImportRequestParam nsx_policyModel.NetworkPolicyImportRequest, onErrorParam *string) (nsx_policyModel.NetworkPolicyImportResponse, error)
 }
 
-
 type importK8sNpToDfwClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewImportK8sNpToDfwClient(connector vapiProtocolClient_.Connector) *importK8sNpToDfwClient {
@@ -97,4 +96,3 @@ func (iIface *importK8sNpToDfwClient) Create(orgIdParam string, projectIdParam s
 		return emptyOutput, methodError.(error)
 	}
 }
-

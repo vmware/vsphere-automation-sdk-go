@@ -10,9 +10,3 @@
 // compatibility.
 
 package nat_rules
-
-
-
-
-
-

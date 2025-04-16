@@ -10,37 +10,36 @@
 package enforcement_points
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TransportZonesAggstatusClient interface {
 
-    // Get high-level summary of all transport zone status. The service layer does not support source = realtime or cached.
-    //
-    // @param siteIdParam site ID (required)
-    // @param enforcementPointIdParam enforcement point ID (required)
-    // @param includeSystemOwnedParam Include system owned transport zones (optional)
-    // @return com.vmware.nsx_policy.model.HeatMapTransportNodesAggregateStatus
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get high-level summary of all transport zone status. The service layer does not support source = realtime or cached.
+	//
+	// @param siteIdParam site ID (required)
+	// @param enforcementPointIdParam enforcement point ID (required)
+	// @param includeSystemOwnedParam Include system owned transport zones (optional)
+	// @return com.vmware.nsx_policy.model.HeatMapTransportNodesAggregateStatus
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementPointIdParam string, includeSystemOwnedParam *bool) (nsx_policyModel.HeatMapTransportNodesAggregateStatus, error)
 }
 
-
 type transportZonesAggstatusClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewTransportZonesAggstatusClient(connector vapiProtocolClient_.Connector) *transportZonesAggstatusClient {
@@ -95,4 +94,3 @@ func (tIface *transportZonesAggstatusClient) Get(siteIdParam string, enforcement
 		return emptyOutput, methodError.(error)
 	}
 }
-

@@ -10,38 +10,37 @@
 package tier_0s
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type NumberOfRoutesClient interface {
 
-    // Get total number of IPv4 or IPv6 routes on a Tier0
-    //
-    // @param tier0IdParam (required)
-    // @param edgePathParam Policy path of edge node (required)
-    // @param enforcementPointPathParam String Path of the enforcement point (optional)
-    // @param includeChildVrfParam Count all the child VRF routes or not. (optional)
-    // @return com.vmware.nsx_policy.model.Tier0NumberOfRoutesResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get total number of IPv4 or IPv6 routes on a Tier0
+	//
+	// @param tier0IdParam (required)
+	// @param edgePathParam Policy path of edge node (required)
+	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param includeChildVrfParam Count all the child VRF routes or not. (optional)
+	// @return com.vmware.nsx_policy.model.Tier0NumberOfRoutesResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(tier0IdParam string, edgePathParam string, enforcementPointPathParam *string, includeChildVrfParam *bool) (nsx_policyModel.Tier0NumberOfRoutesResult, error)
 }
 
-
 type numberOfRoutesClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewNumberOfRoutesClient(connector vapiProtocolClient_.Connector) *numberOfRoutesClient {
@@ -97,4 +96,3 @@ func (nIface *numberOfRoutesClient) Get(tier0IdParam string, edgePathParam strin
 		return emptyOutput, methodError.(error)
 	}
 }
-

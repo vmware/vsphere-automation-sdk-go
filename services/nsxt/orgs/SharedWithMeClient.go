@@ -10,36 +10,35 @@
 package orgs
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SharedWithMeClient interface {
 
-    // Get the list of resource shared with a given org.
-    //
-    // @param orgIdParam (required)
-    // @param resourceTypeParam resource type (optional)
-    // @return com.vmware.nsx_policy.model.SharedResourceListResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get the list of resource shared with a given org.
+	//
+	// @param orgIdParam (required)
+	// @param resourceTypeParam resource type (optional)
+	// @return com.vmware.nsx_policy.model.SharedResourceListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	List(orgIdParam string, resourceTypeParam *string) (nsx_policyModel.SharedResourceListResult, error)
 }
 
-
 type sharedWithMeClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewSharedWithMeClient(connector vapiProtocolClient_.Connector) *sharedWithMeClient {
@@ -93,4 +92,3 @@ func (sIface *sharedWithMeClient) List(orgIdParam string, resourceTypeParam *str
 		return emptyOutput, methodError.(error)
 	}
 }
-

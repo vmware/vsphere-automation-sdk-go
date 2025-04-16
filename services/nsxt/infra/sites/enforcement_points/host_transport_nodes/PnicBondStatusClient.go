@@ -10,38 +10,37 @@
 package host_transport_nodes
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type PnicBondStatusClient interface {
 
-    // Get high-level summary of a transport node
-    //
-    // @param siteIdParam site ID (required)
-    // @param enforcementPointIdParam enforcement point ID (required)
-    // @param nodeIdParam ID of transport node (required)
-    // @param statusParam pNic/bond status (optional)
-    // @return com.vmware.nsx_policy.model.PnicBondStatusListResult
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get high-level summary of a transport node
+	//
+	// @param siteIdParam site ID (required)
+	// @param enforcementPointIdParam enforcement point ID (required)
+	// @param nodeIdParam ID of transport node (required)
+	// @param statusParam pNic/bond status (optional)
+	// @return com.vmware.nsx_policy.model.PnicBondStatusListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	List(siteIdParam string, enforcementPointIdParam string, nodeIdParam string, statusParam *string) (nsx_policyModel.PnicBondStatusListResult, error)
 }
 
-
 type pnicBondStatusClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewPnicBondStatusClient(connector vapiProtocolClient_.Connector) *pnicBondStatusClient {
@@ -97,4 +96,3 @@ func (pIface *pnicBondStatusClient) List(siteIdParam string, enforcementPointIdP
 		return emptyOutput, methodError.(error)
 	}
 }
-

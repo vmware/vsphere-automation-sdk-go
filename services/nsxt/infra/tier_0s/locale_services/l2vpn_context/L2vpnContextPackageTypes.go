@@ -10,9 +10,3 @@
 // compatibility.
 
 package l2vpn_context
-
-
-
-
-
-

@@ -10,37 +10,36 @@
 package host_transport_nodes
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type HyperbusStatusClient interface {
 
-    // Get the container hyperbus status on given node
-    //
-    // @param siteIdParam site ID (required)
-    // @param enforcementPointIdParam enforcement point ID (required)
-    // @param nodeIdParam ID of transport node (required)
-    // @return com.vmware.nsx_policy.model.TnHyperbusStatus
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get the container hyperbus status on given node
+	//
+	// @param siteIdParam site ID (required)
+	// @param enforcementPointIdParam enforcement point ID (required)
+	// @param nodeIdParam ID of transport node (required)
+	// @return com.vmware.nsx_policy.model.TnHyperbusStatus
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementPointIdParam string, nodeIdParam string) (nsx_policyModel.TnHyperbusStatus, error)
 }
 
-
 type hyperbusStatusClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewHyperbusStatusClient(connector vapiProtocolClient_.Connector) *hyperbusStatusClient {
@@ -95,4 +94,3 @@ func (hIface *hyperbusStatusClient) Get(siteIdParam string, enforcementPointIdPa
 		return emptyOutput, methodError.(error)
 	}
 }
-

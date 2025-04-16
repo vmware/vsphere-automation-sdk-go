@@ -10,77 +10,76 @@
 package tags
 
 import (
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AttachmentsClient interface {
 
-    // Delete tag attachments
-    //
-    // @param categoryIdParam (required)
-    // @param tagIdParam (required)
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Delete tag attachments
+	//
+	// @param categoryIdParam (required)
+	// @param tagIdParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Delete(categoryIdParam string, tagIdParam string) error
 
-    // Get tag attachments
-    //
-    // @param categoryIdParam (required)
-    // @param tagIdParam (required)
-    // @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-    // @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-    // @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-    // @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-    // @param resourceTypeParam Tag Attachment Type (optional)
-    // @param sortAscendingParam (optional)
-    // @param sortByParam Field by which records are sorted (optional)
-    // @return com.vmware.nsx_policy.model.TagAttachmentResponse
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Get tag attachments
+	//
+	// @param categoryIdParam (required)
+	// @param tagIdParam (required)
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
+	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param resourceTypeParam Tag Attachment Type (optional)
+	// @param sortAscendingParam (optional)
+	// @param sortByParam Field by which records are sorted (optional)
+	// @return com.vmware.nsx_policy.model.TagAttachmentResponse
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Get(categoryIdParam string, tagIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, resourceTypeParam *string, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.TagAttachmentResponse, error)
 
-    // Create or update vm tag attachment
-    //
-    // @param categoryIdParam (required)
-    // @param tagIdParam (required)
-    // @param tagAttachmentParam (required)
-    // @return com.vmware.nsx_policy.model.TagAttachmentResponse
-    //
-    // @throws InvalidRequest  Bad Request, Precondition Failed
-    // @throws Unauthorized  Forbidden
-    // @throws ServiceUnavailable  Service Unavailable
-    // @throws InternalServerError  Internal Server Error
-    // @throws NotFound  Not Found
+	// Create or update vm tag attachment
+	//
+	// @param categoryIdParam (required)
+	// @param tagIdParam (required)
+	// @param tagAttachmentParam (required)
+	// @return com.vmware.nsx_policy.model.TagAttachmentResponse
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Patch(categoryIdParam string, tagIdParam string, tagAttachmentParam nsx_policyModel.TagAttachment) (nsx_policyModel.TagAttachmentResponse, error)
 }
 
-
 type attachmentsClient struct {
-	connector           	   vapiProtocolClient_.Connector
-	interfaceDefinition 	   vapiCore_.InterfaceDefinition
-	errorsBindingMap           map[string]vapiBindings_.BindingType
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
 func NewAttachmentsClient(connector vapiProtocolClient_.Connector) *attachmentsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.categories.tags.attachments")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"patch": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -196,4 +195,3 @@ func (aIface *attachmentsClient) Patch(categoryIdParam string, tagIdParam string
 		return emptyOutput, methodError.(error)
 	}
 }
-
