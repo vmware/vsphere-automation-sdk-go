@@ -23,9 +23,9 @@ type FirewallIdentityStoresClient interface {
 	// Invoke full sync or delta sync for a specific domain, with additional delay in seconds if needed. Stop sync will try to stop any pending sync if any to return to idle state.
 	//
 	// @param firewallIdentityStoreIdParam Firewall identity store identifier (required)
-	// @param actionParam Sync type requested (required)
-	// @param delayParam Request to execute the sync with some delay in seconds (optional, default to 0)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param actionParam Sync type could be either FULL sync or DELTA sync. The full sync fetches all the objects under the configured sync nodes while delta sync will get the changed objects from previous sync time. FULL_SYNC - Perform a full synchronization, where the local state of all AD objects is updated. DELTA_SYNC - Perform a delta synchronization, where local AD objects that have changed since the last synchronization are updated. STOP_SYNC - Stop the synchronization process. (required)
+	// @param delayParam The delay can be added to execute the sync action in the future. (optional, default to 0)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

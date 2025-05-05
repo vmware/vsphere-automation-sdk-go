@@ -24,7 +24,7 @@ type DefaultClient interface {
 	// This API adds/removes custom attribute values from list for a given attribute key. The values in the request will be added or removed from the existing list.
 	//
 	// @param policyCustomAttributesParam (required)
-	// @param actionParam Add or Remove Custom Context Profile Attribute values. (required)
+	// @param actionParam Action parameter determines whether to add or remove Custom Context Profile Attribute values. (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -35,13 +35,13 @@ type DefaultClient interface {
 
 	// This API lists all the custom attribute values defined in the system for the attribute_key mentioned as part of the url.
 	//
-	// @param attributeKeyParam Fetch attributes and sub-attributes for the given attribute key (optional)
-	// @param attributeSourceParam Source of the attribute, System Defined or custom (optional, default to SYSTEM)
+	// @param attributeKeyParam It fetches attributes and subattributes for the given attribute key supported in the system which can be used for Policy Context Profile creation. (optional)
+	// @param attributeSourceParam It fetches attributes and sub attributes for the given attribute key based on the source of attribute which can be used for Policy Context Profile creation. (optional, default to SYSTEM)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.PolicyContextProfileListResult
 	//

@@ -24,7 +24,7 @@ type ResultClient interface {
 	// Read result for a livetrace config with the specified identifier.
 	//
 	// @param livetraceIdParam (required)
-	// @param enforcementPointPathParam Enforcement point path (optional)
+	// @param enforcementPointPathParam Policy path of enforcement point on which livetrace session was created. (optional)
 	// @return com.vmware.nsx_policy.model.LiveTraceResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

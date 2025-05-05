@@ -23,7 +23,7 @@ type UserSessionDataClient interface {
 
 	// It will get user session data.
 	//
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.IdfwUserSessionDataAndMappings
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

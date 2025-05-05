@@ -26,7 +26,7 @@ type InterfacesClient interface {
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
 	// @param edgeTransportNodeIdParam (required)
-	// @param adminStatusParam Admin status of the interface (optional)
+	// @param adminStatusParam Defines admin status of the interface. (optional)
 	// @param sourceParam Data source type. (optional)
 	// @return com.vmware.nsx_policy.model.NodeInterfacePropertiesListResult
 	//

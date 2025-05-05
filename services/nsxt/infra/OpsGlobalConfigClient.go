@@ -23,7 +23,7 @@ type OpsGlobalConfigClient interface {
 
 	// Read global Operations Configuration
 	//
-	// @param applyLocallyParam Flag to check reaching NSX+ or LM resource (optional, default to false)
+	// @param applyLocallyParam If the user sets apply_locally to GET/PUT/PATCH call then the local resource copy will be shown/modified. This will only be acceptable on LM. In case LM only has it's copy, the apply_local = false will still have effect on local copy. (optional, default to false)
 	// @return com.vmware.nsx_policy.model.OpsGlobalConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -36,7 +36,7 @@ type OpsGlobalConfigClient interface {
 	// Update the global Operationconfiguration
 	//
 	// @param opsGlobalConfigParam (required)
-	// @param applyLocallyParam Flag to check reaching NSX+ or LM resource (optional, default to false)
+	// @param applyLocallyParam If the user sets apply_locally to GET/PUT/PATCH call then the local resource copy will be shown/modified. This will only be acceptable on LM. In case LM only has it's copy, the apply_local = false will still have effect on local copy. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -48,7 +48,7 @@ type OpsGlobalConfigClient interface {
 	// Update the global Operations Configuration
 	//
 	// @param opsGlobalConfigParam (required)
-	// @param applyLocallyParam Flag to check reaching NSX+ or LM resource (optional, default to false)
+	// @param applyLocallyParam If the user sets apply_locally to GET/PUT/PATCH call then the local resource copy will be shown/modified. This will only be acceptable on LM. In case LM only has it's copy, the apply_local = false will still have effect on local copy. (optional, default to false)
 	// @return com.vmware.nsx_policy.model.OpsGlobalConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

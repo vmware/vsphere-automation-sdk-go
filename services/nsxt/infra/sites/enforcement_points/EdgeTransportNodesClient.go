@@ -53,15 +53,15 @@ type EdgeTransportNodesClient interface {
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param inMaintenanceModeParam Maintenance mode flag (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param managementIpParam Edge transport node management IP address (optional)
-	// @param nodeTypeParam Supported edge transport node type. (optional)
+	// @param inMaintenanceModeParam If the flag is true then edge transport nodes with maintenance mode 'ENABLED' in desired state will be returned, otherwise edge transport nodes in 'DISABLED' desired state will be returned. (optional)
+	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param managementIpParam Edge transport node with provided management IP address will be returned. This property can only be used alone. It can not be combined with other filtering properties. (optional)
+	// @param nodeTypeParam Filter the list api based on node type. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @param transportZonePathParam Transport zone path (optional)
+	// @param transportZonePathParam Edge transport nodes with provided transport zone path will be returned. (optional)
 	// @return com.vmware.nsx_policy.model.PolicyEdgeTransportNodeListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

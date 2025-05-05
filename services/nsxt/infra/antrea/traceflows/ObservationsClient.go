@@ -24,7 +24,7 @@ type ObservationsClient interface {
 	// Read Antrea traceflow observations for id traceflow-id
 	//
 	// @param traceflowIdParam (required)
-	// @param enforcementPointPathParam Enforcement point path (optional)
+	// @param enforcementPointPathParam Policy path of enforcement point on which traceflow session was created. (optional)
 	// @return com.vmware.nsx_policy.model.AntreaTraceflowObservationListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

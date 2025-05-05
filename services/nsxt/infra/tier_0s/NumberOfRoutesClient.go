@@ -24,8 +24,8 @@ type NumberOfRoutesClient interface {
 	// Get total number of IPv4 or IPv6 routes on a Tier0
 	//
 	// @param tier0IdParam (required)
-	// @param edgePathParam Policy path of edge node (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param edgePathParam Policy path of edge node. Edge node must be member of enforcement point. (required)
+	// @param enforcementPointPathParam Enforcement point path. (optional)
 	// @param includeChildVrfParam Count all the child VRF routes or not. (optional)
 	// @return com.vmware.nsx_policy.model.Tier0NumberOfRoutesResult
 	//

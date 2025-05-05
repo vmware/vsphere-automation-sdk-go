@@ -23,8 +23,8 @@ type SandboxedResourcesClient interface {
 
 	// Get sandbox resources
 	//
-	// @param intentPathParam intent path (optional)
-	// @param sitePathParam site path (optional)
+	// @param intentPathParam Intent path (optional)
+	// @param sitePathParam Site path (optional)
 	// @return com.vmware.nsx_policy.model.SandboxedResourceListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

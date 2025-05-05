@@ -2,9 +2,9 @@ module github.com/vmware/vsphere-automation-sdk-go/services/nsxt
 
 go 1.17
 
-replace github.com/vmware/vsphere-automation-sdk-go/runtime => /builds/vapi-sdk/unified-sdk-generator/vsphere-automation-sdk-go/runtime
+replace github.com/vmware/vsphere-automation-sdk-go/runtime => /__w/nsx-go-sdk-generator/nsx-go-sdk-generator/build/vsphere-automation-sdk-go/runtime
 
-replace github.com/vmware/vsphere-automation-sdk-go/lib => /builds/vapi-sdk/unified-sdk-generator/vsphere-automation-sdk-go/lib
+replace github.com/vmware/vsphere-automation-sdk-go/lib => /__w/nsx-go-sdk-generator/nsx-go-sdk-generator/build/vsphere-automation-sdk-go/lib
 
 require (
 	github.com/vmware/vsphere-automation-sdk-go/lib v0.0.0-00010101000000-000000000000

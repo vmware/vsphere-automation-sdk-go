@@ -34,8 +34,8 @@ type ConfigClient interface {
 	// Configure file server and timers for automated backup. If secret fields are omitted (password, passphrase) then use the previously set value.
 	//
 	// @param backupConfigurationParam (required)
-	// @param frameTypeParam Frame type (optional, default to LOCAL_LOCAL_MANAGER)
-	// @param siteIdParam Site ID (optional, default to localhost)
+	// @param frameTypeParam This attribute is used to indicate the service on current site or other site for which backup is handled in a frame. LOCAL_LOCAL_MANAGER corresponds to local LM of the site. LOCAL_MANAGER cprresponds to LM of other site. (optional, default to LOCAL_LOCAL_MANAGER)
+	// @param siteIdParam Site ID of LM site, which will be supported in a frame (optional, default to localhost)
 	// @return com.vmware.nsx_policy.model.BackupConfiguration
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

@@ -24,7 +24,7 @@ type StatusClient interface {
 	// Get IDFW status for a specific Compute Collection
 	//
 	// @param computeCollectionIdParam Compute colelction id (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.IdfwComputeCollectionStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -36,7 +36,7 @@ type StatusClient interface {
 
 	// Get IDFW status for all Compute Collections
 	//
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.IdfwComputeCollectionListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

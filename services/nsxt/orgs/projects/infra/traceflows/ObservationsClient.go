@@ -26,7 +26,7 @@ type ObservationsClient interface {
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
 	// @param traceflowIdParam (required)
-	// @param enforcementPointPathParam Enforcement point path (optional)
+	// @param enforcementPointPathParam Policy path of enforcement point on which traceflow session was created. (optional)
 	// @return com.vmware.nsx_policy.model.TraceflowObservationListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

@@ -24,7 +24,7 @@ type SearchClient interface {
 	// Search the LDAP identity source for users and groups that match the given filter_value. In most cases, the LDAP source performs a case-insensitive search.
 	//
 	// @param ldapIdentitySourceIdParam (required)
-	// @param filterValueParam Search filter value (required)
+	// @param filterValueParam A string to use when searching for users and groups in the LDAP identity source. (required)
 	// @return com.vmware.nsx_policy.model.LdapIdentitySourceSearchResultList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

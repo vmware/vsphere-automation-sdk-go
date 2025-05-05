@@ -24,7 +24,7 @@ type SystemConfigurationClient interface {
 	// Use this API to update DNS, NTP and Backup server config in Avi Load Balancer Controller. This API is for VCF deployments only.
 	//
 	// @param aLBControllerSystemConfigurationParam (required)
-	// @param runningConfigParam Update Avi Load Balancer Controller runtime config as well (optional)
+	// @param runningConfigParam If true, then the configuration will be updated in the running Avi Load Balancer Controllers as well. (optional)
 	// @return com.vmware.nsx_policy.model.ALBControllerSystemConfigurationResponse
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

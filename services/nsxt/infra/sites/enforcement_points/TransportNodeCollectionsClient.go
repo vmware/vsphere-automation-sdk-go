@@ -66,9 +66,9 @@ type TransportNodeCollectionsClient interface {
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
-	// @param clusterMoidParam Managed object ID of cluster in VC (optional)
-	// @param computeCollectionIdParam Compute collection id (optional)
-	// @param vcInstanceUuidParam UUID for VC deployment (optional)
+	// @param clusterMoidParam Managed object ID of cluster in VC. vc_instance_uuid has to be provided along with this parameter otherwise it will return empty list. (optional)
+	// @param computeCollectionIdParam Compute collection id against which the serach will be done. If this parameter is provided then other parameters will be ignored. (optional)
+	// @param vcInstanceUuidParam This is UUID of VC deployment as seen in managed objects of VC as \"instanceUuid\". cluster_moid has to be provided along with this parameter otherwise it will return empty list. (optional)
 	// @return com.vmware.nsx_policy.model.HostTransportNodeCollectionListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -124,8 +124,8 @@ type TransportNodeCollectionsClient interface {
 	// @param enforcementpointIdParam (required)
 	// @param transportNodeCollectionsIdParam (required)
 	// @param hostTransportNodeCollectionParam (required)
-	// @param applyProfileParam Indicates if the Transport Node Profile (TNP) configuration should be applied during creation (optional, default to true)
-	// @param overrideNsxOwnershipParam Override NSX Ownership (optional, default to false)
+	// @param applyProfileParam This flag should be used when the configuration specified by the transport_node_profile_id should not be applied to existing hosts referred to by the compute_collection_id during transport node collection creation. If this flag is set to false, the TNP configuration will not be applied to any of the hosts in the cluster during creation. Any transport node that exists in the cluster that has a different configuration than the TNP configuration will have the is_overridden flag set to true. This will result in the transport node collection creation completing with a status of PROFILE_MISMATCH. If this flag is set to true, the default value, the TNP configuration will be applied to all hosts in the cluster during transport node collection creation. (optional, default to true)
+	// @param overrideNsxOwnershipParam Flag indicating whether the NSX ownership constraints (on Managed Objects like Host/Cluster/DVS) should be overridden/bypassed. Note: Overriding/bypassing NSX ownership constraints is not recommended at all. This indicates, you want to use/configure/own certain Managed Objects (like Cluster, Host or DVS) which seem to be already in use/configured/owned by some other NSX instance. This option should be used with caution. It should only be used to come out of situations where: a. The other NSX instance no longer intends to use the Managed Objects (and has already unconfigured NSX configurations) but the ownership still lies with it (incorrectly) and you want those Managed Objects to be used/configured/owned by this NSX instance. b. The other NSX instance has crashed or decommisioned but the ownership still lies with it and you want those Managed Objects to be used/configured/owned by this NSX instance. Enabling this option, while the Managed Objects affected by this operation are actively used by other NSX, can lead to problematic states on both the NSX instances. For example, if a TN is forcefully reconfigured by this NSX instance (using override_nsx_ownership=true), while it was already configured and in use by the other NSX instance, it could corrupt the HostSwitch configurations pushed down by the other NSX instance. (optional, default to false)
 	// @return com.vmware.nsx_policy.model.HostTransportNodeCollection
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

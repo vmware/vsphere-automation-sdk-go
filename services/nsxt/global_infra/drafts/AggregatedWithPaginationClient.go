@@ -24,8 +24,8 @@ type Aggregated_with_paginationClient interface {
 	// Get a paginated aggregated configuration of a given draft. This aggregated configuration is the differnece between the current published firewall configuration and a firewall configuration stored in a given draft. For an initial API call, if request_id is present in a response, then this is a paginated aggregated configuration of a given draft, containing all the security policies from the aggregated configuration. Using this request_id, more granular aggregated configuration, at security policy level, can be fetched from subsequent API calls. Absence of request_id suggests that whole aggregated configuration has been returned as a response to initial API call, as the size of aggregated configuration is not big enough to need pagination.
 	//
 	// @param draftIdParam (required)
-	// @param requestIdParam Request identifier to track subsequent API calls (optional)
-	// @param rootPathParam Path of the root object of subtree (optional)
+	// @param requestIdParam If the initial call to get paginated aggregated configuration for a draft, returns a paginated response, then the response will contain a request_id. This identifier needs to be passed with subsequent API calls to get detailed aggregated configuration for the draft. (optional)
+	// @param rootPathParam Policy path of the security policy. If specified with the subsequent API calls after initial call to get paginated aggregated configuration for a draft, the response will return the subtree of this security policy having all its children. If not specified, then the subsequent API calls will return all the security policies without their children, from pre-calculated aggregated configuration of a draft. This is not required for an initial call to get paginated aggregated configuration for a draft. (optional)
 	// @return com.vmware.nsx_policy.model.PolicyDraftPaginatedAggregatedConfigurationResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

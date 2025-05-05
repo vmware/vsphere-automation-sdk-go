@@ -25,7 +25,7 @@ type NslookupClient interface {
 	//
 	// @param tier0IdParam (required)
 	// @param addressParam IP address or FQDN for nslookup (optional)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.AggregatePolicyDnsAnswer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

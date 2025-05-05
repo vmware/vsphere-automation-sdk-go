@@ -25,7 +25,7 @@ type ProjectsClient interface {
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
-	// @param isRecursiveParam Recursively delete entire project tree. (optional, default to false)
+	// @param isRecursiveParam true - Delete entire project tree including all its children. This is very similar to HAPI delete. false - Delete will not include project's children. If project has any children then delete will fail. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -38,7 +38,7 @@ type ProjectsClient interface {
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
-	// @param shortFormatParam Project API response is brief or descriptive (optional, default to false)
+	// @param shortFormatParam true - result in short format i.e. only id, path and display_name of the listed projects, false - descriptive result with all properties of the projects being listed. (optional, default to false)
 	// @return com.vmware.nsx_policy.model.Project
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -52,11 +52,11 @@ type ProjectsClient interface {
 	//
 	// @param orgIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param instanceIdParam Instance id of NSX+ where to route this request to. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.ProjectListResult
 	//

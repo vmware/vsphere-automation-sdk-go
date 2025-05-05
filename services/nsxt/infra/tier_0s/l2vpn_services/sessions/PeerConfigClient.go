@@ -26,7 +26,7 @@ type PeerConfigClient interface {
 	// @param tier0IdParam (required)
 	// @param serviceIdParam (required)
 	// @param sessionIdParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.AggregateL2VPNSessionPeerConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

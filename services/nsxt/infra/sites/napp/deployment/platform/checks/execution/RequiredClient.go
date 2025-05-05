@@ -24,7 +24,7 @@ type RequiredClient interface {
 	// Get NSX Application Platform pre/post checks execution required.
 	//
 	// @param siteIdParam (required)
-	// @param formFactorParam Form factor types (required)
+	// @param formFactorParam Form factor types. standard - Deployment with standard configuration. advanced - Deployment with advanced configuration. evaluation - Deployment with evaluation configuration. (required)
 	// @return com.vmware.nsx_policy.model.DeploymentChecksExecutionRequiredResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

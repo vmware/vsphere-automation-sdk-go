@@ -23,9 +23,9 @@ type StatusClient interface {
 
 	// Get the status of the latest gateway firewall export task.
 	//
-	// @param categoryParam Type of export category (optional)
-	// @param draftPathParam Policy Path of gateway draft (optional)
-	// @param scopePathParam Scope path (optional)
+	// @param categoryParam Export category for rules like SHARED, ALL_LOCAL or LOCAL. ALL_LOCAL - To export all local gateway rules. LOCAL - To export local gateway rules for provided gateway. SHARED - To export all shared gateway rules. (optional)
+	// @param draftPathParam The draft path for which gateway firewall export was triggered. (optional)
+	// @param scopePathParam It is the scope path for which export was triggered. (optional)
 	// @return com.vmware.nsx_policy.model.FirewallExportTask
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

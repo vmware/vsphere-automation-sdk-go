@@ -24,8 +24,8 @@ type IdsEventsClient interface {
 	// Get the list of the IDS events that are detected with the total number of intrusions detected, their severity and the time they occurred, grouped by signature id.
 	//
 	// @param policyIdsEventDataRequestParam (required)
-	// @param contextParam Tenancy Context of the API request (optional)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param contextParam The following are the valid values for this query parameter – - ALL_PROJECTS: The response returned would contain entries corresponding to ALL (i.e. custom and default) projects in the org. (optional)
+	// @param enforcementPointPathParam The path of the enforcement point from which the data needs to be fetched. (optional)
 	// @return com.vmware.nsx_policy.model.PolicyIdsEventsBySignatureResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

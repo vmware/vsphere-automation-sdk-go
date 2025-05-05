@@ -34,6 +34,19 @@ type UsageClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, ipBlockIdParam string) (nsx_policyModel.IpAddressBlockUsage, error)
+
+	// Lists the usage details for all IpAddressBlocks
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @return com.vmware.nsx_policy.model.IpAddressBlockUsageList
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	List(orgIdParam string, projectIdParam string) (nsx_policyModel.IpAddressBlockUsageList, error)
 }
 
 type usageClient struct {
@@ -45,7 +58,8 @@ type usageClient struct {
 func NewUsageClient(connector vapiProtocolClient_.Connector) *usageClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.infra.ip_blocks.usage")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -86,6 +100,39 @@ func (uIface *usageClient) Get(orgIdParam string, projectIdParam string, ipBlock
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(nsx_policyModel.IpAddressBlockUsage), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), uIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (uIface *usageClient) List(orgIdParam string, projectIdParam string) (nsx_policyModel.IpAddressBlockUsageList, error) {
+	typeConverter := uIface.connector.TypeConverter()
+	executionContext := uIface.connector.NewExecutionContext()
+	operationRestMetaData := usageListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(usageListInputType(), typeConverter)
+	sv.AddStructField("OrgId", orgIdParam)
+	sv.AddStructField("ProjectId", projectIdParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_policyModel.IpAddressBlockUsageList
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := uIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.infra.ip_blocks.usage", "list", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.IpAddressBlockUsageList
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), UsageListOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_policyModel.IpAddressBlockUsageList), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), uIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

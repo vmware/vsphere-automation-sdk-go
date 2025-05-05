@@ -24,8 +24,8 @@ type RealizedEntityClient interface {
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
-	// @param intentPathParam String Path of the intent object (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param intentPathParam Intent path of object, forward slashes must be escaped using %2F (required)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

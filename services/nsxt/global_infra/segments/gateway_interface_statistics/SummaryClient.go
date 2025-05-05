@@ -24,7 +24,7 @@ type SummaryClient interface {
 	// Segment ID is the ID of the segment that is connected to the the tier-0
 	//
 	// @param segmentIdParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @param sourceParam Data source type. (optional)
 	// @return com.vmware.nsx_policy.model.PolicyInterfaceStatisticsSummary
 	//

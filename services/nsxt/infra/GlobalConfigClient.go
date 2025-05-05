@@ -23,7 +23,7 @@ type GlobalConfigClient interface {
 
 	// This rest routine is deprecated. Use /infra/connectivity-global-config for Connectivity global config and /infra/ops-global-config for Operations global config. Read global configuration.
 	//
-	// @param applyLocallyParam Flag to check reaching NSX+ or LM resource (optional, default to false)
+	// @param applyLocallyParam If the user sets apply_locally to GET/PUT/PATCH call then the local resource copy will be shown/modified. This will only be acceptable on LM. In case LM only has it's copy, the apply_local = false will still have effect on local copy. (optional, default to false)
 	// @return com.vmware.nsx_policy.model.GlobalConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -39,7 +39,7 @@ type GlobalConfigClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param globalConfigParam (required)
-	// @param applyLocallyParam Flag to check reaching NSX+ or LM resource (optional, default to false)
+	// @param applyLocallyParam If the user sets apply_locally to GET/PUT/PATCH call then the local resource copy will be shown/modified. This will only be acceptable on LM. In case LM only has it's copy, the apply_local = false will still have effect on local copy. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -51,7 +51,7 @@ type GlobalConfigClient interface {
 	// This rest routine is deprecated. Use /infra/connectivity-global-config for Connectivity global config and /infra/ops-global-config for Operations global config. Update the global configuration.
 	//
 	// @param globalConfigParam (required)
-	// @param applyLocallyParam Flag to check reaching NSX+ or LM resource (optional, default to false)
+	// @param applyLocallyParam If the user sets apply_locally to GET/PUT/PATCH call then the local resource copy will be shown/modified. This will only be acceptable on LM. In case LM only has it's copy, the apply_local = false will still have effect on local copy. (optional, default to false)
 	// @return com.vmware.nsx_policy.model.GlobalConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

@@ -28,8 +28,8 @@ type StatisticsClient interface {
 	// @param domainIdParam Domain id (required)
 	// @param securityPolicyIdParam Security policy id (required)
 	// @param ruleIdParam Rule id (required)
-	// @param containerClusterPathParam String Path of the Container Cluster entity (optional)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param containerClusterPathParam Path to the container cluster entity where the request will be executed. (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.RuleStatisticsListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

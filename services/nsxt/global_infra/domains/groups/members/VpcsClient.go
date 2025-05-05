@@ -4,7 +4,7 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: PhysicalServers
+// Interface file for service: Vpcs
 // Used by client-side stubs.
 
 package members
@@ -19,20 +19,18 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-type PhysicalServersClient interface {
+type VpcsClient interface {
 
-	// Returns Effective Physical Server Members that belong to this group. This API is applicable only for Groups containing Physical Server member type. For Groups containing other member types,it returns an empty list.
-	//
-	// Deprecated: This API element is deprecated.
+	// Get VPCs that belong to this Group
 	//
 	// @param domainIdParam Domain id (required)
 	// @param groupIdParam Group Id (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param enforcementPointPathParam The path of the enforcement point from which the list of members needs to be fetched. Forward slashes must be escaped using %2F. (optional)
+	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.PolicyGroupMembersListResult
 	//
@@ -44,39 +42,39 @@ type PhysicalServersClient interface {
 	List(domainIdParam string, groupIdParam string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyGroupMembersListResult, error)
 }
 
-type physicalServersClient struct {
+type vpcsClient struct {
 	connector           vapiProtocolClient_.Connector
 	interfaceDefinition vapiCore_.InterfaceDefinition
 	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewPhysicalServersClient(connector vapiProtocolClient_.Connector) *physicalServersClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.domains.groups.members.physical_servers")
+func NewVpcsClient(connector vapiProtocolClient_.Connector) *vpcsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.domains.groups.members.vpcs")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
-	pIface := physicalServersClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
-	return &pIface
+	vIface := vpcsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &vIface
 }
 
-func (pIface *physicalServersClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
-	if entry, ok := pIface.errorsBindingMap[errorName]; ok {
+func (vIface *vpcsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+	if entry, ok := vIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (pIface *physicalServersClient) List(domainIdParam string, groupIdParam string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyGroupMembersListResult, error) {
-	typeConverter := pIface.connector.TypeConverter()
-	executionContext := pIface.connector.NewExecutionContext()
-	operationRestMetaData := physicalServersListRestMetadata()
+func (vIface *vpcsClient) List(domainIdParam string, groupIdParam string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyGroupMembersListResult, error) {
+	typeConverter := vIface.connector.TypeConverter()
+	executionContext := vIface.connector.NewExecutionContext()
+	operationRestMetaData := vpcsListRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(physicalServersListInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(vpcsListInputType(), typeConverter)
 	sv.AddStructField("DomainId", domainIdParam)
 	sv.AddStructField("GroupId", groupIdParam)
 	sv.AddStructField("Cursor", cursorParam)
@@ -92,16 +90,16 @@ func (pIface *physicalServersClient) List(domainIdParam string, groupIdParam str
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.groups.members.physical_servers", "list", inputDataValue, executionContext)
+	methodResult := vIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.domains.groups.members.vpcs", "list", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.PolicyGroupMembersListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PhysicalServersListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), VpcsListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(nsx_policyModel.PolicyGroupMembersListResult), nil
 	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), vIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}

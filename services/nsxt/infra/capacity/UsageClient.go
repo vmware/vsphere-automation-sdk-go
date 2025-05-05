@@ -28,11 +28,11 @@ type UsageClient interface {
 	//
 	// Deprecated: This API element is deprecated.
 	//
-	// @param categoryParam (optional)
+	// @param categoryParam Category of attributes for which capacity details need to be fetched. Supported categories are security, inventory and networking. User can provide comma separated list of categories. In order to fetch the whole list of attributes one can leave the category value blank. (optional)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.PolicyCapacityUsageResponse
 	//

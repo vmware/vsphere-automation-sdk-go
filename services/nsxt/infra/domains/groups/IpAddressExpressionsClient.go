@@ -27,7 +27,7 @@ type IpAddressExpressionsClient interface {
 	// @param groupIdParam (required)
 	// @param expressionIdParam (required)
 	// @param ipAddressListParam (required)
-	// @param actionParam Add or Remove group members. (required)
+	// @param actionParam Action parameter determines whether to add or remove the group members. (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

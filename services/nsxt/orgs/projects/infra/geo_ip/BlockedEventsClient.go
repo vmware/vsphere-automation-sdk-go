@@ -29,7 +29,7 @@ type BlockedEventsClient interface {
 	// @param destinationCountryCodeParam Comma Separated Destination Country Codes of Geo IP Blocked Event (optional)
 	// @param destinationIpAddressParam Comma Separated Destination IP Addresses of Geo IP Blocked Event (optional)
 	// @param directionParam Comma Separated Directions of Traffic (optional)
-	// @param includeAllProjectsParam (optional, default to false)
+	// @param includeAllProjectsParam All Blocked Events (including Default and Custom Projects) (optional, default to false)
 	// @param pageSizeParam Maximum number of results to return in this page (optional, default to 500)
 	// @param ruleIdParam Comma Separated Gateway Firewall Rule Ids of Geo IP Blocked Event (optional)
 	// @param sourceCountryCodeParam Comma Separated Source Country Codes of Geo IP Blocked Event (optional)

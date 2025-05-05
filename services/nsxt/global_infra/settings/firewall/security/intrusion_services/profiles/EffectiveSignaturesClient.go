@@ -24,7 +24,7 @@ type EffectiveSignaturesClient interface {
 	// Get all the IDS signatures attached to the Profile.
 	//
 	// @param profileIdParam Profile ID (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam The path of the enforcement point. (optional)
 	// @return com.vmware.nsx_policy.model.IdsProfileSignatures
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

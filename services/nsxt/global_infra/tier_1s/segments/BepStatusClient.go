@@ -25,8 +25,8 @@ type BepStatusClient interface {
 	//
 	// @param tier1IdParam (required)
 	// @param segmentIdParam (required)
-	// @param bridgeProfilePathParam Bridge profile path (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param bridgeProfilePathParam Policy path of Bridge profile using which a bridge end point was created. (required)
+	// @param enforcementPointPathParam Enforcement point path. (optional)
 	// @return com.vmware.nsx_policy.model.BridgeEndpointStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

@@ -24,8 +24,8 @@ type DnsForwarderClient interface {
 	// Perform the specified action for Tier0 DNS forwarder on specified enforcement point.
 	//
 	// @param tier0IdParam (required)
-	// @param actionParam An action to be performed for DNS forwarder on EP (required)
-	// @param enforcementPointPathParam An enforcement point path, on which the action is to be performed (optional, default to /infra/sites/default/enforcement-points/default)
+	// @param actionParam The valid DNS forwarder actions to be performed on EP are, - clear_cache: Clear the current cache of the dns forwarder from specified enforcement point. (required)
+	// @param enforcementPointPathParam An enforcement point path, on which the action is to be performed. If not specified, default enforcement point path, /infra/sites/default/enforcement-points/default will be considered. (optional, default to /infra/sites/default/enforcement-points/default)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

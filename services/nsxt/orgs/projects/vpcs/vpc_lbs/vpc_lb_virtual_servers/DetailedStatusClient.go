@@ -28,7 +28,7 @@ type DetailedStatusClient interface {
 	// @param vpcIdParam VPC ID (required)
 	// @param vpcLbIdParam Load Balancer ID (required)
 	// @param vpcLbVirtualServerIdParam LBVirtualServer id (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @param sourceParam Data source type. (optional)
 	// @return com.vmware.nsx_policy.model.AggregateLBVirtualServerStatus
 	//

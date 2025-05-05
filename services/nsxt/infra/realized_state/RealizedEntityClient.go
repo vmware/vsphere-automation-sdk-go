@@ -23,7 +23,7 @@ type RealizedEntityClient interface {
 
 	// Get realized entity uniquely identified by realized path, specified by query parameter
 	//
-	// @param realizedPathParam String Path of the realized object (required)
+	// @param realizedPathParam Realized path of object, forward slashes must be escaped using %2F (required)
 	// @return com.vmware.nsx_policy.model.GenericPolicyRealizedResource
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -35,8 +35,8 @@ type RealizedEntityClient interface {
 
 	// Refresh the status and statistics of all realized entities associated with given intent path synchronously. The vmw-async: True HTTP header cannot be used with this API.
 	//
-	// @param intentPathParam String Path of the intent object (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param intentPathParam Intent path of object, forward slashes must be escaped using %2F (required)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

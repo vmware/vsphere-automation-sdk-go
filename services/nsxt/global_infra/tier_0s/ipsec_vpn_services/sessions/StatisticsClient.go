@@ -25,8 +25,8 @@ type StatisticsClient interface {
 	// @param tier0IdParam (required)
 	// @param serviceIdParam (required)
 	// @param sessionIdParam (required)
-	// @param actionParam Action on statistics (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param actionParam Action to take on statistics for an object. (required)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

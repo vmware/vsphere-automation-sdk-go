@@ -26,8 +26,8 @@ type FailedQueriesClient interface {
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
 	// @param tier0IdParam (required)
-	// @param countParam The count of the failed DNS queries (optional, default to 100)
-	// @param enforcementPointPathParam An enforcement point path, on which the action is to be performed (optional, default to /infra/sites/default/enforcement-points/default)
+	// @param countParam How many failed DNS queries should be returned. (optional, default to 100)
+	// @param enforcementPointPathParam An enforcement point path, on which the action is to be performed. If not specified, default enforcement point path, /infra/sites/default/enforcement-points/default will be considered. (optional, default to /infra/sites/default/enforcement-points/default)
 	// @return com.vmware.nsx_policy.model.PolicyDnsFailedQueries
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

@@ -25,7 +25,7 @@ type TransportZonesAggstatusClient interface {
 	//
 	// @param siteIdParam site ID (required)
 	// @param enforcementPointIdParam enforcement point ID (required)
-	// @param includeSystemOwnedParam Include system owned transport zones (optional)
+	// @param includeSystemOwnedParam If true, system owned transport zones will be returned in API. Default false. (optional)
 	// @return com.vmware.nsx_policy.model.HeatMapTransportNodesAggregateStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

@@ -26,12 +26,12 @@ type ConsolidatedEffectiveIpAddressesClient interface {
 	// @param domainIdParam Domain id (required)
 	// @param groupIdParam Group Id (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param ipFilterParam IP address, range, or subnet (optional)
+	// @param enforcementPointPathParam The path of the enforcement point on which the API needs to be executed. Forward slashes must be escaped using %2F. (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param ipFilterParam IPElement can be a single IP address, IP address range or a Subnet. Its type can be of IPv4 or IPv6. Supported list of formats are \"192.168.1.1\", \"192.168.1.1-192.168.1.100\", \"192.168.0.0/24\", \"fe80::250:56ff:fe83:318c\", \"fe80::250:56ff:fe83:3181-fe80::250:56ff:fe83:318c\", \"fe80::250:56ff:fe83:318c/64\" (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param siteIdParam UUID of the site from which the effective IP addresses are to be fetched (optional)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.ConsolidatedEffectiveIPAddressMemberListResult
 	//

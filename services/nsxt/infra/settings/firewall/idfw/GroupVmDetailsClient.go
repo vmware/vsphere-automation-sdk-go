@@ -23,8 +23,8 @@ type GroupVmDetailsClient interface {
 
 	// Get all Identity Firewall Group VM details for a given Group.
 	//
-	// @param groupPathParam String Path of the group (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param groupPathParam Group path, forward slashes must be escaped using %2F. (required)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.PolicyIdfwGroupVmDetailListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

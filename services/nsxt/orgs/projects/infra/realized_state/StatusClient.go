@@ -25,9 +25,9 @@ type StatusClient interface {
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
-	// @param intentPathParam Policy Path of the intent object (required)
-	// @param includeEnforcedStatusParam Include Enforced Status Flag (optional, default to false)
-	// @param sitePathParam Policy Path of the site from where the realization status needs to be fetched (optional)
+	// @param intentPathParam Policy Path referencing an intent object. (required)
+	// @param includeEnforcedStatusParam Flag conveying whether to include detailed view of the enforcement point specific status or not. (optional, default to false)
+	// @param sitePathParam Policy Path referencing a site. This is applicable only on a GlobalManager. If no site_path is specified, then based on the span of the intent the response will be fetched from the respective sites (optional)
 	// @return com.vmware.nsx_policy.model.ConsolidatedRealizedStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

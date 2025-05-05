@@ -30,7 +30,7 @@ type EventLogServersClient interface {
 	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param eventLogServerIdParam Event Log server identifier (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -48,7 +48,7 @@ type EventLogServersClient interface {
 	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param eventLogServerIdParam Event Log server identifier (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.DirectoryEventLogServer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -68,7 +68,7 @@ type EventLogServersClient interface {
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param eventLogServerIdParam Event Log server identifier (required)
 	// @param directoryEventLogServerParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -87,7 +87,7 @@ type EventLogServersClient interface {
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param eventLogServerIdParam Event Log Server identifier (required)
 	// @param directoryEventLogServerParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.DirectoryEventLogServer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

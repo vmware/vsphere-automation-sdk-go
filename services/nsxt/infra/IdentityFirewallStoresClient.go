@@ -25,7 +25,7 @@ type IdentityFirewallStoresClient interface {
 	// If the firewall identity store is removed, it will stop the identity store synchronization. User will not be able to define new IDFW rules
 	//
 	// @param identityFirewallStoreIdParam firewall identity store ID (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -37,7 +37,7 @@ type IdentityFirewallStoresClient interface {
 	// Return a firewall identity store based on the store identifier
 	//
 	// @param identityFirewallStoreIdParam identity firewall store ID (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.IdentityFirewallStore
 	// The return value will contain all the properties defined in nsx_policyModel.IdentityFirewallStore.
 	//
@@ -51,10 +51,10 @@ type IdentityFirewallStoresClient interface {
 	// List all firewall identity stores
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.IdentityFirewallStoreListResults
 	//
@@ -70,7 +70,7 @@ type IdentityFirewallStoresClient interface {
 	// @param identityFirewallStoreIdParam firewall identity store ID (required)
 	// @param identityFirewallStoreParam (required)
 	// The parameter must contain all the properties defined in nsx_policyModel.IdentityFirewallStore.
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -84,7 +84,7 @@ type IdentityFirewallStoresClient interface {
 	// @param identityFirewallStoreIdParam firewall identity store ID (required)
 	// @param identityFirewallStoreParam (required)
 	// The parameter must contain all the properties defined in nsx_policyModel.IdentityFirewallStore.
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.IdentityFirewallStore
 	// The return value will contain all the properties defined in nsx_policyModel.IdentityFirewallStore.
 	//

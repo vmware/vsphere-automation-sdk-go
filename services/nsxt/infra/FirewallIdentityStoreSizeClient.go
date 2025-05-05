@@ -26,7 +26,7 @@ type FirewallIdentityStoreSizeClient interface {
 	//
 	// @param directoryDomainParam (required)
 	// The parameter must contain all the properties defined in nsx_policyModel.DirectoryDomain.
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.DirectoryDomainSize
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

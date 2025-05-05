@@ -24,7 +24,7 @@ type StatusClient interface {
 	// Get current status of tier-0 DNS forwarder. - no enforcement point path specified: Status will be evaluated on each enforcement point. - {enforcement_point_path}: Status will be evaluated only on the given enforcement point.
 	//
 	// @param tier0IdParam Tier-0 id (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.AggregateDNSForwarderStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

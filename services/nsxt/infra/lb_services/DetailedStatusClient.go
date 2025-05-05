@@ -24,10 +24,10 @@ type DetailedStatusClient interface {
 	// Get LBService detailed status information. - no enforcement point path specified: Information will be aggregated from each enforcement point. - {enforcement_point_path}: Information will be retrieved only from the given enforcement point. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
 	//
 	// @param lbServiceIdParam LBService id (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @param includeInstanceDetailsParam Flag to indicate whether include detail information (optional, default to false)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
+	// @param includeInstanceDetailsParam The flag to indicate whether include detail information. Load balancer instance detail information will be returned if this field is set to true. It's only valid in realtime status query. (optional, default to false)
 	// @param sourceParam Data source type. (optional)
-	// @param transportNodeIdsParam The UUIDs of transport nodes (optional)
+	// @param transportNodeIdsParam The UUIDs of transport nodes. Multiple UUIDs should be separated by commas. If this field is specified, only the status from the given transport nodes will be returned. It's only valid in realtime status query. (optional)
 	// @return com.vmware.nsx_policy.model.AggregateLBServiceStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

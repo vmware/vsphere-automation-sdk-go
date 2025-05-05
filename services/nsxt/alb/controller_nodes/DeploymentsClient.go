@@ -36,8 +36,8 @@ type DeploymentsClient interface {
 	// Attempts to unregister and undeploy a specified auto-deployed cluster node. If it is a member of a cluster, then the node will be automatically detached from the cluster before being unregistered and undeployed. Alternatively, if the original deployment attempt failed or the node is not found, cleans up the deployment information associated with the deployment attempt. Note: If a node has been successfully auto-deployed, then the associated deployment information will not be deleted unless and until the node is successfully deleted.
 	//
 	// @param nodeIdParam (required)
-	// @param forceDeleteParam Delete by force (optional)
-	// @param inaccessibleParam Delete when controller is inaccessible (optional)
+	// @param forceDeleteParam If true, the Avi Load Balancer Controller node will be undeployed even if it cannot be removed from its cluster. (optional)
+	// @param inaccessibleParam If inaccessible is provided along with force_delete and if this is the last Avi Load Balancer Controller node in the cluster then deployment request will be deleted from NSX even if Policy objects are present. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -60,8 +60,8 @@ type DeploymentsClient interface {
 
 	// Returns request information for every attempted deployment of a Avi Load Balancer cluster node.
 	//
-	// @param clusteringIdParam Unique Id for Avi Load Balancer Controller Cluster used in VCF managed NSX (optional)
-	// @param stateParam The current state of the Avi Load Balancer Controller node deployment (optional)
+	// @param clusteringIdParam Id to filter Avi Load Balancer Controllers, if not provided Avi Load Balancer Controllers without clustering Id will be returned. (optional)
+	// @param stateParam If state is pending then pending requests for Avi Load Balancer Controller nodes are shown. If state is deployed then deployed requests for Avi Load Balancer Controller nodes are shown. else show all the Avi Load Balancer Controller deployment requests. (optional)
 	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequestList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -75,7 +75,7 @@ type DeploymentsClient interface {
 	//
 	// @param nodeIdParam (required)
 	// @param aLBControllerNodeVMDeploymentRequestParam (required)
-	// @param runningConfigParam Update Avi Load Balancer Controller runtime config as well (optional)
+	// @param runningConfigParam If true, then the configuration will be updated in the running Avi Load Balancer Controllers as well. (optional)
 	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequest
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

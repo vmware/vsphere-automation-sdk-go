@@ -40,6 +40,7 @@ type StateClient interface {
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
 	// @param mmStateParam maintenance mode state (optional)
+	// @param nodeTypeParam Filter the edge transport nodes state list api based on node type. (optional)
 	// @param statusParam Realized state of transport nodes (optional)
 	// @param vtepIpParam Virtual tunnel endpoint ip address of transport node (optional)
 	// @return com.vmware.nsx_policy.model.PolicyEdgeTransportNodeStateListResult
@@ -49,7 +50,7 @@ type StateClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(siteIdParam string, enforcementpointIdParam string, mmStateParam *string, statusParam *string, vtepIpParam *string) (nsx_policyModel.PolicyEdgeTransportNodeStateListResult, error)
+	List(siteIdParam string, enforcementpointIdParam string, mmStateParam *string, nodeTypeParam *string, statusParam *string, vtepIpParam *string) (nsx_policyModel.PolicyEdgeTransportNodeStateListResult, error)
 }
 
 type stateClient struct {
@@ -112,7 +113,7 @@ func (sIface *stateClient) Get(siteIdParam string, enforcementpointIdParam strin
 	}
 }
 
-func (sIface *stateClient) List(siteIdParam string, enforcementpointIdParam string, mmStateParam *string, statusParam *string, vtepIpParam *string) (nsx_policyModel.PolicyEdgeTransportNodeStateListResult, error) {
+func (sIface *stateClient) List(siteIdParam string, enforcementpointIdParam string, mmStateParam *string, nodeTypeParam *string, statusParam *string, vtepIpParam *string) (nsx_policyModel.PolicyEdgeTransportNodeStateListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := stateListRestMetadata()
@@ -123,6 +124,7 @@ func (sIface *stateClient) List(siteIdParam string, enforcementpointIdParam stri
 	sv.AddStructField("SiteId", siteIdParam)
 	sv.AddStructField("EnforcementpointId", enforcementpointIdParam)
 	sv.AddStructField("MmState", mmStateParam)
+	sv.AddStructField("NodeType", nodeTypeParam)
 	sv.AddStructField("Status", statusParam)
 	sv.AddStructField("VtepIp", vtepIpParam)
 	inputDataValue, inputError := sv.GetStructValue()

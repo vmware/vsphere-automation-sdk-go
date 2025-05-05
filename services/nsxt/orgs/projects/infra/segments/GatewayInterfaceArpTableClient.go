@@ -30,12 +30,12 @@ type GatewayInterfaceArpTableClient interface {
 	// @param projectIdParam The project ID (required)
 	// @param segmentIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param edgePathParam Policy path of edge node (optional)
-	// @param enforcementPointPathParam Enforcement point path (optional)
-	// @param hostTransportNodePathParam Policy path of host transport node (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param edgePathParam Policy path of edge node. Edge node must be member of enforcement point. Edge path is required when interface specified is either service or loopback interface. (optional)
+	// @param enforcementPointPathParam String Path of the enforcement point. When not specified, routes from all enforcement-points are returned. This property is required for retrieving routes in CSV format. (optional)
+	// @param hostTransportNodePathParam Policy path of host transport node. In case of API used from Global Manager, use the HostTransportNode path from Local Manager. (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.InterfaceArpTable
 	//

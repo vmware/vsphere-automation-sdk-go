@@ -24,7 +24,7 @@ type StatusClient interface {
 	// Read traceflow status with id traceflow-id. Traceflow configuration will be cleaned up by the system after two hours of inactivity. Enforcement Path is optional parameter.
 	//
 	// @param traceflowIdParam (required)
-	// @param enforcementPointPathParam Enforcement point path (optional)
+	// @param enforcementPointPathParam Policy path of enforcement point on which traceflow session was created. (optional)
 	// @return com.vmware.nsx_policy.model.Traceflow
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

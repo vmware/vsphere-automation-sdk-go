@@ -23,7 +23,7 @@ type LbServiceUsageSummaryClient interface {
 
 	// API is used to retrieve the load balancer usage summary for all load balancer services. If the parameter ?include_usages=true exists, the property service-usages is included in the response. By default, service-usages is not included in the response. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
 	//
-	// @param includeUsagesParam Whether to include usages (optional)
+	// @param includeUsagesParam Specify whether to include usages in response. (optional)
 	// @return com.vmware.nsx_policy.model.LBServiceUsageSummary
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

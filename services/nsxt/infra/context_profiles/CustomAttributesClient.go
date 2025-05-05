@@ -27,7 +27,7 @@ type CustomAttributesClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param policyAttributesParam (required)
-	// @param actionParam Add or Remove Custom Context Profile Attribute values. (required)
+	// @param actionParam Action parameter determines whether to add or remove Custom Context Profile Attribute values. (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

@@ -24,7 +24,7 @@ type InstallClient interface {
 	// Use this API to install and update portal certificate in Avi Load Balancer Controller.
 	//
 	// @param aLBControllerCertificateParam (required)
-	// @param caOnlyParam Add given CA certificate to NSX Truststore (optional)
+	// @param caOnlyParam If set to True, given CA certificate will be added to NSX truststore, no certificate install will be performed on Avi Load Balancer Controller. (optional)
 	// @return com.vmware.nsx_policy.model.ALBControllerCertificate
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

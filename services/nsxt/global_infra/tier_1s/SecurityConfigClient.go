@@ -25,10 +25,10 @@ type SecurityConfigClient interface {
 	//
 	// @param tier1IdParam tier1 id (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param featureParam Collection of T1 supported security features (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param featureParam Feature to be activated/deactivated. IDPS - Intrusion Detection System TLS - Transport Layer Security Inspection MALWAREPREVENTION - Malware Prevention GFW_MULTICAST - Multicast on GFW GEOIP_MONITORING - Geo IP Monitoring Use any one of this to enable/disabe it. (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.SecurityFeatures
 	//

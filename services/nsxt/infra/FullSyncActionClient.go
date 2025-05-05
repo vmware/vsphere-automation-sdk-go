@@ -22,9 +22,9 @@ type FullSyncActionClient interface {
 
 	// Performs realized object actions specified in the action.
 	//
-	// @param actionParam (required)
-	// @param siteParam site id (optional)
-	// @param syncTypeParam Type of full sync being requested (optional)
+	// @param actionParam The action to perform (required)
+	// @param siteParam site id to perform full sync on NSX+, like site1, siteId is required for full sync api on NSX+ only. (optional)
+	// @param syncTypeParam If not specified, the value is defaulted to gm_to_lm_full_sync. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

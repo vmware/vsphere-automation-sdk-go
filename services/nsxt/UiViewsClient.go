@@ -55,9 +55,9 @@ type UiViewsClient interface {
 	//
 	// Deprecated: This API element is deprecated.
 	//
-	// @param tagParam The tag for which associated views to be queried. (optional)
-	// @param viewIdsParam Ids of the Views (optional)
-	// @param widgetIdParam Id of widget configuration (optional)
+	// @param tagParam The tag for which associated views to be queried. For tags specified on views, scope is automatically set to 'nsx-dashboard' and hence scope is ignored for searching views based on tag. (optional)
+	// @param viewIdsParam Comma separated ids of views to be queried. (optional)
+	// @param widgetIdParam Id of widget to be queried for all the views it is part of. (optional)
 	// @return com.vmware.nsx_policy.model.ViewList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

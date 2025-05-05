@@ -13,8 +13,8 @@ import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
-	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
@@ -28,14 +28,16 @@ type RedeployClient interface {
 	// @param serviceClusterIdParam (required)
 	// @param serviceNodeIdParam (required)
 	// @param policyServiceNodeParam (required)
+	// The parameter must contain all the properties defined in nsx_policyModel.PolicyServiceNode.
 	// @return com.vmware.nsx_policy.model.PolicyServiceNode
+	// The return value will contain all the properties defined in nsx_policyModel.PolicyServiceNode.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(siteIdParam string, enforcementpointIdParam string, serviceClusterIdParam string, serviceNodeIdParam string, policyServiceNodeParam nsx_policyModel.PolicyServiceNode) (nsx_policyModel.PolicyServiceNode, error)
+	Create(siteIdParam string, enforcementpointIdParam string, serviceClusterIdParam string, serviceNodeIdParam string, policyServiceNodeParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 }
 
 type redeployClient struct {
@@ -63,7 +65,7 @@ func (rIface *redeployClient) GetErrorBindingType(errorName string) vapiBindings
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (rIface *redeployClient) Create(siteIdParam string, enforcementpointIdParam string, serviceClusterIdParam string, serviceNodeIdParam string, policyServiceNodeParam nsx_policyModel.PolicyServiceNode) (nsx_policyModel.PolicyServiceNode, error) {
+func (rIface *redeployClient) Create(siteIdParam string, enforcementpointIdParam string, serviceClusterIdParam string, serviceNodeIdParam string, policyServiceNodeParam *vapiData_.StructValue) (*vapiData_.StructValue, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
 	operationRestMetaData := redeployCreateRestMetadata()
@@ -78,18 +80,18 @@ func (rIface *redeployClient) Create(siteIdParam string, enforcementpointIdParam
 	sv.AddStructField("PolicyServiceNode", policyServiceNodeParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.PolicyServiceNode
+		var emptyOutput *vapiData_.StructValue
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.service_clusters.service_nodes.action.redeploy", "create", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.PolicyServiceNode
+	var emptyOutput *vapiData_.StructValue
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RedeployCreateOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.PolicyServiceNode), nil
+		return output.(*vapiData_.StructValue), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

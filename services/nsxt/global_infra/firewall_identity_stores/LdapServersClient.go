@@ -24,8 +24,8 @@ type LdapServersClient interface {
 	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param ldapServerIdParam LDAP server identifier (required)
-	// @param actionParam LDAP server test requested (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param actionParam Type of LDAP server test to perform. (required)
+	// @param enforcementPointPathParam Enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

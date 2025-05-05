@@ -26,8 +26,8 @@ type VpcLbNodeCapacityStatusClient interface {
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)
 	// @param vpcIdParam VPC ID (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @param serviceClusterPathParam The service cluster path (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
+	// @param serviceClusterPathParam The property identifies the service cluster path. Service cluster path can be either Edge cluster path or Service Appliance cluster path. For example, service_cluster_path=/infra/sites/default/enforcement-points/default /edge-clusters/85175e0b-4d74-461d-83e1-f3b785adef9c. (optional)
 	// @param sourceParam Data source type. (optional)
 	// @return com.vmware.nsx_policy.model.AggregateLBNodeCapacitySummary
 	//

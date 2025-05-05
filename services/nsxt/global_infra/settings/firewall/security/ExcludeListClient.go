@@ -23,9 +23,9 @@ type ExcludeListClient interface {
 
 	// Filter the firewall exclude list by the given object, to check whether the object is a member of this exclude list.
 	//
-	// @param intentPathParam Path of the intent object to be searched in the exclude list (required)
-	// @param deepCheckParam Check all parents (optional, default to false)
-	// @param enforcementPointPathParam Path of the enforcement point (optional)
+	// @param intentPathParam Path of the intent object to be searched in the exclude list. (required)
+	// @param deepCheckParam Deep check all parents of requested intent object, if any of them is in exclude list. If found, makes requested object as excluded. (optional, default to false)
+	// @param enforcementPointPathParam Path of the enforcement point from where the result need to be fetched. If not provided, available enforcement point will be considered. (optional)
 	// @return com.vmware.nsx_policy.model.PolicyResourceReference
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

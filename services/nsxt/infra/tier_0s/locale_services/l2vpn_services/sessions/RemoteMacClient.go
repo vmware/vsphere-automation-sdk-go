@@ -30,8 +30,8 @@ type RemoteMacClient interface {
 	// @param localeServiceIdParam (required)
 	// @param serviceIdParam (required)
 	// @param sessionIdParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @param segmentPathParam Segment Path (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
+	// @param segmentPathParam Intent path of the segment. (optional)
 	// @return com.vmware.nsx_policy.model.AggregateL2VpnSessionRemoteMac
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

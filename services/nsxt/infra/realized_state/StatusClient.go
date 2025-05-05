@@ -23,9 +23,9 @@ type StatusClient interface {
 
 	// Get Consolidated Status of an intent object (with or without enforcement specific status details). The request is evaluated as follows: - <intent_path>: the request is evaluated on all enforcement points for the given intent without enforcement point specific details. - <intent_path, include_enforced_status>: the request is evaluated on all enforcement points for the given intent with enforcement point specific details.
 	//
-	// @param intentPathParam Policy Path of the intent object (required)
-	// @param includeEnforcedStatusParam Include Enforced Status Flag (optional, default to false)
-	// @param sitePathParam Policy Path of the site from where the realization status needs to be fetched (optional)
+	// @param intentPathParam Policy Path referencing an intent object. (required)
+	// @param includeEnforcedStatusParam Flag conveying whether to include detailed view of the enforcement point specific status or not. (optional, default to false)
+	// @param sitePathParam Policy Path referencing a site. This is applicable only on a GlobalManager. If no site_path is specified, then based on the span of the intent the response will be fetched from the respective sites (optional)
 	// @return com.vmware.nsx_policy.model.ConsolidatedRealizedStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

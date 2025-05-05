@@ -26,7 +26,7 @@ type BatchClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param batchRequestParam (required)
-	// @param atomicParam Ignored (transactional atomicity flag) (optional, default to false)
+	// @param atomicParam This flag is ignored. Transactional atomicity is no longer supported. (optional, default to false)
 	// @return com.vmware.nsx_policy.model.BatchResponse
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

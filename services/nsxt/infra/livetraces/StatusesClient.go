@@ -23,7 +23,7 @@ type StatusesClient interface {
 
 	// Get a list of all livetrace status entities.
 	//
-	// @param enforcementPointPathParam Enforcement point path (optional)
+	// @param enforcementPointPathParam Policy path of enforcement point on which livetrace session was created. (optional)
 	// @return com.vmware.nsx_policy.model.LiveTraceListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

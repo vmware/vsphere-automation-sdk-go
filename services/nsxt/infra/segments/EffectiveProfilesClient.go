@@ -24,7 +24,7 @@ type EffectiveProfilesClient interface {
 	// List all effective profiles for this segment on given enforcement point.
 	//
 	// @param segmentIdParam (required)
-	// @param enforcementPointPathParam Enforcement point path (optional)
+	// @param enforcementPointPathParam Policy path of enforcement point on request is to be made. (optional)
 	// @return com.vmware.nsx_policy.model.EffectiveProfilesResponse
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

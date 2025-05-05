@@ -26,7 +26,7 @@ type PnicBondStatusClient interface {
 	// @param siteIdParam site ID (required)
 	// @param enforcementPointIdParam enforcement point ID (required)
 	// @param nodeIdParam ID of transport node (required)
-	// @param statusParam pNic/bond status (optional)
+	// @param statusParam Status of pNIC/bond (optional)
 	// @return com.vmware.nsx_policy.model.PnicBondStatusListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

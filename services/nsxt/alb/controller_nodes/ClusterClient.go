@@ -23,7 +23,7 @@ type ClusterClient interface {
 
 	// Returns information about Avi Load Balancer Controller cluster status
 	//
-	// @param clusteringIdParam Unique Id for Avi Load Balancer Controller Cluster used in VCF managed NSX (optional)
+	// @param clusteringIdParam Id to filter Avi Load Balancer Controllers, if not provided Avi Load Balancer Controllers without clustering Id will be returned. (optional)
 	// @return com.vmware.nsx_policy.model.ALBControllerClusterInfo
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -35,7 +35,7 @@ type ClusterClient interface {
 
 	// Re-trigger clustering for Avi Load Balancer Controller Nodes.
 	//
-	// @param clusteringIdParam Unique Id for Avi Load Balancer Controller Cluster used in VCF managed NSX (optional)
+	// @param clusteringIdParam Id to filter Avi Load Balancer Controllers, if not provided Avi Load Balancer Controllers without clustering Id will be returned. (optional)
 	// @return com.vmware.nsx_policy.model.ALBControllerClusterTrigger
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

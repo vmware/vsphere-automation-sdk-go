@@ -22,9 +22,9 @@ type ReconcileClient interface {
 
 	// This API will sync the data in search index based on the use case like upgrade, restore, etc.
 	//
-	// @param actionParam Reconciliation use case (required)
-	// @param overrideParam Override flag (optional, default to true)
-	// @param scopeParam Re-indexing scope (optional)
+	// @param actionParam Indicates the reconciliation use case. (required)
+	// @param overrideParam Initiate reconciliation regardless of current status of reconcile. (optional, default to true)
+	// @param scopeParam Comma separated list of scopes for COMPLETE_REINDEXING action (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

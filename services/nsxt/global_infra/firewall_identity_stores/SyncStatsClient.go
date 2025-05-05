@@ -24,7 +24,7 @@ type SyncStatsClient interface {
 	// Get Firewall identity store sync statistics for the given identifier
 	//
 	// @param firewallIdentityStoreIdParam Firewall identity store identifier (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.DirectoryDomainSyncStats
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

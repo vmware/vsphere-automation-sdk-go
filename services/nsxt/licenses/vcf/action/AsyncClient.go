@@ -20,14 +20,16 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AsyncClient interface {
 
-	// Trigger to query VCF licenses from all registered vCenters and update licenses in NSX in an asynchronous manner.
+	// Trigger to query VCF licenses from all registered vCenters and update licenses in NSX in an asynchronous manner. If only_sync_unlicensed_vc is true, only query the licenses from the VCs that do not have a license in NSX asynchronously. If only_sync_unlicensed_vc is false, query the licenses from all VCs in NSX.
+	//
+	// @param onlySyncUnlicensedVcParam Specify whether to only query the licenses from the VCs that do not have a license in NSX asynchronously. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create() error
+	Create(onlySyncUnlicensedVcParam *bool) error
 }
 
 type asyncClient struct {
@@ -55,7 +57,7 @@ func (aIface *asyncClient) GetErrorBindingType(errorName string) vapiBindings_.B
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (aIface *asyncClient) Create() error {
+func (aIface *asyncClient) Create(onlySyncUnlicensedVcParam *bool) error {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
 	operationRestMetaData := asyncCreateRestMetadata()
@@ -63,6 +65,7 @@ func (aIface *asyncClient) Create() error {
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(asyncCreateInputType(), typeConverter)
+	sv.AddStructField("OnlySyncUnlicensedVc", onlySyncUnlicensedVcParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)

@@ -23,7 +23,7 @@ type StatusClient interface {
 
 	// This API will provide the search reconciliation status
 	//
-	// @param actionParam Reconciliation use case (optional)
+	// @param actionParam Indicates the reconciliation use case for which the status needs to be fetched. (optional)
 	// @return com.vmware.nsx_policy.model.SearchReconcileStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

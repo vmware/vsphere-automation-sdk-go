@@ -24,8 +24,8 @@ type FailedQueriesClient interface {
 	// Return the given count of recent failed DNS queries from DNS forwarder. Since the DNS forwarder is running in Active/Standby HA mode on transport nodes, the given count of queries will be returned from each nodes. Hence the total queries returned could be doubled. If no count is specified, 100 recent failed queries are returned. If the recent failures is less than the given count, all the failures will be returned. The maximum count is 1,000.
 	//
 	// @param tier0IdParam (required)
-	// @param countParam The count of the failed DNS queries (optional, default to 100)
-	// @param enforcementPointPathParam An enforcement point path, on which the action is to be performed (optional, default to /infra/sites/default/enforcement-points/default)
+	// @param countParam How many failed DNS queries should be returned. (optional, default to 100)
+	// @param enforcementPointPathParam An enforcement point path, on which the action is to be performed. If not specified, default enforcement point path, /infra/sites/default/enforcement-points/default will be considered. (optional, default to /infra/sites/default/enforcement-points/default)
 	// @return com.vmware.nsx_policy.model.PolicyDnsFailedQueries
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

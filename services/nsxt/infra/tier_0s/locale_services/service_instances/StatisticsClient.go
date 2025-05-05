@@ -26,7 +26,7 @@ type StatisticsClient interface {
 	// @param tier0IdParam Tier-0 id (required)
 	// @param localeServiceIdParam Locale service id (required)
 	// @param serviceInstanceIdParam Service instance id (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.PolicyServiceInstanceStatistics
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

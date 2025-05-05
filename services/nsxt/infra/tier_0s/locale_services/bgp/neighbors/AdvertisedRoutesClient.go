@@ -26,12 +26,13 @@ type AdvertisedRoutesClient interface {
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
 	// @param neighborIdParam (required)
-	// @param countParam Number of routes to retrieve (optional, default to 1000)
+	// @param countParam Number of routes to return in response. Not used when routes are requested in CSV format. (optional, default to 1000)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param enforcementPointPathParam Enforcement point path (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param enforcementPointPathParam String Path of the enforcement point. When not specified, routes from all enforcement-points are returned. This property is required for retrieving routes in CSV format. (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param neighborAddressParam Dynamically discovered BGP neighbor address. Not relevant for statically configured BGP neighbor. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.BgpNeighborRoutesListResult
 	//
@@ -40,7 +41,7 @@ type AdvertisedRoutesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(tier0IdParam string, localeServiceIdParam string, neighborIdParam string, countParam *int64, cursorParam *string, enforcementPointPathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.BgpNeighborRoutesListResult, error)
+	List(tier0IdParam string, localeServiceIdParam string, neighborIdParam string, countParam *int64, cursorParam *string, enforcementPointPathParam *string, includedFieldsParam *string, neighborAddressParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.BgpNeighborRoutesListResult, error)
 }
 
 type advertisedRoutesClient struct {
@@ -68,7 +69,7 @@ func (aIface *advertisedRoutesClient) GetErrorBindingType(errorName string) vapi
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (aIface *advertisedRoutesClient) List(tier0IdParam string, localeServiceIdParam string, neighborIdParam string, countParam *int64, cursorParam *string, enforcementPointPathParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.BgpNeighborRoutesListResult, error) {
+func (aIface *advertisedRoutesClient) List(tier0IdParam string, localeServiceIdParam string, neighborIdParam string, countParam *int64, cursorParam *string, enforcementPointPathParam *string, includedFieldsParam *string, neighborAddressParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.BgpNeighborRoutesListResult, error) {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
 	operationRestMetaData := advertisedRoutesListRestMetadata()
@@ -83,6 +84,7 @@ func (aIface *advertisedRoutesClient) List(tier0IdParam string, localeServiceIdP
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("NeighborAddress", neighborAddressParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)

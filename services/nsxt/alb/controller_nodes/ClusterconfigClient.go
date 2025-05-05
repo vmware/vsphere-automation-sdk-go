@@ -35,7 +35,7 @@ type ClusterconfigClient interface {
 
 	// Delete the cluster configuration for Avi Load Balancer Controller cluster. This API is for VCF deployments only.
 	//
-	// @param clusteringIdParam Unique Id for Avi Load Balancer Controller Cluster used in VCF managed NSX (optional)
+	// @param clusteringIdParam Id to filter Avi Load Balancer Controllers, if not provided Avi Load Balancer Controllers without clustering Id will be returned. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -46,7 +46,7 @@ type ClusterconfigClient interface {
 
 	// Returns cluster configuration for the Avi Load Balancer Controller cluster.
 	//
-	// @param clusteringIdParam Unique Id for Avi Load Balancer Controller Cluster used in VCF managed NSX (optional)
+	// @param clusteringIdParam Id to filter Avi Load Balancer Controllers, if not provided Avi Load Balancer Controllers without clustering Id will be returned. (optional)
 	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMClusterConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

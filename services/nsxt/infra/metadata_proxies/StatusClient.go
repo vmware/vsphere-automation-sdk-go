@@ -24,7 +24,7 @@ type StatusClient interface {
 	// Get metadata proxy status
 	//
 	// @param metadataProxyIdParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @param segmentPathParam String Path of the segment which is associated with this metadata proxy (optional)
 	// @param sourceParam Data source type. (optional)
 	// @return com.vmware.nsx_policy.model.PolicyMetadataProxyStatus

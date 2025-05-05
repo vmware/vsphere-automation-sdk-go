@@ -26,7 +26,7 @@ func redeployCreateInputType() vapiBindings_.StructType {
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
 	fields["service_cluster_id"] = vapiBindings_.NewStringType()
 	fields["service_node_id"] = vapiBindings_.NewStringType()
-	fields["policy_service_node"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyServiceNodeBindingType)
+	fields["policy_service_node"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyServiceNodeBindingType)})
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["service_cluster_id"] = "ServiceClusterId"
@@ -37,7 +37,7 @@ func redeployCreateInputType() vapiBindings_.StructType {
 }
 
 func RedeployCreateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.PolicyServiceNodeBindingType)
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyServiceNodeBindingType)})
 }
 
 func redeployCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -53,14 +53,14 @@ func redeployCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
 	fields["service_cluster_id"] = vapiBindings_.NewStringType()
 	fields["service_node_id"] = vapiBindings_.NewStringType()
-	fields["policy_service_node"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyServiceNodeBindingType)
+	fields["policy_service_node"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyServiceNodeBindingType)})
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["service_cluster_id"] = "ServiceClusterId"
 	fieldNameMap["service_node_id"] = "ServiceNodeId"
 	fieldNameMap["policy_service_node"] = "PolicyServiceNode"
 	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["policy_service_node"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyServiceNodeBindingType)
+	paramsTypeMap["policy_service_node"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyServiceNodeBindingType)})
 	paramsTypeMap["service_cluster_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["service_node_id"] = vapiBindings_.NewStringType()

@@ -25,8 +25,8 @@ type QuotaStatsClient interface {
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
-	// @param pathPrefixParam Path prefix for retriving the quota details. (required)
-	// @param constraintPathParam Constraint path to retrive the quota details. (optional)
+	// @param pathPrefixParam Path prefix for retriving the quota details. This value will be compared (exact match) with path-prefix of the quota. - Sample example - path_prefix=/orgs/org-1/projects/project-1/ (required)
+	// @param constraintPathParam Constraint path to retrive the quota details. Please note, when this constraint path is given, only this constraint will be considered on given path_prefix for returning the quota status. - Sample example - constraint_path=/orgs/org-1/projects/project-1/infra/constraints/constraint-1 (optional)
 	// @return com.vmware.nsx_policy.model.QuotaStatsListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

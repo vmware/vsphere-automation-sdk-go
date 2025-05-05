@@ -35,7 +35,7 @@ func stateGetInputType() vapiBindings_.StructType {
 }
 
 func StateGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.PolicyServiceNodeStateBindingType)
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.PolicyServiceNodeStateBindingType)})
 }
 
 func stateGetRestMetadata() vapiProtocol_.OperationRestMetadata {

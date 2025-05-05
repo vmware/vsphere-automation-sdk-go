@@ -25,9 +25,9 @@ type FirewallIdentityStoresClient interface {
 	// Invoke full sync or delta sync for a specific domain, with additional delay in seconds if needed. Stop sync will try to stop any pending sync if any to return to idle state.
 	//
 	// @param firewallIdentityStoreIdParam Firewall identity store identifier (required)
-	// @param actionParam Sync type requested (required)
-	// @param delayParam Request to execute the sync with some delay in seconds (optional, default to 0)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param actionParam Sync type could be either FULL sync or DELTA sync. The full sync fetches all the objects under the configured sync nodes while delta sync will get the changed objects from previous sync time. FULL_SYNC - Perform a full synchronization, where the local state of all AD objects is updated. DELTA_SYNC - Perform a delta synchronization, where local AD objects that have changed since the last synchronization are updated. STOP_SYNC - Stop the synchronization process. (required)
+	// @param delayParam The delay can be added to execute the sync action in the future. (optional, default to 0)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -44,7 +44,7 @@ type FirewallIdentityStoresClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param firewallIdentityStoreIdParam firewall identity store ID (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -61,7 +61,7 @@ type FirewallIdentityStoresClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param firewallIdentityStoreIdParam firewall identity store ID (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.DirectoryDomain
 	// The return value will contain all the properties defined in nsx_policyModel.DirectoryDomain.
 	//
@@ -80,10 +80,10 @@ type FirewallIdentityStoresClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.DirectoryDomainListResults
 	//
@@ -104,7 +104,7 @@ type FirewallIdentityStoresClient interface {
 	// @param firewallIdentityStoreIdParam firewall identity store ID (required)
 	// @param directoryDomainParam (required)
 	// The parameter must contain all the properties defined in nsx_policyModel.DirectoryDomain.
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -123,7 +123,7 @@ type FirewallIdentityStoresClient interface {
 	// @param firewallIdentityStoreIdParam firewall identity store ID (required)
 	// @param directoryDomainParam (required)
 	// The parameter must contain all the properties defined in nsx_policyModel.DirectoryDomain.
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.DirectoryDomain
 	// The return value will contain all the properties defined in nsx_policyModel.DirectoryDomain.
 	//

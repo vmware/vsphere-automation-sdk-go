@@ -31,6 +31,12 @@ const State_LIST_MM_STATE_EXITING = "EXITING"
 // Possible value for ``mmState`` of method State#list.
 const State_LIST_MM_STATE_DISABLED = "DISABLED"
 
+// Possible value for ``nodeType`` of method State#list.
+const State_LIST_NODE_TYPE_NODE = "EDGE_NODE"
+
+// Possible value for ``nodeType`` of method State#list.
+const State_LIST_NODE_TYPE_SERVICE_NODE = "EDGE_SERVICE_NODE"
+
 // Possible value for ``status`` of method State#list.
 const State_LIST_STATUS_PENDING = "PENDING"
 
@@ -119,11 +125,13 @@ func stateListInputType() vapiBindings_.StructType {
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
 	fields["mm_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["vtep_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["mm_state"] = "MmState"
+	fieldNameMap["node_type"] = "NodeType"
 	fieldNameMap["status"] = "Status"
 	fieldNameMap["vtep_ip"] = "VtepIp"
 	var validators = []vapiBindings_.Validator{}
@@ -146,14 +154,17 @@ func stateListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
 	fields["mm_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["vtep_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["mm_state"] = "MmState"
+	fieldNameMap["node_type"] = "NodeType"
 	fieldNameMap["status"] = "Status"
 	fieldNameMap["vtep_ip"] = "VtepIp"
 	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["vtep_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["mm_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -162,6 +173,7 @@ func stateListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
 	pathParams["enforcementpoint_id"] = "enforcementpointId"
 	pathParams["site_id"] = "siteId"
+	queryParams["node_type"] = "node_type"
 	queryParams["vtep_ip"] = "vtep_ip"
 	queryParams["mm_state"] = "mm_state"
 	queryParams["status"] = "status"

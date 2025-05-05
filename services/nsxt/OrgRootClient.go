@@ -23,9 +23,9 @@ type OrgRootClient interface {
 
 	// Read Org Root. Returns only the org root related properties. Inner object are not populated. For Hierarchical Get, base_path request parameter can be used.
 	//
-	// @param basePathParam Base Path for retrieving hierarchical intent (optional)
-	// @param filterParam Filter string as java regex (optional)
-	// @param typeFilterParam Filter string to retrieve hierarchy. (optional)
+	// @param basePathParam Base path of the resource for which user wants to retrieve the hierarchy. This should be the fully qualified path for the resource. - Sample examples - base_path=/infra/domains/default/groups/Group1 base_path=/infra/domains/default/security-policies/SecurityPolicy1/rules/Rule1 (optional)
+	// @param filterParam Filter string, can contain multiple or single java regular expressions separated by ';'. By default populates immediate child resources of the resource indicated by the URL. These child resources will be filtered by the type provided in the filter. It is recommended to use type_filter parameter instead of filter parameter. - Sample query string to prevent loading services and deployment zones: filter=Type-^(?!.\*?(?:Service|DeploymentZone)).\*$ - Sample query string to populate all the Group objects under Infra & Domain: filter=Type-Domain%7CGroup - Sample query string to load every policy object under Infra: filter=Type-.\* (optional)
+	// @param typeFilterParam Advanced filter string in which user can directly specify the resourceTypes to be filtered. Can be used in conjunction with base_path. - Sample example of type_filter to load all groups - type_filter=Group - Sample example of multiple type_filter - type_filter=Group;SercurityPolicy;RedirectionPolicy - Sample example to load all groups in default domain using base_path in conjunction with type_filter - base_path=/infra/domains/default&type_filter=Group (optional)
 	// @return com.vmware.nsx_policy.model.OrgRoot
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -38,7 +38,7 @@ type OrgRootClient interface {
 	// Patch API at org-root to create/update/delete entire or part of intent hierarchy. Hierarchical API: Provides users a way to create entire or part of intent in single API invocation. Input is expressed in a tree format. Each node in tree can have multiple children of different types. System will resolve the dependecies of nodes within the intent tree and will create the model. Children for any node can be specified using ChildResourceReference or ChildPolicyConfigResource. If a resource is specified using ChildResourceReference then it will not be updated only its children will be updated. If Object is specified using ChildPolicyConfigResource, object along with its children will be updated. Hierarchical API can also be used to delete any sub-branch of entire tree.
 	//
 	// @param orgRootParam (required)
-	// @param enforceRevisionCheckParam Force revision check (optional, default to false)
+	// @param enforceRevisionCheckParam If this is set to true, each child object in the request needs to have _revision property set correctly. System will honor the revision numbers while updating the resources. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

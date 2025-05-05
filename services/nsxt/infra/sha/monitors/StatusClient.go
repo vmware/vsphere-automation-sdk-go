@@ -24,8 +24,8 @@ type StatusClient interface {
 	// Read the SHA monitor status on certain transport node.
 	//
 	// @param monitorIdParam (required)
-	// @param transportNodeIdParam (optional)
-	// @param uaNodeIdParam (optional)
+	// @param transportNodeIdParam The transport node that the user would like to check monitor status. (optional)
+	// @param uaNodeIdParam The unified appliance node that the user would like to check monitor status. (optional)
 	// @return com.vmware.nsx_policy.model.ShaMonitorStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

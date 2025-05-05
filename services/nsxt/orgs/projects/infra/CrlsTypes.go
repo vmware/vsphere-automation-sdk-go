@@ -19,6 +19,18 @@ import (
 	"reflect"
 )
 
+// Possible value for ``fmt`` of method Crls#get.
+const Crls_GET_FMT_STANDARD = "STANDARD"
+
+// Possible value for ``fmt`` of method Crls#get.
+const Crls_GET_FMT_RAW = "RAW"
+
+// Possible value for ``fmt`` of method Crls#list.
+const Crls_LIST_FMT_STANDARD = "STANDARD"
+
+// Possible value for ``fmt`` of method Crls#list.
+const Crls_LIST_FMT_RAW = "RAW"
+
 // Possible value for ``type`` of method Crls#list.
 const Crls_LIST_TYPE_CLUSTER_API_CERTIFICATE = "cluster_api_certificate"
 
@@ -96,10 +108,12 @@ func crlsGetInputType() vapiBindings_.StructType {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["crl_id"] = vapiBindings_.NewStringType()
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["crl_id"] = "CrlId"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -121,14 +135,17 @@ func crlsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["crl_id"] = vapiBindings_.NewStringType()
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["crl_id"] = "CrlId"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["crl_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["crlId"] = vapiBindings_.NewStringType()
@@ -136,6 +153,7 @@ func crlsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	queryParams["details"] = "details"
+	queryParams["fmt"] = "fmt"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -235,6 +253,7 @@ func crlsListInputType() vapiBindings_.StructType {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -245,6 +264,7 @@ func crlsListInputType() vapiBindings_.StructType {
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["page_size"] = "PageSize"
@@ -272,6 +292,7 @@ func crlsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -282,6 +303,7 @@ func crlsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["page_size"] = "PageSize"
@@ -295,6 +317,7 @@ func crlsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -307,6 +330,7 @@ func crlsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	queryParams["included_fields"] = "included_fields"
 	queryParams["details"] = "details"
 	queryParams["sort_by"] = "sort_by"
+	queryParams["fmt"] = "fmt"
 	queryParams["type"] = "type"
 	queryParams["node_id"] = "node_id"
 	queryParams["page_size"] = "page_size"

@@ -25,6 +25,7 @@ type CertificatesClient interface {
 	//
 	// @param certificateIdParam ID of certificate to read (required)
 	// @param detailsParam whether to expand the pem data and show all its details (optional, default to false)
+	// @param fmtParam By default the format returned is exactly the format in which the user provided it, which is the 'raw' format. | The 'standard' format has all extraneous characters removed and has a newline after each 64 characters. (optional)
 	// @return com.vmware.nsx_policy.model.TlsCertificate
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -32,18 +33,19 @@ type CertificatesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(certificateIdParam string, detailsParam *bool) (nsx_policyModel.TlsCertificate, error)
+	Get(certificateIdParam string, detailsParam *bool, fmtParam *string) (nsx_policyModel.TlsCertificate, error)
 
 	// Returns all certificate information viewable by the user, including each certificate's id; pem_encoded data; and history of the certificate (who created or modified it and when). For additional information, include the ?details=true modifier at the end of the request URI.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param detailsParam whether to expand the pem data and show all its details (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param nodeIdParam Node ID of certificate to return (optional)
+	// @param fmtParam By default the format returned is exactly the format in which the user provided it, which is the 'raw' format. | The 'standard' format has all extraneous characters removed and has a newline after each 64 characters. (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param nodeIdParam Provide this parameter to limit the list of returned certificates to those matching a particular node ID. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @param type_Param Type of certificate to return (optional)
+	// @param type_Param Provide this parameter to limit the list of returned certificates to those matching a particular usage. Passing cluster_certificate will return the certificate used for the cluster wide API service. (optional)
 	// @return com.vmware.nsx_policy.model.TlsCertificateList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -51,7 +53,7 @@ type CertificatesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, detailsParam *bool, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsx_policyModel.TlsCertificateList, error)
+	List(cursorParam *string, detailsParam *bool, fmtParam *string, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsx_policyModel.TlsCertificateList, error)
 }
 
 type certificatesClient struct {
@@ -80,7 +82,7 @@ func (cIface *certificatesClient) GetErrorBindingType(errorName string) vapiBind
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (cIface *certificatesClient) Get(certificateIdParam string, detailsParam *bool) (nsx_policyModel.TlsCertificate, error) {
+func (cIface *certificatesClient) Get(certificateIdParam string, detailsParam *bool, fmtParam *string) (nsx_policyModel.TlsCertificate, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := certificatesGetRestMetadata()
@@ -90,6 +92,7 @@ func (cIface *certificatesClient) Get(certificateIdParam string, detailsParam *b
 	sv := vapiBindings_.NewStructValueBuilder(certificatesGetInputType(), typeConverter)
 	sv.AddStructField("CertificateId", certificateIdParam)
 	sv.AddStructField("Details", detailsParam)
+	sv.AddStructField("Fmt", fmtParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.TlsCertificate
@@ -113,7 +116,7 @@ func (cIface *certificatesClient) Get(certificateIdParam string, detailsParam *b
 	}
 }
 
-func (cIface *certificatesClient) List(cursorParam *string, detailsParam *bool, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsx_policyModel.TlsCertificateList, error) {
+func (cIface *certificatesClient) List(cursorParam *string, detailsParam *bool, fmtParam *string, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsx_policyModel.TlsCertificateList, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := certificatesListRestMetadata()
@@ -123,6 +126,7 @@ func (cIface *certificatesClient) List(cursorParam *string, detailsParam *bool, 
 	sv := vapiBindings_.NewStructValueBuilder(certificatesListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("Details", detailsParam)
+	sv.AddStructField("Fmt", fmtParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("NodeId", nodeIdParam)
 	sv.AddStructField("PageSize", pageSizeParam)

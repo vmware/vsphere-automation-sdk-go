@@ -26,7 +26,7 @@ type DebugClient interface {
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
 	// @param hostTransportNodeIdParam (required)
-	// @param type_Param type (optional)
+	// @param type_Param Counter type query parameters. (optional)
 	// @return com.vmware.nsx_policy.model.ObservabilityCounterDebugQueryResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

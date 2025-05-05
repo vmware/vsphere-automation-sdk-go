@@ -19,6 +19,18 @@ import (
 	"reflect"
 )
 
+// Possible value for ``fmt`` of method Certificates#get.
+const Certificates_GET_FMT_STANDARD = "STANDARD"
+
+// Possible value for ``fmt`` of method Certificates#get.
+const Certificates_GET_FMT_RAW = "RAW"
+
+// Possible value for ``fmt`` of method Certificates#list.
+const Certificates_LIST_FMT_STANDARD = "STANDARD"
+
+// Possible value for ``fmt`` of method Certificates#list.
+const Certificates_LIST_FMT_RAW = "RAW"
+
 // Possible value for ``type`` of method Certificates#list.
 const Certificates_LIST_TYPE_CLUSTER_API_CERTIFICATE = "cluster_api_certificate"
 
@@ -30,8 +42,10 @@ func certificatesGetInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["certificate_id"] = vapiBindings_.NewStringType()
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["certificate_id"] = "CertificateId"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -51,13 +65,17 @@ func certificatesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["certificate_id"] = vapiBindings_.NewStringType()
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["certificate_id"] = "CertificateId"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	paramsTypeMap["certificate_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["certificateId"] = vapiBindings_.NewStringType()
 	pathParams["certificate_id"] = "certificateId"
 	queryParams["details"] = "details"
+	queryParams["fmt"] = "fmt"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -86,6 +104,7 @@ func certificatesListInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -94,6 +113,7 @@ func certificatesListInputType() vapiBindings_.StructType {
 	fields["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["page_size"] = "PageSize"
@@ -119,6 +139,7 @@ func certificatesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -127,6 +148,7 @@ func certificatesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["page_size"] = "PageSize"
@@ -138,6 +160,7 @@ func certificatesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -146,6 +169,7 @@ func certificatesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	queryParams["included_fields"] = "included_fields"
 	queryParams["details"] = "details"
 	queryParams["sort_by"] = "sort_by"
+	queryParams["fmt"] = "fmt"
 	queryParams["type"] = "type"
 	queryParams["node_id"] = "node_id"
 	queryParams["page_size"] = "page_size"

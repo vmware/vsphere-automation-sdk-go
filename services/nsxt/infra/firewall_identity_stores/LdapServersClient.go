@@ -25,8 +25,8 @@ type LdapServersClient interface {
 	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param ldapServerIdParam LDAP server identifier (required)
-	// @param actionParam LDAP server test requested (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param actionParam Type of LDAP server test to perform. (required)
+	// @param enforcementPointPathParam Enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -44,7 +44,7 @@ type LdapServersClient interface {
 	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param ldapServerIdParam LDAP server identifier (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -62,7 +62,7 @@ type LdapServersClient interface {
 	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param ldapServerIdParam LDAP server identifier (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.DirectoryLdapServer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -81,10 +81,10 @@ type LdapServersClient interface {
 	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.DirectoryLdapServerListResults
 	//
@@ -105,7 +105,7 @@ type LdapServersClient interface {
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param ldapServerIdParam LDAP server identifier (required)
 	// @param directoryLdapServerParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.DirectoryLdapServer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -125,7 +125,7 @@ type LdapServersClient interface {
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param ldapServerIdParam LDAP server identifier (required)
 	// @param directoryLdapServerParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.DirectoryLdapServer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

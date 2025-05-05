@@ -36,8 +36,8 @@ type UserCredentialClient interface {
 	// Use this API to delete user credentials in Avi Load Balancer Controller cluster. This API is for VCF deployments only.
 	//
 	// @param usernameParam Credentials to be deleted. (required)
-	// @param userCredentialTypeParam Type of user credential (required)
-	// @param clusteringIdParam Unique Id for Avi Load Balancer Controller Cluster used in VCF managed NSX (optional)
+	// @param userCredentialTypeParam Type of user credential. (required)
+	// @param clusteringIdParam Id to filter Avi Load Balancer Controllers. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
@@ -49,7 +49,7 @@ type UserCredentialClient interface {
 	// Use this API to update admin user password or service user object password in Avi Load Balancer Controller. This API is for VCF deployments only.
 	//
 	// @param aLBControllerUserCredentialParam (required)
-	// @param runningConfigParam Update Avi Load Balancer Controller runtime config as well (optional)
+	// @param runningConfigParam If true, then the configuration will be updated in the running Avi Load Balancer Controllers as well. (optional)
 	// @return com.vmware.nsx_policy.model.ALBControllerUserCredentialResponse
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

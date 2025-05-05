@@ -26,7 +26,7 @@ type EffectiveProfilesClient interface {
 	// @param tier1IdParam (required)
 	// @param segmentIdParam (required)
 	// @param portIdParam (required)
-	// @param enforcementPointPathParam Enforcement point path (optional)
+	// @param enforcementPointPathParam Policy path of enforcement point on request is to be made. (optional)
 	// @return com.vmware.nsx_policy.model.EffectiveProfilesResponse
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

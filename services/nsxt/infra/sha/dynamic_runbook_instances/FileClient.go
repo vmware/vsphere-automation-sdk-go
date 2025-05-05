@@ -23,7 +23,7 @@ type FileClient interface {
 	// Uninstall the Dynamic Runbook package from the instance
 	//
 	// @param instanceIdParam (required)
-	// @param forceParam Force delete the resource even if it is being used somewhere (optional, default to false)
+	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

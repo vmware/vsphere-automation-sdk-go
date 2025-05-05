@@ -22,9 +22,9 @@ type StatsClient interface {
 
 	// Sets IDS-IPS rule statistics counter to zero. - no enforcement point path specified: Reset of stats will be executed for each enforcement point. - {enforcement_point_path}: Reset of stats will be executed only for the given enforcement point.
 	//
-	// @param categoryParam Aggregation statistic category (optional, default to IDPSDFW)
-	// @param containerClusterPathParam String Path of the Container Cluster entity (optional)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param categoryParam Aggregation statistic category to perform reset operation. If not provided it will be considered as IDPSDFW. (optional, default to IDPSDFW)
+	// @param containerClusterPathParam Path to the container cluster entity where the request will be executed. (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

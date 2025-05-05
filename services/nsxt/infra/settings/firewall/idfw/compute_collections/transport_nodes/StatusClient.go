@@ -24,7 +24,7 @@ type StatusClient interface {
 	// This API will list all transport node and statuses based on idfw enabled compute collection ID.
 	//
 	// @param computeCollectionIdParam Compute colelction id (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.IdfwTransportNodeStatusListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

@@ -24,7 +24,7 @@ type FirewallIdentityStoresOrgUnitsClient interface {
 	// Fetch all organization units for a LDAP server.
 	//
 	// @param directoryLdapServerParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.DirectoryOrgUnitListResults
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

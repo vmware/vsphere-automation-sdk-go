@@ -26,8 +26,8 @@ type Aggregated_with_paginationClient interface {
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
 	// @param draftIdParam (required)
-	// @param requestIdParam Request identifier to track subsequent API calls (optional)
-	// @param rootPathParam Path of the root object of subtree (optional)
+	// @param requestIdParam If the initial call to get paginated aggregated configuration for a draft, returns a paginated response, then the response will contain a request_id. This identifier needs to be passed with subsequent API calls to get detailed aggregated configuration for the draft. (optional)
+	// @param rootPathParam Policy path of the security policy. If specified with the subsequent API calls after initial call to get paginated aggregated configuration for a draft, the response will return the subtree of this security policy having all its children. If not specified, then the subsequent API calls will return all the security policies without their children, from pre-calculated aggregated configuration of a draft. This is not required for an initial call to get paginated aggregated configuration for a draft. (optional)
 	// @return com.vmware.nsx_policy.model.PolicyDraftPaginatedAggregatedConfigurationResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

@@ -27,14 +27,14 @@ type StateClient interface {
 	// @param projectIdParam The project ID (required)
 	// @param tier1IdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param enforcementPointPathParam Enforcement point path (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param interfacePathParam Interface path for interface specific state such as IPv6 DAD state (optional)
+	// @param enforcementPointPathParam String Path of the enforcement point. When not specified, routes from all enforcement-points are returned. (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param interfacePathParam String Path of interface on current Tier1 gateway for interface specified state such as IPv6 DAD state. When not specified, IPv6 NDRA state from from all interfaces is returned. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @param sourceParam Data source type. (optional)
-	// @param type_Param Returns specific information based on the value specified. (optional)
+	// @param sourceParam The data source can be either realtime or cached. If not provided, cached data is returned. (optional)
+	// @param type_Param Returns specific information based on the value specified. When not specified response include gateway state, status and DAD status from interfaces. (optional)
 	// @return com.vmware.nsx_policy.model.Tier1GatewayState
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

@@ -29,7 +29,7 @@ type CustomAttributesClient interface {
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
 	// @param policyAttributesParam (required)
-	// @param actionParam Add or Remove Custom Context Profile Attribute values. (required)
+	// @param actionParam Action parameter determines whether to add or remove Custom Context Profile Attribute values. (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

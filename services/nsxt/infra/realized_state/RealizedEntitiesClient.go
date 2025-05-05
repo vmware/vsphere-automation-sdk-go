@@ -23,8 +23,8 @@ type RealizedEntitiesClient interface {
 
 	// Get list of realized entities associated with intent object, specified by path in query parameter
 	//
-	// @param intentPathParam String Path of the intent object (required)
-	// @param sitePathParam Policy Path of the site (optional)
+	// @param intentPathParam Intent path of object, forward slashes must be escaped using %2F (required)
+	// @param sitePathParam Policy Path referencing a site. This is applicable only on a GlobalManager. If no site_path is specified, then based on the span of the intent the response will be fetched from the respective sites (optional)
 	// @return com.vmware.nsx_policy.model.GenericPolicyRealizedResourceListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

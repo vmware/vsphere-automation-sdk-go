@@ -24,7 +24,7 @@ type StatusClient interface {
 	// This API tests a event log server connectivity before the actual domain or event log server is configured. If the connectivity is good, the response will be HTTP status 200. Otherwise the response will be HTTP status 200 and a corresponding error message will be returned. Note - Query param 'enforcement_point_path' would be honoured only in case of Global manager.
 	//
 	// @param directoryEventLogServerParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.DirectoryEventLogServerStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

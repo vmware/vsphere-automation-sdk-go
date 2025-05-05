@@ -24,7 +24,7 @@ type ExportClient interface {
 	// Trigger the process to collect all pcap files of all the pcap_ids mentioned in request payload.
 	//
 	// @param idsPcapExportParam (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam The path of the enforcement point from which the PCAPs needs to be exported, downloaded or deleted. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

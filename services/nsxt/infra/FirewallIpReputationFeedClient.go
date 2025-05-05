@@ -24,7 +24,7 @@ type FirewallIpReputationFeedClient interface {
 	// This API can be used to activate or deactivate auto-download of IP reputation feed, it can also be used to trigger download of IP reputation feed when required. Once auto-download is activated, IP reputation feed will be downloaded at regular intervals of 720 mins(12 hrs). Auto-download of IP reputation feed can be activated using the action 'enable_auto_download', to deactivate use action 'disable_auto_download' and to trigger a download use action 'download'. For Global Manager, the only action that is supported is action=download. The enforcement_point_path of the site where the feed is to be downloaded should be provided along with the action
 	//
 	// @param operationParam action (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param enforcementPointPathParam The path of the enforcement point where the Feed id downloaded to. Forward slashes must be escaped using %2F. This is a mandatory field when called from Global Manager. (optional)
 	// @return com.vmware.nsx_policy.model.PolicyFirewallIpReputationConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

@@ -61,8 +61,8 @@ type WidgetconfigurationsClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param viewIdParam (required)
-	// @param containerParam Id of the container (optional)
-	// @param widgetIdsParam Ids of the WidgetConfigurations (optional)
+	// @param containerParam Id of the container whose widget configurations are to be queried. (optional)
+	// @param widgetIdsParam Comma separated ids of WidgetConfigurations to be queried. (optional)
 	// @return com.vmware.nsx_policy.model.WidgetConfigurationList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

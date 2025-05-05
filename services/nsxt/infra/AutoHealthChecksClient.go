@@ -23,7 +23,7 @@ type AutoHealthChecksClient interface {
 
 	// Get health check performed by system automatically for all transport zones or a specific transport zone.
 	//
-	// @param transportZonePathParam Policy path of the transport zone. (optional)
+	// @param transportZonePathParam Policy path of the transport zone where this automatic health check is performed. (optional)
 	// @return com.vmware.nsx_policy.model.PolicyAutomaticHealthCheckListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

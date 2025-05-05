@@ -23,7 +23,7 @@ type Listener_certificateClient interface {
 
 	// Connects to the given IP and port, and, if an SSL listener is present, returns the certificate of the listener. Intent of this API is \"Do you trust this certificate?\".
 	//
-	// @param addressParam Host name or IP address of TLS listener (required)
+	// @param addressParam Host name or IP address of TLS listener. (required)
 	// @param portParam TCP port number of the TLS listener (required)
 	// @return com.vmware.nsx_policy.model.TlsListenerCertificate
 	//

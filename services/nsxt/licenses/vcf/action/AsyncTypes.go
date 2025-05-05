@@ -21,6 +21,8 @@ import (
 func asyncCreateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["only_sync_unlicensed_vc"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["only_sync_unlicensed_vc"] = "OnlySyncUnlicensedVc"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -38,6 +40,10 @@ func asyncCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
+	fields["only_sync_unlicensed_vc"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["only_sync_unlicensed_vc"] = "OnlySyncUnlicensedVc"
+	paramsTypeMap["only_sync_unlicensed_vc"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	queryParams["only_sync_unlicensed_vc"] = "only_sync_unlicensed_vc"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(

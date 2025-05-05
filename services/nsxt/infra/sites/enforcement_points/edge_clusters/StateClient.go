@@ -26,8 +26,8 @@ type StateClient interface {
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
 	// @param edgeClusterIdParam (required)
-	// @param barrierIdParam (optional)
-	// @param requestIdParam Realization request ID (optional)
+	// @param barrierIdParam The system checks to ensure that the logical entity is realized or not at least at the given barrier number. This parameter has been deprecated. Please use request_id instead. (optional)
+	// @param requestIdParam Passing a request_id allows you to check if the changes to a logical entity made in a particular API request have been realized or not. The request_id is returned from each API request in the X-NSX-REQUESTID header. For example, to check if a change to a firewall rule has been realized, save the X-NSX-REQUESTID header value returned from the PUT /api/v1/firewall/sections/<section-id>/rules/<rule-id> call, then add ?request_id=<id> to the GET /api/v1/firewall/rules/<rule-id>/state API call. (optional)
 	// @return com.vmware.nsx_policy.model.PolicyEdgeClusterState
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

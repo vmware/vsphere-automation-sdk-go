@@ -25,7 +25,7 @@ type ChildrenClient interface {
 	//
 	// @param identityFirewallStoreIdParam Firewall Identity store identifier (required)
 	// @param groupIdParam Directory group identifier (required)
-	// @param includeUsersParam include users filter (required)
+	// @param includeUsersParam whether users should be included in the list or not. (required)
 	// @return com.vmware.nsx_policy.model.IdentityFirewallStoreUserOrGrouptListResults
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
