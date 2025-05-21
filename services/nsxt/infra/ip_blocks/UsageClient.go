@@ -34,6 +34,13 @@ type UsageClient interface {
 	Get(ipBlockIdParam string) (nsx_policyModel.IpAddressBlockUsage, error)
 
 	// Lists the usage details for all IpAddressBlocks
+	//
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
+	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.IpAddressBlockUsageList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -41,7 +48,7 @@ type UsageClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List() (nsx_policyModel.IpAddressBlockUsageList, error)
+	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IpAddressBlockUsageList, error)
 }
 
 type usageClient struct {
@@ -102,7 +109,7 @@ func (uIface *usageClient) Get(ipBlockIdParam string) (nsx_policyModel.IpAddress
 	}
 }
 
-func (uIface *usageClient) List() (nsx_policyModel.IpAddressBlockUsageList, error) {
+func (uIface *usageClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IpAddressBlockUsageList, error) {
 	typeConverter := uIface.connector.TypeConverter()
 	executionContext := uIface.connector.NewExecutionContext()
 	operationRestMetaData := usageListRestMetadata()
@@ -110,6 +117,12 @@ func (uIface *usageClient) List() (nsx_policyModel.IpAddressBlockUsageList, erro
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(usageListInputType(), typeConverter)
+	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
+	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("SortAscending", sortAscendingParam)
+	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.IpAddressBlockUsageList

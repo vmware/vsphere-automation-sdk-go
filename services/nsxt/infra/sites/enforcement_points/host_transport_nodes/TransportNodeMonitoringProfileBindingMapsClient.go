@@ -1,0 +1,302 @@
+// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
+
+// Auto generated code. DO NOT EDIT.
+
+// Interface file for service: TransportNodeMonitoringProfileBindingMaps
+// Used by client-side stubs.
+
+package host_transport_nodes
+
+import (
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+)
+
+const _ = vapiCore_.SupportedByRuntimeVersion2
+
+type TransportNodeMonitoringProfileBindingMapsClient interface {
+
+	// API will delete given Transport node monitoring profile binding map.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementPointIdParam (required)
+	// @param hostTransportNodeIdParam (required)
+	// @param bindingMapIdParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Delete(siteIdParam string, enforcementPointIdParam string, hostTransportNodeIdParam string, bindingMapIdParam string) error
+
+	// API will fetch Transport node monitoring profile binding map.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementPointIdParam (required)
+	// @param hostTransportNodeIdParam (required)
+	// @param bindingMapIdParam (required)
+	// @return com.vmware.nsx_policy.model.TransportNodeMonitoringProfileBindingMap
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Get(siteIdParam string, enforcementPointIdParam string, hostTransportNodeIdParam string, bindingMapIdParam string) (nsx_policyModel.TransportNodeMonitoringProfileBindingMap, error)
+
+	// API will list all Transport node monitoring profile binding map.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementPointIdParam (required)
+	// @param hostTransportNodeIdParam (required)
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
+	// @param sortByParam Field by which records are sorted (optional)
+	// @return com.vmware.nsx_policy.model.TransportNodeMonitoringProfileBindingMapListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	List(siteIdParam string, enforcementPointIdParam string, hostTransportNodeIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.TransportNodeMonitoringProfileBindingMapListResult, error)
+
+	// API will patch Transport node monitoring profile binding map.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementPointIdParam (required)
+	// @param hostTransportNodeIdParam (required)
+	// @param bindingMapIdParam (required)
+	// @param transportNodeMonitoringProfileBindingMapParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Patch(siteIdParam string, enforcementPointIdParam string, hostTransportNodeIdParam string, bindingMapIdParam string, transportNodeMonitoringProfileBindingMapParam nsx_policyModel.TransportNodeMonitoringProfileBindingMap) error
+
+	// API will update Transport Node Monitoring Profile Binding Map.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementPointIdParam (required)
+	// @param hostTransportNodeIdParam (required)
+	// @param bindingMapIdParam (required)
+	// @param transportNodeMonitoringProfileBindingMapParam (required)
+	// @return com.vmware.nsx_policy.model.TransportNodeMonitoringProfileBindingMap
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Update(siteIdParam string, enforcementPointIdParam string, hostTransportNodeIdParam string, bindingMapIdParam string, transportNodeMonitoringProfileBindingMapParam nsx_policyModel.TransportNodeMonitoringProfileBindingMap) (nsx_policyModel.TransportNodeMonitoringProfileBindingMap, error)
+}
+
+type transportNodeMonitoringProfileBindingMapsClient struct {
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
+}
+
+func NewTransportNodeMonitoringProfileBindingMapsClient(connector vapiProtocolClient_.Connector) *transportNodeMonitoringProfileBindingMapsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.enforcement_points.host_transport_nodes.transport_node_monitoring_profile_binding_maps")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
+	}
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
+
+	tIface := transportNodeMonitoringProfileBindingMapsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &tIface
+}
+
+func (tIface *transportNodeMonitoringProfileBindingMapsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+	if entry, ok := tIface.errorsBindingMap[errorName]; ok {
+		return entry
+	}
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
+}
+
+func (tIface *transportNodeMonitoringProfileBindingMapsClient) Delete(siteIdParam string, enforcementPointIdParam string, hostTransportNodeIdParam string, bindingMapIdParam string) error {
+	typeConverter := tIface.connector.TypeConverter()
+	executionContext := tIface.connector.NewExecutionContext()
+	operationRestMetaData := transportNodeMonitoringProfileBindingMapsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(transportNodeMonitoringProfileBindingMapsDeleteInputType(), typeConverter)
+	sv.AddStructField("SiteId", siteIdParam)
+	sv.AddStructField("EnforcementPointId", enforcementPointIdParam)
+	sv.AddStructField("HostTransportNodeId", hostTransportNodeIdParam)
+	sv.AddStructField("BindingMapId", bindingMapIdParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_transport_nodes.transport_node_monitoring_profile_binding_maps", "delete", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
+}
+
+func (tIface *transportNodeMonitoringProfileBindingMapsClient) Get(siteIdParam string, enforcementPointIdParam string, hostTransportNodeIdParam string, bindingMapIdParam string) (nsx_policyModel.TransportNodeMonitoringProfileBindingMap, error) {
+	typeConverter := tIface.connector.TypeConverter()
+	executionContext := tIface.connector.NewExecutionContext()
+	operationRestMetaData := transportNodeMonitoringProfileBindingMapsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(transportNodeMonitoringProfileBindingMapsGetInputType(), typeConverter)
+	sv.AddStructField("SiteId", siteIdParam)
+	sv.AddStructField("EnforcementPointId", enforcementPointIdParam)
+	sv.AddStructField("HostTransportNodeId", hostTransportNodeIdParam)
+	sv.AddStructField("BindingMapId", bindingMapIdParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_policyModel.TransportNodeMonitoringProfileBindingMap
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_transport_nodes.transport_node_monitoring_profile_binding_maps", "get", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.TransportNodeMonitoringProfileBindingMap
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), TransportNodeMonitoringProfileBindingMapsGetOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_policyModel.TransportNodeMonitoringProfileBindingMap), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (tIface *transportNodeMonitoringProfileBindingMapsClient) List(siteIdParam string, enforcementPointIdParam string, hostTransportNodeIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.TransportNodeMonitoringProfileBindingMapListResult, error) {
+	typeConverter := tIface.connector.TypeConverter()
+	executionContext := tIface.connector.NewExecutionContext()
+	operationRestMetaData := transportNodeMonitoringProfileBindingMapsListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(transportNodeMonitoringProfileBindingMapsListInputType(), typeConverter)
+	sv.AddStructField("SiteId", siteIdParam)
+	sv.AddStructField("EnforcementPointId", enforcementPointIdParam)
+	sv.AddStructField("HostTransportNodeId", hostTransportNodeIdParam)
+	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
+	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("SortAscending", sortAscendingParam)
+	sv.AddStructField("SortBy", sortByParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_policyModel.TransportNodeMonitoringProfileBindingMapListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_transport_nodes.transport_node_monitoring_profile_binding_maps", "list", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.TransportNodeMonitoringProfileBindingMapListResult
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), TransportNodeMonitoringProfileBindingMapsListOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_policyModel.TransportNodeMonitoringProfileBindingMapListResult), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (tIface *transportNodeMonitoringProfileBindingMapsClient) Patch(siteIdParam string, enforcementPointIdParam string, hostTransportNodeIdParam string, bindingMapIdParam string, transportNodeMonitoringProfileBindingMapParam nsx_policyModel.TransportNodeMonitoringProfileBindingMap) error {
+	typeConverter := tIface.connector.TypeConverter()
+	executionContext := tIface.connector.NewExecutionContext()
+	operationRestMetaData := transportNodeMonitoringProfileBindingMapsPatchRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(transportNodeMonitoringProfileBindingMapsPatchInputType(), typeConverter)
+	sv.AddStructField("SiteId", siteIdParam)
+	sv.AddStructField("EnforcementPointId", enforcementPointIdParam)
+	sv.AddStructField("HostTransportNodeId", hostTransportNodeIdParam)
+	sv.AddStructField("BindingMapId", bindingMapIdParam)
+	sv.AddStructField("TransportNodeMonitoringProfileBindingMap", transportNodeMonitoringProfileBindingMapParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_transport_nodes.transport_node_monitoring_profile_binding_maps", "patch", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
+}
+
+func (tIface *transportNodeMonitoringProfileBindingMapsClient) Update(siteIdParam string, enforcementPointIdParam string, hostTransportNodeIdParam string, bindingMapIdParam string, transportNodeMonitoringProfileBindingMapParam nsx_policyModel.TransportNodeMonitoringProfileBindingMap) (nsx_policyModel.TransportNodeMonitoringProfileBindingMap, error) {
+	typeConverter := tIface.connector.TypeConverter()
+	executionContext := tIface.connector.NewExecutionContext()
+	operationRestMetaData := transportNodeMonitoringProfileBindingMapsUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(transportNodeMonitoringProfileBindingMapsUpdateInputType(), typeConverter)
+	sv.AddStructField("SiteId", siteIdParam)
+	sv.AddStructField("EnforcementPointId", enforcementPointIdParam)
+	sv.AddStructField("HostTransportNodeId", hostTransportNodeIdParam)
+	sv.AddStructField("BindingMapId", bindingMapIdParam)
+	sv.AddStructField("TransportNodeMonitoringProfileBindingMap", transportNodeMonitoringProfileBindingMapParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_policyModel.TransportNodeMonitoringProfileBindingMap
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_transport_nodes.transport_node_monitoring_profile_binding_maps", "update", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.TransportNodeMonitoringProfileBindingMap
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), TransportNodeMonitoringProfileBindingMapsUpdateOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_policyModel.TransportNodeMonitoringProfileBindingMap), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}

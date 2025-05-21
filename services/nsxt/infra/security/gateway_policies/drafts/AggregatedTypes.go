@@ -4,7 +4,7 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: Aggregated_with_pagination.
+// Data type definitions file for service: Aggregated.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
@@ -19,28 +19,20 @@ import (
 	"reflect"
 )
 
-func aggregatedWithPaginationGetInputType() vapiBindings_.StructType {
+func aggregatedGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["org_id"] = vapiBindings_.NewStringType()
-	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["draft_id"] = vapiBindings_.NewStringType()
-	fields["request_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["root_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["org_id"] = "OrgId"
-	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["draft_id"] = "DraftId"
-	fieldNameMap["request_id"] = "RequestId"
-	fieldNameMap["root_path"] = "RootPath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func AggregatedWithPaginationGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.PolicyDraftPaginatedAggregatedConfigurationResultBindingType)
+func AggregatedGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.InfraBindingType)
 }
 
-func aggregatedWithPaginationGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func aggregatedGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -49,29 +41,11 @@ func aggregatedWithPaginationGetRestMetadata() vapiProtocol_.OperationRestMetada
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["org_id"] = vapiBindings_.NewStringType()
-	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["draft_id"] = vapiBindings_.NewStringType()
-	fields["request_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["root_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["org_id"] = "OrgId"
-	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["draft_id"] = "DraftId"
-	fieldNameMap["request_id"] = "RequestId"
-	fieldNameMap["root_path"] = "RootPath"
-	paramsTypeMap["root_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["draft_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["request_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["draftId"] = vapiBindings_.NewStringType()
 	pathParams["draft_id"] = "draftId"
-	pathParams["project_id"] = "projectId"
-	pathParams["org_id"] = "orgId"
-	queryParams["root_path"] = "root_path"
-	queryParams["request_id"] = "request_id"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -86,7 +60,7 @@ func aggregatedWithPaginationGetRestMetadata() vapiProtocol_.OperationRestMetada
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/security/gateway-policies/drafts/{draftId}/aggregated_with_pagination",
+		"/policy/api/v1/infra/security/gateway-policies/drafts/{draftId}/aggregated",
 		"",
 		resultHeaders,
 		200,

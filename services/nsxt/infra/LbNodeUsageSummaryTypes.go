@@ -19,13 +19,21 @@ import (
 	"reflect"
 )
 
+// Possible value for ``nodeType`` of method LbNodeUsageSummary#get.
+const LbNodeUsageSummary_GET_NODE_TYPE_EDGENODE = "EdgeNode"
+
+// Possible value for ``nodeType`` of method LbNodeUsageSummary#get.
+const LbNodeUsageSummary_GET_NODE_TYPE_EDGESERVICENODE = "EdgeServiceNode"
+
 func lbNodeUsageSummaryGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_usages"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	fieldNameMap["include_usages"] = "IncludeUsages"
+	fieldNameMap["node_type"] = "NodeType"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -45,10 +53,14 @@ func lbNodeUsageSummaryGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_usages"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	fieldNameMap["include_usages"] = "IncludeUsages"
+	fieldNameMap["node_type"] = "NodeType"
+	paramsTypeMap["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["include_usages"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	queryParams["node_type"] = "node_type"
 	queryParams["include_usages"] = "include_usages"
 	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	resultHeaders := map[string]string{}

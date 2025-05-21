@@ -35,39 +35,39 @@ type BgpClient interface {
 	// Read a BGP routing config.
 	//
 	// @param routerControllerIdParam (required)
-	// @return com.vmware.nsx_policy.model.BgpRoutingConfig
+	// @return com.vmware.nsx_policy.model.RouteControllerBgpRoutingConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(routerControllerIdParam string) (nsx_policyModel.BgpRoutingConfig, error)
+	Get(routerControllerIdParam string) (nsx_policyModel.RouteControllerBgpRoutingConfig, error)
 
 	// If a BGP routing config is not already present, create a new BGP routing config. If it already exists, update the BGP routing config.
 	//
 	// @param routerControllerIdParam (required)
-	// @param bgpRoutingConfigParam (required)
+	// @param routeControllerBgpRoutingConfigParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(routerControllerIdParam string, bgpRoutingConfigParam nsx_policyModel.BgpRoutingConfig) error
+	Patch(routerControllerIdParam string, routeControllerBgpRoutingConfigParam nsx_policyModel.RouteControllerBgpRoutingConfig) error
 
 	// If a BGP routing config is not already present, create a new BGP routing config. If it already exists, update the BGP routing config. This operation will fully replace the object.
 	//
 	// @param routerControllerIdParam (required)
-	// @param bgpRoutingConfigParam (required)
-	// @return com.vmware.nsx_policy.model.BgpRoutingConfig
+	// @param routeControllerBgpRoutingConfigParam (required)
+	// @return com.vmware.nsx_policy.model.RouteControllerBgpRoutingConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(routerControllerIdParam string, bgpRoutingConfigParam nsx_policyModel.BgpRoutingConfig) (nsx_policyModel.BgpRoutingConfig, error)
+	Update(routerControllerIdParam string, routeControllerBgpRoutingConfigParam nsx_policyModel.RouteControllerBgpRoutingConfig) (nsx_policyModel.RouteControllerBgpRoutingConfig, error)
 }
 
 type bgpClient struct {
@@ -124,7 +124,7 @@ func (bIface *bgpClient) Delete(routerControllerIdParam string) error {
 	}
 }
 
-func (bIface *bgpClient) Get(routerControllerIdParam string) (nsx_policyModel.BgpRoutingConfig, error) {
+func (bIface *bgpClient) Get(routerControllerIdParam string) (nsx_policyModel.RouteControllerBgpRoutingConfig, error) {
 	typeConverter := bIface.connector.TypeConverter()
 	executionContext := bIface.connector.NewExecutionContext()
 	operationRestMetaData := bgpGetRestMetadata()
@@ -135,18 +135,18 @@ func (bIface *bgpClient) Get(routerControllerIdParam string) (nsx_policyModel.Bg
 	sv.AddStructField("RouterControllerId", routerControllerIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.BgpRoutingConfig
+		var emptyOutput nsx_policyModel.RouteControllerBgpRoutingConfig
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := bIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.route_controllers.bgp", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.BgpRoutingConfig
+	var emptyOutput nsx_policyModel.RouteControllerBgpRoutingConfig
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), BgpGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.BgpRoutingConfig), nil
+		return output.(nsx_policyModel.RouteControllerBgpRoutingConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), bIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -156,7 +156,7 @@ func (bIface *bgpClient) Get(routerControllerIdParam string) (nsx_policyModel.Bg
 	}
 }
 
-func (bIface *bgpClient) Patch(routerControllerIdParam string, bgpRoutingConfigParam nsx_policyModel.BgpRoutingConfig) error {
+func (bIface *bgpClient) Patch(routerControllerIdParam string, routeControllerBgpRoutingConfigParam nsx_policyModel.RouteControllerBgpRoutingConfig) error {
 	typeConverter := bIface.connector.TypeConverter()
 	executionContext := bIface.connector.NewExecutionContext()
 	operationRestMetaData := bgpPatchRestMetadata()
@@ -165,7 +165,7 @@ func (bIface *bgpClient) Patch(routerControllerIdParam string, bgpRoutingConfigP
 
 	sv := vapiBindings_.NewStructValueBuilder(bgpPatchInputType(), typeConverter)
 	sv.AddStructField("RouterControllerId", routerControllerIdParam)
-	sv.AddStructField("BgpRoutingConfig", bgpRoutingConfigParam)
+	sv.AddStructField("RouteControllerBgpRoutingConfig", routeControllerBgpRoutingConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -183,7 +183,7 @@ func (bIface *bgpClient) Patch(routerControllerIdParam string, bgpRoutingConfigP
 	}
 }
 
-func (bIface *bgpClient) Update(routerControllerIdParam string, bgpRoutingConfigParam nsx_policyModel.BgpRoutingConfig) (nsx_policyModel.BgpRoutingConfig, error) {
+func (bIface *bgpClient) Update(routerControllerIdParam string, routeControllerBgpRoutingConfigParam nsx_policyModel.RouteControllerBgpRoutingConfig) (nsx_policyModel.RouteControllerBgpRoutingConfig, error) {
 	typeConverter := bIface.connector.TypeConverter()
 	executionContext := bIface.connector.NewExecutionContext()
 	operationRestMetaData := bgpUpdateRestMetadata()
@@ -192,21 +192,21 @@ func (bIface *bgpClient) Update(routerControllerIdParam string, bgpRoutingConfig
 
 	sv := vapiBindings_.NewStructValueBuilder(bgpUpdateInputType(), typeConverter)
 	sv.AddStructField("RouterControllerId", routerControllerIdParam)
-	sv.AddStructField("BgpRoutingConfig", bgpRoutingConfigParam)
+	sv.AddStructField("RouteControllerBgpRoutingConfig", routeControllerBgpRoutingConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.BgpRoutingConfig
+		var emptyOutput nsx_policyModel.RouteControllerBgpRoutingConfig
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := bIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.route_controllers.bgp", "update", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.BgpRoutingConfig
+	var emptyOutput nsx_policyModel.RouteControllerBgpRoutingConfig
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), BgpUpdateOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.BgpRoutingConfig), nil
+		return output.(nsx_policyModel.RouteControllerBgpRoutingConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), bIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

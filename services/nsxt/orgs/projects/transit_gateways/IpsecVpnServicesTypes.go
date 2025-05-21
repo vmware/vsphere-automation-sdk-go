@@ -4,12 +4,12 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: Drafts.
+// Data type definitions file for service: IpsecVpnServices.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package gateway_policies
+package transit_gateways
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -19,30 +19,26 @@ import (
 	"reflect"
 )
 
-// Possible value for ``draftType`` of method Drafts#list.
-const Drafts_LIST_DRAFT_TYPE_LOCAL = "GFW_LOCAL"
-
-// Possible value for ``draftType`` of method Drafts#list.
-const Drafts_LIST_DRAFT_TYPE_SHARED_RULES = "GFW_SHARED_RULES"
-
-func draftsDeleteInputType() vapiBindings_.StructType {
+func ipsecVpnServicesDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["draft_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["draft_id"] = "DraftId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["service_id"] = "ServiceId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func DraftsDeleteOutputType() vapiBindings_.BindingType {
+func IpsecVpnServicesDeleteOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewVoidType()
 }
 
-func draftsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipsecVpnServicesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -53,17 +49,22 @@ func draftsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["draft_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["draft_id"] = "DraftId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["service_id"] = "ServiceId"
+	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["draft_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["draftId"] = vapiBindings_.NewStringType()
-	pathParams["draft_id"] = "draftId"
+	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["service_id"] = "serviceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
@@ -80,7 +81,7 @@ func draftsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"DELETE",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/security/gateway-policies/drafts/{draftId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}",
 		"",
 		resultHeaders,
 		204,
@@ -89,24 +90,26 @@ func draftsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func draftsGetInputType() vapiBindings_.StructType {
+func ipsecVpnServicesGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["draft_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["draft_id"] = "DraftId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["service_id"] = "ServiceId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func DraftsGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.PolicyGatewayDraftBindingType)
+func IpsecVpnServicesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnServiceBindingType)
 }
 
-func draftsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipsecVpnServicesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -117,17 +120,22 @@ func draftsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["draft_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["draft_id"] = "DraftId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["service_id"] = "ServiceId"
+	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["draft_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["draftId"] = vapiBindings_.NewStringType()
-	pathParams["draft_id"] = "draftId"
+	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["service_id"] = "serviceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
@@ -144,7 +152,7 @@ func draftsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/security/gateway-policies/drafts/{draftId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}",
 		"",
 		resultHeaders,
 		200,
@@ -153,15 +161,13 @@ func draftsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func draftsListInputType() vapiBindings_.StructType {
+func ipsecVpnServicesListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["auto_drafts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["draft_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["gateway_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -169,10 +175,8 @@ func draftsListInputType() vapiBindings_.StructType {
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["auto_drafts"] = "AutoDrafts"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
 	fieldNameMap["cursor"] = "Cursor"
-	fieldNameMap["draft_type"] = "DraftType"
-	fieldNameMap["gateway_path"] = "GatewayPath"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
@@ -182,11 +186,11 @@ func draftsListInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func DraftsListOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.PolicyGatewayDraftListResultBindingType)
+func IpsecVpnServicesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnServiceListResultBindingType)
 }
 
-func draftsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipsecVpnServicesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -197,10 +201,8 @@ func draftsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["auto_drafts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["draft_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["gateway_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -208,36 +210,31 @@ func draftsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["auto_drafts"] = "AutoDrafts"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
 	fieldNameMap["cursor"] = "Cursor"
-	fieldNameMap["draft_type"] = "DraftType"
-	fieldNameMap["gateway_path"] = "GatewayPath"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["draft_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["auto_drafts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	paramsTypeMap["gateway_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	pathParams["transit_gateway_id"] = "transitGatewayId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	queryParams["cursor"] = "cursor"
-	queryParams["draft_type"] = "draft_type"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
-	queryParams["auto_drafts"] = "auto_drafts"
-	queryParams["gateway_path"] = "gateway_path"
 	queryParams["sort_by"] = "sort_by"
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"
@@ -255,7 +252,7 @@ func draftsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/security/gateway-policies/drafts",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services",
 		"",
 		resultHeaders,
 		200,
@@ -264,26 +261,28 @@ func draftsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func draftsPatchInputType() vapiBindings_.StructType {
+func ipsecVpnServicesPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["draft_id"] = vapiBindings_.NewStringType()
-	fields["policy_gateway_draft"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyGatewayDraftBindingType)
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ip_sec_vpn_service"] = vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnServiceBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["draft_id"] = "DraftId"
-	fieldNameMap["policy_gateway_draft"] = "PolicyGatewayDraft"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ip_sec_vpn_service"] = "IpSecVpnService"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func DraftsPatchOutputType() vapiBindings_.BindingType {
+func IpsecVpnServicesPatchOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewVoidType()
 }
 
-func draftsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipsecVpnServicesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -294,20 +293,25 @@ func draftsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["draft_id"] = vapiBindings_.NewStringType()
-	fields["policy_gateway_draft"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyGatewayDraftBindingType)
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ip_sec_vpn_service"] = vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnServiceBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["draft_id"] = "DraftId"
-	fieldNameMap["policy_gateway_draft"] = "PolicyGatewayDraft"
-	paramsTypeMap["policy_gateway_draft"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyGatewayDraftBindingType)
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ip_sec_vpn_service"] = "IpSecVpnService"
+	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["draft_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ip_sec_vpn_service"] = vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnServiceBindingType)
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["draftId"] = vapiBindings_.NewStringType()
-	pathParams["draft_id"] = "draftId"
+	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["service_id"] = "serviceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
@@ -322,9 +326,9 @@ func draftsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"policy_gateway_draft",
+		"ip_sec_vpn_service",
 		"PATCH",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/security/gateway-policies/drafts/{draftId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}",
 		"application/json",
 		resultHeaders,
 		204,
@@ -333,26 +337,28 @@ func draftsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func draftsUpdateInputType() vapiBindings_.StructType {
+func ipsecVpnServicesUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["draft_id"] = vapiBindings_.NewStringType()
-	fields["policy_gateway_draft"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyGatewayDraftBindingType)
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ip_sec_vpn_service"] = vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnServiceBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["draft_id"] = "DraftId"
-	fieldNameMap["policy_gateway_draft"] = "PolicyGatewayDraft"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ip_sec_vpn_service"] = "IpSecVpnService"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func DraftsUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.PolicyGatewayDraftBindingType)
+func IpsecVpnServicesUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnServiceBindingType)
 }
 
-func draftsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipsecVpnServicesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -363,20 +369,25 @@ func draftsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["draft_id"] = vapiBindings_.NewStringType()
-	fields["policy_gateway_draft"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyGatewayDraftBindingType)
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ip_sec_vpn_service"] = vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnServiceBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["draft_id"] = "DraftId"
-	fieldNameMap["policy_gateway_draft"] = "PolicyGatewayDraft"
-	paramsTypeMap["policy_gateway_draft"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyGatewayDraftBindingType)
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ip_sec_vpn_service"] = "IpSecVpnService"
+	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["draft_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ip_sec_vpn_service"] = vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnServiceBindingType)
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["draftId"] = vapiBindings_.NewStringType()
-	pathParams["draft_id"] = "draftId"
+	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["service_id"] = "serviceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
@@ -391,9 +402,9 @@ func draftsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"policy_gateway_draft",
+		"ip_sec_vpn_service",
 		"PUT",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/infra/security/gateway-policies/drafts/{draftId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}",
 		"application/json",
 		resultHeaders,
 		200,

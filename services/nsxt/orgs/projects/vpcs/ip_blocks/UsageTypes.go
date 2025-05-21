@@ -19,7 +19,7 @@ import (
 	"reflect"
 )
 
-func usageGetInputType() vapiBindings_.StructType {
+func usageListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
@@ -38,11 +38,11 @@ func usageGetInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func UsageGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressBlockUsageBindingType)
+func UsageListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressBlockUsageListBindingType)
 }
 
-func usageGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func usageListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}

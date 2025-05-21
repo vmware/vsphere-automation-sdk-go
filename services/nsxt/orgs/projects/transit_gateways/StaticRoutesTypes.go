@@ -9,7 +9,7 @@
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package route_controllers
+package transit_gateways
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -22,10 +22,14 @@ import (
 func staticRoutesDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["router_controller_id"] = vapiBindings_.NewStringType()
-	fields["static_route_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["router_controller_id"] = "RouterControllerId"
-	fieldNameMap["static_route_id"] = "StaticRouteId"
+	fields["org_id"] = vapiBindings_.NewStringType()
+	fields["project_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["route_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["org_id"] = "OrgId"
+	fieldNameMap["project_id"] = "ProjectId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["route_id"] = "RouteId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -43,16 +47,26 @@ func staticRoutesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["router_controller_id"] = vapiBindings_.NewStringType()
-	fields["static_route_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["router_controller_id"] = "RouterControllerId"
-	fieldNameMap["static_route_id"] = "StaticRouteId"
-	paramsTypeMap["static_route_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["router_controller_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routerControllerId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["staticRouteId"] = vapiBindings_.NewStringType()
-	pathParams["static_route_id"] = "staticRouteId"
-	pathParams["router_controller_id"] = "routerControllerId"
+	fields["org_id"] = vapiBindings_.NewStringType()
+	fields["project_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["route_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["org_id"] = "OrgId"
+	fieldNameMap["project_id"] = "ProjectId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["route_id"] = "RouteId"
+	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["route_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["routeId"] = vapiBindings_.NewStringType()
+	pathParams["route_id"] = "routeId"
+	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["project_id"] = "projectId"
+	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -67,7 +81,7 @@ func staticRoutesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"DELETE",
-		"/policy/api/v1/infra/route-controllers/{routerControllerId}/static-routes/{staticRouteId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/static-routes/{routeId}",
 		"",
 		resultHeaders,
 		204,
@@ -79,10 +93,14 @@ func staticRoutesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 func staticRoutesGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["router_controller_id"] = vapiBindings_.NewStringType()
-	fields["static_route_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["router_controller_id"] = "RouterControllerId"
-	fieldNameMap["static_route_id"] = "StaticRouteId"
+	fields["org_id"] = vapiBindings_.NewStringType()
+	fields["project_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["route_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["org_id"] = "OrgId"
+	fieldNameMap["project_id"] = "ProjectId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["route_id"] = "RouteId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -100,16 +118,26 @@ func staticRoutesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["router_controller_id"] = vapiBindings_.NewStringType()
-	fields["static_route_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["router_controller_id"] = "RouterControllerId"
-	fieldNameMap["static_route_id"] = "StaticRouteId"
-	paramsTypeMap["static_route_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["router_controller_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routerControllerId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["staticRouteId"] = vapiBindings_.NewStringType()
-	pathParams["static_route_id"] = "staticRouteId"
-	pathParams["router_controller_id"] = "routerControllerId"
+	fields["org_id"] = vapiBindings_.NewStringType()
+	fields["project_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["route_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["org_id"] = "OrgId"
+	fieldNameMap["project_id"] = "ProjectId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["route_id"] = "RouteId"
+	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["route_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["routeId"] = vapiBindings_.NewStringType()
+	pathParams["route_id"] = "routeId"
+	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["project_id"] = "projectId"
+	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -124,7 +152,7 @@ func staticRoutesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/route-controllers/{routerControllerId}/static-routes/{staticRouteId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/static-routes/{routeId}",
 		"",
 		resultHeaders,
 		200,
@@ -136,14 +164,18 @@ func staticRoutesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 func staticRoutesListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["router_controller_id"] = vapiBindings_.NewStringType()
+	fields["org_id"] = vapiBindings_.NewStringType()
+	fields["project_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["router_controller_id"] = "RouterControllerId"
+	fieldNameMap["org_id"] = "OrgId"
+	fieldNameMap["project_id"] = "ProjectId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
@@ -167,14 +199,18 @@ func staticRoutesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["router_controller_id"] = vapiBindings_.NewStringType()
+	fields["org_id"] = vapiBindings_.NewStringType()
+	fields["project_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["router_controller_id"] = "RouterControllerId"
+	fieldNameMap["org_id"] = "OrgId"
+	fieldNameMap["project_id"] = "ProjectId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
@@ -182,14 +218,20 @@ func staticRoutesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["router_controller_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
-	paramsTypeMap["routerControllerId"] = vapiBindings_.NewStringType()
-	pathParams["router_controller_id"] = "routerControllerId"
+	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["project_id"] = "projectId"
+	pathParams["org_id"] = "orgId"
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
@@ -210,7 +252,7 @@ func staticRoutesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/route-controllers/{routerControllerId}/static-routes",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/static-routes",
 		"",
 		resultHeaders,
 		200,
@@ -222,18 +264,22 @@ func staticRoutesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 func staticRoutesPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["router_controller_id"] = vapiBindings_.NewStringType()
-	fields["static_route_id"] = vapiBindings_.NewStringType()
+	fields["org_id"] = vapiBindings_.NewStringType()
+	fields["project_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["route_id"] = vapiBindings_.NewStringType()
 	fields["static_routes"] = vapiBindings_.NewReferenceType(nsx_policyModel.StaticRoutesBindingType)
-	fieldNameMap["router_controller_id"] = "RouterControllerId"
-	fieldNameMap["static_route_id"] = "StaticRouteId"
+	fieldNameMap["org_id"] = "OrgId"
+	fieldNameMap["project_id"] = "ProjectId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["route_id"] = "RouteId"
 	fieldNameMap["static_routes"] = "StaticRoutes"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
 func StaticRoutesPatchOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewVoidType()
+	return vapiBindings_.NewReferenceType(nsx_policyModel.StaticRoutesBindingType)
 }
 
 func staticRoutesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -245,19 +291,29 @@ func staticRoutesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["router_controller_id"] = vapiBindings_.NewStringType()
-	fields["static_route_id"] = vapiBindings_.NewStringType()
+	fields["org_id"] = vapiBindings_.NewStringType()
+	fields["project_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["route_id"] = vapiBindings_.NewStringType()
 	fields["static_routes"] = vapiBindings_.NewReferenceType(nsx_policyModel.StaticRoutesBindingType)
-	fieldNameMap["router_controller_id"] = "RouterControllerId"
-	fieldNameMap["static_route_id"] = "StaticRouteId"
+	fieldNameMap["org_id"] = "OrgId"
+	fieldNameMap["project_id"] = "ProjectId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["route_id"] = "RouteId"
 	fieldNameMap["static_routes"] = "StaticRoutes"
 	paramsTypeMap["static_routes"] = vapiBindings_.NewReferenceType(nsx_policyModel.StaticRoutesBindingType)
-	paramsTypeMap["static_route_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["router_controller_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routerControllerId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["staticRouteId"] = vapiBindings_.NewStringType()
-	pathParams["static_route_id"] = "staticRouteId"
-	pathParams["router_controller_id"] = "routerControllerId"
+	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["route_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["routeId"] = vapiBindings_.NewStringType()
+	pathParams["route_id"] = "routeId"
+	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["project_id"] = "projectId"
+	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -272,10 +328,10 @@ func staticRoutesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"static_routes",
 		"PATCH",
-		"/policy/api/v1/infra/route-controllers/{routerControllerId}/static-routes/{staticRouteId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/static-routes/{routeId}",
 		"application/json",
 		resultHeaders,
-		204,
+		200,
 		"",
 		errorHeaders,
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
@@ -284,11 +340,15 @@ func staticRoutesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 func staticRoutesUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["router_controller_id"] = vapiBindings_.NewStringType()
-	fields["static_route_id"] = vapiBindings_.NewStringType()
+	fields["org_id"] = vapiBindings_.NewStringType()
+	fields["project_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["route_id"] = vapiBindings_.NewStringType()
 	fields["static_routes"] = vapiBindings_.NewReferenceType(nsx_policyModel.StaticRoutesBindingType)
-	fieldNameMap["router_controller_id"] = "RouterControllerId"
-	fieldNameMap["static_route_id"] = "StaticRouteId"
+	fieldNameMap["org_id"] = "OrgId"
+	fieldNameMap["project_id"] = "ProjectId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["route_id"] = "RouteId"
 	fieldNameMap["static_routes"] = "StaticRoutes"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
@@ -307,19 +367,29 @@ func staticRoutesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["router_controller_id"] = vapiBindings_.NewStringType()
-	fields["static_route_id"] = vapiBindings_.NewStringType()
+	fields["org_id"] = vapiBindings_.NewStringType()
+	fields["project_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["route_id"] = vapiBindings_.NewStringType()
 	fields["static_routes"] = vapiBindings_.NewReferenceType(nsx_policyModel.StaticRoutesBindingType)
-	fieldNameMap["router_controller_id"] = "RouterControllerId"
-	fieldNameMap["static_route_id"] = "StaticRouteId"
+	fieldNameMap["org_id"] = "OrgId"
+	fieldNameMap["project_id"] = "ProjectId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["route_id"] = "RouteId"
 	fieldNameMap["static_routes"] = "StaticRoutes"
 	paramsTypeMap["static_routes"] = vapiBindings_.NewReferenceType(nsx_policyModel.StaticRoutesBindingType)
-	paramsTypeMap["static_route_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["router_controller_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routerControllerId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["staticRouteId"] = vapiBindings_.NewStringType()
-	pathParams["static_route_id"] = "staticRouteId"
-	pathParams["router_controller_id"] = "routerControllerId"
+	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["route_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["routeId"] = vapiBindings_.NewStringType()
+	pathParams["route_id"] = "routeId"
+	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["project_id"] = "projectId"
+	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -334,7 +404,7 @@ func staticRoutesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"static_routes",
 		"PUT",
-		"/policy/api/v1/infra/route-controllers/{routerControllerId}/static-routes/{staticRouteId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/static-routes/{routeId}",
 		"application/json",
 		resultHeaders,
 		200,

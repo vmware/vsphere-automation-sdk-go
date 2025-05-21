@@ -25,6 +25,7 @@ type LbNodeUsageSummaryClient interface {
 	//
 	// @param enforcementPointPathParam Specify enforcement point path. (optional)
 	// @param includeUsagesParam Specify whether to include usages in response. (optional)
+	// @param nodeTypeParam Specify node type. (optional)
 	// @return com.vmware.nsx_policy.model.AggregateLBNodeUsageSummary
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -32,7 +33,7 @@ type LbNodeUsageSummaryClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(enforcementPointPathParam *string, includeUsagesParam *bool) (nsx_policyModel.AggregateLBNodeUsageSummary, error)
+	Get(enforcementPointPathParam *string, includeUsagesParam *bool, nodeTypeParam *string) (nsx_policyModel.AggregateLBNodeUsageSummary, error)
 }
 
 type lbNodeUsageSummaryClient struct {
@@ -60,7 +61,7 @@ func (lIface *lbNodeUsageSummaryClient) GetErrorBindingType(errorName string) va
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (lIface *lbNodeUsageSummaryClient) Get(enforcementPointPathParam *string, includeUsagesParam *bool) (nsx_policyModel.AggregateLBNodeUsageSummary, error) {
+func (lIface *lbNodeUsageSummaryClient) Get(enforcementPointPathParam *string, includeUsagesParam *bool, nodeTypeParam *string) (nsx_policyModel.AggregateLBNodeUsageSummary, error) {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
 	operationRestMetaData := lbNodeUsageSummaryGetRestMetadata()
@@ -70,6 +71,7 @@ func (lIface *lbNodeUsageSummaryClient) Get(enforcementPointPathParam *string, i
 	sv := vapiBindings_.NewStructValueBuilder(lbNodeUsageSummaryGetInputType(), typeConverter)
 	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	sv.AddStructField("IncludeUsages", includeUsagesParam)
+	sv.AddStructField("NodeType", nodeTypeParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.AggregateLBNodeUsageSummary

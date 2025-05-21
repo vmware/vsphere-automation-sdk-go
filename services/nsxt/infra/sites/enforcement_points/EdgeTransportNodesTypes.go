@@ -31,9 +31,11 @@ func edgeTransportNodesDeleteInputType() vapiBindings_.StructType {
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
 	fields["edge_transport_node_id"] = vapiBindings_.NewStringType()
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["edge_transport_node_id"] = "EdgeTransportNodeId"
+	fieldNameMap["force"] = "Force"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -54,18 +56,22 @@ func edgeTransportNodesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata 
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
 	fields["edge_transport_node_id"] = vapiBindings_.NewStringType()
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["edge_transport_node_id"] = "EdgeTransportNodeId"
+	fieldNameMap["force"] = "Force"
 	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["edge_transport_node_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["edgeTransportNodeId"] = vapiBindings_.NewStringType()
 	pathParams["enforcementpoint_id"] = "enforcementpointId"
 	pathParams["edge_transport_node_id"] = "edgeTransportNodeId"
 	pathParams["site_id"] = "siteId"
+	queryParams["force"] = "force"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(

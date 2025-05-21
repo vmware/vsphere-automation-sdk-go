@@ -74,18 +74,6 @@ type DraftsClient interface {
 	// @throws NotFound  Not Found
 	Patch(draftIdParam string, policyDraftParam nsx_policyModel.PolicyDraft) error
 
-	// Read a draft and publish it by applying changes onto current configuration. If there are additional changes on top of draft configuration, pass it as a request body, in form of Infra object. Otherwise, if there are no additional changes, then pass empty Infra object as a request body.
-	//
-	// @param draftIdParam (required)
-	// @param infraParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Publish(draftIdParam string, infraParam nsx_policyModel.Infra) error
-
 	// Create a new manual draft if the specified draft id does not correspond to an existing draft. Update the manual draft otherwise. Auto draft can not be updated.
 	//
 	// @param draftIdParam (required)
@@ -109,12 +97,11 @@ type draftsClient struct {
 func NewDraftsClient(connector vapiProtocolClient_.Connector) *draftsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.global_infra.drafts")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"delete":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"patch":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
-		"publish": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "publish"),
-		"update":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -242,33 +229,6 @@ func (dIface *draftsClient) Patch(draftIdParam string, policyDraftParam nsx_poli
 	}
 
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.drafts", "patch", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return vapiBindings_.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
-	}
-}
-
-func (dIface *draftsClient) Publish(draftIdParam string, infraParam nsx_policyModel.Infra) error {
-	typeConverter := dIface.connector.TypeConverter()
-	executionContext := dIface.connector.NewExecutionContext()
-	operationRestMetaData := draftsPublishRestMetadata()
-	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
-	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
-
-	sv := vapiBindings_.NewStructValueBuilder(draftsPublishInputType(), typeConverter)
-	sv.AddStructField("DraftId", draftIdParam)
-	sv.AddStructField("Infra", infraParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return vapiBindings_.VAPIerrorsToError(inputError)
-	}
-
-	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.global_infra.drafts", "publish", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {

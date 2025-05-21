@@ -37,14 +37,14 @@ type NeighborsClient interface {
 	//
 	// @param routerControllerIdParam (required)
 	// @param neighborIdParam (required)
-	// @return com.vmware.nsx_policy.model.BgpNeighborConfig
+	// @return com.vmware.nsx_policy.model.RouteControllerBgpNeighborConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(routerControllerIdParam string, neighborIdParam string) (nsx_policyModel.BgpNeighborConfig, error)
+	Get(routerControllerIdParam string, neighborIdParam string) (nsx_policyModel.RouteControllerBgpNeighborConfig, error)
 
 	// List BGP neighbor configs
 	//
@@ -55,41 +55,41 @@ type NeighborsClient interface {
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.BgpNeighborConfigListResult
+	// @return com.vmware.nsx_policy.model.RouteControllerBgpNeighborConfigListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(routerControllerIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.BgpNeighborConfigListResult, error)
+	List(routerControllerIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.RouteControllerBgpNeighborConfigListResult, error)
 
 	// If a BGP neighbor config is not already present, create a new BGP neighbor config. If it already exists, update the BGP neighbor config.
 	//
 	// @param routerControllerIdParam (required)
 	// @param neighborIdParam (required)
-	// @param bgpNeighborConfigParam (required)
+	// @param routeControllerBgpNeighborConfigParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(routerControllerIdParam string, neighborIdParam string, bgpNeighborConfigParam nsx_policyModel.BgpNeighborConfig) error
+	Patch(routerControllerIdParam string, neighborIdParam string, routeControllerBgpNeighborConfigParam nsx_policyModel.RouteControllerBgpNeighborConfig) error
 
 	// If a BGP neighbor config is not already present, create a new BGP neighbor config. If it already exists, update the BGP neighbor config. This operation will fully replace the object.
 	//
 	// @param routerControllerIdParam (required)
 	// @param neighborIdParam (required)
-	// @param bgpNeighborConfigParam (required)
-	// @return com.vmware.nsx_policy.model.BgpNeighborConfig
+	// @param routeControllerBgpNeighborConfigParam (required)
+	// @return com.vmware.nsx_policy.model.RouteControllerBgpNeighborConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(routerControllerIdParam string, neighborIdParam string, bgpNeighborConfigParam nsx_policyModel.BgpNeighborConfig) (nsx_policyModel.BgpNeighborConfig, error)
+	Update(routerControllerIdParam string, neighborIdParam string, routeControllerBgpNeighborConfigParam nsx_policyModel.RouteControllerBgpNeighborConfig) (nsx_policyModel.RouteControllerBgpNeighborConfig, error)
 }
 
 type neighborsClient struct {
@@ -148,7 +148,7 @@ func (nIface *neighborsClient) Delete(routerControllerIdParam string, neighborId
 	}
 }
 
-func (nIface *neighborsClient) Get(routerControllerIdParam string, neighborIdParam string) (nsx_policyModel.BgpNeighborConfig, error) {
+func (nIface *neighborsClient) Get(routerControllerIdParam string, neighborIdParam string) (nsx_policyModel.RouteControllerBgpNeighborConfig, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
 	operationRestMetaData := neighborsGetRestMetadata()
@@ -160,18 +160,18 @@ func (nIface *neighborsClient) Get(routerControllerIdParam string, neighborIdPar
 	sv.AddStructField("NeighborId", neighborIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.BgpNeighborConfig
+		var emptyOutput nsx_policyModel.RouteControllerBgpNeighborConfig
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.route_controllers.bgp.neighbors", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.BgpNeighborConfig
+	var emptyOutput nsx_policyModel.RouteControllerBgpNeighborConfig
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NeighborsGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.BgpNeighborConfig), nil
+		return output.(nsx_policyModel.RouteControllerBgpNeighborConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -181,7 +181,7 @@ func (nIface *neighborsClient) Get(routerControllerIdParam string, neighborIdPar
 	}
 }
 
-func (nIface *neighborsClient) List(routerControllerIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.BgpNeighborConfigListResult, error) {
+func (nIface *neighborsClient) List(routerControllerIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.RouteControllerBgpNeighborConfigListResult, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
 	operationRestMetaData := neighborsListRestMetadata()
@@ -198,18 +198,18 @@ func (nIface *neighborsClient) List(routerControllerIdParam string, cursorParam 
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.BgpNeighborConfigListResult
+		var emptyOutput nsx_policyModel.RouteControllerBgpNeighborConfigListResult
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.route_controllers.bgp.neighbors", "list", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.BgpNeighborConfigListResult
+	var emptyOutput nsx_policyModel.RouteControllerBgpNeighborConfigListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NeighborsListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.BgpNeighborConfigListResult), nil
+		return output.(nsx_policyModel.RouteControllerBgpNeighborConfigListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -219,7 +219,7 @@ func (nIface *neighborsClient) List(routerControllerIdParam string, cursorParam 
 	}
 }
 
-func (nIface *neighborsClient) Patch(routerControllerIdParam string, neighborIdParam string, bgpNeighborConfigParam nsx_policyModel.BgpNeighborConfig) error {
+func (nIface *neighborsClient) Patch(routerControllerIdParam string, neighborIdParam string, routeControllerBgpNeighborConfigParam nsx_policyModel.RouteControllerBgpNeighborConfig) error {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
 	operationRestMetaData := neighborsPatchRestMetadata()
@@ -229,7 +229,7 @@ func (nIface *neighborsClient) Patch(routerControllerIdParam string, neighborIdP
 	sv := vapiBindings_.NewStructValueBuilder(neighborsPatchInputType(), typeConverter)
 	sv.AddStructField("RouterControllerId", routerControllerIdParam)
 	sv.AddStructField("NeighborId", neighborIdParam)
-	sv.AddStructField("BgpNeighborConfig", bgpNeighborConfigParam)
+	sv.AddStructField("RouteControllerBgpNeighborConfig", routeControllerBgpNeighborConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -247,7 +247,7 @@ func (nIface *neighborsClient) Patch(routerControllerIdParam string, neighborIdP
 	}
 }
 
-func (nIface *neighborsClient) Update(routerControllerIdParam string, neighborIdParam string, bgpNeighborConfigParam nsx_policyModel.BgpNeighborConfig) (nsx_policyModel.BgpNeighborConfig, error) {
+func (nIface *neighborsClient) Update(routerControllerIdParam string, neighborIdParam string, routeControllerBgpNeighborConfigParam nsx_policyModel.RouteControllerBgpNeighborConfig) (nsx_policyModel.RouteControllerBgpNeighborConfig, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
 	operationRestMetaData := neighborsUpdateRestMetadata()
@@ -257,21 +257,21 @@ func (nIface *neighborsClient) Update(routerControllerIdParam string, neighborId
 	sv := vapiBindings_.NewStructValueBuilder(neighborsUpdateInputType(), typeConverter)
 	sv.AddStructField("RouterControllerId", routerControllerIdParam)
 	sv.AddStructField("NeighborId", neighborIdParam)
-	sv.AddStructField("BgpNeighborConfig", bgpNeighborConfigParam)
+	sv.AddStructField("RouteControllerBgpNeighborConfig", routeControllerBgpNeighborConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.BgpNeighborConfig
+		var emptyOutput nsx_policyModel.RouteControllerBgpNeighborConfig
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.route_controllers.bgp.neighbors", "update", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.BgpNeighborConfig
+	var emptyOutput nsx_policyModel.RouteControllerBgpNeighborConfig
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NeighborsUpdateOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.BgpNeighborConfig), nil
+		return output.(nsx_policyModel.RouteControllerBgpNeighborConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), nIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

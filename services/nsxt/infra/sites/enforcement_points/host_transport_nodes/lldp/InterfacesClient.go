@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type InterfacesClient interface {
 
-	// Read LLDP Neighbor Properties of transport node by Interface Name
+	// Read LLDP Neighbor Properties of Host Transport Node by Interface Name
 	//
 	// @param siteIdParam site ID (required)
 	// @param enforcementPointIdParam enforcement point ID (required)
@@ -40,7 +40,7 @@ type InterfacesClient interface {
 	//
 	// @param siteIdParam site ID (required)
 	// @param enforcementPointIdParam enforcement point ID (required)
-	// @param nodeIdParam ID of transport node (required)
+	// @param nodeIdParam ID of Host Transport node (required)
 	// @return com.vmware.nsx_policy.model.InterfaceNeighborPropertyListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

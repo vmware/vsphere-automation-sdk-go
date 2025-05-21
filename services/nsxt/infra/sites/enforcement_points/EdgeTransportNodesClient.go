@@ -26,13 +26,14 @@ type EdgeTransportNodesClient interface {
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
 	// @param edgeTransportNodeIdParam (required)
+	// @param forceParam If the delete API fails to delete edge, this flag is used to forcibly delete the stale edge node from the system (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(siteIdParam string, enforcementpointIdParam string, edgeTransportNodeIdParam string) error
+	Delete(siteIdParam string, enforcementpointIdParam string, edgeTransportNodeIdParam string, forceParam *bool) error
 
 	// Read an Edge Transport Node under an Enforcement Point
 	//
@@ -130,7 +131,7 @@ func (eIface *edgeTransportNodesClient) GetErrorBindingType(errorName string) va
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (eIface *edgeTransportNodesClient) Delete(siteIdParam string, enforcementpointIdParam string, edgeTransportNodeIdParam string) error {
+func (eIface *edgeTransportNodesClient) Delete(siteIdParam string, enforcementpointIdParam string, edgeTransportNodeIdParam string, forceParam *bool) error {
 	typeConverter := eIface.connector.TypeConverter()
 	executionContext := eIface.connector.NewExecutionContext()
 	operationRestMetaData := edgeTransportNodesDeleteRestMetadata()
@@ -141,6 +142,7 @@ func (eIface *edgeTransportNodesClient) Delete(siteIdParam string, enforcementpo
 	sv.AddStructField("SiteId", siteIdParam)
 	sv.AddStructField("EnforcementpointId", enforcementpointIdParam)
 	sv.AddStructField("EdgeTransportNodeId", edgeTransportNodeIdParam)
+	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)

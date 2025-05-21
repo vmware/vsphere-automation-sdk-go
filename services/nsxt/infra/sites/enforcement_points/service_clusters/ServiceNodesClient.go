@@ -28,7 +28,7 @@ type ServiceNodesClient interface {
 	// @param enforcementpointIdParam (required)
 	// @param serviceClusterIdParam (required)
 	// @param serviceNodeIdParam (required)
-	// @param forceParam This flag is used to forcibly delete the edge service node from the system. It can also help clean up any stale entries that remain in the system. (optional, default to false)
+	// @param forceParam If the delete API fails to delete edge, this flag is used to forcibly delete the stale edge node from the system. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden

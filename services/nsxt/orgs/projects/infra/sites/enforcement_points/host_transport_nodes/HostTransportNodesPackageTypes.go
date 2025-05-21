@@ -4,9 +4,9 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for package: com.vmware.nsx_policy.orgs.projects.infra.security.gateway_policies.
+// Data type definitions file for package: com.vmware.nsx_policy.orgs.projects.infra.sites.enforcement_points.host_transport_nodes.
 // Includes binding types of a top level structures and enumerations.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package gateway_policies
+package host_transport_nodes

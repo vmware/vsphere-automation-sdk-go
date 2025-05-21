@@ -88,7 +88,7 @@ func neighborsGetInputType() vapiBindings_.StructType {
 }
 
 func NeighborsGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.BgpNeighborConfigBindingType)
+	return vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpNeighborConfigBindingType)
 }
 
 func neighborsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -155,7 +155,7 @@ func neighborsListInputType() vapiBindings_.StructType {
 }
 
 func NeighborsListOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.BgpNeighborConfigListResultBindingType)
+	return vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpNeighborConfigListResultBindingType)
 }
 
 func neighborsListRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -224,10 +224,10 @@ func neighborsPatchInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["router_controller_id"] = vapiBindings_.NewStringType()
 	fields["neighbor_id"] = vapiBindings_.NewStringType()
-	fields["bgp_neighbor_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpNeighborConfigBindingType)
+	fields["route_controller_bgp_neighbor_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpNeighborConfigBindingType)
 	fieldNameMap["router_controller_id"] = "RouterControllerId"
 	fieldNameMap["neighbor_id"] = "NeighborId"
-	fieldNameMap["bgp_neighbor_config"] = "BgpNeighborConfig"
+	fieldNameMap["route_controller_bgp_neighbor_config"] = "RouteControllerBgpNeighborConfig"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -247,13 +247,13 @@ func neighborsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["router_controller_id"] = vapiBindings_.NewStringType()
 	fields["neighbor_id"] = vapiBindings_.NewStringType()
-	fields["bgp_neighbor_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpNeighborConfigBindingType)
+	fields["route_controller_bgp_neighbor_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpNeighborConfigBindingType)
 	fieldNameMap["router_controller_id"] = "RouterControllerId"
 	fieldNameMap["neighbor_id"] = "NeighborId"
-	fieldNameMap["bgp_neighbor_config"] = "BgpNeighborConfig"
+	fieldNameMap["route_controller_bgp_neighbor_config"] = "RouteControllerBgpNeighborConfig"
 	paramsTypeMap["neighbor_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["route_controller_bgp_neighbor_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpNeighborConfigBindingType)
 	paramsTypeMap["router_controller_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["bgp_neighbor_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpNeighborConfigBindingType)
 	paramsTypeMap["routerControllerId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["neighborId"] = vapiBindings_.NewStringType()
 	pathParams["neighbor_id"] = "neighborId"
@@ -270,7 +270,7 @@ func neighborsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"bgp_neighbor_config",
+		"route_controller_bgp_neighbor_config",
 		"PATCH",
 		"/policy/api/v1/infra/route-controllers/{routerControllerId}/bgp/neighbors/{neighborId}",
 		"application/json",
@@ -286,16 +286,16 @@ func neighborsUpdateInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["router_controller_id"] = vapiBindings_.NewStringType()
 	fields["neighbor_id"] = vapiBindings_.NewStringType()
-	fields["bgp_neighbor_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpNeighborConfigBindingType)
+	fields["route_controller_bgp_neighbor_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpNeighborConfigBindingType)
 	fieldNameMap["router_controller_id"] = "RouterControllerId"
 	fieldNameMap["neighbor_id"] = "NeighborId"
-	fieldNameMap["bgp_neighbor_config"] = "BgpNeighborConfig"
+	fieldNameMap["route_controller_bgp_neighbor_config"] = "RouteControllerBgpNeighborConfig"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
 func NeighborsUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.BgpNeighborConfigBindingType)
+	return vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpNeighborConfigBindingType)
 }
 
 func neighborsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -309,13 +309,13 @@ func neighborsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["router_controller_id"] = vapiBindings_.NewStringType()
 	fields["neighbor_id"] = vapiBindings_.NewStringType()
-	fields["bgp_neighbor_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpNeighborConfigBindingType)
+	fields["route_controller_bgp_neighbor_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpNeighborConfigBindingType)
 	fieldNameMap["router_controller_id"] = "RouterControllerId"
 	fieldNameMap["neighbor_id"] = "NeighborId"
-	fieldNameMap["bgp_neighbor_config"] = "BgpNeighborConfig"
+	fieldNameMap["route_controller_bgp_neighbor_config"] = "RouteControllerBgpNeighborConfig"
 	paramsTypeMap["neighbor_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["route_controller_bgp_neighbor_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpNeighborConfigBindingType)
 	paramsTypeMap["router_controller_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["bgp_neighbor_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpNeighborConfigBindingType)
 	paramsTypeMap["routerControllerId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["neighborId"] = vapiBindings_.NewStringType()
 	pathParams["neighbor_id"] = "neighborId"
@@ -332,7 +332,7 @@ func neighborsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"bgp_neighbor_config",
+		"route_controller_bgp_neighbor_config",
 		"PUT",
 		"/policy/api/v1/infra/route-controllers/{routerControllerId}/bgp/neighbors/{neighborId}",
 		"application/json",

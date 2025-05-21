@@ -79,7 +79,7 @@ func bgpGetInputType() vapiBindings_.StructType {
 }
 
 func BgpGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.BgpRoutingConfigBindingType)
+	return vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpRoutingConfigBindingType)
 }
 
 func bgpGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -123,9 +123,9 @@ func bgpPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["router_controller_id"] = vapiBindings_.NewStringType()
-	fields["bgp_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpRoutingConfigBindingType)
+	fields["route_controller_bgp_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpRoutingConfigBindingType)
 	fieldNameMap["router_controller_id"] = "RouterControllerId"
-	fieldNameMap["bgp_routing_config"] = "BgpRoutingConfig"
+	fieldNameMap["route_controller_bgp_routing_config"] = "RouteControllerBgpRoutingConfig"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -144,11 +144,11 @@ func bgpPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["router_controller_id"] = vapiBindings_.NewStringType()
-	fields["bgp_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpRoutingConfigBindingType)
+	fields["route_controller_bgp_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpRoutingConfigBindingType)
 	fieldNameMap["router_controller_id"] = "RouterControllerId"
-	fieldNameMap["bgp_routing_config"] = "BgpRoutingConfig"
+	fieldNameMap["route_controller_bgp_routing_config"] = "RouteControllerBgpRoutingConfig"
 	paramsTypeMap["router_controller_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["bgp_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpRoutingConfigBindingType)
+	paramsTypeMap["route_controller_bgp_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpRoutingConfigBindingType)
 	paramsTypeMap["routerControllerId"] = vapiBindings_.NewStringType()
 	pathParams["router_controller_id"] = "routerControllerId"
 	resultHeaders := map[string]string{}
@@ -163,7 +163,7 @@ func bgpPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"bgp_routing_config",
+		"route_controller_bgp_routing_config",
 		"PATCH",
 		"/policy/api/v1/infra/route-controllers/{routerControllerId}/bgp",
 		"application/json",
@@ -178,15 +178,15 @@ func bgpUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["router_controller_id"] = vapiBindings_.NewStringType()
-	fields["bgp_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpRoutingConfigBindingType)
+	fields["route_controller_bgp_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpRoutingConfigBindingType)
 	fieldNameMap["router_controller_id"] = "RouterControllerId"
-	fieldNameMap["bgp_routing_config"] = "BgpRoutingConfig"
+	fieldNameMap["route_controller_bgp_routing_config"] = "RouteControllerBgpRoutingConfig"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
 func BgpUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.BgpRoutingConfigBindingType)
+	return vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpRoutingConfigBindingType)
 }
 
 func bgpUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -199,11 +199,11 @@ func bgpUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["router_controller_id"] = vapiBindings_.NewStringType()
-	fields["bgp_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpRoutingConfigBindingType)
+	fields["route_controller_bgp_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpRoutingConfigBindingType)
 	fieldNameMap["router_controller_id"] = "RouterControllerId"
-	fieldNameMap["bgp_routing_config"] = "BgpRoutingConfig"
+	fieldNameMap["route_controller_bgp_routing_config"] = "RouteControllerBgpRoutingConfig"
 	paramsTypeMap["router_controller_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["bgp_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpRoutingConfigBindingType)
+	paramsTypeMap["route_controller_bgp_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerBgpRoutingConfigBindingType)
 	paramsTypeMap["routerControllerId"] = vapiBindings_.NewStringType()
 	pathParams["router_controller_id"] = "routerControllerId"
 	resultHeaders := map[string]string{}
@@ -218,7 +218,7 @@ func bgpUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"bgp_routing_config",
+		"route_controller_bgp_routing_config",
 		"PUT",
 		"/policy/api/v1/infra/route-controllers/{routerControllerId}/bgp",
 		"application/json",
