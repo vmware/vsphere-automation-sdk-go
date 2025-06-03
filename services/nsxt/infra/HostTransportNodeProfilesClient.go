@@ -65,6 +65,7 @@ type HostTransportNodeProfilesClient interface {
 	// @param transportNodeProfileIdParam (required)
 	// @param policyHostTransportNodeProfileParam (required)
 	// @param overrideNsxOwnershipParam Flag indicating whether the NSX ownership constraints (on Managed Objects like Host/Cluster/DVS) should be overridden/bypassed. Note: Overriding/bypassing NSX ownership constraints is not recommended at all. This indicates, you want to use/configure/own certain Managed Objects (like Cluster, Host or DVS) which seem to be already in use/configured/owned by some other NSX instance. This option should be used with caution. It should only be used to come out of situations where: a. The other NSX instance no longer intends to use the Managed Objects (and has already unconfigured NSX configurations) but the ownership still lies with it (incorrectly) and you want those Managed Objects to be used/configured/owned by this NSX instance. b. The other NSX instance has crashed or decommisioned but the ownership still lies with it and you want those Managed Objects to be used/configured/owned by this NSX instance. Enabling this option, while the Managed Objects affected by this operation are actively used by other NSX, can lead to problematic states on both the NSX instances. For example, if a TN is forcefully reconfigured by this NSX instance (using override_nsx_ownership=true), while it was already configured and in use by the other NSX instance, it could corrupt the HostSwitch configurations pushed down by the other NSX instance. (optional, default to false)
+	// @param updateVcpConfigParam If transport node profile is attached to a VCP managed cluster, update the VCP cluster document with this transport node profile path (optional, default to false)
 	// @return com.vmware.nsx_policy.model.PolicyHostTransportNodeProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -72,7 +73,7 @@ type HostTransportNodeProfilesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(transportNodeProfileIdParam string, policyHostTransportNodeProfileParam nsx_policyModel.PolicyHostTransportNodeProfile, overrideNsxOwnershipParam *bool) (nsx_policyModel.PolicyHostTransportNodeProfile, error)
+	Update(transportNodeProfileIdParam string, policyHostTransportNodeProfileParam nsx_policyModel.PolicyHostTransportNodeProfile, overrideNsxOwnershipParam *bool, updateVcpConfigParam *bool) (nsx_policyModel.PolicyHostTransportNodeProfile, error)
 }
 
 type hostTransportNodeProfilesClient struct {
@@ -197,7 +198,7 @@ func (hIface *hostTransportNodeProfilesClient) List(cursorParam *string, include
 	}
 }
 
-func (hIface *hostTransportNodeProfilesClient) Update(transportNodeProfileIdParam string, policyHostTransportNodeProfileParam nsx_policyModel.PolicyHostTransportNodeProfile, overrideNsxOwnershipParam *bool) (nsx_policyModel.PolicyHostTransportNodeProfile, error) {
+func (hIface *hostTransportNodeProfilesClient) Update(transportNodeProfileIdParam string, policyHostTransportNodeProfileParam nsx_policyModel.PolicyHostTransportNodeProfile, overrideNsxOwnershipParam *bool, updateVcpConfigParam *bool) (nsx_policyModel.PolicyHostTransportNodeProfile, error) {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
 	operationRestMetaData := hostTransportNodeProfilesUpdateRestMetadata()
@@ -208,6 +209,7 @@ func (hIface *hostTransportNodeProfilesClient) Update(transportNodeProfileIdPara
 	sv.AddStructField("TransportNodeProfileId", transportNodeProfileIdParam)
 	sv.AddStructField("PolicyHostTransportNodeProfile", policyHostTransportNodeProfileParam)
 	sv.AddStructField("OverrideNsxOwnership", overrideNsxOwnershipParam)
+	sv.AddStructField("UpdateVcpConfig", updateVcpConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.PolicyHostTransportNodeProfile

@@ -198,9 +198,11 @@ func hostTransportNodeProfilesUpdateInputType() vapiBindings_.StructType {
 	fields["transport_node_profile_id"] = vapiBindings_.NewStringType()
 	fields["policy_host_transport_node_profile"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyHostTransportNodeProfileBindingType)
 	fields["override_nsx_ownership"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["update_vcp_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["transport_node_profile_id"] = "TransportNodeProfileId"
 	fieldNameMap["policy_host_transport_node_profile"] = "PolicyHostTransportNodeProfile"
 	fieldNameMap["override_nsx_ownership"] = "OverrideNsxOwnership"
+	fieldNameMap["update_vcp_config"] = "UpdateVcpConfig"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -221,15 +223,19 @@ func hostTransportNodeProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMe
 	fields["transport_node_profile_id"] = vapiBindings_.NewStringType()
 	fields["policy_host_transport_node_profile"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyHostTransportNodeProfileBindingType)
 	fields["override_nsx_ownership"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["update_vcp_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["transport_node_profile_id"] = "TransportNodeProfileId"
 	fieldNameMap["policy_host_transport_node_profile"] = "PolicyHostTransportNodeProfile"
 	fieldNameMap["override_nsx_ownership"] = "OverrideNsxOwnership"
+	fieldNameMap["update_vcp_config"] = "UpdateVcpConfig"
 	paramsTypeMap["override_nsx_ownership"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["policy_host_transport_node_profile"] = vapiBindings_.NewReferenceType(nsx_policyModel.PolicyHostTransportNodeProfileBindingType)
+	paramsTypeMap["update_vcp_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["transport_node_profile_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transportNodeProfileId"] = vapiBindings_.NewStringType()
 	pathParams["transport_node_profile_id"] = "transportNodeProfileId"
 	queryParams["override_nsx_ownership"] = "override_nsx_ownership"
+	queryParams["update_vcp_config"] = "update_vcp_config"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
