@@ -24,12 +24,7 @@ type IpCidrsClient interface {
 	// Paginated list of third party IPAM Providers Cidr info.
 	//
 	// @param providerInstanceIdParam (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
-	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
-	// @param sortByParam Field by which records are sorted (optional)
+	// @param ipamThirdPartyProviderCommonParamsParam (required)
 	// @return com.vmware.nsx_policy.model.CidrInfoListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -37,7 +32,7 @@ type IpCidrsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(providerInstanceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.CidrInfoListResult, error)
+	Create(providerInstanceIdParam string, ipamThirdPartyProviderCommonParamsParam nsx_policyModel.IpamThirdPartyProviderCommonParams) (nsx_policyModel.CidrInfoListResult, error)
 }
 
 type ipCidrsClient struct {
@@ -49,7 +44,7 @@ type ipCidrsClient struct {
 func NewIpCidrsClient(connector vapiProtocolClient_.Connector) *ipCidrsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.third_party_ipam_providers.ip_cidrs")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -65,31 +60,26 @@ func (iIface *ipCidrsClient) GetErrorBindingType(errorName string) vapiBindings_
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (iIface *ipCidrsClient) List(providerInstanceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.CidrInfoListResult, error) {
+func (iIface *ipCidrsClient) Create(providerInstanceIdParam string, ipamThirdPartyProviderCommonParamsParam nsx_policyModel.IpamThirdPartyProviderCommonParams) (nsx_policyModel.CidrInfoListResult, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	operationRestMetaData := ipCidrsListRestMetadata()
+	operationRestMetaData := ipCidrsCreateRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(ipCidrsListInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(ipCidrsCreateInputType(), typeConverter)
 	sv.AddStructField("ProviderInstanceId", providerInstanceIdParam)
-	sv.AddStructField("Cursor", cursorParam)
-	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
-	sv.AddStructField("IncludedFields", includedFieldsParam)
-	sv.AddStructField("PageSize", pageSizeParam)
-	sv.AddStructField("SortAscending", sortAscendingParam)
-	sv.AddStructField("SortBy", sortByParam)
+	sv.AddStructField("IpamThirdPartyProviderCommonParams", ipamThirdPartyProviderCommonParamsParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.CidrInfoListResult
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.third_party_ipam_providers.ip_cidrs", "list", inputDataValue, executionContext)
+	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.third_party_ipam_providers.ip_cidrs", "create", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.CidrInfoListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IpCidrsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IpCidrsCreateOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}

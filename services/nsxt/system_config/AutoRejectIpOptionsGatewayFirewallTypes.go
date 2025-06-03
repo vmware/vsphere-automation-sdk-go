@@ -4,12 +4,12 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: Publish.
+// Data type definitions file for service: AutoRejectIpOptionsGatewayFirewall.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package drafts
+package system_config
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -19,73 +19,18 @@ import (
 	"reflect"
 )
 
-func publishCreateInputType() vapiBindings_.StructType {
-	fields := make(map[string]vapiBindings_.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["draft_id"] = vapiBindings_.NewStringType()
-	fields["infra"] = vapiBindings_.NewReferenceType(nsx_policyModel.InfraBindingType)
-	fieldNameMap["draft_id"] = "DraftId"
-	fieldNameMap["infra"] = "Infra"
-	var validators = []vapiBindings_.Validator{}
-	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
-}
-
-func PublishCreateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.PublishTaskBindingType)
-}
-
-func publishCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
-	fields := map[string]vapiBindings_.BindingType{}
-	fieldNameMap := map[string]string{}
-	paramsTypeMap := map[string]vapiBindings_.BindingType{}
-	pathParams := map[string]string{}
-	queryParams := map[string]string{}
-	headerParams := map[string]string{}
-	dispatchHeaderParams := map[string]string{}
-	bodyFieldsMap := map[string]string{}
-	fields["draft_id"] = vapiBindings_.NewStringType()
-	fields["infra"] = vapiBindings_.NewReferenceType(nsx_policyModel.InfraBindingType)
-	fieldNameMap["draft_id"] = "DraftId"
-	fieldNameMap["infra"] = "Infra"
-	paramsTypeMap["infra"] = vapiBindings_.NewReferenceType(nsx_policyModel.InfraBindingType)
-	paramsTypeMap["draft_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["draftId"] = vapiBindings_.NewStringType()
-	pathParams["draft_id"] = "draftId"
-	resultHeaders := map[string]string{}
-	errorHeaders := map[string]map[string]string{}
-	return vapiProtocol_.NewOperationRestMetadata(
-		fields,
-		fieldNameMap,
-		paramsTypeMap,
-		pathParams,
-		queryParams,
-		headerParams,
-		dispatchHeaderParams,
-		bodyFieldsMap,
-		"",
-		"infra",
-		"POST",
-		"/policy/api/v1/infra/drafts/{draftId}/publish",
-		"application/json",
-		resultHeaders,
-		201,
-		"",
-		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
-}
-
-func publishGetInputType() vapiBindings_.StructType {
+func autoRejectIpOptionsGatewayFirewallGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func PublishGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.PublishTaskBindingType)
+func AutoRejectIpOptionsGatewayFirewallGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.AutoRejectIPOptionsGatewayFirewallConfigBindingType)
 }
 
-func publishGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func autoRejectIpOptionsGatewayFirewallGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -108,10 +53,58 @@ func publishGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/drafts/publish",
+		"/policy/api/v1/system-config/auto-reject-ip-options-gateway-firewall",
 		"",
 		resultHeaders,
 		200,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
+func autoRejectIpOptionsGatewayFirewallPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["auto_reject_IP_options_gateway_firewall_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.AutoRejectIPOptionsGatewayFirewallConfigBindingType)
+	fieldNameMap["auto_reject_IP_options_gateway_firewall_config"] = "AutoRejectIPOptionsGatewayFirewallConfig"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func AutoRejectIpOptionsGatewayFirewallPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
+}
+
+func autoRejectIpOptionsGatewayFirewallPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["auto_reject_IP_options_gateway_firewall_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.AutoRejectIPOptionsGatewayFirewallConfigBindingType)
+	fieldNameMap["auto_reject_IP_options_gateway_firewall_config"] = "AutoRejectIPOptionsGatewayFirewallConfig"
+	paramsTypeMap["auto_reject_IP_options_gateway_firewall_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.AutoRejectIPOptionsGatewayFirewallConfigBindingType)
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"",
+		"auto_reject_IP_options_gateway_firewall_config",
+		"PATCH",
+		"/policy/api/v1/system-config/auto-reject-ip-options-gateway-firewall",
+		"application/json",
+		resultHeaders,
+		204,
 		"",
 		errorHeaders,
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})

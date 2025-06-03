@@ -19,7 +19,7 @@ import (
 	"reflect"
 )
 
-func allocationStateGetInputType() vapiBindings_.StructType {
+func allocationStateListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
@@ -38,11 +38,11 @@ func allocationStateGetInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func AllocationStateGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressBlockAllocationStateBindingType)
+func AllocationStateListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressBlockAllocationStateListBindingType)
 }
 
-func allocationStateGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func allocationStateListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}

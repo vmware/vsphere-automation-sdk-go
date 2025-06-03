@@ -198,6 +198,61 @@ func thirdPartyIpamProvidersListRestMetadata() vapiProtocol_.OperationRestMetada
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
+func thirdPartyIpamProvidersPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["provider_instance_id"] = vapiBindings_.NewStringType()
+	fields["ipam_third_party_provider"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpamThirdPartyProviderBindingType)})
+	fieldNameMap["provider_instance_id"] = "ProviderInstanceId"
+	fieldNameMap["ipam_third_party_provider"] = "IpamThirdPartyProvider"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func ThirdPartyIpamProvidersPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpamThirdPartyProviderBindingType)})
+}
+
+func thirdPartyIpamProvidersPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["provider_instance_id"] = vapiBindings_.NewStringType()
+	fields["ipam_third_party_provider"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpamThirdPartyProviderBindingType)})
+	fieldNameMap["provider_instance_id"] = "ProviderInstanceId"
+	fieldNameMap["ipam_third_party_provider"] = "IpamThirdPartyProvider"
+	paramsTypeMap["provider_instance_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipam_third_party_provider"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IpamThirdPartyProviderBindingType)})
+	paramsTypeMap["providerInstanceId"] = vapiBindings_.NewStringType()
+	pathParams["provider_instance_id"] = "providerInstanceId"
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"",
+		"ipam_third_party_provider",
+		"PATCH",
+		"/policy/api/v1/infra/third-party-ipam-providers/{providerInstanceId}",
+		"application/json",
+		resultHeaders,
+		200,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
 func thirdPartyIpamProvidersUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)

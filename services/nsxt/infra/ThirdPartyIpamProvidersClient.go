@@ -76,6 +76,21 @@ type ThirdPartyIpamProvidersClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
+	Patch(providerInstanceIdParam string, ipamThirdPartyProviderParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
+
+	// Creates a new third party IPAM provider with specified ID if not already present. If third party IPAM provider of given ID is already present, then the instance is updated. This is a full replace.
+	//
+	// @param providerInstanceIdParam (required)
+	// @param ipamThirdPartyProviderParam (required)
+	// The parameter must contain all the properties defined in nsx_policyModel.IpamThirdPartyProvider.
+	// @return com.vmware.nsx_policy.model.IpamThirdPartyProvider
+	// The return value will contain all the properties defined in nsx_policyModel.IpamThirdPartyProvider.
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
 	Update(providerInstanceIdParam string, ipamThirdPartyProviderParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 }
 
@@ -91,6 +106,7 @@ func NewThirdPartyIpamProvidersClient(connector vapiProtocolClient_.Connector) *
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
@@ -193,6 +209,39 @@ func (tIface *thirdPartyIpamProvidersClient) List(cursorParam *string, includeMa
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(nsx_policyModel.IpamThirdPartyProviderListResult), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (tIface *thirdPartyIpamProvidersClient) Patch(providerInstanceIdParam string, ipamThirdPartyProviderParam *vapiData_.StructValue) (*vapiData_.StructValue, error) {
+	typeConverter := tIface.connector.TypeConverter()
+	executionContext := tIface.connector.NewExecutionContext()
+	operationRestMetaData := thirdPartyIpamProvidersPatchRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(thirdPartyIpamProvidersPatchInputType(), typeConverter)
+	sv.AddStructField("ProviderInstanceId", providerInstanceIdParam)
+	sv.AddStructField("IpamThirdPartyProvider", ipamThirdPartyProviderParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput *vapiData_.StructValue
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := tIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.third_party_ipam_providers", "patch", inputDataValue, executionContext)
+	var emptyOutput *vapiData_.StructValue
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ThirdPartyIpamProvidersPatchOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(*vapiData_.StructValue), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), tIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

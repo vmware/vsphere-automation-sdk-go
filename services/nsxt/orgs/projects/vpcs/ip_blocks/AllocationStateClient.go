@@ -29,14 +29,14 @@ type AllocationStateClient interface {
 	// @param cidrParam CIDR allocated from the IpAddressBlock (optional)
 	// @param includeWorkloadDetailsParam If set to true, and if the allocated CIDR is being used by a VM, the API will return details about the VM. (optional, default to false)
 	// @param ipAddressBlockPathParam Policy path of the IpAddressBlock (optional)
-	// @return com.vmware.nsx_policy.model.IpAddressBlockAllocationState
+	// @return com.vmware.nsx_policy.model.IpAddressBlockAllocationStateList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, vpcIdParam string, cidrParam *string, includeWorkloadDetailsParam *bool, ipAddressBlockPathParam *string) (nsx_policyModel.IpAddressBlockAllocationState, error)
+	List(orgIdParam string, projectIdParam string, vpcIdParam string, cidrParam *string, includeWorkloadDetailsParam *bool, ipAddressBlockPathParam *string) (nsx_policyModel.IpAddressBlockAllocationStateList, error)
 }
 
 type allocationStateClient struct {
@@ -48,7 +48,7 @@ type allocationStateClient struct {
 func NewAllocationStateClient(connector vapiProtocolClient_.Connector) *allocationStateClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.vpcs.ip_blocks.allocation_state")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -64,14 +64,14 @@ func (aIface *allocationStateClient) GetErrorBindingType(errorName string) vapiB
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (aIface *allocationStateClient) Get(orgIdParam string, projectIdParam string, vpcIdParam string, cidrParam *string, includeWorkloadDetailsParam *bool, ipAddressBlockPathParam *string) (nsx_policyModel.IpAddressBlockAllocationState, error) {
+func (aIface *allocationStateClient) List(orgIdParam string, projectIdParam string, vpcIdParam string, cidrParam *string, includeWorkloadDetailsParam *bool, ipAddressBlockPathParam *string) (nsx_policyModel.IpAddressBlockAllocationStateList, error) {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
-	operationRestMetaData := allocationStateGetRestMetadata()
+	operationRestMetaData := allocationStateListRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(allocationStateGetInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(allocationStateListInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("VpcId", vpcIdParam)
@@ -80,18 +80,18 @@ func (aIface *allocationStateClient) Get(orgIdParam string, projectIdParam strin
 	sv.AddStructField("IpAddressBlockPath", ipAddressBlockPathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.IpAddressBlockAllocationState
+		var emptyOutput nsx_policyModel.IpAddressBlockAllocationStateList
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := aIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpcs.ip_blocks.allocation_state", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.IpAddressBlockAllocationState
+	methodResult := aIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpcs.ip_blocks.allocation_state", "list", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.IpAddressBlockAllocationStateList
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), AllocationStateGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), AllocationStateListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.IpAddressBlockAllocationState), nil
+		return output.(nsx_policyModel.IpAddressBlockAllocationStateList), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), aIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
