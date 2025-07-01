@@ -22,6 +22,8 @@ import (
 func cancelCreateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["draft_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["draft_id"] = "DraftId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -39,6 +41,11 @@ func cancelCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
+	fields["draft_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["draft_id"] = "DraftId"
+	paramsTypeMap["draft_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["draftId"] = vapiBindings_.NewStringType()
+	pathParams["draft_id"] = "draftId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -53,7 +60,7 @@ func cancelCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"POST",
-		"/policy/api/v1/infra/security/gateway-policies/publish/cancel",
+		"/policy/api/v1/infra/drafts/{draftId}/publish/cancel",
 		"",
 		resultHeaders,
 		201,

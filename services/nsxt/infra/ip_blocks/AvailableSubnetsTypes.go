@@ -23,7 +23,7 @@ func availableSubnetsGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["ip_block_id"] = vapiBindings_.NewStringType()
-	fields["mask"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["mask"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["ip_block_id"] = "IpBlockId"
 	fieldNameMap["mask"] = "Mask"
 	var validators = []vapiBindings_.Validator{}
@@ -44,11 +44,11 @@ func availableSubnetsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["ip_block_id"] = vapiBindings_.NewStringType()
-	fields["mask"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["mask"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["ip_block_id"] = "IpBlockId"
 	fieldNameMap["mask"] = "Mask"
 	paramsTypeMap["ip_block_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["mask"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["mask"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["ipBlockId"] = vapiBindings_.NewStringType()
 	pathParams["ip_block_id"] = "ipBlockId"
 	queryParams["mask"] = "mask"

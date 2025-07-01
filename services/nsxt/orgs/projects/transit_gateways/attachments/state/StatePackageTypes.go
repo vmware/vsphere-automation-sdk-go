@@ -4,9 +4,9 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for package: com.vmware.nsx_policy.orgs.projects.vpc_security_profiles.
+// Data type definitions file for package: com.vmware.nsx_policy.orgs.projects.transit_gateways.attachments.state.
 // Includes binding types of a top level structures and enumerations.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package vpc_security_profiles
+package state

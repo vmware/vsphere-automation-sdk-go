@@ -26,21 +26,21 @@ type IpsecVpnServicesClient interface {
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string) error
+	Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string) error
 
 	// Get IPSec VPN service under Transit Gateway.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	// @return com.vmware.nsx_policy.model.IPSecVpnService
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -48,7 +48,7 @@ type IpsecVpnServicesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string) (nsx_policyModel.IPSecVpnService, error)
+	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string) (nsx_policyModel.IPSecVpnService, error)
 
 	// Get paginated list of all IPSec VPN services for given Transit Gateway.
 	//
@@ -75,7 +75,7 @@ type IpsecVpnServicesClient interface {
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	// @param ipSecVpnServiceParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -83,14 +83,14 @@ type IpsecVpnServicesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, ipSecVpnServiceParam nsx_policyModel.IPSecVpnService) error
+	Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, ipSecVpnServiceParam nsx_policyModel.IPSecVpnService) error
 
 	// Create or fully replace IPSec VPN service under given Transit Gateway. Revision is optional for creation and required for update.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	// @param ipSecVpnServiceParam (required)
 	// @return com.vmware.nsx_policy.model.IPSecVpnService
 	//
@@ -99,7 +99,7 @@ type IpsecVpnServicesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, ipSecVpnServiceParam nsx_policyModel.IPSecVpnService) (nsx_policyModel.IPSecVpnService, error)
+	Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, ipSecVpnServiceParam nsx_policyModel.IPSecVpnService) (nsx_policyModel.IPSecVpnService, error)
 }
 
 type ipsecVpnServicesClient struct {
@@ -131,7 +131,7 @@ func (iIface *ipsecVpnServicesClient) GetErrorBindingType(errorName string) vapi
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (iIface *ipsecVpnServicesClient) Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string) error {
+func (iIface *ipsecVpnServicesClient) Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string) error {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
 	operationRestMetaData := ipsecVpnServicesDeleteRestMetadata()
@@ -142,7 +142,7 @@ func (iIface *ipsecVpnServicesClient) Delete(orgIdParam string, projectIdParam s
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -160,7 +160,7 @@ func (iIface *ipsecVpnServicesClient) Delete(orgIdParam string, projectIdParam s
 	}
 }
 
-func (iIface *ipsecVpnServicesClient) Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string) (nsx_policyModel.IPSecVpnService, error) {
+func (iIface *ipsecVpnServicesClient) Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string) (nsx_policyModel.IPSecVpnService, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
 	operationRestMetaData := ipsecVpnServicesGetRestMetadata()
@@ -171,7 +171,7 @@ func (iIface *ipsecVpnServicesClient) Get(orgIdParam string, projectIdParam stri
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.IPSecVpnService
@@ -235,7 +235,7 @@ func (iIface *ipsecVpnServicesClient) List(orgIdParam string, projectIdParam str
 	}
 }
 
-func (iIface *ipsecVpnServicesClient) Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, ipSecVpnServiceParam nsx_policyModel.IPSecVpnService) error {
+func (iIface *ipsecVpnServicesClient) Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, ipSecVpnServiceParam nsx_policyModel.IPSecVpnService) error {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
 	operationRestMetaData := ipsecVpnServicesPatchRestMetadata()
@@ -246,7 +246,7 @@ func (iIface *ipsecVpnServicesClient) Patch(orgIdParam string, projectIdParam st
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	sv.AddStructField("IpSecVpnService", ipSecVpnServiceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
@@ -265,7 +265,7 @@ func (iIface *ipsecVpnServicesClient) Patch(orgIdParam string, projectIdParam st
 	}
 }
 
-func (iIface *ipsecVpnServicesClient) Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, ipSecVpnServiceParam nsx_policyModel.IPSecVpnService) (nsx_policyModel.IPSecVpnService, error) {
+func (iIface *ipsecVpnServicesClient) Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, ipSecVpnServiceParam nsx_policyModel.IPSecVpnService) (nsx_policyModel.IPSecVpnService, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
 	operationRestMetaData := ipsecVpnServicesUpdateRestMetadata()
@@ -276,7 +276,7 @@ func (iIface *ipsecVpnServicesClient) Update(orgIdParam string, projectIdParam s
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	sv.AddStructField("IpSecVpnService", ipSecVpnServiceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {

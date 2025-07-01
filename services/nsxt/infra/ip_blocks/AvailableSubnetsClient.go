@@ -32,7 +32,7 @@ type AvailableSubnetsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(ipBlockIdParam string, maskParam *string) (nsx_policyModel.IpAddressBlockAvailableSubnetsCount, error)
+	Get(ipBlockIdParam string, maskParam *int64) (nsx_policyModel.IpAddressBlockAvailableSubnetsCount, error)
 }
 
 type availableSubnetsClient struct {
@@ -60,7 +60,7 @@ func (aIface *availableSubnetsClient) GetErrorBindingType(errorName string) vapi
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (aIface *availableSubnetsClient) Get(ipBlockIdParam string, maskParam *string) (nsx_policyModel.IpAddressBlockAvailableSubnetsCount, error) {
+func (aIface *availableSubnetsClient) Get(ipBlockIdParam string, maskParam *int64) (nsx_policyModel.IpAddressBlockAvailableSubnetsCount, error) {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
 	operationRestMetaData := availableSubnetsGetRestMetadata()

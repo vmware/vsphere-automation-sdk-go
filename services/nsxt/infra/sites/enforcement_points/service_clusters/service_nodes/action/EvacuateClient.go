@@ -20,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type EvacuateClient interface {
 
-	// This API is designed to evacuate service contexts from a specified edge node.To successfully evacuate the service contexts from the edge service node with the given ID, it is crucial that this node only contains auto-allocated service contexts. If there are any manually allocated service contexts present on the service cluster member, the evacuation task will not be executed. It is also advisable to place the edge service node into maintenance mode before performing the evacuation through the API. If the edge service node is not already in maintenance mode, the API will automatically transition it into maintenance mode before carrying out the evacuation operation. To ensure high availability during the evacuation process, the service cluster should have at least two healthy service nodes.
+	// This API is designed to evacuate service contexts from a specified edge node. To successfully evacuate the service contexts from the edge service node with the given ID, it is crucial that this node only contains auto-allocated service contexts. If there are any manually allocated service contexts present on the service cluster member, the evacuation task will not be executed. To ensure high availability during the evacuation process, the service cluster should have at least two healthy service nodes.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)

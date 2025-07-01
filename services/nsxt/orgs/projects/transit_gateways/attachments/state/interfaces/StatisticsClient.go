@@ -4,10 +4,10 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: Status
+// Interface file for service: Statistics
 // Used by client-side stubs.
 
-package publish
+package interfaces
 
 import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -19,66 +19,77 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-type StatusClient interface {
+type StatisticsClient interface {
 
-	// Get the status of the latest Publish task.
-	// @return com.vmware.nsx_policy.model.PublishTask
+	// Retrieve the total tx, rx dropped, total bytes, total packets of all traffic that flows to the TGW attachment interface.
+	//
+	// @param orgIdParam (required)
+	// @param projectIdParam (required)
+	// @param transitGatewayIdParam (required)
+	// @param attachmentIdParam (required)
+	// @param interfaceIdParam (required)
+	// @return com.vmware.nsx_policy.model.TransitGatewayAttachmentStatistics
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (nsx_policyModel.PublishTask, error)
+	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, attachmentIdParam string, interfaceIdParam string) (nsx_policyModel.TransitGatewayAttachmentStatistics, error)
 }
 
-type statusClient struct {
+type statisticsClient struct {
 	connector           vapiProtocolClient_.Connector
 	interfaceDefinition vapiCore_.InterfaceDefinition
 	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewStatusClient(connector vapiProtocolClient_.Connector) *statusClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.security.gateway_policies.publish.status")
+func NewStatisticsClient(connector vapiProtocolClient_.Connector) *statisticsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.transit_gateways.attachments.state.interfaces.statistics")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
-	sIface := statusClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	sIface := statisticsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *statusClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+func (sIface *statisticsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statusClient) Get() (nsx_policyModel.PublishTask, error) {
+func (sIface *statisticsClient) Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, attachmentIdParam string, interfaceIdParam string) (nsx_policyModel.TransitGatewayAttachmentStatistics, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	operationRestMetaData := statusGetRestMetadata()
+	operationRestMetaData := statisticsGetRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(statusGetInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(statisticsGetInputType(), typeConverter)
+	sv.AddStructField("OrgId", orgIdParam)
+	sv.AddStructField("ProjectId", projectIdParam)
+	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
+	sv.AddStructField("AttachmentId", attachmentIdParam)
+	sv.AddStructField("InterfaceId", interfaceIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.PublishTask
+		var emptyOutput nsx_policyModel.TransitGatewayAttachmentStatistics
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.security.gateway_policies.publish.status", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.PublishTask
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.attachments.state.interfaces.statistics", "get", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.TransitGatewayAttachmentStatistics
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatusGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatisticsGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.PublishTask), nil
+		return output.(nsx_policyModel.TransitGatewayAttachmentStatistics), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

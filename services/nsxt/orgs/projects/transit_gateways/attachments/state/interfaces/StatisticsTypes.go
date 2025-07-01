@@ -4,12 +4,12 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: SecurityProfileAttachments.
+// Data type definitions file for service: Statistics.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package security_profiles
+package interfaces
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -19,26 +19,28 @@ import (
 	"reflect"
 )
 
-func securityProfileAttachmentsGetInputType() vapiBindings_.StructType {
+func statisticsGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["security_profile_id"] = vapiBindings_.NewStringType()
-	fields["security_profile_attachment_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["attachment_id"] = vapiBindings_.NewStringType()
+	fields["interface_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["security_profile_id"] = "SecurityProfileId"
-	fieldNameMap["security_profile_attachment_id"] = "SecurityProfileAttachmentId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["attachment_id"] = "AttachmentId"
+	fieldNameMap["interface_id"] = "InterfaceId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func SecurityProfileAttachmentsGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.SecurityProfileAttachmentBindingType)
+func StatisticsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayAttachmentStatisticsBindingType)
 }
 
-func securityProfileAttachmentsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func statisticsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -49,22 +51,27 @@ func securityProfileAttachmentsGetRestMetadata() vapiProtocol_.OperationRestMeta
 	bodyFieldsMap := map[string]string{}
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["security_profile_id"] = vapiBindings_.NewStringType()
-	fields["security_profile_attachment_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["attachment_id"] = vapiBindings_.NewStringType()
+	fields["interface_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["security_profile_id"] = "SecurityProfileId"
-	fieldNameMap["security_profile_attachment_id"] = "SecurityProfileAttachmentId"
-	paramsTypeMap["security_profile_attachment_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["attachment_id"] = "AttachmentId"
+	fieldNameMap["interface_id"] = "InterfaceId"
+	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["interface_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["security_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["attachment_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["securityProfileId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["securityProfileAttachmentId"] = vapiBindings_.NewStringType()
-	pathParams["security_profile_id"] = "securityProfileId"
-	pathParams["security_profile_attachment_id"] = "securityProfileAttachmentId"
+	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["attachmentId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["interfaceId"] = vapiBindings_.NewStringType()
+	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["attachment_id"] = "attachmentId"
+	pathParams["interface_id"] = "interfaceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
@@ -81,7 +88,7 @@ func securityProfileAttachmentsGetRestMetadata() vapiProtocol_.OperationRestMeta
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/security-profiles/{securityProfileId}/security-profile-attachments/{securityProfileAttachmentId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/attachments/{attachmentId}/state/interfaces/{interfaceId}/statistics",
 		"",
 		resultHeaders,
 		200,

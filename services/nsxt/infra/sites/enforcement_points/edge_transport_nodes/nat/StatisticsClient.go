@@ -25,8 +25,7 @@ type StatisticsClient interface {
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
-	// @param edgeClusterIdParam (required)
-	// @param policyEdgeNodeIdParam (required)
+	// @param nodeIdParam (required)
 	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @param sourceParam Data source type. (optional)
 	// @return com.vmware.nsx_policy.model.NatStatisticsPerPolicyEdgeNode
@@ -36,7 +35,7 @@ type StatisticsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(siteIdParam string, enforcementpointIdParam string, edgeClusterIdParam string, policyEdgeNodeIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.NatStatisticsPerPolicyEdgeNode, error)
+	Get(siteIdParam string, enforcementpointIdParam string, nodeIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.NatStatisticsPerPolicyEdgeNode, error)
 }
 
 type statisticsClient struct {
@@ -46,7 +45,7 @@ type statisticsClient struct {
 }
 
 func NewStatisticsClient(connector vapiProtocolClient_.Connector) *statisticsClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.enforcement_points.edge_clusters.edge_nodes.nat.statistics")
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.enforcement_points.edge_transport_nodes.nat.statistics")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
@@ -64,7 +63,7 @@ func (sIface *statisticsClient) GetErrorBindingType(errorName string) vapiBindin
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statisticsClient) Get(siteIdParam string, enforcementpointIdParam string, edgeClusterIdParam string, policyEdgeNodeIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.NatStatisticsPerPolicyEdgeNode, error) {
+func (sIface *statisticsClient) Get(siteIdParam string, enforcementpointIdParam string, nodeIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.NatStatisticsPerPolicyEdgeNode, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := statisticsGetRestMetadata()
@@ -74,8 +73,7 @@ func (sIface *statisticsClient) Get(siteIdParam string, enforcementpointIdParam 
 	sv := vapiBindings_.NewStructValueBuilder(statisticsGetInputType(), typeConverter)
 	sv.AddStructField("SiteId", siteIdParam)
 	sv.AddStructField("EnforcementpointId", enforcementpointIdParam)
-	sv.AddStructField("EdgeClusterId", edgeClusterIdParam)
-	sv.AddStructField("PolicyEdgeNodeId", policyEdgeNodeIdParam)
+	sv.AddStructField("NodeId", nodeIdParam)
 	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	sv.AddStructField("Source", sourceParam)
 	inputDataValue, inputError := sv.GetStructValue()
@@ -84,7 +82,7 @@ func (sIface *statisticsClient) Get(siteIdParam string, enforcementpointIdParam 
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.edge_clusters.edge_nodes.nat.statistics", "get", inputDataValue, executionContext)
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.edge_transport_nodes.nat.statistics", "get", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.NatStatisticsPerPolicyEdgeNode
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatisticsGetOutputType())

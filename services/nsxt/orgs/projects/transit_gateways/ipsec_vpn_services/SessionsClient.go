@@ -27,7 +27,7 @@ type SessionsClient interface {
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	// @param sessionIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -35,14 +35,14 @@ type SessionsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, sessionIdParam string) error
+	Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, sessionIdParam string) error
 
 	// Get IPSec VPN session without sensitive data for a given ipsec vpn service under Transit Gateway.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	// @param sessionIdParam (required)
 	// @return com.vmware.nsx_policy.model.IPSecVpnSession
 	// The return value will contain all the properties defined in nsx_policyModel.IPSecVpnSession.
@@ -52,14 +52,14 @@ type SessionsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, sessionIdParam string) (*vapiData_.StructValue, error)
+	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, sessionIdParam string) (*vapiData_.StructValue, error)
 
 	// Get paginated list of all IPSec VPN sessions for a given ipsec vpn service under Transit Gateway.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
@@ -73,14 +73,14 @@ type SessionsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPSecVpnSessionListResult, error)
+	List(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPSecVpnSessionListResult, error)
 
 	// Create or patch an IPSec VPN session for a given ipsec vpn service under Transit Gateway.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	// @param sessionIdParam (required)
 	// @param ipSecVpnSessionParam (required)
 	// The parameter must contain all the properties defined in nsx_policyModel.IPSecVpnSession.
@@ -90,14 +90,14 @@ type SessionsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, sessionIdParam string, ipSecVpnSessionParam *vapiData_.StructValue) error
+	Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, sessionIdParam string, ipSecVpnSessionParam *vapiData_.StructValue) error
 
 	// Get IPSec VPN session with senstive data for a given ipsec vpn service under Transit Gateway.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	// @param sessionIdParam (required)
 	// @return com.vmware.nsx_policy.model.IPSecVpnSession
 	// The return value will contain all the properties defined in nsx_policyModel.IPSecVpnSession.
@@ -107,14 +107,14 @@ type SessionsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Showsensitivedata(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, sessionIdParam string) (*vapiData_.StructValue, error)
+	Showsensitivedata(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, sessionIdParam string) (*vapiData_.StructValue, error)
 
 	// Create or fully replace IPSec VPN session for a given ipsec vpn service under Transit Gateway. Revision is optional for creation and required for update.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	// @param sessionIdParam (required)
 	// @param ipSecVpnSessionParam (required)
 	// The parameter must contain all the properties defined in nsx_policyModel.IPSecVpnSession.
@@ -126,7 +126,7 @@ type SessionsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, sessionIdParam string, ipSecVpnSessionParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
+	Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, sessionIdParam string, ipSecVpnSessionParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 }
 
 type sessionsClient struct {
@@ -159,7 +159,7 @@ func (sIface *sessionsClient) GetErrorBindingType(errorName string) vapiBindings
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *sessionsClient) Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, sessionIdParam string) error {
+func (sIface *sessionsClient) Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, sessionIdParam string) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := sessionsDeleteRestMetadata()
@@ -170,7 +170,7 @@ func (sIface *sessionsClient) Delete(orgIdParam string, projectIdParam string, t
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	sv.AddStructField("SessionId", sessionIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
@@ -189,7 +189,7 @@ func (sIface *sessionsClient) Delete(orgIdParam string, projectIdParam string, t
 	}
 }
 
-func (sIface *sessionsClient) Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, sessionIdParam string) (*vapiData_.StructValue, error) {
+func (sIface *sessionsClient) Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, sessionIdParam string) (*vapiData_.StructValue, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := sessionsGetRestMetadata()
@@ -200,7 +200,7 @@ func (sIface *sessionsClient) Get(orgIdParam string, projectIdParam string, tran
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	sv.AddStructField("SessionId", sessionIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
@@ -225,7 +225,7 @@ func (sIface *sessionsClient) Get(orgIdParam string, projectIdParam string, tran
 	}
 }
 
-func (sIface *sessionsClient) List(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPSecVpnSessionListResult, error) {
+func (sIface *sessionsClient) List(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPSecVpnSessionListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := sessionsListRestMetadata()
@@ -236,7 +236,7 @@ func (sIface *sessionsClient) List(orgIdParam string, projectIdParam string, tra
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -266,7 +266,7 @@ func (sIface *sessionsClient) List(orgIdParam string, projectIdParam string, tra
 	}
 }
 
-func (sIface *sessionsClient) Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, sessionIdParam string, ipSecVpnSessionParam *vapiData_.StructValue) error {
+func (sIface *sessionsClient) Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, sessionIdParam string, ipSecVpnSessionParam *vapiData_.StructValue) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := sessionsPatchRestMetadata()
@@ -277,7 +277,7 @@ func (sIface *sessionsClient) Patch(orgIdParam string, projectIdParam string, tr
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	sv.AddStructField("SessionId", sessionIdParam)
 	sv.AddStructField("IpSecVpnSession", ipSecVpnSessionParam)
 	inputDataValue, inputError := sv.GetStructValue()
@@ -297,7 +297,7 @@ func (sIface *sessionsClient) Patch(orgIdParam string, projectIdParam string, tr
 	}
 }
 
-func (sIface *sessionsClient) Showsensitivedata(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, sessionIdParam string) (*vapiData_.StructValue, error) {
+func (sIface *sessionsClient) Showsensitivedata(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, sessionIdParam string) (*vapiData_.StructValue, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := sessionsShowsensitivedataRestMetadata()
@@ -308,7 +308,7 @@ func (sIface *sessionsClient) Showsensitivedata(orgIdParam string, projectIdPara
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	sv.AddStructField("SessionId", sessionIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
@@ -333,7 +333,7 @@ func (sIface *sessionsClient) Showsensitivedata(orgIdParam string, projectIdPara
 	}
 }
 
-func (sIface *sessionsClient) Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, sessionIdParam string, ipSecVpnSessionParam *vapiData_.StructValue) (*vapiData_.StructValue, error) {
+func (sIface *sessionsClient) Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, sessionIdParam string, ipSecVpnSessionParam *vapiData_.StructValue) (*vapiData_.StructValue, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := sessionsUpdateRestMetadata()
@@ -344,7 +344,7 @@ func (sIface *sessionsClient) Update(orgIdParam string, projectIdParam string, t
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	sv.AddStructField("SessionId", sessionIdParam)
 	sv.AddStructField("IpSecVpnSession", ipSecVpnSessionParam)
 	inputDataValue, inputError := sv.GetStructValue()

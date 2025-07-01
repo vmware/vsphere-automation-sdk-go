@@ -26,7 +26,7 @@ type LocalEndpointsClient interface {
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	// @param localEndpointIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -34,14 +34,14 @@ type LocalEndpointsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, localEndpointIdParam string) error
+	Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, localEndpointIdParam string) error
 
 	// Get IPSec VPN local endpoint for a given ipsec vpn service under Transit Gateway.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	// @param localEndpointIdParam (required)
 	// @return com.vmware.nsx_policy.model.IPSecVpnLocalEndpoint
 	//
@@ -50,14 +50,14 @@ type LocalEndpointsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, localEndpointIdParam string) (nsx_policyModel.IPSecVpnLocalEndpoint, error)
+	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, localEndpointIdParam string) (nsx_policyModel.IPSecVpnLocalEndpoint, error)
 
 	// Get paginated list of all IPSec VPN local endpoints for a given ipsec vpn service under Transit Gateway.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
@@ -71,14 +71,14 @@ type LocalEndpointsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPSecVpnLocalEndpointListResult, error)
+	List(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPSecVpnLocalEndpointListResult, error)
 
 	// Create or patch a custom IPSec VPN local endpoint under Transit Gateway.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	// @param localEndpointIdParam (required)
 	// @param ipSecVpnLocalEndpointParam (required)
 	//
@@ -87,14 +87,14 @@ type LocalEndpointsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, localEndpointIdParam string, ipSecVpnLocalEndpointParam nsx_policyModel.IPSecVpnLocalEndpoint) error
+	Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, localEndpointIdParam string, ipSecVpnLocalEndpointParam nsx_policyModel.IPSecVpnLocalEndpoint) error
 
 	// Create or fully replace IPSec VPN local endpoint for a given ipsec vpn service under Transit Gateway. Revision is optional for creation and required for update.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param serviceIdParam (required)
+	// @param ipsecVpnServiceIdParam (required)
 	// @param localEndpointIdParam (required)
 	// @param ipSecVpnLocalEndpointParam (required)
 	// @return com.vmware.nsx_policy.model.IPSecVpnLocalEndpoint
@@ -104,7 +104,7 @@ type LocalEndpointsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, localEndpointIdParam string, ipSecVpnLocalEndpointParam nsx_policyModel.IPSecVpnLocalEndpoint) (nsx_policyModel.IPSecVpnLocalEndpoint, error)
+	Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, localEndpointIdParam string, ipSecVpnLocalEndpointParam nsx_policyModel.IPSecVpnLocalEndpoint) (nsx_policyModel.IPSecVpnLocalEndpoint, error)
 }
 
 type localEndpointsClient struct {
@@ -136,7 +136,7 @@ func (lIface *localEndpointsClient) GetErrorBindingType(errorName string) vapiBi
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (lIface *localEndpointsClient) Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, localEndpointIdParam string) error {
+func (lIface *localEndpointsClient) Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, localEndpointIdParam string) error {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
 	operationRestMetaData := localEndpointsDeleteRestMetadata()
@@ -147,7 +147,7 @@ func (lIface *localEndpointsClient) Delete(orgIdParam string, projectIdParam str
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	sv.AddStructField("LocalEndpointId", localEndpointIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
@@ -166,7 +166,7 @@ func (lIface *localEndpointsClient) Delete(orgIdParam string, projectIdParam str
 	}
 }
 
-func (lIface *localEndpointsClient) Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, localEndpointIdParam string) (nsx_policyModel.IPSecVpnLocalEndpoint, error) {
+func (lIface *localEndpointsClient) Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, localEndpointIdParam string) (nsx_policyModel.IPSecVpnLocalEndpoint, error) {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
 	operationRestMetaData := localEndpointsGetRestMetadata()
@@ -177,7 +177,7 @@ func (lIface *localEndpointsClient) Get(orgIdParam string, projectIdParam string
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	sv.AddStructField("LocalEndpointId", localEndpointIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
@@ -202,7 +202,7 @@ func (lIface *localEndpointsClient) Get(orgIdParam string, projectIdParam string
 	}
 }
 
-func (lIface *localEndpointsClient) List(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPSecVpnLocalEndpointListResult, error) {
+func (lIface *localEndpointsClient) List(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPSecVpnLocalEndpointListResult, error) {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
 	operationRestMetaData := localEndpointsListRestMetadata()
@@ -213,7 +213,7 @@ func (lIface *localEndpointsClient) List(orgIdParam string, projectIdParam strin
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -243,7 +243,7 @@ func (lIface *localEndpointsClient) List(orgIdParam string, projectIdParam strin
 	}
 }
 
-func (lIface *localEndpointsClient) Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, localEndpointIdParam string, ipSecVpnLocalEndpointParam nsx_policyModel.IPSecVpnLocalEndpoint) error {
+func (lIface *localEndpointsClient) Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, localEndpointIdParam string, ipSecVpnLocalEndpointParam nsx_policyModel.IPSecVpnLocalEndpoint) error {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
 	operationRestMetaData := localEndpointsPatchRestMetadata()
@@ -254,7 +254,7 @@ func (lIface *localEndpointsClient) Patch(orgIdParam string, projectIdParam stri
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	sv.AddStructField("LocalEndpointId", localEndpointIdParam)
 	sv.AddStructField("IpSecVpnLocalEndpoint", ipSecVpnLocalEndpointParam)
 	inputDataValue, inputError := sv.GetStructValue()
@@ -274,7 +274,7 @@ func (lIface *localEndpointsClient) Patch(orgIdParam string, projectIdParam stri
 	}
 }
 
-func (lIface *localEndpointsClient) Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, localEndpointIdParam string, ipSecVpnLocalEndpointParam nsx_policyModel.IPSecVpnLocalEndpoint) (nsx_policyModel.IPSecVpnLocalEndpoint, error) {
+func (lIface *localEndpointsClient) Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, localEndpointIdParam string, ipSecVpnLocalEndpointParam nsx_policyModel.IPSecVpnLocalEndpoint) (nsx_policyModel.IPSecVpnLocalEndpoint, error) {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
 	operationRestMetaData := localEndpointsUpdateRestMetadata()
@@ -285,7 +285,7 @@ func (lIface *localEndpointsClient) Update(orgIdParam string, projectIdParam str
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("IpsecVpnServiceId", ipsecVpnServiceIdParam)
 	sv.AddStructField("LocalEndpointId", localEndpointIdParam)
 	sv.AddStructField("IpSecVpnLocalEndpoint", ipSecVpnLocalEndpointParam)
 	inputDataValue, inputError := sv.GetStructValue()

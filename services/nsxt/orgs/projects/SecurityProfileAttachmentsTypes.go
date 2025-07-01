@@ -9,7 +9,7 @@
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package vpc_security_profiles
+package projects
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -19,26 +19,24 @@ import (
 	"reflect"
 )
 
-func securityProfileAttachmentsDeleteInputType() vapiBindings_.StructType {
+func securityProfileAttachmentsGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["vpc_security_profile_id"] = vapiBindings_.NewStringType()
 	fields["security_profile_attachment_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["vpc_security_profile_id"] = "VpcSecurityProfileId"
 	fieldNameMap["security_profile_attachment_id"] = "SecurityProfileAttachmentId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func SecurityProfileAttachmentsDeleteOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewVoidType()
+func SecurityProfileAttachmentsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.SecurityProfileAttachmentBindingType)
 }
 
-func securityProfileAttachmentsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+func securityProfileAttachmentsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -49,23 +47,18 @@ func securityProfileAttachmentsDeleteRestMetadata() vapiProtocol_.OperationRestM
 	bodyFieldsMap := map[string]string{}
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["vpc_security_profile_id"] = vapiBindings_.NewStringType()
 	fields["security_profile_attachment_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["vpc_security_profile_id"] = "VpcSecurityProfileId"
 	fieldNameMap["security_profile_attachment_id"] = "SecurityProfileAttachmentId"
 	paramsTypeMap["security_profile_attachment_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["vpc_security_profile_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["vpcSecurityProfileId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["securityProfileAttachmentId"] = vapiBindings_.NewStringType()
 	pathParams["security_profile_attachment_id"] = "securityProfileAttachmentId"
 	pathParams["project_id"] = "projectId"
-	pathParams["vpc_security_profile_id"] = "vpcSecurityProfileId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
@@ -80,11 +73,11 @@ func securityProfileAttachmentsDeleteRestMetadata() vapiProtocol_.OperationRestM
 		bodyFieldsMap,
 		"",
 		"",
-		"DELETE",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpc-security-profiles/{vpcSecurityProfileId}/security-profile-attachments/{securityProfileAttachmentId}",
+		"GET",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/security-profile-attachments/{securityProfileAttachmentId}",
 		"",
 		resultHeaders,
-		204,
+		200,
 		"",
 		errorHeaders,
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
@@ -95,7 +88,6 @@ func securityProfileAttachmentsListInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["vpc_security_profile_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -104,7 +96,6 @@ func securityProfileAttachmentsListInputType() vapiBindings_.StructType {
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["vpc_security_profile_id"] = "VpcSecurityProfileId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
@@ -130,7 +121,6 @@ func securityProfileAttachmentsListRestMetadata() vapiProtocol_.OperationRestMet
 	bodyFieldsMap := map[string]string{}
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["vpc_security_profile_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -139,7 +129,6 @@ func securityProfileAttachmentsListRestMetadata() vapiProtocol_.OperationRestMet
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["vpc_security_profile_id"] = "VpcSecurityProfileId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
@@ -149,7 +138,6 @@ func securityProfileAttachmentsListRestMetadata() vapiProtocol_.OperationRestMet
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["vpc_security_profile_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -157,9 +145,7 @@ func securityProfileAttachmentsListRestMetadata() vapiProtocol_.OperationRestMet
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["vpcSecurityProfileId"] = vapiBindings_.NewStringType()
 	pathParams["project_id"] = "projectId"
-	pathParams["vpc_security_profile_id"] = "vpcSecurityProfileId"
 	pathParams["org_id"] = "orgId"
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
@@ -181,7 +167,7 @@ func securityProfileAttachmentsListRestMetadata() vapiProtocol_.OperationRestMet
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpc-security-profiles/{vpcSecurityProfileId}/security-profile-attachments",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/security-profile-attachments",
 		"",
 		resultHeaders,
 		200,
@@ -195,12 +181,10 @@ func securityProfileAttachmentsPatchInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["vpc_security_profile_id"] = vapiBindings_.NewStringType()
 	fields["security_profile_attachment_id"] = vapiBindings_.NewStringType()
 	fields["security_profile_attachment"] = vapiBindings_.NewReferenceType(nsx_policyModel.SecurityProfileAttachmentBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["vpc_security_profile_id"] = "VpcSecurityProfileId"
 	fieldNameMap["security_profile_attachment_id"] = "SecurityProfileAttachmentId"
 	fieldNameMap["security_profile_attachment"] = "SecurityProfileAttachment"
 	var validators = []vapiBindings_.Validator{}
@@ -222,26 +206,21 @@ func securityProfileAttachmentsPatchRestMetadata() vapiProtocol_.OperationRestMe
 	bodyFieldsMap := map[string]string{}
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["vpc_security_profile_id"] = vapiBindings_.NewStringType()
 	fields["security_profile_attachment_id"] = vapiBindings_.NewStringType()
 	fields["security_profile_attachment"] = vapiBindings_.NewReferenceType(nsx_policyModel.SecurityProfileAttachmentBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["vpc_security_profile_id"] = "VpcSecurityProfileId"
 	fieldNameMap["security_profile_attachment_id"] = "SecurityProfileAttachmentId"
 	fieldNameMap["security_profile_attachment"] = "SecurityProfileAttachment"
 	paramsTypeMap["security_profile_attachment_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["vpc_security_profile_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["security_profile_attachment"] = vapiBindings_.NewReferenceType(nsx_policyModel.SecurityProfileAttachmentBindingType)
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["vpcSecurityProfileId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["securityProfileAttachmentId"] = vapiBindings_.NewStringType()
 	pathParams["security_profile_attachment_id"] = "securityProfileAttachmentId"
 	pathParams["project_id"] = "projectId"
-	pathParams["vpc_security_profile_id"] = "vpcSecurityProfileId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
@@ -257,7 +236,7 @@ func securityProfileAttachmentsPatchRestMetadata() vapiProtocol_.OperationRestMe
 		"",
 		"security_profile_attachment",
 		"PATCH",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpc-security-profiles/{vpcSecurityProfileId}/security-profile-attachments/{securityProfileAttachmentId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/security-profile-attachments/{securityProfileAttachmentId}",
 		"application/json",
 		resultHeaders,
 		204,
@@ -271,12 +250,10 @@ func securityProfileAttachmentsUpdateInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["vpc_security_profile_id"] = vapiBindings_.NewStringType()
 	fields["security_profile_attachment_id"] = vapiBindings_.NewStringType()
 	fields["security_profile_attachment"] = vapiBindings_.NewReferenceType(nsx_policyModel.SecurityProfileAttachmentBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["vpc_security_profile_id"] = "VpcSecurityProfileId"
 	fieldNameMap["security_profile_attachment_id"] = "SecurityProfileAttachmentId"
 	fieldNameMap["security_profile_attachment"] = "SecurityProfileAttachment"
 	var validators = []vapiBindings_.Validator{}
@@ -298,26 +275,21 @@ func securityProfileAttachmentsUpdateRestMetadata() vapiProtocol_.OperationRestM
 	bodyFieldsMap := map[string]string{}
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
-	fields["vpc_security_profile_id"] = vapiBindings_.NewStringType()
 	fields["security_profile_attachment_id"] = vapiBindings_.NewStringType()
 	fields["security_profile_attachment"] = vapiBindings_.NewReferenceType(nsx_policyModel.SecurityProfileAttachmentBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
-	fieldNameMap["vpc_security_profile_id"] = "VpcSecurityProfileId"
 	fieldNameMap["security_profile_attachment_id"] = "SecurityProfileAttachmentId"
 	fieldNameMap["security_profile_attachment"] = "SecurityProfileAttachment"
 	paramsTypeMap["security_profile_attachment_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["vpc_security_profile_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["security_profile_attachment"] = vapiBindings_.NewReferenceType(nsx_policyModel.SecurityProfileAttachmentBindingType)
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["vpcSecurityProfileId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["securityProfileAttachmentId"] = vapiBindings_.NewStringType()
 	pathParams["security_profile_attachment_id"] = "securityProfileAttachmentId"
 	pathParams["project_id"] = "projectId"
-	pathParams["vpc_security_profile_id"] = "vpcSecurityProfileId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
@@ -333,7 +305,7 @@ func securityProfileAttachmentsUpdateRestMetadata() vapiProtocol_.OperationRestM
 		"",
 		"security_profile_attachment",
 		"PUT",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpc-security-profiles/{vpcSecurityProfileId}/security-profile-attachments/{securityProfileAttachmentId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/security-profile-attachments/{securityProfileAttachmentId}",
 		"application/json",
 		resultHeaders,
 		200,

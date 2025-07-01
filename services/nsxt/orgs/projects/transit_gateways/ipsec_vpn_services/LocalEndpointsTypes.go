@@ -25,12 +25,12 @@ func localEndpointsDeleteInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["local_endpoint_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["local_endpoint_id"] = "LocalEndpointId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
@@ -52,26 +52,26 @@ func localEndpointsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["local_endpoint_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["local_endpoint_id"] = "LocalEndpointId"
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["local_endpoint_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsecVpnServiceId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["localEndpointId"] = vapiBindings_.NewStringType()
 	pathParams["local_endpoint_id"] = "localEndpointId"
 	pathParams["transit_gateway_id"] = "transitGatewayId"
-	pathParams["service_id"] = "serviceId"
+	pathParams["ipsec_vpn_service_id"] = "ipsecVpnServiceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
@@ -88,7 +88,7 @@ func localEndpointsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"DELETE",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}/local-endpoints/{localEndpointId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{ipsecVpnServiceId}/local-endpoints/{localEndpointId}",
 		"",
 		resultHeaders,
 		204,
@@ -103,12 +103,12 @@ func localEndpointsGetInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["local_endpoint_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["local_endpoint_id"] = "LocalEndpointId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
@@ -130,26 +130,26 @@ func localEndpointsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["local_endpoint_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["local_endpoint_id"] = "LocalEndpointId"
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["local_endpoint_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsecVpnServiceId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["localEndpointId"] = vapiBindings_.NewStringType()
 	pathParams["local_endpoint_id"] = "localEndpointId"
 	pathParams["transit_gateway_id"] = "transitGatewayId"
-	pathParams["service_id"] = "serviceId"
+	pathParams["ipsec_vpn_service_id"] = "ipsecVpnServiceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
@@ -166,7 +166,7 @@ func localEndpointsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}/local-endpoints/{localEndpointId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{ipsecVpnServiceId}/local-endpoints/{localEndpointId}",
 		"",
 		resultHeaders,
 		200,
@@ -181,7 +181,7 @@ func localEndpointsListInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -191,7 +191,7 @@ func localEndpointsListInputType() vapiBindings_.StructType {
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
@@ -218,7 +218,7 @@ func localEndpointsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -228,7 +228,7 @@ func localEndpointsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
@@ -237,20 +237,20 @@ func localEndpointsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsecVpnServiceId"] = vapiBindings_.NewStringType()
 	pathParams["transit_gateway_id"] = "transitGatewayId"
-	pathParams["service_id"] = "serviceId"
+	pathParams["ipsec_vpn_service_id"] = "ipsecVpnServiceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	queryParams["cursor"] = "cursor"
@@ -273,7 +273,7 @@ func localEndpointsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}/local-endpoints",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{ipsecVpnServiceId}/local-endpoints",
 		"",
 		resultHeaders,
 		200,
@@ -288,13 +288,13 @@ func localEndpointsPatchInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["local_endpoint_id"] = vapiBindings_.NewStringType()
 	fields["ip_sec_vpn_local_endpoint"] = vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnLocalEndpointBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["local_endpoint_id"] = "LocalEndpointId"
 	fieldNameMap["ip_sec_vpn_local_endpoint"] = "IpSecVpnLocalEndpoint"
 	var validators = []vapiBindings_.Validator{}
@@ -317,29 +317,29 @@ func localEndpointsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["local_endpoint_id"] = vapiBindings_.NewStringType()
 	fields["ip_sec_vpn_local_endpoint"] = vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnLocalEndpointBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["local_endpoint_id"] = "LocalEndpointId"
 	fieldNameMap["ip_sec_vpn_local_endpoint"] = "IpSecVpnLocalEndpoint"
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["ip_sec_vpn_local_endpoint"] = vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnLocalEndpointBindingType)
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["local_endpoint_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsecVpnServiceId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["localEndpointId"] = vapiBindings_.NewStringType()
 	pathParams["local_endpoint_id"] = "localEndpointId"
 	pathParams["transit_gateway_id"] = "transitGatewayId"
-	pathParams["service_id"] = "serviceId"
+	pathParams["ipsec_vpn_service_id"] = "ipsecVpnServiceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
@@ -356,7 +356,7 @@ func localEndpointsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"ip_sec_vpn_local_endpoint",
 		"PATCH",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}/local-endpoints/{localEndpointId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{ipsecVpnServiceId}/local-endpoints/{localEndpointId}",
 		"application/json",
 		resultHeaders,
 		204,
@@ -371,13 +371,13 @@ func localEndpointsUpdateInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["local_endpoint_id"] = vapiBindings_.NewStringType()
 	fields["ip_sec_vpn_local_endpoint"] = vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnLocalEndpointBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["local_endpoint_id"] = "LocalEndpointId"
 	fieldNameMap["ip_sec_vpn_local_endpoint"] = "IpSecVpnLocalEndpoint"
 	var validators = []vapiBindings_.Validator{}
@@ -400,29 +400,29 @@ func localEndpointsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["local_endpoint_id"] = vapiBindings_.NewStringType()
 	fields["ip_sec_vpn_local_endpoint"] = vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnLocalEndpointBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["local_endpoint_id"] = "LocalEndpointId"
 	fieldNameMap["ip_sec_vpn_local_endpoint"] = "IpSecVpnLocalEndpoint"
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["ip_sec_vpn_local_endpoint"] = vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnLocalEndpointBindingType)
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["local_endpoint_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsecVpnServiceId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["localEndpointId"] = vapiBindings_.NewStringType()
 	pathParams["local_endpoint_id"] = "localEndpointId"
 	pathParams["transit_gateway_id"] = "transitGatewayId"
-	pathParams["service_id"] = "serviceId"
+	pathParams["ipsec_vpn_service_id"] = "ipsecVpnServiceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
@@ -439,7 +439,7 @@ func localEndpointsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"ip_sec_vpn_local_endpoint",
 		"PUT",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}/local-endpoints/{localEndpointId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{ipsecVpnServiceId}/local-endpoints/{localEndpointId}",
 		"application/json",
 		resultHeaders,
 		200,

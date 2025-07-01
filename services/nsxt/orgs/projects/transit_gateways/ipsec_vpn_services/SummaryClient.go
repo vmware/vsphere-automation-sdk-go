@@ -4,10 +4,10 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: SecurityProfileAttachments
+// Interface file for service: Summary
 // Used by client-side stubs.
 
-package security_profiles
+package ipsec_vpn_services
 
 import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -19,75 +19,79 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-type SecurityProfileAttachmentsClient interface {
+type SummaryClient interface {
 
-	// Get security profile attachment of a VPC with the specified identifier.
+	// Summarized view of all transit gateway IPSec VPN sessions for a specified service.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @param securityProfileIdParam (required)
-	// @param securityProfileAttachmentIdParam (required)
-	// @return com.vmware.nsx_policy.model.SecurityProfileAttachment
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param transitGatewayIdParam (required)
+	// @param serviceIdParam (required)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
+	// @param sourceParam Data source type. (optional)
+	// @return com.vmware.nsx_policy.model.PolicyIpsecVpnIkeServiceSummary
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, securityProfileIdParam string, securityProfileAttachmentIdParam string) (nsx_policyModel.SecurityProfileAttachment, error)
+	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.PolicyIpsecVpnIkeServiceSummary, error)
 }
 
-type securityProfileAttachmentsClient struct {
+type summaryClient struct {
 	connector           vapiProtocolClient_.Connector
 	interfaceDefinition vapiCore_.InterfaceDefinition
 	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewSecurityProfileAttachmentsClient(connector vapiProtocolClient_.Connector) *securityProfileAttachmentsClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.security_profiles.security_profile_attachments")
+func NewSummaryClient(connector vapiProtocolClient_.Connector) *summaryClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.transit_gateways.ipsec_vpn_services.summary")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
-	sIface := securityProfileAttachmentsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	sIface := summaryClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *securityProfileAttachmentsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+func (sIface *summaryClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *securityProfileAttachmentsClient) Get(orgIdParam string, projectIdParam string, securityProfileIdParam string, securityProfileAttachmentIdParam string) (nsx_policyModel.SecurityProfileAttachment, error) {
+func (sIface *summaryClient) Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.PolicyIpsecVpnIkeServiceSummary, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	operationRestMetaData := securityProfileAttachmentsGetRestMetadata()
+	operationRestMetaData := summaryGetRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(securityProfileAttachmentsGetInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(summaryGetInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
-	sv.AddStructField("SecurityProfileId", securityProfileIdParam)
-	sv.AddStructField("SecurityProfileAttachmentId", securityProfileAttachmentIdParam)
+	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
+	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
+	sv.AddStructField("Source", sourceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.SecurityProfileAttachment
+		var emptyOutput nsx_policyModel.PolicyIpsecVpnIkeServiceSummary
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.security_profiles.security_profile_attachments", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.SecurityProfileAttachment
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.ipsec_vpn_services.summary", "get", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.PolicyIpsecVpnIkeServiceSummary
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SecurityProfileAttachmentsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SummaryGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.SecurityProfileAttachment), nil
+		return output.(nsx_policyModel.PolicyIpsecVpnIkeServiceSummary), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

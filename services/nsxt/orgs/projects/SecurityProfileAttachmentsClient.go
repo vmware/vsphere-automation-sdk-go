@@ -7,7 +7,7 @@
 // Interface file for service: SecurityProfileAttachments
 // Used by client-side stubs.
 
-package vpc_security_profiles
+package projects
 
 import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -21,25 +21,24 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SecurityProfileAttachmentsClient interface {
 
-	// Deletion of the VPC Security profile attachment to VPC result in detaching the security profile to VPC.
+	// Get security profile attachment of a VPC with the specified identifier.
 	//
-	// @param orgIdParam Organisation identifier (required)
-	// @param projectIdParam Project identifier (required)
-	// @param vpcSecurityProfileIdParam VPC Security Profile identifier (required)
-	// @param securityProfileAttachmentIdParam Security Profile attachment identifier (required)
+	// @param orgIdParam (required)
+	// @param projectIdParam (required)
+	// @param securityProfileAttachmentIdParam (required)
+	// @return com.vmware.nsx_policy.model.SecurityProfileAttachment
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(orgIdParam string, projectIdParam string, vpcSecurityProfileIdParam string, securityProfileAttachmentIdParam string) error
+	Get(orgIdParam string, projectIdParam string, securityProfileAttachmentIdParam string) (nsx_policyModel.SecurityProfileAttachment, error)
 
 	// Paginated list of SecurityProfileAttachments.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
-	// @param vpcSecurityProfileIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
@@ -53,13 +52,12 @@ type SecurityProfileAttachmentsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, vpcSecurityProfileIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityProfileAttachmentListResult, error)
+	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityProfileAttachmentListResult, error)
 
 	// create of update existing security profile attachment of a VPC.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
-	// @param vpcSecurityProfileIdParam (required)
 	// @param securityProfileAttachmentIdParam (required)
 	// @param securityProfileAttachmentParam (required)
 	//
@@ -68,13 +66,12 @@ type SecurityProfileAttachmentsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(orgIdParam string, projectIdParam string, vpcSecurityProfileIdParam string, securityProfileAttachmentIdParam string, securityProfileAttachmentParam nsx_policyModel.SecurityProfileAttachment) error
+	Patch(orgIdParam string, projectIdParam string, securityProfileAttachmentIdParam string, securityProfileAttachmentParam nsx_policyModel.SecurityProfileAttachment) error
 
 	// Update existing security profile attachment of a VPC.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
-	// @param vpcSecurityProfileIdParam (required)
 	// @param securityProfileAttachmentIdParam (required)
 	// @param securityProfileAttachmentParam (required)
 	// @return com.vmware.nsx_policy.model.SecurityProfileAttachment
@@ -84,7 +81,7 @@ type SecurityProfileAttachmentsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(orgIdParam string, projectIdParam string, vpcSecurityProfileIdParam string, securityProfileAttachmentIdParam string, securityProfileAttachmentParam nsx_policyModel.SecurityProfileAttachment) (nsx_policyModel.SecurityProfileAttachment, error)
+	Update(orgIdParam string, projectIdParam string, securityProfileAttachmentIdParam string, securityProfileAttachmentParam nsx_policyModel.SecurityProfileAttachment) (nsx_policyModel.SecurityProfileAttachment, error)
 }
 
 type securityProfileAttachmentsClient struct {
@@ -94,9 +91,9 @@ type securityProfileAttachmentsClient struct {
 }
 
 func NewSecurityProfileAttachmentsClient(connector vapiProtocolClient_.Connector) *securityProfileAttachmentsClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.vpc_security_profiles.security_profile_attachments")
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.security_profile_attachments")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
@@ -115,36 +112,41 @@ func (sIface *securityProfileAttachmentsClient) GetErrorBindingType(errorName st
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *securityProfileAttachmentsClient) Delete(orgIdParam string, projectIdParam string, vpcSecurityProfileIdParam string, securityProfileAttachmentIdParam string) error {
+func (sIface *securityProfileAttachmentsClient) Get(orgIdParam string, projectIdParam string, securityProfileAttachmentIdParam string) (nsx_policyModel.SecurityProfileAttachment, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	operationRestMetaData := securityProfileAttachmentsDeleteRestMetadata()
+	operationRestMetaData := securityProfileAttachmentsGetRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(securityProfileAttachmentsDeleteInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(securityProfileAttachmentsGetInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
-	sv.AddStructField("VpcSecurityProfileId", vpcSecurityProfileIdParam)
 	sv.AddStructField("SecurityProfileAttachmentId", securityProfileAttachmentIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		return vapiBindings_.VAPIerrorsToError(inputError)
+		var emptyOutput nsx_policyModel.SecurityProfileAttachment
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpc_security_profiles.security_profile_attachments", "delete", inputDataValue, executionContext)
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.security_profile_attachments", "get", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.SecurityProfileAttachment
 	if methodResult.IsSuccess() {
-		return nil
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SecurityProfileAttachmentsGetOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_policyModel.SecurityProfileAttachment), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return vapiBindings_.VAPIerrorsToError(errorInError)
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
-		return methodError.(error)
+		return emptyOutput, methodError.(error)
 	}
 }
 
-func (sIface *securityProfileAttachmentsClient) List(orgIdParam string, projectIdParam string, vpcSecurityProfileIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityProfileAttachmentListResult, error) {
+func (sIface *securityProfileAttachmentsClient) List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityProfileAttachmentListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := securityProfileAttachmentsListRestMetadata()
@@ -154,7 +156,6 @@ func (sIface *securityProfileAttachmentsClient) List(orgIdParam string, projectI
 	sv := vapiBindings_.NewStructValueBuilder(securityProfileAttachmentsListInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
-	sv.AddStructField("VpcSecurityProfileId", vpcSecurityProfileIdParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -167,7 +168,7 @@ func (sIface *securityProfileAttachmentsClient) List(orgIdParam string, projectI
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpc_security_profiles.security_profile_attachments", "list", inputDataValue, executionContext)
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.security_profile_attachments", "list", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.SecurityProfileAttachmentListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SecurityProfileAttachmentsListOutputType())
@@ -184,7 +185,7 @@ func (sIface *securityProfileAttachmentsClient) List(orgIdParam string, projectI
 	}
 }
 
-func (sIface *securityProfileAttachmentsClient) Patch(orgIdParam string, projectIdParam string, vpcSecurityProfileIdParam string, securityProfileAttachmentIdParam string, securityProfileAttachmentParam nsx_policyModel.SecurityProfileAttachment) error {
+func (sIface *securityProfileAttachmentsClient) Patch(orgIdParam string, projectIdParam string, securityProfileAttachmentIdParam string, securityProfileAttachmentParam nsx_policyModel.SecurityProfileAttachment) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := securityProfileAttachmentsPatchRestMetadata()
@@ -194,7 +195,6 @@ func (sIface *securityProfileAttachmentsClient) Patch(orgIdParam string, project
 	sv := vapiBindings_.NewStructValueBuilder(securityProfileAttachmentsPatchInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
-	sv.AddStructField("VpcSecurityProfileId", vpcSecurityProfileIdParam)
 	sv.AddStructField("SecurityProfileAttachmentId", securityProfileAttachmentIdParam)
 	sv.AddStructField("SecurityProfileAttachment", securityProfileAttachmentParam)
 	inputDataValue, inputError := sv.GetStructValue()
@@ -202,7 +202,7 @@ func (sIface *securityProfileAttachmentsClient) Patch(orgIdParam string, project
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpc_security_profiles.security_profile_attachments", "patch", inputDataValue, executionContext)
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.security_profile_attachments", "patch", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -214,7 +214,7 @@ func (sIface *securityProfileAttachmentsClient) Patch(orgIdParam string, project
 	}
 }
 
-func (sIface *securityProfileAttachmentsClient) Update(orgIdParam string, projectIdParam string, vpcSecurityProfileIdParam string, securityProfileAttachmentIdParam string, securityProfileAttachmentParam nsx_policyModel.SecurityProfileAttachment) (nsx_policyModel.SecurityProfileAttachment, error) {
+func (sIface *securityProfileAttachmentsClient) Update(orgIdParam string, projectIdParam string, securityProfileAttachmentIdParam string, securityProfileAttachmentParam nsx_policyModel.SecurityProfileAttachment) (nsx_policyModel.SecurityProfileAttachment, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := securityProfileAttachmentsUpdateRestMetadata()
@@ -224,7 +224,6 @@ func (sIface *securityProfileAttachmentsClient) Update(orgIdParam string, projec
 	sv := vapiBindings_.NewStructValueBuilder(securityProfileAttachmentsUpdateInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
-	sv.AddStructField("VpcSecurityProfileId", vpcSecurityProfileIdParam)
 	sv.AddStructField("SecurityProfileAttachmentId", securityProfileAttachmentIdParam)
 	sv.AddStructField("SecurityProfileAttachment", securityProfileAttachmentParam)
 	inputDataValue, inputError := sv.GetStructValue()
@@ -233,7 +232,7 @@ func (sIface *securityProfileAttachmentsClient) Update(orgIdParam string, projec
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpc_security_profiles.security_profile_attachments", "update", inputDataValue, executionContext)
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.security_profile_attachments", "update", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.SecurityProfileAttachment
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SecurityProfileAttachmentsUpdateOutputType())

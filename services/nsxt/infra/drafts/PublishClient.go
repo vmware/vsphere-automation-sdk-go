@@ -33,16 +33,6 @@ type PublishClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Create(draftIdParam string, infraParam nsx_policyModel.Infra) (nsx_policyModel.PublishTask, error)
-
-	// Get the information of the latest DFW publish task.
-	// @return com.vmware.nsx_policy.model.PublishTask
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Get() (nsx_policyModel.PublishTask, error)
 }
 
 type publishClient struct {
@@ -55,7 +45,6 @@ func NewPublishClient(connector vapiProtocolClient_.Connector) *publishClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.drafts.publish")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -91,37 +80,6 @@ func (pIface *publishClient) Create(draftIdParam string, infraParam nsx_policyMo
 	var emptyOutput nsx_policyModel.PublishTask
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PublishCreateOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(nsx_policyModel.PublishTask), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (pIface *publishClient) Get() (nsx_policyModel.PublishTask, error) {
-	typeConverter := pIface.connector.TypeConverter()
-	executionContext := pIface.connector.NewExecutionContext()
-	operationRestMetaData := publishGetRestMetadata()
-	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
-	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
-
-	sv := vapiBindings_.NewStructValueBuilder(publishGetInputType(), typeConverter)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput nsx_policyModel.PublishTask
-		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
-	}
-
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.drafts.publish", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.PublishTask
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PublishGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}

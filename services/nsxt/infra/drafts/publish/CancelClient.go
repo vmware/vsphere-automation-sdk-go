@@ -21,7 +21,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type CancelClient interface {
 
-	// This operation cancels an publish task. Task needs to be in running state.
+	// This operation cancels a DFW publish task. Task needs to be in running state.
+	//
+	// @param draftIdParam (required)
 	// @return com.vmware.nsx_policy.model.PublishTask
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -29,7 +31,7 @@ type CancelClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create() (nsx_policyModel.PublishTask, error)
+	Create(draftIdParam string) (nsx_policyModel.PublishTask, error)
 }
 
 type cancelClient struct {
@@ -39,7 +41,7 @@ type cancelClient struct {
 }
 
 func NewCancelClient(connector vapiProtocolClient_.Connector) *cancelClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.security.gateway_policies.publish.cancel")
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.drafts.publish.cancel")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 	}
@@ -57,7 +59,7 @@ func (cIface *cancelClient) GetErrorBindingType(errorName string) vapiBindings_.
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (cIface *cancelClient) Create() (nsx_policyModel.PublishTask, error) {
+func (cIface *cancelClient) Create(draftIdParam string) (nsx_policyModel.PublishTask, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := cancelCreateRestMetadata()
@@ -65,13 +67,14 @@ func (cIface *cancelClient) Create() (nsx_policyModel.PublishTask, error) {
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(cancelCreateInputType(), typeConverter)
+	sv.AddStructField("DraftId", draftIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.PublishTask
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.security.gateway_policies.publish.cancel", "create", inputDataValue, executionContext)
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.drafts.publish.cancel", "create", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.PublishTask
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), CancelCreateOutputType())

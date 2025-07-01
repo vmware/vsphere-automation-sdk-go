@@ -4,12 +4,12 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: Status.
+// Data type definitions file for service: Exports.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package publish
+package gateway_policies
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -19,18 +19,33 @@ import (
 	"reflect"
 )
 
-func statusGetInputType() vapiBindings_.StructType {
+// Possible value for ``category`` of method Exports#get.
+const Exports_GET_CATEGORY_SHARED = "SHARED"
+
+// Possible value for ``category`` of method Exports#get.
+const Exports_GET_CATEGORY_ALL_LOCAL = "ALL_LOCAL"
+
+// Possible value for ``category`` of method Exports#get.
+const Exports_GET_CATEGORY_LOCAL = "LOCAL"
+
+func exportsGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["category"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["draft_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["scope_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["category"] = "Category"
+	fieldNameMap["draft_path"] = "DraftPath"
+	fieldNameMap["scope_path"] = "ScopePath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func StatusGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.PublishTaskBindingType)
+func ExportsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.FirewallExportListResultBindingType)
 }
 
-func statusGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func exportsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -39,6 +54,18 @@ func statusGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
+	fields["category"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["draft_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["scope_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["category"] = "Category"
+	fieldNameMap["draft_path"] = "DraftPath"
+	fieldNameMap["scope_path"] = "ScopePath"
+	paramsTypeMap["scope_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["draft_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["category"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	queryParams["scope_path"] = "scope_path"
+	queryParams["draft_path"] = "draft_path"
+	queryParams["category"] = "category"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -53,7 +80,7 @@ func statusGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/security/gateway-policies/publish/status",
+		"/policy/api/v1/infra/security/gateway-policies/exports",
 		"",
 		resultHeaders,
 		200,

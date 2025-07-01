@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type Aggregated_with_paginationClient interface {
 
-	// Get a paginated aggregated configuration of a given draft. This aggregated configuration is the differnece between the current published firewall configuration and a firewall configuration stored in a given draft. For an initial API call, if request_id is present in a response, then this is a paginated aggregated configuration of a given draft, containing all the security policies from the aggregated configuration. Using this request_id, more granular aggregated configuration, at security policy level, can be fetched from subsequent API calls. Absence of request_id suggests that whole aggregated configuration has been returned as a response to initial API call, as the size of aggregated configuration is not big enough to need pagination.
+	// Get a paginated aggregated configuration of a given draft. This aggregated configuration is the difference between the current published firewall configuration and a firewall configuration stored in a given draft. For an initial API call, if request_id is present in a response, then this is a paginated aggregated configuration of a given draft, containing all the security policies from the aggregated configuration. Using this request_id, more granular aggregated configuration, at security policy level, can be fetched from subsequent API calls. Absence of request_id suggests that whole aggregated configuration has been returned as a response to initial API call, as the size of aggregated configuration is not big enough to need pagination.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

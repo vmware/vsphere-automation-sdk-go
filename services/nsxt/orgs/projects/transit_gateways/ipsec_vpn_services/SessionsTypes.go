@@ -25,12 +25,12 @@ func sessionsDeleteInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["session_id"] = "SessionId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
@@ -52,26 +52,26 @@ func sessionsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["session_id"] = "SessionId"
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["session_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsecVpnServiceId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sessionId"] = vapiBindings_.NewStringType()
 	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["ipsec_vpn_service_id"] = "ipsecVpnServiceId"
 	pathParams["session_id"] = "sessionId"
-	pathParams["service_id"] = "serviceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
@@ -88,7 +88,7 @@ func sessionsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"DELETE",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}/sessions/{sessionId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{ipsecVpnServiceId}/sessions/{sessionId}",
 		"",
 		resultHeaders,
 		204,
@@ -103,12 +103,12 @@ func sessionsGetInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["session_id"] = "SessionId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
@@ -130,26 +130,26 @@ func sessionsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["session_id"] = "SessionId"
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["session_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsecVpnServiceId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sessionId"] = vapiBindings_.NewStringType()
 	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["ipsec_vpn_service_id"] = "ipsecVpnServiceId"
 	pathParams["session_id"] = "sessionId"
-	pathParams["service_id"] = "serviceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
@@ -166,7 +166,7 @@ func sessionsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}/sessions/{sessionId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{ipsecVpnServiceId}/sessions/{sessionId}",
 		"",
 		resultHeaders,
 		200,
@@ -181,7 +181,7 @@ func sessionsListInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -191,7 +191,7 @@ func sessionsListInputType() vapiBindings_.StructType {
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
@@ -218,7 +218,7 @@ func sessionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -228,7 +228,7 @@ func sessionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
@@ -237,20 +237,20 @@ func sessionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsecVpnServiceId"] = vapiBindings_.NewStringType()
 	pathParams["transit_gateway_id"] = "transitGatewayId"
-	pathParams["service_id"] = "serviceId"
+	pathParams["ipsec_vpn_service_id"] = "ipsecVpnServiceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	queryParams["cursor"] = "cursor"
@@ -273,7 +273,7 @@ func sessionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}/sessions",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{ipsecVpnServiceId}/sessions",
 		"",
 		resultHeaders,
 		200,
@@ -288,13 +288,13 @@ func sessionsPatchInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
 	fields["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["session_id"] = "SessionId"
 	fieldNameMap["ip_sec_vpn_session"] = "IpSecVpnSession"
 	var validators = []vapiBindings_.Validator{}
@@ -317,29 +317,29 @@ func sessionsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
 	fields["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["session_id"] = "SessionId"
 	fieldNameMap["ip_sec_vpn_session"] = "IpSecVpnSession"
 	paramsTypeMap["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["session_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsecVpnServiceId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sessionId"] = vapiBindings_.NewStringType()
 	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["ipsec_vpn_service_id"] = "ipsecVpnServiceId"
 	pathParams["session_id"] = "sessionId"
-	pathParams["service_id"] = "serviceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
@@ -356,7 +356,7 @@ func sessionsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"ip_sec_vpn_session",
 		"PATCH",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}/sessions/{sessionId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{ipsecVpnServiceId}/sessions/{sessionId}",
 		"application/json",
 		resultHeaders,
 		204,
@@ -371,12 +371,12 @@ func sessionsShowsensitivedataInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["session_id"] = "SessionId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
@@ -398,26 +398,26 @@ func sessionsShowsensitivedataRestMetadata() vapiProtocol_.OperationRestMetadata
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["session_id"] = "SessionId"
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["session_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsecVpnServiceId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sessionId"] = vapiBindings_.NewStringType()
 	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["ipsec_vpn_service_id"] = "ipsecVpnServiceId"
 	pathParams["session_id"] = "sessionId"
-	pathParams["service_id"] = "serviceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
@@ -434,7 +434,7 @@ func sessionsShowsensitivedataRestMetadata() vapiProtocol_.OperationRestMetadata
 		"action=show_sensitive_data",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}/sessions/{sessionId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{ipsecVpnServiceId}/sessions/{sessionId}",
 		"",
 		resultHeaders,
 		200,
@@ -449,13 +449,13 @@ func sessionsUpdateInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
 	fields["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["session_id"] = "SessionId"
 	fieldNameMap["ip_sec_vpn_session"] = "IpSecVpnSession"
 	var validators = []vapiBindings_.Validator{}
@@ -478,29 +478,29 @@ func sessionsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["service_id"] = vapiBindings_.NewStringType()
+	fields["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
 	fields["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["service_id"] = "ServiceId"
+	fieldNameMap["ipsec_vpn_service_id"] = "IpsecVpnServiceId"
 	fieldNameMap["session_id"] = "SessionId"
 	fieldNameMap["ip_sec_vpn_session"] = "IpSecVpnSession"
 	paramsTypeMap["ip_sec_vpn_session"] = vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(nsx_policyModel.IPSecVpnSessionBindingType)})
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsec_vpn_service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["service_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["session_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["serviceId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipsecVpnServiceId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sessionId"] = vapiBindings_.NewStringType()
 	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["ipsec_vpn_service_id"] = "ipsecVpnServiceId"
 	pathParams["session_id"] = "sessionId"
-	pathParams["service_id"] = "serviceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	resultHeaders := map[string]string{}
@@ -517,7 +517,7 @@ func sessionsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"ip_sec_vpn_session",
 		"PUT",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{serviceId}/sessions/{sessionId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/ipsec-vpn-services/{ipsecVpnServiceId}/sessions/{sessionId}",
 		"application/json",
 		resultHeaders,
 		200,

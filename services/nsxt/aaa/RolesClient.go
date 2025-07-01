@@ -74,7 +74,7 @@ type RolesClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, scopeParam *string, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.RoleListResult, error)
 
-	// Creates a new role with id as <role> if there does not exist any role with id <role>, else updates the existing role. Permissions for features marked is_internal as true will be ignored if provided in request payload. These features' permission are set internally.
+	// Creates a new role with id as <role> if there does not exist any role with id <role>, else updates the existing role. Permissions for features marked is_internal as true will be ignored if provided in request payload. These features' permission are set internally. Custom roles are usually used together with some predefined role being primary.
 	//
 	// @param roleParam Custom role id (required)
 	// @param roleWithFeaturesParam (required)

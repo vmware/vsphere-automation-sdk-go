@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatisticsClient interface {
 
-	// Returns the summation of statistics for all rules from all logical routers which are present on given transport node. Only cached statistics are supported. The query parameter \"source=realtime\" is not supported.
+	// Returns the summation of statistics for all NAT rules from all the gateways which are present on given edge transport node. Only cached statistics are supported. The query parameter \"source=realtime\" is not supported.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
