@@ -21,6 +21,23 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatisticsClient interface {
 
+	// Resets the statistics of the given VPN session. Since source of data is enforcement point, data is reset there.
+	//
+	// @param orgIdParam (required)
+	// @param projectIdParam (required)
+	// @param transitGatewayIdParam (required)
+	// @param serviceIdParam (required)
+	// @param sessionIdParam (required)
+	// @param actionParam Action to take on statistics for an object. (required)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Create(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, sessionIdParam string, actionParam string, enforcementPointPathParam *string) error
+
 	// - no enforcement point path specified: statistics are evaluated on each enforcement point. - an enforcement point path is specified: statistics are evaluated only on the given enforcement point. - source=realtime: statistics are fetched realtime from the enforcement point. - source=cached: cached statistics are not supported for IPSec VPN session statistics. Statistics will always be fetched realtime even if source=cached.
 	//
 	// @param orgIdParam (required)
@@ -49,7 +66,8 @@ type statisticsClient struct {
 func NewStatisticsClient(connector vapiProtocolClient_.Connector) *statisticsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.transit_gateways.ipsec_vpn_services.sessions.statistics")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -63,6 +81,38 @@ func (sIface *statisticsClient) GetErrorBindingType(errorName string) vapiBindin
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
+}
+
+func (sIface *statisticsClient) Create(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, sessionIdParam string, actionParam string, enforcementPointPathParam *string) error {
+	typeConverter := sIface.connector.TypeConverter()
+	executionContext := sIface.connector.NewExecutionContext()
+	operationRestMetaData := statisticsCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(statisticsCreateInputType(), typeConverter)
+	sv.AddStructField("OrgId", orgIdParam)
+	sv.AddStructField("ProjectId", projectIdParam)
+	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
+	sv.AddStructField("ServiceId", serviceIdParam)
+	sv.AddStructField("SessionId", sessionIdParam)
+	sv.AddStructField("Action", actionParam)
+	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.ipsec_vpn_services.sessions.statistics", "create", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
 }
 
 func (sIface *statisticsClient) Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, serviceIdParam string, sessionIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.AggregateIPSecVpnSessionStatistics, error) {

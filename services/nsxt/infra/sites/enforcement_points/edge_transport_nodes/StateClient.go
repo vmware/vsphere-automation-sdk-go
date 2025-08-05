@@ -40,7 +40,7 @@ type StateClient interface {
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
 	// @param mmStateParam maintenance mode state (optional)
-	// @param nodeTypesParam EdgeNode and EdgeServiceNode are supported values in this node_types filter parameter for MP transport-nodes state API. EDGE_NODE and EDGE_SERVICE_NODE are supported values in this node_types filter parameter for Policy edge-transport-nodes state API (optional)
+	// @param nodeTypesParam EdgeNode and VirtualNetworkAppliance are supported values in this node_types filter parameter for MP transport-nodes state API. EDGE_NODE and VIRTUAL_NETWORK_APPLIANCE are supported values in this node_types filter parameter for Policy edge-transport-nodes state API (optional)
 	// @param statusParam Realized state of transport nodes (optional)
 	// @param vtepIpParam Virtual tunnel endpoint ip address of transport node (optional)
 	// @return com.vmware.nsx_policy.model.PolicyEdgeTransportNodeStateListResult

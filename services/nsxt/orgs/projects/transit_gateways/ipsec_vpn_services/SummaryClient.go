@@ -23,8 +23,8 @@ type SummaryClient interface {
 
 	// Summarized view of all transit gateway IPSec VPN sessions for a specified service.
 	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
+	// @param orgIdParam (required)
+	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
 	// @param serviceIdParam (required)
 	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)

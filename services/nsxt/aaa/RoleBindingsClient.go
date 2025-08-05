@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RoleBindingsClient interface {
 
-	// This API is used to assign a user/group any role(s) of choice. It is recommended to use the new property roles_for_paths instead of roles. When using the roles_for_paths, set the read_roles_for_paths as true. User has union of all the roles assigned to it on a particular path and its sub-tree. User name is dealt case-insensitively.
+	// This API is used to assign a user/group any role(s) of choice. It is recommended to use the new property roles_for_paths instead of roles. When using the roles_for_paths, set the read_roles_for_paths as true. User has union of all the roles assigned to it on a particular path and its sub-tree. User name is dealt case-insensitively. If identity_source_id is provided, the system skips querying all underlying providers, which significantly improves lookup efficiency.
 	//
 	// @param roleBindingParam (required)
 	// @return com.vmware.nsx_policy.model.RoleBinding

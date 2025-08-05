@@ -21,13 +21,13 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VpcLbNodeCapacityStatusClient interface {
 
-	// API is used to retrieve available load balancer capacity status for all edge and service clusters shared with VPC. If the parameter ?service_cluster_path=<service-cluster-path> exists, then API only shows the available load balancer capacity status for this specific edge or service cluster. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// API is used to retrieve available load balancer capacity status for the edge or virtual network appliance clusters shared with VPC. If the parameter ?service_cluster_path=<service-cluster-path> exists, then API only shows the available load balancer capacity status for this specific edge cluster or virtual network appliance cluster. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)
 	// @param vpcIdParam VPC ID (required)
 	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
-	// @param serviceClusterPathParam The property identifies the service cluster path. Service cluster path can be either Edge cluster path or Service Appliance cluster path. For example, service_cluster_path=/infra/sites/default/enforcement-points/default /edge-clusters/85175e0b-4d74-461d-83e1-f3b785adef9c. (optional)
+	// @param serviceClusterPathParam The property identifies the service cluster path. The service cluster path can be either edge cluster or virtual network appliance cluster path. For example, service_cluster_path=/infra/sites/default/enforcement-points/default /edge-clusters/85175e0b-4d74-461d-83e1-f3b785adef9c. (optional)
 	// @param sourceParam Data source type. (optional)
 	// @return com.vmware.nsx_policy.model.AggregateLBNodeCapacitySummary
 	//

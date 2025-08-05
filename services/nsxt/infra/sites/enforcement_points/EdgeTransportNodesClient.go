@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type EdgeTransportNodesClient interface {
 
-	// Delete Edge Transport Node.
+	// This API is used to delete the edge transport node. When \"force\" is used as a query parameter, the system will attempt to delete the edge from vCenter. This \"best effort\" approach ensures the edge is not left in a stale state, even if failures occur during the deletion process. However, an edge node cannot be deleted if it hosts any logical networking entities, even when using \"force\". After a successful force delete API execution, user must confirm that the edge virtual machine has been removed from the vCenter Server.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
@@ -58,7 +58,7 @@ type EdgeTransportNodesClient interface {
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param managementIpParam Edge transport node with provided management IP address will be returned. This property can only be used alone. It can not be combined with other filtering properties. (optional)
-	// @param nodeTypesParam Filters the list based on node types. EDGE_NODE and EDGE_SERVICE_NODE are supported values in this node_types filter parameter (optional)
+	// @param nodeTypesParam Filters the list based on node types. EDGE_NODE and VIRTUAL_NETWORK_APPLIANCE are supported values in this node_types filter parameter (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)

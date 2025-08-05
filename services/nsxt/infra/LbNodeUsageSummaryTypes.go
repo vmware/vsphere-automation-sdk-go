@@ -23,7 +23,7 @@ import (
 const LbNodeUsageSummary_GET_NODE_TYPE_EDGENODE = "EdgeNode"
 
 // Possible value for ``nodeType`` of method LbNodeUsageSummary#get.
-const LbNodeUsageSummary_GET_NODE_TYPE_EDGESERVICENODE = "EdgeServiceNode"
+const LbNodeUsageSummary_GET_NODE_TYPE_VIRTUALNETWORKAPPLIANCE = "VirtualNetworkAppliance"
 
 func lbNodeUsageSummaryGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
