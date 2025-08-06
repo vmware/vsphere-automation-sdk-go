@@ -12,10 +12,11 @@
 package model
 
 import (
+	"reflect"
+
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiLog_ "github.com/vmware/vsphere-automation-sdk-go/runtime/log"
-	"reflect"
 )
 
 // Avi Load Balancer Auth Token.
@@ -89860,7 +89861,7 @@ type Project struct {
 	ActivateDefaultDfwRules *bool
 	DedicatedResources      *DedicatedResources
 	// true - the project is a default project. Default projects are non-editable, system create ones.
-	_Default *bool
+	Default *bool
 	// IP block used for allocating CIDR blocks for public subnets. IP block can be consumed by all the VPCs under this project. CIDR that must be unique across Org/provider and will be auto advertised up to Org/Provider Tier0 gateway.
 	ExternalIpv4Blocks []string
 	// Limits are used to add constraints within a project. This field lists the limits that are applied to a particular project by the enterprise admin.
@@ -181076,7 +181077,7 @@ func ProjectBindingType() vapiBindings_.BindingType {
 	fields["dedicated_resources"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(DedicatedResourcesBindingType))
 	fieldNameMap["dedicated_resources"] = "DedicatedResources"
 	fields["default"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fieldNameMap["default"] = "_Default"
+	fieldNameMap["default"] = "Default"
 	fields["external_ipv4_blocks"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["external_ipv4_blocks"] = "ExternalIpv4Blocks"
 	fields["limits"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
