@@ -25,6 +25,15 @@ const Status_GET_SOURCE_REALTIME = "realtime"
 // Possible value for ``source`` of method Status#get.
 const Status_GET_SOURCE_CACHED = "cached"
 
+// Possible value for ``nodeType`` of method Status#list.
+const Status_LIST_NODE_TYPE_HOSTNODE = "HostNode"
+
+// Possible value for ``nodeType`` of method Status#list.
+const Status_LIST_NODE_TYPE_EDGENODE = "EdgeNode"
+
+// Possible value for ``nodeType`` of method Status#list.
+const Status_LIST_NODE_TYPE_VIRTUALNETWORKAPPLIANCE = "VirtualNetworkAppliance"
+
 // Possible value for ``source`` of method Status#list.
 const Status_LIST_SOURCE_REALTIME = "realtime"
 
@@ -121,6 +130,7 @@ func statusListInputType() vapiBindings_.StructType {
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_dfw_heap_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -131,6 +141,7 @@ func statusListInputType() vapiBindings_.StructType {
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["include_dfw_heap_stats"] = "IncludeDfwHeapStats"
 	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["node_type"] = "NodeType"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
@@ -158,6 +169,7 @@ func statusListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_dfw_heap_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -168,6 +180,7 @@ func statusListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["include_dfw_heap_stats"] = "IncludeDfwHeapStats"
 	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["node_type"] = "NodeType"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
@@ -176,6 +189,7 @@ func statusListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["include_dfw_heap_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
@@ -189,6 +203,7 @@ func statusListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	pathParams["site_id"] = "siteId"
 	queryParams["cursor"] = "cursor"
 	queryParams["include_dfw_heap_stats"] = "include_dfw_heap_stats"
+	queryParams["node_type"] = "node_type"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["sort_by"] = "sort_by"
