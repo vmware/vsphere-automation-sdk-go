@@ -26,6 +26,7 @@ type DraftsClient interface {
 	// @param draftIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -38,6 +39,7 @@ type DraftsClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyDraft
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -56,6 +58,7 @@ type DraftsClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyDraftListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -68,6 +71,7 @@ type DraftsClient interface {
 	// @param policyDraftParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -80,6 +84,7 @@ type DraftsClient interface {
 	// @param infraParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -93,6 +98,7 @@ type DraftsClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyDraft
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

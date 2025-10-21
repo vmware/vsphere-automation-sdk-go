@@ -30,6 +30,7 @@ type SubnetConnectionBindingMapsClient interface {
 	// @param mapIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -46,6 +47,7 @@ type SubnetConnectionBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.SubnetConnectionBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -67,6 +69,7 @@ type SubnetConnectionBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.SubnetConnectionBindingMapListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -83,6 +86,7 @@ type SubnetConnectionBindingMapsClient interface {
 	// @param subnetConnectionBindingMapParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -100,6 +104,7 @@ type SubnetConnectionBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.SubnetConnectionBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

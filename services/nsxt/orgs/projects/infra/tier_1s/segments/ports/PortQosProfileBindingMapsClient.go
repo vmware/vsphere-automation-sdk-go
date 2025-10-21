@@ -31,6 +31,7 @@ type PortQosProfileBindingMapsClient interface {
 	// @param portQosProfileBindingMapIdParam Port QoS Profile Binding Map ID (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -48,6 +49,7 @@ type PortQosProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.PortQoSProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -69,6 +71,7 @@ type PortQosProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.PortQoSProfileBindingMapListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -86,6 +89,7 @@ type PortQosProfileBindingMapsClient interface {
 	// @param portQosProfileBindingMapParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -104,6 +108,7 @@ type PortQosProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.PortQoSProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

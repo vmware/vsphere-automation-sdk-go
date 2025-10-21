@@ -30,6 +30,7 @@ type ContextProfilesClient interface {
 	// @param overrideParam If true, the overridden object can be deleted locally. This will restore the global resource as the intended configuration for this site. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -44,6 +45,7 @@ type ContextProfilesClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyContextProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -55,6 +57,7 @@ type ContextProfilesClient interface {
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param hasUnsupportedAppIdsParam If true, returns only context profiles that contain unsupported App IDs. If false, returns only context profiles with supported App IDs. If not specified, returns all context profiles regardless of App ID status. (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
@@ -63,11 +66,12 @@ type ContextProfilesClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyContextProfileListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyContextProfileListResult, error)
+	List(orgIdParam string, projectIdParam string, cursorParam *string, hasUnsupportedAppIdsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyContextProfileListResult, error)
 
 	// Creates/Updates a PolicyContextProfile, which encapsulates attribute and sub-attributes of network services. Rules for using attributes and sub-attributes in single PolicyContextProfile 1. One type of attribute can't have multiple occurrences. ( Eg. - Attribute type APP_ID can be used only once per PolicyContextProfile.) 2. For specifying multiple values for an attribute, provide them in an array. 3. If sub-attribtes are mentioned for an attribute, then only single value is allowed for that attribute. 4. To get a list of supported attributes and sub-attributes fire the following REST API GET https://<policy-mgr>/policy/api/v1/infra/context-profiles/attributes 5. Do not create context profile with \"custom_attributes\" id
 	//
@@ -78,6 +82,7 @@ type ContextProfilesClient interface {
 	// @param overrideParam If true, the global resource can be over written locally. This means that there will be a local only resource in place of the global resource that can reflect local specific settings and values. The global object will continue to exist but will not be used for any configuration until this local object is removed. When the object is overridden the Global resource continues to exist unmodified, while the overridden object is created with all of the user specified values. The Global resource may be updated in the background, however, the overridden object may only be updated by the user. Once the user removes the overridden copy, the Global resource will then resume being used in the configuration. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -94,6 +99,7 @@ type ContextProfilesClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyContextProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -194,7 +200,7 @@ func (cIface *contextProfilesClient) Get(orgIdParam string, projectIdParam strin
 	}
 }
 
-func (cIface *contextProfilesClient) List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyContextProfileListResult, error) {
+func (cIface *contextProfilesClient) List(orgIdParam string, projectIdParam string, cursorParam *string, hasUnsupportedAppIdsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyContextProfileListResult, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := contextProfilesListRestMetadata()
@@ -205,6 +211,7 @@ func (cIface *contextProfilesClient) List(orgIdParam string, projectIdParam stri
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("HasUnsupportedAppIds", hasUnsupportedAppIdsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)

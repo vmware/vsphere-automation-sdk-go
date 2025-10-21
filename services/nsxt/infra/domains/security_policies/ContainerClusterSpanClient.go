@@ -28,6 +28,7 @@ type ContainerClusterSpanClient interface {
 	// @param antreaCluster1Param (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -42,6 +43,7 @@ type ContainerClusterSpanClient interface {
 	// @return com.vmware.nsx_policy.model.SecurityPolicyContainerCluster
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -61,6 +63,7 @@ type ContainerClusterSpanClient interface {
 	// @return com.vmware.nsx_policy.model.SecurityPolicyContainerClusterListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -75,6 +78,7 @@ type ContainerClusterSpanClient interface {
 	// @param securityPolicyContainerClusterParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -90,6 +94,7 @@ type ContainerClusterSpanClient interface {
 	// @return com.vmware.nsx_policy.model.SecurityPolicyContainerCluster
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

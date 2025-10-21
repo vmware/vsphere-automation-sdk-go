@@ -29,6 +29,7 @@ type DhcpStaticBindingConfigsClient interface {
 	// @param bindingIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -44,6 +45,7 @@ type DhcpStaticBindingConfigsClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.DhcpStaticBindingConfig.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -63,6 +65,7 @@ type DhcpStaticBindingConfigsClient interface {
 	// @return com.vmware.nsx_policy.model.DhcpStaticBindingConfigListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -78,6 +81,7 @@ type DhcpStaticBindingConfigsClient interface {
 	// The parameter must contain all the properties defined in nsx_policyModel.DhcpStaticBindingConfig.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -95,6 +99,7 @@ type DhcpStaticBindingConfigsClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.DhcpStaticBindingConfig.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

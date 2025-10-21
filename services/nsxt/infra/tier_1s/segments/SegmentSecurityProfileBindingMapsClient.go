@@ -28,6 +28,7 @@ type SegmentSecurityProfileBindingMapsClient interface {
 	// @param segmentSecurityProfileBindingMapIdParam segment security profile binding map id (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -42,6 +43,7 @@ type SegmentSecurityProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.SegmentSecurityProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -60,6 +62,7 @@ type SegmentSecurityProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.SegmentSecurityProfileBindingMapListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -74,6 +77,7 @@ type SegmentSecurityProfileBindingMapsClient interface {
 	// @param segmentSecurityProfileBindingMapParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -89,6 +93,7 @@ type SegmentSecurityProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.SegmentSecurityProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

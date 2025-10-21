@@ -28,6 +28,7 @@ type DnsSecurityProfileBindingMapsClient interface {
 	// @param dnsSecurityProfileBindingMapIdParam DNS security profile binding map ID (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -42,6 +43,7 @@ type DnsSecurityProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.DnsSecurityProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -61,6 +63,7 @@ type DnsSecurityProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.DnsSecurityProfileBindingMapListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -75,6 +78,7 @@ type DnsSecurityProfileBindingMapsClient interface {
 	// @param dnsSecurityProfileBindingMapParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -90,6 +94,7 @@ type DnsSecurityProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.DnsSecurityProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

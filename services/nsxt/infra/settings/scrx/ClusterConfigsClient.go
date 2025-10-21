@@ -27,6 +27,7 @@ type ClusterConfigsClient interface {
 	// @return com.vmware.nsx_policy.model.ScrxClusterConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -37,6 +38,7 @@ type ClusterConfigsClient interface {
 	// @return com.vmware.nsx_policy.model.ScrxClusterConfigListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -49,6 +51,7 @@ type ClusterConfigsClient interface {
 	// @param scrxClusterConfigParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -62,6 +65,7 @@ type ClusterConfigsClient interface {
 	// @return com.vmware.nsx_policy.model.ScrxClusterConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

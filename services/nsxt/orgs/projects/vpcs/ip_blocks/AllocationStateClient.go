@@ -23,8 +23,8 @@ type AllocationStateClient interface {
 
 	// Get allocation state of given IpAddressBlock for VPC.
 	//
-	// @param orgIdParam The organization ID (required)
-	// @param projectIdParam The project ID (required)
+	// @param orgIdParam (required)
+	// @param projectIdParam (required)
 	// @param vpcIdParam (required)
 	// @param cidrParam CIDR allocated from the IpAddressBlock (optional)
 	// @param includeWorkloadDetailsParam If set to true, and if the allocated CIDR is being used by a VM, the API will return details about the VM. (optional, default to false)
@@ -32,6 +32,7 @@ type AllocationStateClient interface {
 	// @return com.vmware.nsx_policy.model.IpAddressBlockAllocationStateList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

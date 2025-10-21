@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SecurityProfileAttachmentsClient interface {
 
-	// Get security profile attachment of a VPC with the specified identifier.
+	// Retrieves a specific Security Profile Attachment by its unique identifier, providing details about the association between a VPC and its assigned security profile. The response includes information about the target VPC, the attached security profile reference, and attachment metadata details. This API enables administrators to verify current security profile assignments and understand the security configuration applied to specific VPCs within a project. The attachment identifier typically corresponds to the VPC identifier for which the security profile is attached.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -29,13 +29,14 @@ type SecurityProfileAttachmentsClient interface {
 	// @return com.vmware.nsx_policy.model.SecurityProfileAttachment
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, securityProfileAttachmentIdParam string) (nsx_policyModel.SecurityProfileAttachment, error)
 
-	// Paginated list of SecurityProfileAttachments.
+	// Retrieves a paginated collection of all Security Profile Attachments within a specified project, providing a comprehensive view of VPC-to-security-profile associations. Each attachment in the response includes details about the target VPC, the assigned security profile, and relevant metadata details. This API enables project administrators to understand current security posture assignments, and manage security configuration consistency within the project. The response supports standard pagination parameters and sorting capabilities for efficient data retrieval and analysis of security profile usage patterns.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -48,13 +49,14 @@ type SecurityProfileAttachmentsClient interface {
 	// @return com.vmware.nsx_policy.model.SecurityProfileAttachmentListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityProfileAttachmentListResult, error)
 
-	// create of update existing security profile attachment of a VPC.
+	// Creates a new Security Profile Attachment or performs partial updates to an existing attachment using HTTP PATCH semantics. This operation enables project administrators to associate a VPC with a specific security profile or modify an existing attachment by changing the assigned security profile. The API supports attaching different security profiles to VPCs to customize their security posture based on workload requirements and compliance needs. When updating an existing attachment, only the provided fields in the request body will be modified while preserving other attachment properties. The operation ensures that each VPC maintains exactly one active security profile attachment at any time, automatically managing the association lifecycle.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -62,13 +64,14 @@ type SecurityProfileAttachmentsClient interface {
 	// @param securityProfileAttachmentParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, securityProfileAttachmentIdParam string, securityProfileAttachmentParam nsx_policyModel.SecurityProfileAttachment) error
 
-	// Update existing security profile attachment of a VPC.
+	// Performs complete replacement of an existing Security Profile Attachment using HTTP PUT semantics. This operation requires a full attachment representation in the request body and will replace all modifiable properties of the target attachment. The API enables comprehensive updates to VPC-security-profile associations, allowing administrators to change the assigned security profile and update attachment metadata. All required fields must be provided in the request as omitted fields may be reset to default values. The response includes the updated attachment with current configuration, ensuring that the VPC's security posture is properly configured according to the new security profile assignment.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -77,6 +80,7 @@ type SecurityProfileAttachmentsClient interface {
 	// @return com.vmware.nsx_policy.model.SecurityProfileAttachment
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

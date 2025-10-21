@@ -28,6 +28,7 @@ type VpcServiceProfilesClient interface {
 	// @param vpcServiceProfileIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -42,6 +43,7 @@ type VpcServiceProfilesClient interface {
 	// @return com.vmware.nsx_policy.model.VpcServiceProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -61,6 +63,7 @@ type VpcServiceProfilesClient interface {
 	// @return com.vmware.nsx_policy.model.VpcServiceProfileListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -75,6 +78,7 @@ type VpcServiceProfilesClient interface {
 	// @param vpcServiceProfileParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -90,6 +94,7 @@ type VpcServiceProfilesClient interface {
 	// @return com.vmware.nsx_policy.model.VpcServiceProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

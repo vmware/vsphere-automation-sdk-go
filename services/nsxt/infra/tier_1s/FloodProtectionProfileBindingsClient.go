@@ -27,6 +27,7 @@ type FloodProtectionProfileBindingsClient interface {
 	// @param floodProtectionProfileBindingIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -40,6 +41,7 @@ type FloodProtectionProfileBindingsClient interface {
 	// @return com.vmware.nsx_policy.model.FloodProtectionProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -53,6 +55,7 @@ type FloodProtectionProfileBindingsClient interface {
 	// @param floodProtectionProfileBindingMapParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -67,6 +70,7 @@ type FloodProtectionProfileBindingsClient interface {
 	// @return com.vmware.nsx_policy.model.FloodProtectionProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

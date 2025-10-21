@@ -28,6 +28,7 @@ type PortDiscoveryProfileBindingMapsClient interface {
 	// @param portDiscoveryProfileBindingMapIdParam Port Discovery Profile Binding Map ID (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -42,6 +43,7 @@ type PortDiscoveryProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.PortDiscoveryProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -61,6 +63,7 @@ type PortDiscoveryProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.PortDiscoveryProfileBindingMapListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -75,6 +78,7 @@ type PortDiscoveryProfileBindingMapsClient interface {
 	// @param portDiscoveryProfileBindingMapParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -90,6 +94,7 @@ type PortDiscoveryProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.PortDiscoveryProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

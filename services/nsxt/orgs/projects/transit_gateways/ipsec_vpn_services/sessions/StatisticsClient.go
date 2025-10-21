@@ -32,6 +32,7 @@ type StatisticsClient interface {
 	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -50,6 +51,7 @@ type StatisticsClient interface {
 	// @return com.vmware.nsx_policy.model.AggregateIPSecVpnSessionStatistics
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

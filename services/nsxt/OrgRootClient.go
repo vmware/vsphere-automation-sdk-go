@@ -29,6 +29,7 @@ type OrgRootClient interface {
 	// @return com.vmware.nsx_policy.model.OrgRoot
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -41,6 +42,7 @@ type OrgRootClient interface {
 	// @param enforceRevisionCheckParam If this is set to true, each child object in the request needs to have _revision property set correctly. System will honor the revision numbers while updating the resources. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

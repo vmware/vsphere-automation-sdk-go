@@ -25,6 +25,7 @@ type IdsStandaloneHostConfigClient interface {
 	// @return com.vmware.nsx_policy.model.IdsStandaloneHostConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -36,6 +37,7 @@ type IdsStandaloneHostConfigClient interface {
 	// @param idsStandaloneHostConfigParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -48,6 +50,7 @@ type IdsStandaloneHostConfigClient interface {
 	// @return com.vmware.nsx_policy.model.IdsStandaloneHostConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

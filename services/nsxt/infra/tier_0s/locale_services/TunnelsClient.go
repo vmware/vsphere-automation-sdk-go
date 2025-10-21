@@ -29,6 +29,7 @@ type TunnelsClient interface {
 	// @param tunnelIdParam tunnel id (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -44,6 +45,7 @@ type TunnelsClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.Tunnel.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -62,6 +64,7 @@ type TunnelsClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyTunnelListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -77,6 +80,7 @@ type TunnelsClient interface {
 	// The parameter must contain all the properties defined in nsx_policyModel.Tunnel.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -94,6 +98,7 @@ type TunnelsClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.Tunnel.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

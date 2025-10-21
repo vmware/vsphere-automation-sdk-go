@@ -27,6 +27,7 @@ type DnsForwarderZonesClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyDnsForwarderZone
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -44,6 +45,7 @@ type DnsForwarderZonesClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyDnsForwarderZoneListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

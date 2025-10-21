@@ -27,6 +27,7 @@ type ThirdPartyIpamProvidersClient interface {
 	// @param providerInstanceIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -40,6 +41,7 @@ type ThirdPartyIpamProvidersClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.IpamThirdPartyProvider.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -57,6 +59,7 @@ type ThirdPartyIpamProvidersClient interface {
 	// @return com.vmware.nsx_policy.model.IpamThirdPartyProviderListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -72,6 +75,7 @@ type ThirdPartyIpamProvidersClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.IpamThirdPartyProvider.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -87,6 +91,7 @@ type ThirdPartyIpamProvidersClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.IpamThirdPartyProvider.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

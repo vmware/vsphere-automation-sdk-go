@@ -28,6 +28,7 @@ type CommunityListsClient interface {
 	// @return com.vmware.nsx_policy.model.CommunityList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -46,6 +47,7 @@ type CommunityListsClient interface {
 	// @return com.vmware.nsx_policy.model.CommunityListListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

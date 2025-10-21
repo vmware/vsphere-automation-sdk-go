@@ -26,6 +26,7 @@ type TlsInspectionPoliciesClient interface {
 	// @param policyIdParam Firewall TLS inspection poicy id (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -38,6 +39,7 @@ type TlsInspectionPoliciesClient interface {
 	// @return com.vmware.nsx_policy.model.TlsPolicy
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -56,6 +58,7 @@ type TlsInspectionPoliciesClient interface {
 	// @return com.vmware.nsx_policy.model.TlsPolicyListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -69,6 +72,7 @@ type TlsInspectionPoliciesClient interface {
 	// @return com.vmware.nsx_policy.model.TlsPolicy
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -82,6 +86,7 @@ type TlsInspectionPoliciesClient interface {
 	// @return com.vmware.nsx_policy.model.TlsPolicy
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

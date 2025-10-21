@@ -22,8 +22,8 @@ import (
 func troubleshootDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["route_controller_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["route_controller_id"] = "RouteControllerId"
+	fields["router_controller_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["router_controller_id"] = "RouterControllerId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -41,11 +41,11 @@ func troubleshootDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["route_controller_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["route_controller_id"] = "RouteControllerId"
-	paramsTypeMap["route_controller_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routeControllerId"] = vapiBindings_.NewStringType()
-	pathParams["route_controller_id"] = "routeControllerId"
+	fields["router_controller_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["router_controller_id"] = "RouterControllerId"
+	paramsTypeMap["router_controller_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["routerControllerId"] = vapiBindings_.NewStringType()
+	pathParams["router_controller_id"] = "routerControllerId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -60,20 +60,20 @@ func troubleshootDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"DELETE",
-		"/policy/api/v1/infra/route-controllers/{routeControllerId}/bgp/troubleshoot",
+		"/policy/api/v1/infra/route-controllers/{routerControllerId}/bgp/troubleshoot",
 		"",
 		resultHeaders,
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func troubleshootGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["route_controller_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["route_controller_id"] = "RouteControllerId"
+	fields["router_controller_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["router_controller_id"] = "RouterControllerId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -91,11 +91,11 @@ func troubleshootGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["route_controller_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["route_controller_id"] = "RouteControllerId"
-	paramsTypeMap["route_controller_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routeControllerId"] = vapiBindings_.NewStringType()
-	pathParams["route_controller_id"] = "routeControllerId"
+	fields["router_controller_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["router_controller_id"] = "RouterControllerId"
+	paramsTypeMap["router_controller_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["routerControllerId"] = vapiBindings_.NewStringType()
+	pathParams["router_controller_id"] = "routerControllerId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -110,21 +110,21 @@ func troubleshootGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/route-controllers/{routeControllerId}/bgp/troubleshoot",
+		"/policy/api/v1/infra/route-controllers/{routerControllerId}/bgp/troubleshoot",
 		"",
 		resultHeaders,
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func troubleshootPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["route_controller_id"] = vapiBindings_.NewStringType()
+	fields["router_controller_id"] = vapiBindings_.NewStringType()
 	fields["bgp_troubleshoot_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpTroubleshootConfigBindingType)
-	fieldNameMap["route_controller_id"] = "RouteControllerId"
+	fieldNameMap["router_controller_id"] = "RouterControllerId"
 	fieldNameMap["bgp_troubleshoot_config"] = "BgpTroubleshootConfig"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
@@ -143,14 +143,14 @@ func troubleshootPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["route_controller_id"] = vapiBindings_.NewStringType()
+	fields["router_controller_id"] = vapiBindings_.NewStringType()
 	fields["bgp_troubleshoot_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpTroubleshootConfigBindingType)
-	fieldNameMap["route_controller_id"] = "RouteControllerId"
+	fieldNameMap["router_controller_id"] = "RouterControllerId"
 	fieldNameMap["bgp_troubleshoot_config"] = "BgpTroubleshootConfig"
 	paramsTypeMap["bgp_troubleshoot_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpTroubleshootConfigBindingType)
-	paramsTypeMap["route_controller_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routeControllerId"] = vapiBindings_.NewStringType()
-	pathParams["route_controller_id"] = "routeControllerId"
+	paramsTypeMap["router_controller_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["routerControllerId"] = vapiBindings_.NewStringType()
+	pathParams["router_controller_id"] = "routerControllerId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -165,21 +165,21 @@ func troubleshootPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"bgp_troubleshoot_config",
 		"PATCH",
-		"/policy/api/v1/infra/route-controllers/{routeControllerId}/bgp/troubleshoot",
+		"/policy/api/v1/infra/route-controllers/{routerControllerId}/bgp/troubleshoot",
 		"application/json",
 		resultHeaders,
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func troubleshootUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["route_controller_id"] = vapiBindings_.NewStringType()
+	fields["router_controller_id"] = vapiBindings_.NewStringType()
 	fields["bgp_troubleshoot_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpTroubleshootConfigBindingType)
-	fieldNameMap["route_controller_id"] = "RouteControllerId"
+	fieldNameMap["router_controller_id"] = "RouterControllerId"
 	fieldNameMap["bgp_troubleshoot_config"] = "BgpTroubleshootConfig"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
@@ -198,14 +198,14 @@ func troubleshootUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["route_controller_id"] = vapiBindings_.NewStringType()
+	fields["router_controller_id"] = vapiBindings_.NewStringType()
 	fields["bgp_troubleshoot_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpTroubleshootConfigBindingType)
-	fieldNameMap["route_controller_id"] = "RouteControllerId"
+	fieldNameMap["router_controller_id"] = "RouterControllerId"
 	fieldNameMap["bgp_troubleshoot_config"] = "BgpTroubleshootConfig"
 	paramsTypeMap["bgp_troubleshoot_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.BgpTroubleshootConfigBindingType)
-	paramsTypeMap["route_controller_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routeControllerId"] = vapiBindings_.NewStringType()
-	pathParams["route_controller_id"] = "routeControllerId"
+	paramsTypeMap["router_controller_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["routerControllerId"] = vapiBindings_.NewStringType()
+	pathParams["router_controller_id"] = "routerControllerId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -220,11 +220,11 @@ func troubleshootUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"bgp_troubleshoot_config",
 		"PUT",
-		"/policy/api/v1/infra/route-controllers/{routeControllerId}/bgp/troubleshoot",
+		"/policy/api/v1/infra/route-controllers/{routerControllerId}/bgp/troubleshoot",
 		"application/json",
 		resultHeaders,
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }

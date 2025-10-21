@@ -29,6 +29,7 @@ type ClusterControlPlanesClient interface {
 	// @param cascadeParam Flag to indicate if force delete cluster references from the firewall security policies. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -43,6 +44,7 @@ type ClusterControlPlanesClient interface {
 	// @return com.vmware.nsx_policy.model.ClusterControlPlane
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -62,6 +64,7 @@ type ClusterControlPlanesClient interface {
 	// @return com.vmware.nsx_policy.model.ClusterControlPlaneListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -77,6 +80,7 @@ type ClusterControlPlanesClient interface {
 	// @return com.vmware.nsx_policy.model.ClusterControlPlane
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

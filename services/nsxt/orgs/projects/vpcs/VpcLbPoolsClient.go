@@ -30,6 +30,7 @@ type VpcLbPoolsClient interface {
 	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -45,6 +46,7 @@ type VpcLbPoolsClient interface {
 	// @return com.vmware.nsx_policy.model.LBPool
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -65,6 +67,7 @@ type VpcLbPoolsClient interface {
 	// @return com.vmware.nsx_policy.model.LBPoolListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -80,6 +83,7 @@ type VpcLbPoolsClient interface {
 	// @param lbPoolParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -96,6 +100,7 @@ type VpcLbPoolsClient interface {
 	// @return com.vmware.nsx_policy.model.LBPool
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

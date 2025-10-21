@@ -29,6 +29,7 @@ type ConnectivityGlobalConfigClient interface {
 	// @return com.vmware.nsx_policy.model.GlobalConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -43,6 +44,7 @@ type ConnectivityGlobalConfigClient interface {
 	// @param applyLocallyParam If the user sets apply_locally to GET/PUT/PATCH call then the local resource copy will be shown/modified. This will only be acceptable on LM. In case LM only has it's copy, the apply_local = false will still have effect on local copy. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -58,6 +60,7 @@ type ConnectivityGlobalConfigClient interface {
 	// @return com.vmware.nsx_policy.model.GlobalConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

@@ -23,6 +23,7 @@ type DestroyClient interface {
 	// Unauthenticates and makes the provided session cookie invalid. The set-cookie and x-xsrf-token headers obtained from an earlier call to /api/session/create should be provided in the HTTP headers of this request.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

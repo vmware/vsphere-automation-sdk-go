@@ -23,12 +23,18 @@ type LdapServersClient interface {
 
 	// The API tests a LDAP server connection for an already configured domain. If the connection is successful, the response will be HTTP status 200. Otherwise the response will be HTTP status 500 and corresponding error message will be returned.
 	//
+	//  Use the following Policy API -
+	//  POST /infra/identity-firewall-stores/ldap-servers/action/connectivity-check
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param firewallIdentityStoreIdParam Firewall Identity store identifier (required)
 	// @param ldapServerIdParam LDAP server identifier (required)
 	// @param actionParam Type of LDAP server test to perform. (required)
 	// @param enforcementPointPathParam Enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -47,6 +53,7 @@ type LdapServersClient interface {
 	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -66,6 +73,7 @@ type LdapServersClient interface {
 	// @return com.vmware.nsx_policy.model.DirectoryLdapServer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -89,6 +97,7 @@ type LdapServersClient interface {
 	// @return com.vmware.nsx_policy.model.DirectoryLdapServerListResults
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -109,6 +118,7 @@ type LdapServersClient interface {
 	// @return com.vmware.nsx_policy.model.DirectoryLdapServer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -129,6 +139,7 @@ type LdapServersClient interface {
 	// @return com.vmware.nsx_policy.model.DirectoryLdapServer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

@@ -29,6 +29,7 @@ type ServiceInstanceEndpointsClient interface {
 	// @param serviceInstanceEndpointIdParam Tier1 Service instance endpoint id (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -44,6 +45,7 @@ type ServiceInstanceEndpointsClient interface {
 	// @return com.vmware.nsx_policy.model.ServiceInstanceEndpoint
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -64,6 +66,7 @@ type ServiceInstanceEndpointsClient interface {
 	// @return com.vmware.nsx_policy.model.ServiceInstanceEndpointListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -79,6 +82,7 @@ type ServiceInstanceEndpointsClient interface {
 	// @param serviceInstanceEndpointParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -95,6 +99,7 @@ type ServiceInstanceEndpointsClient interface {
 	// @return com.vmware.nsx_policy.model.ServiceInstanceEndpoint
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

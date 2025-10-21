@@ -25,14 +25,10 @@ func usageListInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["vpc_id"] = vapiBindings_.NewStringType()
-	fields["cidr"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["include_workload_details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["ip_address_block_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["vpc_id"] = "VpcId"
-	fieldNameMap["cidr"] = "Cidr"
-	fieldNameMap["include_workload_details"] = "IncludeWorkloadDetails"
 	fieldNameMap["ip_address_block_path"] = "IpAddressBlockPath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
@@ -54,21 +50,15 @@ func usageListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["vpc_id"] = vapiBindings_.NewStringType()
-	fields["cidr"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["include_workload_details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["ip_address_block_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["vpc_id"] = "VpcId"
-	fieldNameMap["cidr"] = "Cidr"
-	fieldNameMap["include_workload_details"] = "IncludeWorkloadDetails"
 	fieldNameMap["ip_address_block_path"] = "IpAddressBlockPath"
 	paramsTypeMap["ip_address_block_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["vpc_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["cidr"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["include_workload_details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["vpcId"] = vapiBindings_.NewStringType()
@@ -76,8 +66,6 @@ func usageListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	queryParams["ip_address_block_path"] = "ip_address_block_path"
-	queryParams["cidr"] = "cidr"
-	queryParams["include_workload_details"] = "include_workload_details"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -98,5 +86,5 @@ func usageListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }

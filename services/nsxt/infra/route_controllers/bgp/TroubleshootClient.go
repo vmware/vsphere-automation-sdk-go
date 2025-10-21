@@ -23,51 +23,55 @@ type TroubleshootClient interface {
 
 	// Delete BGP troubleshoot config
 	//
-	// @param routeControllerIdParam (required)
+	// @param routerControllerIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(routeControllerIdParam string) error
+	Delete(routerControllerIdParam string) error
 
 	// Read BGP troubleshoot config
 	//
-	// @param routeControllerIdParam (required)
+	// @param routerControllerIdParam (required)
 	// @return com.vmware.nsx_policy.model.BgpTroubleshootConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(routeControllerIdParam string) (nsx_policyModel.BgpTroubleshootConfig, error)
+	Get(routerControllerIdParam string) (nsx_policyModel.BgpTroubleshootConfig, error)
 
 	// If BGP troubleshoot config is not present in BGP configuration, create a new BGP troubleshoot config with default value. If it already exists, update the BGP troubleshoot config with this object.
 	//
-	// @param routeControllerIdParam (required)
+	// @param routerControllerIdParam (required)
 	// @param bgpTroubleshootConfigParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(routeControllerIdParam string, bgpTroubleshootConfigParam nsx_policyModel.BgpTroubleshootConfig) error
+	Patch(routerControllerIdParam string, bgpTroubleshootConfigParam nsx_policyModel.BgpTroubleshootConfig) error
 
 	// If BGP troubleshoot config is not present in BGP configuration, create a new BGP troubleshoot config with default value. If it already exists, update the BGP troubleshoot config with this object.
 	//
-	// @param routeControllerIdParam (required)
+	// @param routerControllerIdParam (required)
 	// @param bgpTroubleshootConfigParam (required)
 	// @return com.vmware.nsx_policy.model.BgpTroubleshootConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(routeControllerIdParam string, bgpTroubleshootConfigParam nsx_policyModel.BgpTroubleshootConfig) (nsx_policyModel.BgpTroubleshootConfig, error)
+	Update(routerControllerIdParam string, bgpTroubleshootConfigParam nsx_policyModel.BgpTroubleshootConfig) (nsx_policyModel.BgpTroubleshootConfig, error)
 }
 
 type troubleshootClient struct {
@@ -98,7 +102,7 @@ func (tIface *troubleshootClient) GetErrorBindingType(errorName string) vapiBind
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (tIface *troubleshootClient) Delete(routeControllerIdParam string) error {
+func (tIface *troubleshootClient) Delete(routerControllerIdParam string) error {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
 	operationRestMetaData := troubleshootDeleteRestMetadata()
@@ -106,7 +110,7 @@ func (tIface *troubleshootClient) Delete(routeControllerIdParam string) error {
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(troubleshootDeleteInputType(), typeConverter)
-	sv.AddStructField("RouteControllerId", routeControllerIdParam)
+	sv.AddStructField("RouterControllerId", routerControllerIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -124,7 +128,7 @@ func (tIface *troubleshootClient) Delete(routeControllerIdParam string) error {
 	}
 }
 
-func (tIface *troubleshootClient) Get(routeControllerIdParam string) (nsx_policyModel.BgpTroubleshootConfig, error) {
+func (tIface *troubleshootClient) Get(routerControllerIdParam string) (nsx_policyModel.BgpTroubleshootConfig, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
 	operationRestMetaData := troubleshootGetRestMetadata()
@@ -132,7 +136,7 @@ func (tIface *troubleshootClient) Get(routeControllerIdParam string) (nsx_policy
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(troubleshootGetInputType(), typeConverter)
-	sv.AddStructField("RouteControllerId", routeControllerIdParam)
+	sv.AddStructField("RouterControllerId", routerControllerIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.BgpTroubleshootConfig
@@ -156,7 +160,7 @@ func (tIface *troubleshootClient) Get(routeControllerIdParam string) (nsx_policy
 	}
 }
 
-func (tIface *troubleshootClient) Patch(routeControllerIdParam string, bgpTroubleshootConfigParam nsx_policyModel.BgpTroubleshootConfig) error {
+func (tIface *troubleshootClient) Patch(routerControllerIdParam string, bgpTroubleshootConfigParam nsx_policyModel.BgpTroubleshootConfig) error {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
 	operationRestMetaData := troubleshootPatchRestMetadata()
@@ -164,7 +168,7 @@ func (tIface *troubleshootClient) Patch(routeControllerIdParam string, bgpTroubl
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(troubleshootPatchInputType(), typeConverter)
-	sv.AddStructField("RouteControllerId", routeControllerIdParam)
+	sv.AddStructField("RouterControllerId", routerControllerIdParam)
 	sv.AddStructField("BgpTroubleshootConfig", bgpTroubleshootConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
@@ -183,7 +187,7 @@ func (tIface *troubleshootClient) Patch(routeControllerIdParam string, bgpTroubl
 	}
 }
 
-func (tIface *troubleshootClient) Update(routeControllerIdParam string, bgpTroubleshootConfigParam nsx_policyModel.BgpTroubleshootConfig) (nsx_policyModel.BgpTroubleshootConfig, error) {
+func (tIface *troubleshootClient) Update(routerControllerIdParam string, bgpTroubleshootConfigParam nsx_policyModel.BgpTroubleshootConfig) (nsx_policyModel.BgpTroubleshootConfig, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
 	operationRestMetaData := troubleshootUpdateRestMetadata()
@@ -191,7 +195,7 @@ func (tIface *troubleshootClient) Update(routeControllerIdParam string, bgpTroub
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(troubleshootUpdateInputType(), typeConverter)
-	sv.AddStructField("RouteControllerId", routeControllerIdParam)
+	sv.AddStructField("RouterControllerId", routerControllerIdParam)
 	sv.AddStructField("BgpTroubleshootConfig", bgpTroubleshootConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {

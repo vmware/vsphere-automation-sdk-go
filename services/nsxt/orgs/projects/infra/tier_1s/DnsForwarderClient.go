@@ -30,6 +30,7 @@ type DnsForwarderClient interface {
 	// @param enforcementPointPathParam An enforcement point path, on which the action is to be performed. If not specified, default enforcement point path, /infra/sites/default/enforcement-points/default will be considered. (optional, default to /infra/sites/default/enforcement-points/default)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -43,6 +44,7 @@ type DnsForwarderClient interface {
 	// @param tier1IdParam Tier-1 ID (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -57,6 +59,7 @@ type DnsForwarderClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyDnsForwarder
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -71,6 +74,7 @@ type DnsForwarderClient interface {
 	// @param policyDnsForwarderParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -86,6 +90,7 @@ type DnsForwarderClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyDnsForwarder
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

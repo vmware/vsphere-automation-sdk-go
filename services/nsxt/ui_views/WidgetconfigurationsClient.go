@@ -34,6 +34,7 @@ type WidgetconfigurationsClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.WidgetConfiguration.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -49,6 +50,7 @@ type WidgetconfigurationsClient interface {
 	// @param widgetconfigurationIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -66,6 +68,7 @@ type WidgetconfigurationsClient interface {
 	// @return com.vmware.nsx_policy.model.WidgetConfigurationList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -83,6 +86,7 @@ type WidgetconfigurationsClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.WidgetConfiguration.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -102,6 +106,7 @@ type WidgetconfigurationsClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.WidgetConfiguration.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

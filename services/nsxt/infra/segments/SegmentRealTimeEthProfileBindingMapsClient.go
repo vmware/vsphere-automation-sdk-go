@@ -27,6 +27,7 @@ type SegmentRealTimeEthProfileBindingMapsClient interface {
 	// @param segmentRealTimeEthProfileBindingMapIdParam Segment Real Time Eth Profile Binding Map ID (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -40,6 +41,7 @@ type SegmentRealTimeEthProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.SegmentRealTimeEthProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -57,6 +59,7 @@ type SegmentRealTimeEthProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.SegmentRealTimeEthProfileBindingMapListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -70,6 +73,7 @@ type SegmentRealTimeEthProfileBindingMapsClient interface {
 	// @param segmentRealTimeEthProfileBindingMapParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -84,6 +88,7 @@ type SegmentRealTimeEthProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.SegmentRealTimeEthProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

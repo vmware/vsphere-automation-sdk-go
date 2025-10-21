@@ -86,7 +86,7 @@ func l7AccessProfilesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func l7AccessProfilesGetInputType() vapiBindings_.StructType {
@@ -150,7 +150,7 @@ func l7AccessProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func l7AccessProfilesListInputType() vapiBindings_.StructType {
@@ -159,6 +159,7 @@ func l7AccessProfilesListInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["has_unsupported_app_ids"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_entry_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -168,6 +169,7 @@ func l7AccessProfilesListInputType() vapiBindings_.StructType {
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["has_unsupported_app_ids"] = "HasUnsupportedAppIds"
 	fieldNameMap["include_entry_count"] = "IncludeEntryCount"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
@@ -194,6 +196,7 @@ func l7AccessProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["has_unsupported_app_ids"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_entry_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -203,6 +206,7 @@ func l7AccessProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["has_unsupported_app_ids"] = "HasUnsupportedAppIds"
 	fieldNameMap["include_entry_count"] = "IncludeEntryCount"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
@@ -216,6 +220,7 @@ func l7AccessProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["has_unsupported_app_ids"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
@@ -227,6 +232,7 @@ func l7AccessProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["sort_by"] = "sort_by"
+	queryParams["has_unsupported_app_ids"] = "has_unsupported_app_ids"
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
@@ -249,7 +255,7 @@ func l7AccessProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func l7AccessProfilesPatchInputType() vapiBindings_.StructType {
@@ -324,7 +330,7 @@ func l7AccessProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func l7AccessProfilesUpdateInputType() vapiBindings_.StructType {
@@ -399,5 +405,5 @@ func l7AccessProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }

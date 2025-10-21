@@ -27,6 +27,7 @@ type FullSyncActionClient interface {
 	// @param syncTypeParam If not specified, the value is defaulted to gm_to_lm_full_sync. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

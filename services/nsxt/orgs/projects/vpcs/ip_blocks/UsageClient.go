@@ -26,17 +26,16 @@ type UsageClient interface {
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param vpcIdParam (required)
-	// @param cidrParam CIDR allocated from the IpAddressBlock (optional)
-	// @param includeWorkloadDetailsParam If set to true, and if the allocated CIDR is being used by a VM, the API will return details about the VM. (optional, default to false)
 	// @param ipAddressBlockPathParam Policy path of the IpAddressBlock (optional)
 	// @return com.vmware.nsx_policy.model.IpAddressBlockUsageList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, vpcIdParam string, cidrParam *string, includeWorkloadDetailsParam *bool, ipAddressBlockPathParam *string) (nsx_policyModel.IpAddressBlockUsageList, error)
+	List(orgIdParam string, projectIdParam string, vpcIdParam string, ipAddressBlockPathParam *string) (nsx_policyModel.IpAddressBlockUsageList, error)
 }
 
 type usageClient struct {
@@ -64,7 +63,7 @@ func (uIface *usageClient) GetErrorBindingType(errorName string) vapiBindings_.B
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (uIface *usageClient) List(orgIdParam string, projectIdParam string, vpcIdParam string, cidrParam *string, includeWorkloadDetailsParam *bool, ipAddressBlockPathParam *string) (nsx_policyModel.IpAddressBlockUsageList, error) {
+func (uIface *usageClient) List(orgIdParam string, projectIdParam string, vpcIdParam string, ipAddressBlockPathParam *string) (nsx_policyModel.IpAddressBlockUsageList, error) {
 	typeConverter := uIface.connector.TypeConverter()
 	executionContext := uIface.connector.NewExecutionContext()
 	operationRestMetaData := usageListRestMetadata()
@@ -75,8 +74,6 @@ func (uIface *usageClient) List(orgIdParam string, projectIdParam string, vpcIdP
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("VpcId", vpcIdParam)
-	sv.AddStructField("Cidr", cidrParam)
-	sv.AddStructField("IncludeWorkloadDetails", includeWorkloadDetailsParam)
 	sv.AddStructField("IpAddressBlockPath", ipAddressBlockPathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {

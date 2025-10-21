@@ -32,6 +32,7 @@ type PeerConfigClient interface {
 	// @return com.vmware.nsx_policy.model.AggregateL2VPNSessionPeerConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

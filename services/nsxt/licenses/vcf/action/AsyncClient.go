@@ -25,6 +25,7 @@ type AsyncClient interface {
 	// @param onlySyncUnlicensedVcParam Specify whether to only query the licenses from the VCs that do not have a license in NSX asynchronously. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

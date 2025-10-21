@@ -4,7 +4,7 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: SyncEdgeConfiguration
+// Interface file for service: DeltaSync
 // Used by client-side stubs.
 
 package action
@@ -14,72 +14,70 @@ import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
 	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
 )
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-type SyncEdgeConfigurationClient interface {
+type DeltaSyncClient interface {
 
+	// Initiates a delta synchronization on the Identity Firewall Store. The objects that have changed since the last sync will be retrieved from the AD server and synchronized with NSX.
 	//
-	//
-	// @param siteIdParam (required)
-	// @param enforcementPointIdParam (required)
-	// @param edgeTransportNodeIdParam (required)
+	// @param identityFirewallStoreSyncRequestParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(siteIdParam string, enforcementPointIdParam string, edgeTransportNodeIdParam string) error
+	Create(identityFirewallStoreSyncRequestParam nsx_policyModel.IdentityFirewallStoreSyncRequest) error
 }
 
-type syncEdgeConfigurationClient struct {
+type deltaSyncClient struct {
 	connector           vapiProtocolClient_.Connector
 	interfaceDefinition vapiCore_.InterfaceDefinition
 	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewSyncEdgeConfigurationClient(connector vapiProtocolClient_.Connector) *syncEdgeConfigurationClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.enforcement_points.edge_transport_nodes.action.sync_edge_configuration")
+func NewDeltaSyncClient(connector vapiProtocolClient_.Connector) *deltaSyncClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.identity_firewall_stores.action.delta_sync")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
-	sIface := syncEdgeConfigurationClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
-	return &sIface
+	dIface := deltaSyncClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &dIface
 }
 
-func (sIface *syncEdgeConfigurationClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
-	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
+func (dIface *deltaSyncClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+	if entry, ok := dIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *syncEdgeConfigurationClient) Create(siteIdParam string, enforcementPointIdParam string, edgeTransportNodeIdParam string) error {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	operationRestMetaData := syncEdgeConfigurationCreateRestMetadata()
+func (dIface *deltaSyncClient) Create(identityFirewallStoreSyncRequestParam nsx_policyModel.IdentityFirewallStoreSyncRequest) error {
+	typeConverter := dIface.connector.TypeConverter()
+	executionContext := dIface.connector.NewExecutionContext()
+	operationRestMetaData := deltaSyncCreateRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(syncEdgeConfigurationCreateInputType(), typeConverter)
-	sv.AddStructField("SiteId", siteIdParam)
-	sv.AddStructField("EnforcementPointId", enforcementPointIdParam)
-	sv.AddStructField("EdgeTransportNodeId", edgeTransportNodeIdParam)
+	sv := vapiBindings_.NewStructValueBuilder(deltaSyncCreateInputType(), typeConverter)
+	sv.AddStructField("IdentityFirewallStoreSyncRequest", identityFirewallStoreSyncRequestParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.edge_transport_nodes.action.sync_edge_configuration", "create", inputDataValue, executionContext)
+	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.identity_firewall_stores.action.delta_sync", "create", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
 			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}

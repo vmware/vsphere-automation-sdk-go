@@ -26,6 +26,7 @@ type FileClient interface {
 	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

@@ -29,6 +29,7 @@ type IpSubnetsClient interface {
 	// @param ignoreIpAllocationsParam When flag is set to true, IpAddressPoolSubnet will be deleted, even if IP allocations are present. When flag is set to false (default), error will be thrown if allocations are present. This flag works only when sync_realization field set to true. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -43,6 +44,7 @@ type IpSubnetsClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.IpAddressPoolSubnet.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -61,6 +63,7 @@ type IpSubnetsClient interface {
 	// @return com.vmware.nsx_policy.model.IpAddressPoolSubnetListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -75,6 +78,7 @@ type IpSubnetsClient interface {
 	// The parameter must contain all the properties defined in nsx_policyModel.IpAddressPoolSubnet.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -91,6 +95,7 @@ type IpSubnetsClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.IpAddressPoolSubnet.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

@@ -27,6 +27,7 @@ type CustomTldsClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyCustomTld
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -36,6 +37,7 @@ type CustomTldsClient interface {
 	// This API will return List of all Custom TLDs
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param hasUnsupportedAppIdsParam If true, returns only context profiles that contain unsupported App IDs. If false, returns only context profiles with supported App IDs. If not specified, returns all context profiles regardless of App ID status. (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
@@ -44,11 +46,12 @@ type CustomTldsClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyCustomTldListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyCustomTldListResult, error)
+	List(cursorParam *string, hasUnsupportedAppIdsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyCustomTldListResult, error)
 }
 
 type customTldsClient struct {
@@ -109,7 +112,7 @@ func (cIface *customTldsClient) Get(idParam string) (nsx_policyModel.PolicyCusto
 	}
 }
 
-func (cIface *customTldsClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyCustomTldListResult, error) {
+func (cIface *customTldsClient) List(cursorParam *string, hasUnsupportedAppIdsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyCustomTldListResult, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := customTldsListRestMetadata()
@@ -118,6 +121,7 @@ func (cIface *customTldsClient) List(cursorParam *string, includeMarkForDeleteOb
 
 	sv := vapiBindings_.NewStructValueBuilder(customTldsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("HasUnsupportedAppIds", hasUnsupportedAppIdsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)

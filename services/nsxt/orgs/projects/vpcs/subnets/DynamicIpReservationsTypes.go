@@ -94,7 +94,7 @@ func dynamicIpReservationsDeleteRestMetadata() vapiProtocol_.OperationRestMetada
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func dynamicIpReservationsGetInputType() vapiBindings_.StructType {
@@ -104,12 +104,12 @@ func dynamicIpReservationsGetInputType() vapiBindings_.StructType {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["vpc_id"] = vapiBindings_.NewStringType()
 	fields["subnet_id"] = vapiBindings_.NewStringType()
-	fields["any_ip_reservation_id"] = vapiBindings_.NewStringType()
+	fields["dynamic_ip_reservation_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["vpc_id"] = "VpcId"
 	fieldNameMap["subnet_id"] = "SubnetId"
-	fieldNameMap["any_ip_reservation_id"] = "AnyIpReservationId"
+	fieldNameMap["dynamic_ip_reservation_id"] = "DynamicIpReservationId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -131,13 +131,13 @@ func dynamicIpReservationsGetRestMetadata() vapiProtocol_.OperationRestMetadata 
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["vpc_id"] = vapiBindings_.NewStringType()
 	fields["subnet_id"] = vapiBindings_.NewStringType()
-	fields["any_ip_reservation_id"] = vapiBindings_.NewStringType()
+	fields["dynamic_ip_reservation_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["vpc_id"] = "VpcId"
 	fieldNameMap["subnet_id"] = "SubnetId"
-	fieldNameMap["any_ip_reservation_id"] = "AnyIpReservationId"
-	paramsTypeMap["any_ip_reservation_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["dynamic_ip_reservation_id"] = "DynamicIpReservationId"
+	paramsTypeMap["dynamic_ip_reservation_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["vpc_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
@@ -146,9 +146,9 @@ func dynamicIpReservationsGetRestMetadata() vapiProtocol_.OperationRestMetadata 
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["vpcId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["subnetId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["anyIpReservationId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["dynamicIpReservationId"] = vapiBindings_.NewStringType()
 	pathParams["subnet_id"] = "subnetId"
-	pathParams["any_ip_reservation_id"] = "anyIpReservationId"
+	pathParams["dynamic_ip_reservation_id"] = "dynamicIpReservationId"
 	pathParams["vpc_id"] = "vpcId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
@@ -166,13 +166,13 @@ func dynamicIpReservationsGetRestMetadata() vapiProtocol_.OperationRestMetadata 
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpcs/{vpcId}/subnets/{subnetId}/dynamic-ip-reservations/{anyIpReservationId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpcs/{vpcId}/subnets/{subnetId}/dynamic-ip-reservations/{dynamicIpReservationId}",
 		"",
 		resultHeaders,
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func dynamicIpReservationsListInputType() vapiBindings_.StructType {
@@ -279,7 +279,7 @@ func dynamicIpReservationsListRestMetadata() vapiProtocol_.OperationRestMetadata
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func dynamicIpReservationsPatchInputType() vapiBindings_.StructType {
@@ -302,7 +302,7 @@ func dynamicIpReservationsPatchInputType() vapiBindings_.StructType {
 }
 
 func DynamicIpReservationsPatchOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.DynamicIpAddressReservationBindingType)
+	return vapiBindings_.NewVoidType()
 }
 
 func dynamicIpReservationsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -359,10 +359,10 @@ func dynamicIpReservationsPatchRestMetadata() vapiProtocol_.OperationRestMetadat
 		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpcs/{vpcId}/subnets/{subnetId}/dynamic-ip-reservations/{dynamicIpReservationId}",
 		"application/json",
 		resultHeaders,
-		200,
+		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func dynamicIpReservationsUpdateInputType() vapiBindings_.StructType {
@@ -445,5 +445,5 @@ func dynamicIpReservationsUpdateRestMetadata() vapiProtocol_.OperationRestMetada
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }

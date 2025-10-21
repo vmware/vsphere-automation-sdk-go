@@ -30,6 +30,7 @@ type PortRealTimeEthProfileBindingMapsClient interface {
 	// @param portRealTimeEthProfileBindingMapIdParam Port Real Time Eth Profile Binding Map ID (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -46,6 +47,7 @@ type PortRealTimeEthProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.PortRealTimeEthProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -66,6 +68,7 @@ type PortRealTimeEthProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.PortRealTimeEthProfileBindingMapListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -82,6 +85,7 @@ type PortRealTimeEthProfileBindingMapsClient interface {
 	// @param portRealTimeEthProfileBindingMapParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -99,6 +103,7 @@ type PortRealTimeEthProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.PortRealTimeEthProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

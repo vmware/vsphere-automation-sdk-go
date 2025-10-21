@@ -27,6 +27,7 @@ type LbClientSslProfilesClient interface {
 	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -39,6 +40,7 @@ type LbClientSslProfilesClient interface {
 	// @return com.vmware.nsx_policy.model.LBClientSslProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -56,6 +58,7 @@ type LbClientSslProfilesClient interface {
 	// @return com.vmware.nsx_policy.model.LBClientSslProfileListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -68,6 +71,7 @@ type LbClientSslProfilesClient interface {
 	// @param lbClientSslProfileParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -81,6 +85,7 @@ type LbClientSslProfilesClient interface {
 	// @return com.vmware.nsx_policy.model.LBClientSslProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

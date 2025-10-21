@@ -30,6 +30,7 @@ type HostTransportNodesClient interface {
 	// @param unprepareHostParam Uninstall NSX components from host while deleting (optional, default to true)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -44,6 +45,7 @@ type HostTransportNodesClient interface {
 	// @return com.vmware.nsx_policy.model.HostTransportNode
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -67,6 +69,7 @@ type HostTransportNodesClient interface {
 	// @return com.vmware.nsx_policy.model.HostTransportNodeListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -83,6 +86,7 @@ type HostTransportNodesClient interface {
 	// @param skipMaintmodeParam Skipping maintenance mode check before starting migration. This parameter is only used by SDDC environment. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -104,6 +108,7 @@ type HostTransportNodesClient interface {
 	// @param vnicMigrationDestParam A comma separated list of vif ids, or port group names. When migrating into logical switches, the ids are vif ids in the logical ports created in the logical switches. When migrating out of logical switches, the ids are vSphere Standard Switch portgroup names in a single vSphere Standard Switch, or distributed virtual portgroup names in a single distributed virtual switch (DVS). The property can only be used in combination with property 'vnic'. The number of vnic interfaces in 'vnic' must equal the number of vif ids or port-group names in this list. The items in the two lists match by the the order. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -117,6 +122,7 @@ type HostTransportNodesClient interface {
 	// @param hostTransportNodeIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -130,6 +136,7 @@ type HostTransportNodesClient interface {
 	// @param hostTransportNodeIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -152,6 +159,7 @@ type HostTransportNodesClient interface {
 	// @return com.vmware.nsx_policy.model.HostTransportNode
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -166,6 +174,7 @@ type HostTransportNodesClient interface {
 	// @param actionParam User could use this parameter to put transport node into maintenance mode or exit from maintenance mode. 'enter_maintenance_mode' will put Transport Node into maintenance mode if there is no VIFs attached. 'forced_enter_maintenance_mode' will put transport node into maintenance mode forcibly regardless of whether or not VIF attached. 'exit_maintenance_mode' will exit from maintenance mode. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

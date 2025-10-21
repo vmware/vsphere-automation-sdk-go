@@ -27,6 +27,7 @@ type UserCredentialClient interface {
 	// @return com.vmware.nsx_policy.model.ALBControllerUserCredentialResponse
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -40,6 +41,7 @@ type UserCredentialClient interface {
 	// @param clusteringIdParam Id to filter Avi Load Balancer Controllers. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -53,6 +55,7 @@ type UserCredentialClient interface {
 	// @return com.vmware.nsx_policy.model.ALBControllerUserCredentialResponse
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

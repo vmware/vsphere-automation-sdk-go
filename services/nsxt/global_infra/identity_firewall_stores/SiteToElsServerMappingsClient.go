@@ -28,6 +28,7 @@ type SiteToElsServerMappingsClient interface {
 	// @return com.vmware.nsx_policy.model.SiteToElsServerMapping
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -46,6 +47,7 @@ type SiteToElsServerMappingsClient interface {
 	// @return com.vmware.nsx_policy.model.SiteToElsServerMappingListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

@@ -29,6 +29,7 @@ type EdgeClustersClient interface {
 	// @param deleteMemberEdgeNodesParam When flag is set to true, edge transport nodes within edge cluster will be deleted. When flag is set to false (default), only edge cluster will be deleted. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -43,6 +44,7 @@ type EdgeClustersClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyEdgeCluster
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -62,6 +64,7 @@ type EdgeClustersClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyEdgeClusterListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -76,6 +79,7 @@ type EdgeClustersClient interface {
 	// @param policyEdgeClusterParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -91,6 +95,7 @@ type EdgeClustersClient interface {
 	// @return com.vmware.nsx_policy.model.PolicyEdgeCluster
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

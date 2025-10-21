@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VpcSecurityProfilesClient interface {
 
-	// Get security profile with the specified ID. Currently only the default security profile at the project level can be queried using this API.
+	// Retrieves a specific VPC Security Profile by its unique identifier within a project context. The security profile contains comprehensive security configurations including north-south (Gateway Firewall) and east-west (Distributed Firewall) settings. This API returns detailed information about VPC Gateway firewall enablement status and associated security strategies that define the security posture for VPCs. Currently, this API primarily returns system-generated default security profiles at the project level.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -29,13 +29,14 @@ type VpcSecurityProfilesClient interface {
 	// @return com.vmware.nsx_policy.model.VpcSecurityProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, vpcSecurityProfileIdParam string) (nsx_policyModel.VpcSecurityProfile, error)
 
-	// Paginated list of VpcSecurityProfiles. Note: Currently this API will return only a single default security profile at the project level.
+	// Retrieves a paginated collection of all VPC Security Profiles available within a specified project. Each security profile in the response includes comprehensive security configuration details such as north-south and east-west firewall settings, associated security strategies, and profile metadata. The API supports standard pagination parameters for efficient data retrieval and includes sorting capabilities. Currently, this API returns multiple predefined security profiles including the default profile and additional system-generated profiles that offer various security postures (isolation, external connectivity, essential services, etc.) for different VPC deployment scenarios.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -48,13 +49,14 @@ type VpcSecurityProfilesClient interface {
 	// @return com.vmware.nsx_policy.model.VpcSecurityProfileListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.VpcSecurityProfileListResult, error)
 
-	// Update existing default security profile. Note: Currently, user will not be able to create new security profiles.
+	// Performs partial updates to an existing VPC Security Profile. This operation allows modification of specific security profile properties such as north-south firewall enablement status. It does not allow updating the security strategy defined in the east-west firewall settings. Note: Users can modify existing security profiles but cannot create new custom security profiles.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -62,13 +64,14 @@ type VpcSecurityProfilesClient interface {
 	// @param vpcSecurityProfileParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, vpcSecurityProfileIdParam string, vpcSecurityProfileParam nsx_policyModel.VpcSecurityProfile) error
 
-	// Update existing security profile. Note: Currently, user will not be able to create new security profiles.
+	// Performs partial updates to an existing VPC Security Profile. This operation allows modification of specific security profile properties such as north-south firewall enablement status. It does not allow updating the security strategy defined in the east-west firewall settings. Note: Users can modify existing security profiles but cannot create new custom security profiles.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -77,6 +80,7 @@ type VpcSecurityProfilesClient interface {
 	// @return com.vmware.nsx_policy.model.VpcSecurityProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

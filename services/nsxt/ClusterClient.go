@@ -26,6 +26,7 @@ type ClusterClient interface {
 	// @param siteIdParam Site ID of LM site, which will be supported in a frame (optional, default to localhost)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -35,6 +36,7 @@ type ClusterClient interface {
 	// Request one-time inventory summary. The backup will be uploaded using the same server configuration as for an automatic backup.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

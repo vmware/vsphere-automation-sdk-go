@@ -31,6 +31,7 @@ type SessionsClient interface {
 	// @param sessionIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -48,6 +49,7 @@ type SessionsClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.IPSecVpnSession.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -69,6 +71,7 @@ type SessionsClient interface {
 	// @return com.vmware.nsx_policy.model.IPSecVpnSessionListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -86,6 +89,7 @@ type SessionsClient interface {
 	// The parameter must contain all the properties defined in nsx_policyModel.IPSecVpnSession.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -103,13 +107,14 @@ type SessionsClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.IPSecVpnSession.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Showsensitivedata(orgIdParam string, projectIdParam string, transitGatewayIdParam string, ipsecVpnServiceIdParam string, sessionIdParam string) (*vapiData_.StructValue, error)
 
-	// Create or fully replace IPSec VPN session for a given ipsec vpn service under Transit Gateway. Revision is optional for creation and required for update.
+	// Create or fully replace IPSec VPN session for a given ipsec vpn service under Transit Gateway. Revision is optional for creation and required for update. Firewall is not supported on Route Based VPN session.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -122,6 +127,7 @@ type SessionsClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.IPSecVpnSession.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

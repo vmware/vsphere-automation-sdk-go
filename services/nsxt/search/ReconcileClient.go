@@ -27,6 +27,7 @@ type ReconcileClient interface {
 	// @param scopeParam Comma separated list of scopes for COMPLETE_REINDEXING action (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

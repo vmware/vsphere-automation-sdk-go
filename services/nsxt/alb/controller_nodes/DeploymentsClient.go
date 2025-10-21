@@ -27,6 +27,7 @@ type DeploymentsClient interface {
 	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequestList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -40,6 +41,7 @@ type DeploymentsClient interface {
 	// @param inaccessibleParam If inaccessible is provided along with force_delete and if this is the last Avi Load Balancer Controller node in the cluster then deployment request will be deleted from NSX even if Policy objects are present. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -52,6 +54,7 @@ type DeploymentsClient interface {
 	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequest
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -65,6 +68,7 @@ type DeploymentsClient interface {
 	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequestList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -79,6 +83,7 @@ type DeploymentsClient interface {
 	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMDeploymentRequest
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

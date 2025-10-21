@@ -31,6 +31,7 @@ type TransportNodeMonitoringProfileBindingMapsClient interface {
 	// @param bindingMapIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -48,6 +49,7 @@ type TransportNodeMonitoringProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.TransportNodeMonitoringProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -70,6 +72,7 @@ type TransportNodeMonitoringProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.TransportNodeMonitoringProfileBindingMapListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -87,6 +90,7 @@ type TransportNodeMonitoringProfileBindingMapsClient interface {
 	// @param transportNodeMonitoringProfileBindingMapParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -105,6 +109,7 @@ type TransportNodeMonitoringProfileBindingMapsClient interface {
 	// @return com.vmware.nsx_policy.model.TransportNodeMonitoringProfileBindingMap
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

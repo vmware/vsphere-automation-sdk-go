@@ -28,6 +28,7 @@ type Upload_from_remote_serverClient interface {
 	// @return com.vmware.nsx_policy.model.UploadBundleId
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

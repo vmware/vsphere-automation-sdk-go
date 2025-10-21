@@ -30,6 +30,7 @@ type DynamicIpReservationsClient interface {
 	// @param dynamicIpReservationIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -42,15 +43,16 @@ type DynamicIpReservationsClient interface {
 	// @param projectIdParam (required)
 	// @param vpcIdParam (required)
 	// @param subnetIdParam (required)
-	// @param anyIpReservationIdParam (required)
+	// @param dynamicIpReservationIdParam (required)
 	// @return com.vmware.nsx_policy.model.DynamicIpAddressReservation
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, anyIpReservationIdParam string) (nsx_policyModel.DynamicIpAddressReservation, error)
+	Get(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, dynamicIpReservationIdParam string) (nsx_policyModel.DynamicIpAddressReservation, error)
 
 	// List all the Dynamic IP Address Reservation for a VPC Subnet.
 	//
@@ -67,6 +69,7 @@ type DynamicIpReservationsClient interface {
 	// @return com.vmware.nsx_policy.model.DynamicIpAddressReservationListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -81,14 +84,14 @@ type DynamicIpReservationsClient interface {
 	// @param subnetIdParam (required)
 	// @param dynamicIpReservationIdParam (required)
 	// @param dynamicIpAddressReservationParam (required)
-	// @return com.vmware.nsx_policy.model.DynamicIpAddressReservation
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, dynamicIpReservationIdParam string, dynamicIpAddressReservationParam nsx_policyModel.DynamicIpAddressReservation) (nsx_policyModel.DynamicIpAddressReservation, error)
+	Patch(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, dynamicIpReservationIdParam string, dynamicIpAddressReservationParam nsx_policyModel.DynamicIpAddressReservation) error
 
 	// If no DynamicIpAddressReservation of the specified ID is found, then a new DynamicIpAddressReservation is created. A DynamicIpAddressReservation cannot be updated once created.
 	//
@@ -101,6 +104,7 @@ type DynamicIpReservationsClient interface {
 	// @return com.vmware.nsx_policy.model.DynamicIpAddressReservation
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -167,7 +171,7 @@ func (dIface *dynamicIpReservationsClient) Delete(orgIdParam string, projectIdPa
 	}
 }
 
-func (dIface *dynamicIpReservationsClient) Get(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, anyIpReservationIdParam string) (nsx_policyModel.DynamicIpAddressReservation, error) {
+func (dIface *dynamicIpReservationsClient) Get(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, dynamicIpReservationIdParam string) (nsx_policyModel.DynamicIpAddressReservation, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dynamicIpReservationsGetRestMetadata()
@@ -179,7 +183,7 @@ func (dIface *dynamicIpReservationsClient) Get(orgIdParam string, projectIdParam
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("VpcId", vpcIdParam)
 	sv.AddStructField("SubnetId", subnetIdParam)
-	sv.AddStructField("AnyIpReservationId", anyIpReservationIdParam)
+	sv.AddStructField("DynamicIpReservationId", dynamicIpReservationIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.DynamicIpAddressReservation
@@ -244,7 +248,7 @@ func (dIface *dynamicIpReservationsClient) List(orgIdParam string, projectIdPara
 	}
 }
 
-func (dIface *dynamicIpReservationsClient) Patch(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, dynamicIpReservationIdParam string, dynamicIpAddressReservationParam nsx_policyModel.DynamicIpAddressReservation) (nsx_policyModel.DynamicIpAddressReservation, error) {
+func (dIface *dynamicIpReservationsClient) Patch(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, dynamicIpReservationIdParam string, dynamicIpAddressReservationParam nsx_policyModel.DynamicIpAddressReservation) error {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dynamicIpReservationsPatchRestMetadata()
@@ -260,24 +264,18 @@ func (dIface *dynamicIpReservationsClient) Patch(orgIdParam string, projectIdPar
 	sv.AddStructField("DynamicIpAddressReservation", dynamicIpAddressReservationParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.DynamicIpAddressReservation
-		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpcs.subnets.dynamic_ip_reservations", "patch", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.DynamicIpAddressReservation
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DynamicIpReservationsPatchOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(nsx_policyModel.DynamicIpAddressReservation), nil
+		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
-		return emptyOutput, methodError.(error)
+		return methodError.(error)
 	}
 }
 

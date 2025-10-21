@@ -38,6 +38,7 @@ type StateClient interface {
 	// @return com.vmware.nsx_policy.model.Tier1GatewayState
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

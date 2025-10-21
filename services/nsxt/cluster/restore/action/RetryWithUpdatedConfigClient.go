@@ -26,6 +26,7 @@ type Retry_with_updated_configClient interface {
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

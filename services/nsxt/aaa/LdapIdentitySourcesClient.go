@@ -27,6 +27,7 @@ type LdapIdentitySourcesClient interface {
 	// @param ldapIdentitySourceIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -39,6 +40,7 @@ type LdapIdentitySourcesClient interface {
 	// @return com.vmware.nsx_policy.model.PeerCertificateChain
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -52,6 +54,7 @@ type LdapIdentitySourcesClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.LdapIdentitySource.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -68,6 +71,7 @@ type LdapIdentitySourcesClient interface {
 	// @return com.vmware.nsx_policy.model.LdapIdentitySourceListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -80,6 +84,7 @@ type LdapIdentitySourcesClient interface {
 	// @return com.vmware.nsx_policy.model.LdapIdentitySourceProbeResults
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -93,6 +98,7 @@ type LdapIdentitySourcesClient interface {
 	// @return com.vmware.nsx_policy.model.LdapIdentitySourceProbeResults
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -105,6 +111,7 @@ type LdapIdentitySourcesClient interface {
 	// @return com.vmware.nsx_policy.model.IdentitySourceLdapServerProbeResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -120,6 +127,7 @@ type LdapIdentitySourcesClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.LdapIdentitySource.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

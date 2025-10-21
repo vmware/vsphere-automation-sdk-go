@@ -28,6 +28,7 @@ type CustomSignaturesClient interface {
 	// @param actionParam Different Actions on Custom signatures. (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -41,6 +42,7 @@ type CustomSignaturesClient interface {
 	// @return com.vmware.nsx_policy.model.IdsCustomSignature
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -60,6 +62,7 @@ type CustomSignaturesClient interface {
 	// @return com.vmware.nsx_policy.model.IdsCustomSignatureListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

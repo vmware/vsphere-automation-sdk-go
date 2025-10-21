@@ -27,6 +27,7 @@ type ClusterconfigClient interface {
 	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMClusterConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -38,6 +39,7 @@ type ClusterconfigClient interface {
 	// @param clusteringIdParam Id to filter Avi Load Balancer Controllers, if not provided Avi Load Balancer Controllers without clustering Id will be returned. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -50,6 +52,7 @@ type ClusterconfigClient interface {
 	// @return com.vmware.nsx_policy.model.ALBControllerNodeVMClusterConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

@@ -26,6 +26,7 @@ type AlbOnboardingWorkflowClient interface {
 	// @param managedByParam On Boarding flow managed by LCM/VCF. (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -38,6 +39,7 @@ type AlbOnboardingWorkflowClient interface {
 	// @return com.vmware.nsx_policy.model.EnforcementPoint
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

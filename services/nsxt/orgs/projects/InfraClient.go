@@ -31,6 +31,7 @@ type InfraClient interface {
 	// @return com.vmware.nsx_policy.model.Infra
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -45,6 +46,7 @@ type InfraClient interface {
 	// @param enforceRevisionCheckParam If this is set to true, each child object in the request needs to have _revision property set correctly. System will honor the revision numbers while updating the resources. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

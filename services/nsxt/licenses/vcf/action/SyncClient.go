@@ -23,6 +23,7 @@ type SyncClient interface {
 	// Synchronize VCF licenses from all registered vCenters and update licenses in NSX. This API will not return synchronized VCF licenses and just update them in NSX.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

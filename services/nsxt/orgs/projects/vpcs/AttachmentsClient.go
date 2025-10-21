@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AttachmentsClient interface {
 
-	// Delete VPC Attachment
+	// Delete VPC Attachment. \*\*IMPORTANT WARNING:\*\* Deleting a VPC attachment will remove the connectivity profile association and all related network configurations, which may cause traffic disruption: • \*\*Auto SNAT Rules\*\*: If the current connectivity profile has \"Default Outbound NAT\" enabled, all system-generated SNAT rules will be automatically deleted. This will immediately break outbound connectivity for private subnets that rely on these rules. • \*\*External IP Allocations\*\*: Any IP addresses allocated from external IP blocks for auto SNAT will be released and may be reassigned to other resources. • \*\*Transit Gateway Connections\*\*: All transit gateway connections and routing configurations associated with the connectivity profile will be removed. \*\*Before proceeding with deletion:\*\* 1. Verify that removing auto SNAT won't break critical application traffic 2. Plan for potential downtime during the transition This operation is typically performed as part of changing VPC connectivity profiles. Consider using PATCH or PUT operations to update the connectivity profile instead of deleting and recreating attachments.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -29,6 +29,7 @@ type AttachmentsClient interface {
 	// @param vpcAttachmentIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -44,6 +45,7 @@ type AttachmentsClient interface {
 	// @return com.vmware.nsx_policy.model.VpcAttachment
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -64,13 +66,14 @@ type AttachmentsClient interface {
 	// @return com.vmware.nsx_policy.model.VpcAttachmentListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, vpcIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.VpcAttachmentListResult, error)
 
-	// Each VPC has one attachment. This API will update the VPC attachment.
+	// Each VPC has one attachment. This API will update the VPC attachment. \*\*IMPORTANT WARNING for Connectivity Profile Changes:\*\* When changing the vpc_connectivity_profile field, this operation may cause immediate traffic disruption: • \*\*Auto SNAT Changes\*\*: If switching between connectivity profiles with different \"Default Outbound NAT\" settings (enabled vs disabled), existing auto SNAT rules will be deleted and new ones may be created. This can break outbound connectivity for private subnets during the transition. • \*\*External IP Block Changes\*\*: If the new connectivity profile uses different external IP blocks, existing SNAT IP allocations will be released and new ones allocated, potentially changing translated IP addresses. • \*\*Transit Gateway Changes\*\*: Switching to a connectivity profile with a different transit gateway will update routing paths and may cause temporary connectivity loss. \*\*Best Practices:\*\* 1. Plan for potential downtime during the profile transition 2. Test connectivity profile changes in non-production environments first
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -79,13 +82,14 @@ type AttachmentsClient interface {
 	// @param vpcAttachmentParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, vpcIdParam string, vpcAttachmentIdParam string, vpcAttachmentParam nsx_policyModel.VpcAttachment) error
 
-	// Update the VPC attachment.
+	// Update the VPC attachment. \*\*IMPORTANT WARNING for Connectivity Profile Changes:\*\* When changing the vpc_connectivity_profile field, this operation may cause immediate traffic disruption: • \*\*Auto SNAT Changes\*\*: If switching between connectivity profiles with different \"Default Outbound NAT\" settings (enabled vs disabled), existing auto SNAT rules will be deleted and new ones may be created. This can break outbound connectivity for private subnets during the transition. • \*\*External IP Block Changes\*\*: If the new connectivity profile uses different external IP blocks, existing SNAT IP allocations will be released and new ones allocated, potentially changing translated IP addresses. • \*\*Transit Gateway Changes\*\*: Switching to a connectivity profile with a different transit gateway will update routing paths and may cause temporary connectivity loss. \*\*Best Practices:\*\* 1. Plan for potential downtime during the profile transition 2. Test connectivity profile changes in non-production environments first
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -95,6 +99,7 @@ type AttachmentsClient interface {
 	// @return com.vmware.nsx_policy.model.VpcAttachment
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

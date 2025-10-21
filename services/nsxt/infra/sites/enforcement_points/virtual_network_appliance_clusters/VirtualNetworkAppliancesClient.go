@@ -31,6 +31,7 @@ type VirtualNetworkAppliancesClient interface {
 	// @param forceParam If the delete API fails to delete the virtual network appliance, this flag is used to forcibly delete the stale virtual network appliance from the system. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -47,6 +48,7 @@ type VirtualNetworkAppliancesClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.BaseNetworkAppliance.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -70,6 +72,7 @@ type VirtualNetworkAppliancesClient interface {
 	// @return com.vmware.nsx_policy.model.VirtualNetworkApplianceListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -86,6 +89,7 @@ type VirtualNetworkAppliancesClient interface {
 	// The parameter must contain all the properties defined in nsx_policyModel.BaseNetworkAppliance.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -104,6 +108,7 @@ type VirtualNetworkAppliancesClient interface {
 	// The return value will contain all the properties defined in nsx_policyModel.BaseNetworkAppliance.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

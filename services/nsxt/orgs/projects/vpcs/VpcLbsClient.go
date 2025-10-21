@@ -30,6 +30,7 @@ type VpcLbsClient interface {
 	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -45,6 +46,7 @@ type VpcLbsClient interface {
 	// @return com.vmware.nsx_policy.model.LBService
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -65,6 +67,7 @@ type VpcLbsClient interface {
 	// @return com.vmware.nsx_policy.model.LBServiceListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -81,6 +84,7 @@ type VpcLbsClient interface {
 	// @param actionParam For action=allow_auto_relocation, it means if there is no enough capacity on the current VPC allocated edge nodes, LB creation or update will trigger VPC edge auto-relocation according to LB size. The auto-relocation could happen when LB is created under VPC or LB size is changed. It may bring traffic disruption for the services on the VPC, so please make sure to perform the operation in the maintenance window. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -98,6 +102,7 @@ type VpcLbsClient interface {
 	// @return com.vmware.nsx_policy.model.LBService
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

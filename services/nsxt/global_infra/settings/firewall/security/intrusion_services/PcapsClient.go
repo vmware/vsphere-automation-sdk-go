@@ -27,6 +27,7 @@ type PcapsClient interface {
 	// @param enforcementPointPathParam The path of the enforcement point from which the PCAPs needs to be exported, downloaded or deleted. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -45,6 +46,7 @@ type PcapsClient interface {
 	// @return com.vmware.nsx_policy.model.IdsPcapFileMetadataListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
