@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type IpCidrsClient interface {
 
-	// Paginated list of third party IPAM Providers Cidr info.
+	// Paginated list of third party IPAM Providers CIDR info.
 	//
 	// @param providerInstanceIdParam (required)
 	// @param ipamThirdPartyProviderCommonParamsParam (required)

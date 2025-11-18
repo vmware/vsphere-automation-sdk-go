@@ -12,10 +12,11 @@
 package model
 
 import (
+	"reflect"
+
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
 	vapiData_ "github.com/vmware/vsphere-automation-sdk-go/runtime/data"
 	vapiLog_ "github.com/vmware/vsphere-automation-sdk-go/runtime/log"
-	"reflect"
 )
 
 // Avi Load Balancer Auth Token.
@@ -181,10 +182,12 @@ type ALBControllerCloudCreationRequest struct {
 	NsxtCredentialsName *string
 	// FQDN of the NSX-T Manager.
 	NsxtFqdn *string
-	// Optional prefix for resources. Defaults to 'vcfa' if not provided.
+	// Optional prefix for resources. Defaults to 'vcf' if not provided.
 	ObjNamePrefix *string
 	// Whether to onboard Avi into NSX.
 	OnboardAviIntoNsx *bool
+	// Enable SSL certificate verification for NSX-T connection. When enabled, requires PKI Profile (trust store) to be configured in Avi Controller beforehand. When disabled, Avi Controller will not validate the NSX-T Manager's SSL certificate.
+	VerifyCertificate *bool
 	// Whether to enable VPC mode.
 	VpcMode *bool
 }
@@ -719,6 +722,77 @@ func (s *ALBControllerNodeVMDeploymentStatusReport) GetDataValue__() (vapiData_.
 	return dataVal, nil
 }
 
+// CA certificate for PKI Profile.
+type ALBControllerPKIProfileCACert struct {
+	// PEM-encoded CA certificate.
+	Certificate *string
+}
+
+func (s *ALBControllerPKIProfileCACert) GetType__() vapiBindings_.BindingType {
+	return ALBControllerPKIProfileCACertBindingType()
+}
+
+func (s *ALBControllerPKIProfileCACert) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ALBControllerPKIProfileCACert._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Request for setting up PKI Profile in Avi Load Balancer Controller.
+type ALBControllerPKIProfileRequest struct {
+	// List of CA certificates to add to the PKI Profile.
+	CaCerts []ALBControllerPKIProfileCACert
+	// Unique Id for Avi Load Balancer Controller Cluster used in VCF managed NSX.
+	ClusteringId *string
+	// Name of the PKI Profile to create or update. Defaults to 'Cloud-TrustStore-PKI' if not provided.
+	Name *string
+}
+
+func (s *ALBControllerPKIProfileRequest) GetType__() vapiBindings_.BindingType {
+	return ALBControllerPKIProfileRequestBindingType()
+}
+
+func (s *ALBControllerPKIProfileRequest) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ALBControllerPKIProfileRequest._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Response for PKI Profile setup in Avi Load Balancer Controller.
+type ALBControllerPKIProfileResponse struct {
+	// Name of the PKI Profile that was created or updated.
+	Name *string
+	// Status message for the PKI Profile setup operation.
+	Status *string
+	// UUID of the PKI Profile in Avi Load Balancer Controller.
+	Uuid *string
+}
+
+func (s *ALBControllerPKIProfileResponse) GetType__() vapiBindings_.BindingType {
+	return ALBControllerPKIProfileResponseBindingType()
+}
+
+func (s *ALBControllerPKIProfileResponse) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ALBControllerPKIProfileResponse._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Avi Load Balancer Controller System Configuration.
 type ALBControllerSystemConfiguration struct {
 	BackupServerConfig *ALBControllerBackupConfiguration
@@ -774,6 +848,8 @@ type ALBControllerUser struct {
 	IsServiceUser *bool
 	// Password for the user.
 	Password *string
+	// Whether the password expires.
+	PasswordExpires *bool
 	// Role for the user.
 	Role *string
 	// Username for the user.
@@ -7173,6 +7249,12 @@ func (s *BgpNeighborRouteDetails) GetDataValue__() (vapiData_.DataValue, []error
 type BgpNeighborRouteDetailsCsvRecord struct {
 	// BGP AS path attribute.
 	AsPath *string
+	// Ethernet Segment Identifier for EVPN routes.
+	Esi *string
+	// Ethernet Tag ID for EVPN routes. format: int64
+	EthTag *int64
+	// EVPN route type for EVPN routes. format: int64
+	EvpnRouteType *int64
 	// BGP Local Preference attribute. format: int64
 	LocalPref *int64
 	// Logical router id
@@ -7187,6 +7269,12 @@ type BgpNeighborRouteDetailsCsvRecord struct {
 	Network *string
 	// Next hop IP address. format: ip
 	NextHop *string
+	// BGP Route Distinguisher attribute.
+	Rd *string
+	// Router MAC address for EVPN routes.
+	Rmac *string
+	// Router MAC address length for EVPN routes. format: int64
+	RmacLen *int64
 	// BGP neighbor source address. format: ip
 	SourceAddress *string
 	// Transport node id
@@ -18565,6 +18653,64 @@ func (s *ChildResourceReference) GetDataValue__() (vapiData_.DataValue, []error)
 	return dataVal, nil
 }
 
+// Child wrapper object for RouteAdvertisement, used in hierarchical API
+type ChildRouteAdvertisement struct {
+	RouteAdvertisement *RouteAdvertisement
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id           *string
+	ResourceType string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// Indicates whether this object is the overridden intent object Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
+	MarkForOverride *bool
+	// If this field is set to true, delete operation is triggered on the intent tree. This resource along with its all children in intent tree will be deleted. This is a cascade delete and should only be used if intent object along with its all children are to be deleted. This does not support deletion of single non-leaf node within the tree and should be used carefully.
+	MarkedForDelete  *bool
+	RequestParameter *vapiData_.StructValue
+}
+
+// Identifier denoting this class, when it is used in polymorphic context.
+//
+// This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
+const ChildRouteAdvertisement__TYPE_IDENTIFIER = "ChildRouteAdvertisement"
+
+func (s *ChildRouteAdvertisement) GetType__() vapiBindings_.BindingType {
+	return ChildRouteAdvertisementBindingType()
+}
+
+func (s *ChildRouteAdvertisement) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ChildRouteAdvertisement._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Child wrapper object for route controller, used in hierarchical API.
 type ChildRouteController struct {
 	RouteController *RouteController
@@ -23470,19 +23616,19 @@ func (s *CidrArrayConstraintValue) GetDataValue__() (vapiData_.DataValue, []erro
 	return dataVal, nil
 }
 
-// Cidr info for blocks created for third party ipam providers.
+// CIDR info for blocks created for third party ipam providers.
 type CidrInfo struct {
-	// Cidr of the IP block created. format: ip
+	// CIDR of the IP block created. format: ip
 	Cidr *string
 	// Comment on the IP block.
 	Comment *string
-	// IP block corresponding to the third party IPAM provider cidr has subnets.
+	// IP block corresponding to the third party IPAM provider CIDR has subnets.
 	InUse *bool
-	// IP block name corresponding to the cidr.
+	// IP block name corresponding to the CIDR.
 	IpBlockName *string
-	// IP block path corresponding to the cidr.
+	// IP block path corresponding to the CIDR.
 	IpBlockPath *string
-	// Reference id of the IP block.
+	// Reference ID of the IP block.
 	ReferenceId *string
 }
 
@@ -23501,7 +23647,7 @@ func (s *CidrInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Paged collection of cidr info.
+// Paged collection of CIDR info
 type CidrInfoListResult struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -23516,7 +23662,7 @@ type CidrInfoListResult struct {
 	SortAscending *bool
 	// Field by which records are sorted
 	SortBy *string
-	// IpamThirdPartyProvider cidr info list results
+	// IpamThirdPartyProvider CIDR info list results
 	Results []CidrInfo
 }
 
@@ -23541,7 +23687,7 @@ type CidrUsageDetails struct {
 	AvailableIpRanges []string
 	// Represents free IP count in the CIDR
 	AvailableIpsCount *string
-	// This is one of the cidr from CidrList in IpAddressBlock.
+	// This is one of the CIDR from CidrList in IpAddressBlock.
 	Cidr *string
 	// Represent the overall IP ranges allocated from the CIDR, not limited to the user's scope
 	OverallUsedIpRanges []string
@@ -31896,9 +32042,21 @@ type DistributedVlanConnection struct {
 	GatewayAddresses       []string
 	RestrictedAvailability *VlanAvailability
 	SubnetExclusiveConfig  *SubnetExclusiveConfig
+	// Possible values are:
+	//
+	// * DistributedVlanConnection#DistributedVlanConnection_SUBNET_EXTENSION_CONNECTION_DISABLED
+	// * DistributedVlanConnection#DistributedVlanConnection_SUBNET_EXTENSION_CONNECTION_ENABLED_L2
+	// * DistributedVlanConnection#DistributedVlanConnection_SUBNET_EXTENSION_CONNECTION_ENABLED_L2_AND_L3
+	//
+	//  Controls the connectivity mode for VPC Subnets referencing this distributed VLAN connection. This property determines whether VPC Subnets can use this distributed VLAN connection and the type of connectivity allowed. DISABLED - VPC subnet cannot reference this distributed VLAN connection. ENABLED_L2 - VLAN L2 bridge is enabled. VPC Subnet with this distributed VLAN connection cannot be connected to VDR. ENABLED_L2_AND_L3 - VLAN L2 bridge is enabled. VPC Subnet with this distributed VLAN connection can be connected to VDR when DTGW is also connected with the distributed VLAN connection.
+	SubnetExtensionConnection *string
 	// Vlan id for external gateway traffic format: int64
 	VlanId *int64
 }
+
+const DistributedVlanConnection_SUBNET_EXTENSION_CONNECTION_DISABLED = "DISABLED"
+const DistributedVlanConnection_SUBNET_EXTENSION_CONNECTION_ENABLED_L2 = "ENABLED_L2"
+const DistributedVlanConnection_SUBNET_EXTENSION_CONNECTION_ENABLED_L2_AND_L3 = "ENABLED_L2_AND_L3"
 
 func (s *DistributedVlanConnection) GetType__() vapiBindings_.BindingType {
 	return DistributedVlanConnectionBindingType()
@@ -41094,6 +41252,68 @@ func (s *GmFederationSiteConfig) GetDataValue__() (vapiData_.DataValue, []error)
 	return dataVal, nil
 }
 
+// Specification for importing data from another GM.
+type GmImportSpec struct {
+	// IP address of the GM VM.
+	GmIp *string
+	// Password for the GM VM.
+	GmPassword *string
+	// Username of the GM VM.
+	GmUsername *string
+	// URL for the PUB bundle.
+	PubUrl *string
+	// Thumbprint of the GM VM.
+	Thumbprint *string
+}
+
+func (s *GmImportSpec) GetType__() vapiBindings_.BindingType {
+	return GmImportSpecBindingType()
+}
+
+func (s *GmImportSpec) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for GmImportSpec._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Status of the GM data import process.
+type GmImportStatus struct {
+	// More details about the current step or reason for failure.
+	Details *string
+	// Possible values are:
+	//
+	// * GmImportStatus#GmImportStatus_STATUS_IN_PROGRESS
+	// * GmImportStatus#GmImportStatus_STATUS_SUCCESS
+	// * GmImportStatus#GmImportStatus_STATUS_FAILED
+	//
+	//  The current status of the import operation.
+	Status *string
+}
+
+const GmImportStatus_STATUS_IN_PROGRESS = "IN_PROGRESS"
+const GmImportStatus_STATUS_SUCCESS = "SUCCESS"
+const GmImportStatus_STATUS_FAILED = "FAILED"
+
+func (s *GmImportStatus) GetType__() vapiBindings_.BindingType {
+	return GmImportStatusBindingType()
+}
+
+func (s *GmImportStatus) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for GmImportStatus._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Global Manager federation RTEP configuration. This configuration is distributed to all Sites participating in federation.
 type GmRtepConfig struct {
 	// Password to authenticate IBGP session between remote tunnel endpoints created on federated sites. This is applied to inter-site underlay IBGP neighbors created over remote tunnel endpoints on all sites. Empty string (\"\") clears existing password.
@@ -42427,6 +42647,8 @@ type HeadlessModeStatusConfig struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
+	// Determines if all hosts across the entire environment meet the requirements for headless mode operation.
+	HeadlessModeRuntimeCompatibility *bool
 	// Determines if the system is configured to support headless mode operation. GSS can set this flag to true to enable the possibility of headless mode, or false to disable it system-wide. This acts as the master control for the headless mode feature.
 	HeadlessModeSupported *bool
 }
@@ -42700,9 +42922,9 @@ func (s *HighPerformanceConfigParams) GetDataValue__() (vapiData_.DataValue, []e
 }
 
 type HostConfigCsvRecord struct {
-	// Volume size of BootBank 0 format: int64
+	// Volume size of BootBank 0 (in Bytes) format: int64
 	Bootbank0 *int64
-	// Volume size of BootBank 1 format: int64
+	// Volume size of BootBank 1 (in Bytes) format: int64
 	Bootbank1 *int64
 	// UUID of cluster
 	ClusterId *string
@@ -48138,8 +48360,6 @@ type IdsCustomSignature struct {
 	// Signature policy.
 	Policy []string
 	// Product affected by this signature.
-	//
-	// Deprecated: This API element is deprecated.
 	ProductAffected *string
 	// Protocol used in the packet analysis.
 	Protocol *string
@@ -49247,7 +49467,7 @@ type IdsProfile struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Represents the filtering criteria for the IDS Profile. 1. A non-empty criteria list, must be of odd size. In a list, with indices starting from 0, all IdsProfileFilterCriteria must be at even indices, separated by the IdsProfileConjunctionOperator AND at odd indices. 2. There may be at most 7 IdsProfileCriteria objects inside a list.
+	// Represents the filtering criteria for the IDS Profile. A non-empty criteria list, must be of odd size. In a list, with indices starting from 0, all IdsProfileFilterCriteria must be at even indices, separated by the IdsProfileConjunctionOperator AND at odd indices.
 	Criteria []*vapiData_.StructValue
 	// Represents the flag to enable/disable the inclusion of custom signatures in the profile.
 	IncludeCustomSignatures *bool
@@ -50425,8 +50645,6 @@ type IdsSignature struct {
 	// Signature policy.
 	Policy []string
 	// Product affected by this signature.
-	//
-	// Deprecated: This API element is deprecated.
 	ProductAffected *string
 	// Protocol used in the packet analysis.
 	Protocol *string
@@ -52964,7 +53182,7 @@ type IpAddressBlock struct {
 	//
 	// Deprecated: This API element is deprecated.
 	Cidr *string
-	// Represents list of cidrs. format: ip-cidr-block
+	// Represents list of CIDRs. format: ip-cidr-block
 	Cidrs []string
 	// Represents list of excluded IP address in the form of start and end IPs
 	ExcludedIps []IpPoolRange
@@ -53283,13 +53501,13 @@ type IpAddressBlockUsage struct {
 	// * IpAddressBlockUsage#IpAddressBlockUsage_ADDRESS_TYPE_IPV4
 	// * IpAddressBlockUsage#IpAddressBlockUsage_ADDRESS_TYPE_IPV6
 	//
-	//  Represents the type of Ip Address for all cidrs and ranges within the Ip Address Block
+	//  Represents the type of Ip Address for all CIDRs and ranges within the Ip Address Block
 	AddressType *string
 	// This represents available ip ranges of an IpAddressBlock.
 	AvailableIpRanges []string
 	// This represents total count of IPs which are not assigned to any subnet.
 	AvailableIpsCount *string
-	// This represents Usage details for each cidr of IpAddressBlock
+	// This represents Usage details for each CIDR of IpAddressBlock
 	CidrUsage   []CidrUsageDetails
 	Description *string
 	DisplayName *string
@@ -53332,7 +53550,7 @@ func (s *IpAddressBlockUsage) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Paged collection of IP usage statistics of all IpAddressBlocks.
+// Paged collection of IP usage statistics of all IpAddressBlocks
 type IpAddressBlockUsageList struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -54294,7 +54512,7 @@ func (s *IpamThirdPartyProvider) GetDataValue__() (vapiData_.DataValue, []error)
 	return dataVal, nil
 }
 
-// List cidr common parameters
+// List CIDR common parameters
 type IpamThirdPartyProviderCommonParams struct {
 	FilterParams     *IpamThirdPartyProviderFilterParams
 	PaginationParams *IpamThirdPartyProviderPaginationParams
@@ -54395,9 +54613,9 @@ func (s *IpamThirdPartyProviderConnectionInfo) GetDataValue__() (vapiData_.DataV
 	return dataVal, nil
 }
 
-// List cidr common parameters
+// List CIDR common parameters
 type IpamThirdPartyProviderFilterParams struct {
-	// Third party ipam cidr.
+	// Third party ipam CIDR.
 	Cidr *string
 }
 
@@ -54450,7 +54668,7 @@ func (s *IpamThirdPartyProviderListResult) GetDataValue__() (vapiData_.DataValue
 	return dataVal, nil
 }
 
-// List cidr common parameters
+// List CIDR common parameters
 type IpamThirdPartyProviderPaginationParams struct {
 	// Opaque cursor to be used for getting next page of records (supplied by current result page)
 	Cursor *string
@@ -69828,7 +70046,7 @@ func (s *NoAssignment) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// This type can be specified in ip assignment spec of host switch if no IPv4 assignment is desired for host switch virtual tunnel endpoints.
+// This type can be specified in ip assignment spec of host switch if no IPv4 assignment is desired for host switch virtual tunnel endpoints. If the host switch has no IPv6 assignment as well, then it will be configured without any virtual tunnel endpoints.
 type NoIpv4 struct {
 	// Possible values are:
 	//
@@ -82404,6 +82622,8 @@ type PolicyIdsEventFlowData struct {
 	GatewayTags []Tag
 	// Name of the host on which this intrusion was detected.
 	Host *string
+	// Inner flow details for the IDS event.
+	InnerFlowDetails *vapiData_.StructValue
 	// IP address of VM on the host where IDS engine is running.
 	LocalVmIp *string
 	// The IDS profile id that is associated with the IDS rule pertaining to the intrusion event detected.
@@ -82445,6 +82665,39 @@ func (s *PolicyIdsEventFlowData) GetDataValue__() (vapiData_.DataValue, []error)
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for PolicyIdsEventFlowData._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Inner flow details for the IDS event.
+type PolicyIdsEventInnerFlowData struct {
+	// IP address of the destination pod for the intrusion flow.
+	InnerAttackerIp *string
+	// IP address of the destination pod for the intrusion flow.
+	InnerFlowDestinationIp *string
+	// Port on the destination pod where the traffic was sent to. format: int64
+	InnerFlowDestinationPort *int64
+	// IP address of the source pod for the intrusion flow.
+	InnerFlowSourceIp *string
+	// Port on the source pod where traffic was initiated. format: int64
+	InnerFlowSourcePort *int64
+	// Protocol for the inner traffic flow.
+	InnerProtocol *string
+	// IP address of the destination pod for the intrusion flow.
+	InnerTargetIp *string
+}
+
+func (s *PolicyIdsEventInnerFlowData) GetType__() vapiBindings_.BindingType {
+	return PolicyIdsEventInnerFlowDataBindingType()
+}
+
+func (s *PolicyIdsEventInnerFlowData) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for PolicyIdsEventInnerFlowData._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -89259,7 +89512,7 @@ type PolicyVpcNatRule struct {
 	//
 	//  Source NAT(SNAT) - translates a source IP address into an outbound packet so that the packet appears to originate from a different network. Destination NAT(DNAT) - translates the destination IP address of inbound packets so that packets are delivered to a target address into another network. Reflexive NAT(REFLEXIVE) - one-to-one mapping of source and destination IP addresses. NO_SNAT and NO_DNAT - These do not have support for translated_fields, only source_network and destination_network fields are supported.
 	Action *string
-	// This supports single IP address and it does not support IP range or IP sets. For DNAT and NO_DNAT rules, this is a mandatory field, and represents the destination network for the incoming packets. For other type of rules, optionally it can contain destination network of outgoing packets. NULL value for this field represents ANY network. In case of DNAT NATRule, destination network address should be IPv4 address allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
+	// This supports single IP address or comma separated list of single IP addresses or CIDR. This does not support IP range or IP sets. For DNAT and NO_DNAT rules, this is a mandatory field, and represents the destination network for the incoming packets. For SNAT and NO_SNAT rules, optionally it can contain destination network of outgoing packets. For REFLEXIVE this should be empty. In case of DNAT NATRule, destination network address should be single IPv4 address allocated from External Block associated with VPC. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
 	DestinationNetwork *string
 	// The flag, which suggests whether the NAT rule is enabled or disabled. The default is True.
 	Enabled *bool
@@ -89276,9 +89529,9 @@ type PolicyVpcNatRule struct {
 	// The sequence_number decides the rule_priority of a NAT rule. Sequence_number and rule_priority have 1:1 mapping.For each NAT section, there will be reserved rule_priority numbers.The valid range of rule_priority number is from 0 to 2147483647(MAX_INT). 1. INTERNAL section rule_priority reserved from 0 - 1023 (1024 rules) valid sequence_number range 0 - 1023 2. USER section rule_priority reserved from 1024 - 2147482623 (2147481600 rules) valid sequence_number range 0 - 2147481599 3. DEFAULT section rule_priority reserved from 2147482624 - 2147483647 (1024 rules) valid sequence_number range 0 - 1023 format: int32
 	SequenceNumber *int64
 	ServiceEntry   *NatServiceEntry
-	// This supports single IP address or comma separated list of single IP addresses or CIDR. This does not support IP range or IP sets. For SNAT, NO_SNAT and REFLEXIVE rules, this is a mandatory field and represents the source network of the packets leaving the network. For DNAT and NO_DNAT rules, optionally it can contain source network of incoming packets. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
+	// This supports single IP address or CIDR. This does not support IP range or IP sets. SNAT, NO_SNAT, DNAT, NO_DNAT, support comma seperated list of single IP. For NO_SNAT and REFLEXIVE rules, this is a mandatory field and represents the source network of the packets leaving the network. For SNAT, DNAT and NO_DNAT rules, optionally it can contain source network of incoming packets. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
 	SourceNetwork *string
-	// This supports single IP address or comma separated list of single IP addresses or CIDR. If user specify the CIDR, this value is actually used as an IP pool that includes both the subnet and broadcast addresses as valid for NAT translations. This does not support IP range or IP sets. For SNAT, DNAT and REFLEXIVE rules, this ia a mandatory field, which represents the translated network address. For NO_SNAT and NO_DNAT this should be empty. In case of SNAT and Refelexive NATRule, translated network address should be single IPv4 address allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
+	// This supports single IP address and does not support IP range or IP sets. If user specifies CIDR for DNAT rule, this value is actually used as an IP pool that includes both the subnet and broadcast addresses as valid for NAT translations. For SNAT, DNAT and REFLEXIVE rules, this ia a mandatory field, which represents the translated network address. For NO_SNAT and NO_DNAT this should be empty. In case of SNAT and REFLEXIVE NATRule, translated network address should be single IPv4 address allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
 	TranslatedNetwork *string
 	// Please note, if there is service configured in this NAT rule, the translated_port will be realized on NSX Manager as the destination_port. If there is no service configured, the port will be ignored. format: port-or-range
 	TranslatedPorts *string
@@ -91046,7 +91299,7 @@ type Project struct {
 	ActivateDefaultDfwRules *bool
 	DedicatedResources      *DedicatedResources
 	// true - the project is a default project. Default projects are non-editable, system create ones.
-	_Default *bool
+	Default *bool
 	// IP block used for allocating CIDR blocks for public subnets. IP block can be consumed by all the VPCs under this project. CIDR that must be unique across Org/provider and will be auto advertised up to Org/Provider Tier0 gateway.
 	ExternalIpv4Blocks []string
 	// This is optional attribute, if provided will be used to suffix the project's default objects ID to make the policy path with this ID suffix.
@@ -96093,6 +96346,78 @@ func (s *RolesForPath) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Route Advertisement configuration for VPC to control route advertisement for all subnets. This is a system-created resource that is automatically created when a VPC is created.
+type RouteAdvertisement struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id *string
+	// The type of this resource.
+	ResourceType *string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// This is a UUID generated by the system for knowing which site owns an object. This is used in NSX+.
+	OriginSiteId *string
+	// This is a UUID generated by the system for knowing who owns this object. This is used in NSX+.
+	OwnerId *string
+	// Path of its parent
+	ParentPath *string
+	// Absolute path of this object
+	Path *string
+	// This is a UUID generated by the system for realizing the entity object. In most cases this should be same as 'unique_id' of the entity. However, in some cases this can be different because of entities have migrated their unique identifier to NSX Policy intent objects later in the timeline and did not use unique_id for realization. Realization id is helpful for users to debug data path to correlate the configuration with corresponding intent.
+	RealizationId *string
+	// Path relative from its parent
+	RelativePath *string
+	// This path is populated only in case of multi-site scenario. Currently it is supported only for LM objects. When LM is onboarded to multi-site platform like NAPP or GM, remote_path will be set to the globally unique path across multi-site topology . It is generated based on local site-name and uses /org tree namespace. Note: It is populated only for LM objects. Not supported on the GM.
+	RemotePath *string
+	// This is a UUID generated by the GM/LM to uniquely identify entities in a federated environment. For entities that are stretched across multiple sites, the same ID will be used on all the stretched sites.
+	UniqueId *string
+	// Subtree for this type within policy tree containing nested elements. Note that this type is applicable to be used in Hierarchical API only.
+	Children []*vapiData_.StructValue
+	// Intent objects are not directly deleted from the system when a delete is invoked on them. They are marked for deletion and only when all the realized entities for that intent object get deleted, the intent object is deleted. Objects that are marked for deletion are not returned in GET call. One can use the search API to get these objects.
+	MarkedForDelete *bool
+	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
+	Overridden *bool
+	// Enable/disable route advertisement for all subnets in the VPC. Caution: This is a critical operation that impacts north-south connectivity of all the subnets under the VPC.
+	DisableVpcRouteAdvertisement *bool
+}
+
+func (s *RouteAdvertisement) GetType__() vapiBindings_.BindingType {
+	return RouteAdvertisementBindingType()
+}
+
+func (s *RouteAdvertisement) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for RouteAdvertisement._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Route advertisement rules and filtering
 type RouteAdvertisementRule struct {
 	// Possible values are:
@@ -97187,6 +97512,12 @@ func (s *RouteControllerStateNodeStatus) GetDataValue__() (vapiData_.DataValue, 
 type RouteDetails struct {
 	// BGP AS path attribute.
 	AsPath *string
+	// Ethernet Segment Identifier for EVPN routes.
+	Esi *string
+	// Ethernet Tag ID for EVPN routes. format: int64
+	EthTag *int64
+	// EVPN route type for EVPN routes. format: int64
+	EvpnRouteType *int64
 	// BGP Local Preference attribute. format: int64
 	LocalPref *int64
 	// BGP Multi Exit Discriminator attribute. format: int64
@@ -97195,6 +97526,12 @@ type RouteDetails struct {
 	Network *string
 	// Next hop IP address. format: ip
 	NextHop *string
+	// BGP Route Distinguisher attribute.
+	Rd *string
+	// Router MAC address for EVPN routes.
+	Rmac *string
+	// Router MAC address length for EVPN routes. format: int64
+	RmacLen *int64
 	// BGP Weight attribute. format: int64
 	Weight *int64
 }
@@ -118163,7 +118500,7 @@ type TransitGatewayNatRule struct {
 	//
 	//  Source NAT(SNAT) - translates a source IP address into an outbound packet so that the packet appears to originate from a different network. Destination NAT(DNAT) - translates the destination IP address of inbound packets so that packets are delivered to a target address into another network. Reflexive NAT(REFLEXIVE) - one-to-one mapping of source and destination IP addresses. NO_SNAT and NO_DNAT - These do not have support for translated_fields, only source_network and destination_network fields are supported.
 	Action *string
-	// This supports single IP address and it does not support IP range or IP sets. For DNAT and NO_DNAT rules, this is a mandatory field, and represents the destination network for the incoming packets. For other type of rules, optionally it can contain destination network of outgoing packets. NULL value for this field represents ANY network. In case of DNAT NATRule, destination network address should be IPv4 address allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
+	// This supports single IP address or comma separated list of single IP addresses or CIDR. This does not support IP range or IP sets. For DNAT and NO_DNAT rules, this is a mandatory field, and represents the destination network for the incoming packets. For SNAT and NO_SNAT rules, optionally it can contain destination network of outgoing packets. For REFLEXIVE this should be empty. In case of DNAT NATRule, destination network address should be single IPv4 address allocated from External Block associated with VPC. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
 	DestinationNetwork *string
 	// The flag, which suggests whether the NAT rule is enabled or disabled. The default is True.
 	Enabled *bool
@@ -118180,9 +118517,9 @@ type TransitGatewayNatRule struct {
 	// The sequence_number decides the rule_priority of a NAT rule. Sequence_number and rule_priority have 1:1 mapping.For each NAT section, there will be reserved rule_priority numbers.The valid range of rule_priority number is from 0 to 2147483647(MAX_INT). 1. INTERNAL section rule_priority reserved from 0 - 1023 (1024 rules) valid sequence_number range 0 - 1023 2. USER section rule_priority reserved from 1024 - 2147482623 (2147481600 rules) valid sequence_number range 0 - 2147481599 3. DEFAULT section rule_priority reserved from 2147482624 - 2147483647 (1024 rules) valid sequence_number range 0 - 1023 format: int32
 	SequenceNumber *int64
 	ServiceEntry   *NatServiceEntry
-	// This supports single IP address or comma separated list of single IP addresses or CIDR. This does not support IP range or IP sets. For SNAT, NO_SNAT and REFLEXIVE rules, this is a mandatory field and represents the source network of the packets leaving the network. For DNAT and NO_DNAT rules, optionally it can contain source network of incoming packets. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
+	// This supports single IP address or CIDR. This does not support IP range or IP sets. SNAT, NO_SNAT, DNAT, NO_DNAT, support comma seperated list of single IP. For NO_SNAT and REFLEXIVE rules, this is a mandatory field and represents the source network of the packets leaving the network. For SNAT, DNAT and NO_DNAT rules, optionally it can contain source network of incoming packets. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
 	SourceNetwork *string
-	// This supports single IP address or comma separated list of single IP addresses or CIDR. If user specify the CIDR, this value is actually used as an IP pool that includes both the subnet and broadcast addresses as valid for NAT translations. This does not support IP range or IP sets. For SNAT, DNAT and REFLEXIVE rules, this ia a mandatory field, which represents the translated network address. For NO_SNAT and NO_DNAT this should be empty. In case of SNAT and Refelexive NATRule, translated network address should be single IPv4 address allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
+	// This supports single IP address and does not support IP range or IP sets. If user specifies CIDR for DNAT rule, this value is actually used as an IP pool that includes both the subnet and broadcast addresses as valid for NAT translations. For SNAT, DNAT and REFLEXIVE rules, this ia a mandatory field, which represents the translated network address. For NO_SNAT and NO_DNAT this should be empty. In case of SNAT and REFLEXIVE NATRule, translated network address should be single IPv4 address allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
 	TranslatedNetwork *string
 	// Please note, if there is service configured in this NAT rule, the translated_port will be realized on NSX Manager as the destination_port. If there is no service configured, the port will be ignored. format: port-or-range
 	TranslatedPorts *string
@@ -121700,7 +122037,7 @@ func (s *View) GetDataValue__() (vapiData_.DataValue, []error) {
 type ViewInfo struct {
 	// View name.
 	ViewName *string
-	// View reference id.
+	// View reference ID.
 	ViewRefId *string
 }
 
@@ -123483,8 +123820,6 @@ type Vpc struct {
 	// Deprecated: This API element is deprecated.
 	DefaultGatewayPath *string
 	DhcpConfig         *DhcpConfig
-	// Enable/disable route advertisement for all subnets in the VPC. Caution: This is a critical operation that impacts north-south connectivity of all the subnets under the VPC.
-	DisableRouteAdvertisement *bool
 	// IP block used for allocating CIDR blocks for public subnets. IP block must be subset of Project IPv4 blocks. This field is not allowed with vpc_service_profile in place.
 	//
 	// Deprecated: This API element is deprecated.
@@ -125016,8 +125351,9 @@ type VpcSubnet struct {
 	// * VpcSubnet#VpcSubnet_ACCESS_MODE_PUBLIC
 	// * VpcSubnet#VpcSubnet_ACCESS_MODE_ISOLATED
 	// * VpcSubnet#VpcSubnet_ACCESS_MODE_PRIVATE_TGW
+	// * VpcSubnet#VpcSubnet_ACCESS_MODE_L2_ONLY
 	//
-	//  There are four kinds of Access Types supported for an Application. Private - VPC Subnet is accessible only within the application and its IPs are allocated from private IP address pool from VPC configuration unless specified explicitly by user. Public - VPC Subnet is accessible from external networks and its IPs are allocated from public IP address pool from VPC configuration unless specified explicitly by user. Isolated - VPC Subnet is not accessible from other VPC Subnets within the same VPC. Please make use of Private, Private_TGW or Public Subnets with connectivity_state as DISCONNECTED to have a disconnected Subnet. This value is deprecated. Private_TGW - VPC Subnet is accessible from using connected TGW.
+	//  There are five kinds of Access Types supported for an Application. Private - VPC Subnet is accessible only within the application and its IPs are allocated from private IP address pool from VPC configuration unless specified explicitly by user. Public - VPC Subnet is accessible from external networks and its IPs are allocated from public IP address pool from VPC configuration unless specified explicitly by user. Isolated - VPC Subnet is not accessible from other VPC Subnets within the same VPC. Please make use of Private, Private_TGW or Public Subnets with connectivity_state as DISCONNECTED to have a disconnected Subnet. This value is deprecated. Private_TGW - VPC Subnet is accessible from using connected TGW. L2_Only - VPC Subnet offers Layer 2 connectivity with optional VLAN bridging and full user-managed IP control.
 	AccessMode     *string
 	AdvancedConfig *SubnetAdvancedConfig
 	DhcpConfig     *VpcSubnetDhcpConfig
@@ -125028,12 +125364,15 @@ type VpcSubnet struct {
 	// If IP Addresses are not provided, this field will be used to carve out the ips from respective ip block defined in the parent VPC. The default is 64. If ip_addresses field is provided then ipv4_subnet_size field is ignored. This field cannot be modified after creating a VPC Subnet. format: int32
 	Ipv4SubnetSize   *int64
 	SubnetDhcpConfig *SubnetDhcpConfig
+	// Distributed VLAN connection path.
+	VlanConnection *string
 }
 
 const VpcSubnet_ACCESS_MODE_PRIVATE = "Private"
 const VpcSubnet_ACCESS_MODE_PUBLIC = "Public"
 const VpcSubnet_ACCESS_MODE_ISOLATED = "Isolated"
 const VpcSubnet_ACCESS_MODE_PRIVATE_TGW = "Private_TGW"
+const VpcSubnet_ACCESS_MODE_L2_ONLY = "L2_Only"
 
 func (s *VpcSubnet) GetType__() vapiBindings_.BindingType {
 	return VpcSubnetBindingType()
@@ -126142,6 +126481,29 @@ func (s *VswitchCounters) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Provides info about the latest bundle present on VTIS.
+type VtisBundleInfo struct {
+	// Provides the version ID available on VTIS
+	BundleVersion *string
+	// It indicates if a new signature bundle is available on VTIS.
+	UpdateAvailable *bool
+}
+
+func (s *VtisBundleInfo) GetType__() vapiBindings_.BindingType {
+	return VtisBundleInfoBindingType()
+}
+
+func (s *VtisBundleInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for VtisBundleInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Wavefront collector is defined to export the real-time metrics to Vmware Warfront platform for monitoring and streaming analysis. It is only applicable on VMC mode.
 type WaveFrontGlobalCollector struct {
 	// Port for the Wavefront tracing. format: int32
@@ -126721,6 +127083,8 @@ func ALBControllerCloudCreationRequestBindingType() vapiBindings_.BindingType {
 	fieldNameMap["obj_name_prefix"] = "ObjNamePrefix"
 	fields["onboard_avi_into_nsx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["onboard_avi_into_nsx"] = "OnboardAviIntoNsx"
+	fields["verify_certificate"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["verify_certificate"] = "VerifyCertificate"
 	fields["vpc_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["vpc_mode"] = "VpcMode"
 	var validators = []vapiBindings_.Validator{}
@@ -126992,6 +127356,41 @@ func ALBControllerNodeVMDeploymentStatusReportBindingType() vapiBindings_.Bindin
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ALB_controller_node_VM_deployment_status_report", fields, reflect.TypeOf(ALBControllerNodeVMDeploymentStatusReport{}), fieldNameMap, validators)
 }
 
+func ALBControllerPKIProfileCACertBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["certificate"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["certificate"] = "Certificate"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ALB_controller_PKI_profile_CA_cert", fields, reflect.TypeOf(ALBControllerPKIProfileCACert{}), fieldNameMap, validators)
+}
+
+func ALBControllerPKIProfileRequestBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["ca_certs"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ALBControllerPKIProfileCACertBindingType), reflect.TypeOf([]ALBControllerPKIProfileCACert{})))
+	fieldNameMap["ca_certs"] = "CaCerts"
+	fields["clustering_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["clustering_id"] = "ClusteringId"
+	fields["name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["name"] = "Name"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ALB_controller_PKI_profile_request", fields, reflect.TypeOf(ALBControllerPKIProfileRequest{}), fieldNameMap, validators)
+}
+
+func ALBControllerPKIProfileResponseBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["name"] = "Name"
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["status"] = "Status"
+	fields["uuid"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["uuid"] = "Uuid"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ALB_controller_PKI_profile_response", fields, reflect.TypeOf(ALBControllerPKIProfileResponse{}), fieldNameMap, validators)
+}
+
 func ALBControllerSystemConfigurationBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -127025,6 +127424,8 @@ func ALBControllerUserBindingType() vapiBindings_.BindingType {
 	fieldNameMap["is_service_user"] = "IsServiceUser"
 	fields["password"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["password"] = "Password"
+	fields["password_expires"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["password_expires"] = "PasswordExpires"
 	fields["role"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["role"] = "Role"
 	fields["username"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -130680,6 +131081,12 @@ func BgpNeighborRouteDetailsCsvRecordBindingType() vapiBindings_.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["as_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["as_path"] = "AsPath"
+	fields["esi"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["esi"] = "Esi"
+	fields["eth_tag"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["eth_tag"] = "EthTag"
+	fields["evpn_route_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["evpn_route_type"] = "EvpnRouteType"
 	fields["local_pref"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["local_pref"] = "LocalPref"
 	fields["logical_router_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -130694,6 +131101,12 @@ func BgpNeighborRouteDetailsCsvRecordBindingType() vapiBindings_.BindingType {
 	fieldNameMap["network"] = "Network"
 	fields["next_hop"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["next_hop"] = "NextHop"
+	fields["rd"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["rd"] = "Rd"
+	fields["rmac"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["rmac"] = "Rmac"
+	fields["rmac_len"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["rmac_len"] = "RmacLen"
 	fields["source_address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["source_address"] = "SourceAddress"
 	fields["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -139843,6 +140256,51 @@ func ChildResourceReferenceBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.child_resource_reference", fields, reflect.TypeOf(ChildResourceReference{}), fieldNameMap, validators)
 }
 
+func ChildRouteAdvertisementBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["RouteAdvertisement"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(RouteAdvertisementBindingType))
+	fieldNameMap["RouteAdvertisement"] = "RouteAdvertisement"
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewStringType()
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["mark_for_override"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["mark_for_override"] = "MarkForOverride"
+	fields["marked_for_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["request_parameter"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(PolicyRequestParameterBindingType)}))
+	fieldNameMap["request_parameter"] = "RequestParameter"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.child_route_advertisement", fields, reflect.TypeOf(ChildRouteAdvertisement{}), fieldNameMap, validators)
+}
+
 func ChildRouteControllerBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -148325,6 +148783,8 @@ func DistributedVlanConnectionBindingType() vapiBindings_.BindingType {
 	fieldNameMap["restricted_availability"] = "RestrictedAvailability"
 	fields["subnet_exclusive_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SubnetExclusiveConfigBindingType))
 	fieldNameMap["subnet_exclusive_config"] = "SubnetExclusiveConfig"
+	fields["subnet_extension_connection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["subnet_extension_connection"] = "SubnetExtensionConnection"
 	fields["vlan_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["vlan_id"] = "VlanId"
 	var validators = []vapiBindings_.Validator{}
@@ -153974,6 +154434,34 @@ func GmFederationSiteConfigBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.gm_federation_site_config", fields, reflect.TypeOf(GmFederationSiteConfig{}), fieldNameMap, validators)
 }
 
+func GmImportSpecBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["gm_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["gm_ip"] = "GmIp"
+	fields["gm_password"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["gm_password"] = "GmPassword"
+	fields["gm_username"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["gm_username"] = "GmUsername"
+	fields["pub_url"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["pub_url"] = "PubUrl"
+	fields["thumbprint"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["thumbprint"] = "Thumbprint"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.gm_import_spec", fields, reflect.TypeOf(GmImportSpec{}), fieldNameMap, validators)
+}
+
+func GmImportStatusBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["details"] = "Details"
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["status"] = "Status"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.gm_import_status", fields, reflect.TypeOf(GmImportStatus{}), fieldNameMap, validators)
+}
+
 func GmRtepConfigBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -154788,6 +155276,8 @@ func HeadlessModeStatusConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
 	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["overridden"] = "Overridden"
+	fields["headless_mode_runtime_compatibility"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["headless_mode_runtime_compatibility"] = "HeadlessModeRuntimeCompatibility"
 	fields["headless_mode_supported"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["headless_mode_supported"] = "HeadlessModeSupported"
 	var validators = []vapiBindings_.Validator{}
@@ -178850,6 +179340,8 @@ func PolicyIdsEventFlowDataBindingType() vapiBindings_.BindingType {
 	fieldNameMap["gateway_tags"] = "GatewayTags"
 	fields["host"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["host"] = "Host"
+	fields["inner_flow_details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDynamicStructType(nil))
+	fieldNameMap["inner_flow_details"] = "InnerFlowDetails"
 	fields["local_vm_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["local_vm_ip"] = "LocalVmIp"
 	fields["profile_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -178870,6 +179362,27 @@ func PolicyIdsEventFlowDataBindingType() vapiBindings_.BindingType {
 	fieldNameMap["traffic_type"] = "TrafficType"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.policy_ids_event_flow_data", fields, reflect.TypeOf(PolicyIdsEventFlowData{}), fieldNameMap, validators)
+}
+
+func PolicyIdsEventInnerFlowDataBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["inner_attacker_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["inner_attacker_ip"] = "InnerAttackerIp"
+	fields["inner_flow_destination_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["inner_flow_destination_ip"] = "InnerFlowDestinationIp"
+	fields["inner_flow_destination_port"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["inner_flow_destination_port"] = "InnerFlowDestinationPort"
+	fields["inner_flow_source_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["inner_flow_source_ip"] = "InnerFlowSourceIp"
+	fields["inner_flow_source_port"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["inner_flow_source_port"] = "InnerFlowSourcePort"
+	fields["inner_protocol"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["inner_protocol"] = "InnerProtocol"
+	fields["inner_target_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["inner_target_ip"] = "InnerTargetIp"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.policy_ids_event_inner_flow_data", fields, reflect.TypeOf(PolicyIdsEventInnerFlowData{}), fieldNameMap, validators)
 }
 
 func PolicyIdsEventsBySignatureBindingType() vapiBindings_.BindingType {
@@ -184081,7 +184594,7 @@ func ProjectBindingType() vapiBindings_.BindingType {
 	fields["dedicated_resources"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(DedicatedResourcesBindingType))
 	fieldNameMap["dedicated_resources"] = "DedicatedResources"
 	fields["default"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fieldNameMap["default"] = "_Default"
+	fieldNameMap["default"] = "Default"
 	fields["external_ipv4_blocks"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["external_ipv4_blocks"] = "ExternalIpv4Blocks"
 	fields["id_suffix"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -187495,6 +188008,67 @@ func RolesForPathBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.roles_for_path", fields, reflect.TypeOf(RolesForPath{}), fieldNameMap, validators)
 }
 
+func RouteAdvertisementBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["origin_site_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["origin_site_id"] = "OriginSiteId"
+	fields["owner_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["owner_id"] = "OwnerId"
+	fields["parent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["realization_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["realization_id"] = "RealizationId"
+	fields["relative_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["remote_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["remote_path"] = "RemotePath"
+	fields["unique_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["unique_id"] = "UniqueId"
+	fields["children"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(ChildPolicyConfigResourceBindingType)}), reflect.TypeOf([]*vapiData_.StructValue{})))
+	fieldNameMap["children"] = "Children"
+	fields["marked_for_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["overridden"] = "Overridden"
+	fields["disable_vpc_route_advertisement"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["disable_vpc_route_advertisement"] = "DisableVpcRouteAdvertisement"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.route_advertisement", fields, reflect.TypeOf(RouteAdvertisement{}), fieldNameMap, validators)
+}
+
 func RouteAdvertisementRuleBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -188195,6 +188769,12 @@ func RouteDetailsBindingType() vapiBindings_.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["as_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["as_path"] = "AsPath"
+	fields["esi"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["esi"] = "Esi"
+	fields["eth_tag"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["eth_tag"] = "EthTag"
+	fields["evpn_route_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["evpn_route_type"] = "EvpnRouteType"
 	fields["local_pref"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["local_pref"] = "LocalPref"
 	fields["med"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -188203,6 +188783,12 @@ func RouteDetailsBindingType() vapiBindings_.BindingType {
 	fieldNameMap["network"] = "Network"
 	fields["next_hop"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["next_hop"] = "NextHop"
+	fields["rd"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["rd"] = "Rd"
+	fields["rmac"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["rmac"] = "Rmac"
+	fields["rmac_len"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["rmac_len"] = "RmacLen"
 	fields["weight"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["weight"] = "Weight"
 	var validators = []vapiBindings_.Validator{}
@@ -203244,8 +203830,6 @@ func VpcBindingType() vapiBindings_.BindingType {
 	fieldNameMap["default_gateway_path"] = "DefaultGatewayPath"
 	fields["dhcp_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(DhcpConfigBindingType))
 	fieldNameMap["dhcp_config"] = "DhcpConfig"
-	fields["disable_route_advertisement"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fieldNameMap["disable_route_advertisement"] = "DisableRouteAdvertisement"
 	fields["external_ipv4_blocks"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["external_ipv4_blocks"] = "ExternalIpv4Blocks"
 	fields["ip_address_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -204262,6 +204846,8 @@ func VpcSubnetBindingType() vapiBindings_.BindingType {
 	fieldNameMap["ipv4_subnet_size"] = "Ipv4SubnetSize"
 	fields["subnet_dhcp_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SubnetDhcpConfigBindingType))
 	fieldNameMap["subnet_dhcp_config"] = "SubnetDhcpConfig"
+	fields["vlan_connection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["vlan_connection"] = "VlanConnection"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vpc_subnet", fields, reflect.TypeOf(VpcSubnet{}), fieldNameMap, validators)
 }
@@ -204858,6 +205444,17 @@ func VswitchCountersBindingType() vapiBindings_.BindingType {
 	fieldNameMap["vni_tag_mismatch_tx_mcast"] = "VniTagMismatchTxMcast"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vswitch_counters", fields, reflect.TypeOf(VswitchCounters{}), fieldNameMap, validators)
+}
+
+func VtisBundleInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["bundle_version"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["bundle_version"] = "BundleVersion"
+	fields["update_available"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["update_available"] = "UpdateAvailable"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vtis_bundle_info", fields, reflect.TypeOf(VtisBundleInfo{}), fieldNameMap, validators)
 }
 
 func WaveFrontGlobalCollectorBindingType() vapiBindings_.BindingType {
