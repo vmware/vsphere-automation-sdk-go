@@ -4,12 +4,12 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: ClusterConfigs.
+// Data type definitions file for service: DistributedTlsBypassProfiles.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package security
+package infra
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -19,31 +19,20 @@ import (
 	"reflect"
 )
 
-// Possible value for ``featureType`` of method ClusterConfigs#list.
-const ClusterConfigs_LIST_FEATURE_TYPE_DFW = "DFW"
-
-// Possible value for ``featureType`` of method ClusterConfigs#list.
-const ClusterConfigs_LIST_FEATURE_TYPE_INFRA_SECURITY_DFW = "INFRA_SECURITY_DFW"
-
-// Possible value for ``featureType`` of method ClusterConfigs#list.
-const ClusterConfigs_LIST_FEATURE_TYPE_DISTRIBUTED_TLS = "DISTRIBUTED_TLS"
-
-func clusterConfigsGetInputType() vapiBindings_.StructType {
+func distributedTlsBypassProfilesDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["cluster_external_id"] = vapiBindings_.NewStringType()
-	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["cluster_external_id"] = "ClusterExternalId"
-	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
+	fields["distributed_tls_bypass_profile_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["distributed_tls_bypass_profile_id"] = "DistributedTlsBypassProfileId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ClusterConfigsGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.ClusterSecurityConfigurationBindingType)
+func DistributedTlsBypassProfilesDeleteOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func clusterConfigsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func distributedTlsBypassProfilesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -52,15 +41,61 @@ func clusterConfigsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["cluster_external_id"] = vapiBindings_.NewStringType()
-	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["cluster_external_id"] = "ClusterExternalId"
-	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
-	paramsTypeMap["cluster_external_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["clusterExternalId"] = vapiBindings_.NewStringType()
-	pathParams["cluster_external_id"] = "clusterExternalId"
-	queryParams["enforcement_point_path"] = "enforcement_point_path"
+	fields["distributed_tls_bypass_profile_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["distributed_tls_bypass_profile_id"] = "DistributedTlsBypassProfileId"
+	paramsTypeMap["distributed_tls_bypass_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["distributedTlsBypassProfileId"] = vapiBindings_.NewStringType()
+	pathParams["distributed_tls_bypass_profile_id"] = "distributedTlsBypassProfileId"
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"",
+		"",
+		"DELETE",
+		"/policy/api/v1/infra/distributed-tls-bypass-profiles/{distributedTlsBypassProfileId}",
+		"",
+		resultHeaders,
+		204,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
+func distributedTlsBypassProfilesGetInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["distributed_tls_bypass_profile_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["distributed_tls_bypass_profile_id"] = "DistributedTlsBypassProfileId"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func DistributedTlsBypassProfilesGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsBypassProfileBindingType)
+}
+
+func distributedTlsBypassProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["distributed_tls_bypass_profile_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["distributed_tls_bypass_profile_id"] = "DistributedTlsBypassProfileId"
+	paramsTypeMap["distributed_tls_bypass_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["distributedTlsBypassProfileId"] = vapiBindings_.NewStringType()
+	pathParams["distributed_tls_bypass_profile_id"] = "distributedTlsBypassProfileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -75,7 +110,7 @@ func clusterConfigsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/settings/security/cluster-configs/{clusterExternalId}",
+		"/policy/api/v1/infra/distributed-tls-bypass-profiles/{distributedTlsBypassProfileId}",
 		"",
 		resultHeaders,
 		200,
@@ -84,20 +119,16 @@ func clusterConfigsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func clusterConfigsListInputType() vapiBindings_.StructType {
+func distributedTlsBypassProfilesListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fields["feature_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
-	fieldNameMap["enabled"] = "Enabled"
-	fieldNameMap["feature_type"] = "FeatureType"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
@@ -107,11 +138,11 @@ func clusterConfigsListInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ClusterConfigsListOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.ClusterSecurityConfigurationListResultBindingType)
+func DistributedTlsBypassProfilesListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsBypassProfileListResultBindingType)
 }
 
-func clusterConfigsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+func distributedTlsBypassProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -121,36 +152,28 @@ func clusterConfigsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fields["feature_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
-	fieldNameMap["enabled"] = "Enabled"
-	fieldNameMap["feature_type"] = "FeatureType"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["feature_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	paramsTypeMap["enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
-	queryParams["feature_type"] = "feature_type"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["sort_by"] = "sort_by"
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
-	queryParams["enabled"] = "enabled"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
@@ -166,7 +189,7 @@ func clusterConfigsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/settings/security/cluster-configs",
+		"/policy/api/v1/infra/distributed-tls-bypass-profiles",
 		"",
 		resultHeaders,
 		200,
@@ -175,22 +198,22 @@ func clusterConfigsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func clusterConfigsPatchInputType() vapiBindings_.StructType {
+func distributedTlsBypassProfilesPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["cluster_external_id"] = vapiBindings_.NewStringType()
-	fields["cluster_security_configuration"] = vapiBindings_.NewReferenceType(nsx_policyModel.ClusterSecurityConfigurationBindingType)
-	fieldNameMap["cluster_external_id"] = "ClusterExternalId"
-	fieldNameMap["cluster_security_configuration"] = "ClusterSecurityConfiguration"
+	fields["distributed_tls_bypass_profile_id"] = vapiBindings_.NewStringType()
+	fields["distributed_tls_bypass_profile"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsBypassProfileBindingType)
+	fieldNameMap["distributed_tls_bypass_profile_id"] = "DistributedTlsBypassProfileId"
+	fieldNameMap["distributed_tls_bypass_profile"] = "DistributedTlsBypassProfile"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ClusterConfigsPatchOutputType() vapiBindings_.BindingType {
+func DistributedTlsBypassProfilesPatchOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewVoidType()
 }
 
-func clusterConfigsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+func distributedTlsBypassProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -199,14 +222,14 @@ func clusterConfigsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["cluster_external_id"] = vapiBindings_.NewStringType()
-	fields["cluster_security_configuration"] = vapiBindings_.NewReferenceType(nsx_policyModel.ClusterSecurityConfigurationBindingType)
-	fieldNameMap["cluster_external_id"] = "ClusterExternalId"
-	fieldNameMap["cluster_security_configuration"] = "ClusterSecurityConfiguration"
-	paramsTypeMap["cluster_external_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["cluster_security_configuration"] = vapiBindings_.NewReferenceType(nsx_policyModel.ClusterSecurityConfigurationBindingType)
-	paramsTypeMap["clusterExternalId"] = vapiBindings_.NewStringType()
-	pathParams["cluster_external_id"] = "clusterExternalId"
+	fields["distributed_tls_bypass_profile_id"] = vapiBindings_.NewStringType()
+	fields["distributed_tls_bypass_profile"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsBypassProfileBindingType)
+	fieldNameMap["distributed_tls_bypass_profile_id"] = "DistributedTlsBypassProfileId"
+	fieldNameMap["distributed_tls_bypass_profile"] = "DistributedTlsBypassProfile"
+	paramsTypeMap["distributed_tls_bypass_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["distributed_tls_bypass_profile"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsBypassProfileBindingType)
+	paramsTypeMap["distributedTlsBypassProfileId"] = vapiBindings_.NewStringType()
+	pathParams["distributed_tls_bypass_profile_id"] = "distributedTlsBypassProfileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -219,9 +242,9 @@ func clusterConfigsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"cluster_security_configuration",
+		"distributed_tls_bypass_profile",
 		"PATCH",
-		"/policy/api/v1/infra/settings/security/cluster-configs/{clusterExternalId}",
+		"/policy/api/v1/infra/distributed-tls-bypass-profiles/{distributedTlsBypassProfileId}",
 		"application/json",
 		resultHeaders,
 		204,
@@ -230,22 +253,22 @@ func clusterConfigsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func clusterConfigsUpdateInputType() vapiBindings_.StructType {
+func distributedTlsBypassProfilesUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["cluster_external_id"] = vapiBindings_.NewStringType()
-	fields["cluster_security_configuration"] = vapiBindings_.NewReferenceType(nsx_policyModel.ClusterSecurityConfigurationBindingType)
-	fieldNameMap["cluster_external_id"] = "ClusterExternalId"
-	fieldNameMap["cluster_security_configuration"] = "ClusterSecurityConfiguration"
+	fields["distributed_tls_bypass_profile_id"] = vapiBindings_.NewStringType()
+	fields["distributed_tls_bypass_profile"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsBypassProfileBindingType)
+	fieldNameMap["distributed_tls_bypass_profile_id"] = "DistributedTlsBypassProfileId"
+	fieldNameMap["distributed_tls_bypass_profile"] = "DistributedTlsBypassProfile"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ClusterConfigsUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.ClusterSecurityConfigurationBindingType)
+func DistributedTlsBypassProfilesUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsBypassProfileBindingType)
 }
 
-func clusterConfigsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+func distributedTlsBypassProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -254,14 +277,14 @@ func clusterConfigsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["cluster_external_id"] = vapiBindings_.NewStringType()
-	fields["cluster_security_configuration"] = vapiBindings_.NewReferenceType(nsx_policyModel.ClusterSecurityConfigurationBindingType)
-	fieldNameMap["cluster_external_id"] = "ClusterExternalId"
-	fieldNameMap["cluster_security_configuration"] = "ClusterSecurityConfiguration"
-	paramsTypeMap["cluster_external_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["cluster_security_configuration"] = vapiBindings_.NewReferenceType(nsx_policyModel.ClusterSecurityConfigurationBindingType)
-	paramsTypeMap["clusterExternalId"] = vapiBindings_.NewStringType()
-	pathParams["cluster_external_id"] = "clusterExternalId"
+	fields["distributed_tls_bypass_profile_id"] = vapiBindings_.NewStringType()
+	fields["distributed_tls_bypass_profile"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsBypassProfileBindingType)
+	fieldNameMap["distributed_tls_bypass_profile_id"] = "DistributedTlsBypassProfileId"
+	fieldNameMap["distributed_tls_bypass_profile"] = "DistributedTlsBypassProfile"
+	paramsTypeMap["distributed_tls_bypass_profile_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["distributed_tls_bypass_profile"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsBypassProfileBindingType)
+	paramsTypeMap["distributedTlsBypassProfileId"] = vapiBindings_.NewStringType()
+	pathParams["distributed_tls_bypass_profile_id"] = "distributedTlsBypassProfileId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -274,9 +297,9 @@ func clusterConfigsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"cluster_security_configuration",
+		"distributed_tls_bypass_profile",
 		"PUT",
-		"/policy/api/v1/infra/settings/security/cluster-configs/{clusterExternalId}",
+		"/policy/api/v1/infra/distributed-tls-bypass-profiles/{distributedTlsBypassProfileId}",
 		"application/json",
 		resultHeaders,
 		200,
