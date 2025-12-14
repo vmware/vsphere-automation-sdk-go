@@ -4254,7 +4254,6 @@ type AssignedByAutoConf struct {
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_STATICIPV6MACLISTSPEC
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_ASSIGNEDBYAUTOCONF
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_NOIPV6
-	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_FROMESXIVMKNICIPV6
 	ResourceType string
 }
 
@@ -4321,7 +4320,6 @@ type AssignedByDhcpv6 struct {
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_STATICIPV6MACLISTSPEC
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_ASSIGNEDBYAUTOCONF
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_NOIPV6
-	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_FROMESXIVMKNICIPV6
 	ResourceType string
 }
 
@@ -32491,14 +32489,13 @@ type DistributedVlanConnection struct {
 	// Gateway IP address in network address and prefix length format format: ipv4-cidr-block
 	GatewayAddresses       []string
 	RestrictedAvailability *VlanAvailability
-	SubnetExclusiveConfig  *SubnetExclusiveConfig
 	// Possible values are:
 	//
 	// * DistributedVlanConnection#DistributedVlanConnection_SUBNET_EXTENSION_CONNECTION_DISABLED
 	// * DistributedVlanConnection#DistributedVlanConnection_SUBNET_EXTENSION_CONNECTION_ENABLED_L2
 	// * DistributedVlanConnection#DistributedVlanConnection_SUBNET_EXTENSION_CONNECTION_ENABLED_L2_AND_L3
 	//
-	//  Controls the connectivity mode for VPC Subnets referencing this distributed VLAN connection. This property determines whether VPC Subnets can use this distributed VLAN connection and the type of connectivity allowed. DISABLED - VPC subnet cannot reference this distributed VLAN connection. ENABLED_L2 - VLAN L2 bridge is enabled. VPC Subnet with this distributed VLAN connection cannot be connected to VDR. ENABLED_L2_AND_L3 - VLAN L2 bridge is enabled. VPC Subnet with this distributed VLAN connection can be connected to VDR when DTGW is also connected with the distributed VLAN connection.
+	//  Controls the connectivity mode for VPC Subnets referencing this distributed VLAN connection. This property determines whether VPC Subnets can use this distributed VLAN connection and the type of connectivity allowed. DISABLED - VPC subnet cannot reference this distributed VLAN connection. ENABLED_L2 - VLAN L2 bridge is enabled. VPC Subnet with this distributed VLAN connection cannot have VPC gateway connectivity state as connected. ENABLED_L2_AND_L3 - VLAN L2 bridge is enabled. VPC Subnet with this distributed VLAN connection can have VPC gateway connectivity state as connected when DTGW is also connected with the distributed VLAN connection.
 	SubnetExtensionConnection *string
 	// Vlan id for external gateway traffic format: int64
 	VlanId *int64
@@ -37917,6 +37914,69 @@ func (s *FirewallConfiguration) GetDataValue__() (vapiData_.DataValue, []error) 
 	return dataVal, nil
 }
 
+// Count of members in firewall exclude list
+type FirewallExcludeListMembersCount struct {
+	// Count of members format: int64
+	Count *int64
+	// Possible values are:
+	//
+	// * FirewallExcludeListMembersCount#FirewallExcludeListMembersCount_MEMBER_TYPE_IPADDRESS
+	//
+	//  Member type
+	MemberType *string
+}
+
+const FirewallExcludeListMembersCount_MEMBER_TYPE_IPADDRESS = "IPAddress"
+
+func (s *FirewallExcludeListMembersCount) GetType__() vapiBindings_.BindingType {
+	return FirewallExcludeListMembersCountBindingType()
+}
+
+func (s *FirewallExcludeListMembersCount) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for FirewallExcludeListMembersCount._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// List result for firewall exclude list members count
+type FirewallExcludeListMembersCountListResult struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy *string
+	// List of member counts
+	Results []FirewallExcludeListMembersCount
+}
+
+func (s *FirewallExcludeListMembersCountListResult) GetType__() vapiBindings_.BindingType {
+	return FirewallExcludeListMembersCountListResultBindingType()
+}
+
+func (s *FirewallExcludeListMembersCountListResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for FirewallExcludeListMembersCountListResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // This holds the list of gateway firewall export tasks.
 type FirewallExportListResult struct {
 	// List of export tasks
@@ -38560,7 +38620,7 @@ func (s *FqdnAnalysisConfig) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// If this type of IP assignment is chosen, then the management vmkernel nic of ESXi will be configured as a virtual tunnel endpoint. The existing IP assigned to the management vmkernel nic will be used to form an overlay traffic tunnel between ESXi hosts. This type of IP assignment can be used only if the ESXi management vmkernel nic is connected to a DVPort that belongs to VDS referenced in the StandardHostSwitch.
+// If this type of IP assignment is chosen, then vmkernel nic (vmk) of ESXi will be configured as a virtual tunnel endpoint. The existing IP assigned to the vmk will be used to form an overlay traffic tunnel between ESXi hosts. This type of IP assignment can be used only if the vmk has ipv4 address assigned to it and is connected to a DVPort that belongs to VDS used for overlay traffic referenced in the StandardHostSwitch. Starting from Nsx 9.0, only one ESX vmk (with management service) on default netstack can be used as a vtep. Starting from Nsx 9.1, we additionally support single non-management vmk on default netstack (tagged with vnetworking service) or multiple vmks on vnetworking netstack to be used as vteps.
 type FromEsxiVmknic struct {
 	// Possible values are:
 	//
@@ -38587,40 +38647,6 @@ func (s *FromEsxiVmknic) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for FromEsxiVmknic._GetDataValue method - %s",
-			vapiBindings_.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-// If this type of IP assignment is chosen, then the vmkernel nic of ESXi with vnetworking service will be configured as a virtual tunnel endpoint. The existing IP assigned to the vnetworking vmkernel nic will be used to form an overlay traffic tunnel between ESXi hosts. This type of IP assignment can be used only if the cluster is VCP enabled and ESXi vmkernel nic is connected to a DVPort that belongs to VDS referenced in the StandardHostSwitch.
-type FromEsxiVmknicIpv6 struct {
-	// Possible values are:
-	//
-	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_STATICIPV6POOLSPEC
-	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_STATICIPV6LISTSPEC
-	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_ASSIGNEDBYDHCPV6
-	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_STATICIPV6MACLISTSPEC
-	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_ASSIGNEDBYAUTOCONF
-	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_NOIPV6
-	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_FROMESXIVMKNICIPV6
-	ResourceType string
-}
-
-// Identifier denoting this class, when it is used in polymorphic context.
-//
-// This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
-const FromEsxiVmknicIpv6__TYPE_IDENTIFIER = "FromEsxiVmknicIpv6"
-
-func (s *FromEsxiVmknicIpv6) GetType__() vapiBindings_.BindingType {
-	return FromEsxiVmknicIpv6BindingType()
-}
-
-func (s *FromEsxiVmknicIpv6) GetDataValue__() (vapiData_.DataValue, []error) {
-	typeConverter := vapiBindings_.NewTypeConverter()
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		vapiLog_.Errorf("Error in ConvertToVapi for FromEsxiVmknicIpv6._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -51943,6 +51969,8 @@ type InfraSecurityConfig struct {
 	CrlCheckingEnabled *bool
 	// When this flag is set to true, during certificate checking the Extended Key Usage extension is expected to be present, indicating whether the certificate is to be used a client certificate or server certificate. Setting this value to false is not recommended as it leads to lower security and operational risk. Since this check has now moved to the compliance-report, enabling/disabling this flag no longer has any effect when applying certificates.
 	EkuCheckingEnabled *bool
+	// When this flag is set to true, some certificate restrictions apply required by NDcPP certification. Only users who need to be NDcPP compliant should enable this feature by setting this to true.
+	NdcppEnabled *bool
 }
 
 func (s *InfraSecurityConfig) GetType__() vapiBindings_.BindingType {
@@ -53194,8 +53222,6 @@ type IpAddressBlock struct {
 	//
 	//  This indicates the type of IP address.
 	IpAddressType *string
-	// If this property is set to true, then this block is reserved for direct vlan extension use case. This flag cannot be modified from true to false. This field will be removed later once everyone starts using subnet_exclusive
-	IsSubnetExclusive *bool
 	// Represents list of IP address ranges in the form of start and end IPs
 	Ranges []IpPoolRange
 	// If this property is set to true, then this block is reserved for direct vlan extension use case. This flag cannot be modified from true to false.
@@ -54829,7 +54855,6 @@ type Ipv6AssignmentSpec struct {
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_STATICIPV6MACLISTSPEC
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_ASSIGNEDBYAUTOCONF
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_NOIPV6
-	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_FROMESXIVMKNICIPV6
 	ResourceType string
 }
 
@@ -54843,7 +54868,6 @@ const Ipv6AssignmentSpec_RESOURCE_TYPE_ASSIGNEDBYDHCPV6 = "AssignedByDhcpv6"
 const Ipv6AssignmentSpec_RESOURCE_TYPE_STATICIPV6MACLISTSPEC = "StaticIpv6MacListSpec"
 const Ipv6AssignmentSpec_RESOURCE_TYPE_ASSIGNEDBYAUTOCONF = "AssignedByAutoConf"
 const Ipv6AssignmentSpec_RESOURCE_TYPE_NOIPV6 = "NoIpv6"
-const Ipv6AssignmentSpec_RESOURCE_TYPE_FROMESXIVMKNICIPV6 = "FromEsxiVmknicIpv6"
 
 func (s *Ipv6AssignmentSpec) GetType__() vapiBindings_.BindingType {
 	return Ipv6AssignmentSpecBindingType()
@@ -70092,7 +70116,6 @@ type NoIpv6 struct {
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_STATICIPV6MACLISTSPEC
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_ASSIGNEDBYAUTOCONF
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_NOIPV6
-	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_FROMESXIVMKNICIPV6
 	ResourceType string
 }
 
@@ -75369,7 +75392,7 @@ type PktCaptureSession struct {
 	Tags []Tag
 	// Timestamp when session was stopped in epoch millisecond. format: int64
 	Endtime *int64
-	// Error messasge in capture.
+	// Error message in capture.
 	Errormsg *string
 	// Packet capture file location.
 	Filelocation *string
@@ -75429,7 +75452,7 @@ type PktCaptureSessionList struct {
 	SortAscending *bool
 	// Field by which records are sorted
 	SortBy *string
-	// Packet capture list for all sessoins
+	// Packet capture list for all sessions
 	Results []PktCaptureSession
 }
 
@@ -79766,15 +79789,15 @@ func (s *PolicyEdgeTransportNode) GetDataValue__() (vapiData_.DataValue, []error
 
 // This field is optional, if not provided auto-generated credentials will be used.
 type PolicyEdgeTransportNodeCredential struct {
-	// Password for the node audit user. For deployment, this property is required. After deployment, this property is ignored, and the node cli must be used to change the password. The password specified must be at least 12 characters in length and must contain at least one lowercase, one uppercase, one numeric character and one special character (except quotes). Passwords based on dictionary words and palindromes are invalid.
+	// Password for the node audit user. For deployment, this property is required. After deployment, this property is ignored, and the node cli must be used to change the password. Passwords based on dictionary words and palindromes are invalid. Password must meet the criteria defined by the API GET https://<nsx-mgr>/api/v1/node/aaa/auth-policy.
 	AuditPassword *string
 	// The default username is \"audit\". To configure username, you must provide this property together with **audit_password**. Username must contain ASCII characters only.
 	AuditUsername *string
-	// Password for the node cli user. For deployment, this property is required. After deployment, this property is ignored, and the node cli must be used to change the password. The password specified must be at least 12 characters in length and must contain at least one lowercase, one uppercase, one numeric character and one special character (except quotes). Passwords based on dictionary words and palindromes are invalid.
+	// Password for the node cli user. For deployment, this property is required. After deployment, this property is ignored, and the node cli must be used to change the password. Passwords based on dictionary words and palindromes are invalid. Password must meet the criteria defined by the API GET https://<nsx-mgr>/api/v1/node/aaa/auth-policy.
 	CliPassword *string
 	// To configure username, you must provide this property together with **cli_password**. Username must contain ASCII characters only.
 	CliUsername *string
-	// Password for the node root user. For deployment, this property is required. After deployment, this property is ignored, and the node cli must be used to change the password. The password specified must be at least 12 characters in length and must contain at least one lowercase, one uppercase, one numeric character and one special character (except quotes). Passwords based on dictionary words and palindromes are invalid.
+	// Password for the node root user. For deployment, this property is required. After deployment, this property is ignored, and the node cli must be used to change the password. Passwords based on dictionary words and palindromes are invalid. Password must meet the criteria defined by the API GET https://<nsx-mgr>/api/v1/node/aaa/auth-policy.
 	RootPassword *string
 }
 
@@ -88899,7 +88922,7 @@ func (s *PolicyTunnelTepGroup) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Profile for uplink policies
+// UplinkHostSwitchProfile defines teaming and uplink policies for a HostSwitch. See individual fields below for more details. UplinkHostSwitchProfile is mandatory when, 1] HostSwitch uses vlan transport zone 2] IpAssignmentType is not FromEsxiVmknic UplinkHostSwitchProfile is not supported when, 1] HostSwitch uses IpAssignmentType FromEsxiVmknic and only OverlayTransportZone. In this case, teaming and uplink policies will be inherited from VC VDS dvpg used by the vteps 2] HostSwitch uses Overlay+Vlan TransportZones, IpAssignmentType.FromEsxiVmknic and Esxi vmk are present on vnetworking netstack. This case creates ambiguity for configuring teaming and uplink policies on hostSwitch.
 type PolicyUplinkHostSwitchProfile struct {
 	// list of LACP group
 	Lags []Lag
@@ -91615,19 +91638,19 @@ func (s *ProjectRouteFilterListResult) GetDataValue__() (vapiData_.DataValue, []
 	return dataVal, nil
 }
 
-// Project state information including supported networking stack.
+// Project state information including supported network stack capability.
 type ProjectState struct {
 	// Possible values are:
 	//
-	// * ProjectState#ProjectState_SUPPORTED_NETWORKING_STACK_FULL_STACK_VPC
-	// * ProjectState#ProjectState_SUPPORTED_NETWORKING_STACK_VLAN_BACKED_VPC
+	// * ProjectState#ProjectState_NETWORK_STACK_FULL_STACK_VPC
+	// * ProjectState#ProjectState_NETWORK_STACK_VLAN_BACKED_VPC
 	//
-	//  Indicates the networking stack supported by the project, which reflects the highest capability level of the supported_networking_stack values from all vpc_deployment_scope configurations in the project. FULL_STACK_VPC indicates all features are supported, while VLAN_BACKED_VPC indicates only limited features are supported. The project's supported_networking_stack is determined as follows: - If any zone or span in the vpc_deployment_scope has FULL_STACK_VPC, the project returns FULL_STACK_VPC. - If all zones or spans in the vpc_deployment_scope are VLAN_BACKED_VPC, the project returns VLAN_BACKED_VPC.
-	SupportedNetworkingStack *string
+	//  Indicates the networking stack supported by the project, which reflects the highest capability level of the network_stack values from all vpc_deployment_scope configurations in the project. FULL_STACK_VPC indicates all features are supported, while VLAN_BACKED_VPC indicates only limited features are supported. The project's network_stack is determined as follows: - If any zone or span in the vpc_deployment_scope has FULL_STACK_VPC, the project returns FULL_STACK_VPC. - If all zones or spans in the vpc_deployment_scope are VLAN_BACKED_VPC, the project returns VLAN_BACKED_VPC.
+	NetworkStack *string
 }
 
-const ProjectState_SUPPORTED_NETWORKING_STACK_FULL_STACK_VPC = "FULL_STACK_VPC"
-const ProjectState_SUPPORTED_NETWORKING_STACK_VLAN_BACKED_VPC = "VLAN_BACKED_VPC"
+const ProjectState_NETWORK_STACK_FULL_STACK_VPC = "FULL_STACK_VPC"
+const ProjectState_NETWORK_STACK_VLAN_BACKED_VPC = "VLAN_BACKED_VPC"
 
 func (s *ProjectState) GetType__() vapiBindings_.BindingType {
 	return ProjectStateBindingType()
@@ -107864,21 +107887,21 @@ type SpanMembersListResult struct {
 	SortAscending *bool
 	// Field by which records are sorted
 	SortBy *string
-	// Network Span Members List Result
-	Results []SpanMember
 	// Possible values are:
 	//
-	// * SpanMembersListResult#SpanMembersListResult_SUPPORTED_NETWORKING_STACK_NONE
-	// * SpanMembersListResult#SpanMembersListResult_SUPPORTED_NETWORKING_STACK_FULL_STACK_VPC
-	// * SpanMembersListResult#SpanMembersListResult_SUPPORTED_NETWORKING_STACK_VLAN_BACKED_VPC
+	// * SpanMembersListResult#SpanMembersListResult_NETWORK_STACK_NONE
+	// * SpanMembersListResult#SpanMembersListResult_NETWORK_STACK_FULL_STACK_VPC
+	// * SpanMembersListResult#SpanMembersListResult_NETWORK_STACK_VLAN_BACKED_VPC
 	//
 	//  Indicates the networking stack supported by the members of this network span.
-	SupportedNetworkingStack *string
+	NetworkStack *string
+	// Network Span Members List Result
+	Results []SpanMember
 }
 
-const SpanMembersListResult_SUPPORTED_NETWORKING_STACK_NONE = "NONE"
-const SpanMembersListResult_SUPPORTED_NETWORKING_STACK_FULL_STACK_VPC = "FULL_STACK_VPC"
-const SpanMembersListResult_SUPPORTED_NETWORKING_STACK_VLAN_BACKED_VPC = "VLAN_BACKED_VPC"
+const SpanMembersListResult_NETWORK_STACK_NONE = "NONE"
+const SpanMembersListResult_NETWORK_STACK_FULL_STACK_VPC = "FULL_STACK_VPC"
+const SpanMembersListResult_NETWORK_STACK_VLAN_BACKED_VPC = "VLAN_BACKED_VPC"
 
 func (s *SpanMembersListResult) GetType__() vapiBindings_.BindingType {
 	return SpanMembersListResultBindingType()
@@ -108909,7 +108932,6 @@ type StaticIpv6ListSpec struct {
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_STATICIPV6MACLISTSPEC
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_ASSIGNEDBYAUTOCONF
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_NOIPV6
-	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_FROMESXIVMKNICIPV6
 	ResourceType string
 }
 
@@ -108994,7 +109016,6 @@ type StaticIpv6MacListSpec struct {
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_STATICIPV6MACLISTSPEC
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_ASSIGNEDBYAUTOCONF
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_NOIPV6
-	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_FROMESXIVMKNICIPV6
 	ResourceType string
 }
 
@@ -109070,7 +109091,6 @@ type StaticIpv6PoolSpec struct {
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_STATICIPV6MACLISTSPEC
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_ASSIGNEDBYAUTOCONF
 	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_NOIPV6
-	// * Ipv6AssignmentSpec#Ipv6AssignmentSpec_RESOURCE_TYPE_FROMESXIVMKNICIPV6
 	ResourceType string
 }
 
@@ -110024,8 +110044,6 @@ type SubnetAdvancedConfig struct {
 	ConnectivityState *string
 	// An array of dhcp server addresses per address family. Addresses should be in ip/prefix_length format. format: ip-cidr-block
 	DhcpServerAddresses []string
-	// Enabling VLAN connection for the subnet. The user must configure the exclusive external IP block for this subnet. The IP block should also be configured under a distributed VLAN connection. The default value for this will be false.
-	EnableVlanExtension *bool
 	// This property could be used for vendor specific configuration in key value string pairs.
 	ExtraConfigs []SubnetExtraConfig
 	// An array of gateway addresses per address family. Addresses should be in ip/prefix_length format. format: ip-cidr-block
@@ -110231,28 +110249,6 @@ func (s *SubnetDhcpConfig) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for SubnetDhcpConfig._GetDataValue method - %s",
-			vapiBindings_.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-// Subnet exclusive config
-type SubnetExclusiveConfig struct {
-	// Policy path of external IP block. This IP block must be marked as reserved for VLAN extension.
-	IpBlockPath   *string
-	VlanExtension *VlanExtension
-}
-
-func (s *SubnetExclusiveConfig) GetType__() vapiBindings_.BindingType {
-	return SubnetExclusiveConfigBindingType()
-}
-
-func (s *SubnetExclusiveConfig) GetDataValue__() (vapiData_.DataValue, []error) {
-	typeConverter := vapiBindings_.NewTypeConverter()
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		vapiLog_.Errorf("Error in ConvertToVapi for SubnetExclusiveConfig._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -118709,19 +118705,19 @@ type TransitGatewayState struct {
 	LastUpdateTimestamp *int64
 	// The Id of the TGW logical gateway.
 	LogicalGatewayId *string
-	// TGW per node status.
-	PerNodeStatus []TransitGatewayStateNodeStatus
 	// Possible values are:
 	//
-	// * TransitGatewayState#TransitGatewayState_SUPPORTED_NETWORKING_STACK_FULL_STACK_VPC
-	// * TransitGatewayState#TransitGatewayState_SUPPORTED_NETWORKING_STACK_VLAN_BACKED_VPC
+	// * TransitGatewayState#TransitGatewayState_NETWORK_STACK_FULL_STACK_VPC
+	// * TransitGatewayState#TransitGatewayState_NETWORK_STACK_VLAN_BACKED_VPC
 	//
 	//  Indicates the networking stack supported by the connected VPCs.
-	SupportedNetworkingStack *string
+	NetworkStack *string
+	// TGW per node status.
+	PerNodeStatus []TransitGatewayStateNodeStatus
 }
 
-const TransitGatewayState_SUPPORTED_NETWORKING_STACK_FULL_STACK_VPC = "FULL_STACK_VPC"
-const TransitGatewayState_SUPPORTED_NETWORKING_STACK_VLAN_BACKED_VPC = "VLAN_BACKED_VPC"
+const TransitGatewayState_NETWORK_STACK_FULL_STACK_VPC = "FULL_STACK_VPC"
+const TransitGatewayState_NETWORK_STACK_VLAN_BACKED_VPC = "VLAN_BACKED_VPC"
 
 func (s *TransitGatewayState) GetType__() vapiBindings_.BindingType {
 	return TransitGatewayStateBindingType()
@@ -123006,15 +123002,15 @@ func (s *VirtualNetworkApplianceConfigurationStateElement) GetDataValue__() (vap
 
 // This field is optional, if not provided auto-generated credentials will be used.
 type VirtualNetworkApplianceCredential struct {
-	// Password for the node audit user. For deployment, this property is required. After deployment, this property is ignored, and the node cli must be used to change the password. The password specified must be at least 12 characters in length and must contain at least one lowercase, one uppercase, one numeric character and one special character (except quotes). Passwords based on dictionary words and palindromes are invalid.
+	// Password for the node audit user. For deployment, this property is required. After deployment, this property is ignored, and the node cli must be used to change the password. Passwords based on dictionary words and palindromes are invalid. Password must meet the criteria defined by the API GET https://<nsx-mgr>/api/v1/node/aaa/auth-policy.
 	AuditPassword *string
 	// The default system provided username is \"audit\".
 	AuditUsername *string
-	// Password for the node cli user. For deployment, this property is required. After deployment, this property is ignored, and the node cli must be used to change the password. The password specified must be at least 12 characters in length and must contain at least one lowercase, one uppercase, one numeric character and one special character (except quotes). Passwords based on dictionary words and palindromes are invalid.
+	// Password for the node cli user. For deployment, this property is required. After deployment, this property is ignored, and the node cli must be used to change the password. Passwords based on dictionary words and palindromes are invalid. Password must meet the criteria defined by the API GET https://<nsx-mgr>/api/v1/node/aaa/auth-policy.
 	CliPassword *string
 	// The default system provided username is \"admin\".
 	CliUsername *string
-	// Password for the node root user. For deployment, this property is required. After deployment, this property is ignored, and the node cli must be used to change the password. The password specified must be at least 12 characters in length and must contain at least one lowercase, one uppercase, one numeric character and one special character (except quotes). Passwords based on dictionary words and palindromes are invalid.
+	// Password for the node root user. For deployment, this property is required. After deployment, this property is ignored, and the node cli must be used to change the password. Passwords based on dictionary words and palindromes are invalid. Password must meet the criteria defined by the API GET https://<nsx-mgr>/api/v1/node/aaa/auth-policy.
 	RootPassword *string
 }
 
@@ -123339,27 +123335,6 @@ func (s *VlanAvailability) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for VlanAvailability._GetDataValue method - %s",
-			vapiBindings_.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-// Specifies whether VLAN extension and VPC gateway connectivity are enabled for the VPC subnet.
-type VlanExtension struct {
-	// This configuration controls whether the VLAN extension subnet connects to the VPC gateway.
-	VpcGatewayConnectionEnable *bool
-}
-
-func (s *VlanExtension) GetType__() vapiBindings_.BindingType {
-	return VlanExtensionBindingType()
-}
-
-func (s *VlanExtension) GetDataValue__() (vapiData_.DataValue, []error) {
-	typeConverter := vapiBindings_.NewTypeConverter()
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		vapiLog_.Errorf("Error in ConvertToVapi for VlanExtension._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -125070,19 +125045,19 @@ type VpcState struct {
 	LastUpdateTimestamp *int64
 	// The Id of the VPC logical gateway.
 	LogicalGatewayId *string
-	// VPC per node status.
-	PerNodeStatus []VpcStateNodeStatus
 	// Possible values are:
 	//
-	// * VpcState#VpcState_SUPPORTED_NETWORKING_STACK_FULL_STACK_VPC
-	// * VpcState#VpcState_SUPPORTED_NETWORKING_STACK_VLAN_BACKED_VPC
+	// * VpcState#VpcState_NETWORK_STACK_FULL_STACK_VPC
+	// * VpcState#VpcState_NETWORK_STACK_VLAN_BACKED_VPC
 	//
 	//  Indicates the networking stack supported by the VPC.
-	SupportedNetworkingStack *string
+	NetworkStack *string
+	// VPC per node status.
+	PerNodeStatus []VpcStateNodeStatus
 }
 
-const VpcState_SUPPORTED_NETWORKING_STACK_FULL_STACK_VPC = "FULL_STACK_VPC"
-const VpcState_SUPPORTED_NETWORKING_STACK_VLAN_BACKED_VPC = "VLAN_BACKED_VPC"
+const VpcState_NETWORK_STACK_FULL_STACK_VPC = "FULL_STACK_VPC"
+const VpcState_NETWORK_STACK_VLAN_BACKED_VPC = "VLAN_BACKED_VPC"
 
 func (s *VpcState) GetType__() vapiBindings_.BindingType {
 	return VpcStateBindingType()
@@ -125325,15 +125300,15 @@ type VpcSubnet struct {
 	// * VpcSubnet#VpcSubnet_ACCESS_MODE_PRIVATE_TGW
 	// * VpcSubnet#VpcSubnet_ACCESS_MODE_L2_ONLY
 	//
-	//  There are five kinds of Access Types supported for an Application. Private - VPC Subnet is accessible only within the application and its IPs are allocated from private IP address pool from VPC configuration unless specified explicitly by user. Public - VPC Subnet is accessible from external networks and its IPs are allocated from public IP address pool from VPC configuration unless specified explicitly by user. Isolated - VPC Subnet is not accessible from other VPC Subnets within the same VPC. Please make use of Private, Private_TGW or Public Subnets with connectivity_state as DISCONNECTED to have a disconnected Subnet. This value is deprecated. Private_TGW - VPC Subnet is accessible from using connected TGW. L2_Only - VPC Subnet offers Layer 2 connectivity with optional VLAN bridging and full user-managed IP control.
+	//  There are five kinds of Access Types supported for an Application. Private - VPC Subnet is accessible only within the application and its IPs are allocated from private IP address pool from VPC configuration unless specified explicitly by user. The default value is Private. However, for VLAN extension subnets (when vlan_connection is provided), the default access mode depends on the subnet_extension_connection configuration of the referenced distributed VLAN connection. Public - VPC Subnet is accessible from external networks and its IPs are allocated from public IP address pool from VPC configuration unless specified explicitly by user. Isolated - VPC Subnet is not accessible from other VPC Subnets within the same VPC. Please make use of Private, Private_TGW or Public Subnets with connectivity_state as DISCONNECTED to have a disconnected Subnet. This value is deprecated. Private_TGW - VPC Subnet is accessible from using connected TGW. L2_Only - VPC Subnet offers Layer 2 connectivity with optional VLAN bridging and full user-managed IP control.
 	AccessMode     *string
 	AdvancedConfig *SubnetAdvancedConfig
 	DhcpConfig     *VpcSubnetDhcpConfig
-	// VPC Subnet IP addresses. If not provided, IP assignment will be done based on VPC CIDRs This represents the VPC Subnet that is associated with tier. If IPv4 CIDR is given, ipv4_subnet_size property is ignored. For IPv6 CIDR, supported prefix length is /64. In case of VLAN extension subnet, 'ip_blocks' should be used in stead of this property. format: ip-cidr-block
+	// VPC Subnet IP addresses. If not provided, IP assignment will be done based on VPC CIDRs. This represents the VPC Subnet that is associated with tier. If ip_addresses is provided in subnet creation, ipv4_subnet_size property is ignored. For IPv6 CIDR, supported prefix length is /64. For VLAN-extension subnets, the vlan_connection property must be used instead of this field. format: ip-cidr-block
 	IpAddresses []string
-	// IP block path for subnet IP allocation. IP block is supported for only one IP address family, either IPv4 or IPv6. IP block should be part of: 1) VPC's Private IP block path or 2) VPC Connectivity Profile's attachment's External IP block path or 3) VPC Connectivity Profile's attachment's Project IP block path. 4) Subnet exclusive IP block path in case this subnet is created for VLAN extension.
+	// IP block path for subnet IP allocation. IP block is supported for only one IP address family, either IPv4 or IPv6. IP block should be part of: 1) VPC's Private IP block path or 2) VPC Connectivity Profile's attachment's External IP block path or 3) VPC Connectivity Profile's attachment's Project IP block path. For VLAN-extension subnets, the vlan_connection property must be used instead of this field.
 	IpBlocks []string
-	// If IP Addresses are not provided, this field will be used to carve out the ips from respective ip block defined in the parent VPC. The default is 64. If ip_addresses field is provided then ipv4_subnet_size field is ignored. This field cannot be modified after creating a VPC Subnet. format: int32
+	// Specifies the size of the IPv4 subnet. If ip_addresses or vlan_connection is provided, this field is ignored and not persisted. When a subnet is created with only access_mode in the payload (i.e., no ip_addresses or vlan_connection), the system automatically assigns a value of 64 to this property. Modifying ipv4_subnet_size after subnet creation is not supported. format: int32
 	Ipv4SubnetSize   *int64
 	SubnetDhcpConfig *SubnetDhcpConfig
 	// Distributed VLAN connection path.
@@ -149099,8 +149074,6 @@ func DistributedVlanConnectionBindingType() vapiBindings_.BindingType {
 	fieldNameMap["gateway_addresses"] = "GatewayAddresses"
 	fields["restricted_availability"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(VlanAvailabilityBindingType))
 	fieldNameMap["restricted_availability"] = "RestrictedAvailability"
-	fields["subnet_exclusive_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SubnetExclusiveConfigBindingType))
-	fieldNameMap["subnet_exclusive_config"] = "SubnetExclusiveConfig"
 	fields["subnet_extension_connection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["subnet_extension_connection"] = "SubnetExtensionConnection"
 	fields["vlan_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -152183,6 +152156,40 @@ func FirewallConfigurationBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.firewall_configuration", fields, reflect.TypeOf(FirewallConfiguration{}), fieldNameMap, validators)
 }
 
+func FirewallExcludeListMembersCountBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["count"] = "Count"
+	fields["member_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["member_type"] = "MemberType"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.firewall_exclude_list_members_count", fields, reflect.TypeOf(FirewallExcludeListMembersCount{}), fieldNameMap, validators)
+}
+
+func FirewallExcludeListMembersCountListResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(FirewallExcludeListMembersCountBindingType), reflect.TypeOf([]FirewallExcludeListMembersCount{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.firewall_exclude_list_members_count_list_result", fields, reflect.TypeOf(FirewallExcludeListMembersCountListResult{}), fieldNameMap, validators)
+}
+
 func FirewallExportListResultBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -152605,15 +152612,6 @@ func FromEsxiVmknicBindingType() vapiBindings_.BindingType {
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.from_esxi_vmknic", fields, reflect.TypeOf(FromEsxiVmknic{}), fieldNameMap, validators)
-}
-
-func FromEsxiVmknicIpv6BindingType() vapiBindings_.BindingType {
-	fields := make(map[string]vapiBindings_.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["resource_type"] = vapiBindings_.NewStringType()
-	fieldNameMap["resource_type"] = "ResourceType"
-	var validators = []vapiBindings_.Validator{}
-	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.from_esxi_vmknic_ipv6", fields, reflect.TypeOf(FromEsxiVmknicIpv6{}), fieldNameMap, validators)
 }
 
 func FullSyncInfoBindingType() vapiBindings_.BindingType {
@@ -161500,6 +161498,8 @@ func InfraSecurityConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["crl_checking_enabled"] = "CrlCheckingEnabled"
 	fields["eku_checking_enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["eku_checking_enabled"] = "EkuCheckingEnabled"
+	fields["ndcpp_enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["ndcpp_enabled"] = "NdcppEnabled"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.infra_security_config", fields, reflect.TypeOf(InfraSecurityConfig{}), fieldNameMap, validators)
 }
@@ -162279,8 +162279,6 @@ func IpAddressBlockBindingType() vapiBindings_.BindingType {
 	fieldNameMap["excluded_ips"] = "ExcludedIps"
 	fields["ip_address_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["ip_address_type"] = "IpAddressType"
-	fields["is_subnet_exclusive"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fieldNameMap["is_subnet_exclusive"] = "IsSubnetExclusive"
 	fields["ranges"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(IpPoolRangeBindingType), reflect.TypeOf([]IpPoolRange{})))
 	fieldNameMap["ranges"] = "Ranges"
 	fields["subnet_exclusive"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
@@ -184808,8 +184806,8 @@ func ProjectRouteFilterListResultBindingType() vapiBindings_.BindingType {
 func ProjectStateBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["supported_networking_stack"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["supported_networking_stack"] = "SupportedNetworkingStack"
+	fields["network_stack"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["network_stack"] = "NetworkStack"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.project_state", fields, reflect.TypeOf(ProjectState{}), fieldNameMap, validators)
 }
@@ -195048,10 +195046,10 @@ func SpanMembersListResultBindingType() vapiBindings_.BindingType {
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["sort_by"] = "SortBy"
+	fields["network_stack"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["network_stack"] = "NetworkStack"
 	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(SpanMemberBindingType), reflect.TypeOf([]SpanMember{})))
 	fieldNameMap["results"] = "Results"
-	fields["supported_networking_stack"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["supported_networking_stack"] = "SupportedNetworkingStack"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.span_members_list_result", fields, reflect.TypeOf(SpanMembersListResult{}), fieldNameMap, validators)
 }
@@ -196301,8 +196299,6 @@ func SubnetAdvancedConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["connectivity_state"] = "ConnectivityState"
 	fields["dhcp_server_addresses"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["dhcp_server_addresses"] = "DhcpServerAddresses"
-	fields["enable_vlan_extension"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fieldNameMap["enable_vlan_extension"] = "EnableVlanExtension"
 	fields["extra_configs"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(SubnetExtraConfigBindingType), reflect.TypeOf([]SubnetExtraConfig{})))
 	fieldNameMap["extra_configs"] = "ExtraConfigs"
 	fields["gateway_addresses"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
@@ -196423,17 +196419,6 @@ func SubnetDhcpConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["mode"] = "Mode"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.subnet_dhcp_config", fields, reflect.TypeOf(SubnetDhcpConfig{}), fieldNameMap, validators)
-}
-
-func SubnetExclusiveConfigBindingType() vapiBindings_.BindingType {
-	fields := make(map[string]vapiBindings_.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["ip_block_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["ip_block_path"] = "IpBlockPath"
-	fields["vlan_extension"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(VlanExtensionBindingType))
-	fieldNameMap["vlan_extension"] = "VlanExtension"
-	var validators = []vapiBindings_.Validator{}
-	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.subnet_exclusive_config", fields, reflect.TypeOf(SubnetExclusiveConfig{}), fieldNameMap, validators)
 }
 
 func SubnetExtraConfigBindingType() vapiBindings_.BindingType {
@@ -200968,10 +200953,10 @@ func TransitGatewayStateBindingType() vapiBindings_.BindingType {
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["logical_gateway_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["logical_gateway_id"] = "LogicalGatewayId"
+	fields["network_stack"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["network_stack"] = "NetworkStack"
 	fields["per_node_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TransitGatewayStateNodeStatusBindingType), reflect.TypeOf([]TransitGatewayStateNodeStatus{})))
 	fieldNameMap["per_node_status"] = "PerNodeStatus"
-	fields["supported_networking_stack"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["supported_networking_stack"] = "SupportedNetworkingStack"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.transit_gateway_state", fields, reflect.TypeOf(TransitGatewayState{}), fieldNameMap, validators)
 }
@@ -203467,15 +203452,6 @@ func VlanAvailabilityBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vlan_availability", fields, reflect.TypeOf(VlanAvailability{}), fieldNameMap, validators)
 }
 
-func VlanExtensionBindingType() vapiBindings_.BindingType {
-	fields := make(map[string]vapiBindings_.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["vpc_gateway_connection_enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fieldNameMap["vpc_gateway_connection_enable"] = "VpcGatewayConnectionEnable"
-	var validators = []vapiBindings_.Validator{}
-	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vlan_extension", fields, reflect.TypeOf(VlanExtension{}), fieldNameMap, validators)
-}
-
 func VlanExtensionAggregatedDataCounterBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -204625,10 +204601,10 @@ func VpcStateBindingType() vapiBindings_.BindingType {
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["logical_gateway_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["logical_gateway_id"] = "LogicalGatewayId"
+	fields["network_stack"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["network_stack"] = "NetworkStack"
 	fields["per_node_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(VpcStateNodeStatusBindingType), reflect.TypeOf([]VpcStateNodeStatus{})))
 	fieldNameMap["per_node_status"] = "PerNodeStatus"
-	fields["supported_networking_stack"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["supported_networking_stack"] = "SupportedNetworkingStack"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vpc_state", fields, reflect.TypeOf(VpcState{}), fieldNameMap, validators)
 }

@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SessionClient interface {
 
-	// Create an new packet capture session on given node with specified options
+	// Create a new packet capture session on given node with specified options
 	//
 	// @param pktCaptureRequestParam (required)
 	// @return com.vmware.nsx_policy.model.PktCaptureSession

@@ -4,10 +4,10 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: State
+// Interface file for service: Members
 // Used by client-side stubs.
 
-package projects
+package zones
 
 import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -19,13 +19,12 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-type StateClient interface {
+type MembersClient interface {
 
-	// Get the Project's state that includes the supported network stack capability.
+	// Read Zone Members. This will list all the zone members (VcCluster or StandaloneHost).
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @return com.vmware.nsx_policy.model.ProjectState
+	// @param zoneIdParam (required)
+	// @return com.vmware.nsx_policy.model.SpanMembersListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -33,60 +32,59 @@ type StateClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string) (nsx_policyModel.ProjectState, error)
+	List(zoneIdParam string) (nsx_policyModel.SpanMembersListResult, error)
 }
 
-type stateClient struct {
+type membersClient struct {
 	connector           vapiProtocolClient_.Connector
 	interfaceDefinition vapiCore_.InterfaceDefinition
 	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewStateClient(connector vapiProtocolClient_.Connector) *stateClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.state")
+func NewMembersClient(connector vapiProtocolClient_.Connector) *membersClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.zones.members")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
-	sIface := stateClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
-	return &sIface
+	mIface := membersClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &mIface
 }
 
-func (sIface *stateClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
-	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
+func (mIface *membersClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+	if entry, ok := mIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *stateClient) Get(orgIdParam string, projectIdParam string) (nsx_policyModel.ProjectState, error) {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	operationRestMetaData := stateGetRestMetadata()
+func (mIface *membersClient) List(zoneIdParam string) (nsx_policyModel.SpanMembersListResult, error) {
+	typeConverter := mIface.connector.TypeConverter()
+	executionContext := mIface.connector.NewExecutionContext()
+	operationRestMetaData := membersListRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(stateGetInputType(), typeConverter)
-	sv.AddStructField("OrgId", orgIdParam)
-	sv.AddStructField("ProjectId", projectIdParam)
+	sv := vapiBindings_.NewStructValueBuilder(membersListInputType(), typeConverter)
+	sv.AddStructField("ZoneId", zoneIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.ProjectState
+		var emptyOutput nsx_policyModel.SpanMembersListResult
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.state", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.ProjectState
+	methodResult := mIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.zones.members", "list", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.SpanMembersListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StateGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), MembersListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.ProjectState), nil
+		return output.(nsx_policyModel.SpanMembersListResult), nil
 	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), mIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}

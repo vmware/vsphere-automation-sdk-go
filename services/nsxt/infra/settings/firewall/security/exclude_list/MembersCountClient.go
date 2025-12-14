@@ -4,10 +4,10 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: State
+// Interface file for service: MembersCount
 // Used by client-side stubs.
 
-package projects
+package exclude_list
 
 import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -19,13 +19,10 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-type StateClient interface {
+type MembersCountClient interface {
 
-	// Get the Project's state that includes the supported network stack capability.
-	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
-	// @return com.vmware.nsx_policy.model.ProjectState
+	// Returns the count of IP addresses in the firewall exclude list.
+	// @return com.vmware.nsx_policy.model.FirewallExcludeListMembersCountListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -33,60 +30,58 @@ type StateClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string) (nsx_policyModel.ProjectState, error)
+	List() (nsx_policyModel.FirewallExcludeListMembersCountListResult, error)
 }
 
-type stateClient struct {
+type membersCountClient struct {
 	connector           vapiProtocolClient_.Connector
 	interfaceDefinition vapiCore_.InterfaceDefinition
 	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewStateClient(connector vapiProtocolClient_.Connector) *stateClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.state")
+func NewMembersCountClient(connector vapiProtocolClient_.Connector) *membersCountClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.settings.firewall.security.exclude_list.members_count")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
-	sIface := stateClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
-	return &sIface
+	mIface := membersCountClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &mIface
 }
 
-func (sIface *stateClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
-	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
+func (mIface *membersCountClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+	if entry, ok := mIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *stateClient) Get(orgIdParam string, projectIdParam string) (nsx_policyModel.ProjectState, error) {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	operationRestMetaData := stateGetRestMetadata()
+func (mIface *membersCountClient) List() (nsx_policyModel.FirewallExcludeListMembersCountListResult, error) {
+	typeConverter := mIface.connector.TypeConverter()
+	executionContext := mIface.connector.NewExecutionContext()
+	operationRestMetaData := membersCountListRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(stateGetInputType(), typeConverter)
-	sv.AddStructField("OrgId", orgIdParam)
-	sv.AddStructField("ProjectId", projectIdParam)
+	sv := vapiBindings_.NewStructValueBuilder(membersCountListInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.ProjectState
+		var emptyOutput nsx_policyModel.FirewallExcludeListMembersCountListResult
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.state", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.ProjectState
+	methodResult := mIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.exclude_list.members_count", "list", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.FirewallExcludeListMembersCountListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StateGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), MembersCountListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.ProjectState), nil
+		return output.(nsx_policyModel.FirewallExcludeListMembersCountListResult), nil
 	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), mIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
