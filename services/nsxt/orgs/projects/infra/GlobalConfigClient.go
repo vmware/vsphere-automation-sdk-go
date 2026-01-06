@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type GlobalConfigClient interface {
 
-	// This rest routine is deprecated. Use /infra/connectivity-global-config for Connectivity global config and /infra/ops-global-config for Operations global config. Read global configuration.
+	// Read global configuration.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -54,7 +54,7 @@ type GlobalConfigClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, globalConfigParam nsx_policyModel.GlobalConfig, applyLocallyParam *bool) error
 
-	// This rest routine is deprecated. Use /infra/connectivity-global-config for Connectivity global config and /infra/ops-global-config for Operations global config. Update the global configuration.
+	// Update the global configuration.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

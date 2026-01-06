@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -37,7 +37,7 @@ type ServiceEntriesClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, serviceIdParam string, serviceEntryIdParam string) error
 
-	// Service entry
+	// Read service entry
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -54,7 +54,7 @@ type ServiceEntriesClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, serviceIdParam string, serviceEntryIdParam string) (*vapiData_.StructValue, error)
 
-	// Paginated list of Service entries for the given service
+	// Return list of Service entries for the given service
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

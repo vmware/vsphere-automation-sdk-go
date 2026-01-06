@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatusClient interface {
 
-	// Returns the allocation details of cluster and its members. Lists the service node members, active and standby services of each node, utilization details of configured sub-pools. These allocation details can be monitored by customers to trigger migration of certain service contexts to different VirtualNetworkAppliances, to balance the utilization of VirtualNetworkAppliance(VNA) resources.
+	// Returns the allocation details of cluster and its members. Lists the service node members, active and standby services of each node, utilization details of configured sub-pools. These allocation details can be monitored by customers to trigger migration of certain service contexts to different virtual network appliance, to balance the utilization of virtual network appliance(VNA) resources.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)

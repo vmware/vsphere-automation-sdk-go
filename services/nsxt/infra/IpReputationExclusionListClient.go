@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type IpReputationExclusionListClient interface {
 
-	// Querying the API on GM with a valid enforcement point path, the API will return the list of exclusion IPs from the default malicious IP group of the site represented by the enforcement point path. In the absence of an enforcement point path, the API returns the exclusion IPs present in the global default malicious IP group of GM. Querying the API on LM, the api will return a list of exclusion IP addresses present in the local default malicious ip group. The API will not consider the IP addresses present in the user created malicious group.
+	//
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param enforcementPointPathParam The path of the enforcement point from which the list of members needs to be fetched. Forward slashes must be escaped using %2F. (optional)

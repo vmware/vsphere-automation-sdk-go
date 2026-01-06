@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -35,11 +35,11 @@ func statusListInputType() vapiBindings_.StructType {
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
-	fields["service_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["stats_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["virtual_network_appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["route_controller_id"] = "RouteControllerId"
 	fieldNameMap["bgp_neighbor_type"] = "BgpNeighborType"
 	fieldNameMap["cursor"] = "Cursor"
@@ -47,11 +47,11 @@ func statusListInputType() vapiBindings_.StructType {
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
-	fieldNameMap["service_node_path"] = "ServiceNodePath"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["stats_type"] = "StatsType"
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
+	fieldNameMap["virtual_network_appliance_path"] = "VirtualNetworkAppliancePath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -76,11 +76,11 @@ func statusListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
-	fields["service_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["stats_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["virtual_network_appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["route_controller_id"] = "RouteControllerId"
 	fieldNameMap["bgp_neighbor_type"] = "BgpNeighborType"
 	fieldNameMap["cursor"] = "Cursor"
@@ -88,13 +88,13 @@ func statusListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
-	fieldNameMap["service_node_path"] = "ServiceNodePath"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["stats_type"] = "StatsType"
 	fieldNameMap["transport_node_id"] = "TransportNodeId"
+	fieldNameMap["virtual_network_appliance_path"] = "VirtualNetworkAppliancePath"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["service_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["virtual_network_appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -108,7 +108,7 @@ func statusListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["routeControllerId"] = vapiBindings_.NewStringType()
 	pathParams["route_controller_id"] = "routeControllerId"
 	queryParams["cursor"] = "cursor"
-	queryParams["service_node_path"] = "service_node_path"
+	queryParams["virtual_network_appliance_path"] = "virtual_network_appliance_path"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["enforcement_point_path"] = "enforcement_point_path"

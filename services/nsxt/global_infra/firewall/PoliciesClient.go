@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -23,7 +23,7 @@ type PoliciesClient interface {
 
 	// Get the list of policies filtered based on the given criteria.
 	//
-	// @param scopeParam All those firewall entities, policies/rules, will be returned whose scope value satisfies the given criteria. The value for scope can be, - virtual machine id or - logical router id. Based on the given scope value, the entities will be filtered. (required)
+	// @param scopeParam All those firewall entities, policies/rules, will be returned whose scope value satisfies the given criteria. The value for scope can be, - nsgroup id - logical port id - logical switch id (for DFW) - logical router id (for GFW) Based on the given scope value, the entities will be filtered. (required)
 	// @param enforcementPointPathParam Path of the enforcement point from where the result need to be fetched. If not provided, default enforcement point will be considered. It is mandatory parameter on global manager. (optional)
 	// @param parentPathParam The path of the parent object of entities that are need to be filtered based in the given criteria. Parent path is required for filtering rules of particular policy. (optional)
 	// @return com.vmware.nsx_policy.model.PolicyResourceReferenceForEPListResult

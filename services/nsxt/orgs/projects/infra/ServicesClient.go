@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -50,7 +50,7 @@ type ServicesClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, serviceIdParam string) (nsx_policyModel.Service, error)
 
-	// Paginated list of Services for infra.
+	// Return list of Services.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

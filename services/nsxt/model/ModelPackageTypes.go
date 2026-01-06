@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -995,7 +995,8 @@ type ALGTypeServiceEntry struct {
 	Alg *string
 	// The destination_port cannot be empty and must be a single value. format: port-or-range
 	DestinationPorts []string
-	SourcePorts      []string
+	// Number of values should not exceed 15, ranges count as 2 values. format: port-or-range
+	SourcePorts []string
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
 	// Schema for this resource
@@ -24330,6 +24331,28 @@ func (s *ClusterSecurityFeature) GetDataValue__() (vapiData_.DataValue, []error)
 	return dataVal, nil
 }
 
+type ClusterStatusErrorDetails struct {
+	// Error code encountered while collecting or reporting edge cluster status.
+	Code *string
+	// Error details encountered while collecting or reporting edge cluster status.
+	Details *string
+}
+
+func (s *ClusterStatusErrorDetails) GetType__() vapiBindings_.BindingType {
+	return ClusterStatusErrorDetailsBindingType()
+}
+
+func (s *ClusterStatusErrorDetails) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ClusterStatusErrorDetails._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Represents a column of the Grid
 type ColumnItem struct {
 	// Identifies the column and used for fetching content upon an user click or drilldown. If column identifier is not provided, the column's data will not participate in searches and drilldowns.
@@ -28983,6 +29006,8 @@ func (s *DfwDropCounters) GetDataValue__() (vapiData_.DataValue, []error) {
 
 // DFW Firewall related configurations
 type DfwFirewallConfiguration struct {
+	// If set to true, the system will prevent creation of new DFW policies when existing duplicate sequence numbers are detected (for policies with same scope and category). Users must first revise existing duplicates using the revise API before creating new policies. This only applies to DFW policies with \"applied to Any\" scope.
+	EnforceDuplicateSequenceNumberCheck *bool
 	// If set to true, identity firewall is enabled.
 	IdfwEnabled *bool
 	// This flag is deprecated. Use the alternate flag IdentityFirewallAdStore.event_log_scraper_enabled to enable or disable event log scraping for a given Firewall Identity Store. This flag is only available on local manager and it will be honoured only for Firewall Identity Store created on local manager. The event log scraping for locally created Firewall Identity Store will be enabled, if this flag OR per-domain IdentityFirewallAdStore.event_log_scraper_enabled flag is enabled. To switch off event log scraping for a Firewall Identity Store both this flag and the per-domain IdentityFirewallAdStore.event_log_scraper_enabled flag need to be disabled. This flag is not configurable via the UI. This flag will not effect Firewall Identity Store created on global manager. The event log scraping for globally created Firewall Identity Store will be enabled, if per-domain IdentityFirewallAdStore.event_log_scraper_enabled flag is enabled.
@@ -44721,6 +44746,7 @@ func (s *IPInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 
 // A ServiceEntry that represents an IP protocol
 type IPProtocolServiceEntry struct {
+	// IP protocol number (valid range: 0-255) format: int64
 	ProtocolNumber *int64
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -46077,8 +46103,9 @@ type IPSecVpnSessionStatusNsxt struct {
 	// * IPSecVpnSessionStatusNsxt#IPSecVpnSessionStatusNsxt_RUNTIME_STATUS_UP
 	// * IPSecVpnSessionStatusNsxt#IPSecVpnSessionStatusNsxt_RUNTIME_STATUS_DOWN
 	// * IPSecVpnSessionStatusNsxt#IPSecVpnSessionStatusNsxt_RUNTIME_STATUS_DEGRADED
+	// * IPSecVpnSessionStatusNsxt#IPSecVpnSessionStatusNsxt_RUNTIME_STATUS_NEGOTIATING
 	//
-	//  Gives session status consolidated using IKE status and tunnel status. It can be UP, DOWN, DEGRADED. If IKE and all tunnels are UP status will be UP, if all down it will be DOWN, otherwise it will be DEGRADED.
+	//  Gives session status consolidated using IKE status and tunnel status. It can be UP, DOWN, DEGRADED, NEGOTIATING. If IKE status is NEGO, it will be NEGOTIATING. If IKE and all tunnels are UP status will be UP, if all down it will be DOWN, otherwise it will be DEGRADED.
 	RuntimeStatus *string
 	// Total number of tunnels. format: int64
 	TotalTunnels *int64
@@ -46098,6 +46125,7 @@ const IPSecVpnSessionStatusNsxt__TYPE_IDENTIFIER = "IPSecVpnSessionStatusNsxT"
 const IPSecVpnSessionStatusNsxt_RUNTIME_STATUS_UP = "UP"
 const IPSecVpnSessionStatusNsxt_RUNTIME_STATUS_DOWN = "DOWN"
 const IPSecVpnSessionStatusNsxt_RUNTIME_STATUS_DEGRADED = "DEGRADED"
+const IPSecVpnSessionStatusNsxt_RUNTIME_STATUS_NEGOTIATING = "NEGOTIATING"
 
 func (s *IPSecVpnSessionStatusNsxt) GetType__() vapiBindings_.BindingType {
 	return IPSecVpnSessionStatusNsxtBindingType()
@@ -46567,7 +46595,7 @@ func (s *IPSubnet) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Provides the below summary of session status for all IPSec VPN sessions: - Total number of sessions configured. - Total number of failed sessions. - Total number of degraded sessions. - Total number of established sessions.
+// Provides the below summary of session status for all IPSec VPN sessions: - Total number of sessions configured. - Total number of failed sessions. - Total number of degraded sessions. - Total number of established sessions. - Total number of negotiating sessions.
 type IPsecVPNIKESessionSummary struct {
 	// The number of degraded IPSec VPN sessions. format: int64
 	DegradedSessions *int64
@@ -46575,6 +46603,8 @@ type IPsecVPNIKESessionSummary struct {
 	EstablishedSessions *int64
 	// The number of failed IPSec VPN sessions. format: int64
 	FailedSessions *int64
+	// The number of IPSec VPN sessions in negotiating state. format: int64
+	NegotiatingSessions *int64
 	// The total number of IPSec VPN sessions configured. format: int64
 	TotalSessions *int64
 }
@@ -74794,6 +74824,96 @@ func (s *PeerCertificateChain) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+type PeerNodeStatus struct {
+	// Display name of the edge node whose status is being reported.
+	DisplayName *string
+	// Peer node status when node went down.
+	DownSince *string
+	// Edge node details from where the status is being retrieved.
+	EdgeTransportNodePath *string
+	// Management ip of the edge node whose status is being reported.
+	ManagementIps []string
+	// Policy edge node backed by an edge transport node.
+	PolicyEdgeNodePath *string
+	// Possible values are:
+	//
+	// * PeerNodeStatus#PeerNodeStatus_STATUS_UP
+	// * PeerNodeStatus#PeerNodeStatus_STATUS_DOWN
+	// * PeerNodeStatus#PeerNodeStatus_STATUS_ADMIN_DOWN
+	// * PeerNodeStatus#PeerNodeStatus_STATUS_PARTIALLY_DISCONNECTED
+	// * PeerNodeStatus#PeerNodeStatus_STATUS_UNKNOWN
+	// * PeerNodeStatus#PeerNodeStatus_STATUS_NOT_AVAILABLE
+	//
+	//  If member is not realized yet, status value will be set as \"NOT_AVAILABLE\".
+	Status *string
+}
+
+const PeerNodeStatus_STATUS_UP = "UP"
+const PeerNodeStatus_STATUS_DOWN = "DOWN"
+const PeerNodeStatus_STATUS_ADMIN_DOWN = "ADMIN_DOWN"
+const PeerNodeStatus_STATUS_PARTIALLY_DISCONNECTED = "PARTIALLY_DISCONNECTED"
+const PeerNodeStatus_STATUS_UNKNOWN = "UNKNOWN"
+const PeerNodeStatus_STATUS_NOT_AVAILABLE = "NOT_AVAILABLE"
+
+func (s *PeerNodeStatus) GetType__() vapiBindings_.BindingType {
+	return PeerNodeStatusBindingType()
+}
+
+func (s *PeerNodeStatus) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for PeerNodeStatus._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type PeerVirtualNetworkApplianceStatus struct {
+	// Path Of Virtual Network Appliance
+	AppliancePath *string
+	// Display name of the virtual Network Appliance whose status is being reported.
+	DisplayName *string
+	// Peer node status when node went down.
+	DownSince *string
+	// Management ip of the virtual network appliance whose status is being reported.
+	ManagementIps []string
+	// Possible values are:
+	//
+	// * PeerVirtualNetworkApplianceStatus#PeerVirtualNetworkApplianceStatus_STATUS_UP
+	// * PeerVirtualNetworkApplianceStatus#PeerVirtualNetworkApplianceStatus_STATUS_DOWN
+	// * PeerVirtualNetworkApplianceStatus#PeerVirtualNetworkApplianceStatus_STATUS_ADMIN_DOWN
+	// * PeerVirtualNetworkApplianceStatus#PeerVirtualNetworkApplianceStatus_STATUS_PARTIALLY_DISCONNECTED
+	// * PeerVirtualNetworkApplianceStatus#PeerVirtualNetworkApplianceStatus_STATUS_UNKNOWN
+	// * PeerVirtualNetworkApplianceStatus#PeerVirtualNetworkApplianceStatus_STATUS_NOT_AVAILABLE
+	//
+	//  If member is not realized yet, status value will be set as \"NOT_AVAILABLE\".
+	Status *string
+}
+
+const PeerVirtualNetworkApplianceStatus_STATUS_UP = "UP"
+const PeerVirtualNetworkApplianceStatus_STATUS_DOWN = "DOWN"
+const PeerVirtualNetworkApplianceStatus_STATUS_ADMIN_DOWN = "ADMIN_DOWN"
+const PeerVirtualNetworkApplianceStatus_STATUS_PARTIALLY_DISCONNECTED = "PARTIALLY_DISCONNECTED"
+const PeerVirtualNetworkApplianceStatus_STATUS_UNKNOWN = "UNKNOWN"
+const PeerVirtualNetworkApplianceStatus_STATUS_NOT_AVAILABLE = "NOT_AVAILABLE"
+
+func (s *PeerVirtualNetworkApplianceStatus) GetType__() vapiBindings_.BindingType {
+	return PeerVirtualNetworkApplianceStatusBindingType()
+}
+
+func (s *PeerVirtualNetworkApplianceStatus) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for PeerVirtualNetworkApplianceStatus._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Information about recent changes, if any, that are not reflected in the Enforced Realized Status.
 type PendingChangesInfoNsxt struct {
 	// Flag describing whether there are any pending changes that are not reflected in the status.
@@ -79028,10 +79148,20 @@ func (s *PolicyEdgeClusterMemberState) GetDataValue__() (vapiData_.DataValue, []
 }
 
 type PolicyEdgeClusterMemberStatus struct {
+	// Display name of the edge node whose status is being reported.
+	DisplayName *string
 	// Edge node details from where the status is being retrieved.
 	EdgeTransportNodePath *string
-	// Policy edge node backed by an Edge Transport node.
+	// Failure reason which encountered while collecting or reporting edge cluster status.
+	FailureReason *string
+	// Management ips of the edge node whose status is being reported.
+	ManagementIps []string
+	// Peer Node Status of the Edge Node
+	PeerNodeStatus []PeerNodeStatus
+	// Policy edge node backed by an edge transport node.
 	PolicyEdgeNodePath *string
+	// Average read latency in milliseconds.
+	ReadLatency *string
 	// Possible values are:
 	//
 	// * PolicyEdgeClusterMemberStatus#PolicyEdgeClusterMemberStatus_STATUS_UP
@@ -79043,6 +79173,25 @@ type PolicyEdgeClusterMemberStatus struct {
 	//
 	//  If member is not realized yet, status value will be set as \"NOT_AVAILABLE\".
 	Status *string
+	// Possible values are:
+	//
+	// * PolicyEdgeClusterMemberStatus#PolicyEdgeClusterMemberStatus_STORAGE_STATE_READ_WRITE
+	// * PolicyEdgeClusterMemberStatus#PolicyEdgeClusterMemberStatus_STORAGE_STATE_READ_ONLY
+	// * PolicyEdgeClusterMemberStatus#PolicyEdgeClusterMemberStatus_STORAGE_STATE_UNKNOWN
+	//
+	//  Storage state of an edge node.
+	StorageState *string
+	// Possible values are:
+	//
+	// * PolicyEdgeClusterMemberStatus#PolicyEdgeClusterMemberStatus_VTEP_STATE_UP
+	// * PolicyEdgeClusterMemberStatus#PolicyEdgeClusterMemberStatus_VTEP_STATE_DOWN
+	// * PolicyEdgeClusterMemberStatus#PolicyEdgeClusterMemberStatus_VTEP_STATE_UNKNOWN
+	// * PolicyEdgeClusterMemberStatus#PolicyEdgeClusterMemberStatus_VTEP_STATE_NOT_AVAILABLE
+	//
+	//  VTEP state of an edge node.
+	VtepState *string
+	// Average write latency in milliseconds.
+	WriteLatency *string
 }
 
 const PolicyEdgeClusterMemberStatus_STATUS_UP = "UP"
@@ -79051,6 +79200,13 @@ const PolicyEdgeClusterMemberStatus_STATUS_ADMIN_DOWN = "ADMIN_DOWN"
 const PolicyEdgeClusterMemberStatus_STATUS_PARTIALLY_DISCONNECTED = "PARTIALLY_DISCONNECTED"
 const PolicyEdgeClusterMemberStatus_STATUS_UNKNOWN = "UNKNOWN"
 const PolicyEdgeClusterMemberStatus_STATUS_NOT_AVAILABLE = "NOT_AVAILABLE"
+const PolicyEdgeClusterMemberStatus_STORAGE_STATE_READ_WRITE = "READ_WRITE"
+const PolicyEdgeClusterMemberStatus_STORAGE_STATE_READ_ONLY = "READ_ONLY"
+const PolicyEdgeClusterMemberStatus_STORAGE_STATE_UNKNOWN = "UNKNOWN"
+const PolicyEdgeClusterMemberStatus_VTEP_STATE_UP = "UP"
+const PolicyEdgeClusterMemberStatus_VTEP_STATE_DOWN = "DOWN"
+const PolicyEdgeClusterMemberStatus_VTEP_STATE_UNKNOWN = "UNKNOWN"
+const PolicyEdgeClusterMemberStatus_VTEP_STATE_NOT_AVAILABLE = "NOT_AVAILABLE"
 
 func (s *PolicyEdgeClusterMemberStatus) GetType__() vapiBindings_.BindingType {
 	return PolicyEdgeClusterMemberStatusBindingType()
@@ -79220,6 +79376,7 @@ type PolicyEdgeClusterStatus struct {
 	//
 	//  Edge node status
 	EdgeClusterStatus *string
+	ErrorDetails      *ClusterStatusErrorDetails
 	// Timestamp when the cluster status was last updated format: int64
 	LastUpdateTimestamp *int64
 	// Per Edge Node Status
@@ -96953,8 +97110,8 @@ type RouteControllerBgpNeighborRoutes struct {
 	EnforcementPointPath *string
 	// Neighbor path
 	NeighborPath *string
-	// Service node routes
-	ServiceNodeRoutes []RoutesPerTransportNode
+	// Virtual network appliance routes
+	VirtualNetworkApplianceRoutes []RoutesPerTransportNode
 }
 
 func (s *RouteControllerBgpNeighborRoutes) GetType__() vapiBindings_.BindingType {
@@ -97064,8 +97221,6 @@ type RouteControllerBgpNeighborStatus struct {
 	RemoteSitePath *string
 	// Route controller path
 	RouteControllerPath *string
-	// Service node policy path
-	ServiceNodePath *string
 	// The Ip address of logical port format: ip
 	SourceAddress *string
 	// Time(in seconds) since connection was established. format: int64
@@ -97081,6 +97236,8 @@ type RouteControllerBgpNeighborStatus struct {
 	//
 	//  BGP neighbor type
 	Type_ *string
+	// Contains string path of virtual network appliance
+	VirtualNetworkAppliancePath *string
 }
 
 const RouteControllerBgpNeighborStatus_CONNECTION_STATE_INVALID = "INVALID"
@@ -97436,8 +97593,6 @@ type RouteControllerRoutingTable struct {
 	ErrorMessage *string
 	// Route entries
 	RouteEntries []RoutingEntry
-	// Contains string path of service node
-	ServiceNode *string
 	// Possible values are:
 	//
 	// * RouteControllerRoutingTable#RouteControllerRoutingTable_STATUS_SUCCESS
@@ -97448,6 +97603,8 @@ type RouteControllerRoutingTable struct {
 	Status *string
 	// Contains string path of transport node
 	TransportNodePath *string
+	// Contains string path of virtual network appliance
+	VirtualNetworkAppliancePath *string
 }
 
 const RouteControllerRoutingTable_STATUS_SUCCESS = "SUCCESS"
@@ -97498,8 +97655,8 @@ type RouteControllerState struct {
 	LogicalGatewayId *string
 	// Per node status
 	PerNodeStatus []RouteControllerStateNodeStatus
-	// Contains string path of service cluster
-	ServiceClusterPath *string
+	// Contains string path of virtual network appliance cluster
+	VirtualNetworkApplianceClusterPath *string
 }
 
 func (s *RouteControllerState) GetType__() vapiBindings_.BindingType {
@@ -97530,16 +97687,16 @@ type RouteControllerStateNodeStatus struct {
 	//
 	//  High availability status on virtual network appliance node.
 	HighAvailabilityStatus *string
-	// The Id of the service gateway where the status is retrieved.
-	ServiceGatewayId *string
-	// Policy path of service node where the node status is retrieved. Service cluster should be member of enforcement point.
-	ServiceNodePath *string
 	// Possible values are:
 	//
-	// * RouteControllerStateNodeStatus#RouteControllerStateNodeStatus_SERVICE_NODE_TYPE_APPLIANCE
+	// * RouteControllerStateNodeStatus#RouteControllerStateNodeStatus_NODE_TYPE_APPLIANCE
 	//
-	//  Type of service node.
-	ServiceNodeType *string
+	//  Type of node.
+	NodeType *string
+	// The Id of the service gateway where the status is retrieved.
+	ServiceGatewayId *string
+	// Policy path of virtual network appliance where the node status is retrieved. Virtual network appliance cluster should be member of enforcement point.
+	VirtualNetworkAppliancePath *string
 }
 
 const RouteControllerStateNodeStatus_HIGH_AVAILABILITY_STATUS_ACTIVE = "ACTIVE"
@@ -97548,7 +97705,7 @@ const RouteControllerStateNodeStatus_HIGH_AVAILABILITY_STATUS_DOWN = "DOWN"
 const RouteControllerStateNodeStatus_HIGH_AVAILABILITY_STATUS_SYNC = "SYNC"
 const RouteControllerStateNodeStatus_HIGH_AVAILABILITY_STATUS_UNKNOWN = "UNKNOWN"
 const RouteControllerStateNodeStatus_HIGH_AVAILABILITY_STATUS_ADMIN_DOWN = "ADMIN_DOWN"
-const RouteControllerStateNodeStatus_SERVICE_NODE_TYPE_APPLIANCE = "VIRTUAL_NETWORK_APPLIANCE"
+const RouteControllerStateNodeStatus_NODE_TYPE_APPLIANCE = "VIRTUAL_NETWORK_APPLIANCE"
 
 func (s *RouteControllerStateNodeStatus) GetType__() vapiBindings_.BindingType {
 	return RouteControllerStateNodeStatusBindingType()
@@ -102305,7 +102462,7 @@ func (s *SelfResourceLink) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Used while defining a CommunicationEntry. A service may have multiple service entries.
+// A service may have multiple service entries. Services are used while defining a rule.
 type Service struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -111797,10 +111954,12 @@ type Tier0GatewayState struct {
 	EnforcementPointPath  *string
 	EvpnRdPerEdgeMappings *RdPerEdgeMapping
 	// IPv6 DAD status for interfaces configured on Tier0
-	Ipv6Status    []IPv6Status
-	Tier0State    *LogicalRouterState
-	Tier0Status   *LogicalRouterStatus
-	TransportZone *PolicyTransportZone
+	Ipv6Status []IPv6Status
+	// Interface details of tier0 gateway attached to transit gateways
+	TgwAttachedInterfaces []Tier0TGWAttachmentInterfaceState
+	Tier0State            *LogicalRouterState
+	Tier0Status           *LogicalRouterStatus
+	TransportZone         *PolicyTransportZone
 }
 
 func (s *Tier0GatewayState) GetType__() vapiBindings_.BindingType {
@@ -112609,6 +112768,51 @@ func (s *Tier0Status) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for Tier0Status._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Interface details of tier0 gateway attached to transit gateways.
+type Tier0TGWAttachmentInterfaceState struct {
+	// Tier0-TGW attachment interface display name.
+	DisplayName *string
+	// Tier0-TGW attachment interface edge node path.
+	EdgePath *string
+	// HA vip associated with the interface. HA VIP is owned by interface on active node of active-standby tier0 gateway.
+	HaVipIpAddress []string
+	// Tier0-TGW attachment interface type.
+	InterfaceType *string
+	// Tier0-TGW attachment interface IP address
+	IpAddress []string
+	// Tier0-TGW attachment interface MAC address.
+	MacAddress *string
+	// Tier0-TGW attachment interface connected logical switch id.
+	TgwTier0TransitSwitchId *string
+	// Tier0-TGW attachment interface connected L2 port id.
+	TgwTier0TransitSwitchPortId *string
+	// Possible values are:
+	//
+	// * Tier0TGWAttachmentInterfaceState#Tier0TGWAttachmentInterfaceState_URPF_MODE_NONE
+	// * Tier0TGWAttachmentInterfaceState#Tier0TGWAttachmentInterfaceState_URPF_MODE_STRICT
+	//
+	//  Unicast Reverse Path Forwarding mode of interface.
+	UrpfMode *string
+}
+
+const Tier0TGWAttachmentInterfaceState_URPF_MODE_NONE = "NONE"
+const Tier0TGWAttachmentInterfaceState_URPF_MODE_STRICT = "STRICT"
+
+func (s *Tier0TGWAttachmentInterfaceState) GetType__() vapiBindings_.BindingType {
+	return Tier0TGWAttachmentInterfaceStateBindingType()
+}
+
+func (s *Tier0TGWAttachmentInterfaceState) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for Tier0TGWAttachmentInterfaceState._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -118075,6 +118279,8 @@ type TransitGatewayAttachmentInterfaceState struct {
 	DisplayName *string
 	// Transit gateway attachment interface edge path.
 	EdgePath *string
+	// HA vip associated with the interface. HA VIP is owned by interface on active node of active-standby transit gateway.
+	HaVipIpAddress []string
 	// Transit gateway attachment interface path.
 	InterfacePath *string
 	// Transit gateway attachment interface type.
@@ -118087,9 +118293,19 @@ type TransitGatewayAttachmentInterfaceState struct {
 	TgwTier0TransitSwitchId *string
 	// Transit gateway attachment interface connected L2 port id.
 	TgwTier0TransitSwitchPortId *string
+	// Possible values are:
+	//
+	// * TransitGatewayAttachmentInterfaceState#TransitGatewayAttachmentInterfaceState_URPF_MODE_NONE
+	// * TransitGatewayAttachmentInterfaceState#TransitGatewayAttachmentInterfaceState_URPF_MODE_STRICT
+	//
+	//  Unicast Reverse Path Forwarding mode of interface.
+	UrpfMode *string
 	// VLAN Id for distributed gateway uplink interface
 	VlanId *string
 }
+
+const TransitGatewayAttachmentInterfaceState_URPF_MODE_NONE = "NONE"
+const TransitGatewayAttachmentInterfaceState_URPF_MODE_STRICT = "STRICT"
 
 func (s *TransitGatewayAttachmentInterfaceState) GetType__() vapiBindings_.BindingType {
 	return TransitGatewayAttachmentInterfaceStateBindingType()
@@ -118946,11 +119162,77 @@ func (s *TransportNodeDatapathStats) GetDataValue__() (vapiData_.DataValue, []er
 
 // Deployment progress state of transport node. Object has current deployment step title and progress in percentage.
 type TransportNodeDeploymentProgressState struct {
+	// Possible values are:
+	//
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_BEGIN_VM_DEPLOY
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_DEPLOY_IN_PROGRESS
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_POWERING_ON
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_POWER_ON_DONE
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_REGISTRATION_IN_PROGRESS
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_REGISTRATION_DONE
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_DELETE_IN_PROGRESS
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_UNREGISTER_IN_PROGRESS
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_POWERING_OFF_VM
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_DELETING_VM
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_VMDELETED
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_BEGIN_REDEPLOY
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_BEGIN_TN_CONFIG
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_PREPARE_CONFIG
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_SENDING_HOST_CONFIG
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_WAITING_FOR_HOST_CONFIG_REPLY
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_HANDLING_APP_INIT
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_SYNCING_LS
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_VDS_FOLDER_REALISATION
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_UPDATING_STATE
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_SUCCESS
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_BEGIN_TN_CONFIG
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_PREPARE_CONFIG
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_SENDING_HOST_CONFIG
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_WAITING_FOR_HOST_CONFIG_REPLY
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_HANDLING_APP_INIT
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_SYNCING_LS
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_VDS_FOLDER_REALISATION
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_UPDATING_STATE
+	// * TransportNodeDeploymentProgressState#TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_SUCCESS
+	//
+	//  Deployment step
+	CurrentStep *string
 	// Deployment step title
 	CurrentStepTitle *string
 	// Percentage of deployment completed format: int64
 	Progress *int64
 }
+
+const TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_BEGIN_VM_DEPLOY = "DEPLOYMENT_PROGRESS_EDGE_BEGIN_VM_DEPLOY"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_DEPLOY_IN_PROGRESS = "DEPLOYMENT_PROGRESS_EDGE_DEPLOY_IN_PROGRESS"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_POWERING_ON = "DEPLOYMENT_PROGRESS_EDGE_POWERING_ON"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_POWER_ON_DONE = "DEPLOYMENT_PROGRESS_EDGE_POWER_ON_DONE"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_REGISTRATION_IN_PROGRESS = "DEPLOYMENT_PROGRESS_EDGE_REGISTRATION_IN_PROGRESS"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_REGISTRATION_DONE = "DEPLOYMENT_PROGRESS_EDGE_REGISTRATION_DONE"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_DELETE_IN_PROGRESS = "DEPLOYMENT_PROGRESS_EDGE_DELETE_IN_PROGRESS"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_UNREGISTER_IN_PROGRESS = "DEPLOYMENT_PROGRESS_EDGE_UNREGISTER_IN_PROGRESS"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_POWERING_OFF_VM = "DEPLOYMENT_PROGRESS_EDGE_POWERING_OFF_VM"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_DELETING_VM = "DEPLOYMENT_PROGRESS_EDGE_DELETING_VM"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_VMDELETED = "DEPLOYMENT_PROGRESS_EDGE_VMDELETED"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_EDGE_BEGIN_REDEPLOY = "DEPLOYMENT_PROGRESS_EDGE_BEGIN_REDEPLOY"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_BEGIN_TN_CONFIG = "DEPLOYMENT_PROGRESS_TN_CREATE_BEGIN_TN_CONFIG"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_PREPARE_CONFIG = "DEPLOYMENT_PROGRESS_TN_CREATE_PREPARE_CONFIG"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_SENDING_HOST_CONFIG = "DEPLOYMENT_PROGRESS_TN_CREATE_SENDING_HOST_CONFIG"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_WAITING_FOR_HOST_CONFIG_REPLY = "DEPLOYMENT_PROGRESS_TN_CREATE_WAITING_FOR_HOST_CONFIG_REPLY"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_HANDLING_APP_INIT = "DEPLOYMENT_PROGRESS_TN_CREATE_HANDLING_APP_INIT"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_SYNCING_LS = "DEPLOYMENT_PROGRESS_TN_CREATE_SYNCING_LS"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_VDS_FOLDER_REALISATION = "DEPLOYMENT_PROGRESS_TN_CREATE_VDS_FOLDER_REALISATION"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_UPDATING_STATE = "DEPLOYMENT_PROGRESS_TN_CREATE_UPDATING_STATE"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_CREATE_SUCCESS = "DEPLOYMENT_PROGRESS_TN_CREATE_SUCCESS"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_BEGIN_TN_CONFIG = "DEPLOYMENT_PROGRESS_TN_DELETE_BEGIN_TN_CONFIG"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_PREPARE_CONFIG = "DEPLOYMENT_PROGRESS_TN_DELETE_PREPARE_CONFIG"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_SENDING_HOST_CONFIG = "DEPLOYMENT_PROGRESS_TN_DELETE_SENDING_HOST_CONFIG"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_WAITING_FOR_HOST_CONFIG_REPLY = "DEPLOYMENT_PROGRESS_TN_DELETE_WAITING_FOR_HOST_CONFIG_REPLY"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_HANDLING_APP_INIT = "DEPLOYMENT_PROGRESS_TN_DELETE_HANDLING_APP_INIT"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_SYNCING_LS = "DEPLOYMENT_PROGRESS_TN_DELETE_SYNCING_LS"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_VDS_FOLDER_REALISATION = "DEPLOYMENT_PROGRESS_TN_DELETE_VDS_FOLDER_REALISATION"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_UPDATING_STATE = "DEPLOYMENT_PROGRESS_TN_DELETE_UPDATING_STATE"
+const TransportNodeDeploymentProgressState_CURRENT_STEP_TN_DELETE_SUCCESS = "DEPLOYMENT_PROGRESS_TN_DELETE_SUCCESS"
 
 func (s *TransportNodeDeploymentProgressState) GetType__() vapiBindings_.BindingType {
 	return TransportNodeDeploymentProgressStateBindingType()
@@ -122526,8 +122808,6 @@ func (s *VirtualNetworkApplianceCluster) GetDataValue__() (vapiData_.DataValue, 
 }
 
 type VirtualNetworkApplianceClusterAdvancedConfiguration struct {
-	// Enable or disable the synchronization of high-availability states between VNA nodes over the management interface within the cluster.
-	HaOverManagementInterface *bool
 	// This field is optional and if not provided, default profile path will be considered.
 	HighAvailabilityProfile *string
 	// An overlay transportZone path that is associated with the specified VirtualNetworkAppliance host switch and tep.
@@ -122549,13 +122829,13 @@ func (s *VirtualNetworkApplianceClusterAdvancedConfiguration) GetDataValue__() (
 	return dataVal, nil
 }
 
-// Allocation details of VirtualNetworkAppliance Cluster and its members. Contains information of the VirtualNetworkAppliances present in cluster, active and standby services running on each node, utilization details of configured sub-pools. These allocation details can be monitored by customers to trigger migration of certain service contexts to different VirtualNetworkAppliances, to balance the utilization of VirtualNetworkAppliance resources.
+// Allocation details of VNA Cluster and its members. Contains information of the virtual network appliance present in cluster, active and standby services running on each node, utilization details of configured sub-pools. These allocation details can be monitored by customers to trigger migration of certain service contexts to different virtual network appliance, to balance the utilization of virtual network appliance resources.
 type VirtualNetworkApplianceClusterAllocationStatus struct {
-	// Display name of the VirtualNetworkAppliance Cluster whose status is being reported.
+	// Display name of the virtual network appliance Cluster whose status is being reported.
 	DisplayName *string
 	// Represents the number of virtualNetworkAppliances in the cluster. format: int32
 	MemberCount *int64
-	// Allocation details of virtualNetworkAppliances present in the cluster.
+	// Allocation details of virtual network appliance present in the cluster.
 	Members []VirtualNetworkApplianceClusterMemberAllocationStatus
 }
 
@@ -122634,13 +122914,13 @@ func (s *VirtualNetworkApplianceClusterMember) GetDataValue__() (vapiData_.DataV
 }
 
 type VirtualNetworkApplianceClusterMemberAllocationStatus struct {
-	// List of services allocated on the virtualNetworkAppliance.
+	// List of services allocated on the virtual network appliance.
 	AllocatedServices []PolicyAllocatedService
-	// Allocation details of pools defined on the VirtualNetworkAppliance.
+	// Allocation details of pools defined on the virtual network appliance.
 	AllocationPools []AllocationPool
 	// Virtual network appliance path.
 	AppliancePath *string
-	// Display name of VirtualNetworkAppliance Cluster member. Defaults to ID if not set.
+	// Display name of virtual network appliance Cluster member. Defaults to ID if not set.
 	DisplayName *string
 	// System generated index for cluster member format: int32
 	MemberIndex *int64
@@ -122723,8 +123003,16 @@ func (s *VirtualNetworkApplianceClusterMemberState) GetDataValue__() (vapiData_.
 }
 
 type VirtualNetworkApplianceClusterMemberStatus struct {
-	// Path Of VirtualNetworkAppliance
+	// Path Of Virtual Network Appliance
 	AppliancePath *string
+	// Display name of the virtual network appliance whose status is being reported.
+	DisplayName *string
+	// Management ips of the virtual network appliance whose status is being reported.
+	ManagementIps []string
+	// Peer Node Status of the Virtual Network Appliance
+	PeerNodeStatus []PeerVirtualNetworkApplianceStatus
+	// Average read latency in milliseconds.
+	ReadLatency *string
 	// Possible values are:
 	//
 	// * VirtualNetworkApplianceClusterMemberStatus#VirtualNetworkApplianceClusterMemberStatus_STATUS_UP
@@ -122733,8 +123021,27 @@ type VirtualNetworkApplianceClusterMemberStatus struct {
 	// * VirtualNetworkApplianceClusterMemberStatus#VirtualNetworkApplianceClusterMemberStatus_STATUS_PARTIALLY_DISCONNECTED
 	// * VirtualNetworkApplianceClusterMemberStatus#VirtualNetworkApplianceClusterMemberStatus_STATUS_UNKNOWN
 	//
-	//  Status Of VirtualNetworkAppliance
+	//  Status Of Virtual Network Appliance
 	Status *string
+	// Possible values are:
+	//
+	// * VirtualNetworkApplianceClusterMemberStatus#VirtualNetworkApplianceClusterMemberStatus_STORAGE_STATE_READ_WRITE
+	// * VirtualNetworkApplianceClusterMemberStatus#VirtualNetworkApplianceClusterMemberStatus_STORAGE_STATE_READ_ONLY
+	// * VirtualNetworkApplianceClusterMemberStatus#VirtualNetworkApplianceClusterMemberStatus_STORAGE_STATE_UNKNOWN
+	//
+	//  Storage state of virtual network appliance.
+	StorageState *string
+	// Possible values are:
+	//
+	// * VirtualNetworkApplianceClusterMemberStatus#VirtualNetworkApplianceClusterMemberStatus_VTEP_STATE_UP
+	// * VirtualNetworkApplianceClusterMemberStatus#VirtualNetworkApplianceClusterMemberStatus_VTEP_STATE_DOWN
+	// * VirtualNetworkApplianceClusterMemberStatus#VirtualNetworkApplianceClusterMemberStatus_VTEP_STATE_UNKNOWN
+	// * VirtualNetworkApplianceClusterMemberStatus#VirtualNetworkApplianceClusterMemberStatus_VTEP_STATE_NOT_AVAILABLE
+	//
+	//  VTEP state of virtual network appliance.
+	VtepState *string
+	// Average write latency in milliseconds.
+	WriteLatency *string
 }
 
 const VirtualNetworkApplianceClusterMemberStatus_STATUS_UP = "UP"
@@ -122742,6 +123049,13 @@ const VirtualNetworkApplianceClusterMemberStatus_STATUS_DOWN = "DOWN"
 const VirtualNetworkApplianceClusterMemberStatus_STATUS_ADMIN_DOWN = "ADMIN_DOWN"
 const VirtualNetworkApplianceClusterMemberStatus_STATUS_PARTIALLY_DISCONNECTED = "PARTIALLY_DISCONNECTED"
 const VirtualNetworkApplianceClusterMemberStatus_STATUS_UNKNOWN = "UNKNOWN"
+const VirtualNetworkApplianceClusterMemberStatus_STORAGE_STATE_READ_WRITE = "READ_WRITE"
+const VirtualNetworkApplianceClusterMemberStatus_STORAGE_STATE_READ_ONLY = "READ_ONLY"
+const VirtualNetworkApplianceClusterMemberStatus_STORAGE_STATE_UNKNOWN = "UNKNOWN"
+const VirtualNetworkApplianceClusterMemberStatus_VTEP_STATE_UP = "UP"
+const VirtualNetworkApplianceClusterMemberStatus_VTEP_STATE_DOWN = "DOWN"
+const VirtualNetworkApplianceClusterMemberStatus_VTEP_STATE_UNKNOWN = "UNKNOWN"
+const VirtualNetworkApplianceClusterMemberStatus_VTEP_STATE_NOT_AVAILABLE = "NOT_AVAILABLE"
 
 func (s *VirtualNetworkApplianceClusterMemberStatus) GetType__() vapiBindings_.BindingType {
 	return VirtualNetworkApplianceClusterMemberStatusBindingType()
@@ -122848,11 +123162,12 @@ func (s *VirtualNetworkApplianceClusterState) GetDataValue__() (vapiData_.DataVa
 }
 
 type VirtualNetworkApplianceClusterStatus struct {
-	// Display name of the VirtualNetworkAppliance Cluster whose status is being reported.
-	DisplayName *string
+	// Display name of the virtual network appliance Cluster whose status is being reported.
+	DisplayName  *string
+	ErrorDetails *ClusterStatusErrorDetails
 	// Timestamp when the cluster status was last updated format: int64
 	LastUpdateTimestamp *int64
-	// Per VirtualNetworkAppliance Status
+	// Per Virtual Network Appliance Status
 	MemberStatus []VirtualNetworkApplianceClusterMemberStatus
 	// Possible values are:
 	//
@@ -122861,7 +123176,7 @@ type VirtualNetworkApplianceClusterStatus struct {
 	// * VirtualNetworkApplianceClusterStatus#VirtualNetworkApplianceClusterStatus_STATUS_DEGRADED
 	// * VirtualNetworkApplianceClusterStatus#VirtualNetworkApplianceClusterStatus_STATUS_UNKNOWN
 	//
-	//  VirtualNetworkAppliance Cluster status
+	//  Virtual network appliance cluster status
 	Status *string
 }
 
@@ -144493,6 +144808,17 @@ func ClusterSecurityFeatureBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.cluster_security_feature", fields, reflect.TypeOf(ClusterSecurityFeature{}), fieldNameMap, validators)
 }
 
+func ClusterStatusErrorDetailsBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["code"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["code"] = "Code"
+	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["details"] = "Details"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.cluster_status_error_details", fields, reflect.TypeOf(ClusterStatusErrorDetails{}), fieldNameMap, validators)
+}
+
 func ColumnItemBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -146950,6 +147276,8 @@ func DfwDropCountersBindingType() vapiBindings_.BindingType {
 func DfwFirewallConfigurationBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["enforce_duplicate_sequence_number_check"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["enforce_duplicate_sequence_number_check"] = "EnforceDuplicateSequenceNumberCheck"
 	fields["idfw_enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["idfw_enabled"] = "IdfwEnabled"
 	fields["idfw_event_log_scraper_enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
@@ -157827,6 +158155,8 @@ func IPsecVPNIKESessionSummaryBindingType() vapiBindings_.BindingType {
 	fieldNameMap["established_sessions"] = "EstablishedSessions"
 	fields["failed_sessions"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["failed_sessions"] = "FailedSessions"
+	fields["negotiating_sessions"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["negotiating_sessions"] = "NegotiatingSessions"
 	fields["total_sessions"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["total_sessions"] = "TotalSessions"
 	var validators = []vapiBindings_.Validator{}
@@ -174331,6 +174661,42 @@ func PeerCertificateChainBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.peer_certificate_chain", fields, reflect.TypeOf(PeerCertificateChain{}), fieldNameMap, validators)
 }
 
+func PeerNodeStatusBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["down_since"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["down_since"] = "DownSince"
+	fields["edge_transport_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["edge_transport_node_path"] = "EdgeTransportNodePath"
+	fields["management_ips"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["management_ips"] = "ManagementIps"
+	fields["policy_edge_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["policy_edge_node_path"] = "PolicyEdgeNodePath"
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["status"] = "Status"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.peer_node_status", fields, reflect.TypeOf(PeerNodeStatus{}), fieldNameMap, validators)
+}
+
+func PeerVirtualNetworkApplianceStatusBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["appliance_path"] = "AppliancePath"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["down_since"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["down_since"] = "DownSince"
+	fields["management_ips"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["management_ips"] = "ManagementIps"
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["status"] = "Status"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.peer_virtual_network_appliance_status", fields, reflect.TypeOf(PeerVirtualNetworkApplianceStatus{}), fieldNameMap, validators)
+}
+
 func PendingChangesInfoNsxtBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -176924,12 +177290,28 @@ func PolicyEdgeClusterMemberStateBindingType() vapiBindings_.BindingType {
 func PolicyEdgeClusterMemberStatusBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
 	fields["edge_transport_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["edge_transport_node_path"] = "EdgeTransportNodePath"
+	fields["failure_reason"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["failure_reason"] = "FailureReason"
+	fields["management_ips"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["management_ips"] = "ManagementIps"
+	fields["peer_node_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(PeerNodeStatusBindingType), reflect.TypeOf([]PeerNodeStatus{})))
+	fieldNameMap["peer_node_status"] = "PeerNodeStatus"
 	fields["policy_edge_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["policy_edge_node_path"] = "PolicyEdgeNodePath"
+	fields["read_latency"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["read_latency"] = "ReadLatency"
 	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["status"] = "Status"
+	fields["storage_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["storage_state"] = "StorageState"
+	fields["vtep_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["vtep_state"] = "VtepState"
+	fields["write_latency"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["write_latency"] = "WriteLatency"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.policy_edge_cluster_member_status", fields, reflect.TypeOf(PolicyEdgeClusterMemberStatus{}), fieldNameMap, validators)
 }
@@ -177002,6 +177384,8 @@ func PolicyEdgeClusterStatusBindingType() vapiBindings_.BindingType {
 	fieldNameMap["edge_cluster_name"] = "EdgeClusterName"
 	fields["edge_cluster_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["edge_cluster_status"] = "EdgeClusterStatus"
+	fields["error_details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ClusterStatusErrorDetailsBindingType))
+	fieldNameMap["error_details"] = "ErrorDetails"
 	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["member_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(PolicyEdgeClusterMemberStatusBindingType), reflect.TypeOf([]PolicyEdgeClusterMemberStatus{})))
@@ -188364,8 +188748,8 @@ func RouteControllerBgpNeighborRoutesBindingType() vapiBindings_.BindingType {
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	fields["neighbor_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["neighbor_path"] = "NeighborPath"
-	fields["service_node_routes"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(RoutesPerTransportNodeBindingType), reflect.TypeOf([]RoutesPerTransportNode{})))
-	fieldNameMap["service_node_routes"] = "ServiceNodeRoutes"
+	fields["virtual_network_appliance_routes"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(RoutesPerTransportNodeBindingType), reflect.TypeOf([]RoutesPerTransportNode{})))
+	fieldNameMap["virtual_network_appliance_routes"] = "VirtualNetworkApplianceRoutes"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.route_controller_bgp_neighbor_routes", fields, reflect.TypeOf(RouteControllerBgpNeighborRoutes{}), fieldNameMap, validators)
 }
@@ -188442,8 +188826,6 @@ func RouteControllerBgpNeighborStatusBindingType() vapiBindings_.BindingType {
 	fieldNameMap["remote_site_path"] = "RemoteSitePath"
 	fields["route_controller_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["route_controller_path"] = "RouteControllerPath"
-	fields["service_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["service_node_path"] = "ServiceNodePath"
 	fields["source_address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["source_address"] = "SourceAddress"
 	fields["time_since_established"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -188454,6 +188836,8 @@ func RouteControllerBgpNeighborStatusBindingType() vapiBindings_.BindingType {
 	fieldNameMap["total_out_prefix_count"] = "TotalOutPrefixCount"
 	fields["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["type"] = "Type_"
+	fields["virtual_network_appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["virtual_network_appliance_path"] = "VirtualNetworkAppliancePath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.route_controller_bgp_neighbor_status", fields, reflect.TypeOf(RouteControllerBgpNeighborStatus{}), fieldNameMap, validators)
 }
@@ -188700,12 +189084,12 @@ func RouteControllerRoutingTableBindingType() vapiBindings_.BindingType {
 	fieldNameMap["error_message"] = "ErrorMessage"
 	fields["route_entries"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(RoutingEntryBindingType), reflect.TypeOf([]RoutingEntry{})))
 	fieldNameMap["route_entries"] = "RouteEntries"
-	fields["service_node"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["service_node"] = "ServiceNode"
 	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["status"] = "Status"
 	fields["transport_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["transport_node_path"] = "TransportNodePath"
+	fields["virtual_network_appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["virtual_network_appliance_path"] = "VirtualNetworkAppliancePath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.route_controller_routing_table", fields, reflect.TypeOf(RouteControllerRoutingTable{}), fieldNameMap, validators)
 }
@@ -188728,8 +189112,8 @@ func RouteControllerStateBindingType() vapiBindings_.BindingType {
 	fieldNameMap["logical_gateway_id"] = "LogicalGatewayId"
 	fields["per_node_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(RouteControllerStateNodeStatusBindingType), reflect.TypeOf([]RouteControllerStateNodeStatus{})))
 	fieldNameMap["per_node_status"] = "PerNodeStatus"
-	fields["service_cluster_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["service_cluster_path"] = "ServiceClusterPath"
+	fields["virtual_network_appliance_cluster_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["virtual_network_appliance_cluster_path"] = "VirtualNetworkApplianceClusterPath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.route_controller_state", fields, reflect.TypeOf(RouteControllerState{}), fieldNameMap, validators)
 }
@@ -188739,12 +189123,12 @@ func RouteControllerStateNodeStatusBindingType() vapiBindings_.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["high_availability_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["high_availability_status"] = "HighAvailabilityStatus"
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["node_type"] = "NodeType"
 	fields["service_gateway_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["service_gateway_id"] = "ServiceGatewayId"
-	fields["service_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["service_node_path"] = "ServiceNodePath"
-	fields["service_node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["service_node_type"] = "ServiceNodeType"
+	fields["virtual_network_appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["virtual_network_appliance_path"] = "VirtualNetworkAppliancePath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.route_controller_state_node_status", fields, reflect.TypeOf(RouteControllerStateNodeStatus{}), fieldNameMap, validators)
 }
@@ -197417,6 +197801,8 @@ func Tier0GatewayStateBindingType() vapiBindings_.BindingType {
 	fieldNameMap["evpn_rd_per_edge_mappings"] = "EvpnRdPerEdgeMappings"
 	fields["ipv6_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(IPv6StatusBindingType), reflect.TypeOf([]IPv6Status{})))
 	fieldNameMap["ipv6_status"] = "Ipv6Status"
+	fields["tgw_attached_interfaces"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(Tier0TGWAttachmentInterfaceStateBindingType), reflect.TypeOf([]Tier0TGWAttachmentInterfaceState{})))
+	fieldNameMap["tgw_attached_interfaces"] = "TgwAttachedInterfaces"
 	fields["tier0_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterStateBindingType))
 	fieldNameMap["tier0_state"] = "Tier0State"
 	fields["tier0_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterStatusBindingType))
@@ -197905,6 +198291,31 @@ func Tier0StatusBindingType() vapiBindings_.BindingType {
 	fieldNameMap["unique_id"] = "UniqueId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.tier0_status", fields, reflect.TypeOf(Tier0Status{}), fieldNameMap, validators)
+}
+
+func Tier0TGWAttachmentInterfaceStateBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["edge_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["edge_path"] = "EdgePath"
+	fields["ha_vip_ip_address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["ha_vip_ip_address"] = "HaVipIpAddress"
+	fields["interface_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["interface_type"] = "InterfaceType"
+	fields["ip_address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["ip_address"] = "IpAddress"
+	fields["mac_address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["mac_address"] = "MacAddress"
+	fields["tgw_tier0_transit_switch_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["tgw_tier0_transit_switch_id"] = "TgwTier0TransitSwitchId"
+	fields["tgw_tier0_transit_switch_port_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["tgw_tier0_transit_switch_port_id"] = "TgwTier0TransitSwitchPortId"
+	fields["urpf_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["urpf_mode"] = "UrpfMode"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.tier0_TGW_attachment_interface_state", fields, reflect.TypeOf(Tier0TGWAttachmentInterfaceState{}), fieldNameMap, validators)
 }
 
 func Tier0VrfConfigBindingType() vapiBindings_.BindingType {
@@ -200540,6 +200951,8 @@ func TransitGatewayAttachmentInterfaceStateBindingType() vapiBindings_.BindingTy
 	fieldNameMap["display_name"] = "DisplayName"
 	fields["edge_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["edge_path"] = "EdgePath"
+	fields["ha_vip_ip_address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["ha_vip_ip_address"] = "HaVipIpAddress"
 	fields["interface_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["interface_path"] = "InterfacePath"
 	fields["interface_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -200552,6 +200965,8 @@ func TransitGatewayAttachmentInterfaceStateBindingType() vapiBindings_.BindingTy
 	fieldNameMap["tgw_tier0_transit_switch_id"] = "TgwTier0TransitSwitchId"
 	fields["tgw_tier0_transit_switch_port_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["tgw_tier0_transit_switch_port_id"] = "TgwTier0TransitSwitchPortId"
+	fields["urpf_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["urpf_mode"] = "UrpfMode"
 	fields["vlan_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["vlan_id"] = "VlanId"
 	var validators = []vapiBindings_.Validator{}
@@ -201052,6 +201467,8 @@ func TransportNodeDatapathStatsBindingType() vapiBindings_.BindingType {
 func TransportNodeDeploymentProgressStateBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["current_step"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["current_step"] = "CurrentStep"
 	fields["current_step_title"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["current_step_title"] = "CurrentStepTitle"
 	fields["progress"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -203062,8 +203479,6 @@ func VirtualNetworkApplianceClusterBindingType() vapiBindings_.BindingType {
 func VirtualNetworkApplianceClusterAdvancedConfigurationBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["ha_over_management_interface"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fieldNameMap["ha_over_management_interface"] = "HaOverManagementInterface"
 	fields["high_availability_profile"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["high_availability_profile"] = "HighAvailabilityProfile"
 	fields["overlay_transport_zone_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -203169,8 +203584,22 @@ func VirtualNetworkApplianceClusterMemberStatusBindingType() vapiBindings_.Bindi
 	fieldNameMap := make(map[string]string)
 	fields["appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["appliance_path"] = "AppliancePath"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["management_ips"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["management_ips"] = "ManagementIps"
+	fields["peer_node_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(PeerVirtualNetworkApplianceStatusBindingType), reflect.TypeOf([]PeerVirtualNetworkApplianceStatus{})))
+	fieldNameMap["peer_node_status"] = "PeerNodeStatus"
+	fields["read_latency"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["read_latency"] = "ReadLatency"
 	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["status"] = "Status"
+	fields["storage_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["storage_state"] = "StorageState"
+	fields["vtep_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["vtep_state"] = "VtepState"
+	fields["write_latency"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["write_latency"] = "WriteLatency"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.virtual_network_appliance_cluster_member_status", fields, reflect.TypeOf(VirtualNetworkApplianceClusterMemberStatus{}), fieldNameMap, validators)
 }
@@ -203212,6 +203641,8 @@ func VirtualNetworkApplianceClusterStatusBindingType() vapiBindings_.BindingType
 	fieldNameMap := make(map[string]string)
 	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["display_name"] = "DisplayName"
+	fields["error_details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ClusterStatusErrorDetailsBindingType))
+	fieldNameMap["error_details"] = "ErrorDetails"
 	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["member_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(VirtualNetworkApplianceClusterMemberStatusBindingType), reflect.TypeOf([]VirtualNetworkApplianceClusterMemberStatus{})))

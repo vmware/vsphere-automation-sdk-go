@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -22,7 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ServiceEntriesClient interface {
 
-	// Service entry
+	// Read service entry
 	//
 	// @param serviceIdParam Service ID (required)
 	// @param serviceEntryIdParam Service entry ID (required)
@@ -37,7 +37,7 @@ type ServiceEntriesClient interface {
 	// @throws NotFound  Not Found
 	Get(serviceIdParam string, serviceEntryIdParam string) (*vapiData_.StructValue, error)
 
-	// Paginated list of Service entries for the given service
+	// Return list of Service entries for the given service
 	//
 	// @param serviceIdParam Service ID (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)

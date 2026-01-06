@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatusClient interface {
 
-	// Returns the aggregated realtime status for the VirtualNetworkAppliance Cluster along with status of all VirtualNetworkAppliance(VNA) in the cluster.
+	// Returns the aggregated realtime status for the VNA Cluster along with status of all virtual network appliance(VNA) in the cluster.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)

@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type GlobalConfigClient interface {
 
-	// This rest routine is deprecated. Use /infra/connectivity-global-config for Connectivity global config and /infra/ops-global-config for Operations global config. Read global configuration.
+	// Read global configuration.
 	//
 	// @param applyLocallyParam If the user sets apply_locally to GET/PUT/PATCH call then the local resource copy will be shown/modified. This will only be acceptable on LM. In case LM only has it's copy, the apply_local = false will still have effect on local copy. (optional, default to false)
 	// @return com.vmware.nsx_policy.model.GlobalConfig
@@ -50,7 +50,7 @@ type GlobalConfigClient interface {
 	// @throws NotFound  Not Found
 	Patch(globalConfigParam nsx_policyModel.GlobalConfig, applyLocallyParam *bool) error
 
-	// This rest routine is deprecated. Use /infra/connectivity-global-config for Connectivity global config and /infra/ops-global-config for Operations global config. Update the global configuration.
+	// Update the global configuration.
 	//
 	// @param globalConfigParam (required)
 	// @param applyLocallyParam If the user sets apply_locally to GET/PUT/PATCH call then the local resource copy will be shown/modified. This will only be acceptable on LM. In case LM only has it's copy, the apply_local = false will still have effect on local copy. (optional, default to false)

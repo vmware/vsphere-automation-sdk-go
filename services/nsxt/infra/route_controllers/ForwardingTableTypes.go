@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -28,11 +28,11 @@ func forwardingTableGetInputType() vapiBindings_.StructType {
 	fields["route_controller_id"] = vapiBindings_.NewStringType()
 	fields["network_prefix"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["route_source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["service_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["virtual_network_appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["route_controller_id"] = "RouteControllerId"
 	fieldNameMap["network_prefix"] = "NetworkPrefix"
 	fieldNameMap["route_source"] = "RouteSource"
-	fieldNameMap["service_node_path"] = "ServiceNodePath"
+	fieldNameMap["virtual_network_appliance_path"] = "VirtualNetworkAppliancePath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -53,18 +53,18 @@ func forwardingTableGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["route_controller_id"] = vapiBindings_.NewStringType()
 	fields["network_prefix"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["route_source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["service_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["virtual_network_appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["route_controller_id"] = "RouteControllerId"
 	fieldNameMap["network_prefix"] = "NetworkPrefix"
 	fieldNameMap["route_source"] = "RouteSource"
-	fieldNameMap["service_node_path"] = "ServiceNodePath"
-	paramsTypeMap["service_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["virtual_network_appliance_path"] = "VirtualNetworkAppliancePath"
+	paramsTypeMap["virtual_network_appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["network_prefix"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["route_controller_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["route_source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["routeControllerId"] = vapiBindings_.NewStringType()
 	pathParams["route_controller_id"] = "routeControllerId"
-	queryParams["service_node_path"] = "service_node_path"
+	queryParams["virtual_network_appliance_path"] = "virtual_network_appliance_path"
 	queryParams["network_prefix"] = "network_prefix"
 	queryParams["route_source"] = "route_source"
 	resultHeaders := map[string]string{}

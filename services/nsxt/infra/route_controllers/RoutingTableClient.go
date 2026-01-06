@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -26,7 +26,7 @@ type RoutingTableClient interface {
 	// @param routeControllerIdParam (required)
 	// @param networkPrefixParam Network address filter parameter (optional)
 	// @param routeSourceParam Filter routes based on the source from which route is learned (optional)
-	// @param serviceNodePathParam Policy path of service node (optional)
+	// @param virtualNetworkAppliancePathParam Contains string path of virtual network appliance (optional)
 	// @return com.vmware.nsx_policy.model.RouteControllerRoutingTableListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -35,7 +35,7 @@ type RoutingTableClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(routeControllerIdParam string, networkPrefixParam *string, routeSourceParam *string, serviceNodePathParam *string) (nsx_policyModel.RouteControllerRoutingTableListResult, error)
+	Get(routeControllerIdParam string, networkPrefixParam *string, routeSourceParam *string, virtualNetworkAppliancePathParam *string) (nsx_policyModel.RouteControllerRoutingTableListResult, error)
 }
 
 type routingTableClient struct {
@@ -63,7 +63,7 @@ func (rIface *routingTableClient) GetErrorBindingType(errorName string) vapiBind
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (rIface *routingTableClient) Get(routeControllerIdParam string, networkPrefixParam *string, routeSourceParam *string, serviceNodePathParam *string) (nsx_policyModel.RouteControllerRoutingTableListResult, error) {
+func (rIface *routingTableClient) Get(routeControllerIdParam string, networkPrefixParam *string, routeSourceParam *string, virtualNetworkAppliancePathParam *string) (nsx_policyModel.RouteControllerRoutingTableListResult, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
 	operationRestMetaData := routingTableGetRestMetadata()
@@ -74,7 +74,7 @@ func (rIface *routingTableClient) Get(routeControllerIdParam string, networkPref
 	sv.AddStructField("RouteControllerId", routeControllerIdParam)
 	sv.AddStructField("NetworkPrefix", networkPrefixParam)
 	sv.AddStructField("RouteSource", routeSourceParam)
-	sv.AddStructField("ServiceNodePath", serviceNodePathParam)
+	sv.AddStructField("VirtualNetworkAppliancePath", virtualNetworkAppliancePathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.RouteControllerRoutingTableListResult

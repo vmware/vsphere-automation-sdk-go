@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -34,7 +34,7 @@ type ServicesClient interface {
 	// @throws NotFound  Not Found
 	Get(serviceIdParam string) (nsx_policyModel.Service, error)
 
-	// Paginated list of Services for infra.
+	// Return list of Services.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param defaultServiceParam If set to true, then it will display only default services. If set to false, then it will display all user defined services. If it is not provided, then complete (default as well as user defined) list of services will be displayed. (optional)

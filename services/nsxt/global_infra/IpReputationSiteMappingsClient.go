@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -21,9 +21,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type IpReputationSiteMappingsClient interface {
 
-	// Read IP reputation site mapping details for a given site.
 	//
-	// @param mappingIdParam mapping ID (required)
+	//
+	// @param mappingIdParam IP reputation site mapping ID (required)
 	// @return com.vmware.nsx_policy.model.IPReputationSiteMapping
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -34,7 +34,7 @@ type IpReputationSiteMappingsClient interface {
 	// @throws NotFound  Not Found
 	Get(mappingIdParam string) (nsx_policyModel.IPReputationSiteMapping, error)
 
-	// List IP reputation site mapping details.
+	//
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)

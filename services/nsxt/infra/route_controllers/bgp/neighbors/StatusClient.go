@@ -1,4 +1,4 @@
-// Copyright (c) 2019-2025 Broadcom. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
@@ -30,11 +30,11 @@ type StatusClient interface {
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param serviceNodePathParam Policy path of service node. Service cluster should be member of enforcement point. (optional)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param statsTypeParam This indicates the type of statistics being requested. We support statistics from the data plane. (optional)
 	// @param transportNodeIdParam Identifier of the transport node. This is a UUID. (optional)
+	// @param virtualNetworkAppliancePathParam Contains string path of virtual network appliance. Virtual network appliance cluster should be member of enforcement point. (optional)
 	// @return com.vmware.nsx_policy.model.RouteControllerBgpNeighborsStatusListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -43,7 +43,7 @@ type StatusClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(routeControllerIdParam string, bgpNeighborTypeParam *string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, serviceNodePathParam *string, sortAscendingParam *bool, sortByParam *string, statsTypeParam *string, transportNodeIdParam *string) (nsx_policyModel.RouteControllerBgpNeighborsStatusListResult, error)
+	List(routeControllerIdParam string, bgpNeighborTypeParam *string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, statsTypeParam *string, transportNodeIdParam *string, virtualNetworkAppliancePathParam *string) (nsx_policyModel.RouteControllerBgpNeighborsStatusListResult, error)
 }
 
 type statusClient struct {
@@ -71,7 +71,7 @@ func (sIface *statusClient) GetErrorBindingType(errorName string) vapiBindings_.
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statusClient) List(routeControllerIdParam string, bgpNeighborTypeParam *string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, serviceNodePathParam *string, sortAscendingParam *bool, sortByParam *string, statsTypeParam *string, transportNodeIdParam *string) (nsx_policyModel.RouteControllerBgpNeighborsStatusListResult, error) {
+func (sIface *statusClient) List(routeControllerIdParam string, bgpNeighborTypeParam *string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, statsTypeParam *string, transportNodeIdParam *string, virtualNetworkAppliancePathParam *string) (nsx_policyModel.RouteControllerBgpNeighborsStatusListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := statusListRestMetadata()
@@ -86,11 +86,11 @@ func (sIface *statusClient) List(routeControllerIdParam string, bgpNeighborTypeP
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
-	sv.AddStructField("ServiceNodePath", serviceNodePathParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
 	sv.AddStructField("StatsType", statsTypeParam)
 	sv.AddStructField("TransportNodeId", transportNodeIdParam)
+	sv.AddStructField("VirtualNetworkAppliancePath", virtualNetworkAppliancePathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.RouteControllerBgpNeighborsStatusListResult
