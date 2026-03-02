@@ -4,12 +4,12 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: Cancel.
+// Data type definitions file for service: Summary.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package publish
+package statistics
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -19,20 +19,22 @@ import (
 	"reflect"
 )
 
-func cancelCreateInputType() vapiBindings_.StructType {
+func summaryGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["draft_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["draft_id"] = "DraftId"
+	fields["route_controller_id"] = vapiBindings_.NewStringType()
+	fields["interface_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["route_controller_id"] = "RouteControllerId"
+	fieldNameMap["interface_id"] = "InterfaceId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func CancelCreateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.PublishTaskBindingType)
+func SummaryGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.RouteControllerInterfaceStatisticsSummaryBindingType)
 }
 
-func cancelCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+func summaryGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -41,11 +43,16 @@ func cancelCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["draft_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["draft_id"] = "DraftId"
-	paramsTypeMap["draft_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["draftId"] = vapiBindings_.NewStringType()
-	pathParams["draft_id"] = "draftId"
+	fields["route_controller_id"] = vapiBindings_.NewStringType()
+	fields["interface_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["route_controller_id"] = "RouteControllerId"
+	fieldNameMap["interface_id"] = "InterfaceId"
+	paramsTypeMap["interface_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["route_controller_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["routeControllerId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["interfaceId"] = vapiBindings_.NewStringType()
+	pathParams["route_controller_id"] = "routeControllerId"
+	pathParams["interface_id"] = "interfaceId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -59,11 +66,11 @@ func cancelCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		bodyFieldsMap,
 		"",
 		"",
-		"POST",
-		"/policy/api/v1/infra/drafts/{draftId}/publish/cancel",
+		"GET",
+		"/policy/api/v1/infra/route-controllers/{routeControllerId}/interfaces/{interfaceId}/statistics/summary",
 		"",
 		resultHeaders,
-		201,
+		200,
 		"",
 		errorHeaders,
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})

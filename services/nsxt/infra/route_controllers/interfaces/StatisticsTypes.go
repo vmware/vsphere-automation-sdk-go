@@ -19,13 +19,41 @@ import (
 	"reflect"
 )
 
+// Possible value for ``bgpNeighborType`` of method Statistics#get.
+const Statistics_GET_BGP_NEIGHBOR_TYPE_USER = "USER"
+
+// Possible value for ``statsType`` of method Statistics#get.
+const Statistics_GET_STATS_TYPE_STATS = "DATAPATH_STATS"
+
 func statisticsGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["route_controller_id"] = vapiBindings_.NewStringType()
 	fields["interface_id"] = vapiBindings_.NewStringType()
+	fields["bgp_neighbor_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["stats_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["virtual_network_appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["route_controller_id"] = "RouteControllerId"
 	fieldNameMap["interface_id"] = "InterfaceId"
+	fieldNameMap["bgp_neighbor_type"] = "BgpNeighborType"
+	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
+	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
+	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fieldNameMap["sort_by"] = "SortBy"
+	fieldNameMap["stats_type"] = "StatsType"
+	fieldNameMap["transport_node_id"] = "TransportNodeId"
+	fieldNameMap["virtual_network_appliance_path"] = "VirtualNetworkAppliancePath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -45,14 +73,58 @@ func statisticsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["route_controller_id"] = vapiBindings_.NewStringType()
 	fields["interface_id"] = vapiBindings_.NewStringType()
+	fields["bgp_neighbor_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["stats_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["virtual_network_appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["route_controller_id"] = "RouteControllerId"
 	fieldNameMap["interface_id"] = "InterfaceId"
-	paramsTypeMap["interface_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["bgp_neighbor_type"] = "BgpNeighborType"
+	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
+	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
+	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fieldNameMap["sort_by"] = "SortBy"
+	fieldNameMap["stats_type"] = "StatsType"
+	fieldNameMap["transport_node_id"] = "TransportNodeId"
+	fieldNameMap["virtual_network_appliance_path"] = "VirtualNetworkAppliancePath"
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["stats_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["route_controller_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["virtual_network_appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["interface_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["bgp_neighbor_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["routeControllerId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["interfaceId"] = vapiBindings_.NewStringType()
 	pathParams["route_controller_id"] = "routeControllerId"
 	pathParams["interface_id"] = "interfaceId"
+	queryParams["cursor"] = "cursor"
+	queryParams["virtual_network_appliance_path"] = "virtual_network_appliance_path"
+	queryParams["sort_ascending"] = "sort_ascending"
+	queryParams["included_fields"] = "included_fields"
+	queryParams["enforcement_point_path"] = "enforcement_point_path"
+	queryParams["stats_type"] = "stats_type"
+	queryParams["sort_by"] = "sort_by"
+	queryParams["transport_node_id"] = "transport_node_id"
+	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
+	queryParams["bgp_neighbor_type"] = "bgp_neighbor_type"
+	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(

@@ -20,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AsyncQueryClient interface {
 
-	// Trigger to query licenses from all registered vCenters and ANS license server, then update licenses in NSX in an asynchronous manner.
+	// Trigger to query licenses from all registered vCenters and License Hub then update licenses in NSX in an asynchronous manner.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout

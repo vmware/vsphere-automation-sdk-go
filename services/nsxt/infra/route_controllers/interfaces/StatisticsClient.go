@@ -25,6 +25,17 @@ type StatisticsClient interface {
 	//
 	// @param routeControllerIdParam (required)
 	// @param interfaceIdParam (required)
+	// @param bgpNeighborTypeParam Bgp neighbor type that can be used as filter for T0 bgp neighbor status filter. (optional)
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param enforcementPointPathParam Enforcement point path. (optional)
+	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
+	// @param sortByParam Field by which records are sorted (optional)
+	// @param statsTypeParam This indicates the type of statistics being requested. We support statistics from the data plane. (optional)
+	// @param transportNodeIdParam Identifier of the transport node. This is a UUID. (optional)
+	// @param virtualNetworkAppliancePathParam Contains string path of virtual network appliance. Virtual network appliance cluster should be member of enforcement point. (optional)
 	// @return com.vmware.nsx_policy.model.RouteControllerInterfaceStatistics
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -33,7 +44,7 @@ type StatisticsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(routeControllerIdParam string, interfaceIdParam string) (nsx_policyModel.RouteControllerInterfaceStatistics, error)
+	Get(routeControllerIdParam string, interfaceIdParam string, bgpNeighborTypeParam *string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, statsTypeParam *string, transportNodeIdParam *string, virtualNetworkAppliancePathParam *string) (nsx_policyModel.RouteControllerInterfaceStatistics, error)
 }
 
 type statisticsClient struct {
@@ -61,7 +72,7 @@ func (sIface *statisticsClient) GetErrorBindingType(errorName string) vapiBindin
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statisticsClient) Get(routeControllerIdParam string, interfaceIdParam string) (nsx_policyModel.RouteControllerInterfaceStatistics, error) {
+func (sIface *statisticsClient) Get(routeControllerIdParam string, interfaceIdParam string, bgpNeighborTypeParam *string, cursorParam *string, enforcementPointPathParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, statsTypeParam *string, transportNodeIdParam *string, virtualNetworkAppliancePathParam *string) (nsx_policyModel.RouteControllerInterfaceStatistics, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := statisticsGetRestMetadata()
@@ -71,6 +82,17 @@ func (sIface *statisticsClient) Get(routeControllerIdParam string, interfaceIdPa
 	sv := vapiBindings_.NewStructValueBuilder(statisticsGetInputType(), typeConverter)
 	sv.AddStructField("RouteControllerId", routeControllerIdParam)
 	sv.AddStructField("InterfaceId", interfaceIdParam)
+	sv.AddStructField("BgpNeighborType", bgpNeighborTypeParam)
+	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
+	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
+	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("SortAscending", sortAscendingParam)
+	sv.AddStructField("SortBy", sortByParam)
+	sv.AddStructField("StatsType", statsTypeParam)
+	sv.AddStructField("TransportNodeId", transportNodeIdParam)
+	sv.AddStructField("VirtualNetworkAppliancePath", virtualNetworkAppliancePathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.RouteControllerInterfaceStatistics

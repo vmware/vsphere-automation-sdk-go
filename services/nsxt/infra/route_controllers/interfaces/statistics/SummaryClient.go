@@ -4,10 +4,10 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: Status
+// Interface file for service: Summary
 // Used by client-side stubs.
 
-package cluster_configs
+package statistics
 
 import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -19,12 +19,13 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-type StatusClient interface {
+type SummaryClient interface {
 
-	// This routine is responsible for getting the resize status for every host in the specified cluster.
+	// Get policy route controller interface statistics summary for given interface-id
 	//
-	// @param clusterIdParam Cluster ID (required)
-	// @return com.vmware.nsx_policy.model.ScrxResizeStatus
+	// @param routeControllerIdParam (required)
+	// @param interfaceIdParam (required)
+	// @return com.vmware.nsx_policy.model.RouteControllerInterfaceStatisticsSummary
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -32,57 +33,58 @@ type StatusClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(clusterIdParam string) (nsx_policyModel.ScrxResizeStatus, error)
+	Get(routeControllerIdParam string, interfaceIdParam string) (nsx_policyModel.RouteControllerInterfaceStatisticsSummary, error)
 }
 
-type statusClient struct {
+type summaryClient struct {
 	connector           vapiProtocolClient_.Connector
 	interfaceDefinition vapiCore_.InterfaceDefinition
 	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewStatusClient(connector vapiProtocolClient_.Connector) *statusClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.settings.scrx.cluster_configs.status")
+func NewSummaryClient(connector vapiProtocolClient_.Connector) *summaryClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.route_controllers.interfaces.statistics.summary")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
-	sIface := statusClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	sIface := summaryClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &sIface
 }
 
-func (sIface *statusClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+func (sIface *summaryClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := sIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statusClient) Get(clusterIdParam string) (nsx_policyModel.ScrxResizeStatus, error) {
+func (sIface *summaryClient) Get(routeControllerIdParam string, interfaceIdParam string) (nsx_policyModel.RouteControllerInterfaceStatisticsSummary, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
-	operationRestMetaData := statusGetRestMetadata()
+	operationRestMetaData := summaryGetRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(statusGetInputType(), typeConverter)
-	sv.AddStructField("ClusterId", clusterIdParam)
+	sv := vapiBindings_.NewStructValueBuilder(summaryGetInputType(), typeConverter)
+	sv.AddStructField("RouteControllerId", routeControllerIdParam)
+	sv.AddStructField("InterfaceId", interfaceIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.ScrxResizeStatus
+		var emptyOutput nsx_policyModel.RouteControllerInterfaceStatisticsSummary
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.scrx.cluster_configs.status", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.ScrxResizeStatus
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.route_controllers.interfaces.statistics.summary", "get", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.RouteControllerInterfaceStatisticsSummary
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatusGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), SummaryGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.ScrxResizeStatus), nil
+		return output.(nsx_policyModel.RouteControllerInterfaceStatisticsSummary), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
