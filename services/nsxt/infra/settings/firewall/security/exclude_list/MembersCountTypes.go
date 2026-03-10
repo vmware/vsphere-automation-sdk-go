@@ -19,18 +19,18 @@ import (
 	"reflect"
 )
 
-func membersCountListInputType() vapiBindings_.StructType {
+func membersCountGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func MembersCountListOutputType() vapiBindings_.BindingType {
+func MembersCountGetOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewReferenceType(nsx_policyModel.FirewallExcludeListMembersCountListResultBindingType)
 }
 
-func membersCountListRestMetadata() vapiProtocol_.OperationRestMetadata {
+func membersCountGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}

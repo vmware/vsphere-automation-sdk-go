@@ -22,7 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type ConfigClient interface {
 
 	// Get configuration information for the file server used to store backed-up files. Fields that contain secrets (password, passphrase) are not returned.
-	//  Deprecated. Please use API /cluster/backups/config, to get remote file server(where backed-up files are stored) details durign restore.
+	//  Deprecated. Please use API /cluster/backups/config, to get remote file server(where backed-up files are stored) details during restore.
 	//
 	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx_policy.model.RestoreConfiguration

@@ -30,7 +30,7 @@ type MembersCountClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List() (nsx_policyModel.FirewallExcludeListMembersCountListResult, error)
+	Get() (nsx_policyModel.FirewallExcludeListMembersCountListResult, error)
 }
 
 type membersCountClient struct {
@@ -42,7 +42,7 @@ type membersCountClient struct {
 func NewMembersCountClient(connector vapiProtocolClient_.Connector) *membersCountClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.settings.firewall.security.exclude_list.members_count")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -58,24 +58,24 @@ func (mIface *membersCountClient) GetErrorBindingType(errorName string) vapiBind
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (mIface *membersCountClient) List() (nsx_policyModel.FirewallExcludeListMembersCountListResult, error) {
+func (mIface *membersCountClient) Get() (nsx_policyModel.FirewallExcludeListMembersCountListResult, error) {
 	typeConverter := mIface.connector.TypeConverter()
 	executionContext := mIface.connector.NewExecutionContext()
-	operationRestMetaData := membersCountListRestMetadata()
+	operationRestMetaData := membersCountGetRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(membersCountListInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(membersCountGetInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.FirewallExcludeListMembersCountListResult
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := mIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.exclude_list.members_count", "list", inputDataValue, executionContext)
+	methodResult := mIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.exclude_list.members_count", "get", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.FirewallExcludeListMembersCountListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), MembersCountListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), MembersCountGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
