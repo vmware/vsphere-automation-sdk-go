@@ -35,7 +35,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Delete(domainIdParam string, securityPolicyIdParam string, ruleIdParam string) error
 
-	// Read rule
+	// Returns the configuration of a specific distributed firewall rule within a security policy.
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)
@@ -50,7 +50,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Get(domainIdParam string, securityPolicyIdParam string, ruleIdParam string) (nsx_policyModel.Rule, error)
 
-	// List rules
+	// Returns a list of all distributed firewall rules within a specific security policy.
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)
@@ -85,7 +85,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Patch(domainIdParam string, securityPolicyIdParam string, ruleIdParam string, ruleParam nsx_policyModel.Rule) error
 
-	// This is used to re-order a rule within a security policy.
+	// This is used to re-order a rule within a security policy. NOTE: Default rule sequence numbers cannot be modified.
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)

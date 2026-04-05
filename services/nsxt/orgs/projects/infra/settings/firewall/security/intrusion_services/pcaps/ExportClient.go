@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ExportClient interface {
 
-	// Trigger the process to collect all pcap files of all the pcap_ids mentioned in request payload.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Trigger the process to collect all pcap files of all the pcap_ids mentioned in request payload.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

@@ -33,7 +33,7 @@ type ServicesClient interface {
 	// @throws NotFound  Not Found
 	Delete(serviceIdParam string) error
 
-	// Read a service
+	// Returns the configuration of a specific NSX policy service identified by service ID. Services define protocol and port combinations used in firewall rules.
 	//
 	// @param serviceIdParam Service ID (required)
 	// @return com.vmware.nsx_policy.model.Service
@@ -46,7 +46,7 @@ type ServicesClient interface {
 	// @throws NotFound  Not Found
 	Get(serviceIdParam string) (nsx_policyModel.Service, error)
 
-	// Return list of Services.
+	// Returns a paginated list of all services.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param defaultServiceParam If set to true, then it will display only default services. If set to false, then it will display all user defined services. If it is not provided, then complete (default as well as user defined) list of services will be displayed. (optional)

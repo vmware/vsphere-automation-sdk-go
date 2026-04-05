@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type EnforcementPointsClient interface {
 
-	// Read a Enforcement Point and the complete tree underneath. Returns the populated enforcement point object.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Read a Enforcement Point and the complete tree underneath. Returns the populated enforcement point object.
 	//
 	// @param enforcementPointNameParam Enforcement Point Name (required)
 	// @return com.vmware.nsx_policy.model.RealizedEnforcementPoint
@@ -34,7 +35,8 @@ type EnforcementPointsClient interface {
 	// @throws NotFound  Not Found
 	Get(enforcementPointNameParam string) (nsx_policyModel.RealizedEnforcementPoint, error)
 
-	// Paginated list of all enforcement points. Returns the populated enforcement points.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Paginated list of all enforcement points. Returns the populated enforcement points.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)

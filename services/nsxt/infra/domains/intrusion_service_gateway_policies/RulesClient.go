@@ -35,7 +35,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Delete(domainIdParam string, policyIdParam string, ruleIdParam string) error
 
-	// Read IDS rule
+	// Returns the configuration of a specific Intrusion Detection System (IDS) rule within a gateway intrusion service policy. Gateway IDS rules inspect north-south traffic passing through a Tier-1 or Tier-0 gateway for intrusion patterns.
 	//
 	// @param domainIdParam (required)
 	// @param policyIdParam (required)

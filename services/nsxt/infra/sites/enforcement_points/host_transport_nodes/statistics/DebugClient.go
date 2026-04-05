@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DebugClient interface {
 
-	// Get the counter values for realtime datapath statistics. Support multiple types in one query. Query types should be declared inside query parameters. By default the query type is packet_stats.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Get the counter values for realtime datapath statistics. Support multiple types in one query. Query types should be declared inside query parameters. By default the query type is packet_stats.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)

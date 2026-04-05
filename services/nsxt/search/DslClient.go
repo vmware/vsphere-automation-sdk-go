@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DslClient interface {
 
-	// DSL (Domain Specific Language) search API
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  DSL (Domain Specific Language) search API
 	//
 	// @param queryParam The syntax of query is described in Search API documentation. (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)

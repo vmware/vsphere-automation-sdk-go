@@ -37,7 +37,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, domainIdParam string, securityPolicyIdParam string, ruleIdParam string) error
 
-	// Read rule
+	// Returns the configuration of a specific distributed firewall rule within a security policy.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -54,7 +54,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, domainIdParam string, securityPolicyIdParam string, ruleIdParam string) (nsx_policyModel.Rule, error)
 
-	// List rules
+	// Returns a list of all distributed firewall rules within a specific security policy.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -93,7 +93,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, domainIdParam string, securityPolicyIdParam string, ruleIdParam string, ruleParam nsx_policyModel.Rule) error
 
-	// This is used to re-order a rule within a security policy.
+	// This is used to re-order a rule within a security policy. NOTE: Default rule sequence numbers cannot be modified.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

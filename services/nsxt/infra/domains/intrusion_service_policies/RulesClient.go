@@ -35,7 +35,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Delete(domainIdParam string, policyIdParam string, ruleIdParam string) error
 
-	// Read intrusion detection rule
+	// Returns the configuration of a specific Intrusion Detection System (IDS) rule within an intrusion service policy. Each rule defines traffic matching criteria and the IDS profile to apply for detecting and preventing intrusion attempts.
 	//
 	// @param domainIdParam Domain ID (required)
 	// @param policyIdParam Policy ID (required)
@@ -50,7 +50,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Get(domainIdParam string, policyIdParam string, ruleIdParam string) (nsx_policyModel.IdsRule, error)
 
-	// List intrusion detection rules.
+	// Returns a paginated list of all Intrusion Detection System (IDS) rules within a specific intrusion service policy. Rules are evaluated in sequence to detect and prevent network intrusion attempts based on configured IDS profiles.
 	//
 	// @param domainIdParam Domain ID (required)
 	// @param policyIdParam Policy ID (required)

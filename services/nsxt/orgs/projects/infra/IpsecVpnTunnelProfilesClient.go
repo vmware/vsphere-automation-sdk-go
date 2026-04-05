@@ -35,7 +35,7 @@ type IpsecVpnTunnelProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, tunnelProfileIdParam string) error
 
-	// Get custom IPSec tunnel Profile, given the particular id.
+	// Get custom IPSec tunnel Profile, given the particular id. If this profile is using SHA1 as a digest algorithm, please note that SHA1 is deprecated. Please update the profile to use some other Digest Algorithm.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -50,7 +50,7 @@ type IpsecVpnTunnelProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, tunnelProfileIdParam string) (nsx_policyModel.IPSecVpnTunnelProfile, error)
 
-	// Get paginated list of all IPSec tunnel Profiles.
+	// Get paginated list of all IPSec tunnel Profiles. If any of these profiles are using SHA1 as a digest algorithm, please note that SHA1 is deprecated. Please update such profiles to use some other Digest Algorithm.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -70,7 +70,7 @@ type IpsecVpnTunnelProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPSecVpnTunnelProfileListResult, error)
 
-	// Create or patch custom IPSec tunnel profile. IPSec tunnel profile is a reusable profile that captures phase two negotiation parameters and tunnel properties. System will be provisioned with system owned editable default IPSec tunnel profile. Any change in profile affects all sessions consuming this profile.
+	// Create or patch custom IPSec tunnel profile. IPSec tunnel profile is a reusable profile that captures phase two negotiation parameters and tunnel properties. System will be provisioned with system owned editable default IPSec tunnel profile. Any change in profile affects all sessions consuming this profile. SHA1 is deprecated. Please use some other Digest Algorithm.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -85,7 +85,7 @@ type IpsecVpnTunnelProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, tunnelProfileIdParam string, ipSecVpnTunnelProfileParam nsx_policyModel.IPSecVpnTunnelProfile) error
 
-	// Create or fully replace custom IPSec tunnel profile. IPSec tunnel profile is a reusable profile that captures phase two negotiation parameters and tunnel properties. System will be provisioned with system owned editable default IPSec tunnel profile. Any change in profile affects all sessions consuming this profile. Revision is optional for creation and required for update.
+	// Create or fully replace custom IPSec tunnel profile. IPSec tunnel profile is a reusable profile that captures phase two negotiation parameters and tunnel properties. System will be provisioned with system owned editable default IPSec tunnel profile. Any change in profile affects all sessions consuming this profile. Revision is optional for creation and required for update. SHA1 is deprecated. Please use some other Digest Algorithm.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

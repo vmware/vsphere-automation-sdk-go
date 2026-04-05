@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TroubleshootClient interface {
 
-	// Read a StaticRouteBfdTroubleshootConfig
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Read a StaticRouteBfdTroubleshootConfig
 	//
 	// @param tier0IdParam Tier-0 ID (required)
 	// @return com.vmware.nsx_policy.model.StaticRouteBfdTroubleshootConfig
@@ -34,7 +35,8 @@ type TroubleshootClient interface {
 	// @throws NotFound  Not Found
 	Get(tier0IdParam string) (nsx_policyModel.StaticRouteBfdTroubleshootConfig, error)
 
-	// If a StaticRouteBfdTroubleshootConfig is not already present, create a new StaticRouteBfdTroubleshootConfig. If it already exists, update the StaticRouteBfdTroubleshootConfig. This is a full replace.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  If a StaticRouteBfdTroubleshootConfig is not already present, create a new StaticRouteBfdTroubleshootConfig. If it already exists, update the StaticRouteBfdTroubleshootConfig. This is a full replace.
 	//
 	// @param tier0IdParam Tier-0 ID (required)
 	// @param staticRouteBfdTroubleshootConfigParam (required)
@@ -48,7 +50,8 @@ type TroubleshootClient interface {
 	// @throws NotFound  Not Found
 	Patch(tier0IdParam string, staticRouteBfdTroubleshootConfigParam nsx_policyModel.StaticRouteBfdTroubleshootConfig, overrideParam *bool) error
 
-	// If a StaticRouteBfdTroubleshootConfig is not already present, create a new StaticRouteBfdTroubleshootConfig. If it already exists, update the StaticRouteBfdTroubleshootConfig. This operation will fully replace the object.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  If a StaticRouteBfdTroubleshootConfig is not already present, create a new StaticRouteBfdTroubleshootConfig. If it already exists, update the StaticRouteBfdTroubleshootConfig. This operation will fully replace the object.
 	//
 	// @param tier0IdParam Tier-0 ID (required)
 	// @param staticRouteBfdTroubleshootConfigParam (required)

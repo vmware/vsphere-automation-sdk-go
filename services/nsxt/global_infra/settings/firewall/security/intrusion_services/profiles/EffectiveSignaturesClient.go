@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type EffectiveSignaturesClient interface {
 
-	// Get all the IDS signatures attached to the Profile.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Get all the IDS signatures attached to the Profile.
 	//
 	// @param profileIdParam Profile ID (required)
 	// @param enforcementPointPathParam The path of the enforcement point. (optional)

@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FirewallSectionsClient interface {
 
-	// Read a Firewall and the complete tree underneath. Returns the populated Firewall object.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Read a Firewall and the complete tree underneath. Returns the populated Firewall object.
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -37,7 +38,8 @@ type FirewallSectionsClient interface {
 	// @throws NotFound  Not Found
 	Get(enforcementPointNameParam string, firewallSectionIdParam string) (nsx_policyModel.RealizedFirewallSection, error)
 
-	// Paginated list of all Firewalls. Returns populated Firewalls.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Paginated list of all Firewalls. Returns populated Firewalls.
 	//
 	// Deprecated: This API element is deprecated.
 	//

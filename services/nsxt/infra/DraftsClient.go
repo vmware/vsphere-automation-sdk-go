@@ -33,7 +33,7 @@ type DraftsClient interface {
 	// @throws NotFound  Not Found
 	Delete(draftIdParam string) error
 
-	// Read a draft for a given draft identifier.
+	// Returns the configuration of a specific NSX policy draft identified by the draft ID. Drafts allow administrators to stage and review configuration changes before publishing them to the live environment.
 	//
 	// @param draftIdParam (required)
 	// @return com.vmware.nsx_policy.model.PolicyDraft
@@ -46,7 +46,7 @@ type DraftsClient interface {
 	// @throws NotFound  Not Found
 	Get(draftIdParam string) (nsx_policyModel.PolicyDraft, error)
 
-	// List policy drafts.
+	// Returns a paginated list of all DFW drafts.
 	//
 	// @param autoDraftsParam If set to true, then only auto drafts will be get fetched. If set to false, then only manual drafts will be get fetched. If not set, then all drafts will be get fetched. (optional)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
@@ -78,7 +78,7 @@ type DraftsClient interface {
 	// @throws NotFound  Not Found
 	Patch(draftIdParam string, policyDraftParam nsx_policyModel.PolicyDraft) error
 
-	// Read a draft and publish it by applying changes onto current configuration. If there are additional changes on top of draft configuration, pass it as a request body, in form of Infra object. Otherwise, if there are no additional changes, then pass empty Infra object as a request body.
+	// Publishes a draft by applying its staged configuration changes onto the live environment. If there are additional changes on top of draft configuration, pass it as a request body, in form of Infra object. Otherwise, if there are no additional changes, then pass empty Infra object as a request body.
 	//
 	// @param draftIdParam (required)
 	// @param infraParam (required)

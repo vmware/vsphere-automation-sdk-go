@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type NsgroupsClient interface {
 
-	// Read a NSGroup and the complete tree underneath. Returns the populated NSgroup object.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Read a NSGroup and the complete tree underneath. Returns the populated NSgroup object.
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -37,7 +38,8 @@ type NsgroupsClient interface {
 	// @throws NotFound  Not Found
 	Get(enforcementPointNameParam string, nsgroupNameParam string) (nsx_policyModel.GenericPolicyRealizedResource, error)
 
-	// Paginated list of all NSGroups. Returns populated NSGroups.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Paginated list of all NSGroups. Returns populated NSGroups.
 	//
 	// Deprecated: This API element is deprecated.
 	//

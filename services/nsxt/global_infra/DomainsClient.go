@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DomainsClient interface {
 
-	// Read a domain.
+	// Returns the configuration of a specific NSX policy domain identified by the domain ID. Domains are used to scope groups, security policies, and gateway policies.
 	//
 	// @param domainIdParam Domain ID (required)
 	// @return com.vmware.nsx_policy.model.Domain

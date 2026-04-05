@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type BridgeConnectionsClient interface {
 
-	// Delete VPC Subnet bridge profile
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Delete VPC Subnet bridge profile
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -37,7 +38,8 @@ type BridgeConnectionsClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, bridgeConnectionIdParam string) error
 
-	// Get VPC Subnet Bridge Connection
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Get VPC Subnet Bridge Connection
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -54,7 +56,8 @@ type BridgeConnectionsClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, bridgeConnectionIdParam string) (nsx_policyModel.BridgeConnection, error)
 
-	// List all bridge connections under a vpc subnet specific subnet
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  List all bridge connections under a vpc subnet specific subnet
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -76,7 +79,8 @@ type BridgeConnectionsClient interface {
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.BridgeConnectionListResult, error)
 
-	// Patch Bridge Connection
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Patch Bridge Connection
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -93,7 +97,8 @@ type BridgeConnectionsClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, bridgeConnectionIdParam string, bridgeConnectionParam nsx_policyModel.BridgeConnection) error
 
-	// Put VPC Subnet bridge profile
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Put VPC Subnet bridge profile
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)

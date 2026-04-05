@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type IpSetsNsxtClient interface {
 
-	// Read an IPSet
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Read an IPSet
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -37,7 +38,8 @@ type IpSetsNsxtClient interface {
 	// @throws NotFound  Not Found
 	Get(enforcementPointNameParam string, ipSetNameParam string) (nsx_policyModel.GenericPolicyRealizedResource, error)
 
-	// Paginated list of all Realized IPSets
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Paginated list of all Realized IPSets
 	//
 	// Deprecated: This API element is deprecated.
 	//

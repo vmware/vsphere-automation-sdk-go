@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RealizationFailuresClient interface {
 
-	// Retrieves only the resources with the reason not \"SUCCESS\". In case of failure or warning of the resource a reason object explaining the type of failure (ERROR, WARNING) and the detailed message of what the user could do to remediate is captured.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Retrieves only the resources with the reason not \"SUCCESS\". In case of failure or warning of the resource a reason object explaining the type of failure (ERROR, WARNING) and the detailed message of what the user could do to remediate is captured.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)

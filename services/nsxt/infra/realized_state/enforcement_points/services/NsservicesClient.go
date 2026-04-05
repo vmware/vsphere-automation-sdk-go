@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type NsservicesClient interface {
 
-	// Read a NSService.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Read a NSService.
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -37,7 +38,8 @@ type NsservicesClient interface {
 	// @throws NotFound  Not Found
 	Get(enforcementPointNameParam string, nsserviceNameParam string) (nsx_policyModel.GenericPolicyRealizedResource, error)
 
-	// Paginated list of all Realized NSService.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Paginated list of all Realized NSService.
 	//
 	// Deprecated: This API element is deprecated.
 	//

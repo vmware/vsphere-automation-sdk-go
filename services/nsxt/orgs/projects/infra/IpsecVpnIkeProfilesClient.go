@@ -35,7 +35,7 @@ type IpsecVpnIkeProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, ikeProfileIdParam string) error
 
-	// Get custom IKE Profile, given the particular id.
+	// Get custom IKE Profile, given the particular id. If this profile is using SHA1 as a digest algorithm, please note that SHA1 is deprecated. Please update the profile to use some other Digest Algorithm.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -50,7 +50,7 @@ type IpsecVpnIkeProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, ikeProfileIdParam string) (nsx_policyModel.IPSecVpnIkeProfile, error)
 
-	// Get paginated list of all IKE Profiles.
+	// Get paginated list of all IKE Profiles. If any of these profiles are using SHA1 as a digest algorithm, please note that SHA1 is deprecated. Please update such profiles to use some other Digest Algorithm.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -70,7 +70,7 @@ type IpsecVpnIkeProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPSecVpnIkeProfileListResult, error)
 
-	// Create or patch custom internet key exchange (IKE) Profile. IKE Profile is a reusable profile that captures IKE and phase one negotiation parameters. System will be pre provisioned with system owned editable default IKE profile and suggested set of profiles that can be used for peering with popular remote peers like AWS VPN. User can create custom profiles as needed. Any change in profile affects all sessions consuming this profile.
+	// Create or patch custom internet key exchange (IKE) Profile. IKE Profile is a reusable profile that captures IKE and phase one negotiation parameters. System will be pre provisioned with system owned editable default IKE profile and suggested set of profiles that can be used for peering with popular remote peers like AWS VPN. User can create custom profiles as needed. Any change in profile affects all sessions consuming this profile. SHA1 is deprecated. Please use some other Digest Algorithm.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -85,7 +85,7 @@ type IpsecVpnIkeProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, ikeProfileIdParam string, ipSecVpnIkeProfileParam nsx_policyModel.IPSecVpnIkeProfile) error
 
-	// Create or fully replace custom internet key exchange (IKE) Profile. IKE Profile is a reusable profile that captures IKE and phase one negotiation parameters. System will be pre provisioned with system owned editable default IKE profile and suggested set of profiles that can be used for peering with popular remote peers like AWS VPN. User can create custom profiles as needed. Any change in profile affects all sessions consuming this profile. Revision is optional for creation and required for update.
+	// Create or fully replace custom internet key exchange (IKE) Profile. IKE Profile is a reusable profile that captures IKE and phase one negotiation parameters. System will be pre provisioned with system owned editable default IKE profile and suggested set of profiles that can be used for peering with popular remote peers like AWS VPN. User can create custom profiles as needed. Any change in profile affects all sessions consuming this profile. Revision is optional for creation and required for update. SHA1 is deprecated. Please use some other Digest Algorithm.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

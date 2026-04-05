@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TroubleshootClient interface {
 
-	// Read BGP troubleshoot config
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Read BGP troubleshoot config
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -35,7 +36,8 @@ type TroubleshootClient interface {
 	// @throws NotFound  Not Found
 	Get(tier0IdParam string, localeServiceIdParam string) (nsx_policyModel.BgpTroubleshootConfig, error)
 
-	// If BGP troubleshoot config is not present in BGP configuration, create a new BGP troubleshoot config with default value. If it already exists, update the BGP troubleshoot config with this object.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  If BGP troubleshoot config is not present in BGP configuration, create a new BGP troubleshoot config with default value. If it already exists, update the BGP troubleshoot config with this object.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
@@ -50,7 +52,8 @@ type TroubleshootClient interface {
 	// @throws NotFound  Not Found
 	Patch(tier0IdParam string, localeServiceIdParam string, bgpTroubleshootConfigParam nsx_policyModel.BgpTroubleshootConfig, overrideParam *bool) error
 
-	// If BGP troubleshoot config is not present in BGP configuration, create a new BGP troubleshoot config with default value. If it already exists, update the BGP troubleshoot config with this object.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  If BGP troubleshoot config is not present in BGP configuration, create a new BGP troubleshoot config with default value. If it already exists, update the BGP troubleshoot config with this object.
 	//
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)

@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatusClient interface {
 
-	// Get VPC Status
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Get VPC Status
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)

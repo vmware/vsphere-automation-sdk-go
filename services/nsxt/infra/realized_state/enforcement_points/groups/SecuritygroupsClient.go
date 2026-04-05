@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SecuritygroupsClient interface {
 
-	// Read a Security Group and the complete tree underneath. Returns the populated Security Group object.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Read a Security Group and the complete tree underneath. Returns the populated Security Group object.
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -37,7 +38,8 @@ type SecuritygroupsClient interface {
 	// @throws NotFound  Not Found
 	Get(enforcementPointNameParam string, securitygroupNameParam string) (nsx_policyModel.RealizedSecurityGroup, error)
 
-	// Paginated list of all Security Groups. Returns populated Security Groups.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Paginated list of all Security Groups. Returns populated Security Groups.
 	//
 	// Deprecated: This API element is deprecated.
 	//

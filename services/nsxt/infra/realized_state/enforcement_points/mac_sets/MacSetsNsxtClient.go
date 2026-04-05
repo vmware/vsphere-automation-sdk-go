@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type MacSetsNsxtClient interface {
 
-	// Read an MACSet
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Read an MACSet
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -37,7 +38,8 @@ type MacSetsNsxtClient interface {
 	// @throws NotFound  Not Found
 	Get(enforcementPointNameParam string, macSetNameParam string) (nsx_policyModel.GenericPolicyRealizedResource, error)
 
-	// Paginated list of all Realized MACSets
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Paginated list of all Realized MACSets
 	//
 	// Deprecated: This API element is deprecated.
 	//

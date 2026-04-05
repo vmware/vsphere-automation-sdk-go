@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type CentralizedConfigsClient interface {
 
-	// Delete the centralized service config. Only allowed when no active gateway attachments or VPN services use the TGW.
+	// Delete the centralized config.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -36,7 +36,7 @@ type CentralizedConfigsClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, centralizedConfigIdParam string) error
 
-	// Read the centralized service config for the transit gateway.
+	// Read the centralized service config of the transit gateway.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -52,7 +52,7 @@ type CentralizedConfigsClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, centralizedConfigIdParam string) (nsx_policyModel.CentralizedConfig, error)
 
-	// List transit gateway centralized service configurations
+	// List transit gateway centralized configs
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -73,7 +73,7 @@ type CentralizedConfigsClient interface {
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, transitGatewayIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.CentralizedConfigListResult, error)
 
-	// Partial update of the centralized service config.
+	// Partial update of the centralized config.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -89,7 +89,7 @@ type CentralizedConfigsClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, centralizedConfigIdParam string, centralizedConfigParam nsx_policyModel.CentralizedConfig) error
 
-	// Create or replace the centralized service config for the transit gateway. Only the id \"default\" is accepted. Contains HA mode and edge cluster paths for centralized TGW.
+	// Create or replace the centralized service config for the transit gateway.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)

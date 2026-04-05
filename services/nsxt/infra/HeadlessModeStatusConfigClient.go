@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type HeadlessModeStatusConfigClient interface {
 
-	// This API allow customer read headless mode status config. The configuration includes property that indicates whether headless mode is supported or not.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  This API allow customer read headless mode status config. The configuration includes property that indicates whether headless mode is supported or not.
 	// @return com.vmware.nsx_policy.model.HeadlessModeStatusConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -32,7 +33,8 @@ type HeadlessModeStatusConfigClient interface {
 	// @throws NotFound  Not Found
 	Get() (nsx_policyModel.HeadlessModeStatusConfig, error)
 
-	// This API allows customer to toggle headless_mode_supported flag. If HeadlessModeStatusConfig does not exist, it will be created. If it already exists, it will be updated.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  This API allows customer to toggle headless_mode_supported flag. If HeadlessModeStatusConfig does not exist, it will be created. If it already exists, it will be updated.
 	//
 	// @param headlessModeStatusConfigParam (required)
 	// @return com.vmware.nsx_policy.model.HeadlessModeStatusConfig

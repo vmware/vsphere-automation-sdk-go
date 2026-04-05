@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RulesClient interface {
 
-	// Read rule
+	// Returns the configuration of a specific distributed firewall rule within a security policy.
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)
@@ -36,7 +36,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Get(domainIdParam string, securityPolicyIdParam string, ruleIdParam string) (nsx_policyModel.Rule, error)
 
-	// List rules
+	// Returns a list of all distributed firewall rules within a specific security policy.
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)

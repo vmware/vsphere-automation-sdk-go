@@ -1,0 +1,138 @@
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
+
+// Auto generated code. DO NOT EDIT.
+
+// Interface file for service: GlobalConfig
+// Used by client-side stubs.
+
+package cdo_mode
+
+import (
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt/model"
+)
+
+const _ = vapiCore_.SupportedByRuntimeVersion2
+
+type GlobalConfigClient interface {
+
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  This API allow customer read global cdo mode config. The configuration includes property that indicates whether global cdo mode is enabled or not.
+	// @return com.vmware.nsx_policy.model.GlobalCdoModeConfig
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Get() (nsx_policyModel.GlobalCdoModeConfig, error)
+
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  This API allows customer to toggle global_cdo_mode_enabled flag. If GlobalCdoModeConfig does not exist, it will be created. If it already exists, it will be updated.
+	//
+	// @param globalCdoModeConfigParam (required)
+	// @return com.vmware.nsx_policy.model.GlobalCdoModeConfig
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Update(globalCdoModeConfigParam nsx_policyModel.GlobalCdoModeConfig) (nsx_policyModel.GlobalCdoModeConfig, error)
+}
+
+type globalConfigClient struct {
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
+}
+
+func NewGlobalConfigClient(connector vapiProtocolClient_.Connector) *globalConfigClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.cdo_mode.global_config")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
+	}
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
+
+	gIface := globalConfigClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &gIface
+}
+
+func (gIface *globalConfigClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+	if entry, ok := gIface.errorsBindingMap[errorName]; ok {
+		return entry
+	}
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
+}
+
+func (gIface *globalConfigClient) Get() (nsx_policyModel.GlobalCdoModeConfig, error) {
+	typeConverter := gIface.connector.TypeConverter()
+	executionContext := gIface.connector.NewExecutionContext()
+	operationRestMetaData := globalConfigGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(globalConfigGetInputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_policyModel.GlobalCdoModeConfig
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := gIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.cdo_mode.global_config", "get", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.GlobalCdoModeConfig
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), GlobalConfigGetOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_policyModel.GlobalCdoModeConfig), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), gIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (gIface *globalConfigClient) Update(globalCdoModeConfigParam nsx_policyModel.GlobalCdoModeConfig) (nsx_policyModel.GlobalCdoModeConfig, error) {
+	typeConverter := gIface.connector.TypeConverter()
+	executionContext := gIface.connector.NewExecutionContext()
+	operationRestMetaData := globalConfigUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(globalConfigUpdateInputType(), typeConverter)
+	sv.AddStructField("GlobalCdoModeConfig", globalCdoModeConfigParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_policyModel.GlobalCdoModeConfig
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := gIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.cdo_mode.global_config", "update", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.GlobalCdoModeConfig
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), GlobalConfigUpdateOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_policyModel.GlobalCdoModeConfig), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), gIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}

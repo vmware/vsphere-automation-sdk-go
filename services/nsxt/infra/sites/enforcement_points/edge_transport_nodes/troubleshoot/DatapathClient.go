@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DatapathClient interface {
 
-	// This API is used to fetch the control packet drop log config at enforcement Point level.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  This API is used to fetch the control packet drop log config at enforcement Point level.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementPointIdParam (required)
@@ -35,7 +36,8 @@ type DatapathClient interface {
 	// @throws NotFound  Not Found
 	Get(siteIdParam string, enforcementPointIdParam string) (nsx_policyModel.PolicyEdgeTransportNodeDatapathTroubleshooting, error)
 
-	// This API is used to enable/disable the control packet drop log config in all edge transport nodes at the enforcement Point level.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  This API is used to enable/disable the control packet drop log config in all edge transport nodes at the enforcement Point level.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementPointIdParam (required)

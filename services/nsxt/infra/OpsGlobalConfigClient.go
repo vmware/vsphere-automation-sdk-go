@@ -34,7 +34,7 @@ type OpsGlobalConfigClient interface {
 	// @throws NotFound  Not Found
 	Get(applyLocallyParam *bool) (nsx_policyModel.OpsGlobalConfig, error)
 
-	// Update the global Operationconfiguration
+	// Update the global Operations Configuration
 	//
 	// @param opsGlobalConfigParam (required)
 	// @param applyLocallyParam If the user sets apply_locally to GET/PUT/PATCH call then the local resource copy will be shown/modified. This will only be acceptable on LM. In case LM only has it's copy, the apply_local = false will still have effect on local copy. (optional, default to false)

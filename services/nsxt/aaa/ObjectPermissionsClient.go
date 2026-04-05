@@ -21,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ObjectPermissionsClient interface {
 
-	// Delete object-permissions entries
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Delete object-permissions entries
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
@@ -41,7 +42,8 @@ type ObjectPermissionsClient interface {
 	// @throws NotFound  Not Found
 	Delete(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, inheritanceDisabledParam *bool, pageSizeParam *int64, pathPrefixParam *string, roleNameParam *string, sortAscendingParam *bool, sortByParam *string) error
 
-	// Get list of Object-level RBAC entries.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Get list of Object-level RBAC entries.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
@@ -62,7 +64,8 @@ type ObjectPermissionsClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, inheritanceDisabledParam *bool, pageSizeParam *int64, pathPrefixParam *string, roleNameParam *string, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ObjectRolePermissionGroupListResult, error)
 
-	// Create/update object permission mappings
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Create/update object permission mappings
 	//
 	// @param objectRolePermissionGroupParam (required)
 	//

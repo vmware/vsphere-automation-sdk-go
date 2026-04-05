@@ -991,7 +991,7 @@ type ALGTypeServiceEntry struct {
 	// * ALGTypeServiceEntry#ALGTypeServiceEntry_ALG_NBDG_BROADCAST
 	// * ALGTypeServiceEntry#ALGTypeServiceEntry_ALG_TFTP
 	//
-	//  The Application Layer Gateway (ALG) protocol. Please note, protocol NBNS_BROADCAST and NBDG_BROADCAST are deprecated. Please use UDP protocol and create L4 Port Set type of service instead.
+	//  The Application Layer Gateway (ALG) protocol for this service entry. NBNS_BROADCAST and NBDG_BROADCAST are deprecated; use a UDP L4PortSetServiceEntry instead.
 	Alg *string
 	// The destination_port cannot be empty and must be a single value. format: port-or-range
 	DestinationPorts []string
@@ -1436,6 +1436,37 @@ func (s *ActiveDirectoryIdentitySource) GetDataValue__() (vapiData_.DataValue, [
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for ActiveDirectoryIdentitySource._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Configuration and runtime status for adaptive concurrency limiting mode (active when mode is 'adaptive')
+type AdaptiveLimitsStatus struct {
+	// The current dynamically-calculated concurrency limit based on backend latency. This value fluctuates between min_limit and max_limit based on system load. format: int64
+	CurrentConcurrencyLimit *int64
+	// The current gradient value (minRTT / sampleRTT) used to adjust the limit. Values > 1.0 indicate good performance, values < 1.0 indicate degradation.
+	Gradient *float64
+	// The maximum bound for adaptive concurrency (ceiling) format: int64
+	MaxLimit *int64
+	// The minimum bound for adaptive concurrency (floor) format: int64
+	MinLimit *int64
+	// The observed minimum round-trip time used by the gradient controller.
+	MinRttMs *float64
+	// The most recent sampled round-trip time used by the gradient controller.
+	SampleRttMs *float64
+}
+
+func (s *AdaptiveLimitsStatus) GetType__() vapiBindings_.BindingType {
+	return AdaptiveLimitsStatusBindingType()
+}
+
+func (s *AdaptiveLimitsStatus) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for AdaptiveLimitsStatus._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -3919,6 +3950,10 @@ type ApiServiceConfig struct {
 	ResourceType *string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
+	// The maximum concurrency limit (ceiling) for adaptive mode. The adaptive concurrency filter will not increase the limit above this value. Only applicable when concurrency_limiting_mode is 'adaptive'. If not specified, defaults are based on form factor: MEDIUM=100, LARGE=200, XLARGE=400. format: int64
+	AdaptiveConcurrencyMaxLimit *int64
+	// The minimum concurrency limit (floor) for adaptive mode. The adaptive concurrency filter will not reduce the limit below this value. Only applicable when concurrency_limiting_mode is 'adaptive'. If not specified, defaults are based on form factor: MEDIUM=5, LARGE=10, XLARGE=20. format: int64
+	AdaptiveConcurrencyMinLimit *int64
 	// Identifies whether basic authentication is enabled or disabled in API calls.
 	BasicAuthenticationEnabled *bool
 	// The TLS cipher suites that the API service will negotiate.
@@ -3927,6 +3962,13 @@ type ApiServiceConfig struct {
 	ClientApiConcurrencyLimit *int64
 	// The maximum number of API requests that will be serviced per second for a given authenticated client. If more API requests are received than can be serviced, a 429 Too Many Requests HTTP response will be returned. To disable API rate limiting, set this value to 0. format: int64
 	ClientApiRateLimit *int64
+	// Possible values are:
+	//
+	// * ApiServiceConfig#ApiServiceConfig_CONCURRENCY_LIMITING_MODE_STATIC
+	// * ApiServiceConfig#ApiServiceConfig_CONCURRENCY_LIMITING_MODE_ADAPTIVE
+	//
+	//  The concurrency limiting mode to use. - static: Uses fixed limits (global_api_concurrency_limit, client_api_concurrency_limit) - adaptive: Uses Envoy's adaptive concurrency filter with latency-based adjustment When not specified, the mode is determined by the appliance form factor: XLARGE appliances default to adaptive, others default to static.
+	ConcurrencyLimitingMode *string
 	// NSX connection timeout, in seconds. To disable timeout, set to 0. format: int64
 	ConnectionTimeout *int64
 	// Identifies whether cookie-based authentication is enabled or disabled in API calls. When cookie-based authentication is disabled, new sessions cannot be created via /api/session/create.
@@ -3942,6 +3984,9 @@ type ApiServiceConfig struct {
 	// NSX session inactivity timeout format: int64
 	SessionTimeout *int64
 }
+
+const ApiServiceConfig_CONCURRENCY_LIMITING_MODE_STATIC = "static"
+const ApiServiceConfig_CONCURRENCY_LIMITING_MODE_ADAPTIVE = "adaptive"
 
 func (s *ApiServiceConfig) GetType__() vapiBindings_.BindingType {
 	return ApiServiceConfigBindingType()
@@ -6273,7 +6318,7 @@ type BaseRule struct {
 	IsDefault *bool
 	// Flag to enable packet logging. Default is deactivated.
 	Logged *bool
-	// User level field which will be printed in CLI and packet logs. Even though there is no limitation on length of the notes, internally notes will get truncated after 39 characters.
+	// User level field which will be printed in CLI and packet logs. The notes field accepts up to 2048 characters. Internally, notes are truncated after 39 characters in CLI and packet logs.
 	Notes *string
 	// Paths to Layer 7 service profile objects or L7 access profile objects for advanced traffic inspection and filtering. These profiles enable matching on Layer 7 attributes and sub-attributes of network services such as: - Application IDs (L4 AppId) - Encryption algorithms and TLS versions - Domain names and URLs - HTTP methods - CIFS/SMB versions You can use either Layer 7 service profiles (PolicyContextProfile) or an L7 access profile (L7AccessProfile) in a rule, but not both. When using an L7 access profile, only one profile path is allowed.
 	Profiles []string
@@ -6281,7 +6326,7 @@ type BaseRule struct {
 	RuleId *int64
 	// The list of group paths to which the rule applies. This determines which workloads (VMs, containers, etc.) the rule is enforced on. For Gateway Firewall rules, this can also include Tier-0, Tier-1, or interface paths to specify where the rule is enforced. Note that a given rule can be applied to multiple groups or network entities.
 	Scope []string
-	// This field is used to resolve conflicts between multiple Rules under Security or Gateway Policy for a Domain If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple rules with the same sequence number then their order is not deterministic. If a specific order of rules is desired, then one has to specify unique sequence numbers or use the POST request on the rule entity with a query parameter action=revise to let the framework assign a sequence number format: int32
+	// This field is used to resolve conflicts between multiple Rules under a Security or Gateway Policy for a Domain. Rules are evaluated in ascending sequence number order. If no sequence number is specified in the payload, the system assigns a default value of 0. If there are multiple rules with the same sequence number then their order is not deterministic. If a specific order of rules is desired, specify unique sequence numbers or use the POST request on the rule entity with a query parameter action=revise to let the framework assign a sequence number. format: int32
 	SequenceNumber *int64
 	// In order to specify raw services this can be used, along with services which contains path to services. This can be empty or null.
 	ServiceEntries []*vapiData_.StructValue
@@ -7314,6 +7359,227 @@ func (s *BgpNeighborRoutesListResult) GetDataValue__() (vapiData_.DataValue, []e
 	return dataVal, nil
 }
 
+// BGP Nexthop details.
+type BgpNexthop struct {
+	// Address family identifier.
+	Afi *string
+	// Next hop IP address.
+	Ip *string
+	// Scope of IPv6 address (global or link-local).
+	Scope *string
+	// Indicates if this nexthop is actively used.
+	Used *bool
+}
+
+func (s *BgpNexthop) GetType__() vapiBindings_.BindingType {
+	return BgpNexthopBindingType()
+}
+
+func (s *BgpNexthop) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for BgpNexthop._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type BgpRIBDetailsInCsvRecord struct {
+	// BGP AS path attribute.
+	AsPath *string
+	// Identifies the active/selected route among multiple paths.
+	Bestpath *bool
+	// BGP Community attribute.
+	Community *string
+	// Ethernet Segment Identifier for EVPN routes.
+	Esi *string
+	// Ethernet Tag ID for EVPN routes. format: int64
+	EthTag *int64
+	// EVPN route type for EVPN routes. format: int64
+	EvpnRouteType *int64
+	// BGP Extended Community attribute.
+	ExtendedCommunity *string
+	// Address family identifier of Global Nexthop.
+	GlobalNexthopAfi *string
+	// Global Nexthop IP address.
+	GlobalNexthopIp *string
+	// Indicates if global nexthop is actively used.
+	GlobalNexthopUsed *bool
+	// BGP Large Community attribute.
+	LargeCommunity *string
+	// Address family identifier of link-local Nexthop.
+	LocalNexthopAfi *string
+	// link-local Nexthop IP address.
+	LocalNexthopIp *string
+	// Indicates if link-local nexthop is actively used.
+	LocalNexthopUsed *bool
+	// BGP Local Preference attribute. format: int64
+	LocalPref *int64
+	// Logical router ID.
+	LogicalRouterId *string
+	// BGP Multi Exit Discriminator attribute. format: int64
+	Med *int64
+	// Indicates if route is part of ECMP/multipath forwarding.
+	Multipath *bool
+	// CIDR network address. format: ip-cidr-block
+	Network *string
+	// Determines if route is iBGP or eBGP.
+	PathFrom *string
+	// BGP Peer IP address.
+	PeerId *string
+	// BGP Route Distinguisher attribute.
+	Rd *string
+	// Router MAC address for EVPN routes.
+	Rmac *string
+	// Route Origin type.
+	RouteOrigin *string
+	// Indicates potential stale route (GR scenario).
+	Stale *bool
+	// Transport Node ID.
+	TransportNodeId *string
+	// Route validity status.
+	Valid *bool
+	// VXLAN Network Identifier - maps to L2/L3 VNI for encapsulation. format: int64
+	Vni *int64
+	// BGP Weight attribute. format: int64
+	Weight *int64
+}
+
+func (s *BgpRIBDetailsInCsvRecord) GetType__() vapiBindings_.BindingType {
+	return BgpRIBDetailsInCsvRecordBindingType()
+}
+
+func (s *BgpRIBDetailsInCsvRecord) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for BgpRIBDetailsInCsvRecord._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type BgpRIBListResult struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy *string
+	// Paged Collection of Bgp routes.
+	Results []BgpRoutes
+}
+
+func (s *BgpRIBListResult) GetType__() vapiBindings_.BindingType {
+	return BgpRIBListResultBindingType()
+}
+
+func (s *BgpRIBListResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for BgpRIBListResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type BgpRIBListResultInCSVFormat struct {
+	// File name set by HTTP server if API returns CSV result as a file.
+	FileName *string
+	// Collection of Bgp routes in CSV format.
+	Results []BgpRIBDetailsInCsvRecord
+}
+
+func (s *BgpRIBListResultInCSVFormat) GetType__() vapiBindings_.BindingType {
+	return BgpRIBListResultInCSVFormatBindingType()
+}
+
+func (s *BgpRIBListResultInCSVFormat) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for BgpRIBListResultInCSVFormat._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// BGP route details.
+type BgpRouteDetails struct {
+	// BGP AS path attribute.
+	AsPath *string
+	// Identifies the active/selected route among multiple paths.
+	Bestpath *bool
+	// BGP Community attribute.
+	Community *string
+	// Ethernet Segment Identifier for EVPN routes.
+	Esi *string
+	// Ethernet Tag ID for EVPN routes. format: int64
+	EthTag *int64
+	// EVPN route type for EVPN routes. format: int64
+	EvpnRouteType *int64
+	// BGP Extended Community attribute.
+	ExtendedCommunity *string
+	// BGP Large Community attribute.
+	LargeCommunity *string
+	// BGP Local Preference attribute. format: int64
+	LocalPref *int64
+	// BGP Multi Exit Discriminator attribute. format: int64
+	Med *int64
+	// Indicates if route is part of ECMP/multipath forwarding.
+	Multipath *bool
+	// CIDR network address. format: ip-cidr-block
+	Network *string
+	// Nexthops.
+	Nexthops []BgpNexthop
+	// Determines if route is iBGP or eBGP.
+	PathFrom *string
+	// BGP Peer IP address.
+	PeerId *string
+	// BGP Route Distinguisher attribute.
+	Rd *string
+	// Router MAC address for EVPN routes.
+	Rmac *string
+	// Route Origin type.
+	RouteOrigin *string
+	// Indicates potential stale route (GR scenario).
+	Stale *bool
+	// Route validity status.
+	Valid *bool
+	// VXLAN Network Identifier - maps to L2/L3 VNI for encapsulation. format: int64
+	Vni *int64
+	// BGP Weight attribute. format: int64
+	Weight *int64
+}
+
+func (s *BgpRouteDetails) GetType__() vapiBindings_.BindingType {
+	return BgpRouteDetailsBindingType()
+}
+
+func (s *BgpRouteDetails) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for BgpRouteDetails._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Enable address_families and route filtering in each direction
 type BgpRouteFiltering struct {
 	// Possible values are:
@@ -7380,6 +7646,36 @@ func (s *BgpRouteLeaking) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for BgpRouteLeaking._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// BGP routes from a single edge node.
+type BgpRoutes struct {
+	// Enforcement point policy path
+	EnforcementPointPath *string
+	// Policy intent path of the gateway.
+	GatewayPath *string
+	// Timestamp when the data was last updated, unset if data source has never updated the data. format: int64
+	LastUpdateTimestamp *int64
+	RouteDetails        []BgpRouteDetails
+	// Identifier of the transport node. This is a UUID.
+	TransportNodeId *string
+	// Transport node policy path.
+	TransportNodePath *string
+}
+
+func (s *BgpRoutes) GetType__() vapiBindings_.BindingType {
+	return BgpRoutesBindingType()
+}
+
+func (s *BgpRoutes) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for BgpRoutes._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -7853,7 +8149,7 @@ type BridgeFirewallPolicy struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// - Distributed Firewall - Policy framework provides five pre-defined categories for classifying a security policy. They are \"Ethernet\",\"Emergency\", \"Infrastructure\" \"Environment\" and \"Application\". There is a pre-determined order in which the policy framework manages the priority of these security policies. Ethernet category is for supporting layer 2 firewall rules. The other four categories are applicable for layer 3 rules. Amongst them, the Emergency category has the highest priority followed by Infrastructure, Environment and then Application rules. Administrator can choose to categorize a security policy into the above categories or can choose to leave it empty. If empty it will have the least precedence w.r.t the above four categories. - Edge Firewall - Policy Framework for Edge Firewall provides six pre-defined categories \"Emergency\", \"SystemRules\", \"SharedPreRules\", \"LocalGatewayRules\", \"AutoServiceRules\" and \"Default\", in order of priority of rules. All categories are allowed for Gatetway Policies that belong to 'default' Domain. However, for user created domains, category is restricted to \"SharedPreRules\" or \"LocalGatewayRules\" only. Also, the users can add/modify/delete rules from only the \"SharedPreRules\" and \"LocalGatewayRules\" categories. If user doesn't specify the category then defaulted to \"Rules\". System generated category is used by NSX created rules, for example BFD rules. Autoplumbed category used by NSX verticals to autoplumb data path rules. Finally, \"Default\" category is the placeholder default rules with lowest in the order of priority.
+	// Classifies this security policy into an evaluation-priority category. Categories are evaluated in a fixed priority order. Distributed Firewall (DFW) categories, in priority order (highest first): Ethernet - Layer 2 firewall rules only. Emergency - Highest priority L3 rules (common to both DFW and Edge FW). Infrastructure - Second priority L3 rules. Environment - Third priority L3 rules. Application - Lowest explicit L3 rules. ThreatRules - IDPS-only. Threat-based rules applied after Application. EmergencyThreatRules - IDPS-only. Highest priority threat-based rules. Edge (Gateway) Firewall categories, in priority order (highest first): Emergency, SystemRules, SharedPreRules, SharedExternalRules, LocalGatewayRules, AutoServiceRules, Default. For user-created domains, only SharedPreRules and LocalGatewayRules are allowed. If not specified, defaults to LocalGatewayRules. Bridge Firewall category: LocalBridgeRules - Rules for bridge firewall policies.
 	Category *string
 	// Comments for security policy lock/unlock.
 	Comments *string
@@ -7875,9 +8171,9 @@ type BridgeFirewallPolicy struct {
 	Scope []string
 	// This field is used to resolve conflicts between security policies across domains. In order to change the sequence number of a policy one can fire a POST request on the policy entity with a query parameter action=revise The sequence number field will reflect the value of the computed sequence number upon execution of the above mentioned POST request. For scenarios where the administrator is using a template to update several security policies, the only way to set the sequence number is to explicitly specify the sequence number for each security policy. If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple policies with the same sequence number then their order is not deterministic. If a specific order of policies is desired, then one has to specify unique sequence numbers or use the POST request on the policy entity with a query parameter action=revise to let the framework assign a sequence number. The value of sequence number must be between 0 and 999,999. format: int32
 	SequenceNumber *int64
-	// Stateful or Stateless nature of security policy is enforced on all rules in this security policy. When it is stateful, the state of the network connects are tracked and a stateful packet inspection is performed. Layer3 security policies can be stateful or stateless. By default, they are stateful. Layer2 security policies can only be stateless.
+	// Whether this security policy enforces stateful or stateless packet inspection. When stateful (true), network connection state is tracked and stateful packet inspection is performed. Layer-3 security policies default to stateful. Layer-2 (Ethernet category) security policies must be stateless. Note: when stateful is true, the tcp_strict field also defaults to true unless explicitly set to false. See the tcp_strict field for details.
 	Stateful *bool
-	// Ensures that a 3 way TCP handshake is done before the data packets are sent. tcp_strict=true is supported only for stateful security policies. If the tcp_strict flag is not specified and the security policy is stateful, then tcp_strict will be set to true.
+	// Enforces a 3-way TCP handshake before allowing data packets. Only applicable when the security policy is stateful. If not specified, the server automatically sets tcp_strict to true for stateful policies and false for stateless policies. See also: stateful field.
 	TcpStrict *bool
 	// Rules that are a part of this Bridge Firewall Policy
 	Rules []Rule
@@ -8513,7 +8809,57 @@ func (s *CdoModeRuntimeCompatibilityConfig) GetDataValue__() (vapiData_.DataValu
 	return dataVal, nil
 }
 
-// Singleton child resource under a transit gateway that holds high-availability mode and edge cluster for centralized connectivity (gateway connections and VPN). Only the resource id \"default\" is allowed. Can be auto-created on first gateway connection when missing. Not used for distributed VLAN or VXLAN connections.
+// Cdo Mode Status Config
+type CdoModeStatusConfig struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id *string
+	// The type of this resource.
+	ResourceType *string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// Determines if the system is configured to support cdo mode operation. GSS can set this flag to true to enable the possibility of cdo mode, or false to disable it system-wide. This acts as the master control for the cdo mode feature.
+	CdoModeSupported *bool
+}
+
+func (s *CdoModeStatusConfig) GetType__() vapiBindings_.BindingType {
+	return CdoModeStatusConfigBindingType()
+}
+
+func (s *CdoModeStatusConfig) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for CdoModeStatusConfig._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Singleton child resource under a transit gateway that holds high-availability mode and edge cluster for centralized connectivity. When a gateway attachment is created and no CentralizedConfig exists, the system auto-creates one using the project's authorized edge cluster. Not used for distributed VLAN or VXLAN connections.
 type CentralizedConfig struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -8566,14 +8912,14 @@ type CentralizedConfig struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Policy paths of edge clusters. At most one item. Must be authorized for the project.
+	// Policy paths of edge clusters. Must be authorized for the project.
 	EdgeClusterPaths []string
 	// Possible values are:
 	//
 	// * CentralizedConfig#CentralizedConfig_HA_MODE_ACTIVE
 	// * CentralizedConfig#CentralizedConfig_HA_MODE_STANDBY
 	//
-	//  High-availability mode for the transit gateway centralized services (gateway connections, VPN). Values ACTIVE_ACTIVE and ACTIVE_STANDBY. Only meaningful when edge cluster is configured.
+	//  High-availability mode
 	HaMode *string
 }
 
@@ -8595,7 +8941,7 @@ func (s *CentralizedConfig) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// List of transit gateway centralized service configurations
+// List of transit gateway centralized configs
 type CentralizedConfigListResult struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -8610,7 +8956,7 @@ type CentralizedConfigListResult struct {
 	SortAscending *bool
 	// Field by which records are sorted
 	SortBy *string
-	// Transit gateway centralized service configuration list results
+	// Transit gateway centralized config list results
 	Results []CentralizedConfig
 }
 
@@ -9201,7 +9547,7 @@ func (s *ChildCaBundle) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Child wrapper object for transit gateway centralized service configuration, used in hierarchical API.
+// Child wrapper object for transit gateway centralized config, used in hierarchical API.
 type ChildCentralizedConfig struct {
 	CentralizedConfig *CentralizedConfig
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -23844,6 +24190,10 @@ type CidrInfo struct {
 	IpBlockName *string
 	// IP block path corresponding to the CIDR.
 	IpBlockPath *string
+	// Ip view corresponding to network container
+	IpViewName *string
+	// Ip view reference id
+	IpViewRef *string
 	// Reference ID of the IP block.
 	ReferenceId *string
 }
@@ -24822,7 +25172,7 @@ type CommunicationEntry struct {
 	Scope []string
 	// This field is used to resolve conflicts between multiple CommunicationEntries under CommunicationMap for a Domain If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple communication entries with the same sequence number then their order is not deterministic. If a specific order of communication entry is desired, then one has to specify unique sequence numbers or use the POST request on the communication entry entity with a query parameter action=revise to let the framework assign a sequence number format: int32
 	SequenceNumber *int64
-	// In order to specify all services, use the constant \"ANY\". This is case insensitive. If \"ANY\" is used, it should be the ONLY element in the services array. Error will be thrown if ANY is used in conjunction with other values.
+	// Paths to Service objects (e.g., \"/infra/services/HTTP\"). In order to specify all services, use the constant \"ANY\". This is case insensitive. If \"ANY\" is used, it should be the ONLY element in the services array. Error will be thrown if ANY is used in conjunction with other values.
 	Services []string
 	// We need paths as duplicate names may exist for groups under different domains. In order to specify all groups, use the constant \"ANY\". This is case insensitive. If \"ANY\" is used, it should be the ONLY element in the group array. Error will be thrown if ANY is used in conjunction with other values.
 	SourceGroups []string
@@ -25413,6 +25763,53 @@ func (s *ComputeClusterIdfwConfigurationListResult) GetDataValue__() (vapiData_.
 	return dataVal, nil
 }
 
+// Provides the current concurrency limiting mode and its active configuration. Only the configuration relevant to the current mode is returned.
+type ConcurrencyLimitingStatus struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema         *string
+	Self           *SelfResourceLink
+	AdaptiveLimits *AdaptiveLimitsStatus
+	// Possible values are:
+	//
+	// * ConcurrencyLimitingStatus#ConcurrencyLimitingStatus_FORM_FACTOR_MEDIUM
+	// * ConcurrencyLimitingStatus#ConcurrencyLimitingStatus_FORM_FACTOR_LARGE
+	// * ConcurrencyLimitingStatus#ConcurrencyLimitingStatus_FORM_FACTOR_XLARGE
+	//
+	//  The appliance size (MEDIUM, LARGE, or XLARGE)
+	FormFactor *string
+	// Possible values are:
+	//
+	// * ConcurrencyLimitingStatus#ConcurrencyLimitingStatus_MODE_STATIC
+	// * ConcurrencyLimitingStatus#ConcurrencyLimitingStatus_MODE_ADAPTIVE
+	//
+	//  The active concurrency limiting mode. - static: Uses fixed limits configured via ApiServiceConfig - adaptive: Uses dynamic limits that adjust based on backend latency
+	Mode         *string
+	StaticLimits *StaticLimitsStatus
+}
+
+const ConcurrencyLimitingStatus_FORM_FACTOR_MEDIUM = "MEDIUM"
+const ConcurrencyLimitingStatus_FORM_FACTOR_LARGE = "LARGE"
+const ConcurrencyLimitingStatus_FORM_FACTOR_XLARGE = "XLARGE"
+const ConcurrencyLimitingStatus_MODE_STATIC = "static"
+const ConcurrencyLimitingStatus_MODE_ADAPTIVE = "adaptive"
+
+func (s *ConcurrencyLimitingStatus) GetType__() vapiBindings_.BindingType {
+	return ConcurrencyLimitingStatusBindingType()
+}
+
+func (s *ConcurrencyLimitingStatus) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ConcurrencyLimitingStatus._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Represents the leaf level condition. Evaluation of the condition expression will be case insensitive.
 type Condition struct {
 	Exclude *ExcludedMembersList
@@ -25429,6 +25826,7 @@ type Condition struct {
 	// * Condition#Condition_KEY_PODCIDR
 	// * Condition#Condition_KEY_MANAGEMENTINTERFACE
 	// * Condition#Condition_KEY_OSVERSION
+	// * Condition#Condition_KEY_TYPE
 	//
 	//  Key
 	Key *string
@@ -25523,6 +25921,8 @@ type Condition struct {
 	// * Expression#Expression_RESOURCE_TYPE_PATHEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACENAMEEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -25565,6 +25965,7 @@ const Condition_KEY_IPADDRESS = "IPAddress"
 const Condition_KEY_PODCIDR = "PodCidr"
 const Condition_KEY_MANAGEMENTINTERFACE = "ManagementInterface"
 const Condition_KEY_OSVERSION = "OSVersion"
+const Condition_KEY_TYPE = "Type"
 const Condition_MEMBER_TYPE_IPSET = "IPSet"
 const Condition_MEMBER_TYPE_VIRTUALMACHINE = "VirtualMachine"
 const Condition_MEMBER_TYPE_LOGICALPORT = "LogicalPort"
@@ -26211,6 +26612,8 @@ type ConjunctionOperator struct {
 	// * Expression#Expression_RESOURCE_TYPE_PATHEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACENAMEEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -30665,6 +31068,29 @@ func (s *DhcpV6Lease) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Additional DHCPv6 server config for VPC subnet. The additional configuration must be cleared when the subnet has DHCPv6 relay enabled or DHCPv6 is deactivated.
+type DhcpV6ServerAdditionalConfig struct {
+	// Domain names to be assigned to DHCPv6 client host.
+	DomainNames []string
+	// Specifies IPv6 IP ranges that are reserved and excluded from being assigned by the DHCPv6 server to clients. These reserved IPs must not overlap with system-reserved addresses, including the gateway IP and DHCP server IP, and they must belong to the defined subnet IPv6 CIDR. The reserved IPs can be provided as either a single IPv6 address or an IPv6 address range. Supported formats include: [\"2001:db8::10\", \"2001:db8::10-2001:db8::20\"]
+	ReservedIpRanges []string
+}
+
+func (s *DhcpV6ServerAdditionalConfig) GetType__() vapiBindings_.BindingType {
+	return DhcpV6ServerAdditionalConfigBindingType()
+}
+
+func (s *DhcpV6ServerAdditionalConfig) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for DhcpV6ServerAdditionalConfig._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // DHCP IPv6 static bindings are configured for each segment.
 type DhcpV6StaticBindingConfig struct {
 	// When not specified, no DNS nameserver will be set to client host.
@@ -30677,6 +31103,8 @@ type DhcpV6StaticBindingConfig struct {
 	LeaseTime *int64
 	// The MAC address of the client host. Either client-duid or mac-address, but not both. format: mac-address
 	MacAddress *string
+	// NTP servers as FQDN or IPv6 address. Supports unicast, multicast, and FQDN formats.
+	NtpServers []string
 	// Preferred time, in seconds. If this value is not provided, the value of lease_time\*0.8 will be used. format: int64
 	PreferredTime *int64
 	// SNTP server IP addresses. format: ipv6
@@ -30936,67 +31364,6 @@ func (s *DirectoryAdDomain) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for DirectoryAdDomain._GetDataValue method - %s",
-			vapiBindings_.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-type DirectoryAdGroup struct {
-	// GUID is a 128-bit value that is unique not only in the enterprise but also across the world. GUIDs are assigned to every object created by Active Directory, not just User and Group objects.
-	ObjectGuid *string
-	// A security identifier (SID) is a unique value of variable length used to identify a trustee. A SID consists of the following components - The revision level of the SID structure; A 48-bit identifier authority value that identifies the authority that issued the SID; A variable number of subauthority or relative identifier (RID) values that uniquely identify the trustee relative to the authority that issued the SID.
-	SecureId *string
-	// The server will populate this field when returing the resource. Ignored on PUT and POST.
-	Links []ResourceLink
-	// Schema for this resource
-	Schema *string
-	Self   *SelfResourceLink
-	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
-	Revision *int64
-	// Timestamp of resource creation format: int64
-	CreateTime *int64
-	// ID of the user who created this resource
-	CreateUser *string
-	// Timestamp of last modification format: int64
-	LastModifiedTime *int64
-	// ID of the user who last modified this resource
-	LastModifiedUser *string
-	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
-	Protection *string
-	// Indicates system owned resource
-	SystemOwned *bool
-	// Description of this resource
-	Description *string
-	// Defaults to ID if not set
-	DisplayName *string
-	// Unique identifier of this resource
-	Id *string
-	// Directory group resource type comes from multiple sub-classes extending this base class. For example, DirectoryAdGroup is one accepted resource_type. If there are more sub-classes defined, they will also be accepted resource_type.
-	ResourceType string
-	// Opaque identifiers meaningful to the API user
-	Tags []Tag
-	// Directory group distinguished name
-	DistinguishedName *string
-	// Domain ID this directory group belongs to.
-	DomainId *string
-	// Each active directory domain has a domain naming context (NC), which contains domain-specific data. The root of this naming context is represented by a domain's distinguished name (DN) and is typically referred to as the NC head.
-	DomainName *string
-	// Domain sync node under which this directory group is located. We currently sync only from Root node and hence this attribute doesn't have a specific value set.
-	DomainSyncNodeId *string
-	// This property indicates whether the directory group was | synced from the LDAP server using global config or | local config.
-	IsGlobal *bool
-}
-
-func (s *DirectoryAdGroup) GetType__() vapiBindings_.BindingType {
-	return DirectoryAdGroupBindingType()
-}
-
-func (s *DirectoryAdGroup) GetDataValue__() (vapiData_.DataValue, []error) {
-	typeConverter := vapiBindings_.NewTypeConverter()
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		vapiLog_.Errorf("Error in ConvertToVapi for DirectoryAdGroup._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -31291,9 +31658,9 @@ type DirectoryEventLogServerStatus struct {
 	ErrorMessage *string
 	// Last event record ID is an opaque integer value that shows the last successfully received event from event log server. format: int64
 	LastEventRecordId *int64
-	// Time of last successfully received and record event from event log server. format: int64
+	// Time of last successfully received and record event from event log server. This is a unix timestamp in milliseconds. format: int64
 	LastEventTimeCreated *int64
-	// Last polling time format: int64
+	// Last polling time. This is a unix timestamp in milliseconds. format: int64
 	LastPollingTime *int64
 	// Possible values are:
 	//
@@ -31349,7 +31716,7 @@ type DirectoryGroup struct {
 	// Unique identifier of this resource
 	Id *string
 	// Directory group resource type comes from multiple sub-classes extending this base class. For example, DirectoryAdGroup is one accepted resource_type. If there are more sub-classes defined, they will also be accepted resource_type.
-	ResourceType string
+	ResourceType *string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
 	// Directory group distinguished name
@@ -31363,11 +31730,6 @@ type DirectoryGroup struct {
 	// This property indicates whether the directory group was | synced from the LDAP server using global config or | local config.
 	IsGlobal *bool
 }
-
-// Identifier denoting this class, when it is used in polymorphic context.
-//
-// This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
-const DirectoryGroup__TYPE_IDENTIFIER = "DirectoryGroup"
 
 func (s *DirectoryGroup) GetType__() vapiBindings_.BindingType {
 	return DirectoryGroupBindingType()
@@ -31399,7 +31761,7 @@ type DirectoryGroupListResults struct {
 	// Field by which records are sorted
 	SortBy *string
 	// Directory group list
-	Results []*vapiData_.StructValue
+	Results []DirectoryGroup
 }
 
 func (s *DirectoryGroupListResults) GetType__() vapiBindings_.BindingType {
@@ -33096,7 +33458,7 @@ type DistributedVlanConnection struct {
 	Overridden *bool
 	// IP address block(s) that are associated with the distributed vlan connection. If the block path(s) are set, the system will reserve the host address, network address and broadcast address (based on each gateway address in the distributed vlan connection) in the associated IP block(s) if these addresses fall into the associated IP block(s). Any other IP blocks overlapping with the gateway address(es) can be created without IP reservation. If the block path(s) are not set, the system will reserve the host address, network address and broadcast address (based on each gateway address in the distributed vlan connection) in any IP block that overlaps with the gateway address(es). When an address is reserved, any new IP block(s) overlapping with that address is not allowed to be created.
 	AssociatedIpBlockPaths []string
-	// Gateway IP address in network address and prefix length format format: ipv4-cidr-block
+	// Gateway IP address in network address and prefix length format. Supports both IPv4 and IPv6 CIDRs. format: ip-cidr-block
 	GatewayAddresses       []string
 	RestrictedAvailability *VlanAvailability
 	// Possible values are:
@@ -36928,6 +37290,8 @@ type Expression struct {
 	// * Expression#Expression_RESOURCE_TYPE_PATHEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACENAMEEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -36968,6 +37332,8 @@ const Expression_RESOURCE_TYPE_EXTERNALIDEXPRESSION = "ExternalIDExpression"
 const Expression_RESOURCE_TYPE_PATHEXPRESSION = "PathExpression"
 const Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION = "IdentityGroupExpression"
 const Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION = "GeoLocationExpression"
+const Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION = "NamespaceVmNameExpression"
+const Expression_RESOURCE_TYPE_NAMESPACENAMEEXPRESSION = "NamespaceNameExpression"
 
 func (s *Expression) GetType__() vapiBindings_.BindingType {
 	return ExpressionBindingType()
@@ -37080,6 +37446,8 @@ type ExternalIDExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_PATHEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACENAMEEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -37676,7 +38044,7 @@ type FederationGatewayConfig struct {
 	GlobalOverlayId *int64
 	// inter site transit vlan id format: int32
 	InterSiteTransitVlanId *int64
-	// Indicies for cross site allocation for edge cluster and its members referred by gateway.
+	// Indices for cross site allocation for edge cluster and its members referred by gateway.
 	SiteAllocationIndices []SiteAllocationIndexForEdge
 	// Global UUID for transit segment id to be used by Layer2 services for federation usecases.
 	TransitSegmentId *string
@@ -39402,9 +39770,9 @@ type GatewayConnection struct {
 	AdvertiseOutboundNetworks *ProviderAdvertiseOutBoundNetworks
 	// Array of path of a prefixlist object that will have Transit gateway to tier-0 gateway advertise route filter.
 	AdvertiseOutboundRouteFilters []string
-	// Configure aggregate TGW_PREFIXES routes on Tier-0 gateway for prefixes owned by TGW gateway. If not specified then in-use prefixes are configured as TGW_PREFIXES routes on Tier-0 gateway. format: ipv4-cidr-block
+	// Configure aggregate TGW_PREFIXES routes on Tier-0 gateway for prefixes owned by TGW gateway. If not specified then in-use prefixes are configured as TGW_PREFIXES routes on Tier-0 gateway. Supports both IPv4 and IPv6 CIDRs. format: ip-cidr-block
 	AggregateRoutes []string
-	// List of inbound remote network routes for transit gateways. Default route [0.0.0.0/0] will be assumed if remote networks are not configured. For multiple attachments on TGW, only one gateway connection can support default route. Other gateway connections must have networks configured. format: ipv4-cidr-block
+	// List of inbound remote network routes for transit gateways. Default route [0.0.0.0/0, ::/0] will be assumed if remote networks are not configured. For multiple attachments on TGW, only one gateway connection can support default route. Other gateway connections must have networks configured. Supports both IPv4 and IPv6 CIDRs. format: ip-cidr-block
 	InboundRemoteNetworks []string
 	NatConfig             *ProviderNatConfig
 	// Tier-0 gateway object path
@@ -39779,7 +40147,7 @@ type GatewayPolicy struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// - Distributed Firewall - Policy framework provides five pre-defined categories for classifying a security policy. They are \"Ethernet\",\"Emergency\", \"Infrastructure\" \"Environment\" and \"Application\". There is a pre-determined order in which the policy framework manages the priority of these security policies. Ethernet category is for supporting layer 2 firewall rules. The other four categories are applicable for layer 3 rules. Amongst them, the Emergency category has the highest priority followed by Infrastructure, Environment and then Application rules. Administrator can choose to categorize a security policy into the above categories or can choose to leave it empty. If empty it will have the least precedence w.r.t the above four categories. - Edge Firewall - Policy Framework for Edge Firewall provides six pre-defined categories \"Emergency\", \"SystemRules\", \"SharedPreRules\", \"LocalGatewayRules\", \"AutoServiceRules\" and \"Default\", in order of priority of rules. All categories are allowed for Gatetway Policies that belong to 'default' Domain. However, for user created domains, category is restricted to \"SharedPreRules\" or \"LocalGatewayRules\" only. Also, the users can add/modify/delete rules from only the \"SharedPreRules\" and \"LocalGatewayRules\" categories. If user doesn't specify the category then defaulted to \"Rules\". System generated category is used by NSX created rules, for example BFD rules. Autoplumbed category used by NSX verticals to autoplumb data path rules. Finally, \"Default\" category is the placeholder default rules with lowest in the order of priority.
+	// Classifies this security policy into an evaluation-priority category. Categories are evaluated in a fixed priority order. Distributed Firewall (DFW) categories, in priority order (highest first): Ethernet - Layer 2 firewall rules only. Emergency - Highest priority L3 rules (common to both DFW and Edge FW). Infrastructure - Second priority L3 rules. Environment - Third priority L3 rules. Application - Lowest explicit L3 rules. ThreatRules - IDPS-only. Threat-based rules applied after Application. EmergencyThreatRules - IDPS-only. Highest priority threat-based rules. Edge (Gateway) Firewall categories, in priority order (highest first): Emergency, SystemRules, SharedPreRules, SharedExternalRules, LocalGatewayRules, AutoServiceRules, Default. For user-created domains, only SharedPreRules and LocalGatewayRules are allowed. If not specified, defaults to LocalGatewayRules. Bridge Firewall category: LocalBridgeRules - Rules for bridge firewall policies.
 	Category *string
 	// Comments for security policy lock/unlock.
 	Comments *string
@@ -39801,11 +40169,11 @@ type GatewayPolicy struct {
 	Scope []string
 	// This field is used to resolve conflicts between security policies across domains. In order to change the sequence number of a policy one can fire a POST request on the policy entity with a query parameter action=revise The sequence number field will reflect the value of the computed sequence number upon execution of the above mentioned POST request. For scenarios where the administrator is using a template to update several security policies, the only way to set the sequence number is to explicitly specify the sequence number for each security policy. If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple policies with the same sequence number then their order is not deterministic. If a specific order of policies is desired, then one has to specify unique sequence numbers or use the POST request on the policy entity with a query parameter action=revise to let the framework assign a sequence number. The value of sequence number must be between 0 and 999,999. format: int32
 	SequenceNumber *int64
-	// Stateful or Stateless nature of security policy is enforced on all rules in this security policy. When it is stateful, the state of the network connects are tracked and a stateful packet inspection is performed. Layer3 security policies can be stateful or stateless. By default, they are stateful. Layer2 security policies can only be stateless.
+	// Whether this security policy enforces stateful or stateless packet inspection. When stateful (true), network connection state is tracked and stateful packet inspection is performed. Layer-3 security policies default to stateful. Layer-2 (Ethernet category) security policies must be stateless. Note: when stateful is true, the tcp_strict field also defaults to true unless explicitly set to false. See the tcp_strict field for details.
 	Stateful *bool
-	// Ensures that a 3 way TCP handshake is done before the data packets are sent. tcp_strict=true is supported only for stateful security policies. If the tcp_strict flag is not specified and the security policy is stateful, then tcp_strict will be set to true.
+	// Enforces a 3-way TCP handshake before allowing data packets. Only applicable when the security policy is stateful. If not specified, the server automatically sets tcp_strict to true for stateful policies and false for stateless policies. See also: stateful field.
 	TcpStrict *bool
-	// Rules that are a part of this SecurityPolicy
+	// Rules that are a part of this GatewayPolicy
 	Rules []Rule
 }
 
@@ -40330,6 +40698,135 @@ func (s *GenericGroupStaticRouteAlarm) GetDataValue__() (vapiData_.DataValue, []
 	return dataVal, nil
 }
 
+// Policy entity representing a Runbook, which includes System Predefined Runbooks and Dynamic Runbooks.
+type GenericOdsRunbook struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id *string
+	// The type of this resource.
+	ResourceType *string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// This is a UUID generated by the system for knowing which site owns an object. This is used in NSX+.
+	OriginSiteId *string
+	// This is a UUID generated by the system for knowing who owns this object. This is used in NSX+.
+	OwnerId *string
+	// Path of its parent
+	ParentPath *string
+	// Absolute path of this object
+	Path *string
+	// This is a UUID generated by the system for realizing the entity object. In most cases this should be same as 'unique_id' of the entity. However, in some cases this can be different because of entities have migrated their unique identifier to NSX Policy intent objects later in the timeline and did not use unique_id for realization. Realization id is helpful for users to debug data path to correlate the configuration with corresponding intent.
+	RealizationId *string
+	// Path relative from its parent
+	RelativePath *string
+	// This path is populated only in case of multi-site scenario. Currently it is supported only for LM objects. When LM is onboarded to multi-site platform like NAPP or GM, remote_path will be set to the globally unique path across multi-site topology . It is generated based on local site-name and uses /org tree namespace. Note: It is populated only for LM objects. Not supported on the GM.
+	RemotePath *string
+	// This is a UUID generated by the GM/LM to uniquely identify entities in a federated environment. For entities that are stretched across multiple sites, the same ID will be used on all the stretched sites.
+	UniqueId *string
+	// Subtree for this type within policy tree containing nested elements. Note that this type is applicable to be used in Hierarchical API only.
+	Children []*vapiData_.StructValue
+	// Intent objects are not directly deleted from the system when a delete is invoked on them. They are marked for deletion and only when all the realized entities for that intent object get deleted, the intent object is deleted. Objects that are marked for deletion are not returned in GET call. One can use the search API to get these objects.
+	MarkedForDelete *bool
+	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
+	Overridden *bool
+	// The knob of installing Dynamic Runbook on all appliance nodes.
+	AppliedToAllAppliances *bool
+	// The policy path set of groups to which the Dynamic Runbook is installed.
+	AppliedToGroupPaths []string
+	// Identifiers of appliances and transport nodes to which the Dynamic Runbook is installed.
+	AppliedToNodes []string
+	DefaultConfig  *OdsRunbookSettingData
+	// Parameters of Runbook.
+	Parameters []*vapiData_.StructValue
+	//
+	Status *string
+	// Possible values are:
+	//
+	// * GenericOdsRunbook#GenericOdsRunbook_TARGET_NODES_ESX
+	// * GenericOdsRunbook#GenericOdsRunbook_TARGET_NODES_EDGE
+	// * GenericOdsRunbook#GenericOdsRunbook_TARGET_NODES_MANAGER_APPLIANCE
+	//
+	//  Supported node types for the Runbook.
+	TargetNodes []string
+}
+
+const GenericOdsRunbook_STATUS_INSTALLED = "INSTALLED"
+const GenericOdsRunbook_STATUS_PENDING_CHECK = "PENDING_CHECK"
+const GenericOdsRunbook_TARGET_NODES_ESX = "ESX"
+const GenericOdsRunbook_TARGET_NODES_EDGE = "EDGE"
+const GenericOdsRunbook_TARGET_NODES_MANAGER_APPLIANCE = "MANAGER_APPLIANCE"
+
+func (s *GenericOdsRunbook) GetType__() vapiBindings_.BindingType {
+	return GenericOdsRunbookBindingType()
+}
+
+func (s *GenericOdsRunbook) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for GenericOdsRunbook._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Paged list of Online Diagnostic System Runbooks.
+type GenericOdsRunbookListResult struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy *string
+	// Online Diagnostic System Runbook list results.
+	Results []GenericOdsRunbook
+}
+
+func (s *GenericOdsRunbookListResult) GetType__() vapiBindings_.BindingType {
+	return GenericOdsRunbookListResultBindingType()
+}
+
+func (s *GenericOdsRunbookListResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for GenericOdsRunbookListResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Represents realized entity
 type GenericPolicyRealizedResource struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -40381,11 +40878,11 @@ type GenericPolicyRealizedResource struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -40833,6 +41330,8 @@ type GeoLocationExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_PATHEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACENAMEEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -40874,6 +41373,56 @@ func (s *GeoLocationExpression) GetDataValue__() (vapiData_.DataValue, []error) 
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for GeoLocationExpression._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Global Cdo Mode Config
+type GlobalCdoModeConfig struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id *string
+	// The type of this resource.
+	ResourceType *string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// Determines if the global cdo mode is enabled.
+	GlobalCdoModeEnabled *bool
+}
+
+func (s *GlobalCdoModeConfig) GetType__() vapiBindings_.BindingType {
+	return GlobalCdoModeConfigBindingType()
+}
+
+func (s *GlobalCdoModeConfig) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for GlobalCdoModeConfig._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -41013,7 +41562,7 @@ type GlobalConfig struct {
 	// Information related to sites applicable for given config.
 	SiteInfos      []SiteInfo
 	TepGroupConfig *TepGroupConfig
-	// IP block is used for allocating unique transit subnet per tier-0 for transit gateway and tier-0 backplane network. It is system generated IP block and user can modify the content of it, but cannot delete it.
+	// IP block is used for allocating unique transit subnet per tier-0 for transit gateway and tier-0 backplane network. It is system generated IP block and user can modify the content of it, but cannot delete it. Supports both IPv4 and IPv6 IP blocks (1 IPv4 and 1 IPv6).
 	TgwTransitSubnetBlocks []string
 	// TGW Transit subnet cidr prefix length is used for allocating new CIDR from tgw_transit_subnet_blocks. Modifying this value will not update existing TGW Transit subnet cidr prefix length, the new value will be used for new allocation. format: int32
 	TgwTransitSubnetPrefixLength *int64
@@ -42895,6 +43444,8 @@ type GroupScopeExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_PATHEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACENAMEEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -44297,6 +44848,8 @@ type IPAddressExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_PATHEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACENAMEEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -45658,7 +46211,7 @@ type IPSecVpnIkeProfile struct {
 	// * IPSecVpnIkeProfile#IPSecVpnIkeProfile_DIGEST_ALGORITHMS_SHA2_384
 	// * IPSecVpnIkeProfile#IPSecVpnIkeProfile_DIGEST_ALGORITHMS_SHA2_512
 	//
-	//  Algorithm to be used for message digest during Internet Key Exchange(IKE) negotiation. A default value of SHA2_256 will be applied only when the supplied encryption algorithms contain either AES_128 or AES_256.
+	//  Algorithm to be used for message digest during Internet Key Exchange(IKE) negotiation. A default value of SHA2_256 will be applied only when the supplied encryption algorithms contain either AES_128 or AES_256. SHA1 is deprecated. Please use some other Digest Algorithm.
 	DigestAlgorithms []string
 	// Possible values are:
 	//
@@ -46776,7 +47329,7 @@ type IPSecVpnTunnelProfile struct {
 	// * IPSecVpnTunnelProfile#IPSecVpnTunnelProfile_DIGEST_ALGORITHMS_SHA2_384
 	// * IPSecVpnTunnelProfile#IPSecVpnTunnelProfile_DIGEST_ALGORITHMS_SHA2_512
 	//
-	//  Algorithm to be used for message digest. Default digest algorithm is implicitly covered by default encryption algorithm \"AES_GCM_128\".
+	//  Algorithm to be used for message digest. Default digest algorithm is implicitly covered by default encryption algorithm \"AES_GCM_128\". SHA1 is deprecated. Please use some other Digest Algorithm.
 	DigestAlgorithms []string
 	// If true, perfect forward secrecy (PFS) is enabled.
 	EnablePerfectForwardSecrecy *bool
@@ -47849,6 +48402,8 @@ type IdentityGroupExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_PATHEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACENAMEEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -48254,9 +48809,9 @@ type IdfwUserSessionData struct {
 	DomainName *string
 	// Identifier of user session data.
 	Id *string
-	// Login time. format: int64
+	// Login time. This is a unix timestamp in milliseconds. format: int64
 	LoginTime *int64
-	// Logout time if applicable. An active user session has no logout time. Non-active user session is stored (up to last 5 most recent entries) per VM and per user. format: int64
+	// Logout time if applicable. This is a unix timestamp in milliseconds. An active user session has no logout time. Non-active user session is stored (up to last 5 most recent entries) per VM and per user. format: int64
 	LogoutTime *int64
 	// Possible values are:
 	//
@@ -48901,7 +49456,7 @@ type IdsCustomSignatureListResult struct {
 	SortAscending *bool
 	// Field by which records are sorted
 	SortBy *string
-	// Time when the custom signature was published. format: int64
+	// Time when the custom signature was published. This is a unix timestamp in milliseconds. format: int64
 	PublishTime *int64
 	// IDS custom signature list results
 	Results []IdsCustomSignature
@@ -49069,7 +49624,7 @@ type IdsCustomSignatureVersion struct {
 	//
 	//  This flag tells the status of the signatures under a custom signature version. VALIDATION_PENDING: Signatures are not yet validated. PUBLISH_PENDING: Signatures are validated but not yet published. PUBLISHED: Signatures are published.
 	Status *string
-	// Time when this version was downloaded and saved. format: int64
+	// Time when this version was downloaded and saved. This is a unix timestamp in milliseconds. format: int64
 	UpdateTime *int64
 	// Flag which tells whether the Signature version is uploaded by user or not.
 	UserUploaded *bool
@@ -49077,7 +49632,7 @@ type IdsCustomSignatureVersion struct {
 	VersionId *string
 	// Represents the version name.
 	VersionName *string
-	// Time when the custom signature was published. format: int64
+	// Time when the custom signature was published. This is a unix timestamp in milliseconds. format: int64
 	PublishTime *int64
 }
 
@@ -49266,7 +49821,7 @@ type IdsGatewayPolicy struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// - Distributed Firewall - Policy framework provides five pre-defined categories for classifying a security policy. They are \"Ethernet\",\"Emergency\", \"Infrastructure\" \"Environment\" and \"Application\". There is a pre-determined order in which the policy framework manages the priority of these security policies. Ethernet category is for supporting layer 2 firewall rules. The other four categories are applicable for layer 3 rules. Amongst them, the Emergency category has the highest priority followed by Infrastructure, Environment and then Application rules. Administrator can choose to categorize a security policy into the above categories or can choose to leave it empty. If empty it will have the least precedence w.r.t the above four categories. - Edge Firewall - Policy Framework for Edge Firewall provides six pre-defined categories \"Emergency\", \"SystemRules\", \"SharedPreRules\", \"LocalGatewayRules\", \"AutoServiceRules\" and \"Default\", in order of priority of rules. All categories are allowed for Gatetway Policies that belong to 'default' Domain. However, for user created domains, category is restricted to \"SharedPreRules\" or \"LocalGatewayRules\" only. Also, the users can add/modify/delete rules from only the \"SharedPreRules\" and \"LocalGatewayRules\" categories. If user doesn't specify the category then defaulted to \"Rules\". System generated category is used by NSX created rules, for example BFD rules. Autoplumbed category used by NSX verticals to autoplumb data path rules. Finally, \"Default\" category is the placeholder default rules with lowest in the order of priority.
+	// Classifies this security policy into an evaluation-priority category. Categories are evaluated in a fixed priority order. Distributed Firewall (DFW) categories, in priority order (highest first): Ethernet - Layer 2 firewall rules only. Emergency - Highest priority L3 rules (common to both DFW and Edge FW). Infrastructure - Second priority L3 rules. Environment - Third priority L3 rules. Application - Lowest explicit L3 rules. ThreatRules - IDPS-only. Threat-based rules applied after Application. EmergencyThreatRules - IDPS-only. Highest priority threat-based rules. Edge (Gateway) Firewall categories, in priority order (highest first): Emergency, SystemRules, SharedPreRules, SharedExternalRules, LocalGatewayRules, AutoServiceRules, Default. For user-created domains, only SharedPreRules and LocalGatewayRules are allowed. If not specified, defaults to LocalGatewayRules. Bridge Firewall category: LocalBridgeRules - Rules for bridge firewall policies.
 	Category *string
 	// Comments for security policy lock/unlock.
 	Comments *string
@@ -49288,9 +49843,9 @@ type IdsGatewayPolicy struct {
 	Scope []string
 	// This field is used to resolve conflicts between security policies across domains. In order to change the sequence number of a policy one can fire a POST request on the policy entity with a query parameter action=revise The sequence number field will reflect the value of the computed sequence number upon execution of the above mentioned POST request. For scenarios where the administrator is using a template to update several security policies, the only way to set the sequence number is to explicitly specify the sequence number for each security policy. If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple policies with the same sequence number then their order is not deterministic. If a specific order of policies is desired, then one has to specify unique sequence numbers or use the POST request on the policy entity with a query parameter action=revise to let the framework assign a sequence number. The value of sequence number must be between 0 and 999,999. format: int32
 	SequenceNumber *int64
-	// Stateful or Stateless nature of security policy is enforced on all rules in this security policy. When it is stateful, the state of the network connects are tracked and a stateful packet inspection is performed. Layer3 security policies can be stateful or stateless. By default, they are stateful. Layer2 security policies can only be stateless.
+	// Whether this security policy enforces stateful or stateless packet inspection. When stateful (true), network connection state is tracked and stateful packet inspection is performed. Layer-3 security policies default to stateful. Layer-2 (Ethernet category) security policies must be stateless. Note: when stateful is true, the tcp_strict field also defaults to true unless explicitly set to false. See the tcp_strict field for details.
 	Stateful *bool
-	// Ensures that a 3 way TCP handshake is done before the data packets are sent. tcp_strict=true is supported only for stateful security policies. If the tcp_strict flag is not specified and the security policy is stateful, then tcp_strict will be set to true.
+	// Enforces a 3-way TCP handshake before allowing data packets. Only applicable when the security policy is stateful. If not specified, the server automatically sets tcp_strict to true for stateful policies and false for stateless policies. See also: stateful field.
 	TcpStrict *bool
 	// IDS Rules that are a part of this SecurityPolicy
 	Rules []IdsRule
@@ -49793,7 +50348,7 @@ type IdsPolicy struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// - Distributed Firewall - Policy framework provides five pre-defined categories for classifying a security policy. They are \"Ethernet\",\"Emergency\", \"Infrastructure\" \"Environment\" and \"Application\". There is a pre-determined order in which the policy framework manages the priority of these security policies. Ethernet category is for supporting layer 2 firewall rules. The other four categories are applicable for layer 3 rules. Amongst them, the Emergency category has the highest priority followed by Infrastructure, Environment and then Application rules. Administrator can choose to categorize a security policy into the above categories or can choose to leave it empty. If empty it will have the least precedence w.r.t the above four categories. - Edge Firewall - Policy Framework for Edge Firewall provides six pre-defined categories \"Emergency\", \"SystemRules\", \"SharedPreRules\", \"LocalGatewayRules\", \"AutoServiceRules\" and \"Default\", in order of priority of rules. All categories are allowed for Gatetway Policies that belong to 'default' Domain. However, for user created domains, category is restricted to \"SharedPreRules\" or \"LocalGatewayRules\" only. Also, the users can add/modify/delete rules from only the \"SharedPreRules\" and \"LocalGatewayRules\" categories. If user doesn't specify the category then defaulted to \"Rules\". System generated category is used by NSX created rules, for example BFD rules. Autoplumbed category used by NSX verticals to autoplumb data path rules. Finally, \"Default\" category is the placeholder default rules with lowest in the order of priority.
+	// Classifies this security policy into an evaluation-priority category. Categories are evaluated in a fixed priority order. Distributed Firewall (DFW) categories, in priority order (highest first): Ethernet - Layer 2 firewall rules only. Emergency - Highest priority L3 rules (common to both DFW and Edge FW). Infrastructure - Second priority L3 rules. Environment - Third priority L3 rules. Application - Lowest explicit L3 rules. ThreatRules - IDPS-only. Threat-based rules applied after Application. EmergencyThreatRules - IDPS-only. Highest priority threat-based rules. Edge (Gateway) Firewall categories, in priority order (highest first): Emergency, SystemRules, SharedPreRules, SharedExternalRules, LocalGatewayRules, AutoServiceRules, Default. For user-created domains, only SharedPreRules and LocalGatewayRules are allowed. If not specified, defaults to LocalGatewayRules. Bridge Firewall category: LocalBridgeRules - Rules for bridge firewall policies.
 	Category *string
 	// Comments for security policy lock/unlock.
 	Comments *string
@@ -49815,9 +50370,9 @@ type IdsPolicy struct {
 	Scope []string
 	// This field is used to resolve conflicts between security policies across domains. In order to change the sequence number of a policy one can fire a POST request on the policy entity with a query parameter action=revise The sequence number field will reflect the value of the computed sequence number upon execution of the above mentioned POST request. For scenarios where the administrator is using a template to update several security policies, the only way to set the sequence number is to explicitly specify the sequence number for each security policy. If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple policies with the same sequence number then their order is not deterministic. If a specific order of policies is desired, then one has to specify unique sequence numbers or use the POST request on the policy entity with a query parameter action=revise to let the framework assign a sequence number. The value of sequence number must be between 0 and 999,999. format: int32
 	SequenceNumber *int64
-	// Stateful or Stateless nature of security policy is enforced on all rules in this security policy. When it is stateful, the state of the network connects are tracked and a stateful packet inspection is performed. Layer3 security policies can be stateful or stateless. By default, they are stateful. Layer2 security policies can only be stateless.
+	// Whether this security policy enforces stateful or stateless packet inspection. When stateful (true), network connection state is tracked and stateful packet inspection is performed. Layer-3 security policies default to stateful. Layer-2 (Ethernet category) security policies must be stateless. Note: when stateful is true, the tcp_strict field also defaults to true unless explicitly set to false. See the tcp_strict field for details.
 	Stateful *bool
-	// Ensures that a 3 way TCP handshake is done before the data packets are sent. tcp_strict=true is supported only for stateful security policies. If the tcp_strict flag is not specified and the security policy is stateful, then tcp_strict will be set to true.
+	// Enforces a 3-way TCP handshake before allowing data packets. Only applicable when the security policy is stateful. If not specified, the server automatically sets tcp_strict to true for stateful policies and false for stateless policies. See also: stateful field.
 	TcpStrict *bool
 	// IDS Rules that are a part of this SecurityPolicy
 	Rules []IdsRule
@@ -50438,7 +50993,7 @@ type IdsRule struct {
 	IsDefault *bool
 	// Flag to enable packet logging. Default is deactivated.
 	Logged *bool
-	// User level field which will be printed in CLI and packet logs. Even though there is no limitation on length of the notes, internally notes will get truncated after 39 characters.
+	// User level field which will be printed in CLI and packet logs. The notes field accepts up to 2048 characters. Internally, notes are truncated after 39 characters in CLI and packet logs.
 	Notes *string
 	// Paths to Layer 7 service profile objects or L7 access profile objects for advanced traffic inspection and filtering. These profiles enable matching on Layer 7 attributes and sub-attributes of network services such as: - Application IDs (L4 AppId) - Encryption algorithms and TLS versions - Domain names and URLs - HTTP methods - CIFS/SMB versions You can use either Layer 7 service profiles (PolicyContextProfile) or an L7 access profile (L7AccessProfile) in a rule, but not both. When using an L7 access profile, only one profile path is allowed.
 	Profiles []string
@@ -50446,7 +51001,7 @@ type IdsRule struct {
 	RuleId *int64
 	// The list of group paths to which the rule applies. This determines which workloads (VMs, containers, etc.) the rule is enforced on. For Gateway Firewall rules, this can also include Tier-0, Tier-1, or interface paths to specify where the rule is enforced. Note that a given rule can be applied to multiple groups or network entities.
 	Scope []string
-	// This field is used to resolve conflicts between multiple Rules under Security or Gateway Policy for a Domain If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple rules with the same sequence number then their order is not deterministic. If a specific order of rules is desired, then one has to specify unique sequence numbers or use the POST request on the rule entity with a query parameter action=revise to let the framework assign a sequence number format: int32
+	// This field is used to resolve conflicts between multiple Rules under a Security or Gateway Policy for a Domain. Rules are evaluated in ascending sequence number order. If no sequence number is specified in the payload, the system assigns a default value of 0. If there are multiple rules with the same sequence number then their order is not deterministic. If a specific order of rules is desired, specify unique sequence numbers or use the POST request on the rule entity with a query parameter action=revise to let the framework assign a sequence number. format: int32
 	SequenceNumber *int64
 	// In order to specify raw services this can be used, along with services which contains path to services. This can be empty or null.
 	ServiceEntries []*vapiData_.StructValue
@@ -50553,7 +51108,7 @@ type IdsRuleStatistics struct {
 	ByteCount *int64
 	// Aggregated number of hits received by the rule. format: int64
 	HitCount *int64
-	// Realized id of the rule on NSX MP. Policy Manager can create more than one rule per policy rule, in which case this identifier helps to distinguish between the multple rules created.
+	// Realized id of the rule on NSX MP. Policy Manager can create more than one rule per policy rule, in which case this identifier helps to distinguish between the multiple rules created.
 	InternalRuleId *string
 	// Aggregated number of L7 Profile Accepted counters received by the rule. format: int64
 	L7AcceptCount *int64
@@ -50596,9 +51151,9 @@ func (s *IdsRuleStatistics) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// IDS Rule statistics for a specfic enforcement point.
+// IDS Rule statistics for a specific enforcement point.
 type IdsRuleStatisticsForEnforcementPoint struct {
-	// IDS Rule statistics for a single enforcement point
+	// Path of the enforcement point for which statistics are reported. On Global Manager, specifying an enforcement_point_path is mandatory. On Local Manager, if omitted, statistics are aggregated across all enforcement points.
 	EnforcementPoint *string
 	Statistics       *IdsRuleStatistics
 }
@@ -50705,7 +51260,7 @@ type IdsSecurityPolicy struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// - Distributed Firewall - Policy framework provides five pre-defined categories for classifying a security policy. They are \"Ethernet\",\"Emergency\", \"Infrastructure\" \"Environment\" and \"Application\". There is a pre-determined order in which the policy framework manages the priority of these security policies. Ethernet category is for supporting layer 2 firewall rules. The other four categories are applicable for layer 3 rules. Amongst them, the Emergency category has the highest priority followed by Infrastructure, Environment and then Application rules. Administrator can choose to categorize a security policy into the above categories or can choose to leave it empty. If empty it will have the least precedence w.r.t the above four categories. - Edge Firewall - Policy Framework for Edge Firewall provides six pre-defined categories \"Emergency\", \"SystemRules\", \"SharedPreRules\", \"LocalGatewayRules\", \"AutoServiceRules\" and \"Default\", in order of priority of rules. All categories are allowed for Gatetway Policies that belong to 'default' Domain. However, for user created domains, category is restricted to \"SharedPreRules\" or \"LocalGatewayRules\" only. Also, the users can add/modify/delete rules from only the \"SharedPreRules\" and \"LocalGatewayRules\" categories. If user doesn't specify the category then defaulted to \"Rules\". System generated category is used by NSX created rules, for example BFD rules. Autoplumbed category used by NSX verticals to autoplumb data path rules. Finally, \"Default\" category is the placeholder default rules with lowest in the order of priority.
+	// Classifies this security policy into an evaluation-priority category. Categories are evaluated in a fixed priority order. Distributed Firewall (DFW) categories, in priority order (highest first): Ethernet - Layer 2 firewall rules only. Emergency - Highest priority L3 rules (common to both DFW and Edge FW). Infrastructure - Second priority L3 rules. Environment - Third priority L3 rules. Application - Lowest explicit L3 rules. ThreatRules - IDPS-only. Threat-based rules applied after Application. EmergencyThreatRules - IDPS-only. Highest priority threat-based rules. Edge (Gateway) Firewall categories, in priority order (highest first): Emergency, SystemRules, SharedPreRules, SharedExternalRules, LocalGatewayRules, AutoServiceRules, Default. For user-created domains, only SharedPreRules and LocalGatewayRules are allowed. If not specified, defaults to LocalGatewayRules. Bridge Firewall category: LocalBridgeRules - Rules for bridge firewall policies.
 	Category *string
 	// Comments for security policy lock/unlock.
 	Comments *string
@@ -50727,9 +51282,9 @@ type IdsSecurityPolicy struct {
 	Scope []string
 	// This field is used to resolve conflicts between security policies across domains. In order to change the sequence number of a policy one can fire a POST request on the policy entity with a query parameter action=revise The sequence number field will reflect the value of the computed sequence number upon execution of the above mentioned POST request. For scenarios where the administrator is using a template to update several security policies, the only way to set the sequence number is to explicitly specify the sequence number for each security policy. If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple policies with the same sequence number then their order is not deterministic. If a specific order of policies is desired, then one has to specify unique sequence numbers or use the POST request on the policy entity with a query parameter action=revise to let the framework assign a sequence number. The value of sequence number must be between 0 and 999,999. format: int32
 	SequenceNumber *int64
-	// Stateful or Stateless nature of security policy is enforced on all rules in this security policy. When it is stateful, the state of the network connects are tracked and a stateful packet inspection is performed. Layer3 security policies can be stateful or stateless. By default, they are stateful. Layer2 security policies can only be stateless.
+	// Whether this security policy enforces stateful or stateless packet inspection. When stateful (true), network connection state is tracked and stateful packet inspection is performed. Layer-3 security policies default to stateful. Layer-2 (Ethernet category) security policies must be stateless. Note: when stateful is true, the tcp_strict field also defaults to true unless explicitly set to false. See the tcp_strict field for details.
 	Stateful *bool
-	// Ensures that a 3 way TCP handshake is done before the data packets are sent. tcp_strict=true is supported only for stateful security policies. If the tcp_strict flag is not specified and the security policy is stateful, then tcp_strict will be set to true.
+	// Enforces a 3-way TCP handshake before allowing data packets. Only applicable when the security policy is stateful. If not specified, the server automatically sets tcp_strict to true for stateful policies and false for stateless policies. See also: stateful field.
 	TcpStrict *bool
 	// IDS Rules that are a part of this SecurityPolicy
 	Rules []IdsRule
@@ -50815,7 +51370,7 @@ func (s *IdsSecurityPolicyStatistics) GetDataValue__() (vapiData_.DataValue, []e
 
 // Aggregate statistics of all the IDS rules in a security policy for a specific enforcement point.
 type IdsSecurityPolicyStatisticsForEnforcementPoint struct {
-	// Enforcement point to fetch the statistics from.
+	// Path of the enforcement point for which statistics are reported. On Global Manager, specifying an enforcement_point_path is mandatory. On Local Manager, if omitted, statistics are aggregated across all enforcement points.
 	EnforcementPoint *string
 	Statistics       *IdsSecurityPolicyStatistics
 }
@@ -51398,7 +51953,7 @@ type IdsSignatureVersion struct {
 	//
 	//  This flag tells the status of the signatures under a version. OUTDATED: It means the signatures under this version are outdated and new version is available. LATEST: It means the signatures of this version are up to date.
 	Status *string
-	// Time when this version was downloaded and saved. format: int64
+	// Time when this version was downloaded and saved. This is a unix timestamp in milliseconds. format: int64
 	UpdateTime *int64
 	// Flag which tells whether the Signature version is uploaded by user or not.
 	UserUploaded *bool
@@ -52434,7 +52989,7 @@ type InfraSecurityPolicy struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// - Distributed Firewall - Policy framework provides five pre-defined categories for classifying a security policy. They are \"Ethernet\",\"Emergency\", \"Infrastructure\" \"Environment\" and \"Application\". There is a pre-determined order in which the policy framework manages the priority of these security policies. Ethernet category is for supporting layer 2 firewall rules. The other four categories are applicable for layer 3 rules. Amongst them, the Emergency category has the highest priority followed by Infrastructure, Environment and then Application rules. Administrator can choose to categorize a security policy into the above categories or can choose to leave it empty. If empty it will have the least precedence w.r.t the above four categories. - Edge Firewall - Policy Framework for Edge Firewall provides six pre-defined categories \"Emergency\", \"SystemRules\", \"SharedPreRules\", \"LocalGatewayRules\", \"AutoServiceRules\" and \"Default\", in order of priority of rules. All categories are allowed for Gatetway Policies that belong to 'default' Domain. However, for user created domains, category is restricted to \"SharedPreRules\" or \"LocalGatewayRules\" only. Also, the users can add/modify/delete rules from only the \"SharedPreRules\" and \"LocalGatewayRules\" categories. If user doesn't specify the category then defaulted to \"Rules\". System generated category is used by NSX created rules, for example BFD rules. Autoplumbed category used by NSX verticals to autoplumb data path rules. Finally, \"Default\" category is the placeholder default rules with lowest in the order of priority.
+	// Classifies this security policy into an evaluation-priority category. Categories are evaluated in a fixed priority order. Distributed Firewall (DFW) categories, in priority order (highest first): Ethernet - Layer 2 firewall rules only. Emergency - Highest priority L3 rules (common to both DFW and Edge FW). Infrastructure - Second priority L3 rules. Environment - Third priority L3 rules. Application - Lowest explicit L3 rules. ThreatRules - IDPS-only. Threat-based rules applied after Application. EmergencyThreatRules - IDPS-only. Highest priority threat-based rules. Edge (Gateway) Firewall categories, in priority order (highest first): Emergency, SystemRules, SharedPreRules, SharedExternalRules, LocalGatewayRules, AutoServiceRules, Default. For user-created domains, only SharedPreRules and LocalGatewayRules are allowed. If not specified, defaults to LocalGatewayRules. Bridge Firewall category: LocalBridgeRules - Rules for bridge firewall policies.
 	Category *string
 	// Comments for security policy lock/unlock.
 	Comments *string
@@ -52456,9 +53011,9 @@ type InfraSecurityPolicy struct {
 	Scope []string
 	// This field is used to resolve conflicts between security policies across domains. In order to change the sequence number of a policy one can fire a POST request on the policy entity with a query parameter action=revise The sequence number field will reflect the value of the computed sequence number upon execution of the above mentioned POST request. For scenarios where the administrator is using a template to update several security policies, the only way to set the sequence number is to explicitly specify the sequence number for each security policy. If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple policies with the same sequence number then their order is not deterministic. If a specific order of policies is desired, then one has to specify unique sequence numbers or use the POST request on the policy entity with a query parameter action=revise to let the framework assign a sequence number. The value of sequence number must be between 0 and 999,999. format: int32
 	SequenceNumber *int64
-	// Stateful or Stateless nature of security policy is enforced on all rules in this security policy. When it is stateful, the state of the network connects are tracked and a stateful packet inspection is performed. Layer3 security policies can be stateful or stateless. By default, they are stateful. Layer2 security policies can only be stateless.
+	// Whether this security policy enforces stateful or stateless packet inspection. When stateful (true), network connection state is tracked and stateful packet inspection is performed. Layer-3 security policies default to stateful. Layer-2 (Ethernet category) security policies must be stateless. Note: when stateful is true, the tcp_strict field also defaults to true unless explicitly set to false. See the tcp_strict field for details.
 	Stateful *bool
-	// Ensures that a 3 way TCP handshake is done before the data packets are sent. tcp_strict=true is supported only for stateful security policies. If the tcp_strict flag is not specified and the security policy is stateful, then tcp_strict will be set to true.
+	// Enforces a 3-way TCP handshake before allowing data packets. Only applicable when the security policy is stateful. If not specified, the server automatically sets tcp_strict to true for stateful policies and false for stateless policies. See also: stateful field.
 	TcpStrict *bool
 	// This field indicates the application connectivity policy for the security policy.
 	ApplicationConnectivityStrategy []ApplicationConnectivityStrategy
@@ -52482,9 +53037,9 @@ type InfraSecurityPolicy struct {
 	//
 	//  This field indicates the default connectivity policy for the security policy. Based on the connectivity strategy, a default rule for this security policy will be created. An appropriate action will be set on the rule based on the value of the connectivity strategy. If NONE is selected or no connectivity strategy is specified, then no default rule for the security policy gets created. The default rule that gets created will be a any-any rule and applied to entities specified in the scope of the security policy. Specifying the connectivity_strategy without specifying the scope is not allowed. The scope has to be a Group and one cannot specify IPAddress directly in the group that is used as scope. This default rule is only applicable for the Layer3 security policies. This property is deprecated. Use the type connectivity_preference instead. WHITELIST - Adds a default drop rule. Administrator can then use \"allow\" rules (aka whitelist) to allow traffic between groups BLACKLIST - Adds a default allow rule. Admin can then use \"drop\" rules (aka blacklist) to block traffic between groups WHITELIST_ENABLE_LOGGING - Whitelising with logging enabled BLACKLIST_ENABLE_LOGGING - Blacklisting with logging enabled NONE - No default rule is created.
 	ConnectivityStrategy *string
-	// Based on the value of the connectivity strategy, a default rule is created for the security policy. The rule id is internally assigned by the system for this default rule. format: int64
+	// Based on the value of the connectivity_preference, a default rule is created for the security policy. The rule id is internally assigned by the system for this default rule. format: int64
 	DefaultRuleId *int64
-	// This property is deprecated. Flag to enable logging for all the rules in the security policy. If the value is true then logging will be enabled for all the rules in the security policy. If the value is false, then the rule level logging value will be honored.
+	// Deprecated. Flag to enable logging for all rules in this security policy. If true, logging is enabled for all rules in the policy. If false, the individual rule-level logging flag is honored. Use per-rule logging instead.
 	LoggingEnabled *bool
 	// Rules that are a part of this SecurityPolicy
 	Rules []Rule
@@ -52595,7 +53150,7 @@ type InfraSecurityRule struct {
 	IsDefault *bool
 	// Flag to enable packet logging. Default is deactivated.
 	Logged *bool
-	// User level field which will be printed in CLI and packet logs. Even though there is no limitation on length of the notes, internally notes will get truncated after 39 characters.
+	// User level field which will be printed in CLI and packet logs. The notes field accepts up to 2048 characters. Internally, notes are truncated after 39 characters in CLI and packet logs.
 	Notes *string
 	// Paths to Layer 7 service profile objects or L7 access profile objects for advanced traffic inspection and filtering. These profiles enable matching on Layer 7 attributes and sub-attributes of network services such as: - Application IDs (L4 AppId) - Encryption algorithms and TLS versions - Domain names and URLs - HTTP methods - CIFS/SMB versions You can use either Layer 7 service profiles (PolicyContextProfile) or an L7 access profile (L7AccessProfile) in a rule, but not both. When using an L7 access profile, only one profile path is allowed.
 	Profiles []string
@@ -52603,7 +53158,7 @@ type InfraSecurityRule struct {
 	RuleId *int64
 	// The list of group paths to which the rule applies. This determines which workloads (VMs, containers, etc.) the rule is enforced on. For Gateway Firewall rules, this can also include Tier-0, Tier-1, or interface paths to specify where the rule is enforced. Note that a given rule can be applied to multiple groups or network entities.
 	Scope []string
-	// This field is used to resolve conflicts between multiple Rules under Security or Gateway Policy for a Domain If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple rules with the same sequence number then their order is not deterministic. If a specific order of rules is desired, then one has to specify unique sequence numbers or use the POST request on the rule entity with a query parameter action=revise to let the framework assign a sequence number format: int32
+	// This field is used to resolve conflicts between multiple Rules under a Security or Gateway Policy for a Domain. Rules are evaluated in ascending sequence number order. If no sequence number is specified in the payload, the system assigns a default value of 0. If there are multiple rules with the same sequence number then their order is not deterministic. If a specific order of rules is desired, specify unique sequence numbers or use the POST request on the rule entity with a query parameter action=revise to let the framework assign a sequence number. format: int32
 	SequenceNumber *int64
 	// In order to specify raw services this can be used, along with services which contains path to services. This can be empty or null.
 	ServiceEntries []*vapiData_.StructValue
@@ -52622,7 +53177,7 @@ type InfraSecurityRule struct {
 	// * InfraSecurityRule#InfraSecurityRule_ACTION_REJECT
 	// * InfraSecurityRule#InfraSecurityRule_ACTION_JUMP_TO_APPLICATION
 	//
-	//  The action to be applied to all the services The JUMP_TO_APPLICATION action is only supported for rules created in the Environment category. Once a match is hit then the rule processing will jump to the rules present in the Application category, skipping all further rules in the Environment category. If no rules match in the Application category then the default application rule will be hit. This is applicable only for DFW.
+	//  The action to be applied to all the services. REJECT is not allowed for Layer-2 (Ethernet category) rules — use DROP instead. JUMP_TO_APPLICATION is only valid for DFW rules (not Gateway Firewall) created in the Environment category. Once a match is hit then the rule processing will jump to the rules present in the Application category, skipping all further rules in the Environment category. If no rules match in the Application category then the default application rule will be hit.
 	Action *string
 }
 
@@ -55033,6 +55588,8 @@ func (s *IpamThirdPartyProviderConnectionInfo) GetDataValue__() (vapiData_.DataV
 type IpamThirdPartyProviderFilterParams struct {
 	// Third party ipam CIDR.
 	Cidr *string
+	// Ip view name to list CIDRs under a particular network view
+	IpView *string
 }
 
 func (s *IpamThirdPartyProviderFilterParams) GetType__() vapiBindings_.BindingType {
@@ -67200,6 +67757,8 @@ type MACAddressExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_PATHEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACENAMEEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -69519,6 +70078,205 @@ func (s *NamespaceMemberDetails) GetDataValue__() (vapiData_.DataValue, []error)
 	return dataVal, nil
 }
 
+// Represents a collection of Namespace name expressions.
+type NamespaceNameExpression struct {
+	// Namespace Identifiers
+	NamespaceNames []string
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id *string
+	// Possible values are:
+	//
+	// * Expression#Expression_RESOURCE_TYPE_CONDITION
+	// * Expression#Expression_RESOURCE_TYPE_CONJUNCTIONOPERATOR
+	// * Expression#Expression_RESOURCE_TYPE_NESTEDEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_IPADDRESSEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_MACADDRESSEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_EXTERNALIDEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_PATHEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACENAMEEXPRESSION
+	ResourceType string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// This is a UUID generated by the system for knowing which site owns an object. This is used in NSX+.
+	OriginSiteId *string
+	// This is a UUID generated by the system for knowing who owns this object. This is used in NSX+.
+	OwnerId *string
+	// Path of its parent
+	ParentPath *string
+	// Absolute path of this object
+	Path *string
+	// This is a UUID generated by the system for realizing the entity object. In most cases this should be same as 'unique_id' of the entity. However, in some cases this can be different because of entities have migrated their unique identifier to NSX Policy intent objects later in the timeline and did not use unique_id for realization. Realization id is helpful for users to debug data path to correlate the configuration with corresponding intent.
+	RealizationId *string
+	// Path relative from its parent
+	RelativePath *string
+	// This path is populated only in case of multi-site scenario. Currently it is supported only for LM objects. When LM is onboarded to multi-site platform like NAPP or GM, remote_path will be set to the globally unique path across multi-site topology . It is generated based on local site-name and uses /org tree namespace. Note: It is populated only for LM objects. Not supported on the GM.
+	RemotePath *string
+	// This is a UUID generated by the GM/LM to uniquely identify entities in a federated environment. For entities that are stretched across multiple sites, the same ID will be used on all the stretched sites.
+	UniqueId *string
+	// Subtree for this type within policy tree containing nested elements. Note that this type is applicable to be used in Hierarchical API only.
+	Children []*vapiData_.StructValue
+	// Intent objects are not directly deleted from the system when a delete is invoked on them. They are marked for deletion and only when all the realized entities for that intent object get deleted, the intent object is deleted. Objects that are marked for deletion are not returned in GET call. One can use the search API to get these objects.
+	MarkedForDelete *bool
+	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
+	Overridden *bool
+}
+
+// Identifier denoting this class, when it is used in polymorphic context.
+//
+// This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
+const NamespaceNameExpression__TYPE_IDENTIFIER = "NamespaceNameExpression"
+
+func (s *NamespaceNameExpression) GetType__() vapiBindings_.BindingType {
+	return NamespaceNameExpressionBindingType()
+}
+
+func (s *NamespaceNameExpression) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for NamespaceNameExpression._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Represents a VM Identifier composed of the VM's origin and its unique name.
+type NamespaceVmName struct {
+	NamespaceName *string
+	VmName        *string
+}
+
+func (s *NamespaceVmName) GetType__() vapiBindings_.BindingType {
+	return NamespaceVmNameBindingType()
+}
+
+func (s *NamespaceVmName) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for NamespaceVmName._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Represents a collection of Namespace and VM expressions.
+type NamespaceVmNameExpression struct {
+	// Namespace Vm Identifiers
+	NamespaceVmNames []NamespaceVmName
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id *string
+	// Possible values are:
+	//
+	// * Expression#Expression_RESOURCE_TYPE_CONDITION
+	// * Expression#Expression_RESOURCE_TYPE_CONJUNCTIONOPERATOR
+	// * Expression#Expression_RESOURCE_TYPE_NESTEDEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_IPADDRESSEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_MACADDRESSEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_EXTERNALIDEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_PATHEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACENAMEEXPRESSION
+	ResourceType string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// This is a UUID generated by the system for knowing which site owns an object. This is used in NSX+.
+	OriginSiteId *string
+	// This is a UUID generated by the system for knowing who owns this object. This is used in NSX+.
+	OwnerId *string
+	// Path of its parent
+	ParentPath *string
+	// Absolute path of this object
+	Path *string
+	// This is a UUID generated by the system for realizing the entity object. In most cases this should be same as 'unique_id' of the entity. However, in some cases this can be different because of entities have migrated their unique identifier to NSX Policy intent objects later in the timeline and did not use unique_id for realization. Realization id is helpful for users to debug data path to correlate the configuration with corresponding intent.
+	RealizationId *string
+	// Path relative from its parent
+	RelativePath *string
+	// This path is populated only in case of multi-site scenario. Currently it is supported only for LM objects. When LM is onboarded to multi-site platform like NAPP or GM, remote_path will be set to the globally unique path across multi-site topology . It is generated based on local site-name and uses /org tree namespace. Note: It is populated only for LM objects. Not supported on the GM.
+	RemotePath *string
+	// This is a UUID generated by the GM/LM to uniquely identify entities in a federated environment. For entities that are stretched across multiple sites, the same ID will be used on all the stretched sites.
+	UniqueId *string
+	// Subtree for this type within policy tree containing nested elements. Note that this type is applicable to be used in Hierarchical API only.
+	Children []*vapiData_.StructValue
+	// Intent objects are not directly deleted from the system when a delete is invoked on them. They are marked for deletion and only when all the realized entities for that intent object get deleted, the intent object is deleted. Objects that are marked for deletion are not returned in GET call. One can use the search API to get these objects.
+	MarkedForDelete *bool
+	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
+	Overridden *bool
+}
+
+// Identifier denoting this class, when it is used in polymorphic context.
+//
+// This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
+const NamespaceVmNameExpression__TYPE_IDENTIFIER = "NamespaceVmNameExpression"
+
+func (s *NamespaceVmNameExpression) GetType__() vapiBindings_.BindingType {
+	return NamespaceVmNameExpressionBindingType()
+}
+
+func (s *NamespaceVmNameExpression) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for NamespaceVmNameExpression._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Contains a NSX Application Platform.
 type NappRegistration struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -69897,6 +70655,8 @@ type NestedExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_PATHEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACENAMEEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -72043,6 +72803,8 @@ type OdsDynamicRunbookNodeInstallStatus struct {
 	NodeId *string
 	// The name of transport node, Edge node or appliance node.
 	NodeName *string
+	// The type of transport node, Edge node or appliance node.
+	NodeType *string
 	// Possible values are:
 	//
 	// * OdsDynamicRunbookNodeInstallStatus#OdsDynamicRunbookNodeInstallStatus_STATUS_NONE
@@ -72091,6 +72853,50 @@ func (s *OdsDynamicRunbookNodeInstallStatus) GetDataValue__() (vapiData_.DataVal
 	return dataVal, nil
 }
 
+type OdsDynamicRunbookQuery struct {
+	// Policy Path of Dynamic Runbook Instance.
+	DynamicInstancePath *string
+	// The identifier of the target node on which the runbook is installed.
+	TargetNodeId *string
+}
+
+func (s *OdsDynamicRunbookQuery) GetType__() vapiBindings_.BindingType {
+	return OdsDynamicRunbookQueryBindingType()
+}
+
+func (s *OdsDynamicRunbookQuery) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for OdsDynamicRunbookQuery._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type OdsDynamicRunbookQueryResult struct {
+	// Policy Path of Dynamic Runbook.
+	DynamicRunbookPath *string
+	// Parameters of Runbook.
+	Parameters []*vapiData_.StructValue
+}
+
+func (s *OdsDynamicRunbookQueryResult) GetType__() vapiBindings_.BindingType {
+	return OdsDynamicRunbookQueryResultBindingType()
+}
+
+func (s *OdsDynamicRunbookQueryResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for OdsDynamicRunbookQueryResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Paged list of Online Diagnostic System Dynamic Runbook Instances.
 type OdsDynamicdRunbookInstanceListResult struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -72119,6 +72925,28 @@ func (s *OdsDynamicdRunbookInstanceListResult) GetDataValue__() (vapiData_.DataV
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for OdsDynamicdRunbookInstanceListResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type OdsPackageInfo struct {
+	// The name of Dynamic Runbook.
+	RunbookName *string
+	// Runbook target node types.
+	TargetNodes []string
+}
+
+func (s *OdsPackageInfo) GetType__() vapiBindings_.BindingType {
+	return OdsPackageInfoBindingType()
+}
+
+func (s *OdsPackageInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for OdsPackageInfo._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -72318,6 +73146,7 @@ func (s *OdsRunbookArtifactStatus) GetDataValue__() (vapiData_.DataValue, []erro
 
 // Online Diagnostic System Runbook parameter of compound type.
 type OdsRunbookCompoundParameter struct {
+	EntityQuery *OdsRunbookEntityQueryParameter
 	// Runbook argument will be set to this value if not provided.
 	DefaultValue *string
 	// Runbook argument is not allowed to set value bigger than this.
@@ -72356,6 +73185,56 @@ func (s *OdsRunbookCompoundParameter) GetDataValue__() (vapiData_.DataValue, []e
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for OdsRunbookCompoundParameter._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Configuration object that describes how to dynamically fetch valid values for an Online Diagnostic System Runbook parameter from an NSX entity collection at invocation time. The UI (or API client) uses the fields below to: 1. Fetch a list of candidate entities (via data_source / api_path). 2. Display each entity to the user (entity_display_field).
+type OdsRunbookEntityQueryParameter struct {
+	// Absolute path of the REST endpoint that returns the entity collection, e.g. \"/policy/api/v1/infra/realized-state/virtual-machines\". Required when data_source is VERTICAL_API.
+	ApiPath *string
+	// Possible values are:
+	//
+	// * OdsRunbookEntityQueryParameter#OdsRunbookEntityQueryParameter_DATA_SOURCE_SEARCH
+	// * OdsRunbookEntityQueryParameter#OdsRunbookEntityQueryParameter_DATA_SOURCE_VERTICAL_API
+	//
+	//  Determines how the entity list is retrieved. SEARCH - POST to /policy/api/v1/search with an entity_type filter. VERTICAL_API - Call the endpoint specified in api_path using http_method.
+	DataSource *string
+	// The top-level field name in the API response body that holds the array of entity objects, e.g. \"results\". If the response body is itself an array (no wrapper object), leave this field absent.
+	EntityCollectionField *string
+	// The field name within each entity object whose value is shown to the user as the human-readable label, e.g. \"display_name\".
+	EntityDisplayField *string
+	// The field name within each entity object whose value is used as the actual runbook argument when the user makes a selection, e.g. \"id\" or \"external_id\".
+	EntityReturnField *string
+	// The NSX resource type of the entities to query, e.g. \"VirtualMachine\", \"LogicalPort\", \"TransportNode\".
+	EntityType *string
+	// Possible values are:
+	//
+	// * OdsRunbookEntityQueryParameter#OdsRunbookEntityQueryParameter_HTTP_METHOD_GET
+	// * OdsRunbookEntityQueryParameter#OdsRunbookEntityQueryParameter_HTTP_METHOD_POST
+	//
+	//  HTTP method to use when querying with data_source.
+	HttpMethod *string
+	// A JSON string used as the request body when http_method is POST or when data_source is SEARCH. For SEARCH, this is the full search query body template (resource_type filter is merged in automatically from entity_type). Example for SEARCH: {\"query\": \"resource_type:VirtualMachine\", \"page_size\": 100}
+	RequestPayload *string
+}
+
+const OdsRunbookEntityQueryParameter_DATA_SOURCE_SEARCH = "SEARCH"
+const OdsRunbookEntityQueryParameter_DATA_SOURCE_VERTICAL_API = "VERTICAL_API"
+const OdsRunbookEntityQueryParameter_HTTP_METHOD_GET = "GET"
+const OdsRunbookEntityQueryParameter_HTTP_METHOD_POST = "POST"
+
+func (s *OdsRunbookEntityQueryParameter) GetType__() vapiBindings_.BindingType {
+	return OdsRunbookEntityQueryParameterBindingType()
+}
+
+func (s *OdsRunbookEntityQueryParameter) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for OdsRunbookEntityQueryParameter._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -72404,6 +73283,32 @@ func (s *OdsRunbookEnumParameter) GetDataValue__() (vapiData_.DataValue, []error
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for OdsRunbookEnumParameter._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type OdsRunbookFilter struct {
+	// Filter by multiple Runbook IDs.
+	Ids []string
+	// Filter by multiple Runbook names.
+	Names []string
+	// Filter by multiple Runbook paths.
+	Paths []string
+	// Filter by multiple Runbook target node types.
+	TargetNodes []string
+}
+
+func (s *OdsRunbookFilter) GetType__() vapiBindings_.BindingType {
+	return OdsRunbookFilterBindingType()
+}
+
+func (s *OdsRunbookFilter) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for OdsRunbookFilter._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -72534,15 +73439,57 @@ type OdsRunbookInvocation struct {
 	Overridden *bool
 	// List of key value pairs as the arguments for an execution of an Online Diagnostic System Runbook.
 	Arguments []UnboundedKeyValuePair
+	// The Name of Dynamic runbook instance object.
+	DynamicRunbookInstanceName *string
+	// The policy path of Dynamic runbook instance object.
+	DynamicRunbookInstancePath *string
+	// The error detail when the runbook invocation report is invalid. Empty string if no error.
+	ErrorDetail *string
 	// This field indicates if intent is transient and will be cleaned up by the system if set to true
 	IsTransient *bool
+	// The type of transport node, Edge node or appliance node.
+	NodeType *string
+	// Indicates whether a report is available for this runbook invocation.
+	ReportAvailable *bool
 	// The property is read-only, used for querying result.
 	RunbookName *string
 	// The policy path of runbook object.
 	RunbookPath *string
+	// Possible values are:
+	//
+	// * OdsRunbookInvocation#OdsRunbookInvocation_STATUS_SUCCESS
+	// * OdsRunbookInvocation#OdsRunbookInvocation_STATUS_CONNECTION_ERROR
+	// * OdsRunbookInvocation#OdsRunbookInvocation_STATUS_TIMEOUT
+	// * OdsRunbookInvocation#OdsRunbookInvocation_STATUS_RUNBOOK_NOT_FOUND
+	// * OdsRunbookInvocation#OdsRunbookInvocation_STATUS_QUEUED
+	// * OdsRunbookInvocation#OdsRunbookInvocation_STATUS_BUSY_REJECTED
+	// * OdsRunbookInvocation#OdsRunbookInvocation_STATUS_THROTTLED
+	// * OdsRunbookInvocation#OdsRunbookInvocation_STATUS_ARG_INVALID
+	// * OdsRunbookInvocation#OdsRunbookInvocation_STATUS_RUNNING
+	// * OdsRunbookInvocation#OdsRunbookInvocation_STATUS_GENERAL_ERROR
+	// * OdsRunbookInvocation#OdsRunbookInvocation_STATUS_RUNBOOK_NOT_ENABLED
+	// * OdsRunbookInvocation#OdsRunbookInvocation_STATUS_ABORTED
+	//
+	//  The consolidated runtime status of the runbook invocation.
+	Status *string
 	// Identifier of an appliance node or transport node where the execution of an Online Diagnostic System Runbook happens.
 	TargetNode *string
+	// Name of an appliance node or transport node where the execution of an Online Diagnostic System Runbook happens.
+	TargetNodeName *string
 }
+
+const OdsRunbookInvocation_STATUS_SUCCESS = "SUCCESS"
+const OdsRunbookInvocation_STATUS_CONNECTION_ERROR = "CONNECTION_ERROR"
+const OdsRunbookInvocation_STATUS_TIMEOUT = "TIMEOUT"
+const OdsRunbookInvocation_STATUS_RUNBOOK_NOT_FOUND = "RUNBOOK_NOT_FOUND"
+const OdsRunbookInvocation_STATUS_QUEUED = "QUEUED"
+const OdsRunbookInvocation_STATUS_BUSY_REJECTED = "BUSY_REJECTED"
+const OdsRunbookInvocation_STATUS_THROTTLED = "THROTTLED"
+const OdsRunbookInvocation_STATUS_ARG_INVALID = "ARG_INVALID"
+const OdsRunbookInvocation_STATUS_RUNNING = "RUNNING"
+const OdsRunbookInvocation_STATUS_GENERAL_ERROR = "GENERAL_ERROR"
+const OdsRunbookInvocation_STATUS_RUNBOOK_NOT_ENABLED = "RUNBOOK_NOT_ENABLED"
+const OdsRunbookInvocation_STATUS_ABORTED = "ABORTED"
 
 func (s *OdsRunbookInvocation) GetType__() vapiBindings_.BindingType {
 	return OdsRunbookInvocationBindingType()
@@ -72753,6 +73700,36 @@ func (s *OdsRunbookInvocationArtifactListResult) GetDataValue__() (vapiData_.Dat
 	return dataVal, nil
 }
 
+type OdsRunbookInvocationFilter struct {
+	// Filter by multiple Runbook Invocation names.
+	InvocationNames []string
+	// Filter by multiple Runbook Invocation paths.
+	Paths []string
+	// Filter by multiple Runbook names.
+	RunbookNames []string
+	// Filter by multiple Runbook paths.
+	RunbookPaths []string
+	// Filter by multiple Invocation statuses.
+	Statuses []string
+	// Filter by multiple Runbook target node names.
+	TargetNodeNames []string
+}
+
+func (s *OdsRunbookInvocationFilter) GetType__() vapiBindings_.BindingType {
+	return OdsRunbookInvocationFilterBindingType()
+}
+
+func (s *OdsRunbookInvocationFilter) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for OdsRunbookInvocationFilter._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Paged list of Online Diagnostic System Runbook invocations.
 type OdsRunbookInvocationListResult struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -72789,6 +73766,8 @@ func (s *OdsRunbookInvocationListResult) GetDataValue__() (vapiData_.DataValue, 
 
 // The report of the Invocation of an Online Diagnostic System Runbook.
 type OdsRunbookInvocationReport struct {
+	// Indicates whether an artifact has been created for this runbook invocation.
+	ArtifactCreated *bool
 	// The error detail of the invalid report.
 	ErrorDetail *string
 	// Possible values are:
@@ -73214,6 +74193,7 @@ func (s *OdsRunbookSettingListResult) GetDataValue__() (vapiData_.DataValue, []e
 
 // Online Diagnostic System Runbook parameter of string type.
 type OdsRunbookStringParameter struct {
+	EntityQuery *OdsRunbookEntityQueryParameter
 	// Runbook argument will be set to this value if not provided.
 	DefaultValue *string
 	// Runbook argument is not allowed to set value bigger than this.
@@ -73452,6 +74432,7 @@ type OpsGlobalConfig struct {
 	// The operation collector is defined to receive stats from hosts. The VRNI and WAVE_FRONT collector type can be defined to collect the metric data. The WAVE_FRONT collector type can only be used in VMC mode.
 	OperationCollectors      []*vapiData_.StructValue
 	OperationFeatureDisabled *OperationVerticalConfig
+	OverlayTunnelMtuCheck    *OverlayTunnelMtuCheckConfig
 	// Information related to sites applicable for given config.
 	SiteInfos []SiteInfo
 	// A DSCP value is allocated to indicate the existence of INT header. The user should guarantee that the given DSCP value is specifically allocated for INT. The scope of this DSCP value applies to traffic between the VNA and the ESXi host on which the VNA resides. format: int32
@@ -74422,6 +75403,103 @@ func (s *OverlayDataPathL2) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+type OverlayMTUCheckStatusCount struct {
+	// Number of tunnels with overlay MTU check in down state format: int32
+	DownCount *int64
+	// Number of tunnels with overlay MTU check in init state format: int32
+	InitCount *int64
+	// Timestamp of the last MTU check status change, in epoch milliseconds format: int64
+	LastStatusChangedTime *int64
+	// Number of tunnels with overlay MTU check in up state format: int32
+	UpCount *int64
+}
+
+func (s *OverlayMTUCheckStatusCount) GetType__() vapiBindings_.BindingType {
+	return OverlayMTUCheckStatusCountBindingType()
+}
+
+func (s *OverlayMTUCheckStatusCount) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for OverlayMTUCheckStatusCount._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Overlay MTU check status
+type OverlayMtuCheckProperties struct {
+	// True if the Overlay MTU check is enabled
+	Enabled *bool
+	// Time when the check was performed. format: int64
+	LastUpdatedTime *int64
+	// Possible values are:
+	//
+	// * OverlayMtuCheckProperties#OverlayMtuCheckProperties_MODE_ON_DEMAND
+	// * OverlayMtuCheckProperties#OverlayMtuCheckProperties_MODE_PERIODIC
+	//
+	//  MTU check mode when it is triggered.
+	Mode *string
+	// The value of MTU being checked. format: int64
+	Mtu *int64
+	// The value of source UDP port being checked. format: int64
+	SrcUdpPort *int64
+	// Possible values are:
+	//
+	// * OverlayMtuCheckProperties#OverlayMtuCheckProperties_STATE_DOWN
+	// * OverlayMtuCheckProperties#OverlayMtuCheckProperties_STATE_INIT
+	// * OverlayMtuCheckProperties#OverlayMtuCheckProperties_STATE_UP
+	//
+	//  State of the Overlay MTU check.
+	State *string
+}
+
+const OverlayMtuCheckProperties_MODE_ON_DEMAND = "ON_DEMAND"
+const OverlayMtuCheckProperties_MODE_PERIODIC = "PERIODIC"
+const OverlayMtuCheckProperties_STATE_DOWN = "DOWN"
+const OverlayMtuCheckProperties_STATE_INIT = "INIT"
+const OverlayMtuCheckProperties_STATE_UP = "UP"
+
+func (s *OverlayMtuCheckProperties) GetType__() vapiBindings_.BindingType {
+	return OverlayMtuCheckPropertiesBindingType()
+}
+
+func (s *OverlayMtuCheckProperties) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for OverlayMtuCheckProperties._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Configuration for NSX Overlay tunnel MTU check.
+type OverlayTunnelMtuCheckConfig struct {
+	// The flag is to turn on/off overlay tunnel MTU check. It will enable NSX to send the overlay MTU probe packets if true.
+	Enable *bool
+	// The default check interval is 1 day(86400s). It supports periodic check and on-demand check. If check enabled, interval 0 indicates on-demand check. If check disabled, it requries interval as 0. format: int32
+	Interval *int64
+}
+
+func (s *OverlayTunnelMtuCheckConfig) GetType__() vapiBindings_.BindingType {
+	return OverlayTunnelMtuCheckConfigBindingType()
+}
+
+func (s *OverlayTunnelMtuCheckConfig) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for OverlayTunnelMtuCheckConfig._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Represents which federated global resources have been overrriden on a specific Site.
 type OverriddenResource struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -74984,6 +76062,8 @@ type PathExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_PATHEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACENAMEEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -76807,7 +77887,7 @@ type Policy struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// - Distributed Firewall - Policy framework provides five pre-defined categories for classifying a security policy. They are \"Ethernet\",\"Emergency\", \"Infrastructure\" \"Environment\" and \"Application\". There is a pre-determined order in which the policy framework manages the priority of these security policies. Ethernet category is for supporting layer 2 firewall rules. The other four categories are applicable for layer 3 rules. Amongst them, the Emergency category has the highest priority followed by Infrastructure, Environment and then Application rules. Administrator can choose to categorize a security policy into the above categories or can choose to leave it empty. If empty it will have the least precedence w.r.t the above four categories. - Edge Firewall - Policy Framework for Edge Firewall provides six pre-defined categories \"Emergency\", \"SystemRules\", \"SharedPreRules\", \"LocalGatewayRules\", \"AutoServiceRules\" and \"Default\", in order of priority of rules. All categories are allowed for Gatetway Policies that belong to 'default' Domain. However, for user created domains, category is restricted to \"SharedPreRules\" or \"LocalGatewayRules\" only. Also, the users can add/modify/delete rules from only the \"SharedPreRules\" and \"LocalGatewayRules\" categories. If user doesn't specify the category then defaulted to \"Rules\". System generated category is used by NSX created rules, for example BFD rules. Autoplumbed category used by NSX verticals to autoplumb data path rules. Finally, \"Default\" category is the placeholder default rules with lowest in the order of priority.
+	// Classifies this security policy into an evaluation-priority category. Categories are evaluated in a fixed priority order. Distributed Firewall (DFW) categories, in priority order (highest first): Ethernet - Layer 2 firewall rules only. Emergency - Highest priority L3 rules (common to both DFW and Edge FW). Infrastructure - Second priority L3 rules. Environment - Third priority L3 rules. Application - Lowest explicit L3 rules. ThreatRules - IDPS-only. Threat-based rules applied after Application. EmergencyThreatRules - IDPS-only. Highest priority threat-based rules. Edge (Gateway) Firewall categories, in priority order (highest first): Emergency, SystemRules, SharedPreRules, SharedExternalRules, LocalGatewayRules, AutoServiceRules, Default. For user-created domains, only SharedPreRules and LocalGatewayRules are allowed. If not specified, defaults to LocalGatewayRules. Bridge Firewall category: LocalBridgeRules - Rules for bridge firewall policies.
 	Category *string
 	// Comments for security policy lock/unlock.
 	Comments *string
@@ -76829,9 +77909,9 @@ type Policy struct {
 	Scope []string
 	// This field is used to resolve conflicts between security policies across domains. In order to change the sequence number of a policy one can fire a POST request on the policy entity with a query parameter action=revise The sequence number field will reflect the value of the computed sequence number upon execution of the above mentioned POST request. For scenarios where the administrator is using a template to update several security policies, the only way to set the sequence number is to explicitly specify the sequence number for each security policy. If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple policies with the same sequence number then their order is not deterministic. If a specific order of policies is desired, then one has to specify unique sequence numbers or use the POST request on the policy entity with a query parameter action=revise to let the framework assign a sequence number. The value of sequence number must be between 0 and 999,999. format: int32
 	SequenceNumber *int64
-	// Stateful or Stateless nature of security policy is enforced on all rules in this security policy. When it is stateful, the state of the network connects are tracked and a stateful packet inspection is performed. Layer3 security policies can be stateful or stateless. By default, they are stateful. Layer2 security policies can only be stateless.
+	// Whether this security policy enforces stateful or stateless packet inspection. When stateful (true), network connection state is tracked and stateful packet inspection is performed. Layer-3 security policies default to stateful. Layer-2 (Ethernet category) security policies must be stateless. Note: when stateful is true, the tcp_strict field also defaults to true unless explicitly set to false. See the tcp_strict field for details.
 	Stateful *bool
-	// Ensures that a 3 way TCP handshake is done before the data packets are sent. tcp_strict=true is supported only for stateful security policies. If the tcp_strict flag is not specified and the security policy is stateful, then tcp_strict will be set to true.
+	// Enforces a 3-way TCP handshake before allowing data packets. Only applicable when the security policy is stateful. If not specified, the server automatically sets tcp_strict to true for stateful policies and false for stateless policies. See also: stateful field.
 	TcpStrict *bool
 }
 
@@ -85900,11 +86980,11 @@ type PolicyRealizedResource struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -87644,8 +88724,10 @@ type PolicyTraceflowObservationDropped struct {
 	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_ROUTE_DISTINGUISHER_MAC_RESOLUTION_FAILED
 	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_MAC_RPF_CHECK_FAILED
 	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_ENCAP_PKT_EXCEED_VDS_MTU
+	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_PKT_EXCEED_GW_MTU
+	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_ENCAP_PKT_EXCEED_RTEP_MTU
 	//
-	//  This field specifies the drop reason of traceflow packet. ARP_FAIL - ARP request fails for some reasons, please refer arp_fail_reason for detail BFD - BFD packet is dropped because traversed by non-operative interface or encountering internal error (e.g., memory insufficient) BROADCAST - Packet is dropped during traversing the interface (e.g., Edge uplink, Edge centralized service port) which disallow ethernet broadcast DHCP - DHCP packet is malformed DLB - The packet is disallowed by distributed load balancing FW_RULE - The packet matches a drop or reject rule of DFW or Edge firewall GENEVE - GENEVE packet is malformed GRE - GRE packet is malformed or traverses a non-operative interface IFACE - Packet traverses a non-operative interface IP - Packet is dropped because of IP related causes (e.g., ICMPv4/ICMPv6 packet is malformed, or DF flag is set but fragment must be performed for the packet) or corresponding interface is not found or inoperative IP_REASS - Packet is dropped during IP reassembly IPSEC - IPsec protocol related packet is dropped IPSEC_VTI - IPsec required SA is not found or traversing inoperative interface cause packet dropped L2VPN - VLAN id of GRE packet is invalid L4PORT - Layer 4 packet (e.g., BFD, DHCP) is dropped LB - Packet is dropped by load balancing rule LROUTER - Packet is dropped by logical router LSERVICE - Packet is malformed or traverses inoperative logical service interface LSWITCH - Packet is dropped by logical switch MANAGEMENT - Packet is dropped by Edge datapath MANAGEMENT service port MD_PROXY - Packet is dropped by metadata proxy NAT - Packet is dropped by NAT rule RTEP_TUNNEL - Unused drop reason ND_NS_FAIL - Neighbor Discovery packet fails NEIGH - ARP or Neighbor Discovery packet fails NO_EIP_FOUND - Destination IP is not an elastic IP NO_EIP_ASSOCIATION - Elastic IP is not associated with active edge VDR ENI NO_ENI_FOR_IP - There is no ENI found for the destination IP NO_ENI_FOR_LIF - Cannot find an ENI associated with uplink LIF NO_ROUTE - Cannot find route for destination IP NO_ROUTE_TABLE_FOUND - Cannot find associated route table NO_UNDERLAY_ROUTE_FOUND - Cannot find AWS route to destination NOT_VDR_DOWNLINK - Packet is not forwarded to VMC unmanaged VDR downlink NO_VDR_FOUND - VMC unmanaged VDR associated with Edge uplink is not found NO_VDR_ON_HOST - Cannot find VMC unmanaged VDR list on this host NOT_VDR_UPLINK - Packet is not forwarded to VDR uplink SERVICE_INSERT - Packet from guest VM to service VM or from service VM to guest VM is dropped by firewall rule SPOOFGUARD - Packet is blocked by SpoofGuard policy TTL_ZERO - The IPv4 time to live field of packet is zero. TUNNEL - Overlay tunnel management packet (VNI value of GENEVE header is 0, e.g., BFD) is dropped VLAN - VLAN id of packet is disallowed by the given port VXLAN - VXLAN packet is malformed or cannot find tunnel port for it VXSTT - Unused drop reason VMC_NO_RESPONSE - Failed to query VMC observations as no response from VMC app WRONG_UPLINK - Packet is not routed to the expected Edge uplink by VMC unmanaged VDR FW_STATE - Packet is dropped by stateful firewall NO_MAC - Drop by vswitch as no destination MAC hit MAC Table. FILTERED_UPLINK - Filtering applied at the corresponding UPLINK having no aggregation. IP_OUT_OF_SCOPE - An external IP is required if a packet from a non-public VPC subnet is trying to enter the external underlay network. DHCP_FORGED_MAC - The source MAC address of the DHCP packet sent to the DHCP server does not match the corresponding VIF MAC address of the source port. DHCP_IP_UNAVAILABLE - There is no DHCP client IP address available on the DHCP server. DHCP_IP_NOT_ALLOWED - The requested DHCP client IP address of the packet cannot be allocated from DHCP server. DHCP_INVALID_SERVER_IP_MAC - The DHCP packet is not destined to the DHCP server. NO_GATEWAY_CIDR_FOUND - There is no distributed connection for the source network of the packet to forward the packet to the physical gateway. CONNECTIVITY_POLICY - The packet is dropped due to violating communication rule of connectivity policy. HOP_LIMIT_ZERO - The IPv6 hop limit field of packet is zero. WRONG_SUBNET_GW_BLOCK - The packet is dropped by the gateway to enforce its confinement to the origin network of the VLAN extended subnet. The VLAN extended subnet is the terminology of both VPC overlay subnet and the extended VLAN network. ROUTE_DISTINGUISHER_MAC_RESOLUTION_FAILED - The MAC address of the route distinguisher fails to resolve. MAC_RPF_CHECK_FAILED - The packet is droped due to MAC-address-based reverse path forwarding check. This is to avoid the packet forwarding loops. ENCAP_PKT_EXCEED_VDS_MTU - The frame size of the encapsulated traceflow packet is larger than the VDS MTU.
+	//  This field specifies the drop reason of traceflow packet. ARP_FAIL - ARP request fails for some reasons, please refer arp_fail_reason for detail BFD - BFD packet is dropped because traversed by non-operative interface or encountering internal error (e.g., memory insufficient) BROADCAST - Packet is dropped during traversing the interface (e.g., Edge uplink, Edge centralized service port) which disallow ethernet broadcast DHCP - DHCP packet is malformed DLB - The packet is disallowed by distributed load balancing FW_RULE - The packet matches a drop or reject rule of DFW or Edge firewall GENEVE - GENEVE packet is malformed GRE - GRE packet is malformed or traverses a non-operative interface IFACE - Packet traverses a non-operative interface IP - Packet is dropped because of IP related causes (e.g., ICMPv4/ICMPv6 packet is malformed, or DF flag is set but fragment must be performed for the packet) or corresponding interface is not found or inoperative IP_REASS - Packet is dropped during IP reassembly IPSEC - IPsec protocol related packet is dropped IPSEC_VTI - IPsec required SA is not found or traversing inoperative interface cause packet dropped L2VPN - VLAN id of GRE packet is invalid L4PORT - Layer 4 packet (e.g., BFD, DHCP) is dropped LB - Packet is dropped by load balancing rule LROUTER - Packet is dropped by logical router LSERVICE - Packet is malformed or traverses inoperative logical service interface LSWITCH - Packet is dropped by logical switch MANAGEMENT - Packet is dropped by Edge datapath MANAGEMENT service port MD_PROXY - Packet is dropped by metadata proxy NAT - Packet is dropped by NAT rule RTEP_TUNNEL - Unused drop reason ND_NS_FAIL - Neighbor Discovery packet fails NEIGH - ARP or Neighbor Discovery packet fails NO_EIP_FOUND - Destination IP is not an elastic IP NO_EIP_ASSOCIATION - Elastic IP is not associated with active edge VDR ENI NO_ENI_FOR_IP - There is no ENI found for the destination IP NO_ENI_FOR_LIF - Cannot find an ENI associated with uplink LIF NO_ROUTE - Cannot find route for destination IP NO_ROUTE_TABLE_FOUND - Cannot find associated route table NO_UNDERLAY_ROUTE_FOUND - Cannot find AWS route to destination NOT_VDR_DOWNLINK - Packet is not forwarded to VMC unmanaged VDR downlink NO_VDR_FOUND - VMC unmanaged VDR associated with Edge uplink is not found NO_VDR_ON_HOST - Cannot find VMC unmanaged VDR list on this host NOT_VDR_UPLINK - Packet is not forwarded to VDR uplink SERVICE_INSERT - Packet from guest VM to service VM or from service VM to guest VM is dropped by firewall rule SPOOFGUARD - Packet is blocked by SpoofGuard policy TTL_ZERO - The IPv4 time to live field of packet is zero. TUNNEL - Overlay tunnel management packet (VNI value of GENEVE header is 0, e.g., BFD) is dropped VLAN - VLAN id of packet is disallowed by the given port VXLAN - VXLAN packet is malformed or cannot find tunnel port for it VXSTT - Unused drop reason VMC_NO_RESPONSE - Failed to query VMC observations as no response from VMC app WRONG_UPLINK - Packet is not routed to the expected Edge uplink by VMC unmanaged VDR FW_STATE - Packet is dropped by stateful firewall NO_MAC - Drop by vswitch as no destination MAC hit MAC Table. FILTERED_UPLINK - Filtering applied at the corresponding UPLINK having no aggregation. IP_OUT_OF_SCOPE - An external IP is required if a packet from a non-public VPC subnet is trying to enter the external underlay network. DHCP_FORGED_MAC - The source MAC address of the DHCP packet sent to the DHCP server does not match the corresponding VIF MAC address of the source port. DHCP_IP_UNAVAILABLE - There is no DHCP client IP address available on the DHCP server. DHCP_IP_NOT_ALLOWED - The requested DHCP client IP address of the packet cannot be allocated from DHCP server. DHCP_INVALID_SERVER_IP_MAC - The DHCP packet is not destined to the DHCP server. NO_GATEWAY_CIDR_FOUND - There is no distributed connection for the source network of the packet to forward the packet to the physical gateway. CONNECTIVITY_POLICY - The packet is dropped due to violating communication rule of connectivity policy. HOP_LIMIT_ZERO - The IPv6 hop limit field of packet is zero. WRONG_SUBNET_GW_BLOCK - The packet is dropped by the gateway to enforce its confinement to the origin network of the VLAN extended subnet. The VLAN extended subnet is the terminology of both VPC overlay subnet and the extended VLAN network. ROUTE_DISTINGUISHER_MAC_RESOLUTION_FAILED - The MAC address of the route distinguisher fails to resolve. MAC_RPF_CHECK_FAILED - The packet is droped due to MAC-address-based reverse path forwarding check. This is to avoid the packet forwarding loops. ENCAP_PKT_EXCEED_VDS_MTU - The frame size of the encapsulated traceflow packet is larger than the VDS MTU. PKT_EXCEED_GW_MTU - The frame size of the traceflow packet is larger than the gateway interface MTU. ENCAP_PKT_EXCEED_RTEP_MTU - The frame size of the traceflow packet is larger than the remote tunnel endpoint MTU.
 	Reason *string
 	// The ID of the connectivity policy that applies to the source of the packet. format: int64
 	SrcConnectivityPolicyInternalId *int64
@@ -87930,8 +89012,10 @@ type PolicyTraceflowObservationDroppedLogical struct {
 	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_ROUTE_DISTINGUISHER_MAC_RESOLUTION_FAILED
 	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_MAC_RPF_CHECK_FAILED
 	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_ENCAP_PKT_EXCEED_VDS_MTU
+	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_PKT_EXCEED_GW_MTU
+	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_ENCAP_PKT_EXCEED_RTEP_MTU
 	//
-	//  This field specifies the drop reason of traceflow packet. ARP_FAIL - ARP request fails for some reasons, please refer arp_fail_reason for detail BFD - BFD packet is dropped because traversed by non-operative interface or encountering internal error (e.g., memory insufficient) BROADCAST - Packet is dropped during traversing the interface (e.g., Edge uplink, Edge centralized service port) which disallow ethernet broadcast DHCP - DHCP packet is malformed DLB - The packet is disallowed by distributed load balancing FW_RULE - The packet matches a drop or reject rule of DFW or Edge firewall GENEVE - GENEVE packet is malformed GRE - GRE packet is malformed or traverses a non-operative interface IFACE - Packet traverses a non-operative interface IP - Packet is dropped because of IP related causes (e.g., ICMPv4/ICMPv6 packet is malformed, or DF flag is set but fragment must be performed for the packet) or corresponding interface is not found or inoperative IP_REASS - Packet is dropped during IP reassembly IPSEC - IPsec protocol related packet is dropped IPSEC_VTI - IPsec required SA is not found or traversing inoperative interface cause packet dropped L2VPN - VLAN id of GRE packet is invalid L4PORT - Layer 4 packet (e.g., BFD, DHCP) is dropped LB - Packet is dropped by load balancing rule LROUTER - Packet is dropped by logical router LSERVICE - Packet is malformed or traverses inoperative logical service interface LSWITCH - Packet is dropped by logical switch MANAGEMENT - Packet is dropped by Edge datapath MANAGEMENT service port MD_PROXY - Packet is dropped by metadata proxy NAT - Packet is dropped by NAT rule RTEP_TUNNEL - Unused drop reason ND_NS_FAIL - Neighbor Discovery packet fails NEIGH - ARP or Neighbor Discovery packet fails NO_EIP_FOUND - Destination IP is not an elastic IP NO_EIP_ASSOCIATION - Elastic IP is not associated with active edge VDR ENI NO_ENI_FOR_IP - There is no ENI found for the destination IP NO_ENI_FOR_LIF - Cannot find an ENI associated with uplink LIF NO_ROUTE - Cannot find route for destination IP NO_ROUTE_TABLE_FOUND - Cannot find associated route table NO_UNDERLAY_ROUTE_FOUND - Cannot find AWS route to destination NOT_VDR_DOWNLINK - Packet is not forwarded to VMC unmanaged VDR downlink NO_VDR_FOUND - VMC unmanaged VDR associated with Edge uplink is not found NO_VDR_ON_HOST - Cannot find VMC unmanaged VDR list on this host NOT_VDR_UPLINK - Packet is not forwarded to VDR uplink SERVICE_INSERT - Packet from guest VM to service VM or from service VM to guest VM is dropped by firewall rule SPOOFGUARD - Packet is blocked by SpoofGuard policy TTL_ZERO - The IPv4 time to live field of packet is zero. TUNNEL - Overlay tunnel management packet (VNI value of GENEVE header is 0, e.g., BFD) is dropped VLAN - VLAN id of packet is disallowed by the given port VXLAN - VXLAN packet is malformed or cannot find tunnel port for it VXSTT - Unused drop reason VMC_NO_RESPONSE - Failed to query VMC observations as no response from VMC app WRONG_UPLINK - Packet is not routed to the expected Edge uplink by VMC unmanaged VDR FW_STATE - Packet is dropped by stateful firewall NO_MAC - Drop by vswitch as no destination MAC hit MAC Table. FILTERED_UPLINK - Filtering applied at the corresponding UPLINK having no aggregation. IP_OUT_OF_SCOPE - An external IP is required if a packet from a non-public VPC subnet is trying to enter the external underlay network. DHCP_FORGED_MAC - The source MAC address of the DHCP packet sent to the DHCP server does not match the corresponding VIF MAC address of the source port. DHCP_IP_UNAVAILABLE - There is no DHCP client IP address available on the DHCP server. DHCP_IP_NOT_ALLOWED - The requested DHCP client IP address of the packet cannot be allocated from DHCP server. DHCP_INVALID_SERVER_IP_MAC - The DHCP packet is not destined to the DHCP server. NO_GATEWAY_CIDR_FOUND - There is no distributed connection for the source network of the packet to forward the packet to the physical gateway. CONNECTIVITY_POLICY - The packet is dropped due to violating communication rule of connectivity policy. HOP_LIMIT_ZERO - The IPv6 hop limit field of packet is zero. WRONG_SUBNET_GW_BLOCK - The packet is dropped by the gateway to enforce its confinement to the origin network of the VLAN extended subnet. The VLAN extended subnet is the terminology of both VPC overlay subnet and the extended VLAN network. ROUTE_DISTINGUISHER_MAC_RESOLUTION_FAILED - The MAC address of the route distinguisher fails to resolve. MAC_RPF_CHECK_FAILED - The packet is droped due to MAC-address-based reverse path forwarding check. This is to avoid the packet forwarding loops. ENCAP_PKT_EXCEED_VDS_MTU - The frame size of the encapsulated traceflow packet is larger than the VDS MTU.
+	//  This field specifies the drop reason of traceflow packet. ARP_FAIL - ARP request fails for some reasons, please refer arp_fail_reason for detail BFD - BFD packet is dropped because traversed by non-operative interface or encountering internal error (e.g., memory insufficient) BROADCAST - Packet is dropped during traversing the interface (e.g., Edge uplink, Edge centralized service port) which disallow ethernet broadcast DHCP - DHCP packet is malformed DLB - The packet is disallowed by distributed load balancing FW_RULE - The packet matches a drop or reject rule of DFW or Edge firewall GENEVE - GENEVE packet is malformed GRE - GRE packet is malformed or traverses a non-operative interface IFACE - Packet traverses a non-operative interface IP - Packet is dropped because of IP related causes (e.g., ICMPv4/ICMPv6 packet is malformed, or DF flag is set but fragment must be performed for the packet) or corresponding interface is not found or inoperative IP_REASS - Packet is dropped during IP reassembly IPSEC - IPsec protocol related packet is dropped IPSEC_VTI - IPsec required SA is not found or traversing inoperative interface cause packet dropped L2VPN - VLAN id of GRE packet is invalid L4PORT - Layer 4 packet (e.g., BFD, DHCP) is dropped LB - Packet is dropped by load balancing rule LROUTER - Packet is dropped by logical router LSERVICE - Packet is malformed or traverses inoperative logical service interface LSWITCH - Packet is dropped by logical switch MANAGEMENT - Packet is dropped by Edge datapath MANAGEMENT service port MD_PROXY - Packet is dropped by metadata proxy NAT - Packet is dropped by NAT rule RTEP_TUNNEL - Unused drop reason ND_NS_FAIL - Neighbor Discovery packet fails NEIGH - ARP or Neighbor Discovery packet fails NO_EIP_FOUND - Destination IP is not an elastic IP NO_EIP_ASSOCIATION - Elastic IP is not associated with active edge VDR ENI NO_ENI_FOR_IP - There is no ENI found for the destination IP NO_ENI_FOR_LIF - Cannot find an ENI associated with uplink LIF NO_ROUTE - Cannot find route for destination IP NO_ROUTE_TABLE_FOUND - Cannot find associated route table NO_UNDERLAY_ROUTE_FOUND - Cannot find AWS route to destination NOT_VDR_DOWNLINK - Packet is not forwarded to VMC unmanaged VDR downlink NO_VDR_FOUND - VMC unmanaged VDR associated with Edge uplink is not found NO_VDR_ON_HOST - Cannot find VMC unmanaged VDR list on this host NOT_VDR_UPLINK - Packet is not forwarded to VDR uplink SERVICE_INSERT - Packet from guest VM to service VM or from service VM to guest VM is dropped by firewall rule SPOOFGUARD - Packet is blocked by SpoofGuard policy TTL_ZERO - The IPv4 time to live field of packet is zero. TUNNEL - Overlay tunnel management packet (VNI value of GENEVE header is 0, e.g., BFD) is dropped VLAN - VLAN id of packet is disallowed by the given port VXLAN - VXLAN packet is malformed or cannot find tunnel port for it VXSTT - Unused drop reason VMC_NO_RESPONSE - Failed to query VMC observations as no response from VMC app WRONG_UPLINK - Packet is not routed to the expected Edge uplink by VMC unmanaged VDR FW_STATE - Packet is dropped by stateful firewall NO_MAC - Drop by vswitch as no destination MAC hit MAC Table. FILTERED_UPLINK - Filtering applied at the corresponding UPLINK having no aggregation. IP_OUT_OF_SCOPE - An external IP is required if a packet from a non-public VPC subnet is trying to enter the external underlay network. DHCP_FORGED_MAC - The source MAC address of the DHCP packet sent to the DHCP server does not match the corresponding VIF MAC address of the source port. DHCP_IP_UNAVAILABLE - There is no DHCP client IP address available on the DHCP server. DHCP_IP_NOT_ALLOWED - The requested DHCP client IP address of the packet cannot be allocated from DHCP server. DHCP_INVALID_SERVER_IP_MAC - The DHCP packet is not destined to the DHCP server. NO_GATEWAY_CIDR_FOUND - There is no distributed connection for the source network of the packet to forward the packet to the physical gateway. CONNECTIVITY_POLICY - The packet is dropped due to violating communication rule of connectivity policy. HOP_LIMIT_ZERO - The IPv6 hop limit field of packet is zero. WRONG_SUBNET_GW_BLOCK - The packet is dropped by the gateway to enforce its confinement to the origin network of the VLAN extended subnet. The VLAN extended subnet is the terminology of both VPC overlay subnet and the extended VLAN network. ROUTE_DISTINGUISHER_MAC_RESOLUTION_FAILED - The MAC address of the route distinguisher fails to resolve. MAC_RPF_CHECK_FAILED - The packet is droped due to MAC-address-based reverse path forwarding check. This is to avoid the packet forwarding loops. ENCAP_PKT_EXCEED_VDS_MTU - The frame size of the encapsulated traceflow packet is larger than the VDS MTU. PKT_EXCEED_GW_MTU - The frame size of the traceflow packet is larger than the gateway interface MTU. ENCAP_PKT_EXCEED_RTEP_MTU - The frame size of the traceflow packet is larger than the remote tunnel endpoint MTU.
 	Reason *string
 	// The ID of the connectivity policy that applies to the source of the packet. format: int64
 	SrcConnectivityPolicyInternalId *int64
@@ -89932,6 +91016,8 @@ type PolicyVpcNatRule struct {
 	Action *string
 	// This supports single IPv4 address or comma separated list of single IPv4 addresses or IPv4 CIDR. This does not support IP range or IP sets. For DNAT and NO_DNAT rules, this is a mandatory field, and represents the destination network for the incoming packets. For SNAT and NO_SNAT rules, optionally it can contain destination network of outgoing packets. For REFLEXIVE this should be empty. In case of DNAT NATRule, destination network address should be single IPv4 address or IPv4 CIDR allocated from External Block associated with VPC. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
 	DestinationNetwork *string
+	// Policy path to a VpcIpAddressAllocation for DNAT rules. The system resolves the allocated IP and uses it as the destination_network. This field is mutually exclusive with destination_network. Only valid for DNAT action.
+	DestinationNetworkAllocationPath *string
 	// The flag, which suggests whether the NAT rule is enabled or disabled. The default is True.
 	Enabled *bool
 	// Possible values are:
@@ -89951,6 +91037,8 @@ type PolicyVpcNatRule struct {
 	SourceNetwork *string
 	// This supports single IPv4 address and does not support IP range or IP sets. If user specifies CIDR for DNAT rule, this value is actually used as an IP pool that includes both the subnet and broadcast addresses as valid for NAT translations. For SNAT, DNAT and REFLEXIVE rules, this ia a mandatory field, which represents the translated network address. For NO_SNAT and NO_DNAT this should be empty. In case of SNAT and REFLEXIVE NATRule, translated network address should be single IPv4 address or IPv4 CIDR allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
 	TranslatedNetwork *string
+	// Policy path to a VpcIpAddressAllocation. For SNAT and REFLEXIVE rules, the system resolves the allocated IP and uses it as the translated_network. This field is mutually exclusive with translated_network. Only valid for SNAT and REFLEXIVE actions.
+	TranslatedNetworkAllocationPath *string
 }
 
 const PolicyVpcNatRule_ACTION_SNAT = "SNAT"
@@ -90339,7 +91427,7 @@ type PortAttachment struct {
 	//
 	// * PortAttachment#PortAttachment_CONTEXT_TYPE_PARENT
 	//
-	//  Set to PARENT when type field is CHILD. Read only field.
+	//  Identifies the relationship context of this port attachment relative to its parent. PARENT indicates that this port is the parent of a child port (i.e., the port with type=CHILD is attached to this port). This field is system-assigned and read-only; it is automatically set to PARENT when another port references this port as its parent.
 	ContextType *string
 	// List of Evpn tenant VLAN IDs the Parent logical-port serves in Evpn Route-Server mode. Only effective when attachment type is PARENT and the logical-port is attached to vRouter VM.
 	EvpnVlans []string
@@ -91720,6 +92808,8 @@ type Project struct {
 	ExternalIpv4Blocks []string
 	// This is optional attribute, if provided will be used to suffix the project's default objects ID to make the policy path with this ID suffix.
 	IdSuffix *string
+	// This represents the path of the block containing the IPv6 addresses. IP block can be consumed by all the VPCs under this project. Only IP address blocks with EXTERNAL visibility and ip_address_type IPV6 are supported.
+	Ipv6Blocks []string
 	// Limits are used to add constraints within a project. This field lists the limits that are applied to a particular project by the enterprise admin.
 	Limits                      []string
 	LogLabeledExternalResources *DedicatedResources
@@ -93232,11 +94322,11 @@ type RealizedEnforcementPoint struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -93376,11 +94466,11 @@ type RealizedFirewall struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -93487,11 +94577,11 @@ type RealizedFirewallRule struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -93636,11 +94726,11 @@ type RealizedFirewallSection struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -93777,11 +94867,11 @@ type RealizedFirewalls struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -93888,11 +94978,11 @@ type RealizedGroup struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -94000,11 +95090,11 @@ type RealizedGroups struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -94135,11 +95225,11 @@ type RealizedLogicalPort struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -94254,11 +95344,11 @@ type RealizedLogicalSwitch struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -94369,11 +95459,11 @@ type RealizedNSGroup struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -94475,11 +95565,11 @@ type RealizedNSGroupMemberEvaluation struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -94600,11 +95690,11 @@ type RealizedNSService struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -94713,11 +95803,11 @@ type RealizedSecurityGroup struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -94852,11 +95942,11 @@ type RealizedSecurityGroupMemberEvaluation struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -94966,11 +96056,11 @@ type RealizedService struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -95077,11 +96167,11 @@ type RealizedServices struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -95185,11 +96275,11 @@ type RealizedVirtualMachine struct {
 	Alarms []PolicyAlarmResource
 	// Desire state paths of this object
 	IntentReference []string
-	// Possible values could be UP, DOWN, UNKNOWN, FAILURE This list is not exhaustive.
+	// Runtime operational status of this realized resource as observed on the enforcement point. Common values include UP (resource is operational), DOWN (resource is not operational), FAILURE (an error occurred), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	OperationalStatus *string
 	// It defines the root cause for operational status error.
 	OperationalStatusError *string
-	// Possible values could be UP, DOWN, UNKNOWN, SUCCESS This list is not exhaustive.
+	// Publish (intent-to-datapath push) status of this realized resource. Common values include UP (successfully published), DOWN (publish failed), SUCCESS (published without errors), and UNKNOWN (status cannot be determined). Additional implementation-specific values may appear.
 	PublishStatus *string
 	// It defines the root cause for publish status error.
 	PublishStatusError *string
@@ -95403,7 +96493,7 @@ type RedirectionPolicy struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// - Distributed Firewall - Policy framework provides five pre-defined categories for classifying a security policy. They are \"Ethernet\",\"Emergency\", \"Infrastructure\" \"Environment\" and \"Application\". There is a pre-determined order in which the policy framework manages the priority of these security policies. Ethernet category is for supporting layer 2 firewall rules. The other four categories are applicable for layer 3 rules. Amongst them, the Emergency category has the highest priority followed by Infrastructure, Environment and then Application rules. Administrator can choose to categorize a security policy into the above categories or can choose to leave it empty. If empty it will have the least precedence w.r.t the above four categories. - Edge Firewall - Policy Framework for Edge Firewall provides six pre-defined categories \"Emergency\", \"SystemRules\", \"SharedPreRules\", \"LocalGatewayRules\", \"AutoServiceRules\" and \"Default\", in order of priority of rules. All categories are allowed for Gatetway Policies that belong to 'default' Domain. However, for user created domains, category is restricted to \"SharedPreRules\" or \"LocalGatewayRules\" only. Also, the users can add/modify/delete rules from only the \"SharedPreRules\" and \"LocalGatewayRules\" categories. If user doesn't specify the category then defaulted to \"Rules\". System generated category is used by NSX created rules, for example BFD rules. Autoplumbed category used by NSX verticals to autoplumb data path rules. Finally, \"Default\" category is the placeholder default rules with lowest in the order of priority.
+	// Classifies this security policy into an evaluation-priority category. Categories are evaluated in a fixed priority order. Distributed Firewall (DFW) categories, in priority order (highest first): Ethernet - Layer 2 firewall rules only. Emergency - Highest priority L3 rules (common to both DFW and Edge FW). Infrastructure - Second priority L3 rules. Environment - Third priority L3 rules. Application - Lowest explicit L3 rules. ThreatRules - IDPS-only. Threat-based rules applied after Application. EmergencyThreatRules - IDPS-only. Highest priority threat-based rules. Edge (Gateway) Firewall categories, in priority order (highest first): Emergency, SystemRules, SharedPreRules, SharedExternalRules, LocalGatewayRules, AutoServiceRules, Default. For user-created domains, only SharedPreRules and LocalGatewayRules are allowed. If not specified, defaults to LocalGatewayRules. Bridge Firewall category: LocalBridgeRules - Rules for bridge firewall policies.
 	Category *string
 	// Comments for security policy lock/unlock.
 	Comments *string
@@ -95425,9 +96515,9 @@ type RedirectionPolicy struct {
 	Scope []string
 	// This field is used to resolve conflicts between security policies across domains. In order to change the sequence number of a policy one can fire a POST request on the policy entity with a query parameter action=revise The sequence number field will reflect the value of the computed sequence number upon execution of the above mentioned POST request. For scenarios where the administrator is using a template to update several security policies, the only way to set the sequence number is to explicitly specify the sequence number for each security policy. If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple policies with the same sequence number then their order is not deterministic. If a specific order of policies is desired, then one has to specify unique sequence numbers or use the POST request on the policy entity with a query parameter action=revise to let the framework assign a sequence number. The value of sequence number must be between 0 and 999,999. format: int32
 	SequenceNumber *int64
-	// Stateful or Stateless nature of security policy is enforced on all rules in this security policy. When it is stateful, the state of the network connects are tracked and a stateful packet inspection is performed. Layer3 security policies can be stateful or stateless. By default, they are stateful. Layer2 security policies can only be stateless.
+	// Whether this security policy enforces stateful or stateless packet inspection. When stateful (true), network connection state is tracked and stateful packet inspection is performed. Layer-3 security policies default to stateful. Layer-2 (Ethernet category) security policies must be stateless. Note: when stateful is true, the tcp_strict field also defaults to true unless explicitly set to false. See the tcp_strict field for details.
 	Stateful *bool
-	// Ensures that a 3 way TCP handshake is done before the data packets are sent. tcp_strict=true is supported only for stateful security policies. If the tcp_strict flag is not specified and the security policy is stateful, then tcp_strict will be set to true.
+	// Enforces a 3-way TCP handshake before allowing data packets. Only applicable when the security policy is stateful. If not specified, the server automatically sets tcp_strict to true for stateful policies and false for stateless policies. See also: stateful field.
 	TcpStrict *bool
 	// This is the read only flag which will state the direction of this | redirection policy. True denotes that it is NORTH-SOUTH and false | value means it is an EAST-WEST redirection policy.
 	NorthSouth *bool
@@ -95565,7 +96655,7 @@ type RedirectionRule struct {
 	IsDefault *bool
 	// Flag to enable packet logging. Default is deactivated.
 	Logged *bool
-	// User level field which will be printed in CLI and packet logs. Even though there is no limitation on length of the notes, internally notes will get truncated after 39 characters.
+	// User level field which will be printed in CLI and packet logs. The notes field accepts up to 2048 characters. Internally, notes are truncated after 39 characters in CLI and packet logs.
 	Notes *string
 	// Paths to Layer 7 service profile objects or L7 access profile objects for advanced traffic inspection and filtering. These profiles enable matching on Layer 7 attributes and sub-attributes of network services such as: - Application IDs (L4 AppId) - Encryption algorithms and TLS versions - Domain names and URLs - HTTP methods - CIFS/SMB versions You can use either Layer 7 service profiles (PolicyContextProfile) or an L7 access profile (L7AccessProfile) in a rule, but not both. When using an L7 access profile, only one profile path is allowed.
 	Profiles []string
@@ -95573,7 +96663,7 @@ type RedirectionRule struct {
 	RuleId *int64
 	// The list of group paths to which the rule applies. This determines which workloads (VMs, containers, etc.) the rule is enforced on. For Gateway Firewall rules, this can also include Tier-0, Tier-1, or interface paths to specify where the rule is enforced. Note that a given rule can be applied to multiple groups or network entities.
 	Scope []string
-	// This field is used to resolve conflicts between multiple Rules under Security or Gateway Policy for a Domain If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple rules with the same sequence number then their order is not deterministic. If a specific order of rules is desired, then one has to specify unique sequence numbers or use the POST request on the rule entity with a query parameter action=revise to let the framework assign a sequence number format: int32
+	// This field is used to resolve conflicts between multiple Rules under a Security or Gateway Policy for a Domain. Rules are evaluated in ascending sequence number order. If no sequence number is specified in the payload, the system assigns a default value of 0. If there are multiple rules with the same sequence number then their order is not deterministic. If a specific order of rules is desired, specify unique sequence numbers or use the POST request on the rule entity with a query parameter action=revise to let the framework assign a sequence number. format: int32
 	SequenceNumber *int64
 	// In order to specify raw services this can be used, along with services which contains path to services. This can be empty or null.
 	ServiceEntries []*vapiData_.StructValue
@@ -96909,7 +97999,7 @@ func (s *RouteAggregationEntry) GetDataValue__() (vapiData_.DataValue, []error) 
 
 // A Route Based VPN is more flexible, more powerful and recommended over policy based VPN. IP Tunnel port is created and all traffic routed via tunnel port is protected. Routes can be configured statically or can be learned through BGP. A route based VPN is must for establishing redundant VPN session to remote site.
 type RouteBasedIPSecVpnSession struct {
-	// If true the default firewall rule Action is set to DROP, otherwise set to ALLOW. This field is deprecated and recommended to change Rule action field. Note that this field is not synchornied with default rule field.
+	// If true the default firewall rule Action is set to DROP, otherwise set to ALLOW. This field is deprecated and recommended to change Rule action field. Note that this field is not synchronized with default rule field.
 	ForceWhitelisting *bool
 	// IP Tunnel interfaces. This property is mandatory on LM. It is required on GM only in case of site_overrides property not provided.
 	TunnelInterfaces []IPSecVpnTunnelInterface
@@ -98361,7 +99451,7 @@ type Rule struct {
 	IsDefault *bool
 	// Flag to enable packet logging. Default is deactivated.
 	Logged *bool
-	// User level field which will be printed in CLI and packet logs. Even though there is no limitation on length of the notes, internally notes will get truncated after 39 characters.
+	// User level field which will be printed in CLI and packet logs. The notes field accepts up to 2048 characters. Internally, notes are truncated after 39 characters in CLI and packet logs.
 	Notes *string
 	// Paths to Layer 7 service profile objects or L7 access profile objects for advanced traffic inspection and filtering. These profiles enable matching on Layer 7 attributes and sub-attributes of network services such as: - Application IDs (L4 AppId) - Encryption algorithms and TLS versions - Domain names and URLs - HTTP methods - CIFS/SMB versions You can use either Layer 7 service profiles (PolicyContextProfile) or an L7 access profile (L7AccessProfile) in a rule, but not both. When using an L7 access profile, only one profile path is allowed.
 	Profiles []string
@@ -98369,7 +99459,7 @@ type Rule struct {
 	RuleId *int64
 	// The list of group paths to which the rule applies. This determines which workloads (VMs, containers, etc.) the rule is enforced on. For Gateway Firewall rules, this can also include Tier-0, Tier-1, or interface paths to specify where the rule is enforced. Note that a given rule can be applied to multiple groups or network entities.
 	Scope []string
-	// This field is used to resolve conflicts between multiple Rules under Security or Gateway Policy for a Domain If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple rules with the same sequence number then their order is not deterministic. If a specific order of rules is desired, then one has to specify unique sequence numbers or use the POST request on the rule entity with a query parameter action=revise to let the framework assign a sequence number format: int32
+	// This field is used to resolve conflicts between multiple Rules under a Security or Gateway Policy for a Domain. Rules are evaluated in ascending sequence number order. If no sequence number is specified in the payload, the system assigns a default value of 0. If there are multiple rules with the same sequence number then their order is not deterministic. If a specific order of rules is desired, specify unique sequence numbers or use the POST request on the rule entity with a query parameter action=revise to let the framework assign a sequence number. format: int32
 	SequenceNumber *int64
 	// In order to specify raw services this can be used, along with services which contains path to services. This can be empty or null.
 	ServiceEntries []*vapiData_.StructValue
@@ -98388,7 +99478,7 @@ type Rule struct {
 	// * Rule#Rule_ACTION_REJECT
 	// * Rule#Rule_ACTION_JUMP_TO_APPLICATION
 	//
-	//  The action to be applied to all the services The JUMP_TO_APPLICATION action is only supported for rules created in the Environment category. Once a match is hit then the rule processing will jump to the rules present in the Application category, skipping all further rules in the Environment category. If no rules match in the Application category then the default application rule will be hit. This is applicable only for DFW.
+	//  The action to be applied to all the services. REJECT is not allowed for Layer-2 (Ethernet category) rules — use DROP instead. JUMP_TO_APPLICATION is only valid for DFW rules (not Gateway Firewall) created in the Environment category. Once a match is hit then the rule processing will jump to the rules present in the Application category, skipping all further rules in the Environment category. If no rules match in the Application category then the default application rule will be hit.
 	Action *string
 }
 
@@ -98462,7 +99552,7 @@ type RuleStatistics struct {
 	ByteCount *int64
 	// Aggregated number of hits received by the rule. format: int64
 	HitCount *int64
-	// Realized id of the rule on NSX MP. Policy Manager can create more than one rule per policy rule, in which case this identifier helps to distinguish between the multple rules created.
+	// Realized id of the rule on NSX MP. Policy Manager can create more than one rule per policy rule, in which case this identifier helps to distinguish between the multiple rules created.
 	InternalRuleId *string
 	// Aggregated number of L7 Profile Accepted counters received by the rule. format: int64
 	L7AcceptCount *int64
@@ -98505,11 +99595,11 @@ func (s *RuleStatistics) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Rule statistics for a specfic enforcement point.
+// Rule statistics for a specific enforcement point.
 type RuleStatisticsForEnforcementPoint struct {
 	// Rule statistics for a single container cluster
 	ContainerClusterPath *string
-	// Rule statistics for a single enforcement point
+	// Path of the enforcement point for which statistics are reported. On Global Manager, specifying an enforcement_point_path is mandatory. On Local Manager, if omitted, statistics are aggregated across all enforcement points.
 	EnforcementPoint *string
 	Statistics       *RuleStatistics
 }
@@ -99914,7 +101004,7 @@ type SecurityPolicy struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// - Distributed Firewall - Policy framework provides five pre-defined categories for classifying a security policy. They are \"Ethernet\",\"Emergency\", \"Infrastructure\" \"Environment\" and \"Application\". There is a pre-determined order in which the policy framework manages the priority of these security policies. Ethernet category is for supporting layer 2 firewall rules. The other four categories are applicable for layer 3 rules. Amongst them, the Emergency category has the highest priority followed by Infrastructure, Environment and then Application rules. Administrator can choose to categorize a security policy into the above categories or can choose to leave it empty. If empty it will have the least precedence w.r.t the above four categories. - Edge Firewall - Policy Framework for Edge Firewall provides six pre-defined categories \"Emergency\", \"SystemRules\", \"SharedPreRules\", \"LocalGatewayRules\", \"AutoServiceRules\" and \"Default\", in order of priority of rules. All categories are allowed for Gatetway Policies that belong to 'default' Domain. However, for user created domains, category is restricted to \"SharedPreRules\" or \"LocalGatewayRules\" only. Also, the users can add/modify/delete rules from only the \"SharedPreRules\" and \"LocalGatewayRules\" categories. If user doesn't specify the category then defaulted to \"Rules\". System generated category is used by NSX created rules, for example BFD rules. Autoplumbed category used by NSX verticals to autoplumb data path rules. Finally, \"Default\" category is the placeholder default rules with lowest in the order of priority.
+	// Classifies this security policy into an evaluation-priority category. Categories are evaluated in a fixed priority order. Distributed Firewall (DFW) categories, in priority order (highest first): Ethernet - Layer 2 firewall rules only. Emergency - Highest priority L3 rules (common to both DFW and Edge FW). Infrastructure - Second priority L3 rules. Environment - Third priority L3 rules. Application - Lowest explicit L3 rules. ThreatRules - IDPS-only. Threat-based rules applied after Application. EmergencyThreatRules - IDPS-only. Highest priority threat-based rules. Edge (Gateway) Firewall categories, in priority order (highest first): Emergency, SystemRules, SharedPreRules, SharedExternalRules, LocalGatewayRules, AutoServiceRules, Default. For user-created domains, only SharedPreRules and LocalGatewayRules are allowed. If not specified, defaults to LocalGatewayRules. Bridge Firewall category: LocalBridgeRules - Rules for bridge firewall policies.
 	Category *string
 	// Comments for security policy lock/unlock.
 	Comments *string
@@ -99936,9 +101026,9 @@ type SecurityPolicy struct {
 	Scope []string
 	// This field is used to resolve conflicts between security policies across domains. In order to change the sequence number of a policy one can fire a POST request on the policy entity with a query parameter action=revise The sequence number field will reflect the value of the computed sequence number upon execution of the above mentioned POST request. For scenarios where the administrator is using a template to update several security policies, the only way to set the sequence number is to explicitly specify the sequence number for each security policy. If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple policies with the same sequence number then their order is not deterministic. If a specific order of policies is desired, then one has to specify unique sequence numbers or use the POST request on the policy entity with a query parameter action=revise to let the framework assign a sequence number. The value of sequence number must be between 0 and 999,999. format: int32
 	SequenceNumber *int64
-	// Stateful or Stateless nature of security policy is enforced on all rules in this security policy. When it is stateful, the state of the network connects are tracked and a stateful packet inspection is performed. Layer3 security policies can be stateful or stateless. By default, they are stateful. Layer2 security policies can only be stateless.
+	// Whether this security policy enforces stateful or stateless packet inspection. When stateful (true), network connection state is tracked and stateful packet inspection is performed. Layer-3 security policies default to stateful. Layer-2 (Ethernet category) security policies must be stateless. Note: when stateful is true, the tcp_strict field also defaults to true unless explicitly set to false. See the tcp_strict field for details.
 	Stateful *bool
-	// Ensures that a 3 way TCP handshake is done before the data packets are sent. tcp_strict=true is supported only for stateful security policies. If the tcp_strict flag is not specified and the security policy is stateful, then tcp_strict will be set to true.
+	// Enforces a 3-way TCP handshake before allowing data packets. Only applicable when the security policy is stateful. If not specified, the server automatically sets tcp_strict to true for stateful policies and false for stateless policies. See also: stateful field.
 	TcpStrict *bool
 	// This field indicates the application connectivity policy for the security policy.
 	ApplicationConnectivityStrategy []ApplicationConnectivityStrategy
@@ -99962,9 +101052,9 @@ type SecurityPolicy struct {
 	//
 	//  This field indicates the default connectivity policy for the security policy. Based on the connectivity strategy, a default rule for this security policy will be created. An appropriate action will be set on the rule based on the value of the connectivity strategy. If NONE is selected or no connectivity strategy is specified, then no default rule for the security policy gets created. The default rule that gets created will be a any-any rule and applied to entities specified in the scope of the security policy. Specifying the connectivity_strategy without specifying the scope is not allowed. The scope has to be a Group and one cannot specify IPAddress directly in the group that is used as scope. This default rule is only applicable for the Layer3 security policies. This property is deprecated. Use the type connectivity_preference instead. WHITELIST - Adds a default drop rule. Administrator can then use \"allow\" rules (aka whitelist) to allow traffic between groups BLACKLIST - Adds a default allow rule. Admin can then use \"drop\" rules (aka blacklist) to block traffic between groups WHITELIST_ENABLE_LOGGING - Whitelising with logging enabled BLACKLIST_ENABLE_LOGGING - Blacklisting with logging enabled NONE - No default rule is created.
 	ConnectivityStrategy *string
-	// Based on the value of the connectivity strategy, a default rule is created for the security policy. The rule id is internally assigned by the system for this default rule. format: int64
+	// Based on the value of the connectivity_preference, a default rule is created for the security policy. The rule id is internally assigned by the system for this default rule. format: int64
 	DefaultRuleId *int64
-	// This property is deprecated. Flag to enable logging for all the rules in the security policy. If the value is true then logging will be enabled for all the rules in the security policy. If the value is false, then the rule level logging value will be honored.
+	// Deprecated. Flag to enable logging for all rules in this security policy. If true, logging is enabled for all rules in the policy. If false, the individual rule-level logging flag is honored. Use per-rule logging instead.
 	LoggingEnabled *bool
 	// Rules that are a part of this SecurityPolicy
 	Rules []Rule
@@ -100177,7 +101267,7 @@ func (s *SecurityPolicyStatistics) GetDataValue__() (vapiData_.DataValue, []erro
 type SecurityPolicyStatisticsForEnforcementPoint struct {
 	// Security Policy statistics for a single container cluster
 	ContainerClusterPath *string
-	// Enforcement point to fetch the statistics from.
+	// Path of the enforcement point for which statistics are reported. On Global Manager, specifying an enforcement_point_path is mandatory. On Local Manager, if omitted, statistics are aggregated across all enforcement points.
 	EnforcementPoint *string
 	Statistics       *SecurityPolicyStatistics
 }
@@ -100600,7 +101690,7 @@ type Segment struct {
 	MacPoolId *string
 	// Policy path to metadata proxy configuration. Multiple distinct MD proxies can be configured.
 	MetadataProxyPaths []string
-	// Used for overlay connectivity of segments. The overlay_id should be allocated from the pool as definied by enforcement-point. If not provided, it is auto-allocated from the default pool on the enforcement-point. format: int32
+	// Optional. Overlay network identifier (VNI) for this segment. Must be allocated from the pool defined by the enforcement point. If not specified, a VNI is automatically allocated from the default pool on the enforcement point. Valid range: 0-2147483647. Note: once set, changing the overlay_id on an existing segment is not supported. format: int32
 	OverlayId *int64
 	// Possible values are:
 	//
@@ -100622,7 +101712,7 @@ type Segment struct {
 	//
 	//  Segment type based on configuration.
 	Type_ *string
-	// VLAN ids for a VLAN backed Segment. Can be a VLAN id or a range of VLAN ids specified with '-' in between.
+	// List of VLAN IDs or ranges for a VLAN-backed segment. Each element is either a single VLAN ID (0-4094) or a contiguous range in the format 'start-end' (e.g. '100-200'). Mixed arrays are supported (e.g. ['100', '200-300', '400']). Required when creating a VLAN-backed segment; not applicable to overlay segments.
 	VlanIds []string
 }
 
@@ -107310,7 +108400,7 @@ func (s *Site) GetDataValue__() (vapiData_.DataValue, []error) {
 
 // Index for cross site allocation for edge cluster and its members referred by gateway.
 type SiteAllocationIndexForEdge struct {
-	// Unqiue edge cluster node index across sites based on stretch of the Gateway. For example, if a Gateway is streched to sites S1 with one edge cluster of 3 nodes and site S2 with one edge cluster of 2 nodes, the in the Global Manager will allocate the index for 5 edge nodes and 2 cluster in the rage 0 to 7. format: int64
+	// Unique edge cluster node index across sites based on stretch of the Gateway. For example, if a Gateway is stretched to sites S1 with one edge cluster of 3 nodes and site S2 with one edge cluster of 2 nodes, the in the Global Manager will allocate the index for 5 edge nodes and 2 cluster in the rage 0 to 7. format: int64
 	Index *int64
 	// Edge cluster or edge node path
 	TargetResourcePath *string
@@ -108655,7 +109745,7 @@ type StandardHostSwitch struct {
 	// * StandardHostSwitch#StandardHostSwitch_HOST_SWITCH_MODE_ENS_INTERRUPT
 	// * StandardHostSwitch#StandardHostSwitch_HOST_SWITCH_MODE_LEGACY
 	//
-	//  STANDARD - This mode applies to all transport nodes. This is realized as pktHandle mode in the dataplane. ENS - This is the Enhanced Data Path switch mode for ESX host tranport node. This mode provides accelerated networking performances but also introduces additional prerequisites. In order to benefit from this mode, workloads will be need to be compiled with DPDK and will use VMXNET3 for their vNIC. This mode is only available on ESX hypervisor. Not all NSX features are available in this mode, please consult the documentation. ENS_INTERRUPT - This is an interrupt driven variant of the Enhanced Data Path mode. Please, consult your account representative for applicability. This mode is available only on ESX hypervisor. LEGACY - This mode applies to all transport nodes. This mode was formerly called as STANDARD and is realized as pktHandle. NOTE: If a value is not specified for this property, we use the default_host_switch_mode value from GlobalConfig Policy API as the operational mode for this HostSwitch. IMPORTANT: ENS and ENS_INTERRUPT modes require a higher tier of NSX licenses. ENS and ENS_INTERRUPT with classic Nic - NSX advanced or higher ENS with SmartNic : NSX Enterprise Plus or higher. Please consult NSX documentation for complete details.
+	//  STANDARD - This mode applies to all transport nodes. The realized host switch mode will be chosen automatically (best applicable as per uplink capabilities) by the data-plane in the transport node and may change in future. ENS - This is the Enhanced Data Path switch mode for ESX host tranport node. This mode provides accelerated networking performances but also introduces additional prerequisites. In order to benefit from this mode, workloads will be need to be compiled with DPDK and will use VMXNET3 for their vNIC. This mode is only available on ESX hypervisor. Not all NSX features are available in this mode, please consult the documentation. ENS_INTERRUPT - This is an interrupt driven variant of the Enhanced Data Path mode. Please, consult your account representative for applicability. This mode is available only on ESX hypervisor. LEGACY - This mode applies to all transport nodes. This mode was formerly called as STANDARD and is realized as pktHandle. NOTE: If a value is not specified for this property, we use the default_host_switch_mode value from GlobalConfig Policy API as the operational mode for this HostSwitch. IMPORTANT: ENS and ENS_INTERRUPT modes require a higher tier of NSX licenses. ENS and ENS_INTERRUPT with classic Nic - NSX advanced or higher ENS with SmartNic : NSX Enterprise Plus or higher. Please consult NSX documentation for complete details.
 	HostSwitchMode *string
 	// This field is writable only in case of NVDS type HostSwitch and system generated for VDS type. For NVDS type host switch, If this name is unset or empty then the default host switch name will be used. The name must be unique among all host switches specified in a given transport node; unset name, empty name and the default host switch name are considered the same in terms of uniqueness. For VDS type host switch, Manager fetches VDS name from corresponding Compute Manager and populates this field. If VDS name is given (correct or incorrect) it is ignored and overwritten with correct one.
 	HostSwitchName *string
@@ -109007,10 +110097,12 @@ func (s *StaticIpAddressReservationListResult) GetDataValue__() (vapiData_.DataV
 	return dataVal, nil
 }
 
-// Static IP allocation for VPC Subnet ports with VIF attachement
+// Static IP allocation for VPC Subnet ports with VIF attachment
 type StaticIpAllocation struct {
 	// Enable ip and mac addresses allocation for VPC Subnet ports from static ip pool. To enable this, dhcp pool shall be empty and static ip pool shall own all available ip addresses. To optimize static ip pool management, it is recommended to allocate ip addresses starting from the highest available ip in the static pool. This approach simplifies adjustments when the pool size needs to be reduced, as it avoids the need to reconfigure existing allocations.
 	Enabled *bool
+	// IP address ranges for static IP allocation. Each entry is a string that is either a single IP address or a dash-separated range (\"startIp - endIp\"). Supports both IPv4 and IPv6 addresses in a single array. Supported formats: [\"10.10.10.51-10.10.10.100\", \"10.10.10.200\", \"2001:db8::100-2001:db8::1ff\"]. When specified alongside DHCP (mode=DHCP_SERVER), enables mixed allocation where the specified ranges are reserved for static IP allocation and the remaining addresses in the subnet CIDR are used for DHCP. Each range must fall within the subnet CIDR, must not overlap with other static ranges, reserved IP ranges, or system-reserved addresses (gateway, network, broadcast, DHCP server IP).
+	PoolRanges []string
 }
 
 func (s *StaticIpAllocation) GetType__() vapiBindings_.BindingType {
@@ -109600,6 +110692,31 @@ func (s *StaticIpv6PoolSpec) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Status of static concurrency limits (active when mode is 'static')
+type StaticLimitsStatus struct {
+	// Maximum concurrent API requests per client per node. Value of 0 means disabled. format: int64
+	ClientApiConcurrencyLimit *int64
+	// Maximum API requests per second per client. Value of 0 means disabled. format: int64
+	ClientApiRateLimit *int64
+	// Maximum concurrent API requests serviced per node. Value of 0 means disabled. format: int64
+	GlobalApiConcurrencyLimit *int64
+}
+
+func (s *StaticLimitsStatus) GetType__() vapiBindings_.BindingType {
+	return StaticLimitsStatusBindingType()
+}
+
+func (s *StaticLimitsStatus) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for StaticLimitsStatus._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // MIME content with text message and image path in it.
 type StaticMimeContent struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -109653,6 +110770,10 @@ type StaticMimeContent struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
+	// The rendered HTML template for this block page, returned as a base64-encoded string. Decode the value to obtain the raw HTML. This field is system-generated and read-only. Example: original template <p>{0}</p> encodes to PHA+ezB9PC9wPg==
+	HtmlTemplate *string
+	// The rendered HTML template with the configured text_message already substituted, returned as a base64-encoded string. Decode the value to obtain the raw HTML. This field is system-generated and read-only. Example: <p>Not allowed</p> encodes to PHA+Tm90IGFsbG93ZWQ8L3A+
+	HtmlTemplateWithMessage *string
 	// text message.
 	TextMessage *string
 }
@@ -109970,8 +111091,10 @@ type StaticRoutes struct {
 	Overridden *bool
 	// When false or by default northbound routes are configured only on the primary location and not on secondary location. When true, the static route will also be configured on a secondary location. Secondary location prefers route learned from the primary location and enabling this flag secondary location can override this. This flag is not applicable if all sites are primary. Not applicable for static routes created under VPC.
 	EnabledOnSecondary *bool
-	// Specify network address in CIDR format. In case of VPC, user can optionally use allocated IP from one of the external blocks associated with VPC. Only /32 CIDR is allowed in case IP overlaps with external blocks. format: address-or-block-or-range
+	// Specify network address in CIDR format. In case of VPC, user can optionally use allocated IP from one of the external blocks associated with VPC. Only /32 CIDR is allowed in case IP overlaps with external blocks. This property is required when network_ip_allocation_path is not specified. Exactly one of network or network_ip_allocation_path must be provided for VPC. For Tier-0, Tier-1 and Transit Gateway static routes only network property is supported. format: address-or-block-or-range
 	Network *string
+	// Policy path to a VpcIpAddressAllocation (VPC context). When specified, NSX resolves the allocated IP and uses it as the network with /32 CIDR. This field is mutually exclusive with network. Exactly one of network or network_ip_allocation_path must be specified. Only supported for VPC and static routes. Not supported for Tier-0, Tier-1 and Transit Gateway static routes.
+	NetworkIpAllocationPath *string
 	// Specify next hop routes for network.
 	NextHops []RouterNexthop
 }
@@ -110389,7 +111512,7 @@ type SubClusterInfo struct {
 	//
 	// * SubClusterInfo#SubClusterInfo_SUB_CLUSTER_TYPE_MANUAL
 	//
-	//  Sub-cluster-type can be either MANUAL or FAULT_DOMAIN. This is a mandatory field. Currently, all sub-clusters will be of type MANUAL. In the future, we will provide support for creating a sub-cluster for fault domains in VC. This field indicates the same.
+	//  The type of this sub-cluster. Currently only MANUAL sub-clusters are supported, where nodes are explicitly assigned. This field is mandatory.
 	SubClusterType *string
 }
 
@@ -110522,11 +111645,11 @@ type SubnetAdvancedConfig struct {
 	//
 	//  Connectivity status of the subnet from other subnets to the VPC. If this subnet is used for VLAN extension, connectivity state must follow the configuration of subnet exclusive config at distributed VLAN connection.
 	ConnectivityState *string
-	// An array of dhcp server addresses per address family. Addresses should be in ip/prefix_length format. format: ip-cidr-block
+	// An array of dhcp server addresses per address family. Addresses should be in ip/prefix_length format. Supports up to 2 addresses for dual-stack subnets (1 IPv4 + 1 IPv6). format: ip-cidr-block
 	DhcpServerAddresses []string
 	// This property could be used for vendor specific configuration in key value string pairs.
 	ExtraConfigs []SubnetExtraConfig
-	// An array of gateway addresses per address family. Addresses should be in ip/prefix_length format. format: ip-cidr-block
+	// An array of gateway addresses per address family. Addresses should be in ip/prefix_length format. Supports up to 2 addresses for dual-stack subnets (1 IPv4 + 1 IPv6). format: ip-cidr-block
 	GatewayAddresses   []string
 	StaticIpAllocation *StaticIpAllocation
 }
@@ -110586,7 +111709,7 @@ func (s *SubnetAndPortStatus) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Subnet with this binding map indicates the connection between this subnet and another subnet in the same VPC to enable advances in IPAM, Routing, and NAT for Kubernetes workloads with Antrea
+// Subnet with this binding map indicates the connection between this subnet and another subnet to enable advances in IPAM, Routing, and NAT for Kubernetes workloads with Antrea.
 type SubnetConnectionBindingMap struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -110639,11 +111762,21 @@ type SubnetConnectionBindingMap struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
+	// Possible values are:
+	//
+	// * SubnetConnectionBindingMap#SubnetConnectionBindingMap_SUBNET_ASSOCIATION_TRUNK
+	// * SubnetConnectionBindingMap#SubnetConnectionBindingMap_SUBNET_ASSOCIATION_BRANCH
+	//
+	//  Indicates the role of the subnet referenced by subnet_path in this binding. TRUNK means the referenced subnet is the trunk subnet in the connection. BRANCH means the referenced subnet is the branch subnet in the connection. If not specified, defaults to TRUNK for backward compatibility. This property cannot be modified after the binding map is created.
+	SubnetAssociation *string
 	// Policy path of the subnet connected to the host VM.
 	SubnetPath *string
 	// VLAN ID is used to identify traffic between the VPC subnet connected to the containers and VPC subnet where the host VM is connected. format: int64
 	VlanTrafficTag *int64
 }
+
+const SubnetConnectionBindingMap_SUBNET_ASSOCIATION_TRUNK = "TRUNK"
+const SubnetConnectionBindingMap_SUBNET_ASSOCIATION_BRANCH = "BRANCH"
 
 func (s *SubnetConnectionBindingMap) GetType__() vapiBindings_.BindingType {
 	return SubnetConnectionBindingMapBindingType()
@@ -110729,6 +111862,49 @@ func (s *SubnetDhcpConfig) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for SubnetDhcpConfig._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// The DHCPv6 configurations for a subnet, with the base configurations inherited from the VPC Service Profile. Any additional settings will be applied on top of the inherited configurations.
+type SubnetDhcpv6Config struct {
+	Dhcpv6ServerAdditionalConfig *DhcpV6ServerAdditionalConfig
+	// Possible values are:
+	//
+	// * SubnetDhcpv6Config#SubnetDhcpv6Config_DNS_SERVER_PREFERENCE_PROFILE_DNS_SERVERS_PREFERRED_OVER_DNS_FORWARDER
+	// * SubnetDhcpv6Config#SubnetDhcpv6Config_DNS_SERVER_PREFERENCE_DNS_FORWARDER_PREFERRED_OVER_PROFILE_DNS_SERVERS
+	//
+	//  DNS server IP preference for DHCPv6. Select the preference between the DNS server IPs (from the DHCPv6 config in VPC service profile), and VPC DNS forwarder IP.
+	DnsServerPreference *string
+	// Possible values are:
+	//
+	// * SubnetDhcpv6Config#SubnetDhcpv6Config_MODE_SERVER
+	// * SubnetDhcpv6Config#SubnetDhcpv6Config_MODE_RELAY
+	// * SubnetDhcpv6Config#SubnetDhcpv6Config_MODE_DEACTIVATED
+	// * SubnetDhcpv6Config#SubnetDhcpv6Config_MODE_SERVER_STATELESS
+	//
+	//  The operational mode of DHCPv6 within the subnet. Options include DHCPv6 server, relay, deactivated, or stateless server. The default mode will be inherited from VPC Service Profile dhcpv6_config if not specified. DHCP_SERVER_STATELESS mode requires NDRA profile ra_mode to be DHCP_ADDRESS_AND_DNS_THROUGH_DHCP and VpcServiceProfile dhcpv6_config server config to be enabled.
+	Mode *string
+}
+
+const SubnetDhcpv6Config_DNS_SERVER_PREFERENCE_PROFILE_DNS_SERVERS_PREFERRED_OVER_DNS_FORWARDER = "PROFILE_DNS_SERVERS_PREFERRED_OVER_DNS_FORWARDER"
+const SubnetDhcpv6Config_DNS_SERVER_PREFERENCE_DNS_FORWARDER_PREFERRED_OVER_PROFILE_DNS_SERVERS = "DNS_FORWARDER_PREFERRED_OVER_PROFILE_DNS_SERVERS"
+const SubnetDhcpv6Config_MODE_SERVER = "DHCP_SERVER"
+const SubnetDhcpv6Config_MODE_RELAY = "DHCP_RELAY"
+const SubnetDhcpv6Config_MODE_DEACTIVATED = "DHCP_DEACTIVATED"
+const SubnetDhcpv6Config_MODE_SERVER_STATELESS = "DHCP_SERVER_STATELESS"
+
+func (s *SubnetDhcpv6Config) GetType__() vapiBindings_.BindingType {
+	return SubnetDhcpv6ConfigBindingType()
+}
+
+func (s *SubnetDhcpv6Config) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for SubnetDhcpv6Config._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -111921,6 +113097,10 @@ func (s *TestIdentityFirewallStoreLdapServerConnectivityRequest) GetDataValue__(
 
 // Third party IPAM information indicates if the object is managed by a third-party IPAM.
 type ThirdPartyIPAMInfo struct {
+	// Dns View Reference Id under Ip View for third party provider
+	DnsViewRef *string
+	// Ip View Reference Id for Third party ipam provider container
+	IpViewRef *string
 	// Possible values are:
 	//
 	// * ThirdPartyIPAMInfo#ThirdPartyIPAMInfo_IPAM_PROVIDER_INFOBLOX
@@ -112067,7 +113247,7 @@ type Tier0 struct {
 	DefaultRuleLogging *bool
 	// DHCP configuration for Segments connected to Tier-0. DHCP service is configured in relay mode.
 	DhcpConfigPaths []string
-	// Disable or enable gateway fiewall.
+	// Disable or enable gateway firewall.
 	DisableFirewall *bool
 	// This field is enable that each edge node has a distinct route distinguisher per edge node.
 	EnableRdPerEdge *bool
@@ -112098,9 +113278,9 @@ type Tier0 struct {
 	// If you are using EVPN service, then route distinguisher administrator address should be defined if you need auto generation of route distinguisher on your VRF configuration. format: ip
 	RdAdminField     *string
 	StatefulServices *Tier0StatefulServicesConfig
-	// Specify subnets that are used to assign addresses to logical links connecting default T0/VRF and transit gateway. When not specified, subnet 169.254.4.0/22 is assigned by default. format: ip-cidr-block
+	// Specify subnets that are used to assign addresses to logical links connecting default T0/VRF and transit gateway. When not specified, subnet 169.254.4.0/22 is assigned by default. Supports both IPv4 and IPv6 CIDRs (1 IPv4 and 1 IPv6). format: ip-cidr-block
 	TgwTransitSubnets []string
-	// Specify transit subnets that are used to assign addresses to logical links connecting tier-0 and tier-1s. Both IPv4 and IPv6 addresses are supported. When not specified, subnet 100.64.0.0/16 is configured by default. Transit subnets must not overlap reserved internal subnets. When modifying, for stateful active-active Tier-0 number of IPs should be at least attached Tier-1s count \* 16 and for other type of Tier-0 number of IPs should be at least attached Tier-1s count \* 2. Modification not allowed if there are child tier-0 VRFs and there are any Tier-1s connected to those VRFs. The value in VRF tier-0 is always inherited from the parent. format: ip-cidr-block
+	// Specify transit subnets that are used to assign addresses to logical links connecting tier-0 and tier-1s. Both IPv4 and IPv6 addresses are supported. When not specified, subnet 100.64.0.0/16 is configured by default. Transit subnets must not overlap reserved internal subnets. When modifying, for stateful active-active Tier-0 number of IPs should be at least attached Tier-1s count \* 16 and for other type of Tier-0 number of IPs should be at least attached Tier-1s count \* 2. Modification not allowed if there are child tier-0 VRFs and there are any Tier-1s connected to those VRFs. For VRF with shared HA, the value is always inherited from the parent. Transit subnets are allowed to be configured independently for VRF with self HA. format: ip-cidr-block
 	TransitSubnets []string
 	VrfConfig      *Tier0VrfConfig
 	// Specify subnets that are used to assign addresses to logical links connecting default T0 and child VRFs. When not specified, subnet 169.254.2.0/23 is assigned by default. format: ip-cidr-block
@@ -112136,7 +113316,7 @@ type Tier0AdvancedConfig struct {
 	//
 	//  Connectivity configuration to manually connect (ON) or disconnect (OFF) Tier-0/Tier1 segment from corresponding gateway. This property does not apply to VLAN backed segments. VLAN backed segments with connectivity OFF does not affect its layer-2 connectivity.
 	Connectivity *string
-	// Extra time in seconds the router must wait before sending the UP notification after the peer routing session is established. Default means forward immediately. VRF logical router will set it same as parent logical router.The functionality of this timer is to ensure that a given node when coming up does not claim as active until it has learned the northbound routes. This minimizes any impact on traffic. 5 seconds is a smarter default as it allows to learn a few thousand routes (which should cover a lot of customers). Customers that have larger scale of course today would have to set it to higher value. Exception for the this default setting is single node case, i.e; no redundancy (which is anyway not recommended,not sure if anyone deploys like that). For single node case, it should be set to 0. format: int64
+	// Extra time in seconds the router must wait before sending the UP notification after the peer routing session is established. Default means forward immediately. VRF logical router will set it same as parent logical router if parent logical router exists otherwise is configurable if vrf_ha is enabled. The functionality of this timer is to ensure that a given node when coming up does not claim as active until it has learned the northbound routes. This minimizes any impact on traffic. 5 seconds is a smarter default as it allows to learn a few thousand routes (which should cover a lot of customers). Customers that have larger scale of course today would have to set it to higher value. Exception for the this default setting is single node case, i.e; no redundancy (which is anyway not recommended, not sure if anyone deploys like that). For single node case, it should be set to 0. format: int64
 	ForwardingUpTimer *int64
 }
 
@@ -113135,16 +114315,18 @@ func (s *Tier0TGWAttachmentInterfaceState) GetDataValue__() (vapiData_.DataValue
 // Tier-0 vrf configuration.
 type Tier0VrfConfig struct {
 	EvpnL2VniConfig *VrfEvpnL2VniConfig
-	// L3 VNI associated with the VRF for overlay traffic of ethernet virtual private network (EVPN). It must be unique and available from the VNI pool defined for EVPN service. It is required for VRF to participate in the EVPN service in INLINE mode. format: int32
+	// L3 VNI associated with the VRF for overlay traffic of ethernet virtual private network (EVPN). It must be unique and available from the VNI pool defined for EVPN service. It is required for VRF to participate in the EVPN service in INLINE mode. Not allowed when vrf_ha is enabled (VRF with self HA). format: int32
 	EvpnTransitVni *int64
-	// route distinguisher pool for edge nodes.
+	// route distinguisher pool for edge nodes. Not allowed when vrf_ha is enabled (VRF with self HA).
 	RdPerEdgePool []string
 	//
 	RouteDistinguisher *string
-	// Route targets.
+	// Route targets. Not allowed when vrf_ha is enabled (VRF with self HA).
 	RouteTargets []VrfRouteTargets
-	// Default tier0 path. Cannot be modified after realization.
+	// Default tier0 path. Cannot be modified after realization. Not allowed when vrf_ha is enabled (VRF with self HA).
 	Tier0Path *string
+	// When true, this VRF has self HA with its own edge cluster, HA mode, transit subnets, and BGP routing config. Edge cluster is mandatory and tier0_path is not allowed. This setting cannot be disabled once enabled. A VRF that shares HA with its connected Tier0 cannot switch to have self HA.
+	VrfHa *bool
 }
 
 func (s *Tier0VrfConfig) GetType__() vapiBindings_.BindingType {
@@ -113221,7 +114403,7 @@ type Tier1 struct {
 	DefaultRuleLogging *bool
 	// DHCP configuration for Segments connected to Tier-1. DHCP service is enabled in relay mode.
 	DhcpConfigPaths []string
-	// Disable or enable gateway fiewall.
+	// Disable or enable gateway firewall.
 	DisableFirewall *bool
 	// Flag to enable standby service router relocation. Standby relocation is not enabled until edge cluster is configured for Tier1.
 	EnableStandbyRelocation *bool
@@ -113233,7 +114415,7 @@ type Tier1 struct {
 	//  Determines the behavior when a Tier-1 instance restarts after a failure. If set to PREEMPTIVE, the preferred node will take over, even if it causes another failure. If set to NON_PREEMPTIVE, then the instance that restarted will remain secondary. Only applicable when edge cluster is configured in Tier1 locale-service.
 	FailoverMode     *string
 	FederationConfig *FederationGatewayConfig
-	// This field is deprecated and recommended to change Rule action field. Note that this field is not synchornied with default rule field.
+	// This field is deprecated and recommended to change Rule action field. Note that this field is not synchronized with default rule field.
 	ForceWhitelisting *bool
 	// Possible values are:
 	//
@@ -114861,7 +116043,7 @@ type TlsPolicy struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// - Distributed Firewall - Policy framework provides five pre-defined categories for classifying a security policy. They are \"Ethernet\",\"Emergency\", \"Infrastructure\" \"Environment\" and \"Application\". There is a pre-determined order in which the policy framework manages the priority of these security policies. Ethernet category is for supporting layer 2 firewall rules. The other four categories are applicable for layer 3 rules. Amongst them, the Emergency category has the highest priority followed by Infrastructure, Environment and then Application rules. Administrator can choose to categorize a security policy into the above categories or can choose to leave it empty. If empty it will have the least precedence w.r.t the above four categories. - Edge Firewall - Policy Framework for Edge Firewall provides six pre-defined categories \"Emergency\", \"SystemRules\", \"SharedPreRules\", \"LocalGatewayRules\", \"AutoServiceRules\" and \"Default\", in order of priority of rules. All categories are allowed for Gatetway Policies that belong to 'default' Domain. However, for user created domains, category is restricted to \"SharedPreRules\" or \"LocalGatewayRules\" only. Also, the users can add/modify/delete rules from only the \"SharedPreRules\" and \"LocalGatewayRules\" categories. If user doesn't specify the category then defaulted to \"Rules\". System generated category is used by NSX created rules, for example BFD rules. Autoplumbed category used by NSX verticals to autoplumb data path rules. Finally, \"Default\" category is the placeholder default rules with lowest in the order of priority.
+	// Classifies this security policy into an evaluation-priority category. Categories are evaluated in a fixed priority order. Distributed Firewall (DFW) categories, in priority order (highest first): Ethernet - Layer 2 firewall rules only. Emergency - Highest priority L3 rules (common to both DFW and Edge FW). Infrastructure - Second priority L3 rules. Environment - Third priority L3 rules. Application - Lowest explicit L3 rules. ThreatRules - IDPS-only. Threat-based rules applied after Application. EmergencyThreatRules - IDPS-only. Highest priority threat-based rules. Edge (Gateway) Firewall categories, in priority order (highest first): Emergency, SystemRules, SharedPreRules, SharedExternalRules, LocalGatewayRules, AutoServiceRules, Default. For user-created domains, only SharedPreRules and LocalGatewayRules are allowed. If not specified, defaults to LocalGatewayRules. Bridge Firewall category: LocalBridgeRules - Rules for bridge firewall policies.
 	Category *string
 	// Comments for security policy lock/unlock.
 	Comments *string
@@ -114883,9 +116065,9 @@ type TlsPolicy struct {
 	Scope []string
 	// This field is used to resolve conflicts between security policies across domains. In order to change the sequence number of a policy one can fire a POST request on the policy entity with a query parameter action=revise The sequence number field will reflect the value of the computed sequence number upon execution of the above mentioned POST request. For scenarios where the administrator is using a template to update several security policies, the only way to set the sequence number is to explicitly specify the sequence number for each security policy. If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple policies with the same sequence number then their order is not deterministic. If a specific order of policies is desired, then one has to specify unique sequence numbers or use the POST request on the policy entity with a query parameter action=revise to let the framework assign a sequence number. The value of sequence number must be between 0 and 999,999. format: int32
 	SequenceNumber *int64
-	// Stateful or Stateless nature of security policy is enforced on all rules in this security policy. When it is stateful, the state of the network connects are tracked and a stateful packet inspection is performed. Layer3 security policies can be stateful or stateless. By default, they are stateful. Layer2 security policies can only be stateless.
+	// Whether this security policy enforces stateful or stateless packet inspection. When stateful (true), network connection state is tracked and stateful packet inspection is performed. Layer-3 security policies default to stateful. Layer-2 (Ethernet category) security policies must be stateless. Note: when stateful is true, the tcp_strict field also defaults to true unless explicitly set to false. See the tcp_strict field for details.
 	Stateful *bool
-	// Ensures that a 3 way TCP handshake is done before the data packets are sent. tcp_strict=true is supported only for stateful security policies. If the tcp_strict flag is not specified and the security policy is stateful, then tcp_strict will be set to true.
+	// Enforces a 3-way TCP handshake before allowing data packets. Only applicable when the security policy is stateful. If not specified, the server automatically sets tcp_strict to true for stateful policies and false for stateless policies. See also: stateful field.
 	TcpStrict *bool
 	// Rules that are a part of this TLSPolicy
 	Rules []TlsRule
@@ -115143,7 +116325,7 @@ type TlsRule struct {
 	IsDefault *bool
 	// Flag to enable packet logging. Default is deactivated.
 	Logged *bool
-	// User level field which will be printed in CLI and packet logs. Even though there is no limitation on length of the notes, internally notes will get truncated after 39 characters.
+	// User level field which will be printed in CLI and packet logs. The notes field accepts up to 2048 characters. Internally, notes are truncated after 39 characters in CLI and packet logs.
 	Notes *string
 	// Paths to Layer 7 service profile objects or L7 access profile objects for advanced traffic inspection and filtering. These profiles enable matching on Layer 7 attributes and sub-attributes of network services such as: - Application IDs (L4 AppId) - Encryption algorithms and TLS versions - Domain names and URLs - HTTP methods - CIFS/SMB versions You can use either Layer 7 service profiles (PolicyContextProfile) or an L7 access profile (L7AccessProfile) in a rule, but not both. When using an L7 access profile, only one profile path is allowed.
 	Profiles []string
@@ -115151,7 +116333,7 @@ type TlsRule struct {
 	RuleId *int64
 	// The list of group paths to which the rule applies. This determines which workloads (VMs, containers, etc.) the rule is enforced on. For Gateway Firewall rules, this can also include Tier-0, Tier-1, or interface paths to specify where the rule is enforced. Note that a given rule can be applied to multiple groups or network entities.
 	Scope []string
-	// This field is used to resolve conflicts between multiple Rules under Security or Gateway Policy for a Domain If no sequence number is specified in the payload, a value of 0 is assigned by default. If there are multiple rules with the same sequence number then their order is not deterministic. If a specific order of rules is desired, then one has to specify unique sequence numbers or use the POST request on the rule entity with a query parameter action=revise to let the framework assign a sequence number format: int32
+	// This field is used to resolve conflicts between multiple Rules under a Security or Gateway Policy for a Domain. Rules are evaluated in ascending sequence number order. If no sequence number is specified in the payload, the system assigns a default value of 0. If there are multiple rules with the same sequence number then their order is not deterministic. If a specific order of rules is desired, specify unique sequence numbers or use the POST request on the rule entity with a query parameter action=revise to let the framework assign a sequence number. format: int32
 	SequenceNumber *int64
 	// In order to specify raw services this can be used, along with services which contains path to services. This can be empty or null.
 	ServiceEntries []*vapiData_.StructValue
@@ -116487,8 +117669,10 @@ type TraceflowObservationDropped struct {
 	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_ROUTE_DISTINGUISHER_MAC_RESOLUTION_FAILED
 	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_MAC_RPF_CHECK_FAILED
 	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_ENCAP_PKT_EXCEED_VDS_MTU
+	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_PKT_EXCEED_GW_MTU
+	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_ENCAP_PKT_EXCEED_RTEP_MTU
 	//
-	//  This field specifies the drop reason of traceflow packet. ARP_FAIL - ARP request fails for some reasons, please refer arp_fail_reason for detail BFD - BFD packet is dropped because traversed by non-operative interface or encountering internal error (e.g., memory insufficient) BROADCAST - Packet is dropped during traversing the interface (e.g., Edge uplink, Edge centralized service port) which disallow ethernet broadcast DHCP - DHCP packet is malformed DLB - The packet is disallowed by distributed load balancing FW_RULE - The packet matches a drop or reject rule of DFW or Edge firewall GENEVE - GENEVE packet is malformed GRE - GRE packet is malformed or traverses a non-operative interface IFACE - Packet traverses a non-operative interface IP - Packet is dropped because of IP related causes (e.g., ICMPv4/ICMPv6 packet is malformed, or DF flag is set but fragment must be performed for the packet) or corresponding interface is not found or inoperative IP_REASS - Packet is dropped during IP reassembly IPSEC - IPsec protocol related packet is dropped IPSEC_VTI - IPsec required SA is not found or traversing inoperative interface cause packet dropped L2VPN - VLAN id of GRE packet is invalid L4PORT - Layer 4 packet (e.g., BFD, DHCP) is dropped LB - Packet is dropped by load balancing rule LROUTER - Packet is dropped by logical router LSERVICE - Packet is malformed or traverses inoperative logical service interface LSWITCH - Packet is dropped by logical switch MANAGEMENT - Packet is dropped by Edge datapath MANAGEMENT service port MD_PROXY - Packet is dropped by metadata proxy NAT - Packet is dropped by NAT rule RTEP_TUNNEL - Unused drop reason ND_NS_FAIL - Neighbor Discovery packet fails NEIGH - ARP or Neighbor Discovery packet fails NO_EIP_FOUND - Destination IP is not an elastic IP NO_EIP_ASSOCIATION - Elastic IP is not associated with active edge VDR ENI NO_ENI_FOR_IP - There is no ENI found for the destination IP NO_ENI_FOR_LIF - Cannot find an ENI associated with uplink LIF NO_ROUTE - Cannot find route for destination IP NO_ROUTE_TABLE_FOUND - Cannot find associated route table NO_UNDERLAY_ROUTE_FOUND - Cannot find AWS route to destination NOT_VDR_DOWNLINK - Packet is not forwarded to VMC unmanaged VDR downlink NO_VDR_FOUND - VMC unmanaged VDR associated with Edge uplink is not found NO_VDR_ON_HOST - Cannot find VMC unmanaged VDR list on this host NOT_VDR_UPLINK - Packet is not forwarded to VDR uplink SERVICE_INSERT - Packet from guest VM to service VM or from service VM to guest VM is dropped by firewall rule SPOOFGUARD - Packet is blocked by SpoofGuard policy TTL_ZERO - The IPv4 time to live field of packet is zero. TUNNEL - Overlay tunnel management packet (VNI value of GENEVE header is 0, e.g., BFD) is dropped VLAN - VLAN id of packet is disallowed by the given port VXLAN - VXLAN packet is malformed or cannot find tunnel port for it VXSTT - Unused drop reason VMC_NO_RESPONSE - Failed to query VMC observations as no response from VMC app WRONG_UPLINK - Packet is not routed to the expected Edge uplink by VMC unmanaged VDR FW_STATE - Packet is dropped by stateful firewall NO_MAC - Drop by vswitch as no destination MAC hit MAC Table. FILTERED_UPLINK - Filtering applied at the corresponding UPLINK having no aggregation. IP_OUT_OF_SCOPE - An external IP is required if a packet from a non-public VPC subnet is trying to enter the external underlay network. DHCP_FORGED_MAC - The source MAC address of the DHCP packet sent to the DHCP server does not match the corresponding VIF MAC address of the source port. DHCP_IP_UNAVAILABLE - There is no DHCP client IP address available on the DHCP server. DHCP_IP_NOT_ALLOWED - The requested DHCP client IP address of the packet cannot be allocated from DHCP server. DHCP_INVALID_SERVER_IP_MAC - The DHCP packet is not destined to the DHCP server. NO_GATEWAY_CIDR_FOUND - There is no distributed connection for the source network of the packet to forward the packet to the physical gateway. CONNECTIVITY_POLICY - The packet is dropped due to violating communication rule of connectivity policy. HOP_LIMIT_ZERO - The IPv6 hop limit field of packet is zero. WRONG_SUBNET_GW_BLOCK - The packet is dropped by the gateway to enforce its confinement to the origin network of the VLAN extended subnet. The VLAN extended subnet is the terminology of both VPC overlay subnet and the extended VLAN network. ROUTE_DISTINGUISHER_MAC_RESOLUTION_FAILED - The MAC address of the route distinguisher fails to resolve. MAC_RPF_CHECK_FAILED - The packet is droped due to MAC-address-based reverse path forwarding check. This is to avoid the packet forwarding loops. ENCAP_PKT_EXCEED_VDS_MTU - The frame size of the encapsulated traceflow packet is larger than the VDS MTU.
+	//  This field specifies the drop reason of traceflow packet. ARP_FAIL - ARP request fails for some reasons, please refer arp_fail_reason for detail BFD - BFD packet is dropped because traversed by non-operative interface or encountering internal error (e.g., memory insufficient) BROADCAST - Packet is dropped during traversing the interface (e.g., Edge uplink, Edge centralized service port) which disallow ethernet broadcast DHCP - DHCP packet is malformed DLB - The packet is disallowed by distributed load balancing FW_RULE - The packet matches a drop or reject rule of DFW or Edge firewall GENEVE - GENEVE packet is malformed GRE - GRE packet is malformed or traverses a non-operative interface IFACE - Packet traverses a non-operative interface IP - Packet is dropped because of IP related causes (e.g., ICMPv4/ICMPv6 packet is malformed, or DF flag is set but fragment must be performed for the packet) or corresponding interface is not found or inoperative IP_REASS - Packet is dropped during IP reassembly IPSEC - IPsec protocol related packet is dropped IPSEC_VTI - IPsec required SA is not found or traversing inoperative interface cause packet dropped L2VPN - VLAN id of GRE packet is invalid L4PORT - Layer 4 packet (e.g., BFD, DHCP) is dropped LB - Packet is dropped by load balancing rule LROUTER - Packet is dropped by logical router LSERVICE - Packet is malformed or traverses inoperative logical service interface LSWITCH - Packet is dropped by logical switch MANAGEMENT - Packet is dropped by Edge datapath MANAGEMENT service port MD_PROXY - Packet is dropped by metadata proxy NAT - Packet is dropped by NAT rule RTEP_TUNNEL - Unused drop reason ND_NS_FAIL - Neighbor Discovery packet fails NEIGH - ARP or Neighbor Discovery packet fails NO_EIP_FOUND - Destination IP is not an elastic IP NO_EIP_ASSOCIATION - Elastic IP is not associated with active edge VDR ENI NO_ENI_FOR_IP - There is no ENI found for the destination IP NO_ENI_FOR_LIF - Cannot find an ENI associated with uplink LIF NO_ROUTE - Cannot find route for destination IP NO_ROUTE_TABLE_FOUND - Cannot find associated route table NO_UNDERLAY_ROUTE_FOUND - Cannot find AWS route to destination NOT_VDR_DOWNLINK - Packet is not forwarded to VMC unmanaged VDR downlink NO_VDR_FOUND - VMC unmanaged VDR associated with Edge uplink is not found NO_VDR_ON_HOST - Cannot find VMC unmanaged VDR list on this host NOT_VDR_UPLINK - Packet is not forwarded to VDR uplink SERVICE_INSERT - Packet from guest VM to service VM or from service VM to guest VM is dropped by firewall rule SPOOFGUARD - Packet is blocked by SpoofGuard policy TTL_ZERO - The IPv4 time to live field of packet is zero. TUNNEL - Overlay tunnel management packet (VNI value of GENEVE header is 0, e.g., BFD) is dropped VLAN - VLAN id of packet is disallowed by the given port VXLAN - VXLAN packet is malformed or cannot find tunnel port for it VXSTT - Unused drop reason VMC_NO_RESPONSE - Failed to query VMC observations as no response from VMC app WRONG_UPLINK - Packet is not routed to the expected Edge uplink by VMC unmanaged VDR FW_STATE - Packet is dropped by stateful firewall NO_MAC - Drop by vswitch as no destination MAC hit MAC Table. FILTERED_UPLINK - Filtering applied at the corresponding UPLINK having no aggregation. IP_OUT_OF_SCOPE - An external IP is required if a packet from a non-public VPC subnet is trying to enter the external underlay network. DHCP_FORGED_MAC - The source MAC address of the DHCP packet sent to the DHCP server does not match the corresponding VIF MAC address of the source port. DHCP_IP_UNAVAILABLE - There is no DHCP client IP address available on the DHCP server. DHCP_IP_NOT_ALLOWED - The requested DHCP client IP address of the packet cannot be allocated from DHCP server. DHCP_INVALID_SERVER_IP_MAC - The DHCP packet is not destined to the DHCP server. NO_GATEWAY_CIDR_FOUND - There is no distributed connection for the source network of the packet to forward the packet to the physical gateway. CONNECTIVITY_POLICY - The packet is dropped due to violating communication rule of connectivity policy. HOP_LIMIT_ZERO - The IPv6 hop limit field of packet is zero. WRONG_SUBNET_GW_BLOCK - The packet is dropped by the gateway to enforce its confinement to the origin network of the VLAN extended subnet. The VLAN extended subnet is the terminology of both VPC overlay subnet and the extended VLAN network. ROUTE_DISTINGUISHER_MAC_RESOLUTION_FAILED - The MAC address of the route distinguisher fails to resolve. MAC_RPF_CHECK_FAILED - The packet is droped due to MAC-address-based reverse path forwarding check. This is to avoid the packet forwarding loops. ENCAP_PKT_EXCEED_VDS_MTU - The frame size of the encapsulated traceflow packet is larger than the VDS MTU. PKT_EXCEED_GW_MTU - The frame size of the traceflow packet is larger than the gateway interface MTU. ENCAP_PKT_EXCEED_RTEP_MTU - The frame size of the traceflow packet is larger than the remote tunnel endpoint MTU.
 	Reason *string
 	// The ID of the connectivity policy that applies to the source of the packet. format: int64
 	SrcConnectivityPolicyInternalId *int64
@@ -116709,6 +117893,8 @@ const TraceflowObservationDropped_REASON_WRONG_SUBNET_GW_BLOCK = "WRONG_SUBNET_G
 const TraceflowObservationDropped_REASON_ROUTE_DISTINGUISHER_MAC_RESOLUTION_FAILED = "ROUTE_DISTINGUISHER_MAC_RESOLUTION_FAILED"
 const TraceflowObservationDropped_REASON_MAC_RPF_CHECK_FAILED = "MAC_RPF_CHECK_FAILED"
 const TraceflowObservationDropped_REASON_ENCAP_PKT_EXCEED_VDS_MTU = "ENCAP_PKT_EXCEED_VDS_MTU"
+const TraceflowObservationDropped_REASON_PKT_EXCEED_GW_MTU = "PKT_EXCEED_GW_MTU"
+const TraceflowObservationDropped_REASON_ENCAP_PKT_EXCEED_RTEP_MTU = "ENCAP_PKT_EXCEED_RTEP_MTU"
 
 func (s *TraceflowObservationDropped) GetType__() vapiBindings_.BindingType {
 	return TraceflowObservationDroppedBindingType()
@@ -116857,8 +118043,10 @@ type TraceflowObservationDroppedLogical struct {
 	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_ROUTE_DISTINGUISHER_MAC_RESOLUTION_FAILED
 	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_MAC_RPF_CHECK_FAILED
 	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_ENCAP_PKT_EXCEED_VDS_MTU
+	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_PKT_EXCEED_GW_MTU
+	// * TraceflowObservationDropped#TraceflowObservationDropped_REASON_ENCAP_PKT_EXCEED_RTEP_MTU
 	//
-	//  This field specifies the drop reason of traceflow packet. ARP_FAIL - ARP request fails for some reasons, please refer arp_fail_reason for detail BFD - BFD packet is dropped because traversed by non-operative interface or encountering internal error (e.g., memory insufficient) BROADCAST - Packet is dropped during traversing the interface (e.g., Edge uplink, Edge centralized service port) which disallow ethernet broadcast DHCP - DHCP packet is malformed DLB - The packet is disallowed by distributed load balancing FW_RULE - The packet matches a drop or reject rule of DFW or Edge firewall GENEVE - GENEVE packet is malformed GRE - GRE packet is malformed or traverses a non-operative interface IFACE - Packet traverses a non-operative interface IP - Packet is dropped because of IP related causes (e.g., ICMPv4/ICMPv6 packet is malformed, or DF flag is set but fragment must be performed for the packet) or corresponding interface is not found or inoperative IP_REASS - Packet is dropped during IP reassembly IPSEC - IPsec protocol related packet is dropped IPSEC_VTI - IPsec required SA is not found or traversing inoperative interface cause packet dropped L2VPN - VLAN id of GRE packet is invalid L4PORT - Layer 4 packet (e.g., BFD, DHCP) is dropped LB - Packet is dropped by load balancing rule LROUTER - Packet is dropped by logical router LSERVICE - Packet is malformed or traverses inoperative logical service interface LSWITCH - Packet is dropped by logical switch MANAGEMENT - Packet is dropped by Edge datapath MANAGEMENT service port MD_PROXY - Packet is dropped by metadata proxy NAT - Packet is dropped by NAT rule RTEP_TUNNEL - Unused drop reason ND_NS_FAIL - Neighbor Discovery packet fails NEIGH - ARP or Neighbor Discovery packet fails NO_EIP_FOUND - Destination IP is not an elastic IP NO_EIP_ASSOCIATION - Elastic IP is not associated with active edge VDR ENI NO_ENI_FOR_IP - There is no ENI found for the destination IP NO_ENI_FOR_LIF - Cannot find an ENI associated with uplink LIF NO_ROUTE - Cannot find route for destination IP NO_ROUTE_TABLE_FOUND - Cannot find associated route table NO_UNDERLAY_ROUTE_FOUND - Cannot find AWS route to destination NOT_VDR_DOWNLINK - Packet is not forwarded to VMC unmanaged VDR downlink NO_VDR_FOUND - VMC unmanaged VDR associated with Edge uplink is not found NO_VDR_ON_HOST - Cannot find VMC unmanaged VDR list on this host NOT_VDR_UPLINK - Packet is not forwarded to VDR uplink SERVICE_INSERT - Packet from guest VM to service VM or from service VM to guest VM is dropped by firewall rule SPOOFGUARD - Packet is blocked by SpoofGuard policy TTL_ZERO - The IPv4 time to live field of packet is zero. TUNNEL - Overlay tunnel management packet (VNI value of GENEVE header is 0, e.g., BFD) is dropped VLAN - VLAN id of packet is disallowed by the given port VXLAN - VXLAN packet is malformed or cannot find tunnel port for it VXSTT - Unused drop reason VMC_NO_RESPONSE - Failed to query VMC observations as no response from VMC app WRONG_UPLINK - Packet is not routed to the expected Edge uplink by VMC unmanaged VDR FW_STATE - Packet is dropped by stateful firewall NO_MAC - Drop by vswitch as no destination MAC hit MAC Table. FILTERED_UPLINK - Filtering applied at the corresponding UPLINK having no aggregation. IP_OUT_OF_SCOPE - An external IP is required if a packet from a non-public VPC subnet is trying to enter the external underlay network. DHCP_FORGED_MAC - The source MAC address of the DHCP packet sent to the DHCP server does not match the corresponding VIF MAC address of the source port. DHCP_IP_UNAVAILABLE - There is no DHCP client IP address available on the DHCP server. DHCP_IP_NOT_ALLOWED - The requested DHCP client IP address of the packet cannot be allocated from DHCP server. DHCP_INVALID_SERVER_IP_MAC - The DHCP packet is not destined to the DHCP server. NO_GATEWAY_CIDR_FOUND - There is no distributed connection for the source network of the packet to forward the packet to the physical gateway. CONNECTIVITY_POLICY - The packet is dropped due to violating communication rule of connectivity policy. HOP_LIMIT_ZERO - The IPv6 hop limit field of packet is zero. WRONG_SUBNET_GW_BLOCK - The packet is dropped by the gateway to enforce its confinement to the origin network of the VLAN extended subnet. The VLAN extended subnet is the terminology of both VPC overlay subnet and the extended VLAN network. ROUTE_DISTINGUISHER_MAC_RESOLUTION_FAILED - The MAC address of the route distinguisher fails to resolve. MAC_RPF_CHECK_FAILED - The packet is droped due to MAC-address-based reverse path forwarding check. This is to avoid the packet forwarding loops. ENCAP_PKT_EXCEED_VDS_MTU - The frame size of the encapsulated traceflow packet is larger than the VDS MTU.
+	//  This field specifies the drop reason of traceflow packet. ARP_FAIL - ARP request fails for some reasons, please refer arp_fail_reason for detail BFD - BFD packet is dropped because traversed by non-operative interface or encountering internal error (e.g., memory insufficient) BROADCAST - Packet is dropped during traversing the interface (e.g., Edge uplink, Edge centralized service port) which disallow ethernet broadcast DHCP - DHCP packet is malformed DLB - The packet is disallowed by distributed load balancing FW_RULE - The packet matches a drop or reject rule of DFW or Edge firewall GENEVE - GENEVE packet is malformed GRE - GRE packet is malformed or traverses a non-operative interface IFACE - Packet traverses a non-operative interface IP - Packet is dropped because of IP related causes (e.g., ICMPv4/ICMPv6 packet is malformed, or DF flag is set but fragment must be performed for the packet) or corresponding interface is not found or inoperative IP_REASS - Packet is dropped during IP reassembly IPSEC - IPsec protocol related packet is dropped IPSEC_VTI - IPsec required SA is not found or traversing inoperative interface cause packet dropped L2VPN - VLAN id of GRE packet is invalid L4PORT - Layer 4 packet (e.g., BFD, DHCP) is dropped LB - Packet is dropped by load balancing rule LROUTER - Packet is dropped by logical router LSERVICE - Packet is malformed or traverses inoperative logical service interface LSWITCH - Packet is dropped by logical switch MANAGEMENT - Packet is dropped by Edge datapath MANAGEMENT service port MD_PROXY - Packet is dropped by metadata proxy NAT - Packet is dropped by NAT rule RTEP_TUNNEL - Unused drop reason ND_NS_FAIL - Neighbor Discovery packet fails NEIGH - ARP or Neighbor Discovery packet fails NO_EIP_FOUND - Destination IP is not an elastic IP NO_EIP_ASSOCIATION - Elastic IP is not associated with active edge VDR ENI NO_ENI_FOR_IP - There is no ENI found for the destination IP NO_ENI_FOR_LIF - Cannot find an ENI associated with uplink LIF NO_ROUTE - Cannot find route for destination IP NO_ROUTE_TABLE_FOUND - Cannot find associated route table NO_UNDERLAY_ROUTE_FOUND - Cannot find AWS route to destination NOT_VDR_DOWNLINK - Packet is not forwarded to VMC unmanaged VDR downlink NO_VDR_FOUND - VMC unmanaged VDR associated with Edge uplink is not found NO_VDR_ON_HOST - Cannot find VMC unmanaged VDR list on this host NOT_VDR_UPLINK - Packet is not forwarded to VDR uplink SERVICE_INSERT - Packet from guest VM to service VM or from service VM to guest VM is dropped by firewall rule SPOOFGUARD - Packet is blocked by SpoofGuard policy TTL_ZERO - The IPv4 time to live field of packet is zero. TUNNEL - Overlay tunnel management packet (VNI value of GENEVE header is 0, e.g., BFD) is dropped VLAN - VLAN id of packet is disallowed by the given port VXLAN - VXLAN packet is malformed or cannot find tunnel port for it VXSTT - Unused drop reason VMC_NO_RESPONSE - Failed to query VMC observations as no response from VMC app WRONG_UPLINK - Packet is not routed to the expected Edge uplink by VMC unmanaged VDR FW_STATE - Packet is dropped by stateful firewall NO_MAC - Drop by vswitch as no destination MAC hit MAC Table. FILTERED_UPLINK - Filtering applied at the corresponding UPLINK having no aggregation. IP_OUT_OF_SCOPE - An external IP is required if a packet from a non-public VPC subnet is trying to enter the external underlay network. DHCP_FORGED_MAC - The source MAC address of the DHCP packet sent to the DHCP server does not match the corresponding VIF MAC address of the source port. DHCP_IP_UNAVAILABLE - There is no DHCP client IP address available on the DHCP server. DHCP_IP_NOT_ALLOWED - The requested DHCP client IP address of the packet cannot be allocated from DHCP server. DHCP_INVALID_SERVER_IP_MAC - The DHCP packet is not destined to the DHCP server. NO_GATEWAY_CIDR_FOUND - There is no distributed connection for the source network of the packet to forward the packet to the physical gateway. CONNECTIVITY_POLICY - The packet is dropped due to violating communication rule of connectivity policy. HOP_LIMIT_ZERO - The IPv6 hop limit field of packet is zero. WRONG_SUBNET_GW_BLOCK - The packet is dropped by the gateway to enforce its confinement to the origin network of the VLAN extended subnet. The VLAN extended subnet is the terminology of both VPC overlay subnet and the extended VLAN network. ROUTE_DISTINGUISHER_MAC_RESOLUTION_FAILED - The MAC address of the route distinguisher fails to resolve. MAC_RPF_CHECK_FAILED - The packet is droped due to MAC-address-based reverse path forwarding check. This is to avoid the packet forwarding loops. ENCAP_PKT_EXCEED_VDS_MTU - The frame size of the encapsulated traceflow packet is larger than the VDS MTU. PKT_EXCEED_GW_MTU - The frame size of the traceflow packet is larger than the gateway interface MTU. ENCAP_PKT_EXCEED_RTEP_MTU - The frame size of the traceflow packet is larger than the remote tunnel endpoint MTU.
 	Reason *string
 	// The ID of the connectivity policy that applies to the source of the packet. format: int64
 	SrcConnectivityPolicyInternalId *int64
@@ -118478,11 +119666,10 @@ type TransitGateway struct {
 	//
 	//  Enable feature for route signaling to notify the IP of the ESX workloads. NONE: Disable route signaling feature by default IPV4: Enable route signaling for IPV4 routes
 	ExternalIpSignalingMode *string
-	HighAvailabilityConfig  *TransitGatewayHighAvailabilityConfig
 	// default transit gateway indicator. If true, then this is the default Transit Gateway. Users can modify it but cannot delete it.
 	IsDefault *bool
 	Span      *vapiData_.StructValue
-	// Array of IPV4 CIDRs for internal VPC attachment networks. format: ipv4-cidr-block
+	// Array of IPv4/IPv6 CIDRs for internal VPC attachment networks. Supports both IPv4 and IPv6 CIDRs. format: ip-cidr-block
 	TransitSubnets []string
 }
 
@@ -118727,37 +119914,6 @@ func (s *TransitGatewayAttachmentStatistics) GetDataValue__() (vapiData_.DataVal
 	return dataVal, nil
 }
 
-// Transit Gateway high availability config centralized transit gateway.
-type TransitGatewayHighAvailabilityConfig struct {
-	// The Edge cluster should be authorized to be used in the transit gateway. A single edge cluster will be supported when the transit gateway is created from the local NSX manager.
-	EdgeClusterPaths []string
-	// Possible values are:
-	//
-	// * TransitGatewayHighAvailabilityConfig#TransitGatewayHighAvailabilityConfig_HA_MODE_ACTIVE
-	// * TransitGatewayHighAvailabilityConfig#TransitGatewayHighAvailabilityConfig_HA_MODE_STANDBY
-	//
-	//  High-availability mode for Transit Gateway will only supported with edge cluster config.
-	HaMode *string
-}
-
-const TransitGatewayHighAvailabilityConfig_HA_MODE_ACTIVE = "ACTIVE_ACTIVE"
-const TransitGatewayHighAvailabilityConfig_HA_MODE_STANDBY = "ACTIVE_STANDBY"
-
-func (s *TransitGatewayHighAvailabilityConfig) GetType__() vapiBindings_.BindingType {
-	return TransitGatewayHighAvailabilityConfigBindingType()
-}
-
-func (s *TransitGatewayHighAvailabilityConfig) GetDataValue__() (vapiData_.DataValue, []error) {
-	typeConverter := vapiBindings_.NewTypeConverter()
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		vapiLog_.Errorf("Error in ConvertToVapi for TransitGatewayHighAvailabilityConfig._GetDataValue method - %s",
-			vapiBindings_.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
 // List of Transit Gateways
 type TransitGatewayListResult struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -118975,6 +120131,8 @@ type TransitGatewayNatRule struct {
 	Action *string
 	// This supports single IPv4 address or comma separated list of single IPv4 addresses or IPv4 CIDR. This does not support IP range or IP sets. For DNAT and NO_DNAT rules, this is a mandatory field, and represents the destination network for the incoming packets. For SNAT and NO_SNAT rules, optionally it can contain destination network of outgoing packets. For REFLEXIVE this should be empty. In case of DNAT NATRule, destination network address should be single IPv4 address or IPv4 CIDR allocated from External Block associated with VPC. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
 	DestinationNetwork *string
+	// Policy path to a VpcIpAddressAllocation for DNAT rules. The system resolves the allocated IP and uses it as the destination_network. This field is mutually exclusive with destination_network. Only valid for DNAT action.
+	DestinationNetworkAllocationPath *string
 	// The flag, which suggests whether the NAT rule is enabled or disabled. The default is True.
 	Enabled *bool
 	// Possible values are:
@@ -118994,6 +120152,8 @@ type TransitGatewayNatRule struct {
 	SourceNetwork *string
 	// This supports single IPv4 address and does not support IP range or IP sets. If user specifies CIDR for DNAT rule, this value is actually used as an IP pool that includes both the subnet and broadcast addresses as valid for NAT translations. For SNAT, DNAT and REFLEXIVE rules, this ia a mandatory field, which represents the translated network address. For NO_SNAT and NO_DNAT this should be empty. In case of SNAT and REFLEXIVE NATRule, translated network address should be single IPv4 address or IPv4 CIDR allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
 	TranslatedNetwork *string
+	// Policy path to a VpcIpAddressAllocation. For SNAT and REFLEXIVE rules, the system resolves the allocated IP and uses it as the translated_network. This field is mutually exclusive with translated_network. Only valid for SNAT and REFLEXIVE actions.
+	TranslatedNetworkAllocationPath *string
 	// Contains the list of policy paths of TGW Attachments on which the NAT rule is applied.
 	Scope []string
 }
@@ -120072,8 +121232,9 @@ type TransportNodeStatus struct {
 	//  Transport node type.
 	NodeType *string
 	// Transport node uuid
-	NodeUuid   *string
-	PnicStatus *StatusCount
+	NodeUuid              *string
+	OverlayMtuCheckStatus *OverlayMTUCheckStatusCount
+	PnicStatus            *StatusCount
 	// Possible values are:
 	//
 	// * TransportNodeStatus#TransportNodeStatus_STATUS_UP
@@ -120912,7 +122073,8 @@ type TunnelProperties struct {
 	// The latency value is set only when latency_type is VALID. format: int64
 	LatencyValue *int64
 	// Local IP address of tunnel format: ip
-	LocalIp *string
+	LocalIp  *string
+	MtuCheck *OverlayMtuCheckProperties
 	// Name of tunnel
 	Name *string
 	// Remote IP address of tunnel format: ip
@@ -122569,6 +123731,40 @@ func (s *ViewInfo) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Paged collection of Views
+type ViewInfoListResult struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy *string
+	// Network view info list results
+	Results []ViewInfo
+}
+
+func (s *ViewInfoListResult) GetType__() vapiBindings_.BindingType {
+	return ViewInfoListResultBindingType()
+}
+
+func (s *ViewInfoListResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ViewInfoListResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Represents a list of views.
 type ViewList struct {
 	// Array of views
@@ -122815,6 +124011,7 @@ func (s *VirtualMachineDetails) GetDataValue__() (vapiData_.DataValue, []error) 
 	return dataVal, nil
 }
 
+// Paginated list of virtual machines. Supports cursor-based pagination, result_count, sort_by, and sort_ascending.
 type VirtualMachineListResult struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -124353,7 +125550,7 @@ type Vpc struct {
 	//
 	// * Vpc#Vpc_IP_ADDRESS_TYPE_IPV4
 	//
-	//  This defines the IP address type that will be allocated for subnets. In the case of IPv4, all the subnets will be allocated IP addresses from the IpV4 private/external pool.
+	//  This defines the IP address type that will be allocated for subnets. IP address type is now configured at the VpcSubnet level.
 	IpAddressType *string
 	// Configuration IPv6 NDRA and DAD profiles. Either or both NDRA and/or DAD profiles can be configured. If not specified, default profiles will be applied.
 	Ipv6ProfilePaths []string
@@ -124604,6 +125801,8 @@ type VpcConnectivityProfile struct {
 	Overridden *bool
 	// PolicyPath of External IP block
 	ExternalIpBlocks []string
+	// Provider created external IPv6 blocks. These blocks must be a subset of the Project's ipv6_blocks. Only IP address blocks with EXTERNAL visibility and ip_address_type IPV6 are supported.
+	Ipv6Blocks []string
 	// If true, then this VPC Connectivity Profile is the default system created profile. Default profiles can be modified by users but cannot be deleted.
 	IsDefault *bool
 	// PolicyPath of Private IP block
@@ -124746,6 +125945,35 @@ func (s *VpcDhcpServerConfig) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for VpcDhcpServerConfig._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// DHCPv6 server configuration includes IPv6 address leasing, DNS servers, NTP servers, etc.
+type VpcDhcpv6ServerConfig struct {
+	AdvancedConfig  *VpcDhcpAdvancedConfig
+	DnsClientConfig *DnsClientConfig
+	// This property specifies the duration (in seconds) for which an IPv6 address lease is valid before the client must renew it. format: int64
+	LeaseTime *int64
+	// NTP servers as FQDN or IPv6 address. Supports unicast, multicast, and FQDN formats.
+	NtpServers []string
+	// Preferred time in seconds. If this value is not provided, the value of lease_time \* 0.8 will be used. format: int64
+	PreferredTime *int64
+	// SNTP server IPv6 addresses for VPC Subnets. format: ip
+	SntpServers []string
+}
+
+func (s *VpcDhcpv6ServerConfig) GetType__() vapiBindings_.BindingType {
+	return VpcDhcpv6ServerConfigBindingType()
+}
+
+func (s *VpcDhcpv6ServerConfig) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for VpcDhcpv6ServerConfig._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -125289,6 +126517,27 @@ func (s *VpcProfileDhcpConfig) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+// DHCPv6 configuration at the VPC Service Profile level. Provides relay or server configuration template for VPC subnets.
+type VpcProfileDhcpV6Config struct {
+	Dhcpv6RelayConfig  *VpcDhcpRelayConfig
+	Dhcpv6ServerConfig *VpcDhcpv6ServerConfig
+}
+
+func (s *VpcProfileDhcpV6Config) GetType__() vapiBindings_.BindingType {
+	return VpcProfileDhcpV6ConfigBindingType()
+}
+
+func (s *VpcProfileDhcpV6Config) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for VpcProfileDhcpV6Config._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // VPC Security Profile defines comprehensive security configurations for Virtual Private Clouds (VPCs) within a project. It encompasses both north-south (Gateway Firewall) and east-west (Distributed Firewall) security settings. All VPCs within a project are automatically associated with a pre-created default security profile at the project level. User can only update a Security Profile, deletion and creation of the security profile is managed by the system and tied to the lifecycle of the project. Note: Currently, users are not allowed to create new security profiles but can modify existing ones.
 type VpcSecurityProfile struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -125476,6 +126725,8 @@ type VpcServiceInstanceStatus struct {
 	ExitInterface *string
 	// The parent port that the child port is linked to.
 	ParentPortId *string
+	// The effective interval in seconds at which this service VM instance is sending periodic Gratuitous ARP (GARP) packets on its internal IP. Populated only when periodic GARP is active on the associated DistributedVxlanConnection. format: int64
+	PeriodicGarpInterval *int64
 	// Identifier of the service interface connecting VPC service instance to VPC DR.
 	ServiceInterfaceId *string
 	// IP address of the service interface connecting VPC service instance to VPC DR.
@@ -125553,9 +126804,12 @@ type VpcServiceProfile struct {
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden         *bool
 	DhcpConfig         *VpcProfileDhcpConfig
+	Dhcpv6Config       *VpcProfileDhcpV6Config
 	DnsForwarderConfig *PolicyVpcDnsForwarder
 	// Using this profile to configure different options of IP Discovery
 	IpDiscoveryProfile *string
+	// Policy paths to Ipv6DadProfile and Ipv6NdraProfile used for IPv6 configuration on VPC subnets. Supports up to 2 paths (one DAD profile and one NDRA profile).
+	Ipv6ProfilePaths []string
 	// If true, then this VPC Service Profile is the default system created profile. Default profiles can be modified by users but cannot be deleted.
 	IsDefault *bool
 	// Mac Discovery Profile
@@ -125564,7 +126818,7 @@ type VpcServiceProfile struct {
 	QosProfile *string
 	// Security features are extended by policy operations for securing logical segments.
 	SecurityProfile *string
-	// An array of service subnet CIDRs. CIDRs should be in ip/prefix_length format. Minimum CIDR size should be /28. Must not overlap with private, private TGW and external IP blocks format: ip-cidr-block
+	// An array of service subnet CIDRs. CIDRs should be in ip/prefix_length format. Supports both IPv4 and IPv6 CIDRs. Minimum IPv4 CIDR size should be /28. Must not overlap with private, private TGW and external IP blocks. format: ip-cidr-block
 	ServiceSubnetCidrs []string
 	// SpoofGuard is a tool that is designed to prevent virtual machines in your environment from sending traffic with IP addresses which are not authorized to send traffic from. A SpoofGuard policy profile once enabled blocks the traffic determined to be spoofed.
 	SpoofGuardProfile *string
@@ -125884,13 +127138,24 @@ type VpcSubnet struct {
 	AccessMode     *string
 	AdvancedConfig *SubnetAdvancedConfig
 	DhcpConfig     *VpcSubnetDhcpConfig
+	// Possible values are:
+	//
+	// * VpcSubnet#VpcSubnet_IP_ADDRESS_TYPE_IPV4
+	// * VpcSubnet#VpcSubnet_IP_ADDRESS_TYPE_IPV6
+	// * VpcSubnet#VpcSubnet_IP_ADDRESS_TYPE_IPV4_IPV6
+	//
+	//  Indicates the IP address type for the subnet. IPV4 - Subnet will use IPv4 addressing only. IPV6 - Subnet will use IPv6 addressing only. IPV4_IPV6 - Subnet will use dual-stack (both IPv4 and IPv6) addressing. Defaults to IPV4 when not provided.
+	IpAddressType *string
 	// VPC Subnet IP addresses. If not provided, IP assignment will be done based on VPC CIDRs. This represents the VPC Subnet that is associated with tier. If ip_addresses is provided in subnet creation, ipv4_subnet_size property is ignored. For IPv6 CIDR, supported prefix length is /64. For VLAN-extension subnets, the vlan_connection property must be used instead of this field. format: ip-cidr-block
 	IpAddresses []string
-	// IP block path for subnet IP allocation. IP block is supported for only one IP address family, either IPv4 or IPv6. IP block should be part of: 1) VPC's Private IP block path or 2) VPC Connectivity Profile's attachment's External IP block path or 3) VPC Connectivity Profile's attachment's Project IP block path. For VLAN-extension subnets, the vlan_connection property must be used instead of this field.
+	// IP block path for subnet IP allocation. Maximum 2 IP blocks allowed (1 IPv4 + 1 IPv6). IP block should be part of: 1) VPC's Private IP block path or 2) VPC Connectivity Profile's attachment's External IP block path or 3) VPC Connectivity Profile's attachment's Project IP block path or 4) VPC Connectivity Profile's attachment's IPv6 block path. For VLAN-extension subnets, the vlan_connection property must be used instead of this field.
 	IpBlocks []string
 	// Specifies the size of the IPv4 subnet. If ip_addresses or vlan_connection is provided, this field is ignored and not persisted. When a subnet is created with only access_mode in the payload (i.e., no ip_addresses or vlan_connection), the system automatically assigns a value of 64 to this property. Modifying ipv4_subnet_size after subnet creation is not supported. format: int32
-	Ipv4SubnetSize   *int64
-	SubnetDhcpConfig *SubnetDhcpConfig
+	Ipv4SubnetSize *int64
+	// IPv6 prefix length for the subnet. Default value is 64. Only /64 prefix length is supported for IPv6 subnets. format: int64
+	Ipv6SubnetMask     *int64
+	SubnetDhcpConfig   *SubnetDhcpConfig
+	SubnetDhcpv6Config *SubnetDhcpv6Config
 	// Distributed VLAN connection path.
 	VlanConnection *string
 }
@@ -125900,6 +127165,9 @@ const VpcSubnet_ACCESS_MODE_PUBLIC = "Public"
 const VpcSubnet_ACCESS_MODE_ISOLATED = "Isolated"
 const VpcSubnet_ACCESS_MODE_PRIVATE_TGW = "Private_TGW"
 const VpcSubnet_ACCESS_MODE_L2_ONLY = "L2_Only"
+const VpcSubnet_IP_ADDRESS_TYPE_IPV4 = "IPV4"
+const VpcSubnet_IP_ADDRESS_TYPE_IPV6 = "IPV6"
+const VpcSubnet_IP_ADDRESS_TYPE_IPV4_IPV6 = "IPV4_IPV6"
 
 func (s *VpcSubnet) GetType__() vapiBindings_.BindingType {
 	return VpcSubnetBindingType()
@@ -126523,6 +127791,7 @@ type VpcSubnetStatus struct {
 	//
 	// * VpcSubnetStatus#VpcSubnetStatus_IP_ADDRESS_TYPE_IPV4
 	// * VpcSubnetStatus#VpcSubnetStatus_IP_ADDRESS_TYPE_IPV6
+	// * VpcSubnetStatus#VpcSubnetStatus_IP_ADDRESS_TYPE_IPV4_IPV6
 	//
 	//  This defines the IP address type that will be allocated for VPC Subnets.
 	IpAddressType *string
@@ -126537,6 +127806,7 @@ type VpcSubnetStatus struct {
 
 const VpcSubnetStatus_IP_ADDRESS_TYPE_IPV4 = "IPV4"
 const VpcSubnetStatus_IP_ADDRESS_TYPE_IPV6 = "IPV6"
+const VpcSubnetStatus_IP_ADDRESS_TYPE_IPV4_IPV6 = "IPV4_IPV6"
 
 func (s *VpcSubnetStatus) GetType__() vapiBindings_.BindingType {
 	return VpcSubnetStatusBindingType()
@@ -128292,6 +129562,25 @@ func ActiveDirectoryIdentitySourceBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.active_directory_identity_source", fields, reflect.TypeOf(ActiveDirectoryIdentitySource{}), fieldNameMap, validators)
 }
 
+func AdaptiveLimitsStatusBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["current_concurrency_limit"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["current_concurrency_limit"] = "CurrentConcurrencyLimit"
+	fields["gradient"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDoubleType())
+	fieldNameMap["gradient"] = "Gradient"
+	fields["max_limit"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["max_limit"] = "MaxLimit"
+	fields["min_limit"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["min_limit"] = "MinLimit"
+	fields["min_rtt_ms"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDoubleType())
+	fieldNameMap["min_rtt_ms"] = "MinRttMs"
+	fields["sample_rtt_ms"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDoubleType())
+	fieldNameMap["sample_rtt_ms"] = "SampleRttMs"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.adaptive_limits_status", fields, reflect.TypeOf(AdaptiveLimitsStatus{}), fieldNameMap, validators)
+}
+
 func AddALBControllerNodeVMInfoBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -129631,6 +130920,10 @@ func ApiServiceConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["resource_type"] = "ResourceType"
 	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
 	fieldNameMap["tags"] = "Tags"
+	fields["adaptive_concurrency_max_limit"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["adaptive_concurrency_max_limit"] = "AdaptiveConcurrencyMaxLimit"
+	fields["adaptive_concurrency_min_limit"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["adaptive_concurrency_min_limit"] = "AdaptiveConcurrencyMinLimit"
 	fields["basic_authentication_enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["basic_authentication_enabled"] = "BasicAuthenticationEnabled"
 	fields["cipher_suites"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(CipherSuiteBindingType), reflect.TypeOf([]CipherSuite{})))
@@ -129639,6 +130932,8 @@ func ApiServiceConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["client_api_concurrency_limit"] = "ClientApiConcurrencyLimit"
 	fields["client_api_rate_limit"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["client_api_rate_limit"] = "ClientApiRateLimit"
+	fields["concurrency_limiting_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["concurrency_limiting_mode"] = "ConcurrencyLimitingMode"
 	fields["connection_timeout"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["connection_timeout"] = "ConnectionTimeout"
 	fields["cookie_based_authentication_enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
@@ -131658,6 +132953,171 @@ func BgpNeighborRoutesListResultBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.bgp_neighbor_routes_list_result", fields, reflect.TypeOf(BgpNeighborRoutesListResult{}), fieldNameMap, validators)
 }
 
+func BgpNexthopBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["afi"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["afi"] = "Afi"
+	fields["ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["ip"] = "Ip"
+	fields["scope"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["scope"] = "Scope"
+	fields["used"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["used"] = "Used"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.bgp_nexthop", fields, reflect.TypeOf(BgpNexthop{}), fieldNameMap, validators)
+}
+
+func BgpRIBDetailsInCsvRecordBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["as_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["as_path"] = "AsPath"
+	fields["bestpath"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["bestpath"] = "Bestpath"
+	fields["community"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["community"] = "Community"
+	fields["esi"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["esi"] = "Esi"
+	fields["eth_tag"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["eth_tag"] = "EthTag"
+	fields["evpn_route_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["evpn_route_type"] = "EvpnRouteType"
+	fields["extended_community"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["extended_community"] = "ExtendedCommunity"
+	fields["global_nexthop_afi"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["global_nexthop_afi"] = "GlobalNexthopAfi"
+	fields["global_nexthop_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["global_nexthop_ip"] = "GlobalNexthopIp"
+	fields["global_nexthop_used"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["global_nexthop_used"] = "GlobalNexthopUsed"
+	fields["large_community"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["large_community"] = "LargeCommunity"
+	fields["local_nexthop_afi"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["local_nexthop_afi"] = "LocalNexthopAfi"
+	fields["local_nexthop_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["local_nexthop_ip"] = "LocalNexthopIp"
+	fields["local_nexthop_used"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["local_nexthop_used"] = "LocalNexthopUsed"
+	fields["local_pref"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["local_pref"] = "LocalPref"
+	fields["logical_router_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["logical_router_id"] = "LogicalRouterId"
+	fields["med"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["med"] = "Med"
+	fields["multipath"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["multipath"] = "Multipath"
+	fields["network"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["network"] = "Network"
+	fields["path_from"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["path_from"] = "PathFrom"
+	fields["peer_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["peer_id"] = "PeerId"
+	fields["rd"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["rd"] = "Rd"
+	fields["rmac"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["rmac"] = "Rmac"
+	fields["route_origin"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["route_origin"] = "RouteOrigin"
+	fields["stale"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["stale"] = "Stale"
+	fields["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["transport_node_id"] = "TransportNodeId"
+	fields["valid"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["valid"] = "Valid"
+	fields["vni"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["vni"] = "Vni"
+	fields["weight"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["weight"] = "Weight"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.bgp_RIB_details_in_csv_record", fields, reflect.TypeOf(BgpRIBDetailsInCsvRecord{}), fieldNameMap, validators)
+}
+
+func BgpRIBListResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(BgpRoutesBindingType), reflect.TypeOf([]BgpRoutes{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.bgp_RIB_list_result", fields, reflect.TypeOf(BgpRIBListResult{}), fieldNameMap, validators)
+}
+
+func BgpRIBListResultInCSVFormatBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["file_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["file_name"] = "FileName"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(BgpRIBDetailsInCsvRecordBindingType), reflect.TypeOf([]BgpRIBDetailsInCsvRecord{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.bgp_RIB_list_result_in_CSV_format", fields, reflect.TypeOf(BgpRIBListResultInCSVFormat{}), fieldNameMap, validators)
+}
+
+func BgpRouteDetailsBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["as_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["as_path"] = "AsPath"
+	fields["bestpath"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["bestpath"] = "Bestpath"
+	fields["community"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["community"] = "Community"
+	fields["esi"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["esi"] = "Esi"
+	fields["eth_tag"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["eth_tag"] = "EthTag"
+	fields["evpn_route_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["evpn_route_type"] = "EvpnRouteType"
+	fields["extended_community"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["extended_community"] = "ExtendedCommunity"
+	fields["large_community"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["large_community"] = "LargeCommunity"
+	fields["local_pref"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["local_pref"] = "LocalPref"
+	fields["med"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["med"] = "Med"
+	fields["multipath"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["multipath"] = "Multipath"
+	fields["network"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["network"] = "Network"
+	fields["nexthops"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(BgpNexthopBindingType), reflect.TypeOf([]BgpNexthop{})))
+	fieldNameMap["nexthops"] = "Nexthops"
+	fields["path_from"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["path_from"] = "PathFrom"
+	fields["peer_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["peer_id"] = "PeerId"
+	fields["rd"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["rd"] = "Rd"
+	fields["rmac"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["rmac"] = "Rmac"
+	fields["route_origin"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["route_origin"] = "RouteOrigin"
+	fields["stale"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["stale"] = "Stale"
+	fields["valid"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["valid"] = "Valid"
+	fields["vni"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["vni"] = "Vni"
+	fields["weight"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["weight"] = "Weight"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.bgp_route_details", fields, reflect.TypeOf(BgpRouteDetails{}), fieldNameMap, validators)
+}
+
 func BgpRouteFilteringBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -131686,6 +133146,25 @@ func BgpRouteLeakingBindingType() vapiBindings_.BindingType {
 	fieldNameMap["out_filter"] = "OutFilter"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.bgp_route_leaking", fields, reflect.TypeOf(BgpRouteLeaking{}), fieldNameMap, validators)
+}
+
+func BgpRoutesBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
+	fields["gateway_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["gateway_path"] = "GatewayPath"
+	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
+	fields["route_details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(BgpRouteDetailsBindingType), reflect.TypeOf([]BgpRouteDetails{})))
+	fieldNameMap["route_details"] = "RouteDetails"
+	fields["transport_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["transport_node_id"] = "TransportNodeId"
+	fields["transport_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["transport_node_path"] = "TransportNodePath"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.bgp_routes", fields, reflect.TypeOf(BgpRoutes{}), fieldNameMap, validators)
 }
 
 func BgpRoutingConfigBindingType() vapiBindings_.BindingType {
@@ -132487,6 +133966,45 @@ func CdoModeRuntimeCompatibilityConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["incompatible_hosts"] = "IncompatibleHosts"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.cdo_mode_runtime_compatibility_config", fields, reflect.TypeOf(CdoModeRuntimeCompatibilityConfig{}), fieldNameMap, validators)
+}
+
+func CdoModeStatusConfigBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["cdo_mode_supported"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["cdo_mode_supported"] = "CdoModeSupported"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.cdo_mode_status_config", fields, reflect.TypeOf(CdoModeStatusConfig{}), fieldNameMap, validators)
 }
 
 func CentralizedConfigBindingType() vapiBindings_.BindingType {
@@ -144818,6 +146336,10 @@ func CidrInfoBindingType() vapiBindings_.BindingType {
 	fieldNameMap["ip_block_name"] = "IpBlockName"
 	fields["ip_block_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["ip_block_path"] = "IpBlockPath"
+	fields["ip_view_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["ip_view_name"] = "IpViewName"
+	fields["ip_view_ref"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["ip_view_ref"] = "IpViewRef"
 	fields["reference_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["reference_id"] = "ReferenceId"
 	var validators = []vapiBindings_.Validator{}
@@ -145807,6 +147329,27 @@ func ComputeClusterIdfwConfigurationListResultBindingType() vapiBindings_.Bindin
 	fieldNameMap["results"] = "Results"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.compute_cluster_idfw_configuration_list_result", fields, reflect.TypeOf(ComputeClusterIdfwConfigurationListResult{}), fieldNameMap, validators)
+}
+
+func ConcurrencyLimitingStatusBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["adaptive_limits"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AdaptiveLimitsStatusBindingType))
+	fieldNameMap["adaptive_limits"] = "AdaptiveLimits"
+	fields["form_factor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["form_factor"] = "FormFactor"
+	fields["mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["mode"] = "Mode"
+	fields["static_limits"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(StaticLimitsStatusBindingType))
+	fieldNameMap["static_limits"] = "StaticLimits"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.concurrency_limiting_status", fields, reflect.TypeOf(ConcurrencyLimitingStatus{}), fieldNameMap, validators)
 }
 
 func ConditionBindingType() vapiBindings_.BindingType {
@@ -148425,6 +149968,17 @@ func DhcpV6LeaseBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.dhcp_v6_lease", fields, reflect.TypeOf(DhcpV6Lease{}), fieldNameMap, validators)
 }
 
+func DhcpV6ServerAdditionalConfigBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["domain_names"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["domain_names"] = "DomainNames"
+	fields["reserved_ip_ranges"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["reserved_ip_ranges"] = "ReservedIpRanges"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.dhcp_v6_server_additional_config", fields, reflect.TypeOf(DhcpV6ServerAdditionalConfig{}), fieldNameMap, validators)
+}
+
 func DhcpV6StaticBindingConfigBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -148438,6 +149992,8 @@ func DhcpV6StaticBindingConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["lease_time"] = "LeaseTime"
 	fields["mac_address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["mac_address"] = "MacAddress"
+	fields["ntp_servers"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["ntp_servers"] = "NtpServers"
 	fields["preferred_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["preferred_time"] = "PreferredTime"
 	fields["sntp_servers"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
@@ -148578,57 +150134,6 @@ func DirectoryAdDomainBindingType() vapiBindings_.BindingType {
 	fieldNameMap["name"] = "Name"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.directory_ad_domain", fields, reflect.TypeOf(DirectoryAdDomain{}), fieldNameMap, validators)
-}
-
-func DirectoryAdGroupBindingType() vapiBindings_.BindingType {
-	fields := make(map[string]vapiBindings_.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["object_guid"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["object_guid"] = "ObjectGuid"
-	fields["secure_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["secure_id"] = "SecureId"
-	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
-	fieldNameMap["_links"] = "Links"
-	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["_schema"] = "Schema"
-	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
-	fieldNameMap["_self"] = "Self"
-	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
-	fieldNameMap["_revision"] = "Revision"
-	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
-	fieldNameMap["_create_time"] = "CreateTime"
-	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["_create_user"] = "CreateUser"
-	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
-	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
-	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
-	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["_protection"] = "Protection"
-	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fieldNameMap["_system_owned"] = "SystemOwned"
-	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["description"] = "Description"
-	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["display_name"] = "DisplayName"
-	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["id"] = "Id"
-	fields["resource_type"] = vapiBindings_.NewStringType()
-	fieldNameMap["resource_type"] = "ResourceType"
-	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
-	fieldNameMap["tags"] = "Tags"
-	fields["distinguished_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["distinguished_name"] = "DistinguishedName"
-	fields["domain_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["domain_id"] = "DomainId"
-	fields["domain_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["domain_name"] = "DomainName"
-	fields["domain_sync_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["domain_sync_node_id"] = "DomainSyncNodeId"
-	fields["is_global"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fieldNameMap["is_global"] = "IsGlobal"
-	var validators = []vapiBindings_.Validator{}
-	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.directory_ad_group", fields, reflect.TypeOf(DirectoryAdGroup{}), fieldNameMap, validators)
 }
 
 func DirectoryDomainBindingType() vapiBindings_.BindingType {
@@ -148845,7 +150350,7 @@ func DirectoryGroupBindingType() vapiBindings_.BindingType {
 	fieldNameMap["display_name"] = "DisplayName"
 	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["id"] = "Id"
-	fields["resource_type"] = vapiBindings_.NewStringType()
+	fields["resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["resource_type"] = "ResourceType"
 	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
 	fieldNameMap["tags"] = "Tags"
@@ -148880,7 +150385,7 @@ func DirectoryGroupListResultsBindingType() vapiBindings_.BindingType {
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["sort_by"] = "SortBy"
-	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(DirectoryGroupBindingType)}), reflect.TypeOf([]*vapiData_.StructValue{})))
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(DirectoryGroupBindingType), reflect.TypeOf([]DirectoryGroup{})))
 	fieldNameMap["results"] = "Results"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.directory_group_list_results", fields, reflect.TypeOf(DirectoryGroupListResults{}), fieldNameMap, validators)
@@ -154342,6 +155847,102 @@ func GenericGroupStaticRouteAlarmBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.generic_group_static_route_alarm", fields, reflect.TypeOf(GenericGroupStaticRouteAlarm{}), fieldNameMap, validators)
 }
 
+func GenericOdsRunbookBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["origin_site_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["origin_site_id"] = "OriginSiteId"
+	fields["owner_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["owner_id"] = "OwnerId"
+	fields["parent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["realization_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["realization_id"] = "RealizationId"
+	fields["relative_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["remote_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["remote_path"] = "RemotePath"
+	fields["unique_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["unique_id"] = "UniqueId"
+	fields["children"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(ChildPolicyConfigResourceBindingType)}), reflect.TypeOf([]*vapiData_.StructValue{})))
+	fieldNameMap["children"] = "Children"
+	fields["marked_for_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["overridden"] = "Overridden"
+	fields["applied_to_all_appliances"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["applied_to_all_appliances"] = "AppliedToAllAppliances"
+	fields["applied_to_group_paths"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["applied_to_group_paths"] = "AppliedToGroupPaths"
+	fields["applied_to_nodes"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["applied_to_nodes"] = "AppliedToNodes"
+	fields["default_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(OdsRunbookSettingDataBindingType))
+	fieldNameMap["default_config"] = "DefaultConfig"
+	fields["parameters"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(OdsRunbookParameterBindingType)}), reflect.TypeOf([]*vapiData_.StructValue{})))
+	fieldNameMap["parameters"] = "Parameters"
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["status"] = "Status"
+	fields["target_nodes"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["target_nodes"] = "TargetNodes"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.generic_ods_runbook", fields, reflect.TypeOf(GenericOdsRunbook{}), fieldNameMap, validators)
+}
+
+func GenericOdsRunbookListResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(GenericOdsRunbookBindingType), reflect.TypeOf([]GenericOdsRunbook{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.generic_ods_runbook_list_result", fields, reflect.TypeOf(GenericOdsRunbookListResult{}), fieldNameMap, validators)
+}
+
 func GenericPolicyRealizedResourceBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -154695,6 +156296,45 @@ func GeoLocationExpressionBindingType() vapiBindings_.BindingType {
 	fieldNameMap["overridden"] = "Overridden"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.geo_location_expression", fields, reflect.TypeOf(GeoLocationExpression{}), fieldNameMap, validators)
+}
+
+func GlobalCdoModeConfigBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["global_cdo_mode_enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["global_cdo_mode_enabled"] = "GlobalCdoModeEnabled"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.global_cdo_mode_config", fields, reflect.TypeOf(GlobalCdoModeConfig{}), fieldNameMap, validators)
 }
 
 func GlobalCollectorConfigBindingType() vapiBindings_.BindingType {
@@ -164033,6 +165673,8 @@ func IpamThirdPartyProviderFilterParamsBindingType() vapiBindings_.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["cidr"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cidr"] = "Cidr"
+	fields["ip_view"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["ip_view"] = "IpView"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ipam_third_party_provider_filter_params", fields, reflect.TypeOf(IpamThirdPartyProviderFilterParams{}), fieldNameMap, validators)
 }
@@ -171940,6 +173582,139 @@ func NamespaceMemberDetailsBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.namespace_member_details", fields, reflect.TypeOf(NamespaceMemberDetails{}), fieldNameMap, validators)
 }
 
+func NamespaceNameExpressionBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["namespace_names"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["namespace_names"] = "NamespaceNames"
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewStringType()
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["origin_site_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["origin_site_id"] = "OriginSiteId"
+	fields["owner_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["owner_id"] = "OwnerId"
+	fields["parent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["realization_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["realization_id"] = "RealizationId"
+	fields["relative_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["remote_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["remote_path"] = "RemotePath"
+	fields["unique_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["unique_id"] = "UniqueId"
+	fields["children"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(ChildPolicyConfigResourceBindingType)}), reflect.TypeOf([]*vapiData_.StructValue{})))
+	fieldNameMap["children"] = "Children"
+	fields["marked_for_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["overridden"] = "Overridden"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.namespace_name_expression", fields, reflect.TypeOf(NamespaceNameExpression{}), fieldNameMap, validators)
+}
+
+func NamespaceVmNameBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["namespace_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["namespace_name"] = "NamespaceName"
+	fields["vm_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["vm_name"] = "VmName"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.namespace_vm_name", fields, reflect.TypeOf(NamespaceVmName{}), fieldNameMap, validators)
+}
+
+func NamespaceVmNameExpressionBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["namespace_vm_names"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(NamespaceVmNameBindingType), reflect.TypeOf([]NamespaceVmName{})))
+	fieldNameMap["namespace_vm_names"] = "NamespaceVmNames"
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewStringType()
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["origin_site_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["origin_site_id"] = "OriginSiteId"
+	fields["owner_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["owner_id"] = "OwnerId"
+	fields["parent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["realization_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["realization_id"] = "RealizationId"
+	fields["relative_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["remote_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["remote_path"] = "RemotePath"
+	fields["unique_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["unique_id"] = "UniqueId"
+	fields["children"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(ChildPolicyConfigResourceBindingType)}), reflect.TypeOf([]*vapiData_.StructValue{})))
+	fieldNameMap["children"] = "Children"
+	fields["marked_for_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["overridden"] = "Overridden"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.namespace_vm_name_expression", fields, reflect.TypeOf(NamespaceVmNameExpression{}), fieldNameMap, validators)
+}
+
 func NappRegistrationBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -173274,12 +175049,36 @@ func OdsDynamicRunbookNodeInstallStatusBindingType() vapiBindings_.BindingType {
 	fieldNameMap["node_id"] = "NodeId"
 	fields["node_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["node_name"] = "NodeName"
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["node_type"] = "NodeType"
 	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["status"] = "Status"
 	fields["version"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(OdsRunbookVersionBindingType))
 	fieldNameMap["version"] = "Version"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ods_dynamic_runbook_node_install_status", fields, reflect.TypeOf(OdsDynamicRunbookNodeInstallStatus{}), fieldNameMap, validators)
+}
+
+func OdsDynamicRunbookQueryBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["dynamic_instance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["dynamic_instance_path"] = "DynamicInstancePath"
+	fields["target_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["target_node_id"] = "TargetNodeId"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ods_dynamic_runbook_query", fields, reflect.TypeOf(OdsDynamicRunbookQuery{}), fieldNameMap, validators)
+}
+
+func OdsDynamicRunbookQueryResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["dynamic_runbook_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["dynamic_runbook_path"] = "DynamicRunbookPath"
+	fields["parameters"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(OdsRunbookParameterBindingType)}), reflect.TypeOf([]*vapiData_.StructValue{})))
+	fieldNameMap["parameters"] = "Parameters"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ods_dynamic_runbook_query_result", fields, reflect.TypeOf(OdsDynamicRunbookQueryResult{}), fieldNameMap, validators)
 }
 
 func OdsDynamicdRunbookInstanceListResultBindingType() vapiBindings_.BindingType {
@@ -173303,6 +175102,17 @@ func OdsDynamicdRunbookInstanceListResultBindingType() vapiBindings_.BindingType
 	fieldNameMap["results"] = "Results"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ods_dynamicd_runbook_instance_list_result", fields, reflect.TypeOf(OdsDynamicdRunbookInstanceListResult{}), fieldNameMap, validators)
+}
+
+func OdsPackageInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["runbook_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["runbook_name"] = "RunbookName"
+	fields["target_nodes"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["target_nodes"] = "TargetNodes"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ods_package_info", fields, reflect.TypeOf(OdsPackageInfo{}), fieldNameMap, validators)
 }
 
 func OdsPredefinedRunbookBindingType() vapiBindings_.BindingType {
@@ -173434,6 +175244,8 @@ func OdsRunbookArtifactStatusBindingType() vapiBindings_.BindingType {
 func OdsRunbookCompoundParameterBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["entity_query"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(OdsRunbookEntityQueryParameterBindingType))
+	fieldNameMap["entity_query"] = "EntityQuery"
 	fields["default_value"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["default_value"] = "DefaultValue"
 	fields["max"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -173448,6 +175260,29 @@ func OdsRunbookCompoundParameterBindingType() vapiBindings_.BindingType {
 	fieldNameMap["parameter_type"] = "ParameterType"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ods_runbook_compound_parameter", fields, reflect.TypeOf(OdsRunbookCompoundParameter{}), fieldNameMap, validators)
+}
+
+func OdsRunbookEntityQueryParameterBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["api_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["api_path"] = "ApiPath"
+	fields["data_source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["data_source"] = "DataSource"
+	fields["entity_collection_field"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["entity_collection_field"] = "EntityCollectionField"
+	fields["entity_display_field"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["entity_display_field"] = "EntityDisplayField"
+	fields["entity_return_field"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["entity_return_field"] = "EntityReturnField"
+	fields["entity_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["entity_type"] = "EntityType"
+	fields["http_method"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["http_method"] = "HttpMethod"
+	fields["request_payload"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["request_payload"] = "RequestPayload"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ods_runbook_entity_query_parameter", fields, reflect.TypeOf(OdsRunbookEntityQueryParameter{}), fieldNameMap, validators)
 }
 
 func OdsRunbookEnumParameterBindingType() vapiBindings_.BindingType {
@@ -173469,6 +175304,21 @@ func OdsRunbookEnumParameterBindingType() vapiBindings_.BindingType {
 	fieldNameMap["parameter_type"] = "ParameterType"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ods_runbook_enum_parameter", fields, reflect.TypeOf(OdsRunbookEnumParameter{}), fieldNameMap, validators)
+}
+
+func OdsRunbookFilterBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["ids"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["ids"] = "Ids"
+	fields["names"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["names"] = "Names"
+	fields["paths"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["paths"] = "Paths"
+	fields["target_nodes"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["target_nodes"] = "TargetNodes"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ods_runbook_filter", fields, reflect.TypeOf(OdsRunbookFilter{}), fieldNameMap, validators)
 }
 
 func OdsRunbookHelpInfoBindingType() vapiBindings_.BindingType {
@@ -173558,14 +175408,28 @@ func OdsRunbookInvocationBindingType() vapiBindings_.BindingType {
 	fieldNameMap["overridden"] = "Overridden"
 	fields["arguments"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(UnboundedKeyValuePairBindingType), reflect.TypeOf([]UnboundedKeyValuePair{})))
 	fieldNameMap["arguments"] = "Arguments"
+	fields["dynamic_runbook_instance_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["dynamic_runbook_instance_name"] = "DynamicRunbookInstanceName"
+	fields["dynamic_runbook_instance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["dynamic_runbook_instance_path"] = "DynamicRunbookInstancePath"
+	fields["error_detail"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["error_detail"] = "ErrorDetail"
 	fields["is_transient"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["is_transient"] = "IsTransient"
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["node_type"] = "NodeType"
+	fields["report_available"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["report_available"] = "ReportAvailable"
 	fields["runbook_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["runbook_name"] = "RunbookName"
 	fields["runbook_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["runbook_path"] = "RunbookPath"
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["status"] = "Status"
 	fields["target_node"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["target_node"] = "TargetNode"
+	fields["target_node_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["target_node_name"] = "TargetNodeName"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ods_runbook_invocation", fields, reflect.TypeOf(OdsRunbookInvocation{}), fieldNameMap, validators)
 }
@@ -173725,6 +175589,25 @@ func OdsRunbookInvocationArtifactListResultBindingType() vapiBindings_.BindingTy
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ods_runbook_invocation_artifact_list_result", fields, reflect.TypeOf(OdsRunbookInvocationArtifactListResult{}), fieldNameMap, validators)
 }
 
+func OdsRunbookInvocationFilterBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["invocation_names"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["invocation_names"] = "InvocationNames"
+	fields["paths"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["paths"] = "Paths"
+	fields["runbook_names"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["runbook_names"] = "RunbookNames"
+	fields["runbook_paths"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["runbook_paths"] = "RunbookPaths"
+	fields["statuses"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["statuses"] = "Statuses"
+	fields["target_node_names"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["target_node_names"] = "TargetNodeNames"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ods_runbook_invocation_filter", fields, reflect.TypeOf(OdsRunbookInvocationFilter{}), fieldNameMap, validators)
+}
+
 func OdsRunbookInvocationListResultBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -173751,6 +175634,8 @@ func OdsRunbookInvocationListResultBindingType() vapiBindings_.BindingType {
 func OdsRunbookInvocationReportBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["artifact_created"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["artifact_created"] = "ArtifactCreated"
 	fields["error_detail"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["error_detail"] = "ErrorDetail"
 	fields["invalid_reason"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -173983,6 +175868,8 @@ func OdsRunbookSettingListResultBindingType() vapiBindings_.BindingType {
 func OdsRunbookStringParameterBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["entity_query"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(OdsRunbookEntityQueryParameterBindingType))
+	fieldNameMap["entity_query"] = "EntityQuery"
 	fields["default_value"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["default_value"] = "DefaultValue"
 	fields["max"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -174142,6 +176029,8 @@ func OpsGlobalConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["operation_collectors"] = "OperationCollectors"
 	fields["operation_feature_disabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(OperationVerticalConfigBindingType))
 	fieldNameMap["operation_feature_disabled"] = "OperationFeatureDisabled"
+	fields["overlay_tunnel_mtu_check"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(OverlayTunnelMtuCheckConfigBindingType))
+	fieldNameMap["overlay_tunnel_mtu_check"] = "OverlayTunnelMtuCheck"
 	fields["site_infos"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(SiteInfoBindingType), reflect.TypeOf([]SiteInfo{})))
 	fieldNameMap["site_infos"] = "SiteInfos"
 	fields["vna_dscp_value"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -174794,6 +176683,51 @@ func OverlayDataPathL2BindingType() vapiBindings_.BindingType {
 	fieldNameMap["uplink_tx_ucast_flood"] = "UplinkTxUcastFlood"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.overlay_data_path_l2", fields, reflect.TypeOf(OverlayDataPathL2{}), fieldNameMap, validators)
+}
+
+func OverlayMTUCheckStatusCountBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["down_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["down_count"] = "DownCount"
+	fields["init_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["init_count"] = "InitCount"
+	fields["last_status_changed_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["last_status_changed_time"] = "LastStatusChangedTime"
+	fields["up_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["up_count"] = "UpCount"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.overlay_MTU_check_status_count", fields, reflect.TypeOf(OverlayMTUCheckStatusCount{}), fieldNameMap, validators)
+}
+
+func OverlayMtuCheckPropertiesBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["enabled"] = "Enabled"
+	fields["last_updated_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["last_updated_time"] = "LastUpdatedTime"
+	fields["mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["mode"] = "Mode"
+	fields["mtu"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["mtu"] = "Mtu"
+	fields["src_udp_port"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["src_udp_port"] = "SrcUdpPort"
+	fields["state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["state"] = "State"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.overlay_mtu_check_properties", fields, reflect.TypeOf(OverlayMtuCheckProperties{}), fieldNameMap, validators)
+}
+
+func OverlayTunnelMtuCheckConfigBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["enable"] = "Enable"
+	fields["interval"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["interval"] = "Interval"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.overlay_tunnel_mtu_check_config", fields, reflect.TypeOf(OverlayTunnelMtuCheckConfig{}), fieldNameMap, validators)
 }
 
 func OverriddenResourceBindingType() vapiBindings_.BindingType {
@@ -184276,6 +186210,8 @@ func PolicyVpcNatRuleBindingType() vapiBindings_.BindingType {
 	fieldNameMap["action"] = "Action"
 	fields["destination_network"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["destination_network"] = "DestinationNetwork"
+	fields["destination_network_allocation_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["destination_network_allocation_path"] = "DestinationNetworkAllocationPath"
 	fields["enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enabled"] = "Enabled"
 	fields["firewall_match"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -184290,6 +186226,8 @@ func PolicyVpcNatRuleBindingType() vapiBindings_.BindingType {
 	fieldNameMap["source_network"] = "SourceNetwork"
 	fields["translated_network"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["translated_network"] = "TranslatedNetwork"
+	fields["translated_network_allocation_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["translated_network_allocation_path"] = "TranslatedNetworkAllocationPath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.policy_vpc_nat_rule", fields, reflect.TypeOf(PolicyVpcNatRule{}), fieldNameMap, validators)
 }
@@ -185472,6 +187410,8 @@ func ProjectBindingType() vapiBindings_.BindingType {
 	fieldNameMap["external_ipv4_blocks"] = "ExternalIpv4Blocks"
 	fields["id_suffix"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["id_suffix"] = "IdSuffix"
+	fields["ipv6_blocks"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["ipv6_blocks"] = "Ipv6Blocks"
 	fields["limits"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["limits"] = "Limits"
 	fields["log_labeled_external_resources"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(DedicatedResourcesBindingType))
@@ -196491,6 +198431,8 @@ func StaticIpAllocationBindingType() vapiBindings_.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enabled"] = "Enabled"
+	fields["pool_ranges"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["pool_ranges"] = "PoolRanges"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.static_ip_allocation", fields, reflect.TypeOf(StaticIpAllocation{}), fieldNameMap, validators)
 }
@@ -196685,6 +198627,19 @@ func StaticIpv6PoolSpecBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.static_ipv6_pool_spec", fields, reflect.TypeOf(StaticIpv6PoolSpec{}), fieldNameMap, validators)
 }
 
+func StaticLimitsStatusBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["client_api_concurrency_limit"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["client_api_concurrency_limit"] = "ClientApiConcurrencyLimit"
+	fields["client_api_rate_limit"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["client_api_rate_limit"] = "ClientApiRateLimit"
+	fields["global_api_concurrency_limit"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["global_api_concurrency_limit"] = "GlobalApiConcurrencyLimit"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.static_limits_status", fields, reflect.TypeOf(StaticLimitsStatus{}), fieldNameMap, validators)
+}
+
 func StaticMimeContentBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -196740,6 +198695,10 @@ func StaticMimeContentBindingType() vapiBindings_.BindingType {
 	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
 	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["overridden"] = "Overridden"
+	fields["html_template"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["html_template"] = "HtmlTemplate"
+	fields["html_template_with_message"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["html_template_with_message"] = "HtmlTemplateWithMessage"
 	fields["text_message"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["text_message"] = "TextMessage"
 	var validators = []vapiBindings_.Validator{}
@@ -196992,6 +198951,8 @@ func StaticRoutesBindingType() vapiBindings_.BindingType {
 	fieldNameMap["enabled_on_secondary"] = "EnabledOnSecondary"
 	fields["network"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["network"] = "Network"
+	fields["network_ip_allocation_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["network_ip_allocation_path"] = "NetworkIpAllocationPath"
 	fields["next_hops"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(RouterNexthopBindingType), reflect.TypeOf([]RouterNexthop{})))
 	fieldNameMap["next_hops"] = "NextHops"
 	var validators = []vapiBindings_.Validator{}
@@ -197396,6 +199357,8 @@ func SubnetConnectionBindingMapBindingType() vapiBindings_.BindingType {
 	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
 	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["overridden"] = "Overridden"
+	fields["subnet_association"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["subnet_association"] = "SubnetAssociation"
 	fields["subnet_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["subnet_path"] = "SubnetPath"
 	fields["vlan_traffic_tag"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -197438,6 +199401,19 @@ func SubnetDhcpConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["mode"] = "Mode"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.subnet_dhcp_config", fields, reflect.TypeOf(SubnetDhcpConfig{}), fieldNameMap, validators)
+}
+
+func SubnetDhcpv6ConfigBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["dhcpv6_server_additional_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(DhcpV6ServerAdditionalConfigBindingType))
+	fieldNameMap["dhcpv6_server_additional_config"] = "Dhcpv6ServerAdditionalConfig"
+	fields["dns_server_preference"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["dns_server_preference"] = "DnsServerPreference"
+	fields["mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["mode"] = "Mode"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.subnet_dhcpv6_config", fields, reflect.TypeOf(SubnetDhcpv6Config{}), fieldNameMap, validators)
 }
 
 func SubnetExtraConfigBindingType() vapiBindings_.BindingType {
@@ -198203,6 +200179,10 @@ func TestIdentityFirewallStoreLdapServerConnectivityRequestBindingType() vapiBin
 func ThirdPartyIPAMInfoBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["dns_view_ref"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["dns_view_ref"] = "DnsViewRef"
+	fields["ip_view_ref"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["ip_view_ref"] = "IpViewRef"
 	fields["ipam_provider"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["ipam_provider"] = "IpamProvider"
 	fields["object_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -198968,6 +200948,8 @@ func Tier0VrfConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["route_targets"] = "RouteTargets"
 	fields["tier0_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["tier0_path"] = "Tier0Path"
+	fields["vrf_ha"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["vrf_ha"] = "VrfHa"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.tier0_vrf_config", fields, reflect.TypeOf(Tier0VrfConfig{}), fieldNameMap, validators)
 }
@@ -201508,8 +203490,6 @@ func TransitGatewayBindingType() vapiBindings_.BindingType {
 	fieldNameMap["overridden"] = "Overridden"
 	fields["external_ip_signaling_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["external_ip_signaling_mode"] = "ExternalIpSignalingMode"
-	fields["high_availability_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TransitGatewayHighAvailabilityConfigBindingType))
-	fieldNameMap["high_availability_config"] = "HighAvailabilityConfig"
 	fields["is_default"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["is_default"] = "IsDefault"
 	fields["span"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(BaseSpanBindingType)}))
@@ -201671,17 +203651,6 @@ func TransitGatewayAttachmentStatisticsBindingType() vapiBindings_.BindingType {
 	fieldNameMap["tx"] = "Tx"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.transit_gateway_attachment_statistics", fields, reflect.TypeOf(TransitGatewayAttachmentStatistics{}), fieldNameMap, validators)
-}
-
-func TransitGatewayHighAvailabilityConfigBindingType() vapiBindings_.BindingType {
-	fields := make(map[string]vapiBindings_.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["edge_cluster_paths"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["edge_cluster_paths"] = "EdgeClusterPaths"
-	fields["ha_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["ha_mode"] = "HaMode"
-	var validators = []vapiBindings_.Validator{}
-	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.transit_gateway_high_availability_config", fields, reflect.TypeOf(TransitGatewayHighAvailabilityConfig{}), fieldNameMap, validators)
 }
 
 func TransitGatewayListResultBindingType() vapiBindings_.BindingType {
@@ -201850,6 +203819,8 @@ func TransitGatewayNatRuleBindingType() vapiBindings_.BindingType {
 	fieldNameMap["action"] = "Action"
 	fields["destination_network"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["destination_network"] = "DestinationNetwork"
+	fields["destination_network_allocation_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["destination_network_allocation_path"] = "DestinationNetworkAllocationPath"
 	fields["enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enabled"] = "Enabled"
 	fields["firewall_match"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -201864,6 +203835,8 @@ func TransitGatewayNatRuleBindingType() vapiBindings_.BindingType {
 	fieldNameMap["source_network"] = "SourceNetwork"
 	fields["translated_network"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["translated_network"] = "TranslatedNetwork"
+	fields["translated_network_allocation_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["translated_network_allocation_path"] = "TranslatedNetworkAllocationPath"
 	fields["scope"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["scope"] = "Scope"
 	var validators = []vapiBindings_.Validator{}
@@ -202315,6 +204288,8 @@ func TransportNodeStatusBindingType() vapiBindings_.BindingType {
 	fieldNameMap["node_type"] = "NodeType"
 	fields["node_uuid"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["node_uuid"] = "NodeUuid"
+	fields["overlay_mtu_check_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(OverlayMTUCheckStatusCountBindingType))
+	fieldNameMap["overlay_mtu_check_status"] = "OverlayMtuCheckStatus"
 	fields["pnic_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(StatusCountBindingType))
 	fieldNameMap["pnic_status"] = "PnicStatus"
 	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -202744,6 +204719,8 @@ func TunnelPropertiesBindingType() vapiBindings_.BindingType {
 	fieldNameMap["latency_value"] = "LatencyValue"
 	fields["local_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["local_ip"] = "LocalIp"
+	fields["mtu_check"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(OverlayMtuCheckPropertiesBindingType))
+	fieldNameMap["mtu_check"] = "MtuCheck"
 	fields["name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["name"] = "Name"
 	fields["remote_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -203762,6 +205739,29 @@ func ViewInfoBindingType() vapiBindings_.BindingType {
 	fieldNameMap["view_ref_id"] = "ViewRefId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.view_info", fields, reflect.TypeOf(ViewInfo{}), fieldNameMap, validators)
+}
+
+func ViewInfoListResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ViewInfoBindingType), reflect.TypeOf([]ViewInfo{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.view_info_list_result", fields, reflect.TypeOf(ViewInfoListResult{}), fieldNameMap, validators)
 }
 
 func ViewListBindingType() vapiBindings_.BindingType {
@@ -204994,6 +206994,8 @@ func VpcConnectivityProfileBindingType() vapiBindings_.BindingType {
 	fieldNameMap["overridden"] = "Overridden"
 	fields["external_ip_blocks"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["external_ip_blocks"] = "ExternalIpBlocks"
+	fields["ipv6_blocks"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["ipv6_blocks"] = "Ipv6Blocks"
 	fields["is_default"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["is_default"] = "IsDefault"
 	fields["private_tgw_ip_blocks"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
@@ -205071,6 +207073,25 @@ func VpcDhcpServerConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["ntp_servers"] = "NtpServers"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vpc_dhcp_server_config", fields, reflect.TypeOf(VpcDhcpServerConfig{}), fieldNameMap, validators)
+}
+
+func VpcDhcpv6ServerConfigBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["advanced_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(VpcDhcpAdvancedConfigBindingType))
+	fieldNameMap["advanced_config"] = "AdvancedConfig"
+	fields["dns_client_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(DnsClientConfigBindingType))
+	fieldNameMap["dns_client_config"] = "DnsClientConfig"
+	fields["lease_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["lease_time"] = "LeaseTime"
+	fields["ntp_servers"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["ntp_servers"] = "NtpServers"
+	fields["preferred_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["preferred_time"] = "PreferredTime"
+	fields["sntp_servers"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["sntp_servers"] = "SntpServers"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vpc_dhcpv6_server_config", fields, reflect.TypeOf(VpcDhcpv6ServerConfig{}), fieldNameMap, validators)
 }
 
 func VpcDnsFailedQueriesBindingType() vapiBindings_.BindingType {
@@ -205405,6 +207426,17 @@ func VpcProfileDhcpConfigBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vpc_profile_dhcp_config", fields, reflect.TypeOf(VpcProfileDhcpConfig{}), fieldNameMap, validators)
 }
 
+func VpcProfileDhcpV6ConfigBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["dhcpv6_relay_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(VpcDhcpRelayConfigBindingType))
+	fieldNameMap["dhcpv6_relay_config"] = "Dhcpv6RelayConfig"
+	fields["dhcpv6_server_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(VpcDhcpv6ServerConfigBindingType))
+	fieldNameMap["dhcpv6_server_config"] = "Dhcpv6ServerConfig"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vpc_profile_dhcp_v6_config", fields, reflect.TypeOf(VpcProfileDhcpV6Config{}), fieldNameMap, validators)
+}
+
 func VpcSecurityProfileBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -205545,6 +207577,8 @@ func VpcServiceInstanceStatusBindingType() vapiBindings_.BindingType {
 	fieldNameMap["exit_interface"] = "ExitInterface"
 	fields["parent_port_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["parent_port_id"] = "ParentPortId"
+	fields["periodic_garp_interval"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["periodic_garp_interval"] = "PeriodicGarpInterval"
 	fields["service_interface_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["service_interface_id"] = "ServiceInterfaceId"
 	fields["service_interface_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -205612,10 +207646,14 @@ func VpcServiceProfileBindingType() vapiBindings_.BindingType {
 	fieldNameMap["overridden"] = "Overridden"
 	fields["dhcp_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(VpcProfileDhcpConfigBindingType))
 	fieldNameMap["dhcp_config"] = "DhcpConfig"
+	fields["dhcpv6_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(VpcProfileDhcpV6ConfigBindingType))
+	fieldNameMap["dhcpv6_config"] = "Dhcpv6Config"
 	fields["dns_forwarder_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(PolicyVpcDnsForwarderBindingType))
 	fieldNameMap["dns_forwarder_config"] = "DnsForwarderConfig"
 	fields["ip_discovery_profile"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["ip_discovery_profile"] = "IpDiscoveryProfile"
+	fields["ipv6_profile_paths"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["ipv6_profile_paths"] = "Ipv6ProfilePaths"
 	fields["is_default"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["is_default"] = "IsDefault"
 	fields["mac_discovery_profile"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -205802,14 +207840,20 @@ func VpcSubnetBindingType() vapiBindings_.BindingType {
 	fieldNameMap["advanced_config"] = "AdvancedConfig"
 	fields["dhcp_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(VpcSubnetDhcpConfigBindingType))
 	fieldNameMap["dhcp_config"] = "DhcpConfig"
+	fields["ip_address_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["ip_address_type"] = "IpAddressType"
 	fields["ip_addresses"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["ip_addresses"] = "IpAddresses"
 	fields["ip_blocks"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["ip_blocks"] = "IpBlocks"
 	fields["ipv4_subnet_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["ipv4_subnet_size"] = "Ipv4SubnetSize"
+	fields["ipv6_subnet_mask"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["ipv6_subnet_mask"] = "Ipv6SubnetMask"
 	fields["subnet_dhcp_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SubnetDhcpConfigBindingType))
 	fieldNameMap["subnet_dhcp_config"] = "SubnetDhcpConfig"
+	fields["subnet_dhcpv6_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SubnetDhcpv6ConfigBindingType))
+	fieldNameMap["subnet_dhcpv6_config"] = "SubnetDhcpv6Config"
 	fields["vlan_connection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["vlan_connection"] = "VlanConnection"
 	var validators = []vapiBindings_.Validator{}

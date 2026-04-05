@@ -38,7 +38,7 @@ type GroupsClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, domainIdParam string, groupIdParam string, failIfSubtreeExistsParam *bool, forceParam *bool) error
 
-	// Read group
+	// Returns the configuration of a specific NSX policy group within a domain, identified by domain ID and group ID. Groups define membership criteria for workloads and are used as sources, destinations, and scopes in security policies.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

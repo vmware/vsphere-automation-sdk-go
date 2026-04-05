@@ -23,7 +23,7 @@ type ServiceInstancesClient interface {
 
 	// Delete Tier1 policy service instance
 	//
-	// @param tier1IdParam Tier-0 id (required)
+	// @param tier1IdParam Tier-1 id (required)
 	// @param localeServiceIdParam Locale service id (required)
 	// @param serviceInstanceIdParam Tier1 Service instance id (required)
 	//

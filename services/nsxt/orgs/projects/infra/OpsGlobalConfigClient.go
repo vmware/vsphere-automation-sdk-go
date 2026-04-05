@@ -36,7 +36,7 @@ type OpsGlobalConfigClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, applyLocallyParam *bool) (nsx_policyModel.OpsGlobalConfig, error)
 
-	// Update the global Operationconfiguration
+	// Update the global Operations Configuration
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

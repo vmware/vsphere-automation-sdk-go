@@ -60,7 +60,7 @@ type SegmentsClient interface {
 	// @throws NotFound  Not Found
 	Deletedhcpleases(segmentIdParam string, dhcpDeleteLeasesParam nsx_policyModel.DhcpDeleteLeases, enforcementPointPathParam *string) error
 
-	// Read infra segment Note: Extended Segment: Please note that old vpn path deprecated. If user specify old l2vpn path in the \"l2_extension\" object in the PATCH API payload, the path returned in the GET response payload may include the new path instead of the deprecated l2vpn path. Both old and new l2vpn path refer to same resource. there is no functional impact. Also note that l2vpn path included in the error messages returned from validation may include the new VPN path instead of the deprecated l2vpn path. Both new path and old vpn path refer to same resource.
+	// Returns the configuration of a specific NSX network segment (logical switch) identified by segment ID. Segments provide Layer 2 connectivity for workloads and are connected to a Tier-0 or Tier-1 gateway for Layer 3 routing. Note: Extended Segment (L2VPN) — if an old vpn path was specified in the l2_extension object in a previous PATCH request, the GET response may return the new canonicalized path instead of the original path that was submitted. instead of the deprecated l2vpn path. Both old and new l2vpn path refer to same resource. there is no functional impact. Also note that l2vpn path included in the error messages returned from validation may include the new VPN path instead of the deprecated l2vpn path. Both new path and old vpn path refer to same resource.
 	//
 	// @param segmentIdParam Segment ID (required)
 	// @return com.vmware.nsx_policy.model.Segment
