@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RulesClient interface {
 
-	// Get the list of rules of given parent path of policy/section, filtered based on the given criteria. Parent path is mandatory.
+	// Get the list of firewall rules of a given parent policy path, filtered based on the given criteria. Parent path is mandatory.
 	//
 	// @param scopeParam All those firewall entities, policies/rules, will be returned whose scope value satisfies the given criteria. The value for scope can be, - nsgroup id - logical port id - logical switch id (for DFW) - logical router id (for GFW) Based on the given scope value, the entities will be filtered. (required)
 	// @param enforcementPointPathParam Path of the enforcement point from where the result need to be fetched. If not provided, default enforcement point will be considered. It is mandatory parameter on global manager. (optional)

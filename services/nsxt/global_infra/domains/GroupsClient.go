@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type GroupsClient interface {
 
-	// Returns the configuration of a specific NSX policy group within a domain, identified by domain ID and group ID. Groups define membership criteria for workloads and are used as sources, destinations, and scopes in security policies.
+	// Returns the configuration of a specific group within a domain, identified by domain ID and group ID. Groups define membership criteria for workloads and are used as sources, destinations, and scopes in security policies.
 	//
 	// @param domainIdParam Domain ID (required)
 	// @param groupIdParam Group ID (required)

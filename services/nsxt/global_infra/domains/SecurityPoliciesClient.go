@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SecurityPoliciesClient interface {
 
-	// Read security policy for a domain.
+	// Read a distributed firewall (DFW) security policy for a domain.
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)
@@ -35,7 +35,7 @@ type SecurityPoliciesClient interface {
 	// @throws NotFound  Not Found
 	Get(domainIdParam string, securityPolicyIdParam string) (nsx_policyModel.SecurityPolicy, error)
 
-	// List all security policies for a domain.
+	// List all distributed firewall (DFW) security policies for a domain.
 	//
 	// @param domainIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)

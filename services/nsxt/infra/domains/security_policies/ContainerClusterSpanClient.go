@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ContainerClusterSpanClient interface {
 
-	// Deletes the security policy along with all the rules
+	// Remove the association of a container cluster span from a distributed firewall (DFW) security policy.
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)

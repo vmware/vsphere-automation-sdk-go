@@ -36,7 +36,7 @@ type ExcludeListClient interface {
 	// @throws NotFound  Not Found
 	Filter(intentPathParam string, deepCheckParam *bool, enforcementPointPathParam *string) (nsx_policyModel.PolicyResourceReference, error)
 
-	// Read exclude list for firewall
+	// Read the exclude list for the distributed firewall (DFW). Members in this list are excluded from DFW enforcement.
 	// @return com.vmware.nsx_policy.model.PolicyExcludeList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -47,7 +47,7 @@ type ExcludeListClient interface {
 	// @throws NotFound  Not Found
 	Get() (nsx_policyModel.PolicyExcludeList, error)
 
-	// Read security policy exclude list including system and user excluded members.
+	// Read the distributed firewall (DFW) exclude list including both system-owned and user-defined excluded members.
 	// @return com.vmware.nsx_policy.model.PolicyExcludeList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

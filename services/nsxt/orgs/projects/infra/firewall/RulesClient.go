@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RulesClient interface {
 
-	// Get the list of rules of given parent path of policy/section, filtered based on the given criteria. Parent path is mandatory.
+	// Get the list of firewall rules of a given parent policy path, filtered based on the given criteria. Parent path is mandatory.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

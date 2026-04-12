@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RulesClient interface {
 
-	// Delete rule
+	// Delete a distributed firewall (DFW) rule from a security policy.
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)
@@ -70,7 +70,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	List(domainIdParam string, securityPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.RuleListResult, error)
 
-	// Patch the rule. If Rule corresponding to the the given rule-id is not present, the object will get created and if it is present it will be updated. This is a full replace. Performance Note: If you want to edit several rules in a security policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/security-policies/<security-policy-id>
+	// Create or partially update a distributed firewall (DFW) rule within a security policy. If a rule with the given rule-id does not exist it will be created; otherwise only the specified fields will be updated. Performance Note: If you want to edit several rules in a security policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/security-policies/<security-policy-id>
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)
@@ -85,7 +85,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Patch(domainIdParam string, securityPolicyIdParam string, ruleIdParam string, ruleParam nsx_policyModel.Rule) error
 
-	// This is used to re-order a rule within a security policy. NOTE: Default rule sequence numbers cannot be modified.
+	// This is used to re-order a distributed firewall (DFW) rule within a security policy. NOTE: Default rule sequence numbers cannot be modified.
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)
@@ -103,7 +103,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Revise(domainIdParam string, securityPolicyIdParam string, ruleIdParam string, ruleParam nsx_policyModel.Rule, anchorPathParam *string, operationParam *string) (nsx_policyModel.Rule, error)
 
-	// Update the rule. Create new rule if a rule with the rule-id is not already present. Performance Note: If you wish to edit several rules in a security policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/security-policies/<security-policy-id>
+	// Create or update a distributed firewall (DFW) rule within a security policy. If a rule with the given rule-id does not exist it will be created; otherwise it will be replaced in full. Performance Note: If you wish to edit several rules in a security policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/security-policies/<security-policy-id>
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)

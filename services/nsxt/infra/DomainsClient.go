@@ -33,7 +33,7 @@ type DomainsClient interface {
 	// @throws NotFound  Not Found
 	Delete(domainIdParam string) error
 
-	// Returns the configuration of a specific NSX policy domain identified by the domain ID. Domains are used to scope groups, security policies, and gateway policies.
+	// Returns the configuration of a specific domain identified by the domain ID. Domains are used to scope groups, security policies, and gateway policies.
 	//
 	// @param domainIdParam Domain ID (required)
 	// @return com.vmware.nsx_policy.model.Domain

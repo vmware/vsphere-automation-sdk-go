@@ -68,7 +68,7 @@ type IntrusionServiceGatewayPoliciesClient interface {
 	// @throws NotFound  Not Found
 	List(domainIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includeRuleCountParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IdsGatewayPolicyListResult, error)
 
-	// Update the IDS gateway policy for a domain.
+	// Create or partially update a gateway IDS/IPS intrusion detection policy for a domain.
 	//
 	// @param domainIdParam (required)
 	// @param policyIdParam (required)
@@ -99,7 +99,7 @@ type IntrusionServiceGatewayPoliciesClient interface {
 	// @throws NotFound  Not Found
 	Revise(domainIdParam string, policyIdParam string, idsGatewayPolicyParam nsx_policyModel.IdsGatewayPolicy, anchorPathParam *string, operationParam *string) (nsx_policyModel.IdsGatewayPolicy, error)
 
-	// Update the IDS gateway policy for a domain.
+	// Create or update a gateway IDS/IPS intrusion detection policy for a domain.
 	//
 	// @param domainIdParam (required)
 	// @param policyIdParam (required)

@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RulesClient interface {
 
-	// Returns the configuration of a specific Intrusion Detection System (IDS) rule within an intrusion service policy. Each rule defines traffic matching criteria and the IDS profile to apply for detecting and preventing intrusion attempts.
+	// Returns the configuration of a specific distributed IDS/IPS rule within an intrusion service policy, identified by domain ID, policy ID, and rule ID.
 	//
 	// @param domainIdParam Domain ID (required)
 	// @param policyIdParam Policy ID (required)

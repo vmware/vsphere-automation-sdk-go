@@ -50,7 +50,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Get(domainIdParam string, infraSecurityPolicyIdParam string, ruleIdParam string) (nsx_policyModel.InfraSecurityRule, error)
 
-	// List rules
+	// List all rules within an infra security policy.
 	//
 	// @param domainIdParam (required)
 	// @param infraSecurityPolicyIdParam (required)

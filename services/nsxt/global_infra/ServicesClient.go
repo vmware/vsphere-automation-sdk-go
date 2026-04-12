@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ServicesClient interface {
 
-	// Returns the configuration of a specific NSX policy service identified by service ID. Services define protocol and port combinations used in firewall rules.
+	// Returns the configuration of a specific service identified by service ID.
 	//
 	// @param serviceIdParam Service ID (required)
 	// @return com.vmware.nsx_policy.model.Service

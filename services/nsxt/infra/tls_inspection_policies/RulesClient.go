@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RulesClient interface {
 
-	// Delete rule
+	// Delete a gateway firewall TLS inspection rule.
 	//
 	// @param policyIdParam (required)
 	// @param ruleIdParam (required)
@@ -34,7 +34,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Delete(policyIdParam string, ruleIdParam string) error
 
-	// Read rule
+	// Read a gateway firewall TLS inspection rule by ID.
 	//
 	// @param policyIdParam (required)
 	// @param ruleIdParam (required)

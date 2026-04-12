@@ -35,7 +35,7 @@ type ServicesClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, serviceIdParam string) error
 
-	// Returns the configuration of a specific NSX policy service identified by service ID. Services define protocol and port combinations used in firewall rules.
+	// Returns the configuration of a specific service identified by service ID.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

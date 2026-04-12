@@ -35,7 +35,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Delete(domainIdParam string, redirectionPolicyIdParam string, ruleIdParam string) error
 
-	// Read rule
+	// Read a service insertion redirection rule by ID.
 	//
 	// @param domainIdParam Domain id (required)
 	// @param redirectionPolicyIdParam Redirection map id (required)
@@ -50,7 +50,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Get(domainIdParam string, redirectionPolicyIdParam string, ruleIdParam string) (nsx_policyModel.RedirectionRule, error)
 
-	// List rules
+	// List all rules within a service insertion redirection policy.
 	//
 	// @param domainIdParam Domain id (required)
 	// @param redirectionPolicyIdParam Redirection map id (required)

@@ -4,10 +4,10 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: InfraSecurityPolicies
+// Interface file for service: IpBlockRestrictedIps
 // Used by client-side stubs.
 
-package domains
+package infra
 
 import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -19,12 +19,11 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-type InfraSecurityPoliciesClient interface {
+type IpBlockRestrictedIpsClient interface {
 
-	// Delete an infra security policy along with all its rules.
+	// Delete the IP Block restricted IPs resource with the given id.
 	//
-	// @param domainIdParam (required)
-	// @param securityPolicyIdParam (required)
+	// @param restrictedIpsIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -32,13 +31,12 @@ type InfraSecurityPoliciesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(domainIdParam string, securityPolicyIdParam string) error
+	Delete(restrictedIpsIdParam string) error
 
-	// Read an infra security policy for a domain.
+	// Read a specific IP Block restricted IPs resource.
 	//
-	// @param domainIdParam (required)
-	// @param securityPolicyIdParam (required)
-	// @return com.vmware.nsx_policy.model.InfraSecurityPolicy
+	// @param restrictedIpsIdParam (required)
+	// @return com.vmware.nsx_policy.model.IpBlockRestrictedIps
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -46,19 +44,17 @@ type InfraSecurityPoliciesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(domainIdParam string, securityPolicyIdParam string) (nsx_policyModel.InfraSecurityPolicy, error)
+	Get(restrictedIpsIdParam string) (nsx_policyModel.IpBlockRestrictedIps, error)
 
-	// List all infra security policies for a domain.
+	// Paginated list of IP Block restricted IPs. These define CIDRs and ranges that are disallowed in IP Block creation.
 	//
-	// @param domainIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
-	// @param includeRuleCountParam If true, populate the rule_count field with the count of rules in the particular policy. By default, rule_count will not be populated. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.SecurityPolicyListResult
+	// @return com.vmware.nsx_policy.model.IpBlockRestrictedIpsListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -66,13 +62,12 @@ type InfraSecurityPoliciesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(domainIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includeRuleCountParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityPolicyListResult, error)
+	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IpBlockRestrictedIpsListResult, error)
 
-	// Create or partially update an infra security policy for a domain. If a security policy for the given security-policy-id is not present, the object will get created and if it is present it will be updated. This is a full replace. Performance Note: If you want to edit several rules in a security policy use this API. It will perform better than several individual rule APIs. Just pass all the rules which you wish to edit as embedded rules to it.
+	// Create a new IP Block restricted IPs resource with specified ID if not already present. If the resource of given ID already exists, it is updated.
 	//
-	// @param domainIdParam (required)
-	// @param securityPolicyIdParam (required)
-	// @param infraSecurityPolicyParam (required)
+	// @param restrictedIpsIdParam (required)
+	// @param ipBlockRestrictedIpsParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -80,14 +75,13 @@ type InfraSecurityPoliciesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(domainIdParam string, securityPolicyIdParam string, infraSecurityPolicyParam nsx_policyModel.InfraSecurityPolicy) error
+	Patch(restrictedIpsIdParam string, ipBlockRestrictedIpsParam nsx_policyModel.IpBlockRestrictedIps) error
 
-	// Create or update an infra security policy for a domain. This is a full replace. All the rules are replaced. Performance Note: If you want to edit several rules in a security policy, use this API. It will perform better than several individual rule APIs. Just pass all the rules which you wish to edit as embedded rules to it.
+	// Create or replace IP Block restricted IPs resource with given ID.
 	//
-	// @param domainIdParam (required)
-	// @param securityPolicyIdParam (required)
-	// @param infraSecurityPolicyParam (required)
-	// @return com.vmware.nsx_policy.model.InfraSecurityPolicy
+	// @param restrictedIpsIdParam (required)
+	// @param ipBlockRestrictedIpsParam (required)
+	// @return com.vmware.nsx_policy.model.IpBlockRestrictedIps
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -95,17 +89,17 @@ type InfraSecurityPoliciesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(domainIdParam string, securityPolicyIdParam string, infraSecurityPolicyParam nsx_policyModel.InfraSecurityPolicy) (nsx_policyModel.InfraSecurityPolicy, error)
+	Update(restrictedIpsIdParam string, ipBlockRestrictedIpsParam nsx_policyModel.IpBlockRestrictedIps) (nsx_policyModel.IpBlockRestrictedIps, error)
 }
 
-type infraSecurityPoliciesClient struct {
+type ipBlockRestrictedIpsClient struct {
 	connector           vapiProtocolClient_.Connector
 	interfaceDefinition vapiCore_.InterfaceDefinition
 	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewInfraSecurityPoliciesClient(connector vapiProtocolClient_.Connector) *infraSecurityPoliciesClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.domains.infra_security_policies")
+func NewIpBlockRestrictedIpsClient(connector vapiProtocolClient_.Connector) *ipBlockRestrictedIpsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.ip_block_restricted_ips")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
@@ -116,33 +110,32 @@ func NewInfraSecurityPoliciesClient(connector vapiProtocolClient_.Connector) *in
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
-	iIface := infraSecurityPoliciesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	iIface := ipBlockRestrictedIpsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &iIface
 }
 
-func (iIface *infraSecurityPoliciesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+func (iIface *ipBlockRestrictedIpsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := iIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (iIface *infraSecurityPoliciesClient) Delete(domainIdParam string, securityPolicyIdParam string) error {
+func (iIface *ipBlockRestrictedIpsClient) Delete(restrictedIpsIdParam string) error {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	operationRestMetaData := infraSecurityPoliciesDeleteRestMetadata()
+	operationRestMetaData := ipBlockRestrictedIpsDeleteRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(infraSecurityPoliciesDeleteInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("SecurityPolicyId", securityPolicyIdParam)
+	sv := vapiBindings_.NewStructValueBuilder(ipBlockRestrictedIpsDeleteInputType(), typeConverter)
+	sv.AddStructField("RestrictedIpsId", restrictedIpsIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.domains.infra_security_policies", "delete", inputDataValue, executionContext)
+	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.ip_block_restricted_ips", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -154,30 +147,29 @@ func (iIface *infraSecurityPoliciesClient) Delete(domainIdParam string, security
 	}
 }
 
-func (iIface *infraSecurityPoliciesClient) Get(domainIdParam string, securityPolicyIdParam string) (nsx_policyModel.InfraSecurityPolicy, error) {
+func (iIface *ipBlockRestrictedIpsClient) Get(restrictedIpsIdParam string) (nsx_policyModel.IpBlockRestrictedIps, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	operationRestMetaData := infraSecurityPoliciesGetRestMetadata()
+	operationRestMetaData := ipBlockRestrictedIpsGetRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(infraSecurityPoliciesGetInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("SecurityPolicyId", securityPolicyIdParam)
+	sv := vapiBindings_.NewStructValueBuilder(ipBlockRestrictedIpsGetInputType(), typeConverter)
+	sv.AddStructField("RestrictedIpsId", restrictedIpsIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.InfraSecurityPolicy
+		var emptyOutput nsx_policyModel.IpBlockRestrictedIps
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.domains.infra_security_policies", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.InfraSecurityPolicy
+	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.ip_block_restricted_ips", "get", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.IpBlockRestrictedIps
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), InfraSecurityPoliciesGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IpBlockRestrictedIpsGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.InfraSecurityPolicy), nil
+		return output.(nsx_policyModel.IpBlockRestrictedIps), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -187,36 +179,34 @@ func (iIface *infraSecurityPoliciesClient) Get(domainIdParam string, securityPol
 	}
 }
 
-func (iIface *infraSecurityPoliciesClient) List(domainIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includeRuleCountParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityPolicyListResult, error) {
+func (iIface *ipBlockRestrictedIpsClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IpBlockRestrictedIpsListResult, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	operationRestMetaData := infraSecurityPoliciesListRestMetadata()
+	operationRestMetaData := ipBlockRestrictedIpsListRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(infraSecurityPoliciesListInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
+	sv := vapiBindings_.NewStructValueBuilder(ipBlockRestrictedIpsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
-	sv.AddStructField("IncludeRuleCount", includeRuleCountParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.SecurityPolicyListResult
+		var emptyOutput nsx_policyModel.IpBlockRestrictedIpsListResult
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.domains.infra_security_policies", "list", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.SecurityPolicyListResult
+	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.ip_block_restricted_ips", "list", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.IpBlockRestrictedIpsListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), InfraSecurityPoliciesListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IpBlockRestrictedIpsListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.SecurityPolicyListResult), nil
+		return output.(nsx_policyModel.IpBlockRestrictedIpsListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -226,23 +216,22 @@ func (iIface *infraSecurityPoliciesClient) List(domainIdParam string, cursorPara
 	}
 }
 
-func (iIface *infraSecurityPoliciesClient) Patch(domainIdParam string, securityPolicyIdParam string, infraSecurityPolicyParam nsx_policyModel.InfraSecurityPolicy) error {
+func (iIface *ipBlockRestrictedIpsClient) Patch(restrictedIpsIdParam string, ipBlockRestrictedIpsParam nsx_policyModel.IpBlockRestrictedIps) error {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	operationRestMetaData := infraSecurityPoliciesPatchRestMetadata()
+	operationRestMetaData := ipBlockRestrictedIpsPatchRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(infraSecurityPoliciesPatchInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("SecurityPolicyId", securityPolicyIdParam)
-	sv.AddStructField("InfraSecurityPolicy", infraSecurityPolicyParam)
+	sv := vapiBindings_.NewStructValueBuilder(ipBlockRestrictedIpsPatchInputType(), typeConverter)
+	sv.AddStructField("RestrictedIpsId", restrictedIpsIdParam)
+	sv.AddStructField("IpBlockRestrictedIps", ipBlockRestrictedIpsParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.domains.infra_security_policies", "patch", inputDataValue, executionContext)
+	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.ip_block_restricted_ips", "patch", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -254,31 +243,30 @@ func (iIface *infraSecurityPoliciesClient) Patch(domainIdParam string, securityP
 	}
 }
 
-func (iIface *infraSecurityPoliciesClient) Update(domainIdParam string, securityPolicyIdParam string, infraSecurityPolicyParam nsx_policyModel.InfraSecurityPolicy) (nsx_policyModel.InfraSecurityPolicy, error) {
+func (iIface *ipBlockRestrictedIpsClient) Update(restrictedIpsIdParam string, ipBlockRestrictedIpsParam nsx_policyModel.IpBlockRestrictedIps) (nsx_policyModel.IpBlockRestrictedIps, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
-	operationRestMetaData := infraSecurityPoliciesUpdateRestMetadata()
+	operationRestMetaData := ipBlockRestrictedIpsUpdateRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(infraSecurityPoliciesUpdateInputType(), typeConverter)
-	sv.AddStructField("DomainId", domainIdParam)
-	sv.AddStructField("SecurityPolicyId", securityPolicyIdParam)
-	sv.AddStructField("InfraSecurityPolicy", infraSecurityPolicyParam)
+	sv := vapiBindings_.NewStructValueBuilder(ipBlockRestrictedIpsUpdateInputType(), typeConverter)
+	sv.AddStructField("RestrictedIpsId", restrictedIpsIdParam)
+	sv.AddStructField("IpBlockRestrictedIps", ipBlockRestrictedIpsParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.InfraSecurityPolicy
+		var emptyOutput nsx_policyModel.IpBlockRestrictedIps
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.domains.infra_security_policies", "update", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.InfraSecurityPolicy
+	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.ip_block_restricted_ips", "update", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.IpBlockRestrictedIps
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), InfraSecurityPoliciesUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), IpBlockRestrictedIpsUpdateOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.InfraSecurityPolicy), nil
+		return output.(nsx_policyModel.IpBlockRestrictedIps), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

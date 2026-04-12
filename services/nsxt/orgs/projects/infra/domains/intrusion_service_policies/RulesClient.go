@@ -37,7 +37,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, domainIdParam string, policyIdParam string, ruleIdParam string) error
 
-	// Returns the configuration of a specific Intrusion Detection System (IDS) rule within an intrusion service policy. Each rule defines traffic matching criteria and the IDS profile to apply for detecting and preventing intrusion attempts.
+	// Returns the configuration of a specific distributed IDS/IPS rule within an intrusion service policy, identified by domain ID, policy ID, and rule ID.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -76,7 +76,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, domainIdParam string, policyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IdsRuleListResult, error)
 
-	// Patch intrusion detection system rule.
+	// Create or partially update a distributed IDS/IPS intrusion detection rule.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -113,7 +113,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Revise(orgIdParam string, projectIdParam string, domainIdParam string, policyIdParam string, ruleIdParam string, idsRuleParam nsx_policyModel.IdsRule, anchorPathParam *string, operationParam *string) (nsx_policyModel.IdsRule, error)
 
-	// Update intrusion detection system rule.
+	// Create or update a distributed IDS/IPS intrusion detection rule.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
