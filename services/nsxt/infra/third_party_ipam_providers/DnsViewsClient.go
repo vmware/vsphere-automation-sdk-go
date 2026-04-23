@@ -26,6 +26,7 @@ type DnsViewsClient interface {
 	// @param providerInstanceIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param ipBlockIdParam Ip Block Identifier (optional)
 	// @param ipViewParam Network View name (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
@@ -38,7 +39,7 @@ type DnsViewsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(providerInstanceIdParam string, cursorParam *string, includedFieldsParam *string, ipViewParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ViewInfoListResult, error)
+	List(providerInstanceIdParam string, cursorParam *string, includedFieldsParam *string, ipBlockIdParam *string, ipViewParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ViewInfoListResult, error)
 }
 
 type dnsViewsClient struct {
@@ -66,7 +67,7 @@ func (dIface *dnsViewsClient) GetErrorBindingType(errorName string) vapiBindings
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (dIface *dnsViewsClient) List(providerInstanceIdParam string, cursorParam *string, includedFieldsParam *string, ipViewParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ViewInfoListResult, error) {
+func (dIface *dnsViewsClient) List(providerInstanceIdParam string, cursorParam *string, includedFieldsParam *string, ipBlockIdParam *string, ipViewParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ViewInfoListResult, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dnsViewsListRestMetadata()
@@ -77,6 +78,7 @@ func (dIface *dnsViewsClient) List(providerInstanceIdParam string, cursorParam *
 	sv.AddStructField("ProviderInstanceId", providerInstanceIdParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("IpBlockId", ipBlockIdParam)
 	sv.AddStructField("IpView", ipViewParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)

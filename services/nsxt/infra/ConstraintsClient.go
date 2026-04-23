@@ -64,7 +64,7 @@ type ConstraintsClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ConstraintListResult, error)
 
-	// Create tenant constraint if not exists, otherwise update the existing constraint.
+	// Create tenant constraint if not exists, otherwise update the existing constraint. Any quota constraint created under custom project's scope should have path_prefix under the context of VPC Example: path_prefix=\"/orgs/default/projects/project-1/vpcs/vpc-1/\"
 	//
 	// @param constraintIdParam (required)
 	// @param constraintParam (required)
@@ -77,7 +77,7 @@ type ConstraintsClient interface {
 	// @throws NotFound  Not Found
 	Patch(constraintIdParam string, constraintParam nsx_policyModel.Constraint) error
 
-	// Create tenant constraint if it does not exist, otherwise replace the existing constraint.
+	// Create tenant constraint if it does not exist, otherwise replace the existing constraint. Any quota constraint created under custom project's scope should have path_prefix under the context of VPC Example: path_prefix=\"/orgs/default/projects/project-1/vpcs/vpc-1/\"
 	//
 	// @param constraintIdParam (required)
 	// @param constraintParam (required)

@@ -26,13 +26,13 @@ const SecurityConfig_GET_FEATURE_IDFW = "IDFW"
 const SecurityConfig_GET_FEATURE_IDPS = "IDPS"
 
 // Possible value for ``feature`` of method SecurityConfig#get.
+const SecurityConfig_GET_FEATURE_MALWAREPREVENTION = "MALWAREPREVENTION"
+
+// Possible value for ``feature`` of method SecurityConfig#get.
 const SecurityConfig_GET_FEATURE_GFW_MULTICAST = "GFW_MULTICAST"
 
 // Possible value for ``feature`` of method SecurityConfig#get.
 const SecurityConfig_GET_FEATURE_GEOIP_MONITORING = "GEOIP_MONITORING"
-
-// Possible value for ``feature`` of method SecurityConfig#get.
-const SecurityConfig_GET_FEATURE_MALWAREPREVENTION = "MALWAREPREVENTION"
 
 func securityConfigGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)

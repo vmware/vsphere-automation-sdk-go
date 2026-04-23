@@ -23,7 +23,19 @@ func ipViewsListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["provider_instance_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["ip_block_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["provider_instance_id"] = "ProviderInstanceId"
+	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["ip_block_id"] = "IpBlockId"
+	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fieldNameMap["sort_by"] = "SortBy"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -42,10 +54,34 @@ func ipViewsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["provider_instance_id"] = vapiBindings_.NewStringType()
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["ip_block_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["provider_instance_id"] = "ProviderInstanceId"
+	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["ip_block_id"] = "IpBlockId"
+	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fieldNameMap["sort_by"] = "SortBy"
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["ip_block_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["provider_instance_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["providerInstanceId"] = vapiBindings_.NewStringType()
 	pathParams["provider_instance_id"] = "providerInstanceId"
+	queryParams["cursor"] = "cursor"
+	queryParams["ip_block_id"] = "ip_block_id"
+	queryParams["sort_ascending"] = "sort_ascending"
+	queryParams["included_fields"] = "included_fields"
+	queryParams["sort_by"] = "sort_by"
+	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(

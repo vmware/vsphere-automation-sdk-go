@@ -25,6 +25,7 @@ func dnsViewsListInputType() vapiBindings_.StructType {
 	fields["provider_instance_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["ip_block_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["ip_view"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
@@ -32,6 +33,7 @@ func dnsViewsListInputType() vapiBindings_.StructType {
 	fieldNameMap["provider_instance_id"] = "ProviderInstanceId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["ip_block_id"] = "IpBlockId"
 	fieldNameMap["ip_view"] = "IpView"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
@@ -56,6 +58,7 @@ func dnsViewsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["provider_instance_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["ip_block_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["ip_view"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
@@ -63,11 +66,13 @@ func dnsViewsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["provider_instance_id"] = "ProviderInstanceId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["ip_block_id"] = "IpBlockId"
 	fieldNameMap["ip_view"] = "IpView"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["ip_block_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["ip_view"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -77,6 +82,7 @@ func dnsViewsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["providerInstanceId"] = vapiBindings_.NewStringType()
 	pathParams["provider_instance_id"] = "providerInstanceId"
 	queryParams["cursor"] = "cursor"
+	queryParams["ip_block_id"] = "ip_block_id"
 	queryParams["ip_view"] = "ip_view"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"

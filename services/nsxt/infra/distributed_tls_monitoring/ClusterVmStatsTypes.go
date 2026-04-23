@@ -4,7 +4,7 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: ActivatedClusterVmStats.
+// Data type definitions file for service: ClusterVmStats.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
@@ -19,16 +19,16 @@ import (
 	"reflect"
 )
 
-func activatedClusterVmStatsCreateInputType() vapiBindings_.StructType {
+func clusterVmStatsCreateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["distributed_tls_activated_cluster_VM_stats_request"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsActivatedClusterVMStatsRequestBindingType)
+	fields["distributed_tls_cluster_VM_stats_request"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsClusterVMStatsRequestBindingType)
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["distributed_tls_activated_cluster_VM_stats_request"] = "DistributedTlsActivatedClusterVMStatsRequest"
+	fieldNameMap["distributed_tls_cluster_VM_stats_request"] = "DistributedTlsClusterVMStatsRequest"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
@@ -38,11 +38,11 @@ func activatedClusterVmStatsCreateInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func ActivatedClusterVmStatsCreateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsActivatedClusterVMStatsListResultBindingType)
+func ClusterVmStatsCreateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsClusterVMStatsListResultBindingType)
 }
 
-func activatedClusterVmStatsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+func clusterVmStatsCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -51,13 +51,13 @@ func activatedClusterVmStatsCreateRestMetadata() vapiProtocol_.OperationRestMeta
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["distributed_tls_activated_cluster_VM_stats_request"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsActivatedClusterVMStatsRequestBindingType)
+	fields["distributed_tls_cluster_VM_stats_request"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsClusterVMStatsRequestBindingType)
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["distributed_tls_activated_cluster_VM_stats_request"] = "DistributedTlsActivatedClusterVMStatsRequest"
+	fieldNameMap["distributed_tls_cluster_VM_stats_request"] = "DistributedTlsClusterVMStatsRequest"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
@@ -66,8 +66,8 @@ func activatedClusterVmStatsCreateRestMetadata() vapiProtocol_.OperationRestMeta
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["distributed_tls_activated_cluster_VM_stats_request"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsActivatedClusterVMStatsRequestBindingType)
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["distributed_tls_cluster_VM_stats_request"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsClusterVMStatsRequestBindingType)
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
 	queryParams["sort_ascending"] = "sort_ascending"
@@ -86,9 +86,9 @@ func activatedClusterVmStatsCreateRestMetadata() vapiProtocol_.OperationRestMeta
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"distributed_tls_activated_cluster_VM_stats_request",
+		"distributed_tls_cluster_VM_stats_request",
 		"POST",
-		"/policy/api/v1/infra/distributed-tls-monitoring/activated-cluster-vm-stats",
+		"/policy/api/v1/infra/distributed-tls-monitoring/cluster-vm-stats",
 		"application/json",
 		resultHeaders,
 		201,

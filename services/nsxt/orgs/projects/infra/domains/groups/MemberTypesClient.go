@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type MemberTypesClient interface {
 
-	// It retrieves member types for a given group. In case of nested groups, it calculates member types of child groups as well. Considers member type for members added via static members and dynamic membership criteria.
+	// It retrieves member types for a given group - based on the expression used in the group or the definition of the group via static and dynamic criteria. In case of nested groups, it calculates member types of child groups as well.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

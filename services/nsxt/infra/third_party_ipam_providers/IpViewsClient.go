@@ -24,6 +24,12 @@ type IpViewsClient interface {
 	// List network-views of third party IPAM provider with given Id.
 	//
 	// @param providerInstanceIdParam (required)
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param ipBlockIdParam Ip Block Identifier (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
+	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_policy.model.ViewInfoListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -32,7 +38,7 @@ type IpViewsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(providerInstanceIdParam string) (nsx_policyModel.ViewInfoListResult, error)
+	List(providerInstanceIdParam string, cursorParam *string, includedFieldsParam *string, ipBlockIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ViewInfoListResult, error)
 }
 
 type ipViewsClient struct {
@@ -60,7 +66,7 @@ func (iIface *ipViewsClient) GetErrorBindingType(errorName string) vapiBindings_
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (iIface *ipViewsClient) List(providerInstanceIdParam string) (nsx_policyModel.ViewInfoListResult, error) {
+func (iIface *ipViewsClient) List(providerInstanceIdParam string, cursorParam *string, includedFieldsParam *string, ipBlockIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ViewInfoListResult, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
 	operationRestMetaData := ipViewsListRestMetadata()
@@ -69,6 +75,12 @@ func (iIface *ipViewsClient) List(providerInstanceIdParam string) (nsx_policyMod
 
 	sv := vapiBindings_.NewStructValueBuilder(ipViewsListInputType(), typeConverter)
 	sv.AddStructField("ProviderInstanceId", providerInstanceIdParam)
+	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("IpBlockId", ipBlockIdParam)
+	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("SortAscending", sortAscendingParam)
+	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.ViewInfoListResult
