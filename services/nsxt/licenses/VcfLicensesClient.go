@@ -20,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VcfLicensesClient interface {
 
-	// Synchronize VCF licenses from all registered vCenters and update licenses in NSX. This API will not return synchronized VCF licenses and just update them in NSX.
+	// Synchronize VCF licenses from all registered vCenters and update licenses in VCF Networking. This API will not return synchronized VCF licenses and just update them in VCF Networking.
 	//
 	// Deprecated: This API element is deprecated.
 	//
