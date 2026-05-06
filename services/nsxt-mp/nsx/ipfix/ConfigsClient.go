@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,7 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ConfigsClient interface {
 
-	// Create a new IPFIX configuration
+	//
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -31,26 +32,28 @@ type ConfigsClient interface {
 	// The return value will contain all the properties defined in nsxModel.IpfixConfig.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Create(ipfixConfigParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 
-	// Delete an existing IPFIX configuration
+	//
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param configIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete(configIdParam string) error
 
-	// Get an existing IPFIX configuration
+	//
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -59,6 +62,7 @@ type ConfigsClient interface {
 	// The return value will contain all the properties defined in nsxModel.IpfixConfig.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -66,24 +70,28 @@ type ConfigsClient interface {
 	Get(configIdParam string) (*vapiData_.StructValue, error)
 
 	// List IPFIX configuration
+	//  This API is deprecated. Please use Policy API instead. For DFW IPFIX, please use /infra/ipfix-dfw-profiles. For Switch IPFIX, please use /infra/ipfix-l2-profiles.
 	//
-	// @param appliedToParam Applied To (optional)
+	// Deprecated: This API element is deprecated.
+	//
+	// @param appliedToParam An applied to UUID working as listing condition (optional)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param ipfixConfigTypeParam Supported IPFIX Config Types. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.IpfixConfigListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(appliedToParam *string, cursorParam *string, includedFieldsParam *string, ipfixConfigTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.IpfixConfigListResult, error)
 
-	// Update an existing IPFIX configuration
+	//
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -94,6 +102,7 @@ type ConfigsClient interface {
 	// The return value will contain all the properties defined in nsxModel.IpfixConfig.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

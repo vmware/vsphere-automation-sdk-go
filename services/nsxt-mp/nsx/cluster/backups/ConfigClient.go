@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -24,6 +25,7 @@ type ConfigClient interface {
 	// @return com.vmware.nsx.model.BackupConfiguration
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -33,11 +35,12 @@ type ConfigClient interface {
 	// Configure file server and timers for automated backup. If secret fields are omitted (password, passphrase) then use the previously set value.
 	//
 	// @param backupConfigurationParam (required)
-	// @param frameTypeParam Frame type (optional, default to LOCAL_LOCAL_MANAGER)
-	// @param siteIdParam Site ID (optional, default to localhost)
+	// @param frameTypeParam This attribute is used to indicate the service on current site or other site for which backup is handled in a frame. LOCAL_LOCAL_MANAGER corresponds to local LM of the site. LOCAL_MANAGER cprresponds to LM of other site. (optional, default to LOCAL_LOCAL_MANAGER)
+	// @param siteIdParam Site ID of LM site, which will be supported in a frame (optional, default to localhost)
 	// @return com.vmware.nsx.model.BackupConfiguration
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

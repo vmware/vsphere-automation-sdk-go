@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -25,10 +26,11 @@ type InstanceRuntimesClient interface {
 	// @param serviceIdParam (required)
 	// @param serviceInstanceIdParam (required)
 	// @param instanceRuntimeIdParam (required)
-	// @param actionParam (optional)
-	// @param unhealthyReasonParam Reason for the unhealthy state (optional)
+	// @param actionParam You could use this parameter to set a servcie VM in maintenance mode or exit from maintenance mode, or set a service VM health state to indicate whether the service VM is running properly or not. 'enable_maintenance_mode' will set service VM in maintenance mode. 'disable_maintenance_mode' will exit from maintenance mode. 'is_healthy' will set runtime health state by partner of a service VM to be healthy. 'is_stopped' will set runtime health state by partner of a service VM to be stopped. 'is_not_responding' will set runtime health state by partner of a service VM to be not responding. (optional)
+	// @param unhealthyReasonParam Reason for the unhealthy state. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -45,6 +47,7 @@ type InstanceRuntimesClient interface {
 	// @param serviceInstanceIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -61,6 +64,7 @@ type InstanceRuntimesClient interface {
 	// @param serviceInstanceIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -74,6 +78,7 @@ type InstanceRuntimesClient interface {
 	// @return com.vmware.nsx.model.InstanceRuntimeListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -90,6 +95,7 @@ type InstanceRuntimesClient interface {
 	// @param serviceInstanceIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

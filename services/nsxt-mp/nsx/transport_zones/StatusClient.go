@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,14 +22,17 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type StatusClient interface {
 
 	// Get high-level summary of a transport zone. The service layer does not support source = realtime or cached.
+	//
+	// @param includeSystemOwnedParam If true, system owned transport zones will be returned in API. Default false. (optional)
 	// @return com.vmware.nsx.model.HeatMapTransportNodesAggregateStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (nsxModel.HeatMapTransportNodesAggregateStatus, error)
+	Get(includeSystemOwnedParam *bool) (nsxModel.HeatMapTransportNodesAggregateStatus, error)
 
 	// Get high-level summary of a transport zone
 	//
@@ -37,6 +41,7 @@ type StatusClient interface {
 	// @return com.vmware.nsx.model.HeatMapTransportZoneStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -70,7 +75,7 @@ func (sIface *statusClient) GetErrorBindingType(errorName string) vapiBindings_.
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statusClient) Get() (nsxModel.HeatMapTransportNodesAggregateStatus, error) {
+func (sIface *statusClient) Get(includeSystemOwnedParam *bool) (nsxModel.HeatMapTransportNodesAggregateStatus, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := statusGetRestMetadata()
@@ -78,6 +83,7 @@ func (sIface *statusClient) Get() (nsxModel.HeatMapTransportNodesAggregateStatus
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(statusGetInputType(), typeConverter)
+	sv.AddStructField("IncludeSystemOwned", includeSystemOwnedParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsxModel.HeatMapTransportNodesAggregateStatus

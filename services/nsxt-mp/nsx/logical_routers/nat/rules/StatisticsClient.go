@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +22,12 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type StatisticsClient interface {
 
 	// Returns the summation of statistics for all rules from all nodes for the Specified Logical Router. Also gives the per transport node statistics for provided logical router. The query parameter \"source=realtime\" is not supported.
+	//  This API has been deprecated, please use below Policy APIs
+	//  GET /policy/api/v1/infra/tier-0s/<tier-0-id>/nat/statistics
+	//  GET /policy/api/v1/global-infra/tier-0s/<tier-0-id>/nat/statistics
+	//  GET /policy/api/v1/infra/tier-1s/<tier-1-id>/nat/statistics
+	//  GET /policy/api/v1/global-infra/tier-1s/<tier-1-id>/nat/statistics
+	//  GET /policy/api/v1/orgs/<org-id>/projects/<project-id>/infra/tier-1s/<tier-1-id>/nat/statistics
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -29,6 +36,7 @@ type StatisticsClient interface {
 	// @return com.vmware.nsx.model.NatStatisticsPerLogicalRouter
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -36,6 +44,12 @@ type StatisticsClient interface {
 	Getperlogicalrouter(logicalRouterIdParam string, sourceParam *string) (nsxModel.NatStatisticsPerLogicalRouter, error)
 
 	// Returns the summation of statistics from all nodes for the Specified Logical Router NAT Rule. Query parameter \"source=realtime\" is the only supported source.
+	//  This API has been deprecated, please use below Policy APIs
+	//  GET /policy/api/v1/infra/tier-0s/<tier-0-id>/nat/<nat-id>/nat-rules<nat-rule-id>/statistics
+	//  GET /policy/api/v1/global-infra/tier-0s/<tier-0-id>/nat/<nat-id>/nat-rules<nat-rule-id>/statistics
+	//  GET /policy/api/v1/infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules<nat-rule-id>/statistics
+	//  GET /policy/api/v1/global-infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules<nat-rule-id>/statistics
+	//  GET /policy/api/v1/orgs/<org-id>/projects/<project-id>/infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules<nat-rule-id>/statistics
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -45,6 +59,7 @@ type StatisticsClient interface {
 	// @return com.vmware.nsx.model.NatStatisticsPerRule
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

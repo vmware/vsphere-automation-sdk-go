@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -30,18 +31,19 @@ type RoutingTableClient interface {
 	//
 	// @param logicalRouterIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param networkPrefixParam IPAddress or CIDR Block (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param networkPrefixParam IPaddress or CIDR network address to filter the RIB table. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param routeSourceParam Route source filter parameter (optional)
-	// @param sortAscendingParam (optional)
+	// @param routeSourceParam To filter the RIB table based on the source from which route is learned. (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param sourceParam Data source type. (optional)
 	// @param transportNodeIdParam TransportNode Id (optional)
-	// @param vrfTableParam VRF filter parameter (optional)
+	// @param vrfTableParam To filter RIB table depending on the parameters specified (not specified - empty) - get all routes DEFAULT - get entries from default VRF INTER_SR - get entries from inter SR VRF (optional)
 	// @return com.vmware.nsx.model.LogicalRouterRouteTable
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

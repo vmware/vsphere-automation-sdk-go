@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,7 +22,10 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type PersistenceProfilesClient interface {
 
+	// Create a load balancer persistence profile.
 	//
+	//  Use the following Policy API -
+	//  PATCH /policy/api/v1/infra/lb-persistence-profiles/<lb-persistence-profile-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -31,26 +35,34 @@ type PersistenceProfilesClient interface {
 	// The return value will contain all the properties defined in nsxModel.LbPersistenceProfile.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Create(lbPersistenceProfileParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 
+	// Delete a load balancer persistence profile.
 	//
+	//  Use the following Policy API -
+	//  DELETE /policy/api/v1/infra/lb-persistence-profiles/<lb-persistence-profile-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param persistenceProfileIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete(persistenceProfileIdParam string) error
 
+	// Retrieve a load balancer persistence profile.
 	//
+	//  Use the following Policy API -
+	//  GET /policy/api/v1/infra/lb-persistence-profiles/<lb-persistence-profile-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -59,6 +71,7 @@ type PersistenceProfilesClient interface {
 	// The return value will contain all the properties defined in nsxModel.LbPersistenceProfile.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -73,21 +86,25 @@ type PersistenceProfilesClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @param type_Param persistence profile type (optional)
+	// @param type_Param Source-ip persistence ensures all connections from a client (identified by IP address) are sent to the same backend server for a specified period. Cookie persistence allows related client connections, identified by the same cookie in HTTP requests, to be redirected to the same server. Generic persistence profile cannot be attached to virtual servers directly. It can only be consumed by load balancer rule actions: LbVariablePersistenceOnAction and LbVariablePersistenceLearnAction. (optional)
 	// @return com.vmware.nsx.model.LbPersistenceProfileListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsxModel.LbPersistenceProfileListResult, error)
 
+	// Update a load balancer persistence profile.
 	//
+	//  Use the following Policy API -
+	//  PATCH/PUT /policy/api/v1/infra/lb-persistence-profiles/<lb-persistence-profile-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -98,6 +115,7 @@ type PersistenceProfilesClient interface {
 	// The return value will contain all the properties defined in nsxModel.LbPersistenceProfile.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

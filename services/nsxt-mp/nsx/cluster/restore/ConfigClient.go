@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,12 +22,13 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type ConfigClient interface {
 
 	// Get configuration information for the file server used to store backed-up files. Fields that contain secrets (password, passphrase) are not returned.
-	//  Deprecated. Please use API /cluster/backups/config, to get remote file server(where backed-up files are stored) details durign restore.
+	//  Deprecated. Please use API /cluster/backups/config, to get remote file server(where backed-up files are stored) details during restore.
 	//
 	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.RestoreConfiguration
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -42,6 +44,7 @@ type ConfigClient interface {
 	// @return com.vmware.nsx.model.RestoreConfiguration
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

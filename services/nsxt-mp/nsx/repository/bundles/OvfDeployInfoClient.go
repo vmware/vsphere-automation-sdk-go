@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,10 +23,11 @@ type OvfDeployInfoClient interface {
 
 	// Get information of the OVF for specified appliance which is present in repository and will be used to deploy new VM.
 	//
-	// @param productParam Name of the appliance (required)
+	// @param productParam Name of the appliance for which upload is performed. (required)
 	// @return com.vmware.nsx.model.OvfInfo
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

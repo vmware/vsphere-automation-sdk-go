@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,10 +23,11 @@ type FeedbackResponseClient interface {
 
 	// Pick default resolution for all feedback items.
 	//
-	// @param networkLayerParam Network layer for which feedback is generated (optional)
+	// @param networkLayerParam Network layer for which feedback is generated. This field is mandatory in BYOT modes. (optional)
 	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -35,10 +37,11 @@ type FeedbackResponseClient interface {
 	// Provide response for feedback queries needed for migration.
 	//
 	// @param migrationFeedbackResponseListParam (required)
-	// @param networkLayerParam Network layer for which feedback is generated (optional)
+	// @param networkLayerParam Network layer for which feedback is generated. This field is mandatory in BYOT modes. (optional)
 	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

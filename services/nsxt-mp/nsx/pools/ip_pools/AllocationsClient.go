@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,10 +23,15 @@ type AllocationsClient interface {
 
 	// Returns information about which addresses have been allocated from a specified IP address pool.
 	//
+	//  This rest routine is deprecated. Use /infra/ip-pools/<ip-pool-id>/ip-allocations to get all ip pool allocations.
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param poolIdParam IP pool ID (required)
 	// @return com.vmware.nsx.model.AllocationIpAddressListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

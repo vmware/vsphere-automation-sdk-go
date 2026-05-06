@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -27,31 +28,46 @@ type ExportersClient interface {
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Create(nodeSyslogExporterPropertiesParam nsxModel.NodeSyslogExporterProperties) (nsxModel.NodeSyslogExporterProperties, error)
 
-	// Removes all syslog exporter rules.
 	//
+	//
+	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete() error
 
-	// Removes a specified rule from the collection of syslog exporter rules.
+	// Removes a specified rule from the collection of syslog exporter rules. Note, if the specified exporter-name corresponds to the VCF Operations configured VCF Log Server, a 409 CONFLICT is returned as an exporter rule configured by VCF Operations cannot be deleted via this NSX API.
 	//
 	// @param exporterNameParam Name of syslog exporter to delete (required)
 	//
+	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete0(exporterNameParam string) error
+
+	// Remove all syslog exporter rules for exporters that are not managed by VCF Operations.
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Deleteallnonvcfopsmanagedexporters() error
 
 	// Returns information about a specific syslog collection point.
 	//
@@ -59,6 +75,7 @@ type ExportersClient interface {
 	// @return com.vmware.nsx.model.NodeSyslogExporterProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -69,6 +86,7 @@ type ExportersClient interface {
 	// @return com.vmware.nsx.model.NodeSyslogExporterPropertiesListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -78,6 +96,7 @@ type ExportersClient interface {
 	// Collect iptables rules needed for all existing syslog exporters and verify if the existing iptables rules are the same. If not, remove the stale rules and add the new rules to make sure all exporters work properly.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -94,12 +113,13 @@ type exportersClient struct {
 func NewExportersClient(connector vapiProtocolClient_.Connector) *exportersClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.node.services.syslog.exporters")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"create":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"delete_0": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete_0"),
-		"get":      vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"verify":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "verify"),
+		"create":                             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+		"delete":                             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"delete_0":                           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete_0"),
+		"deleteallnonvcfopsmanagedexporters": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "deleteallnonvcfopsmanagedexporters"),
+		"get":                                vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":                               vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"verify":                             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "verify"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -187,6 +207,31 @@ func (eIface *exportersClient) Delete0(exporterNameParam string) error {
 	}
 
 	methodResult := eIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.syslog.exporters", "delete_0", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), eIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
+}
+
+func (eIface *exportersClient) Deleteallnonvcfopsmanagedexporters() error {
+	typeConverter := eIface.connector.TypeConverter()
+	executionContext := eIface.connector.NewExecutionContext()
+	operationRestMetaData := exportersDeleteallnonvcfopsmanagedexportersRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(exportersDeleteallnonvcfopsmanagedexportersInputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := eIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.syslog.exporters", "deleteallnonvcfopsmanagedexporters", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {

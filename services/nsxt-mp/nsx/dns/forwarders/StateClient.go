@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -25,11 +26,12 @@ type StateClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param forwarderIdParam (required)
-	// @param barrierIdParam (optional)
-	// @param requestIdParam Realization request ID (optional)
+	// @param barrierIdParam The system checks to ensure that the logical entity is realized or not at least at the given barrier number. This parameter has been deprecated. Please use request_id instead. (optional)
+	// @param requestIdParam Passing a request_id allows you to check if the changes to a logical entity made in a particular API request have been realized or not. The request_id is returned from each API request in the X-NSX-REQUESTID header. For example, to check if a change to a firewall rule has been realized, save the X-NSX-REQUESTID header value returned from the PUT /api/v1/firewall/sections/<section-id>/rules/<rule-id> call, then add ?request_id=<id> to the GET /api/v1/firewall/rules/<rule-id>/state API call. (optional)
 	// @return com.vmware.nsx.model.ConfigurationState
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

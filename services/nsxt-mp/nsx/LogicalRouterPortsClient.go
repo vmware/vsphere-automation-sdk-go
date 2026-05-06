@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -37,6 +38,7 @@ type LogicalRouterPortsClient interface {
 	// The return value will contain all the properties defined in nsxModel.LogicalRouterPort.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -54,10 +56,11 @@ type LogicalRouterPortsClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param logicalRouterPortIdParam (required)
-	// @param cascadeDeleteLinkedPortsParam Flag to specify whether to delete related logical switch ports (optional, default to false)
-	// @param forceParam Force delete the resource even if it is being used somewhere (optional, default to false)
+	// @param cascadeDeleteLinkedPortsParam When the flag is true, the logical switch port or T0 router link port | associated with this logical router port is also deleted. This flag works independent | of the \"force\" parameter sent in request. (optional, default to false)
+	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -79,6 +82,7 @@ type LogicalRouterPortsClient interface {
 	// The return value will contain all the properties defined in nsxModel.LogicalRouterPort.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -96,16 +100,17 @@ type LogicalRouterPortsClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param logicalRouterIdParam Logical Router identifier (optional)
 	// @param logicalSwitchIdParam Logical Switch identifier (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param resourceTypeParam Resource types of logical router port (optional)
-	// @param sortAscendingParam (optional)
+	// @param resourceTypeParam LogicalRouterUpLinkPort is allowed only on TIER0 logical router. It is the north facing port of the logical router. LogicalRouterLinkPortOnTIER0 is allowed only on TIER0 logical router. This is the port where the LogicalRouterLinkPortOnTIER1 of TIER1 logical router connects to. LogicalRouterLinkPortOnTIER1 is allowed only on TIER1 logical router. This is the port using which the user connected to TIER1 logical router for upwards connectivity via TIER0 logical router. Connect this port to the LogicalRouterLinkPortOnTIER0 of the TIER0 logical router. LogicalRouterDownLinkPort is for the connected subnets on the logical router. LogicalRouterLoopbackPort is a loopback port for logical router component which is placed on chosen edge cluster member. LogicalRouterIPTunnelPort is a IPSec VPN tunnel port created on logical router when route based VPN session configured. LogicalRouterCentralizedServicePort is allowed only on Active/Standby TIER0 and TIER1 logical router. Port can be connected to VLAN or overlay logical switch. Unlike downlink port it does not participate in distributed routing and hosted on all edge cluster members associated with logical router. Stateful services can be applied on this port. LogicalRouterGreTunnelPort is a GRE Tunnel Port and is allowed only on Tier0 logical router and VRF. (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.LogicalRouterPortListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -129,6 +134,7 @@ type LogicalRouterPortsClient interface {
 	// The return value will contain all the properties defined in nsxModel.LogicalRouterPort.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

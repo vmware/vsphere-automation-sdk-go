@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,15 +23,19 @@ type StatusClient interface {
 
 	// Returns the status of the given load balancer service.
 	//
+	//  Use the following Policy API -
+	//  GET /policy/api/v1/infra/lb-services/<lb-service-id>/detailed-status
+	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param serviceIdParam (required)
-	// @param includeInstanceDetailsParam Flag to indicate whether include detail information (optional, default to false)
+	// @param includeInstanceDetailsParam The flag to indicate whether include detail information. Load balancer instance detail information will be returned if this field is set to true. It's only valid in realtime status query. (optional, default to false)
 	// @param sourceParam Data source type. (optional)
-	// @param transportNodeIdsParam The UUIDs of transport nodes (optional)
+	// @param transportNodeIdsParam The UUIDs of transport nodes. Multiple UUIDs should be separated by commas. If this field is specified, only the status from the given transport nodes will be returned. It's only valid in realtime status query. (optional)
 	// @return com.vmware.nsx.model.LbServiceStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -65,11 +66,24 @@ type FileStoreClient interface {
 	// @param fileNameParam Name of the file to delete (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete(fileNameParam string) error
+
+	// Delete a directory or file on the remote server. When remote directory is specified for deletion, it removes all of files and sub-directories residing within the specified remote directory for deletion. Supports only SFTP. You must provide the remote server's SSH fingerprint. See the *NSX Administration Guide* for information and instructions about finding the SSH fingerprint.
+	//
+	// @param deleteRemoteDirectoryPropertiesParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Deleteremotedirectory(deleteRemoteDirectoryPropertiesParam nsxModel.DeleteRemoteDirectoryProperties) error
 
 	// Read file properties
 	//
@@ -77,6 +91,7 @@ type FileStoreClient interface {
 	// @return com.vmware.nsx.model.FileProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -87,11 +102,25 @@ type FileStoreClient interface {
 	// @return com.vmware.nsx.model.FilePropertiesListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List() (nsxModel.FilePropertiesListResult, error)
+
+	// Retrieve matching host key algorithm for a given remote server , port and ssh fingerprint.
+	//
+	// @param retrieveMatchingHostKeyAlgorithmPropertiesParam (required)
+	// @return com.vmware.nsx.model.RetrieveMatchingHostKeyAlgorithmProperties
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Retrievematchinghostkeyalgorithm(retrieveMatchingHostKeyAlgorithmPropertiesParam nsxModel.RetrieveMatchingHostKeyAlgorithmProperties) (nsxModel.RetrieveMatchingHostKeyAlgorithmProperties, error)
 
 	// Retrieve ssh fingerprint for a given remote server and port.
 	//
@@ -99,6 +128,7 @@ type FileStoreClient interface {
 	// @return com.vmware.nsx.model.SshFingerprintProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -115,13 +145,15 @@ type fileStoreClient struct {
 func NewFileStoreClient(connector vapiProtocolClient_.Connector) *fileStoreClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.node.file_store")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"copyfromremotefile":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "copyfromremotefile"),
-		"copytoremotefile":       vapiCore_.NewMethodIdentifier(interfaceIdentifier, "copytoremotefile"),
-		"createremotedirectory":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "createremotedirectory"),
-		"delete":                 vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":                    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":                   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"retrievesshfingerprint": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "retrievesshfingerprint"),
+		"copyfromremotefile":               vapiCore_.NewMethodIdentifier(interfaceIdentifier, "copyfromremotefile"),
+		"copytoremotefile":                 vapiCore_.NewMethodIdentifier(interfaceIdentifier, "copytoremotefile"),
+		"createremotedirectory":            vapiCore_.NewMethodIdentifier(interfaceIdentifier, "createremotedirectory"),
+		"delete":                           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"deleteremotedirectory":            vapiCore_.NewMethodIdentifier(interfaceIdentifier, "deleteremotedirectory"),
+		"get":                              vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":                             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"retrievematchinghostkeyalgorithm": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "retrievematchinghostkeyalgorithm"),
+		"retrievesshfingerprint":           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "retrievesshfingerprint"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -249,6 +281,32 @@ func (fIface *fileStoreClient) Delete(fileNameParam string) error {
 	}
 }
 
+func (fIface *fileStoreClient) Deleteremotedirectory(deleteRemoteDirectoryPropertiesParam nsxModel.DeleteRemoteDirectoryProperties) error {
+	typeConverter := fIface.connector.TypeConverter()
+	executionContext := fIface.connector.NewExecutionContext()
+	operationRestMetaData := fileStoreDeleteremotedirectoryRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(fileStoreDeleteremotedirectoryInputType(), typeConverter)
+	sv.AddStructField("DeleteRemoteDirectoryProperties", deleteRemoteDirectoryPropertiesParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := fIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.file_store", "deleteremotedirectory", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), fIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
+}
+
 func (fIface *fileStoreClient) Get(fileNameParam string) (nsxModel.FileProperties, error) {
 	typeConverter := fIface.connector.TypeConverter()
 	executionContext := fIface.connector.NewExecutionContext()
@@ -303,6 +361,38 @@ func (fIface *fileStoreClient) List() (nsxModel.FilePropertiesListResult, error)
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(nsxModel.FilePropertiesListResult), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), fIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (fIface *fileStoreClient) Retrievematchinghostkeyalgorithm(retrieveMatchingHostKeyAlgorithmPropertiesParam nsxModel.RetrieveMatchingHostKeyAlgorithmProperties) (nsxModel.RetrieveMatchingHostKeyAlgorithmProperties, error) {
+	typeConverter := fIface.connector.TypeConverter()
+	executionContext := fIface.connector.NewExecutionContext()
+	operationRestMetaData := fileStoreRetrievematchinghostkeyalgorithmRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(fileStoreRetrievematchinghostkeyalgorithmInputType(), typeConverter)
+	sv.AddStructField("RetrieveMatchingHostKeyAlgorithmProperties", retrieveMatchingHostKeyAlgorithmPropertiesParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.RetrieveMatchingHostKeyAlgorithmProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := fIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.file_store", "retrievematchinghostkeyalgorithm", inputDataValue, executionContext)
+	var emptyOutput nsxModel.RetrieveMatchingHostKeyAlgorithmProperties
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), FileStoreRetrievematchinghostkeyalgorithmOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsxModel.RetrieveMatchingHostKeyAlgorithmProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), fIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

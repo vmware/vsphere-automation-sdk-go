@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,18 +24,19 @@ type AuditLogsClient interface {
 	// This API is executed on a manager node to display audit logs from all nodes inside the management plane cluster. An audit log collection will be triggered if the local master audit log is outdated.
 	//
 	// @param auditLogRequestParam (required)
-	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param fieldsParam Fields to include in query results (optional)
-	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 100)
+	// @param cursorParam A log cursor points to a specific line number in the master audit log (optional)
+	// @param fieldsParam Comma-separated field names to include in query result (optional)
+	// @param pageSizeParam The page size determines the number of logs to be returned (optional, default to 1000)
 	// @return com.vmware.nsx.model.AuditLogListResult
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error, Bad Gateway
 	// @throws NotFound  Not Found
-	Create(auditLogRequestParam nsxModel.AuditLogRequest, cursorParam *int64, fieldsParam *string, pageSizeParam *int64) (nsxModel.AuditLogListResult, error)
+	Create(auditLogRequestParam nsxModel.AuditLogRequest, cursorParam *string, fieldsParam *string, pageSizeParam *int64) (nsxModel.AuditLogListResult, error)
 }
 
 type auditLogsClient struct {
@@ -62,7 +64,7 @@ func (aIface *auditLogsClient) GetErrorBindingType(errorName string) vapiBinding
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (aIface *auditLogsClient) Create(auditLogRequestParam nsxModel.AuditLogRequest, cursorParam *int64, fieldsParam *string, pageSizeParam *int64) (nsxModel.AuditLogListResult, error) {
+func (aIface *auditLogsClient) Create(auditLogRequestParam nsxModel.AuditLogRequest, cursorParam *string, fieldsParam *string, pageSizeParam *int64) (nsxModel.AuditLogListResult, error) {
 	typeConverter := aIface.connector.TypeConverter()
 	executionContext := aIface.connector.NewExecutionContext()
 	operationRestMetaData := auditLogsCreateRestMetadata()

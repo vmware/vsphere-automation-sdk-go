@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -95,16 +96,18 @@ func stateGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func stateListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["mm_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_types"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["vtep_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["mm_state"] = "MmState"
+	fieldNameMap["node_types"] = "NodeTypes"
 	fieldNameMap["status"] = "Status"
 	fieldNameMap["vtep_ip"] = "VtepIp"
 	var validators = []vapiBindings_.Validator{}
@@ -125,14 +128,18 @@ func stateListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["mm_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_types"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["vtep_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["mm_state"] = "MmState"
+	fieldNameMap["node_types"] = "NodeTypes"
 	fieldNameMap["status"] = "Status"
 	fieldNameMap["vtep_ip"] = "VtepIp"
+	paramsTypeMap["node_types"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["vtep_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["mm_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	queryParams["node_types"] = "node_types"
 	queryParams["vtep_ip"] = "vtep_ip"
 	queryParams["mm_state"] = "mm_state"
 	queryParams["status"] = "status"
@@ -156,5 +163,5 @@ func stateListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }

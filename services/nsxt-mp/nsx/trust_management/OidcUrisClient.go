@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -26,6 +27,7 @@ type OidcUrisClient interface {
 	// @return com.vmware.nsx.model.OidcEndPoint
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -35,10 +37,11 @@ type OidcUrisClient interface {
 	// When ?refresh=true is added to the request, the meta-data is newly fetched from the OIDC end-point.
 	//
 	// @param idParam (required)
-	// @param refreshParam Refresh meta-data (optional, default to false)
+	// @param refreshParam Whether to fetch and update the OIDC meta-data. (optional, default to false)
 	// @return com.vmware.nsx.model.OidcEndPoint
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -47,10 +50,11 @@ type OidcUrisClient interface {
 
 	// Return the list of OpenID Connect end-points.
 	//
-	// @param oidcTypeParam Type of OIDC endpoint to return (optional)
+	// @param oidcTypeParam Selects the type of OIDC endpoint to return in list results. (optional)
 	// @return com.vmware.nsx.model.OidcEndPointListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -63,6 +67,7 @@ type OidcUrisClient interface {
 	// @return com.vmware.nsx.model.OidcEndPoint
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -76,6 +81,7 @@ type OidcUrisClient interface {
 	// @return com.vmware.nsx.model.OidcEndPoint
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -88,6 +94,7 @@ type OidcUrisClient interface {
 	// @return com.vmware.nsx.model.OidcEndPoint
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,6 +23,9 @@ type CommuntyListsClient interface {
 
 	// Update a specific BGP community list from a Logical Router
 	//
+	//  Please use below Policy APIs.
+	//  PUT /policy/api/v1/infra/tier-0s/<tier-0-id>/community-lists/<community-list-id>
+	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param logicalRouterIdParam (required)
@@ -30,6 +34,7 @@ type CommuntyListsClient interface {
 	// @return com.vmware.nsx.model.BGPCommunityList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

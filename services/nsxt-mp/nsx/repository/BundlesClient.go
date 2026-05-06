@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,9 +24,10 @@ type BundlesClient interface {
 	// Cancel upload of bundle. This API works only when bundle upload is in-progress and will not work during post-processing of bundle. If bundle upload is in-progress, then the API call returns http OK response after cancelling the upload and deleting partially uploaded bundle.
 	//
 	// @param bundleIdParam (required)
-	// @param productParam Name of the appliance (required)
+	// @param productParam Name of the appliance for which upload is performed. (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -35,12 +37,13 @@ type BundlesClient interface {
 	// Upload the bundle from remote bundle URL. The call returns after fetch is initiated. Check status by periodically retrieving bundle upload status using GET /repository/bundles/<bundle-id>/upload-status. The upload is complete when the status is SUCCESS.
 	//
 	// @param remoteBundleUrlParam (required)
-	// @param fileTypeParam Type of file (required)
-	// @param productParam Name of the appliance (required)
+	// @param fileTypeParam Type of file which will be uploaded. (required)
+	// @param productParam Name of the appliance for which upload is performed. (required)
 	// @return com.vmware.nsx.model.BundleId
 	//
 	// @throws Unauthenticated  Unauthorized
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -49,11 +52,12 @@ type BundlesClient interface {
 
 	// Get list of bundle-ids which are available in repository or in-progress
 	//
-	// @param fileTypeParam Type of file (required)
-	// @param productParam Name of the appliance (required)
+	// @param fileTypeParam Type of file which will be uploaded. (required)
+	// @param productParam Name of the appliance for which upload is performed. (required)
 	// @return com.vmware.nsx.model.BundleIds
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

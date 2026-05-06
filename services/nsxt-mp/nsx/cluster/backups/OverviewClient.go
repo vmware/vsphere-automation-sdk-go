@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,16 +24,17 @@ type OverviewClient interface {
 	// Get a configuration of a file server, timers for automated backup, latest backup status, backups list for a site. Fields that contain secrets (password, passphrase) are not returned.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param frameTypeParam Frame type (optional, default to LOCAL_LOCAL_MANAGER)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param frameTypeParam This attribute is used to indicate the service on current site or other site for which backup is handled in a frame. LOCAL_LOCAL_MANAGER corresponds to local LM of the site. LOCAL_MANAGER cprresponds to LM of other site. (optional, default to LOCAL_LOCAL_MANAGER)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param showBackupsListParam Need a list of backups (optional, default to true)
-	// @param siteIdParam UUID of the site (optional, default to localhost)
-	// @param sortAscendingParam (optional)
+	// @param showBackupsListParam True to request a list of backups (optional, default to true)
+	// @param siteIdParam UUID of LM site, which will be supported in a frame (optional, default to localhost)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.BackupOverview
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

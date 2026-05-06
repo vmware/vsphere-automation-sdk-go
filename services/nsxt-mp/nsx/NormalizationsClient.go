@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -26,17 +27,18 @@ type NormalizationsClient interface {
 	//
 	// Deprecated: This API element is deprecated.
 	//
-	// @param preferredNormalizationTypeParam Resource type valid for use as target in normalization API. (required)
+	// @param preferredNormalizationTypeParam Type to which the resource needs to be normalized. Multiple types can be passed by repeating the parameter. The order in which the types are passed is honored and decides to which type the resource is normalized. The resource is normalized to the first type in the list to which it can be normalized. For example, consider an NSGroup NS1 that has an LSwitch LS1. Assume that NS1 is being normalized to a list of translated entities [LSwitch, LPort]. As LSwitch is the first translated entity to which NSGroup can be translated, the translation will return a list having the LSwitch LS1. Normalization is supported from NSGroup to NSGroup, LogicalSwitch, LogicalPort, IPSets and MACSets. (required)
 	// @param resourceIdParam Identifier of the resource on which normalization is to be performed (required)
 	// @param resourceTypeParam Resource type valid for use as source in normalization API. (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.NormalizedResourceListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

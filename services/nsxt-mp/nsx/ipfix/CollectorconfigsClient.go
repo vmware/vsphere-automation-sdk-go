@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type CollectorconfigsClient interface {
 
-	// Create a new IPFIX collector configuration
+	//
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -28,26 +29,28 @@ type CollectorconfigsClient interface {
 	// @return com.vmware.nsx.model.IpfixCollectorConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Create(ipfixCollectorConfigParam nsxModel.IpfixCollectorConfig) (nsxModel.IpfixCollectorConfig, error)
 
-	// Delete an existing IPFIX collector configuration
+	//
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param collectorConfigIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete(collectorConfigIdParam string) error
 
-	// Get an existing IPFIX collector configuration
+	//
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -55,6 +58,7 @@ type CollectorconfigsClient interface {
 	// @return com.vmware.nsx.model.IpfixCollectorConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -62,22 +66,26 @@ type CollectorconfigsClient interface {
 	Get(collectorConfigIdParam string) (nsxModel.IpfixCollectorConfig, error)
 
 	// List IPFIX collector configurations
+	//  This API is deprecated. Please use Policy API instead. For DFW IPFIX, please use /infra/ipfix-dfw-collector-profiles. For Switch IPFIX, please use /infra/ipfix-l2-collector-profiles.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.IpfixCollectorConfigListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.IpfixCollectorConfigListResult, error)
 
-	// Update an existing IPFIX collector configuration
+	//
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -86,6 +94,7 @@ type CollectorconfigsClient interface {
 	// @return com.vmware.nsx.model.IpfixCollectorConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

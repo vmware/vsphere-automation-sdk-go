@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type RelaysClient interface {
 
 	// Creates a dhcp relay service.
+	//  Please use Policy API: PUT /policy/api/v1/infra/segments/{segment-id} { \"display_name\" : \"segment-1\", \"subnets\": [ { \"gateway_address\": \"40.1.1.1/16\", \"network\": \"40.1.2.0/24\" } ], \"dhcp_config_path\" : \"/infra/dhcp-relay-configs/dhcp-relay-profile\", \"connectivity_path\": \"/infra/tier-1s/mgw\", \"_revision\" : 0 }
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -28,6 +30,7 @@ type RelaysClient interface {
 	// @return com.vmware.nsx.model.DhcpRelayService
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -35,12 +38,14 @@ type RelaysClient interface {
 	Create(dhcpRelayServiceParam nsxModel.DhcpRelayService) (nsxModel.DhcpRelayService, error)
 
 	// Deletes the specified dhcp relay service.
+	//  Please use Policy API: PUT /policy/api/v1/infra/segments/{segment-id} { \"display_name\" : \"segment-1\", \"subnets\": [ { \"gateway_address\": \"40.1.1.1/16\", \"network\": \"40.1.2.0/24\" } ], \"connectivity_path\": \"/infra/tier-1s/mgw\", \"_revision\" : 0 }
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param relayIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -48,6 +53,7 @@ type RelaysClient interface {
 	Delete(relayIdParam string) error
 
 	// Returns the dhcp relay service information.
+	//  Please use Policy API: GET /policy/api/v1/infra/segments/{segment-id}
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -55,6 +61,7 @@ type RelaysClient interface {
 	// @return com.vmware.nsx.model.DhcpRelayService
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -62,17 +69,19 @@ type RelaysClient interface {
 	Get(relayIdParam string) (nsxModel.DhcpRelayService, error)
 
 	// Returns information about all configured dhcp relay services.
+	//  Please use Policy API: GET /policy/api/v1/infra/segments/{segment-id}
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.DhcpRelayServiceListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -80,6 +89,7 @@ type RelaysClient interface {
 	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.DhcpRelayServiceListResult, error)
 
 	// Modifies the specified dhcp relay service.
+	//  Please use Policy API: PUT /policy/api/v1/infra/segments/{segment-id} { \"display_name\" : \"segment-1\", \"subnets\": [ { \"gateway_address\": \"40.1.1.1/16\", \"network\": \"40.1.2.0/24\" } ], \"dhcp_config_path\" : \"/infra/dhcp-relay-configs/dhcp-relay-profile\", \"connectivity_path\": \"/infra/tier-1s/mgw\", \"_revision\" : 0 }
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -88,6 +98,7 @@ type RelaysClient interface {
 	// @return com.vmware.nsx.model.DhcpRelayService
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

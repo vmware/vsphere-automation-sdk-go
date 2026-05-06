@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,9 +22,13 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type AutomaticHealthCheckToggleClient interface {
 
 	// Get detailed info for automatic health check toggle.
+	//  This API is deprecated. Please use policy API /infra/auto-health-check-toggle to get automatic health check toggle.
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.AutomaticHealthCheckToggle
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -31,11 +36,15 @@ type AutomaticHealthCheckToggleClient interface {
 	Get() (nsxModel.AutomaticHealthCheckToggle, error)
 
 	// Change status of automatic health check toggle to enabled/disabled.
+	//  This API is deprecated. Please use policy API /infra/auto-health-check-toggle to update automatic health check toggle.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param automaticHealthCheckToggleParam (required)
 	// @return com.vmware.nsx.model.AutomaticHealthCheckToggle
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

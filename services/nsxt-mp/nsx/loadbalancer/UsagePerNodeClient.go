@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,9 +23,8 @@ type UsagePerNodeClient interface {
 
 	// API is used to retrieve the usage of load balancer entities which include current number and remaining number of credits, virtual Servers, pools, pool Members and different size of LB services from the given node. Currently only Edge node is supported.
 	//
-	//  NSX-T Load Balancer is deprecated.
-	//  Please take advantage of NSX Advanced Load Balancer.
-	//  Refer to Policy > Networking > Network Services > Advanced Load Balancing section of the API guide.
+	//  Use the following Policy API -
+	//  GET /policy/api/v1/infra/lb-node-usage?node_path=<node-path>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -33,6 +33,7 @@ type UsagePerNodeClient interface {
 	// The return value will contain all the properties defined in nsxModel.LbNodeUsage.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

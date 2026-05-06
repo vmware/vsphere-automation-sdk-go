@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,14 +22,17 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type TrustManagementClient interface {
 
 	// Returns information about the supported algorithms and key sizes.
+	//
+	// @param forCertificateGenerationParam Return TrustManagement configuration data valid for action of generating self signed certificate. (optional)
 	// @return com.vmware.nsx.model.TrustManagementData
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (nsxModel.TrustManagementData, error)
+	Get(forCertificateGenerationParam *bool) (nsxModel.TrustManagementData, error)
 }
 
 type trustManagementClient struct {
@@ -56,7 +60,7 @@ func (tIface *trustManagementClient) GetErrorBindingType(errorName string) vapiB
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (tIface *trustManagementClient) Get() (nsxModel.TrustManagementData, error) {
+func (tIface *trustManagementClient) Get(forCertificateGenerationParam *bool) (nsxModel.TrustManagementData, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
 	operationRestMetaData := trustManagementGetRestMetadata()
@@ -64,6 +68,7 @@ func (tIface *trustManagementClient) Get() (nsxModel.TrustManagementData, error)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(trustManagementGetInputType(), typeConverter)
+	sv.AddStructField("ForCertificateGeneration", forCertificateGenerationParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsxModel.TrustManagementData

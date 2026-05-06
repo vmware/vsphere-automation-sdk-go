@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,9 +22,14 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type TelemetryClient interface {
 
 	// Read Telemetry service properties
+	//  This API is deprecated. Use:
+	// GET https://<nsx-mgr>/api/v1/node/services/nsxt-mp/monitoring
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.NodePhonehomeCoordinatorServiceProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -31,8 +37,13 @@ type TelemetryClient interface {
 	Get() (nsxModel.NodePhonehomeCoordinatorServiceProperties, error)
 
 	// Reset the logging levels to default values
+	//  This API is deprecated. Use:
+	// POST https://<nsx-mgr>/api/v1/node/services/nsxt-mp/monitoring?action=reset-monitoring-logging-levels
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -40,9 +51,14 @@ type TelemetryClient interface {
 	Resettelemetrylogginglevels() error
 
 	// Restart, start or stop Telemetry service
+	//  This API is deprecated. Use:
+	// POST https://<nsx-mgr>/api/v1/node/services/nsxt-mp/monitoring?action=restart|start|stop
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -50,9 +66,14 @@ type TelemetryClient interface {
 	Restart() (nsxModel.NodeServiceStatusProperties, error)
 
 	// Restart, start or stop Telemetry service
+	//  This API is deprecated. Use:
+	// POST https://<nsx-mgr>/api/v1/node/services/nsxt-mp/monitoring?action=restart|start|stop
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -60,9 +81,14 @@ type TelemetryClient interface {
 	Start() (nsxModel.NodeServiceStatusProperties, error)
 
 	// Restart, start or stop Telemetry service
+	//  This API is deprecated. Use:
+	// POST https://<nsx-mgr>/api/v1/node/services/nsxt-mp/monitoring?action=restart|start|stop
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -70,11 +96,16 @@ type TelemetryClient interface {
 	Stop() (nsxModel.NodeServiceStatusProperties, error)
 
 	// Update Telemetry service properties
+	//  This API is deprecated. Use:
+	// PUT https://<nsx-mgr>/api/v1/node/services/nsxt-mp/monitoring
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param nodePhonehomeCoordinatorServicePropertiesParam (required)
 	// @return com.vmware.nsx.model.NodePhonehomeCoordinatorServiceProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

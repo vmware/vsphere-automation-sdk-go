@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,31 +21,38 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StateClient interface {
 
-	// Returns information about the current state of the transport node configuration and information about the associated hostswitch. Change introduced in 4.1.2 for ESX Transport node - The vib details will not be retrieved in every state API call. It will be retrieved by periodical polling on the host. Therefore the nsx vib version mismatch or nsx vib absence will be reported by this API only after subsequent polling takes place. Currently, the poll frequency is 10 minutes.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param transportNodeIdParam (required)
 	// @return com.vmware.nsx.model.TransportNodeState
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get(transportNodeIdParam string) (nsxModel.TransportNodeState, error)
 
-	// Returns a list of transport node states that have realized state as provided as query parameter. If this API is called multiple times in parallel then it will fail with error indicating that another request is already in progress. In such case, try the API on another NSX manager instance (if exists) or try again after some time.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param mmStateParam maintenance mode state (optional)
+	// @param nodeTypesParam EdgeNode and VirtualNetworkAppliance are supported values in this node_types filter parameter for MP transport-nodes state API. EDGE_NODE and VIRTUAL_NETWORK_APPLIANCE are supported values in this node_types filter parameter for Policy edge-transport-nodes state API (optional)
 	// @param statusParam Realized state of transport nodes (optional)
 	// @param vtepIpParam Virtual tunnel endpoint ip address of transport node (optional)
 	// @return com.vmware.nsx.model.TransportNodeStateListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(mmStateParam *string, statusParam *string, vtepIpParam *string) (nsxModel.TransportNodeStateListResult, error)
+	List(mmStateParam *string, nodeTypesParam *string, statusParam *string, vtepIpParam *string) (nsxModel.TransportNodeStateListResult, error)
 }
 
 type stateClient struct {
@@ -105,7 +113,7 @@ func (sIface *stateClient) Get(transportNodeIdParam string) (nsxModel.TransportN
 	}
 }
 
-func (sIface *stateClient) List(mmStateParam *string, statusParam *string, vtepIpParam *string) (nsxModel.TransportNodeStateListResult, error) {
+func (sIface *stateClient) List(mmStateParam *string, nodeTypesParam *string, statusParam *string, vtepIpParam *string) (nsxModel.TransportNodeStateListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := stateListRestMetadata()
@@ -114,6 +122,7 @@ func (sIface *stateClient) List(mmStateParam *string, statusParam *string, vtepI
 
 	sv := vapiBindings_.NewStructValueBuilder(stateListInputType(), typeConverter)
 	sv.AddStructField("MmState", mmStateParam)
+	sv.AddStructField("NodeTypes", nodeTypesParam)
 	sv.AddStructField("Status", statusParam)
 	sv.AddStructField("VtepIp", vtepIpParam)
 	inputDataValue, inputError := sv.GetStructValue()

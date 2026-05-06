@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -34,6 +35,7 @@ type RulesClient interface {
 	// @return com.vmware.nsx.model.FirewallRule
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -54,6 +56,7 @@ type RulesClient interface {
 	// @return com.vmware.nsx.model.FirewallRuleList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -71,6 +74,7 @@ type RulesClient interface {
 	// @param ruleIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -89,6 +93,7 @@ type RulesClient interface {
 	// @return com.vmware.nsx.model.FirewallRule
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -103,23 +108,24 @@ type RulesClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param sectionIdParam (required)
-	// @param appliedTosParam AppliedTo's referenced by this section or section's Distributed Service Rules . (optional)
-	// @param contextProfilesParam Limits results to sections having rules with specific Context Profiles. (optional)
+	// @param appliedTosParam Where the Distributed Service Rules are applied.(used for filtering the list). Single value is supported in current release. Multiple Comma delmited values may be supported in future releases. (optional)
+	// @param contextProfilesParam The context profile value in Firewall Rules (used for filtering the list). Single value is supported in current release. Multiple comma delmited values may be supported in future releases. (optional)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param deepSearchParam Toggle to search with direct or indirect references. (optional, default to false)
-	// @param destinationsParam Destinations referenced by this section's Distributed Service Rules . (optional)
-	// @param extendedSourcesParam Limits results to sections having rules with specific Extended Sources. (optional)
-	// @param filterTypeParam Filter type (optional, default to FILTER)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param deepSearchParam This parameter allows firewall API to search and filter results when references in appliedtos are either directly used in rule/section or indirectly in another container which is used in rule/section. Currently param support is only for LogicalPort. Ignores search_invalid_references to reduce heavy check. (optional, default to false)
+	// @param destinationsParam The destination value in Distributed Service Rules (used for filtering the list). Single value is supported in current release. Multiple Comma delmited values may be supported in future releases. (optional)
+	// @param extendedSourcesParam The extended source value in Firewall Rules (used for filtering the list). Single value is supported in current release. Multiple comma delmited values may be supported in future releases. (optional)
+	// @param filterTypeParam Filter type defines matching criteria to qualify a rule in result. Type 'FILTER' will ensure all criterias (sources, destinations, services, extended sources, context profiles, appliedtos) are matched. Type 'SEARCH' will match any of the given criteria. (optional, default to FILTER)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param searchInvalidReferencesParam Return invalid references in results. (optional, default to false)
-	// @param servicesParam NSService referenced by this section's Distributed Service Rules . (optional)
-	// @param sortAscendingParam (optional)
+	// @param searchInvalidReferencesParam Used in conjunction with filter_type to find invalid i.e. non nonexistent references in given criteria (sources, destinations, extended sources, services, context profiles, applied_tos). (optional, default to false)
+	// @param servicesParam Specifying this returns the Rules where this NSServiceElement is used (used for filtering the list). Single value is supported in current release. Multiple Comma delmited values may be supported in future releases. (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @param sourcesParam Sources referenced by this section's Distributed Service Rules . (optional)
+	// @param sourcesParam The source value in Distributed Service Rules (used for filtering the list). Single value is supported in current release. Multiple Comma delmited values may be supported in future releases. (optional)
 	// @return com.vmware.nsx.model.FirewallRuleListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -141,6 +147,7 @@ type RulesClient interface {
 	// @return com.vmware.nsx.model.FirewallRule
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -160,6 +167,7 @@ type RulesClient interface {
 	// @return com.vmware.nsx.model.FirewallRule
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

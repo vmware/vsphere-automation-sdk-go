@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,6 +23,9 @@ type StatusClient interface {
 
 	// Returns the status of the virtual server by given load balancer serives id and load balancer virtual server id.
 	//
+	//  Use the following Policy API -
+	//  GET /policy/api/v1/infra/lb-services/<lb-service-id>/lb-virtual-servers/<lb-virtual-server-id>/detailed-status
+	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param serviceIdParam (required)
@@ -30,6 +34,7 @@ type StatusClient interface {
 	// @return com.vmware.nsx.model.LbVirtualServerStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -38,6 +43,9 @@ type StatusClient interface {
 
 	// Returns the status list of virtual servers in given load balancer service.
 	//
+	//  Use the following Policy API to get the virtual server status in the LB -
+	//  GET /policy/api/v1/infra/lb-services/<lb-service-id>/detailed-status
+	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param serviceIdParam (required)
@@ -45,6 +53,7 @@ type StatusClient interface {
 	// @return com.vmware.nsx.model.LbVirtualServerStatusListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,28 +24,33 @@ type MpaConfigClient interface {
 	// Delete the MPA configuration for this node.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete() error
 
-	// Retrieve the MPA configuration for this node to identify the Manager nodes with which this node is communicating.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Retrieve the MPA configuration for this node to identify the Manager nodes with which this node is communicating.
 	// @return com.vmware.nsx.model.MPAConfigProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get() (nsxModel.MPAConfigProperties, error)
 
-	// Update the MPA configuration for this node.
+	// Experimental:\*\* This API is experimental and may change or be removed in future releases without notice.
+	//  Update the MPA configuration for this node.
 	//
 	// @param mPAConfigPropertiesParam (required)
 	// @return com.vmware.nsx.model.MPAConfigProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

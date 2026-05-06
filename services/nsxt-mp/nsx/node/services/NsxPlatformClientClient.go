@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -24,6 +25,7 @@ type NsxPlatformClientClient interface {
 	// @return com.vmware.nsx.model.NodeServiceProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -31,34 +33,43 @@ type NsxPlatformClientClient interface {
 	Get() (nsxModel.NodeServiceProperties, error)
 
 	// Restart, start or stop the NSX Platform Client service
+	//
+	// @param forceParam By default is false, but when force is set to true - user request is attempted to perform specified action on service nsx-platform-client for remote transport node, which will not necessarily return 200 OK in response. <br /> In order to figure out if indeed action was performed on service nsx-platform-client, user need to confirm via - <code>/api/v1/transport-node/<tn-id>/node/services/nsxt-mp/nsx-platform-client/status</code> endpoint to verify the running status holds appropriate information. (optional, default to false)
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Restart() (nsxModel.NodeServiceStatusProperties, error)
+	Restart(forceParam *bool) (nsxModel.NodeServiceStatusProperties, error)
 
 	// Restart, start or stop the NSX Platform Client service
+	//
+	// @param forceParam By default is false, but when force is set to true - user request is attempted to perform specified action on service nsx-platform-client for remote transport node, which will not necessarily return 200 OK in response. <br /> In order to figure out if indeed action was performed on service nsx-platform-client, user need to confirm via - <code>/api/v1/transport-node/<tn-id>/node/services/nsxt-mp/nsx-platform-client/status</code> endpoint to verify the running status holds appropriate information. (optional, default to false)
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Start() (nsxModel.NodeServiceStatusProperties, error)
+	Start(forceParam *bool) (nsxModel.NodeServiceStatusProperties, error)
 
 	// Restart, start or stop the NSX Platform Client service
+	//
+	// @param forceParam By default is false, but when force is set to true - user request is attempted to perform specified action on service nsx-platform-client for remote transport node, which will not necessarily return 200 OK in response. <br /> In order to figure out if indeed action was performed on service nsx-platform-client, user need to confirm via - <code>/api/v1/transport-node/<tn-id>/node/services/nsxt-mp/nsx-platform-client/status</code> endpoint to verify the running status holds appropriate information. (optional, default to false)
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Stop() (nsxModel.NodeServiceStatusProperties, error)
+	Stop(forceParam *bool) (nsxModel.NodeServiceStatusProperties, error)
 }
 
 type nsxPlatformClientClient struct {
@@ -120,7 +131,7 @@ func (nIface *nsxPlatformClientClient) Get() (nsxModel.NodeServiceProperties, er
 	}
 }
 
-func (nIface *nsxPlatformClientClient) Restart() (nsxModel.NodeServiceStatusProperties, error) {
+func (nIface *nsxPlatformClientClient) Restart(forceParam *bool) (nsxModel.NodeServiceStatusProperties, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
 	operationRestMetaData := nsxPlatformClientRestartRestMetadata()
@@ -128,6 +139,7 @@ func (nIface *nsxPlatformClientClient) Restart() (nsxModel.NodeServiceStatusProp
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(nsxPlatformClientRestartInputType(), typeConverter)
+	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsxModel.NodeServiceStatusProperties
@@ -151,7 +163,7 @@ func (nIface *nsxPlatformClientClient) Restart() (nsxModel.NodeServiceStatusProp
 	}
 }
 
-func (nIface *nsxPlatformClientClient) Start() (nsxModel.NodeServiceStatusProperties, error) {
+func (nIface *nsxPlatformClientClient) Start(forceParam *bool) (nsxModel.NodeServiceStatusProperties, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
 	operationRestMetaData := nsxPlatformClientStartRestMetadata()
@@ -159,6 +171,7 @@ func (nIface *nsxPlatformClientClient) Start() (nsxModel.NodeServiceStatusProper
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(nsxPlatformClientStartInputType(), typeConverter)
+	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsxModel.NodeServiceStatusProperties
@@ -182,7 +195,7 @@ func (nIface *nsxPlatformClientClient) Start() (nsxModel.NodeServiceStatusProper
 	}
 }
 
-func (nIface *nsxPlatformClientClient) Stop() (nsxModel.NodeServiceStatusProperties, error) {
+func (nIface *nsxPlatformClientClient) Stop(forceParam *bool) (nsxModel.NodeServiceStatusProperties, error) {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
 	operationRestMetaData := nsxPlatformClientStopRestMetadata()
@@ -190,6 +203,7 @@ func (nIface *nsxPlatformClientClient) Stop() (nsxModel.NodeServiceStatusPropert
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(nsxPlatformClientStopInputType(), typeConverter)
+	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsxModel.NodeServiceStatusProperties

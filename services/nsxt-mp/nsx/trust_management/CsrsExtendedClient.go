@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,16 +22,20 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type CsrsExtendedClient interface {
 
 	// Creates a new certificate signing request (CSR) with selected extensions. A CSR is encrypted text that contains information about your organization (organization name, country, and so on), additional attributes as extensions, and your Web server's public key, which is a public certificate the is generated on the server that can be used to forward this request to a certificate authority (CA). A private key is also usually created at the same time as the CSR.
+	//  Deprecated in favor of POST /trust-management/csrs.
 	//
-	// @param csrExtParam (required)
+	// Deprecated: This API element is deprecated.
+	//
+	// @param csrParam (required)
 	// @return com.vmware.nsx.model.Csr
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Create(csrExtParam nsxModel.CsrExt) (nsxModel.Csr, error)
+	Create(csrParam nsxModel.Csr) (nsxModel.Csr, error)
 }
 
 type csrsExtendedClient struct {
@@ -58,7 +63,7 @@ func (cIface *csrsExtendedClient) GetErrorBindingType(errorName string) vapiBind
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (cIface *csrsExtendedClient) Create(csrExtParam nsxModel.CsrExt) (nsxModel.Csr, error) {
+func (cIface *csrsExtendedClient) Create(csrParam nsxModel.Csr) (nsxModel.Csr, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := csrsExtendedCreateRestMetadata()
@@ -66,7 +71,7 @@ func (cIface *csrsExtendedClient) Create(csrExtParam nsxModel.CsrExt) (nsxModel.
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(csrsExtendedCreateInputType(), typeConverter)
-	sv.AddStructField("CsrExt", csrExtParam)
+	sv.AddStructField("Csr", csrParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsxModel.Csr

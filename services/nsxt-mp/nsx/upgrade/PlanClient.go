@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,11 +23,16 @@ type PlanClient interface {
 
 	// Continue the upgrade. Resumes the upgrade from the point where it was paused.
 	//
-	// @param componentTypeParam Component to upgrade. (optional)
+	//  This rest routine is deprecated. Use /upgrade/plan?action=upgrade to start, retry or continue the upgrade.
+	//
+	// Deprecated: This API element is deprecated.
+	//
+	// @param componentTypeParam Hints NSX to upgrade a specific component. (optional)
 	// @param skipParam Skip to upgrade of next component. (optional, default to false)
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -37,6 +43,7 @@ type PlanClient interface {
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -48,6 +55,7 @@ type PlanClient interface {
 	// @param componentTypeParam Component type (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -56,9 +64,10 @@ type PlanClient interface {
 
 	// This will stage the upgrade bits so that upgrade can be driven from outside NSX upgrade-coordinator. If component type is not provided as a request parameter then upgrade staging will be performed on all the components.
 	//
-	// @param componentTypeParam Component type (optional)
+	// @param componentTypeParam Type of the component (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -67,9 +76,14 @@ type PlanClient interface {
 
 	// Start the upgrade. Upgrade will start as per the upgrade plan.
 	//
+	//  This rest routine is deprecated. Use /upgrade/plan?action=upgrade to start, retry or continue the upgrade.
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param componentTypeParam Type of the component (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -81,6 +95,7 @@ type PlanClient interface {
 	// @param componentTypeParam Type of the component (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -93,6 +108,7 @@ type PlanClient interface {
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type StatusClient interface {
 
 	// Returns the status of the given metadata proxy and attached logical switch.
+	//  Please use Policy API: GET /policy/api/v1/infra/metadata-proxies/{metadata-proxy-id}/status
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -29,6 +31,7 @@ type StatusClient interface {
 	// @return com.vmware.nsx.model.MetadataProxyStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

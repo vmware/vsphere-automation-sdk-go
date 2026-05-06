@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,10 +24,11 @@ type NodeConfigProfilesClient interface {
 	// Returns properties in specified Central Node Config profile. Sensitive data (like SNMP v2c community strings) are included only if query parameter \"show_sensitive_data\" is true.
 	//
 	// @param profileIdParam Central Node Config profile id (required)
-	// @param showSensitiveDataParam Show sensitive data in Central Node Config profile (optional, default to false)
+	// @param showSensitiveDataParam If set to true, Central Node Config profile includes sensitive data properties like SNMP community strings if any applicable. Note that passwords are never returned. Default set to false. (optional, default to false)
 	// @return com.vmware.nsx.model.CentralNodeConfigProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -37,6 +39,7 @@ type NodeConfigProfilesClient interface {
 	// @return com.vmware.nsx.model.CentralNodeConfigProfileListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -50,6 +53,7 @@ type NodeConfigProfilesClient interface {
 	// @return com.vmware.nsx.model.CentralNodeConfigProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

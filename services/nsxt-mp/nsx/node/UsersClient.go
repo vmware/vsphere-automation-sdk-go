@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -28,6 +29,7 @@ type UsersClient interface {
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -35,12 +37,14 @@ type UsersClient interface {
 	Activate(useridParam string, nodeUserPasswordPropertyParam nsxModel.NodeUserPasswordProperty) (nsxModel.NodeUserProperties, error)
 
 	// Create new user account to log in to the NSX web-based user interface or access API. ``username`` is required field in case of creating new user, further following usernames - ``root, admin, audit`` are reserved and can not be used to create new user account unless for local audit user. In case of local audit account when username not specified in request by default account will be created with ``audit`` username, although administrators are allowed to use any other non-duplicate usernames during creation.
+	//  When a VCF password management policy is configured, VCF password management policy's properties take precedence and are enforced. password_change_frequency is set to the VCF password management policy's passwordExpirationDays if not provided. Specifying the password_change_frequency value that conflicts with the VCF password management policy's passwordExpirationDays returns 409 CONFLICT. Please use the VCF Ops UI/API to update the policy if needed.
 	//
 	// @param nodeUserPropertiesParam (required)
 	// @return com.vmware.nsx.model.NodeUserProperties
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -48,12 +52,29 @@ type UsersClient interface {
 	Createaudituser(nodeUserPropertiesParam nsxModel.NodeUserProperties) (nsxModel.NodeUserProperties, error)
 
 	// Create new user account to log in to the NSX web-based user interface or access API. ``username`` is required field in case of creating new user, further following usernames - ``root, admin, audit`` are reserved and can not be used to create new user account unless for local audit user. In case of local audit account when username not specified in request by default account will be created with ``audit`` username, although administrators are allowed to use any other non-duplicate usernames during creation.
+	//  When a VCF password management policy is configured, VCF password management policy's properties take precedence and are enforced. password_change_frequency is set to the VCF password management policy's passwordExpirationDays if not provided. Specifying the password_change_frequency value that conflicts with the VCF password management policy's passwordExpirationDays returns 409 CONFLICT. Please use the VCF Ops UI/API to update the policy if needed.
 	//
 	// @param nodeUserPropertiesParam (required)
 	// @return com.vmware.nsx.model.NodeUserProperties
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Createserviceuser(nodeUserPropertiesParam nsxModel.NodeUserProperties) (nsxModel.NodeUserProperties, error)
+
+	// Create new user account to log in to the NSX web-based user interface or access API. ``username`` is required field in case of creating new user, further following usernames - ``root, admin, audit`` are reserved and can not be used to create new user account unless for local audit user. In case of local audit account when username not specified in request by default account will be created with ``audit`` username, although administrators are allowed to use any other non-duplicate usernames during creation.
+	//  When a VCF password management policy is configured, VCF password management policy's properties take precedence and are enforced. password_change_frequency is set to the VCF password management policy's passwordExpirationDays if not provided. Specifying the password_change_frequency value that conflicts with the VCF password management policy's passwordExpirationDays returns 409 CONFLICT. Please use the VCF Ops UI/API to update the policy if needed.
+	//
+	// @param nodeUserPropertiesParam (required)
+	// @return com.vmware.nsx.model.NodeUserProperties
+	//
+	// @throws ConcurrentChange  Conflict
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -67,6 +88,7 @@ type UsersClient interface {
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -85,6 +107,7 @@ type UsersClient interface {
 	// @param useridParam User id of the user (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -97,6 +120,7 @@ type UsersClient interface {
 	// @return com.vmware.nsx.model.NodeUserProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -104,24 +128,18 @@ type UsersClient interface {
 	Get(useridParam string) (nsxModel.NodeUserProperties, error)
 
 	// Returns the list of users configured to log in to the NSX appliance.
+	//
+	// @param filterParam Show all local user accounts with filter account_type (optional)
+	// @param internalParam When flag internal is set to true, response will include all node user (including internal users) and detailed property. When flag internal is set to false, response will only include user managed accounts. (optional, default to false)
 	// @return com.vmware.nsx.model.NodeUserPropertiesListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List() (nsxModel.NodeUserPropertiesListResult, error)
-
-	// Returns the list of users configured to log in to the NSX appliance.
-	// @return com.vmware.nsx.model.NodeUserPropertiesListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	List0() (nsxModel.NodeUserPropertiesListResult, error)
+	List(filterParam *string, internalParam *bool) (nsxModel.NodeUserPropertiesListResult, error)
 
 	// Enables a user to reset their own password.
 	//
@@ -129,6 +147,7 @@ type UsersClient interface {
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -142,6 +161,7 @@ type UsersClient interface {
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -156,6 +176,7 @@ type UsersClient interface {
 	//
 	//
 	// The valid user IDs are: 0, 10000, 10002 or other users managed by administrators. Note that invoking this API does not update any user-related properties of existing objects in the system and does not modify the username field in existing audit log entries.
+	//  When a VCF password management policy is configured, VCF password management policy's properties take precedence and are enforced. Specifying the password_change_frequency value that conflicts with the VCF password management policy's passwordExpirationDays returns 409 CONFLICT. Please use the VCF Ops UI/API to update the policy if needed.
 	//
 	// @param useridParam User id of the user (required)
 	// @param nodeUserPropertiesParam (required)
@@ -163,6 +184,7 @@ type UsersClient interface {
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -179,17 +201,17 @@ type usersClient struct {
 func NewUsersClient(connector vapiProtocolClient_.Connector) *usersClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.node.users")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"activate":         vapiCore_.NewMethodIdentifier(interfaceIdentifier, "activate"),
-		"createaudituser":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "createaudituser"),
-		"createuser":       vapiCore_.NewMethodIdentifier(interfaceIdentifier, "createuser"),
-		"deactivate":       vapiCore_.NewMethodIdentifier(interfaceIdentifier, "deactivate"),
-		"delete":           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
-		"get":              vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list":             vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
-		"list_0":           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list_0"),
-		"resetownpassword": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "resetownpassword"),
-		"resetpassword":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "resetpassword"),
-		"update":           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
+		"activate":          vapiCore_.NewMethodIdentifier(interfaceIdentifier, "activate"),
+		"createaudituser":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "createaudituser"),
+		"createserviceuser": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "createserviceuser"),
+		"createuser":        vapiCore_.NewMethodIdentifier(interfaceIdentifier, "createuser"),
+		"deactivate":        vapiCore_.NewMethodIdentifier(interfaceIdentifier, "deactivate"),
+		"delete":            vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":               vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":              vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"resetownpassword":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "resetownpassword"),
+		"resetpassword":     vapiCore_.NewMethodIdentifier(interfaceIdentifier, "resetpassword"),
+		"update":            vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -257,6 +279,38 @@ func (uIface *usersClient) Createaudituser(nodeUserPropertiesParam nsxModel.Node
 	var emptyOutput nsxModel.NodeUserProperties
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), UsersCreateaudituserOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsxModel.NodeUserProperties), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), uIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (uIface *usersClient) Createserviceuser(nodeUserPropertiesParam nsxModel.NodeUserProperties) (nsxModel.NodeUserProperties, error) {
+	typeConverter := uIface.connector.TypeConverter()
+	executionContext := uIface.connector.NewExecutionContext()
+	operationRestMetaData := usersCreateserviceuserRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(usersCreateserviceuserInputType(), typeConverter)
+	sv.AddStructField("NodeUserProperties", nodeUserPropertiesParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsxModel.NodeUserProperties
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := uIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.users", "createserviceuser", inputDataValue, executionContext)
+	var emptyOutput nsxModel.NodeUserProperties
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), UsersCreateserviceuserOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
@@ -392,7 +446,7 @@ func (uIface *usersClient) Get(useridParam string) (nsxModel.NodeUserProperties,
 	}
 }
 
-func (uIface *usersClient) List() (nsxModel.NodeUserPropertiesListResult, error) {
+func (uIface *usersClient) List(filterParam *string, internalParam *bool) (nsxModel.NodeUserPropertiesListResult, error) {
 	typeConverter := uIface.connector.TypeConverter()
 	executionContext := uIface.connector.NewExecutionContext()
 	operationRestMetaData := usersListRestMetadata()
@@ -400,6 +454,8 @@ func (uIface *usersClient) List() (nsxModel.NodeUserPropertiesListResult, error)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(usersListInputType(), typeConverter)
+	sv.AddStructField("Filter", filterParam)
+	sv.AddStructField("Internal", internalParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsxModel.NodeUserPropertiesListResult
@@ -410,37 +466,6 @@ func (uIface *usersClient) List() (nsxModel.NodeUserPropertiesListResult, error)
 	var emptyOutput nsxModel.NodeUserPropertiesListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), UsersListOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(nsxModel.NodeUserPropertiesListResult), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), uIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (uIface *usersClient) List0() (nsxModel.NodeUserPropertiesListResult, error) {
-	typeConverter := uIface.connector.TypeConverter()
-	executionContext := uIface.connector.NewExecutionContext()
-	operationRestMetaData := usersList0RestMetadata()
-	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
-	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
-
-	sv := vapiBindings_.NewStructValueBuilder(usersList0InputType(), typeConverter)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput nsxModel.NodeUserPropertiesListResult
-		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
-	}
-
-	methodResult := uIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.users", "list_0", inputDataValue, executionContext)
-	var emptyOutput nsxModel.NodeUserPropertiesListResult
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), UsersList0OutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}

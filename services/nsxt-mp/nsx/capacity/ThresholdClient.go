@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,9 +22,13 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type ThresholdClient interface {
 
 	// Returns warning threshold(s) set for NSX Objects.
+	//  MP objects are not supported in 9.0. Use /policy/api/v1/infra/capacity/threshold to get POLICY and FABRIC entities' capacity warning thresholds.
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.CapacityThresholdList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -31,11 +36,15 @@ type ThresholdClient interface {
 	Get() (nsxModel.CapacityThresholdList, error)
 
 	// Updates the warning threshold(s) for NSX Objects specified, and returns new threshold(s). Threshold list in the request must contain value for GLOBAL_DEFAULT threshold_type which represents global thresholds.
+	//  MP objects are not supported in 9.0. Use /policy/api/v1/infra/capacity/threshold to configure POLICY and FABRIC entities' capacity warning thresholds.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param capacityThresholdListParam (required)
 	// @return com.vmware.nsx.model.CapacityThresholdList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

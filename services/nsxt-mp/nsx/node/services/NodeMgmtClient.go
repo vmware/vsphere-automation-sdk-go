@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -24,6 +25,7 @@ type NodeMgmtClient interface {
 	// @return com.vmware.nsx.model.NodeServiceProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -32,12 +34,15 @@ type NodeMgmtClient interface {
 
 	// Restart the node management service
 	//
+	// @param forceParam By default is false, but when force is set to true - user request is attempted to perform specified action on service node-mgmt for remote transport node, which will not necessarily return 200 OK in response. <br /> In order to figure out if indeed action was performed on service node-mgmt, user need to confirm via - <code>/api/v1/transport-node/<tn-id>/node/services/nsxt-mp/node-mgmt/status</code> endpoint to verify the running status holds appropriate information. (optional, default to false)
+	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Restart() error
+	Restart(forceParam *bool) error
 }
 
 type nodeMgmtClient struct {
@@ -97,7 +102,7 @@ func (nIface *nodeMgmtClient) Get() (nsxModel.NodeServiceProperties, error) {
 	}
 }
 
-func (nIface *nodeMgmtClient) Restart() error {
+func (nIface *nodeMgmtClient) Restart(forceParam *bool) error {
 	typeConverter := nIface.connector.TypeConverter()
 	executionContext := nIface.connector.NewExecutionContext()
 	operationRestMetaData := nodeMgmtRestartRestMetadata()
@@ -105,6 +110,7 @@ func (nIface *nodeMgmtClient) Restart() error {
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
 	sv := vapiBindings_.NewStructValueBuilder(nodeMgmtRestartInputType(), typeConverter)
+	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)

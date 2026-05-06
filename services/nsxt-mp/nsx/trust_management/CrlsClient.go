@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -25,6 +26,7 @@ type CrlsClient interface {
 	// @param crlIdParam ID of CRL to delete (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -35,14 +37,16 @@ type CrlsClient interface {
 	//
 	// @param crlIdParam ID of CRL to read (required)
 	// @param detailsParam whether to expand the pem data and show all its details (optional, default to false)
+	// @param fmtParam By default the format returned is exactly the format in which the user provided it, which is the 'raw' format. | The 'standard' format has all extraneous characters removed and has a newline after each 64 characters. (optional)
 	// @return com.vmware.nsx.model.Crl
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(crlIdParam string, detailsParam *bool) (nsxModel.Crl, error)
+	Get(crlIdParam string, detailsParam *bool, fmtParam *string) (nsxModel.Crl, error)
 
 	// Adds a new certificate revocation list (CRL). The CRL is used to verify the client certificate status against the revocation lists published by the CA. For this reason, the administrator needs to add the CRL in certificate repository as well. A CRL can be in the PEM X.509 format (crl_type=X509) or JSON OneCRL (crl_type=OneCRL). If crl_type is not specified, it is auto-detected based on the presence of fields pem_encoded or one_crl.
 	//
@@ -50,6 +54,7 @@ type CrlsClient interface {
 	// @return com.vmware.nsx.model.CrlList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -60,20 +65,22 @@ type CrlsClient interface {
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param detailsParam whether to expand the pem data and show all its details (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param nodeIdParam Node ID of certificate to return (optional)
+	// @param fmtParam By default the format returned is exactly the format in which the user provided it, which is the 'raw' format. | The 'standard' format has all extraneous characters removed and has a newline after each 64 characters. (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param nodeIdParam Provide this parameter to limit the list of returned certificates to those matching a particular node ID. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @param type_Param Type of certificate to return (optional)
+	// @param type_Param Provide this parameter to limit the list of returned certificates to those matching a particular usage. Passing cluster_certificate will return the certificate used for the cluster wide API service. (optional)
 	// @return com.vmware.nsx.model.CrlList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, detailsParam *bool, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsxModel.CrlList, error)
+	List(cursorParam *string, detailsParam *bool, fmtParam *string, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsxModel.CrlList, error)
 
 	// Updates an existing CRL.
 	//
@@ -82,6 +89,7 @@ type CrlsClient interface {
 	// @return com.vmware.nsx.model.Crl
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -144,7 +152,7 @@ func (cIface *crlsClient) Delete(crlIdParam string) error {
 	}
 }
 
-func (cIface *crlsClient) Get(crlIdParam string, detailsParam *bool) (nsxModel.Crl, error) {
+func (cIface *crlsClient) Get(crlIdParam string, detailsParam *bool, fmtParam *string) (nsxModel.Crl, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := crlsGetRestMetadata()
@@ -154,6 +162,7 @@ func (cIface *crlsClient) Get(crlIdParam string, detailsParam *bool) (nsxModel.C
 	sv := vapiBindings_.NewStructValueBuilder(crlsGetInputType(), typeConverter)
 	sv.AddStructField("CrlId", crlIdParam)
 	sv.AddStructField("Details", detailsParam)
+	sv.AddStructField("Fmt", fmtParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsxModel.Crl
@@ -209,7 +218,7 @@ func (cIface *crlsClient) Importcrl(crlObjectDataParam nsxModel.CrlObjectData) (
 	}
 }
 
-func (cIface *crlsClient) List(cursorParam *string, detailsParam *bool, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsxModel.CrlList, error) {
+func (cIface *crlsClient) List(cursorParam *string, detailsParam *bool, fmtParam *string, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsxModel.CrlList, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := crlsListRestMetadata()
@@ -219,6 +228,7 @@ func (cIface *crlsClient) List(cursorParam *string, detailsParam *bool, included
 	sv := vapiBindings_.NewStructValueBuilder(crlsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("Details", detailsParam)
+	sv.AddStructField("Fmt", fmtParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("NodeId", nodeIdParam)
 	sv.AddStructField("PageSize", pageSizeParam)

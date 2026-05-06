@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -30,14 +31,21 @@ type RoutesClient interface {
 	//
 	// @param logicalRouterIdParam (required)
 	// @param neighborIdParam (required)
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param neighborAddressParam Routes advertised or learnt router w.r.t to specific discovered Bgp Neighbor for a BgpNeighbor configured as a range. (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
+	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.BgpNeighborRouteDetails
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(logicalRouterIdParam string, neighborIdParam string) (nsxModel.BgpNeighborRouteDetails, error)
+	Get(logicalRouterIdParam string, neighborIdParam string, cursorParam *string, includedFieldsParam *string, neighborAddressParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.BgpNeighborRouteDetails, error)
 }
 
 type routesClient struct {
@@ -65,7 +73,7 @@ func (rIface *routesClient) GetErrorBindingType(errorName string) vapiBindings_.
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (rIface *routesClient) Get(logicalRouterIdParam string, neighborIdParam string) (nsxModel.BgpNeighborRouteDetails, error) {
+func (rIface *routesClient) Get(logicalRouterIdParam string, neighborIdParam string, cursorParam *string, includedFieldsParam *string, neighborAddressParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.BgpNeighborRouteDetails, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
 	operationRestMetaData := routesGetRestMetadata()
@@ -75,6 +83,12 @@ func (rIface *routesClient) Get(logicalRouterIdParam string, neighborIdParam str
 	sv := vapiBindings_.NewStructValueBuilder(routesGetInputType(), typeConverter)
 	sv.AddStructField("LogicalRouterId", logicalRouterIdParam)
 	sv.AddStructField("NeighborId", neighborIdParam)
+	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("NeighborAddress", neighborAddressParam)
+	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("SortAscending", sortAscendingParam)
+	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsxModel.BgpNeighborRouteDetails

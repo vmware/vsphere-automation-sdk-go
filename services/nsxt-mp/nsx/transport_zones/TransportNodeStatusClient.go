@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,42 +21,48 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type TransportNodeStatusClient interface {
 
-	// Read status of all the transport nodes
+	// To improve performance, we have removed 'memory_used', 'memory_total', and 'cpu_usage' from the resource_usage field, and 'last_status_update_time' from the health_metrics field in the agent_status returned by the API. To obtain these metrics, use the GET /api/v1/systemhealth-extended/host-transport-nodes endpoint.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includeDfwHeapStatsParam If true, DFW heap stats information will be returned in API (optional, default to false)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param nodeTypeParam Transport node type. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param sourceParam Data source type. (optional)
-	// @param statusParam Transport node (optional)
+	// @param statusParam Rolled-up status of pNIC, management connection, control connection, tunnel status and agent status. UP means all of these are up; DOWN represents the state when pNIC or agent status is down. DEGRADED status here represents the state for a node when its pNIC bond status is DEGRADED, or, its Control connection status is either DEGRADED or DOWN. UNKNOWN is the case when both control connection, tunnel and agent status are unknown. If none of these conditions are true, the node status is considered DOWN. (optional)
 	// @return com.vmware.nsx.model.TransportNodeStatusListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Getall(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsxModel.TransportNodeStatusListResult, error)
+	Getall(cursorParam *string, includeDfwHeapStatsParam *bool, includedFieldsParam *string, nodeTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsxModel.TransportNodeStatusListResult, error)
 
 	// Read status of transport nodes in a transport zone
 	//
 	// @param zoneIdParam ID of transport zone (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includeDfwHeapStatsParam If true, DFW heap stats information will be returned in API (optional, default to false)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param nodeTypeParam Transport node type. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param sourceParam Data source type. (optional)
-	// @param statusParam Transport node (optional)
+	// @param statusParam Rolled-up status of pNIC, management connection, control connection, tunnel status and agent status. UP means all of these are up; DOWN represents the state when pNIC or agent status is down. DEGRADED status here represents the state for a node when its pNIC bond status is DEGRADED, or, its Control connection status is either DEGRADED or DOWN. UNKNOWN is the case when both control connection, tunnel and agent status are unknown. If none of these conditions are true, the node status is considered DOWN. (optional)
 	// @return com.vmware.nsx.model.TransportNodeStatusListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(zoneIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsxModel.TransportNodeStatusListResult, error)
+	List(zoneIdParam string, cursorParam *string, includeDfwHeapStatsParam *bool, includedFieldsParam *string, nodeTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsxModel.TransportNodeStatusListResult, error)
 }
 
 type transportNodeStatusClient struct {
@@ -84,7 +91,7 @@ func (tIface *transportNodeStatusClient) GetErrorBindingType(errorName string) v
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (tIface *transportNodeStatusClient) Getall(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsxModel.TransportNodeStatusListResult, error) {
+func (tIface *transportNodeStatusClient) Getall(cursorParam *string, includeDfwHeapStatsParam *bool, includedFieldsParam *string, nodeTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsxModel.TransportNodeStatusListResult, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
 	operationRestMetaData := transportNodeStatusGetallRestMetadata()
@@ -93,7 +100,9 @@ func (tIface *transportNodeStatusClient) Getall(cursorParam *string, includedFie
 
 	sv := vapiBindings_.NewStructValueBuilder(transportNodeStatusGetallInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeDfwHeapStats", includeDfwHeapStatsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("NodeType", nodeTypeParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
@@ -122,7 +131,7 @@ func (tIface *transportNodeStatusClient) Getall(cursorParam *string, includedFie
 	}
 }
 
-func (tIface *transportNodeStatusClient) List(zoneIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsxModel.TransportNodeStatusListResult, error) {
+func (tIface *transportNodeStatusClient) List(zoneIdParam string, cursorParam *string, includeDfwHeapStatsParam *bool, includedFieldsParam *string, nodeTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsxModel.TransportNodeStatusListResult, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
 	operationRestMetaData := transportNodeStatusListRestMetadata()
@@ -132,7 +141,9 @@ func (tIface *transportNodeStatusClient) List(zoneIdParam string, cursorParam *s
 	sv := vapiBindings_.NewStructValueBuilder(transportNodeStatusListInputType(), typeConverter)
 	sv.AddStructField("ZoneId", zoneIdParam)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeDfwHeapStats", includeDfwHeapStatsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("NodeType", nodeTypeParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)

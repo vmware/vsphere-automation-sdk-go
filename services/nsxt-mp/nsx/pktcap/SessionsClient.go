@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,9 +22,13 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type SessionsClient interface {
 
 	// Delete all the packet capture sessions.
+	//  Use API DELETE /api/v1/infra/pktcap/sessions.
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.PacketCaptureSessionList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -31,9 +36,13 @@ type SessionsClient interface {
 	Delete() (nsxModel.PacketCaptureSessionList, error)
 
 	// Get the information of all packet capture sessions.
+	//  Use API GET /api/v1/infra/pktcap/sessions.
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.PacketCaptureSessionList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

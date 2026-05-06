@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -28,6 +29,7 @@ type BridgeEndpointsClient interface {
 	// @return com.vmware.nsx.model.BridgeEndpoint
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -41,6 +43,7 @@ type BridgeEndpointsClient interface {
 	// @param bridgeendpointIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -48,11 +51,15 @@ type BridgeEndpointsClient interface {
 	Delete(bridgeendpointIdParam string) error
 
 	// Returns information about a specified bridge endpoint.
+	//  Start using Edge Bridge Profiles and attach to the segment to configure bridging on the segment.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param bridgeendpointIdParam (required)
 	// @return com.vmware.nsx.model.BridgeEndpoint
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -60,19 +67,23 @@ type BridgeEndpointsClient interface {
 	Get(bridgeendpointIdParam string) (nsxModel.BridgeEndpoint, error)
 
 	// Returns information about all configured bridge endoints
+	//  Start using Edge Bridge Profiles and attach to the segment to configure bridging on the segment.
 	//
-	// @param bridgeClusterIdParam Bridge Cluster Identifier (optional)
-	// @param bridgeEndpointProfileIdParam Bridge endpoint profile used by the edge cluster (optional)
+	// Deprecated: This API element is deprecated.
+	//
+	// @param bridgeClusterIdParam If provided, only bridge endpoints associated with the given bridge cluster will be returned. (optional)
+	// @param bridgeEndpointProfileIdParam If provided, only bridge endpoints associated with the given bridge endpoint profile will be returned. (optional)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param logicalSwitchIdParam Logical Switch Identifier (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param logicalSwitchIdParam If provided, only bridge endpoints associated with the given logical switch will be returned. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @param vlanTransportZoneIdParam VLAN transport zone id used by the edge cluster (optional)
+	// @param vlanTransportZoneIdParam If provided, only bridge endpoints associated with the given transport zone will be returned. (optional)
 	// @return com.vmware.nsx.model.BridgeEndpointListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -88,6 +99,7 @@ type BridgeEndpointsClient interface {
 	// @return com.vmware.nsx.model.BridgeEndpoint
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

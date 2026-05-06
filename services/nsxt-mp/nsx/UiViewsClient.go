@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,11 +22,15 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type UiViewsClient interface {
 
 	// Creates a new View.
+	//  This API is deprecated and will be unavailable in later releases.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param viewParam (required)
 	// @return com.vmware.nsx.model.View
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -33,10 +38,14 @@ type UiViewsClient interface {
 	Create(viewParam nsxModel.View) (nsxModel.View, error)
 
 	// Delete View
+	//  This API is deprecated and will be unavailable in later releases.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param viewIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -44,13 +53,17 @@ type UiViewsClient interface {
 	Delete(viewIdParam string) error
 
 	// If no query params are specified then all the views entitled for the user are returned. The views to which a user is entitled to include the views created by the user and the shared views.
+	//  This API is deprecated and will be unavailable in later releases.
 	//
-	// @param tagParam The tag for which associated views to be queried. (optional)
-	// @param viewIdsParam Ids of the Views (optional)
-	// @param widgetIdParam Id of widget configuration (optional)
+	// Deprecated: This API element is deprecated.
+	//
+	// @param tagParam The tag for which associated views to be queried. For tags specified on views, scope is automatically set to 'nsx-dashboard' and hence scope is ignored for searching views based on tag. (optional)
+	// @param viewIdsParam Comma separated ids of views to be queried. (optional)
+	// @param widgetIdParam Id of widget to be queried for all the views it is part of. (optional)
 	// @return com.vmware.nsx.model.ViewList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -58,11 +71,15 @@ type UiViewsClient interface {
 	Get(tagParam *string, viewIdsParam *string, widgetIdParam *string) (nsxModel.ViewList, error)
 
 	// Returns Information about a specific View.
+	//  This API is deprecated and will be unavailable in later releases.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param viewIdParam (required)
 	// @return com.vmware.nsx.model.View
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -70,12 +87,16 @@ type UiViewsClient interface {
 	Get0(viewIdParam string) (nsxModel.View, error)
 
 	// Update View
+	//  This API is deprecated and will be unavailable in later releases.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param viewIdParam (required)
 	// @param viewParam (required)
 	// @return com.vmware.nsx.model.View
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

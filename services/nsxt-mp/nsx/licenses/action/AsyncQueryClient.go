@@ -1,0 +1,82 @@
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
+
+// Auto generated code. DO NOT EDIT.
+
+// Interface file for service: AsyncQuery
+// Used by client-side stubs.
+
+package action
+
+import (
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+)
+
+const _ = vapiCore_.SupportedByRuntimeVersion2
+
+type AsyncQueryClient interface {
+
+	// Trigger to query licenses from all registered vCenters and License Hub then update licenses in VCF Networking in an asynchronous manner.
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Create() error
+}
+
+type asyncQueryClient struct {
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
+}
+
+func NewAsyncQueryClient(connector vapiProtocolClient_.Connector) *asyncQueryClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.licenses.action.async_query")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+	}
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
+
+	aIface := asyncQueryClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &aIface
+}
+
+func (aIface *asyncQueryClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+	if entry, ok := aIface.errorsBindingMap[errorName]; ok {
+		return entry
+	}
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
+}
+
+func (aIface *asyncQueryClient) Create() error {
+	typeConverter := aIface.connector.TypeConverter()
+	executionContext := aIface.connector.NewExecutionContext()
+	operationRestMetaData := asyncQueryCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(asyncQueryCreateInputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := aIface.connector.GetApiProvider().Invoke("com.vmware.nsx.licenses.action.async_query", "create", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), aIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
+}

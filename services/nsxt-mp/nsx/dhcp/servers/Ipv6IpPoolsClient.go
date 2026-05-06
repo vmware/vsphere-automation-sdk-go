@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type Ipv6IpPoolsClient interface {
 
 	// Create an ip pool for a local DHCP IPv6 server
+	//  Please use Policy API: PUT /policy/api/v1/infra/segments/{segment-id} { \"display_name\" : \"segment-1\", \"subnets\": [ { \"gateway_address\": \"2019::200.1.0.1/128\", \"dhcp_ranges\": [ \"2019::200.1.0.0-2019::200.255.255.255\" ], \"dhcp_config\": { \"resource_type\": \"SegmentDhcpV6Config\", \"lease_time\": 84600 }, \"network\": \"2019::200.1.1.1/128\" } ], \"dhcp_config_path\" : \"/infra/dhcp-server-configs/dhcp-server-profile\", \"connectivity_path\": \"/infra/tier-1s/mgw\", \"_revision\" : 0 }
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -29,27 +31,15 @@ type Ipv6IpPoolsClient interface {
 	// @return com.vmware.nsx.model.DhcpV6IpPool
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Create(serverIdParam string, dhcpV6IpPoolParam nsxModel.DhcpV6IpPool) (nsxModel.DhcpV6IpPool, error)
 
-	// Delete a specific ip pool of a given logical DHCP IPv6 server.
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param serverIdParam (required)
-	// @param poolIdParam (required)
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	Delete(serverIdParam string, poolIdParam string) error
-
 	// Return a specific ip pool of a given logical DHCP IPv6 server.
+	//  Please use Policy API: GET /policy/api/v1/infra/segments/{segment-id}
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -58,6 +48,7 @@ type Ipv6IpPoolsClient interface {
 	// @return com.vmware.nsx.model.DhcpV6IpPool
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -65,18 +56,20 @@ type Ipv6IpPoolsClient interface {
 	Get(serverIdParam string, poolIdParam string) (nsxModel.DhcpV6IpPool, error)
 
 	// List the ip pools of a logical DHCP IPv6 server with pagination support.
+	//  Please use Policy API: GET /policy/api/v1/infra/segments/{segment-id}
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param serverIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.DhcpV6IpPoolListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -84,6 +77,7 @@ type Ipv6IpPoolsClient interface {
 	List(serverIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.DhcpV6IpPoolListResult, error)
 
 	// Update a specific ip pool of a given logical DHCP IPv6 server.
+	//  Please use Policy API: PUT /policy/api/v1/infra/segments/{segment-id} { \"display_name\" : \"segment-1\", \"subnets\": [ { \"gateway_address\": \"2019::200.1.0.1/128\", \"dhcp_ranges\": [ \"2019::200.1.0.0-2019::200.255.255.255\" ], \"dhcp_config\": { \"resource_type\": \"SegmentDhcpV6Config\", \"lease_time\": 84600 }, \"network\": \"2019::200.1.1.1/128\" } ], \"dhcp_config_path\" : \"/infra/dhcp-server-configs/dhcp-server-profile\", \"connectivity_path\": \"/infra/tier-1s/mgw\", \"_revision\" : 0 }
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -93,6 +87,7 @@ type Ipv6IpPoolsClient interface {
 	// @return com.vmware.nsx.model.DhcpV6IpPool
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -110,7 +105,6 @@ func NewIpv6IpPoolsClient(connector vapiProtocolClient_.Connector) *ipv6IpPoolsC
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.dhcp.servers.ipv6_ip_pools")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
-		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
@@ -159,33 +153,6 @@ func (iIface *ipv6IpPoolsClient) Create(serverIdParam string, dhcpV6IpPoolParam 
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
 		return emptyOutput, methodError.(error)
-	}
-}
-
-func (iIface *ipv6IpPoolsClient) Delete(serverIdParam string, poolIdParam string) error {
-	typeConverter := iIface.connector.TypeConverter()
-	executionContext := iIface.connector.NewExecutionContext()
-	operationRestMetaData := ipv6IpPoolsDeleteRestMetadata()
-	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
-	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
-
-	sv := vapiBindings_.NewStructValueBuilder(ipv6IpPoolsDeleteInputType(), typeConverter)
-	sv.AddStructField("ServerId", serverIdParam)
-	sv.AddStructField("PoolId", poolIdParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		return vapiBindings_.VAPIerrorsToError(inputError)
-	}
-
-	methodResult := iIface.connector.GetApiProvider().Invoke("com.vmware.nsx.dhcp.servers.ipv6_ip_pools", "delete", inputDataValue, executionContext)
-	if methodResult.IsSuccess() {
-		return nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), iIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return vapiBindings_.VAPIerrorsToError(errorInError)
-		}
-		return methodError.(error)
 	}
 }
 

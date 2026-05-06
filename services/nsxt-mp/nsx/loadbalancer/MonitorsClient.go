@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,9 +24,8 @@ type MonitorsClient interface {
 
 	// Create a load balancer monitor.
 	//
-	//  NSX-T Load Balancer is deprecated.
-	//  Please take advantage of NSX Advanced Load Balancer.
-	//  Refer to Policy > Networking > Network Services > Advanced Load Balancing section of the API guide.
+	//  Use the following Policy API -
+	//  PUT/PATCH /policy/api/v1/infra/lb-monitor-profiles/<lb-monitor-profile-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -35,6 +35,7 @@ type MonitorsClient interface {
 	// The return value will contain all the properties defined in nsxModel.LbMonitor.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -43,15 +44,15 @@ type MonitorsClient interface {
 
 	// Delete a load balancer monitor.
 	//
-	//  NSX-T Load Balancer is deprecated.
-	//  Please take advantage of NSX Advanced Load Balancer.
-	//  Refer to Policy > Networking > Network Services > Advanced Load Balancing section of the API guide.
+	//  Use the following Policy API -
+	//  DELETE /policy/api/v1/infra/lb-monitor-profiles/<lb-monitor-profile-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param monitorIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -60,9 +61,8 @@ type MonitorsClient interface {
 
 	// Retrieve a load balancer monitor.
 	//
-	//  NSX-T Load Balancer is deprecated.
-	//  Please take advantage of NSX Advanced Load Balancer.
-	//  Refer to Policy > Networking > Network Services > Advanced Load Balancing section of the API guide.
+	//  Use the following Policy API -
+	//  GET /policy/api/v1/infra/lb-monitor-profiles/<lb-monitor-profile-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -71,6 +71,7 @@ type MonitorsClient interface {
 	// The return value will contain all the properties defined in nsxModel.LbMonitor.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -79,21 +80,21 @@ type MonitorsClient interface {
 
 	// Retrieve a paginated list of load balancer monitors.
 	//
-	//  NSX-T Load Balancer is deprecated.
-	//  Please take advantage of NSX Advanced Load Balancer.
-	//  Refer to Policy > Networking > Network Services > Advanced Load Balancing section of the API guide.
+	//  Use the following Policy API -
+	//  GET /policy/api/v1/infra/lb-monitor-profiles
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @param type_Param monitor query type (optional)
+	// @param type_Param MonitorQueryType is used to query load balancer monitors. LbActiveMonitor represents active load balancer monitors. While LbActiveMonitor is specified to query load balancer monitors, it returns all active monitors, including LbHttpMonitor, LbHttpMonitor, LbIcmpMonitor, LbTcpMonitor, LbUdpMonitor. (optional)
 	// @return com.vmware.nsx.model.LbMonitorListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -102,9 +103,8 @@ type MonitorsClient interface {
 
 	// Update a load balancer monitor.
 	//
-	//  NSX-T Load Balancer is deprecated.
-	//  Please take advantage of NSX Advanced Load Balancer.
-	//  Refer to Policy > Networking > Network Services > Advanced Load Balancing section of the API guide.
+	//  Use the following Policy API -
+	//  PATCH/PUT /policy/api/v1/infra/lb-monitor-profiles/<lb-monitor-profile-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -115,6 +115,7 @@ type MonitorsClient interface {
 	// The return value will contain all the properties defined in nsxModel.LbMonitor.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

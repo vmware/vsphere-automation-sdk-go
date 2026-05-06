@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,12 +22,14 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type ForwardersClient interface {
 
 	// Clear the current cache of the DNS forwarder.
+	//  Please use Policy API: POST /policy/api/v1/infra/tier-0s/{tier-0-id}/dns-forwarder?action=clear_cache POST /policy/api/v1/infra/tier-1s/{tier-1-id}/dns-forwarder?action=clear_cache
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param forwarderIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -34,6 +37,7 @@ type ForwardersClient interface {
 	Clearcache(forwarderIdParam string) error
 
 	// Create a DNS forwader upon a logical router. There is only one DNS forwarder can be created upon a given logical router.
+	//  Please use Policy API: PATCH /policy/api/v1/infra/tier-0s/{tier-0-id}/dns-forwarder PATCH /policy/api/v1/infra/tier-1s/{tier-1-id}/dns-forwarder
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -41,6 +45,7 @@ type ForwardersClient interface {
 	// @return com.vmware.nsx.model.DnsForwarder
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -48,12 +53,14 @@ type ForwardersClient interface {
 	Create(dnsForwarderParam nsxModel.DnsForwarder) (nsxModel.DnsForwarder, error)
 
 	// Delete a specific DNS forwarder.
+	//  Please use Policy API: DELETE /policy/api/v1/infra/tier-0s/{tier-0-id}/dns-forwarder DELETE /policy/api/v1/infra/tier-1s/{tier-1-id}/dns-forwarder
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param forwarderIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -61,10 +68,14 @@ type ForwardersClient interface {
 	Delete(forwarderIdParam string) error
 
 	// Disable the DNS forwarder if the forwarder is currently enbled. If the DNS forwarder is already disabled, the forwarder will not be re-disabled. Please note, once a DNS forwarder is disabled then enabled, the previous DNS forwarder statistics counters will be reset.
+	//  Please use Policy API: PUT or PATCH /policy/api/v1/infra/tier-0s/{tier-0-id}/dns-forwarder { \"display_name\" : \"dns-forwarder\", \"listener_ip\" : \"5.5.5.5\", \"default_forwarder_zone_path\" : \"/infra/dns-forwarder-zones/default-1\", \"conditional_forwarder_zone_paths\" : [\"/infra/dns-forwarder-zones/conditional-1\"], \"enabled\": false, \"_revision\" : 0 } PUT or PATCH /policy/api/v1/infra/tier-1s/{tier-1-id}/dns-forwarder { \"display_name\" : \"dns-forwarder\", \"listener_ip\" : \"5.5.5.5\", \"default_forwarder_zone_path\" : \"/infra/dns-forwarder-zones/default-1\", \"conditional_forwarder_zone_paths\" : [\"/infra/dns-forwarder-zones/conditional-1\"], \"enabled\": false, \"_revision\" : 0 }
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param forwarderIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -72,10 +83,14 @@ type ForwardersClient interface {
 	Disable(forwarderIdParam string) error
 
 	// Enable the DNS forwarder if the forwarder is currently disabled. If the DNS forwarder is already enabled, the forwarder will not be re-enabled. Please note, once a DNS forwarder is disabled then enabled, the previous DNS forwarder statistics counters will be reset.
+	//  Please use Policy API: PUT or PATCH /policy/api/v1/infra/tier-0s/{tier-0-id}/dns-forwarder { \"display_name\" : \"dns-forwarder\", \"listener_ip\" : \"5.5.5.5\", \"default_forwarder_zone_path\" : \"/infra/dns-forwarder-zones/default-1\", \"conditional_forwarder_zone_paths\" : [\"/infra/dns-forwarder-zones/conditional-1\"], \"enabled\": true, \"_revision\" : 0 } PUT or PATCH /policy/api/v1/infra/tier-1s/{tier-1-id}/dns-forwarder { \"display_name\" : \"dns-forwarder\", \"listener_ip\" : \"5.5.5.5\", \"default_forwarder_zone_path\" : \"/infra/dns-forwarder-zones/default-1\", \"conditional_forwarder_zone_paths\" : [\"/infra/dns-forwarder-zones/conditional-1\"], \"enabled\": true, \"_revision\" : 0 }
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param forwarderIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -83,6 +98,7 @@ type ForwardersClient interface {
 	Enable(forwarderIdParam string) error
 
 	// Retrieve a DNS forwarder.
+	//  Please use Policy API: GET /policy/api/v1/infra/tier-0s/{tier-0-id}/dns-forwarder GET /policy/api/v1/infra/tier-1s/{tier-1-id}/dns-forwarder
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -90,6 +106,7 @@ type ForwardersClient interface {
 	// @return com.vmware.nsx.model.DnsForwarder
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -97,17 +114,19 @@ type ForwardersClient interface {
 	Get(forwarderIdParam string) (nsxModel.DnsForwarder, error)
 
 	// Get a paginated list of DNS forwarders.
+	//  Please use Policy API: GET /policy/api/v1/infra/tier-0s/{tier-0-id}/dns-forwarder GET /policy/api/v1/infra/tier-1s/{tier-1-id}/dns-forwarder
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.DnsForwarderListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -115,6 +134,7 @@ type ForwardersClient interface {
 	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.DnsForwarderListResult, error)
 
 	// Update a specific DNS forwarder.
+	//  Please use Policy API: PUT /policy/api/v1/infra/tier-0s/{tier-0-id}/dns-forwarder PUT /policy/api/v1/infra/tier-1s/{tier-1-id}/dns-forwarder
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -123,6 +143,7 @@ type ForwardersClient interface {
 	// @return com.vmware.nsx.model.DnsForwarder
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -32,6 +33,7 @@ type StatusClient interface {
 	// @return com.vmware.nsx.model.LogicalPortOperationalStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -51,19 +53,20 @@ type StatusClient interface {
 	// @param containerPortsOnlyParam Only container VIF logical ports will be returned if true (optional, default to false)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param diagnosticParam Flag to enable showing of transit logical port. (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param logicalSwitchIdParam Logical Switch identifier (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param parentVifIdParam ID of the VIF of type PARENT (optional)
-	// @param sortAscendingParam (optional)
+	// @param parentVifIdParam Get logical ports that have CHILD VIF attachment of given PARENT VIF. (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param sourceParam Data source type. (optional)
 	// @param switchingProfileIdParam Network Profile identifier (optional)
-	// @param transportNodeIdParam Transport node identifier (optional)
+	// @param transportNodeIdParam Get logical ports on the transport node; it can not be given together with other parameters except container_ports_only and attachment_type VIF. (optional)
 	// @param transportZoneIdParam Transport zone identifier (optional)
 	// @return com.vmware.nsx.model.LogicalPortStatusSummary
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

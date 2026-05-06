@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -74,7 +75,7 @@ func computeCollectionsCreateRestMetadata() vapiProtocol_.OperationRestMetadata 
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func computeCollectionsGetInputType() vapiBindings_.StructType {
@@ -124,7 +125,7 @@ func computeCollectionsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func computeCollectionsListInputType() vapiBindings_.StructType {
@@ -132,6 +133,7 @@ func computeCollectionsListInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["cm_local_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["datacenter_external_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["discovered_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["external_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -145,6 +147,7 @@ func computeCollectionsListInputType() vapiBindings_.StructType {
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cm_local_id"] = "CmLocalId"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["datacenter_external_id"] = "DatacenterExternalId"
 	fieldNameMap["discovered_node_id"] = "DiscoveredNodeId"
 	fieldNameMap["display_name"] = "DisplayName"
 	fieldNameMap["external_id"] = "ExternalId"
@@ -175,6 +178,7 @@ func computeCollectionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["cm_local_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["datacenter_external_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["discovered_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["external_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -188,6 +192,7 @@ func computeCollectionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cm_local_id"] = "CmLocalId"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["datacenter_external_id"] = "DatacenterExternalId"
 	fieldNameMap["discovered_node_id"] = "DiscoveredNodeId"
 	fieldNameMap["display_name"] = "DisplayName"
 	fieldNameMap["external_id"] = "ExternalId"
@@ -201,6 +206,7 @@ func computeCollectionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["cm_local_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["datacenter_external_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["owner_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["external_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["origin_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -214,6 +220,7 @@ func computeCollectionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
 	queryParams["cm_local_id"] = "cm_local_id"
+	queryParams["datacenter_external_id"] = "datacenter_external_id"
 	queryParams["owner_id"] = "owner_id"
 	queryParams["external_id"] = "external_id"
 	queryParams["origin_id"] = "origin_id"
@@ -245,5 +252,5 @@ func computeCollectionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +21,8 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AssociationsClient interface {
 
-	//
+	// Returns information about resources that are associated with the given resource. Id and type of the resource for which associated resources are to be fetched are to be specified as query parameter in the URI. Resource type of the associated resources must be specified as query parameter.
+	//  This API is deprecated. Please use below policy API /infra/virtual-machine-group-associations?vm_external_id=<ext-id> /infra/virtual-network-interface-group-associations?vif_external_id=<ext-id> /infra/ip-address-group-associations?ip_address=10.1.19.10 /infra/group-associations?intent_path=<intent-path> to get policy groups associated with the given resource.
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -28,14 +30,15 @@ type AssociationsClient interface {
 	// @param resourceIdParam The resource for which associated resources are to be fetched (required)
 	// @param resourceTypeParam Resource type valid for use as source in association API (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param fetchAncestorsParam Fetch complete list of associated resources considering containment and nesting (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param fetchAncestorsParam If set to true, will fetch direct as well as indirect(considering containment as well as nesting) associated objects for the given source Id. (optional, default to false)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.AssociationListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

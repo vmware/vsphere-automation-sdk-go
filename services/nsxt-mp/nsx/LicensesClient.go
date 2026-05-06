@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,11 +22,15 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type LicensesClient interface {
 
 	// This will add a license key to the system. The API supports adding only one license key for each license edition type - Standard, Advanced or Enterprise. If a new license key is tried to add for an edition for which the license key already exists, then this API will return an error.
+	//  Deprecated. For all licensing related workflows, please refer to the common Licensing documentation in the VMware Cloud Foundation for this version.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param licenseParam (required)
 	// @return com.vmware.nsx.model.License
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -33,13 +38,14 @@ type LicensesClient interface {
 	Create(licenseParam nsxModel.License) (nsxModel.License, error)
 
 	// Remove a license identified by the license-key.
-	//  Deprecated. Use POST /licenses?action=delete API instead.
+	//  Deprecated. For all licensing related workflows, please refer to the common Licensing documentation in the VMware Cloud Foundation for this version.
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param licenseKeyParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -47,10 +53,14 @@ type LicensesClient interface {
 	Delete(licenseKeyParam string) error
 
 	// This will delete the license key identified in the request body by \"license_key\" and its properties from the system. Attempting to delete the last license key will result in an error.
+	//  Deprecated. For all licensing related workflows, please refer to the common Licensing documentation in the VMware Cloud Foundation for this version.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param licenseParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -64,6 +74,7 @@ type LicensesClient interface {
 	// @return com.vmware.nsx.model.License
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -79,6 +90,7 @@ type LicensesClient interface {
 	// @return com.vmware.nsx.model.License
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -89,6 +101,7 @@ type LicensesClient interface {
 	// @return com.vmware.nsx.model.LicensesListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -96,7 +109,7 @@ type LicensesClient interface {
 	List() (nsxModel.LicensesListResult, error)
 
 	// Assign an Updated Enterprise License Key.
-	//  Deprecated. Use the POST /licenses API instead
+	//  Deprecated. For all licensing related workflows, please refer to the common Licensing documentation in the VMware Cloud Foundation for this version.
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -104,6 +117,7 @@ type LicensesClient interface {
 	// @return com.vmware.nsx.model.License
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

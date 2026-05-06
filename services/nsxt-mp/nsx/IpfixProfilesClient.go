@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,6 +23,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type IpfixProfilesClient interface {
 
 	// Create a new IPFIX profile with essential properties.
+	//  This API is deprecated. Please use Policy API /infra/ipfix-l2-profiles instead.
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -31,6 +33,7 @@ type IpfixProfilesClient interface {
 	// The return value will contain all the properties defined in nsxModel.IpfixUpmProfile.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -38,12 +41,14 @@ type IpfixProfilesClient interface {
 	Create(ipfixUpmProfileParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 
 	// Delete an existing IPFIX profile by ID.
+	//  This API is deprecated. Please use Policy API /infra/ipfix-l2-profiles instead.
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param ipfixProfileIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -51,6 +56,7 @@ type IpfixProfilesClient interface {
 	Delete(ipfixProfileIdParam string) error
 
 	// Get an existing IPFIX profile by profile ID.
+	//  This API is deprecated. Please use Policy API /infra/ipfix-l2-profiles instead.
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -59,6 +65,7 @@ type IpfixProfilesClient interface {
 	// The return value will contain all the properties defined in nsxModel.IpfixUpmProfile.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -66,18 +73,22 @@ type IpfixProfilesClient interface {
 	Get(ipfixProfileIdParam string) (*vapiData_.StructValue, error)
 
 	// Query IPFIX profiles with list parameters. List result can be filtered by profile type defined by IpfixUpmProfileType.
+	//  This API is deprecated. Please use Policy API /infra/ipfix-l2-profiles instead.
 	//
-	// @param appliedToEntityIdParam ID of Entity Applied with Profile (optional)
-	// @param appliedToEntityTypeParam Supported Entity Types (optional)
+	// Deprecated: This API element is deprecated.
+	//
+	// @param appliedToEntityIdParam The entity ID works as a filter param. Entity ID and entity type should be both provided or not at a query. (optional)
+	// @param appliedToEntityTypeParam All entity types supported. (optional)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param profileTypesParam IPFIX Profile Type List (optional)
-	// @param sortAscendingParam (optional)
+	// @param profileTypesParam An English comma-separated list of profile types. Enumerated value in IpfixUpmProfileType could be listed here as a filter param. (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.IpfixUpmProfileListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -85,6 +96,7 @@ type IpfixProfilesClient interface {
 	List(appliedToEntityIdParam *string, appliedToEntityTypeParam *string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, profileTypesParam *string, sortAscendingParam *bool, sortByParam *string) (nsxModel.IpfixUpmProfileListResult, error)
 
 	// Update an existing IPFIX profile with profile ID and modified properties.
+	//  This API is deprecated. Please use Policy API /infra/ipfix-l2-profiles instead.
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -95,6 +107,7 @@ type IpfixProfilesClient interface {
 	// The return value will contain all the properties defined in nsxModel.IpfixUpmProfile.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

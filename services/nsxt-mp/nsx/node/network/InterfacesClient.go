@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -26,6 +27,7 @@ type InterfacesClient interface {
 	// @return com.vmware.nsx.model.NodeNetworkInterfaceProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -36,19 +38,21 @@ type InterfacesClient interface {
 	// @return com.vmware.nsx.model.NodeNetworkInterfacePropertiesListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List() (nsxModel.NodeNetworkInterfacePropertiesListResult, error)
 
-	// Updates the specified interface properties. You cannot change the properties ``ip_configuration``, ``ip_addresses``, or ``plane``. NSX Manager must have a static IP address. You must use NSX CLI to configure a controller or an edge node. **Note:** NSX manager reboot is required after adding IPv6 address.
+	// Updates the specified interface properties, which includes configuring IPv6 address when NSX appliance has only IPv4 management address. But once configured you cannot modify following interface properties - ``ip_configuration``, ``ip_addresses``, ``ip6_addresses`` or ``plane``. NSX Manager must have a static IPv4 or IPv6 address. You must use NSX CLI to configure the manager or edge appliance. **Note:** NSX appliance reboot is required after adding IPv6 address.
 	//
 	// @param interfaceIdParam ID of interface to update (required)
 	// @param nodeNetworkInterfacePropertiesParam (required)
 	// @return com.vmware.nsx.model.NodeNetworkInterfaceProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

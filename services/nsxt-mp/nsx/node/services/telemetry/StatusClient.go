@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,9 +22,14 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type StatusClient interface {
 
 	// Read Telemetry service status
+	//  This API is deprecated. Use:
+	// GET https://<nsx-mgr>/api/v1/node/services/nsxt-mp/monitoring/status
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

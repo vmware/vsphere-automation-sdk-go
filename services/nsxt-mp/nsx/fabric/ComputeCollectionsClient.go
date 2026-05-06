@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,9 +24,10 @@ type ComputeCollectionsClient interface {
 	// Perform action specific to NSX on the compute-collection. cc-ext-id should be of type VC_Cluster.
 	//
 	// @param ccExtIdParam (required)
-	// @param actionParam Supported actions on compute-collection (optional)
+	// @param actionParam For Compute collection, the supported actions are: - remove_nsx: removes NSX from the cluster (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -38,6 +40,7 @@ type ComputeCollectionsClient interface {
 	// @return com.vmware.nsx.model.ComputeCollection
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -48,25 +51,27 @@ type ComputeCollectionsClient interface {
 	//
 	// @param cmLocalIdParam Local Id of the compute collection in the Compute Manager (optional)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param datacenterExternalIdParam Datacenter external id of the compute collection in the compute manager (optional)
 	// @param discoveredNodeIdParam Id of the discovered node which belongs to this Compute Collection (optional)
 	// @param displayNameParam Name of the ComputeCollection in source compute manager (optional)
 	// @param externalIdParam External ID of the ComputeCollection in the source Compute manager, e.g. mo-ref in VC (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param nodeIdParam Id of the fabric node created from a discovered node belonging to this Compute Collection (optional)
 	// @param originIdParam Id of the compute manager from where this Compute Collection was discovered (optional)
 	// @param originTypeParam ComputeCollection type like VC_Cluster. Here the Compute Manager type prefix would help in differentiating similar named Compute Collection types from different Compute Managers (optional)
 	// @param ownerIdParam Id of the owner of compute collection in the Compute Manager (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.ComputeCollectionListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cmLocalIdParam *string, cursorParam *string, discoveredNodeIdParam *string, displayNameParam *string, externalIdParam *string, includedFieldsParam *string, nodeIdParam *string, originIdParam *string, originTypeParam *string, ownerIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.ComputeCollectionListResult, error)
+	List(cmLocalIdParam *string, cursorParam *string, datacenterExternalIdParam *string, discoveredNodeIdParam *string, displayNameParam *string, externalIdParam *string, includedFieldsParam *string, nodeIdParam *string, originIdParam *string, originTypeParam *string, ownerIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.ComputeCollectionListResult, error)
 }
 
 type computeCollectionsClient struct {
@@ -155,7 +160,7 @@ func (cIface *computeCollectionsClient) Get(ccExtIdParam string) (nsxModel.Compu
 	}
 }
 
-func (cIface *computeCollectionsClient) List(cmLocalIdParam *string, cursorParam *string, discoveredNodeIdParam *string, displayNameParam *string, externalIdParam *string, includedFieldsParam *string, nodeIdParam *string, originIdParam *string, originTypeParam *string, ownerIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.ComputeCollectionListResult, error) {
+func (cIface *computeCollectionsClient) List(cmLocalIdParam *string, cursorParam *string, datacenterExternalIdParam *string, discoveredNodeIdParam *string, displayNameParam *string, externalIdParam *string, includedFieldsParam *string, nodeIdParam *string, originIdParam *string, originTypeParam *string, ownerIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.ComputeCollectionListResult, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := computeCollectionsListRestMetadata()
@@ -165,6 +170,7 @@ func (cIface *computeCollectionsClient) List(cmLocalIdParam *string, cursorParam
 	sv := vapiBindings_.NewStructValueBuilder(computeCollectionsListInputType(), typeConverter)
 	sv.AddStructField("CmLocalId", cmLocalIdParam)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("DatacenterExternalId", datacenterExternalIdParam)
 	sv.AddStructField("DiscoveredNodeId", discoveredNodeIdParam)
 	sv.AddStructField("DisplayName", displayNameParam)
 	sv.AddStructField("ExternalId", externalIdParam)

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,13 +21,14 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type CertificatesClient interface {
 
-	// Look up the Certificate Profile matching the service-type and apply the certificate. When the Certificate Profile has cluster_certificate=false, the node_id parameter is required to designate the node where the certificate needs to be applied.
+	// Look up the Certificate Profile matching the service-type and apply the certificate. When the Certificate Profile has cluster_certificate=false, the node_id parameter is required to designate the node where the certificate needs to be applied. Note that when applying CA-signed certificates to either the API certificate profile or the MGMT_CLUSTER certificate profile, the cerficate must have its CN or SAN extensions matching the endpoint's IP or FQDN. This also means that applying a CA-signed certificate to the MGMT_CLUSTER service profile to a cluster without first configuring its VIP is not allowed.
 	//
 	// @param certIdParam ID of certificate to apply (required)
-	// @param serviceTypeParam Supported service types, that are using certificates. (required)
-	// @param nodeIdParam Node Id (optional)
+	// @param serviceTypeParam Service Type of the CertificateProfile to apply the certificate to. (required)
+	// @param nodeIdParam Optional node-id to which to apply the certificate. The cluster_certificate field of the matching Certificate Profile must be false, as those get applied to all nodes. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -38,6 +40,7 @@ type CertificatesClient interface {
 	// @param certIdParam ID of certificate to delete (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -50,6 +53,7 @@ type CertificatesClient interface {
 	// @return com.vmware.nsx.model.PeerCertificateChain
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -60,14 +64,16 @@ type CertificatesClient interface {
 	//
 	// @param certIdParam ID of certificate to read (required)
 	// @param detailsParam whether to expand the pem data and show all its details (optional, default to false)
+	// @param fmtParam By default the format returned is exactly the format in which the user provided it, which is the 'raw' format. | The 'standard' format has all extraneous characters removed and has a newline after each 64 characters. (optional)
 	// @return com.vmware.nsx.model.Certificate
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(certIdParam string, detailsParam *bool) (nsxModel.Certificate, error)
+	Get(certIdParam string, detailsParam *bool, fmtParam *string) (nsxModel.Certificate, error)
 
 	// Adds a new private-public certificate or a chain of certificates (CAs) and, optionally, a private key that can be applied to one of the user-facing components (appliance management or edge). The certificate and the key should be stored in PEM format. If no private key is provided, the certificate is used as a client certificate in the trust store. A private key can be uploaded for a CA certificate only if the \"purpose\" parameter is set to \"signing-ca\".
 	//
@@ -75,6 +81,7 @@ type CertificatesClient interface {
 	// @return com.vmware.nsx.model.CertificateList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -87,6 +94,7 @@ type CertificatesClient interface {
 	// @param trustObjectDataParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -97,20 +105,22 @@ type CertificatesClient interface {
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param detailsParam whether to expand the pem data and show all its details (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param nodeIdParam Node ID of certificate to return (optional)
+	// @param fmtParam By default the format returned is exactly the format in which the user provided it, which is the 'raw' format. | The 'standard' format has all extraneous characters removed and has a newline after each 64 characters. (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param nodeIdParam Provide this parameter to limit the list of returned certificates to those matching a particular node ID. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @param type_Param Type of certificate to return (optional)
+	// @param type_Param Provide this parameter to limit the list of returned certificates to those matching a particular usage. Passing cluster_certificate will return the certificate used for the cluster wide API service. (optional)
 	// @return com.vmware.nsx.model.CertificateList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, detailsParam *bool, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsxModel.CertificateList, error)
+	List(cursorParam *string, detailsParam *bool, fmtParam *string, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsxModel.CertificateList, error)
 
 	// Set a certificate that has been imported to be the Appliance Proxy certificate used for communicating with Appliance Proxies on other sites.
 	//
@@ -122,6 +132,7 @@ type CertificatesClient interface {
 	// @param setInterSiteAphCertificateRequestParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -139,6 +150,7 @@ type CertificatesClient interface {
 	// @param setPrincipalIdentityCertificateForFederationRequestParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -152,6 +164,7 @@ type CertificatesClient interface {
 	// @return com.vmware.nsx.model.CertificateCheckingStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -279,7 +292,7 @@ func (cIface *certificatesClient) Fetchpeercertificatechain(tlsServiceEndpointPa
 	}
 }
 
-func (cIface *certificatesClient) Get(certIdParam string, detailsParam *bool) (nsxModel.Certificate, error) {
+func (cIface *certificatesClient) Get(certIdParam string, detailsParam *bool, fmtParam *string) (nsxModel.Certificate, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := certificatesGetRestMetadata()
@@ -289,6 +302,7 @@ func (cIface *certificatesClient) Get(certIdParam string, detailsParam *bool) (n
 	sv := vapiBindings_.NewStructValueBuilder(certificatesGetInputType(), typeConverter)
 	sv.AddStructField("CertId", certIdParam)
 	sv.AddStructField("Details", detailsParam)
+	sv.AddStructField("Fmt", fmtParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsxModel.Certificate
@@ -371,7 +385,7 @@ func (cIface *certificatesClient) Importtrustedca(aliasParam string, trustObject
 	}
 }
 
-func (cIface *certificatesClient) List(cursorParam *string, detailsParam *bool, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsxModel.CertificateList, error) {
+func (cIface *certificatesClient) List(cursorParam *string, detailsParam *bool, fmtParam *string, includedFieldsParam *string, nodeIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsxModel.CertificateList, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := certificatesListRestMetadata()
@@ -381,6 +395,7 @@ func (cIface *certificatesClient) List(cursorParam *string, detailsParam *bool, 
 	sv := vapiBindings_.NewStructValueBuilder(certificatesListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("Details", detailsParam)
+	sv.AddStructField("Fmt", fmtParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("NodeId", nodeIdParam)
 	sv.AddStructField("PageSize", pageSizeParam)

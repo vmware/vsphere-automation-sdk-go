@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -31,6 +32,7 @@ type SectionsClient interface {
 	// @return com.vmware.nsx.model.ServiceInsertionSection
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -48,6 +50,7 @@ type SectionsClient interface {
 	// @return com.vmware.nsx.model.ServiceInsertionSectionRuleList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -63,6 +66,7 @@ type SectionsClient interface {
 	// @param cascadeParam Flag to cascade delete of this object to all it's child objects. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -78,6 +82,7 @@ type SectionsClient interface {
 	// @return com.vmware.nsx.model.ServiceInsertionSection
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -89,22 +94,23 @@ type SectionsClient interface {
 	//
 	// Deprecated: This API element is deprecated.
 	//
-	// @param appliedTosParam AppliedTo's referenced by this section or section's Distributed Service Rules . (optional)
+	// @param appliedTosParam Where the Distributed Service Rules are applied.(used for filtering the list). Single value is supported in current release. Multiple Comma delmited values may be supported in future releases. (optional)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param destinationsParam Destinations referenced by this section's Distributed Service Rules . (optional)
-	// @param excludeAppliedToTypeParam Resource type valid for use as AppliedTo filter in section API (optional)
-	// @param filterTypeParam Filter type (optional, default to FILTER)
-	// @param includeAppliedToTypeParam Resource type valid for use as AppliedTo filter in section API (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param destinationsParam The destination value in Distributed Service Rules (used for filtering the list). Single value is supported in current release. Multiple Comma delmited values may be supported in future releases. (optional)
+	// @param excludeAppliedToTypeParam Used to filter out sections not having a specified AppliedTo target type. This parameter cannot be used along with include_applied_to_type parameter. Section filter only takes a single value for this param. (optional)
+	// @param filterTypeParam Filter type defines matching criteria to qualify a rule in result. Type 'FILTER' will ensure all criterias (sources, destinations, services, extended sources, context profiles, appliedtos) are matched. Type 'SEARCH' will match any of the given criteria. (optional, default to FILTER)
+	// @param includeAppliedToTypeParam Used to filter out results based on target type of a section's AppliedTo. Only sections with matching target type in its applied to will be returned. This parameter cannot be used along with exclude_applied_to_type parameter. Section filter only takes a single value for this param. (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param servicesParam NSService referenced by this section's Distributed Service Rules . (optional)
-	// @param sortAscendingParam (optional)
+	// @param servicesParam Specifying this returns the Rules where this NSServiceElement is used (used for filtering the list). Single value is supported in current release. Multiple Comma delmited values may be supported in future releases. (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @param sourcesParam Sources referenced by this section's Distributed Service Rules . (optional)
-	// @param type_Param Section Type (optional, default to L3REDIRECT)
+	// @param sourcesParam The source value in Distributed Service Rules (used for filtering the list). Single value is supported in current release. Multiple Comma delmited values may be supported in future releases. (optional)
+	// @param type_Param Section Type with values L3REDIRECT. (optional, default to L3REDIRECT)
 	// @return com.vmware.nsx.model.ServiceInsertionSectionListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -120,6 +126,7 @@ type SectionsClient interface {
 	// @return com.vmware.nsx.model.ServiceInsertionSectionRuleList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -138,6 +145,7 @@ type SectionsClient interface {
 	// @return com.vmware.nsx.model.ServiceInsertionSection
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -156,6 +164,7 @@ type SectionsClient interface {
 	// @return com.vmware.nsx.model.ServiceInsertionSectionRuleList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -172,6 +181,7 @@ type SectionsClient interface {
 	// @return com.vmware.nsx.model.ServiceInsertionSection
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -188,6 +198,7 @@ type SectionsClient interface {
 	// @return com.vmware.nsx.model.ServiceInsertionSectionRuleList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

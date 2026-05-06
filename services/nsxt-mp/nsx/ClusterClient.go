@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,10 +23,11 @@ type ClusterClient interface {
 
 	// Request one-time backup. The backup will be uploaded using the same server configuration as for automatic backup.
 	//
-	// @param frameTypeParam Frame type (optional, default to LOCAL_LOCAL_MANAGER)
-	// @param siteIdParam Site ID (optional, default to localhost)
+	// @param frameTypeParam This attribute is used to indicate the service on current site or other site for which backup is handled in a frame. LOCAL_LOCAL_MANAGER corresponds to local LM of the site. LOCAL_MANAGER cprresponds to LM of other site. (optional, default to LOCAL_LOCAL_MANAGER)
+	// @param siteIdParam Site ID of LM site, which will be supported in a frame (optional, default to localhost)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -41,6 +43,7 @@ type ClusterClient interface {
 	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
+	// @throws UnableToAllocateResource  Insufficient Storage
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Create(targetNodeIdParam string, targetUriParam string) error
@@ -54,6 +57,7 @@ type ClusterClient interface {
 	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
+	// @throws UnableToAllocateResource  Insufficient Storage
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete(targetNodeIdParam string, targetUriParam string) error
@@ -62,6 +66,7 @@ type ClusterClient interface {
 	// @return com.vmware.nsx.model.ClusterConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -74,6 +79,7 @@ type ClusterClient interface {
 	// @return com.vmware.nsx.model.ClusterNodeInfo
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -89,6 +95,7 @@ type ClusterClient interface {
 	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
+	// @throws UnableToAllocateResource  Insufficient Storage
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get1(targetNodeIdParam string, targetUriParam string) error
@@ -99,6 +106,7 @@ type ClusterClient interface {
 	// @return com.vmware.nsx.model.ClusterConfiguration
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -114,6 +122,7 @@ type ClusterClient interface {
 	// @return com.vmware.nsx.model.ClusterConfiguration
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -123,6 +132,7 @@ type ClusterClient interface {
 	// Request one-time inventory summary. The backup will be uploaded using the same server configuration as for an automatic backup.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -138,6 +148,7 @@ type ClusterClient interface {
 	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
+	// @throws UnableToAllocateResource  Insufficient Storage
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Update(targetNodeIdParam string, targetUriParam string) error

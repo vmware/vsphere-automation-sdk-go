@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -17,6 +18,18 @@ import (
 	nsxModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-mp/nsx/model"
 	"reflect"
 )
+
+// Possible value for ``fmt`` of method Crls#get.
+const Crls_GET_FMT_STANDARD = "STANDARD"
+
+// Possible value for ``fmt`` of method Crls#get.
+const Crls_GET_FMT_RAW = "RAW"
+
+// Possible value for ``fmt`` of method Crls#list.
+const Crls_LIST_FMT_STANDARD = "STANDARD"
+
+// Possible value for ``fmt`` of method Crls#list.
+const Crls_LIST_FMT_RAW = "RAW"
 
 // Possible value for ``type`` of method Crls#list.
 const Crls_LIST_TYPE_CLUSTER_API_CERTIFICATE = "cluster_api_certificate"
@@ -71,7 +84,7 @@ func crlsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func crlsGetInputType() vapiBindings_.StructType {
@@ -79,8 +92,10 @@ func crlsGetInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["crl_id"] = vapiBindings_.NewStringType()
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["crl_id"] = "CrlId"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -100,13 +115,17 @@ func crlsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["crl_id"] = vapiBindings_.NewStringType()
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["crl_id"] = "CrlId"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	paramsTypeMap["crl_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["crlId"] = vapiBindings_.NewStringType()
 	pathParams["crl_id"] = "crlId"
 	queryParams["details"] = "details"
+	queryParams["fmt"] = "fmt"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -127,7 +146,7 @@ func crlsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func crlsImportcrlInputType() vapiBindings_.StructType {
@@ -170,12 +189,12 @@ func crlsImportcrlRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"crl_object_data",
 		"POST",
 		"/api/v1/trust-management/crls",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func crlsListInputType() vapiBindings_.StructType {
@@ -183,6 +202,7 @@ func crlsListInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -191,6 +211,7 @@ func crlsListInputType() vapiBindings_.StructType {
 	fields["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["page_size"] = "PageSize"
@@ -216,6 +237,7 @@ func crlsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -224,6 +246,7 @@ func crlsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["page_size"] = "PageSize"
@@ -235,6 +258,7 @@ func crlsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -243,6 +267,7 @@ func crlsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	queryParams["included_fields"] = "included_fields"
 	queryParams["details"] = "details"
 	queryParams["sort_by"] = "sort_by"
+	queryParams["fmt"] = "fmt"
 	queryParams["type"] = "type"
 	queryParams["node_id"] = "node_id"
 	queryParams["page_size"] = "page_size"
@@ -266,7 +291,7 @@ func crlsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func crlsUpdateInputType() vapiBindings_.StructType {
@@ -316,10 +341,10 @@ func crlsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"crl",
 		"PUT",
 		"/api/v1/trust-management/crls/{crlId}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,10 +21,21 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SshClient interface {
 
+	// Clear SSH login banner
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Clearbanner() error
+
 	// Read ssh service properties
 	// @return com.vmware.nsx.model.NodeSshServiceProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -35,6 +47,7 @@ type SshClient interface {
 	// @param knownHostParameterParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -45,6 +58,7 @@ type SshClient interface {
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -55,6 +69,7 @@ type SshClient interface {
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -65,18 +80,20 @@ type SshClient interface {
 	// @return com.vmware.nsx.model.NodeServiceStatusProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Stop() (nsxModel.NodeServiceStatusProperties, error)
 
-	// Update ssh service properties. If the start_on_boot property is updated to true, existing ssh sessions if any are stopped and the ssh service is restarted.
+	// Update ssh service properties. If the start_on_boot property is updated to true, existing ssh sessions if any are stopped and the ssh service is restarted. If root_login is updated to false then SSH to the root is not permitted. Banner should be formatted proprtly before sending into the request body. \"\\n\" can be used for multiline message.
 	//
 	// @param nodeSshServicePropertiesParam (required)
 	// @return com.vmware.nsx.model.NodeSshServiceProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -93,6 +110,7 @@ type sshClient struct {
 func NewSshClient(connector vapiProtocolClient_.Connector) *sshClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.node.services.ssh")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"clearbanner":           vapiCore_.NewMethodIdentifier(interfaceIdentifier, "clearbanner"),
 		"get":                   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"removehostfingerprint": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "removehostfingerprint"),
 		"restart":               vapiCore_.NewMethodIdentifier(interfaceIdentifier, "restart"),
@@ -112,6 +130,31 @@ func (sIface *sshClient) GetErrorBindingType(errorName string) vapiBindings_.Bin
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
+}
+
+func (sIface *sshClient) Clearbanner() error {
+	typeConverter := sIface.connector.TypeConverter()
+	executionContext := sIface.connector.NewExecutionContext()
+	operationRestMetaData := sshClearbannerRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(sshClearbannerInputType(), typeConverter)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.services.ssh", "clearbanner", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
 }
 
 func (sIface *sshClient) Get() (nsxModel.NodeSshServiceProperties, error) {

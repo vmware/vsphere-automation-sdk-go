@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,12 +22,16 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type StatisticsClient interface {
 
 	// Get the statistics for the Bridge Endpoint of the given Endpoint id (endpoint-id)
+	//  Start using Edge Bridge Profiles and attach to the segment to configure bridging on the segment.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param endpointIdParam (required)
 	// @param sourceParam Data source type. (optional)
 	// @return com.vmware.nsx.model.BridgeEndpointStatistics
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

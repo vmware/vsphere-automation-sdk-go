@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +22,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type NsGroupsClient interface {
 
 	// Add/remove the expressions passed in the request body to/from the NSGroup
+	//  This API is deprecated. Please use below policy API PUT /infra/domains/<domain-id>/groups/<group-id> to add or remove members to and from a group following PUT semantics.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param nsGroupIdParam NSGroup Id (required)
 	// @param nsGroupExpressionListParam (required)
@@ -28,6 +32,7 @@ type NsGroupsClient interface {
 	// @return com.vmware.nsx.model.NSGroup
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -42,6 +47,7 @@ type NsGroupsClient interface {
 	// @return com.vmware.nsx.model.NSGroup
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -49,11 +55,15 @@ type NsGroupsClient interface {
 	Create(nsGroupParam nsxModel.NSGroup) (nsxModel.NSGroup, error)
 
 	// Deletes the specified NSGroup. By default, if the NSGroup is added to another NSGroup, it won't be deleted. In such situations, pass \"force=true\" as query param to force delete the NSGroup.
+	//  This API is deprecated. Please use below policy API /infra/domains/<domain-id>/groups/<group-id> to delete a group.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param nsGroupIdParam NSGroup Id (required)
-	// @param forceParam Force delete the resource even if it is being used somewhere (optional, default to false)
+	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -65,10 +75,11 @@ type NsGroupsClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param nsGroupIdParam NSGroup Id (required)
-	// @param populateReferencesParam Populate metadata of resource referenced by NSGroupExpressions (optional, default to false)
+	// @param populateReferencesParam If set to true, the target_resource property of each NSGroupExpresion will be populated from the associated resource when the expression uniquely identifies a resource. (optional, default to false)
 	// @return com.vmware.nsx.model.NSGroup
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -80,15 +91,16 @@ type NsGroupsClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param memberTypesParam Specify member types to filter corresponding NSGroups (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param memberTypesParam Specify valid member types in CSV format to filter NSGroups. Returns NSGroups whose member types are same as or subset of specified member types (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param populateReferencesParam Populate metadata of resource referenced by NSGroupExpressions (optional, default to false)
-	// @param sortAscendingParam (optional)
+	// @param populateReferencesParam If set to true, the target_resource property of each NSGroupExpresion will be populated from the associated resource when the expression uniquely identifies a resource. (optional, default to false)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.NSGroupListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -104,6 +116,7 @@ type NsGroupsClient interface {
 	// @return com.vmware.nsx.model.NSGroup
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

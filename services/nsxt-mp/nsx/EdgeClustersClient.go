@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,89 +21,111 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type EdgeClustersClient interface {
 
-	// Creates a new edge cluster. It only supports homogeneous members. The TransportNodes backed by EdgeNode are only allowed in cluster members. DeploymentType (VIRTUAL_MACHINE|PHYSICAL_MACHINE) of these EdgeNodes is recommended to be the same. EdgeCluster supports members of different deployment types.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param edgeClusterParam (required)
 	// @return com.vmware.nsx.model.EdgeCluster
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Create(edgeClusterParam nsxModel.EdgeCluster) (nsxModel.EdgeCluster, error)
 
-	// Deletes the specified edge cluster.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param edgeClusterIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete(edgeClusterIdParam string) error
 
-	// Returns information about the specified edge cluster.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param edgeClusterIdParam (required)
 	// @return com.vmware.nsx.model.EdgeCluster
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get(edgeClusterIdParam string) (nsxModel.EdgeCluster, error)
 
-	// Returns information about the configured edge clusters, which enable you to group together transport nodes of the type EdgeNode and apply fabric profiles to all members of the edge cluster. Each edge node can participate in only one edge cluster.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includeVnaClustersParam When include_vna_clusters query parameter is set to true then virtual network appliance clusters will be included in the listing along with edge clusters. When set to false then only edge clusters will be displayed in listing. When include_vna_clusters query parameter is not used then by default edge clusters will be displayed in listing. (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.EdgeClusterListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.EdgeClusterListResult, error)
+	List(cursorParam *string, includeVnaClustersParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.EdgeClusterListResult, error)
 
-	// Relocate auto allocated service contexts from edge node at given index. For API to perform relocate and remove action the edge node at given index must only have auto allocated service contexts. If any manually allocated service context is present on the edge cluster member, then the task will not be performed. Also, it is recommended to move edge node for which relocate and remove action is being performed into maintenance mode, before executing the API. If edge is not not moved into maintenance mode, then API will move edge node into maintenance mode before performing the actual relocate and remove task.To maintain high availability, Edge cluster should have at least two healthy edge nodes for relocate and removal. Once relocate action is performed successfully, the edge node will be removed from the edge cluster.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param edgeClusterIdParam (required)
 	// @param edgeClusterMemberIndexParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Relocateandremove(edgeClusterIdParam string, edgeClusterMemberIndexParam nsxModel.EdgeClusterMemberIndex) error
 
-	// Replace the transport node in the specified member of the edge-cluster. This is a disruptive action. This will move all the LogicalRouterPorts(uplink and routerLink) host on the old transport_node to the new transport_node. The transportNode cannot be present in another member of any edgeClusters.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param edgeClusterIdParam (required)
 	// @param edgeClusterMemberTransportNodeParam (required)
 	// @return com.vmware.nsx.model.EdgeCluster
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Replacetransportnode(edgeClusterIdParam string, edgeClusterMemberTransportNodeParam nsxModel.EdgeClusterMemberTransportNode) (nsxModel.EdgeCluster, error)
 
-	// Modifies the specified edge cluster. Modifiable parameters include the description, display_name, transport-node-id. If the optional fabric_profile_binding is included, resource_type and profile_id are required. User should do a GET on the edge-cluster and obtain the payload and retain the member_index of the existing members as returning in the GET output. For new member additions, the member_index cannot be defined by the user, user can read the system allocated index to the new member in the output of this API call or by doing a GET call. User cannot use this PUT api to replace the transport_node of an existing member because this is a disruption action, we have exposed a explicit API for doing so, refer to \"ReplaceEdgeClusterMemberTransportNode\" EdgeCluster only supports homogeneous members. The TransportNodes backed by EdgeNode are only allowed in cluster members. DeploymentType (VIRTUAL_MACHINE|PHYSICAL_MACHINE) of these EdgeNodes is recommended to be the same. EdgeCluster supports members of different deployment types.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param edgeClusterIdParam (required)
 	// @param edgeClusterParam (required)
 	// @return com.vmware.nsx.model.EdgeCluster
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -231,7 +254,7 @@ func (eIface *edgeClustersClient) Get(edgeClusterIdParam string) (nsxModel.EdgeC
 	}
 }
 
-func (eIface *edgeClustersClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.EdgeClusterListResult, error) {
+func (eIface *edgeClustersClient) List(cursorParam *string, includeVnaClustersParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.EdgeClusterListResult, error) {
 	typeConverter := eIface.connector.TypeConverter()
 	executionContext := eIface.connector.NewExecutionContext()
 	operationRestMetaData := edgeClustersListRestMetadata()
@@ -240,6 +263,7 @@ func (eIface *edgeClustersClient) List(cursorParam *string, includedFieldsParam 
 
 	sv := vapiBindings_.NewStructValueBuilder(edgeClustersListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeVnaClusters", includeVnaClustersParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,11 +23,12 @@ type ServiceInstancesClient interface {
 
 	// Returns all Service-Instance(s) of all Services present in system. When request parameter (deployed_to or service_deployment_id) is provided as a part of request, it will filter out Service-Instances accordingly.
 	//
-	// @param deployedToParam Deployed_to referenced by service instances present in system (optional)
-	// @param serviceDeploymentIdParam Service Deployment Id using which the instances were deployed (optional)
+	// @param deployedToParam The deployed_to attribute in Service Instance. Currently only Logical Router id is supported as deployed_to value. Single value is supported in current release. (optional)
+	// @param serviceDeploymentIdParam Service Deployment Id using which the instances were deployed. Single value is supported in current release. (optional)
 	// @return com.vmware.nsx.model.ServiceInstanceListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

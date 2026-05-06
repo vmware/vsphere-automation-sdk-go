@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,8 +22,8 @@ import (
 func csrsExtendedCreateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["csr_ext"] = vapiBindings_.NewReferenceType(nsxModel.CsrExtBindingType)
-	fieldNameMap["csr_ext"] = "CsrExt"
+	fields["csr"] = vapiBindings_.NewReferenceType(nsxModel.CsrBindingType)
+	fieldNameMap["csr"] = "Csr"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -40,9 +41,9 @@ func csrsExtendedCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["csr_ext"] = vapiBindings_.NewReferenceType(nsxModel.CsrExtBindingType)
-	fieldNameMap["csr_ext"] = "CsrExt"
-	paramsTypeMap["csr_ext"] = vapiBindings_.NewReferenceType(nsxModel.CsrExtBindingType)
+	fields["csr"] = vapiBindings_.NewReferenceType(nsxModel.CsrBindingType)
+	fieldNameMap["csr"] = "Csr"
+	paramsTypeMap["csr"] = vapiBindings_.NewReferenceType(nsxModel.CsrBindingType)
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -55,13 +56,13 @@ func csrsExtendedCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"csr_ext",
+		"csr",
 		"POST",
 		"/api/v1/trust-management/csrs-extended",
-		"",
+		"application/json",
 		resultHeaders,
 		201,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }

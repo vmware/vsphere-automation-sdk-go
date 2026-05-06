@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,11 +22,15 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type ManualHealthChecksClient interface {
 
 	// Create a new manual health check request with essential properties. It's disallowed to create new one until the count of in-progress manual health check is less than 50. A manual health check will be deleted automatically after finished for 24 hours.
+	//  This API is deprecated. Please use policy API /infra/manual-health-checks/<manual-health-check-id> to create a new manual health check request.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param manualHealthCheckParam (required)
 	// @return com.vmware.nsx.model.ManualHealthCheck
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -33,10 +38,14 @@ type ManualHealthChecksClient interface {
 	Create(manualHealthCheckParam nsxModel.ManualHealthCheck) (nsxModel.ManualHealthCheck, error)
 
 	// Delete an existing manual health check by ID.
+	//  This API is deprecated. Please use policy API /infra/manual-health-checks/<manual-health-check-id> to delete an existing manual health check.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param manualHealthCheckIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -44,11 +53,15 @@ type ManualHealthChecksClient interface {
 	Delete(manualHealthCheckIdParam string) error
 
 	// Get an existing manual health check by health check ID.
+	//  This API is deprecated. Please use policy API /infra/manual-health-checks/<manual-health-check-id> to get an existing manual health check.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param manualHealthCheckIdParam (required)
 	// @return com.vmware.nsx.model.ManualHealthCheck
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -56,15 +69,19 @@ type ManualHealthChecksClient interface {
 	Get(manualHealthCheckIdParam string) (nsxModel.ManualHealthCheck, error)
 
 	// Query manual health checks with list parameters.
+	//  This API is deprecated. Please use policy API /infra/manual-health-checks to list all the manual health check config entities; /infra/manual-health-checks/<manual-health-check-id>/result to get result for the specified manual health check ID.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.ManualHealthCheckListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

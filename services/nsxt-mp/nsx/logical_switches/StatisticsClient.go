@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +22,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type StatisticsClient interface {
 
 	// Returns statistics of a specified logical switch. For real time statistics source, transport_node_id and stats_type are mandatory.
+	//  This API is now deprecated. Please use new API - GET policy/api/v1/infra/segments/<segment-id>/statistics
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param lswitchIdParam (required)
 	// @param sourceParam Data source type. (optional)
@@ -29,6 +33,7 @@ type StatisticsClient interface {
 	// @return com.vmware.nsx.model.LogicalSwitchStatistics
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,12 +22,16 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type LeasesClient interface {
 
 	// Delete a single DHCP lease entry specified by ip and mac. The DHCP server matches the DHCP lease with the given ip address and the mac address. The matched lease entry will be deleted. If no lease matches, the request is ignored. The DHCP lease to be deleted will be removed by the system from both active and standby node. The system will report error if the DHCP lease could not be removed from both nodes. If the DHCP lease could not be removed on either node, please check the DHCP server status. Once the DHCP server status is UP, please invoke the deletion API again to ensure the lease gets deleted from both nodes.
+	//  Please use Policy API: POST /policy/api/v1/infra/segments/{segment-id}?action=delete_dhcp_leases POST /policy/api/v1/infra/tier-1s/{tier1-id}/segments/{segment-id}?action=delete_dhcp_leases
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param serverIdParam (required)
 	// @param ipParam IPv4 or IPv6 address (required)
-	// @param macParam MAC Address (required)
+	// @param macParam A MAC address. Must be 6 pairs of hexadecimal digits, upper or lower case, separated by colons or dashes. Examples: 01:23:45:67:89:ab, 01-23-45-67-89-AB. (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -34,6 +39,7 @@ type LeasesClient interface {
 	Delete(serverIdParam string, ipParam string, macParam string) error
 
 	// Get specific leases of a given dhcp server. As a dhcp server could manage millions of leases, the API has to limit the number of the returned leases via two mutually-excluded request parameters, i.e. \"pool_id\" and \"address\". Either a \"pool_id\" or an \"address\" can be provided, but not both in a same call. If a \"pool_id\" is specified, the leases of the specific pool are returned. If an \"address\" is specified, only the lease(s) represented y this address is(are) returned. The \"address\" can be a single IP, an ip-range, or a mac address.
+	//  Please use Policy API: GET /policy/api/v1/infra/dhcp-server-configs/{config-id}/leases
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -44,6 +50,7 @@ type LeasesClient interface {
 	// @return com.vmware.nsx.model.DhcpLeases
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

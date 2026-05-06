@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type ServersClient interface {
 
 	// Create a logical DHCP server with v4 and/or v6 servers.
+	//  Please use Policy API: PUT /policy/api/v1/infra/tier-0s/{tier-0-id} PUT /policy/api/v1/infra/tier-1s/{tier-1-id} { \"dhcp_config_path\" : \"/infra/dhcp-server-configs/dhcp-server-profile\", \"_revision\" : 0 } PUT /policy/api/v1/infra/segments/{segment-id} { \"display_name\" : \"segment-1\", \"subnets\": [ { \"gateway_address\": \"40.1.1.1/16\", \"dhcp_ranges\": [ \"40.1.2.2-40.1.2.20\" ], \"dhcp_config\": { \"resource_type\": \"SegmentDhcpV4Config\", \"lease_time\": 84600 }, \"network\": \"40.1.2.0/24\" } ], \"dhcp_config_path\" : \"/infra/dhcp-server-configs/dhcp-server-profile\", \"connectivity_path\": \"/infra/tier-1s/mgw\", \"_revision\" : 0 }
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -28,6 +30,7 @@ type ServersClient interface {
 	// @return com.vmware.nsx.model.LogicalDhcpServer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -35,12 +38,14 @@ type ServersClient interface {
 	Create(logicalDhcpServerParam nsxModel.LogicalDhcpServer) (nsxModel.LogicalDhcpServer, error)
 
 	// Delete a logical DHCP server specified by server id.
+	//  Please use Policy API: PUT /policy/api/v1/infra/tier-0s/{tier-0-id} PUT /policy/api/v1/infra/tier-1s/{tier-1-id} { \"display_name\" : \"mgw\", \"_revision\" : 0 } PUT /policy/api/v1/infra/segments/{segment-id} { \"display_name\" : \"segment-1\", \"subnets\": [ { \"gateway_address\": \"40.1.1.1/16\", \"network\": \"40.1.2.0/24\" } ], \"connectivity_path\": \"/infra/tier-1s/mgw\", \"_revision\" : 0 }
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param serverIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -48,6 +53,7 @@ type ServersClient interface {
 	Delete(serverIdParam string) error
 
 	// Retrieve a logical DHCP server specified by server id.
+	//  Please use Policy API: GET /policy/api/v1/infra/tier-0s/{tier-0-id} GET /policy/api/v1/infra/tier-1s/{tier-1-id} GET /policy/api/v1/infra/segments/{segment-id}
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -55,6 +61,7 @@ type ServersClient interface {
 	// @return com.vmware.nsx.model.LogicalDhcpServer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -62,17 +69,19 @@ type ServersClient interface {
 	Get(serverIdParam string) (nsxModel.LogicalDhcpServer, error)
 
 	// List logical DHCP servers with pagination support.
+	//  Please use Policy API: GET /policy/api/v1/infra/tier-0s/{tier-0-id} GET /policy/api/v1/infra/tier-1s/{tier-1-id} GET /policy/api/v1/infra/segments/{segment-id}
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.LogicalDhcpServerListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -80,6 +89,7 @@ type ServersClient interface {
 	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.LogicalDhcpServerListResult, error)
 
 	// Update a logical DHCP server with new configurations.
+	//  Please use Policy API: PUT /policy/api/v1/infra/tier-0s/{tier-0-id} PUT /policy/api/v1/infra/tier-1s/{tier-1-id} { \"dhcp_config_path\" : \"/infra/dhcp-server-configs/dhcp-server-profile\", \"_revision\" : 0 } PUT /policy/api/v1/infra/segments/{segment-id} { \"display_name\" : \"segment-1\", \"subnets\": [ { \"gateway_address\": \"40.1.1.1/16\", \"dhcp_ranges\": [ \"40.1.2.2-40.1.2.20\" ], \"dhcp_config\": { \"resource_type\": \"SegmentDhcpV4Config\", \"lease_time\": 84600 }, \"network\": \"40.1.2.0/24\" } ], \"dhcp_config_path\" : \"/infra/dhcp-server-configs/dhcp-server-profile\", \"connectivity_path\": \"/infra/tier-1s/mgw\", \"_revision\" : 0 }
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -88,6 +98,7 @@ type ServersClient interface {
 	// @return com.vmware.nsx.model.LogicalDhcpServer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

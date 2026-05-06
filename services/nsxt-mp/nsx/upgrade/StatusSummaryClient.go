@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -24,10 +25,11 @@ type StatusSummaryClient interface {
 	//
 	// @param componentTypeParam Component type based on which upgrade units to be filtered (optional)
 	// @param selectionStatusParam Flag to indicate whether to return status for only selected, only deselected or both type of upgrade units (optional, default to ALL)
-	// @param showHistoryParam Get upgrade activity for a given component (optional)
+	// @param showHistoryParam Get details of the last 16 operations performed during the upgrade of a given component. (optional)
 	// @return com.vmware.nsx.model.UpgradeStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

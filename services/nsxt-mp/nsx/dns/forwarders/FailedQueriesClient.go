@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,12 +22,16 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type FailedQueriesClient interface {
 
 	// Return the given count of recent failed DNS queries from DNS forwarder. Since the DNS forwarder is running in Acitve/Standby HA mode on transport nodes, the given count of queries will be returned from each nodes. Hence the total queries returned could be doubled. If no count is specified, 100 recent failed queries are returned. If the recent failures is less than the given count, all the failures will be returned. The maximum count is 1,000.
+	//  This API is deprecated, Please use policy APIs GET /policy/api/v1/infra/tier-0s/<tier-0-id>/dns-forwarder/failed-queries GET /policy/api/v1/infra/tier-1s/<tier-1-id>/dns-forwarder/failed-queries
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param forwarderIdParam (required)
-	// @param countParam The count of the failed DNS queries (optional, default to 100)
+	// @param countParam How many failed DNS queries should be returned. (optional, default to 100)
 	// @return com.vmware.nsx.model.DnsFailedQueries
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

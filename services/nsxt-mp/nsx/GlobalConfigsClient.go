@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -32,11 +33,14 @@ type GlobalConfigsClient interface {
 	//  SwitchingGlobalConfig GET /policy/api/v1/infra/connectivity-global-config
 	//  FirewallGlobalConfig GET policy/api/v1/infra/settings/firewall/security
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param configTypeParam (required)
 	// @return com.vmware.nsx.model.GlobalConfigs
 	// The return value will contain all the properties defined in nsxModel.GlobalConfigs.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -54,9 +58,12 @@ type GlobalConfigsClient interface {
 	//  FipsGlobalConfig GET /policy/api/v1/infra/connectivity-global-config
 	//  SwitchingGlobalConfig GET /policy/api/v1/infra/connectivity-global-config
 	//  FirewallGlobalConfig GET policy/api/v1/infra/settings/firewall/security
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.GlobalConfigsListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -74,6 +81,8 @@ type GlobalConfigsClient interface {
 	//  SwitchingGlobalConfig PUT /policy/api/v1/infra/connectivity-global-config
 	//  FirewallGlobalConfig PUT /policy/api/v1/infra/settings/firewall/security
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param configTypeParam (required)
 	// @param globalConfigsParam (required)
 	// The parameter must contain all the properties defined in nsxModel.GlobalConfigs.
@@ -81,6 +90,7 @@ type GlobalConfigsClient interface {
 	// The return value will contain all the properties defined in nsxModel.GlobalConfigs.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -98,6 +108,8 @@ type GlobalConfigsClient interface {
 	//  SwitchingGlobalConfig PUT /policy/api/v1/infra/connectivity-global-config
 	//  FirewallGlobalConfig PUT /policy/api/v1/infra/settings/firewall/security
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param configTypeParam (required)
 	// @param globalConfigsParam (required)
 	// The parameter must contain all the properties defined in nsxModel.GlobalConfigs.
@@ -105,6 +117,7 @@ type GlobalConfigsClient interface {
 	// The return value will contain all the properties defined in nsxModel.GlobalConfigs.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

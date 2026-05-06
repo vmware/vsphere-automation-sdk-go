@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -29,6 +30,7 @@ type TransportZonesClient interface {
 	// @return com.vmware.nsx.model.TransportZone
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -43,6 +45,7 @@ type TransportZonesClient interface {
 	// @param zoneIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -58,6 +61,7 @@ type TransportZonesClient interface {
 	// @return com.vmware.nsx.model.TransportZone
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -70,18 +74,19 @@ type TransportZonesClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param displayNameParam The transport zone's display name (optional)
+	// @param displayNameParam If set, all transport zones with matching display name will be returned. (optional)
 	// @param includeSystemOwnedParam Filter to indicate whether to include system owned Transport Zones. (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param isDefaultParam Filter to choose if default transport zones will be returned (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param isDefaultParam If set to true, only the default transport zones will be returned. If set to false, all transport zones except the default ones will be returned. If unset, all transport zones will be returned. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @param transportTypeParam Filter to choose the type of transport zones to return (optional)
-	// @param uplinkTeamingPolicyNameParam The transport zone's uplink teaming policy name (optional)
+	// @param transportTypeParam If set, only transport zones of the given type will be returned; otherwise transport zones of all types will be returned. (optional)
+	// @param uplinkTeamingPolicyNameParam All transport zone's with the specified uplink teaming policy name. Otherwise, transport zones with any uplink teaming policy will be returned. (optional)
 	// @return com.vmware.nsx.model.TransportZoneListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -98,6 +103,7 @@ type TransportZonesClient interface {
 	// @return com.vmware.nsx.model.TransportZone
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

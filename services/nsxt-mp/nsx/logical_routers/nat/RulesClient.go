@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +22,10 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type RulesClient interface {
 
 	// Add a NAT rule in a specific logical router.
+	//  This API has been deprecated, please use below Policy APIs
+	//  PATCH /policy/api/v1/infra/tier-0s/<tier-0-id>/nat/<nat-id>/nat-rules/<nat-rule-id>
+	//  PATCH /policy/api/v1/infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules/<nat-rule-id>
+	//  PATCH /policy/api/v1/orgs/<org-id>/projects/<project-id>/infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules/<nat-rule-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -29,6 +34,7 @@ type RulesClient interface {
 	// @return com.vmware.nsx.model.NatRule
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -47,6 +53,7 @@ type RulesClient interface {
 	// @return com.vmware.nsx.model.NatRuleList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -54,6 +61,10 @@ type RulesClient interface {
 	Createmultiple(logicalRouterIdParam string, natRuleListParam nsxModel.NatRuleList) (nsxModel.NatRuleList, error)
 
 	// Delete a specific NAT rule from a logical router
+	//  This API has been deprecated, please use below Policy APIs
+	//  DELETE /policy/api/v1/infra/tier-0s/<tier-0-id>/nat/<nat-id>/nat-rules/<nat-rule-id>
+	//  DELETE /policy/api/v1/infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules/<nat-rule-id>
+	//  DELETE /policy/api/v1/orgs/<org-id>/projects/<project-id>/infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules/<nat-rule-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -61,6 +72,7 @@ type RulesClient interface {
 	// @param ruleIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -68,6 +80,12 @@ type RulesClient interface {
 	Delete(logicalRouterIdParam string, ruleIdParam string) error
 
 	// Get a specific NAT rule from a given logical router
+	//  This API has been deprecated, please use below Policy APIs
+	//  GET /policy/api/v1/infra/tier-0s/<tier-0-id>/nat/<nat-id>/nat-rules<nat-rule-id>
+	//  GET /policy/api/v1/global-infra/tier-0s/<tier-0-id>/nat/<nat-id>/nat-rules<nat-rule-id>
+	//  GET /policy/api/v1/infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules<nat-rule-id>
+	//  GET /policy/api/v1/global-infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules<nat-rule-id>
+	//  GET /policy/api/v1/orgs/<org-id>/projects/<project-id>/infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules<nat-rule-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -76,6 +94,7 @@ type RulesClient interface {
 	// @return com.vmware.nsx.model.NatRule
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -83,19 +102,26 @@ type RulesClient interface {
 	Get(logicalRouterIdParam string, ruleIdParam string) (nsxModel.NatRule, error)
 
 	// Returns paginated list of all user defined NAT rules of the specific logical router. If a rule_type is provided, only the given type of rules will be returned. If no rule_type is specified, the rule_type will be defaulted to NATv4, i.e. only the NATv4 rules will be listed.
+	//  This API has been deprecated, please use below Policy APIs
+	//  GET /policy/api/v1/infra/tier-0s/<tier-0-id>/nat/<nat-id>/nat-rules
+	//  GET /policy/api/v1/global-infra/tier-0s/<tier-0-id>/nat/<nat-id>/nat-rules
+	//  GET /policy/api/v1/infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules
+	//  GET /policy/api/v1/global-infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules
+	//  GET /policy/api/v1/orgs/<org-id>/projects/<project-id>/infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param logicalRouterIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param ruleTypeParam Action type for getting NAT rules (optional)
-	// @param sortAscendingParam (optional)
+	// @param ruleTypeParam If not specify rule_type, backend returns NAT rule list for IPv4. If specify rule_type to ALL, backend returns all NAT rules list. If specify rule_type to NATv4, backend returns NAT rule list for IPv4. If specify rule_type to NAT64, backend returns NAT rule list for IPv6. (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.NatRuleListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -103,6 +129,10 @@ type RulesClient interface {
 	List(logicalRouterIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, ruleTypeParam *string, sortAscendingParam *bool, sortByParam *string) (nsxModel.NatRuleListResult, error)
 
 	// Update a specific NAT rule from a given logical router.
+	//  This API has been deprecated, please use below Policy APIs
+	//  PUT /policy/api/v1/infra/tier-0s/<tier-0-id>/nat/<nat-id>/nat-rules<nat-rule-id>
+	//  PUT /policy/api/v1/infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules<nat-rule-id>
+	//  PUT /policy/api/v1/orgs/<org-id>/projects/<project-id>/infra/tier-1s/<tier-1-id>/nat/<nat-id>/nat-rules<nat-rule-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -112,6 +142,7 @@ type RulesClient interface {
 	// @return com.vmware.nsx.model.NatRule
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

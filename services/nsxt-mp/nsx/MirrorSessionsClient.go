@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -28,6 +29,7 @@ type MirrorSessionsClient interface {
 	// @return com.vmware.nsx.model.PortMirroringSession
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -41,6 +43,7 @@ type MirrorSessionsClient interface {
 	// @param mirrorSessionIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -55,6 +58,7 @@ type MirrorSessionsClient interface {
 	// @return com.vmware.nsx.model.PortMirroringSession
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -62,20 +66,25 @@ type MirrorSessionsClient interface {
 	Get(mirrorSessionIdParam string) (nsxModel.PortMirroringSession, error)
 
 	// List all mirror sessions
+	//  This api is now deprecated. Depending on source of port mirroring, use the following apis - Tier-1 Segment: /infra/tier-1s/<tier-1-id>/segments/<segment-id>/segment-monitoring-profile-binding-maps Tier-1 Segment Port: /infra/tier-1s/<tier-1-id>/segments/<segment-id>/ports/<port-id>/port-monitoring-profile-binding-maps Group: /infra/domains/<domain-id>/groups/<group-id>/group-monitoring-profile-binding-maps Infra Segment: /infra/segments/<infra-segment-id>/segment-monitoring-profile-binding-maps Infra Segment Port: /infra/segments/<infra-segment-id>/ports/<infra-port-id>/port-monitoring-profile-binding-maps
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sessionTypesParam Fill in the session types you want to filter, and separate the values ​​of each type with the ',' symbol. If not filled in, all sessions will be returned. (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.PortMirroringSessionListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.PortMirroringSessionListResult, error)
+	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sessionTypesParam *string, sortAscendingParam *bool, sortByParam *string) (nsxModel.PortMirroringSessionListResult, error)
 
 	// Update the mirror session
 	//
@@ -86,6 +95,7 @@ type MirrorSessionsClient interface {
 	// @return com.vmware.nsx.model.PortMirroringSession
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -93,10 +103,14 @@ type MirrorSessionsClient interface {
 	Update(mirrorSessionIdParam string, portMirroringSessionParam nsxModel.PortMirroringSession) (nsxModel.PortMirroringSession, error)
 
 	// Verify whether all participants are on the same transport node
+	//  This api is now deprecated. The validation is done when creating or updating port mirroring.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param mirrorSessionIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -224,7 +238,7 @@ func (mIface *mirrorSessionsClient) Get(mirrorSessionIdParam string) (nsxModel.P
 	}
 }
 
-func (mIface *mirrorSessionsClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.PortMirroringSessionListResult, error) {
+func (mIface *mirrorSessionsClient) List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sessionTypesParam *string, sortAscendingParam *bool, sortByParam *string) (nsxModel.PortMirroringSessionListResult, error) {
 	typeConverter := mIface.connector.TypeConverter()
 	executionContext := mIface.connector.NewExecutionContext()
 	operationRestMetaData := mirrorSessionsListRestMetadata()
@@ -235,6 +249,7 @@ func (mIface *mirrorSessionsClient) List(cursorParam *string, includedFieldsPara
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("SessionTypes", sessionTypesParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()

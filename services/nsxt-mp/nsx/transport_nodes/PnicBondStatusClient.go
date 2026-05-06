@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,10 +24,11 @@ type PnicBondStatusClient interface {
 	// Get high-level summary of a transport node
 	//
 	// @param nodeIdParam ID of transport node (required)
-	// @param statusParam pNic/bond status (optional)
+	// @param statusParam Status of pNIC/bond (optional)
 	// @return com.vmware.nsx.model.PnicBondStatusListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

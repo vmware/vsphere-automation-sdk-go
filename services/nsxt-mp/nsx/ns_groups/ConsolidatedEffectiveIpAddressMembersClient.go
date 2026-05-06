@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,19 +21,23 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ConsolidatedEffectiveIpAddressMembersClient interface {
 
-	// Returns the consolidated effective IP address members of the specified NSGroup. This is applicable in the case of a federated/NSX+ environment. The response includes a site-wise list of static and dynamically translated effective IP address members. If the ns-group evaluation on a site is empty, the response will contain the site-id with empty list. If an ns-group is a reference group on a site, then its consolidated effective IP response will contain the effective IPs from other sites, and the response will contain an empty list of IPs for the sites where is it a reference group. This API is applicable only for Global and NSX+ Groups that contain (either directly or via nesting) VirtualMachine, VIF, Segment, SegmentPort, or IPSet member types. Please use the cursor value in the response to fetch the next page. If there is no cursor value in the response, it indicates that it is the last page of results for the query.
+	// Returns the consolidated effective IP address members of the specified NSGroup. This is applicable in the case of a federated environment. The response includes a site-wise list of static and dynamically translated effective IP address members. If the ns-group evaluation on a site is empty, the response will contain the site-id with empty list. If an ns-group is a reference group on a site, then its consolidated effective IP response will contain the effective IPs from other sites, and the response will contain an empty list of IPs for the sites where is it a reference group. This API is applicable only for Global Groups that contain (either directly or via nesting) VirtualMachine, VIF, Segment, SegmentPort, or IPSet member types. Please use the cursor value in the response to fetch the next page. If there is no cursor value in the response, it indicates that it is the last page of results for the query.
+	//  This API is deprecated. Please use below policy API /global-infra/domains/<domain-id>/groups/<group-id>/members/consolidated-effective-ip-addresses to fetch effective IP address members for a group.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param nsGroupIdParam NSGroup Id (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param ipFilterParam IP address, range, or subnet (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param ipFilterParam IPElement can be a single IP address, IP address range or a Subnet. Its type can be of IPv4 or IPv6. Supported list of formats are \"192.168.1.1\", \"192.168.1.1-192.168.1.100\", \"192.168.0.0/24\", \"fe80::250:56ff:fe83:318c\", \"fe80::250:56ff:fe83:3181-fe80::250:56ff:fe83:318c\", \"fe80::250:56ff:fe83:318c/64\" (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param siteIdParam UUID of the site from which the effective IP addresses are to be fetched (optional)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.ConsolidatedEffectiveIPAddressMemberListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

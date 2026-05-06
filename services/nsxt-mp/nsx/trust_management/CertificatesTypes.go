@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -49,7 +50,16 @@ const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_GLOBAL_MANAGER = "GLOBAL_MANAGE
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_LOCAL_MANAGER = "LOCAL_MANAGER"
 
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
+const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_LM_FEDERATION = "LM_FEDERATION"
+
+// Possible value for ``serviceType`` of method Certificates#applycertificate.
+const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_LM_INTRASITE = "LM_INTRASITE"
+
+// Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_CLIENT_AUTH = "CLIENT_AUTH"
+
+// Possible value for ``serviceType`` of method Certificates#applycertificate.
+const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_GM_FEDERATION = "GM_FEDERATION"
 
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_RMQ = "RMQ"
@@ -103,9 +113,6 @@ const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_CBM_CLUSTER_MANAGER = "CBM_CLUS
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_CBM_CORFU = "CBM_CORFU"
 
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
-const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_CBM_SITE_PROXY_CLIENT = "CBM_SITE_PROXY_CLIENT"
-
-// Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_COMPUTE_MANAGER = "COMPUTE_MANAGER"
 
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
@@ -116,6 +123,27 @@ const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_ANALYTICS_AGENT = "ANALYTICS_AG
 
 // Possible value for ``serviceType`` of method Certificates#applycertificate.
 const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_ANALYTICS_KAFKA = "ANALYTICS_KAFKA"
+
+// Possible value for ``serviceType`` of method Certificates#applycertificate.
+const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_NAPP_COMMON_AGENT = "NAPP_COMMON_AGENT"
+
+// Possible value for ``serviceType`` of method Certificates#applycertificate.
+const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_NAPP_PACE_AGENT = "NAPP_PACE_AGENT"
+
+// Possible value for ``serviceType`` of method Certificates#applycertificate.
+const Certificates_APPLYCERTIFICATE_SERVICE_TYPE_NAPP_METRICS_AGENT = "NAPP_METRICS_AGENT"
+
+// Possible value for ``fmt`` of method Certificates#get.
+const Certificates_GET_FMT_STANDARD = "STANDARD"
+
+// Possible value for ``fmt`` of method Certificates#get.
+const Certificates_GET_FMT_RAW = "RAW"
+
+// Possible value for ``fmt`` of method Certificates#list.
+const Certificates_LIST_FMT_STANDARD = "STANDARD"
+
+// Possible value for ``fmt`` of method Certificates#list.
+const Certificates_LIST_FMT_RAW = "RAW"
 
 // Possible value for ``type`` of method Certificates#list.
 const Certificates_LIST_TYPE_CLUSTER_API_CERTIFICATE = "cluster_api_certificate"
@@ -188,7 +216,7 @@ func certificatesApplycertificateRestMetadata() vapiProtocol_.OperationRestMetad
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesDeleteInputType() vapiBindings_.StructType {
@@ -238,7 +266,7 @@ func certificatesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesFetchpeercertificatechainInputType() vapiBindings_.StructType {
@@ -281,12 +309,12 @@ func certificatesFetchpeercertificatechainRestMetadata() vapiProtocol_.Operation
 		"tls_service_endpoint",
 		"POST",
 		"/api/v1/trust-management/certificates",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesGetInputType() vapiBindings_.StructType {
@@ -294,8 +322,10 @@ func certificatesGetInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["cert_id"] = vapiBindings_.NewStringType()
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cert_id"] = "CertId"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -315,13 +345,17 @@ func certificatesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["cert_id"] = vapiBindings_.NewStringType()
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cert_id"] = "CertId"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	paramsTypeMap["cert_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["certId"] = vapiBindings_.NewStringType()
 	pathParams["cert_id"] = "certId"
 	queryParams["details"] = "details"
+	queryParams["fmt"] = "fmt"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -342,7 +376,7 @@ func certificatesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesImportcertificateInputType() vapiBindings_.StructType {
@@ -385,12 +419,12 @@ func certificatesImportcertificateRestMetadata() vapiProtocol_.OperationRestMeta
 		"trust_object_data",
 		"POST",
 		"/api/v1/trust-management/certificates",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesImporttrustedcaInputType() vapiBindings_.StructType {
@@ -440,12 +474,12 @@ func certificatesImporttrustedcaRestMetadata() vapiProtocol_.OperationRestMetada
 		"trust_object_data",
 		"POST",
 		"/api/v1/trust-management/certificates/{alias}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesListInputType() vapiBindings_.StructType {
@@ -453,6 +487,7 @@ func certificatesListInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -461,6 +496,7 @@ func certificatesListInputType() vapiBindings_.StructType {
 	fields["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["page_size"] = "PageSize"
@@ -486,6 +522,7 @@ func certificatesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -494,6 +531,7 @@ func certificatesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["details"] = "Details"
+	fieldNameMap["fmt"] = "Fmt"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["node_id"] = "NodeId"
 	fieldNameMap["page_size"] = "PageSize"
@@ -505,6 +543,7 @@ func certificatesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["fmt"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -513,6 +552,7 @@ func certificatesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	queryParams["included_fields"] = "included_fields"
 	queryParams["details"] = "details"
 	queryParams["sort_by"] = "sort_by"
+	queryParams["fmt"] = "fmt"
 	queryParams["type"] = "type"
 	queryParams["node_id"] = "node_id"
 	queryParams["page_size"] = "page_size"
@@ -536,7 +576,7 @@ func certificatesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesSetapplianceproxycertificateforintersitecommunicationInputType() vapiBindings_.StructType {
@@ -579,12 +619,12 @@ func certificatesSetapplianceproxycertificateforintersitecommunicationRestMetada
 		"set_inter_site_aph_certificate_request",
 		"POST",
 		"/api/v1/trust-management/certificates",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesSetpicertificateforfederationInputType() vapiBindings_.StructType {
@@ -627,12 +667,12 @@ func certificatesSetpicertificateforfederationRestMetadata() vapiProtocol_.Opera
 		"set_principal_identity_certificate_for_federation_request",
 		"POST",
 		"/api/v1/trust-management/certificates",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func certificatesValidateInputType() vapiBindings_.StructType {
@@ -688,5 +728,5 @@ func certificatesValidateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }

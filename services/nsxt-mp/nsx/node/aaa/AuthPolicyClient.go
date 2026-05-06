@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -24,6 +25,7 @@ type AuthPolicyClient interface {
 	// @return com.vmware.nsx.model.AuthenticationPolicyProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -38,9 +40,11 @@ type AuthPolicyClient interface {
 	//  *includes - {api_failed_auth_lockout_period, api_failed_auth_reset_period, api_max_auth_failures, cli_failed_auth_lockout_period, cli_max_auth_failures}*
 	//
 	// **reset-pwd-complexity**: resets only configured Password complexity
+	//  When the password policy is managed through VCF Operations, performing a reset action will update all VCF Operations–managed fields to their default password policy values as defined by VCF. Fields not managed by VCF Operations will retain their default values as defined by NSX.
 	// @return com.vmware.nsx.model.AuthenticationPolicyProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -55,9 +59,11 @@ type AuthPolicyClient interface {
 	//  *includes - {api_failed_auth_lockout_period, api_failed_auth_reset_period, api_max_auth_failures, cli_failed_auth_lockout_period, cli_max_auth_failures}*
 	//
 	// **reset-pwd-complexity**: resets only configured Password complexity
+	//  When the password policy is managed through VCF Operations, performing a reset action will update all VCF Operations–managed fields to their default password policy values as defined by VCF. Fields not managed by VCF Operations will retain their default values as defined by NSX.
 	// @return com.vmware.nsx.model.AuthenticationPolicyProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -72,9 +78,11 @@ type AuthPolicyClient interface {
 	//  *includes - {api_failed_auth_lockout_period, api_failed_auth_reset_period, api_max_auth_failures, cli_failed_auth_lockout_period, cli_max_auth_failures}*
 	//
 	// **reset-pwd-complexity**: resets only configured Password complexity
+	//  When the password policy is managed through VCF Operations, performing a reset action will update all VCF Operations–managed fields to their default password policy values as defined by VCF. Fields not managed by VCF Operations will retain their default values as defined by NSX.
 	// @return com.vmware.nsx.model.AuthenticationPolicyProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -82,12 +90,15 @@ type AuthPolicyClient interface {
 	Resetpwdcomplexity() (nsxModel.AuthenticationPolicyProperties, error)
 
 	// Update the currently configured authentication policy and password complexity on the node. If any of api_max_auth_failures, api_failed_auth_reset_period, or api_failed_auth_lockout_period are modified, the http service is automatically restarted. Whereas change in any password complexity will not be applicable on already configured user passwords. Administrators need to enforce password change for existing user accounts in order to match newly configured complexity requirements enforced in system. All values from AuthenticationPolicyProperties are in sync among the management cluster nodes.
+	//  If any field is not specified in the request body, the existing configured value will be retained rather than falling back to the system default value.
+	//  When the VCF password management policy is configured, its properties take precedence and are strictly enforced. Any attempt to specify values that conflict with this policy will result in a 409 CONFLICT error. To modify the policy, kindly use the VCF Operations UI or API.
 	//
 	// @param authenticationPolicyPropertiesParam (required)
 	// @return com.vmware.nsx.model.AuthenticationPolicyProperties
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

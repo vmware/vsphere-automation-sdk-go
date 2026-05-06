@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +21,10 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type UsageClient interface {
 
+	// API to fetch the capacity and current usage of the given load balancer service.
 	//
+	//  Use the following Policy API -
+	//  GET /policy/api/v1/infra/lb-services/<lb-service-id>/service-usage
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -28,6 +32,7 @@ type UsageClient interface {
 	// @return com.vmware.nsx.model.LbServiceUsage
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

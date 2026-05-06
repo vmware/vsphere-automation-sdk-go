@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,24 +22,26 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type StatusClient interface {
 
 	// Clear node bootup status
-	// @return com.vmware.nsx.model.NodeStatusProperties
+	// @return com.vmware.nsx.model.NsxNodeStatusProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Clearbootuperror() (nsxModel.NodeStatusProperties, error)
+	Clearbootuperror() (nsxModel.NsxNodeStatusProperties, error)
 
 	// Returns information about the node appliance's file system, CPU, memory, disk usage, and uptime.
-	// @return com.vmware.nsx.model.NodeStatusProperties
+	// @return com.vmware.nsx.model.NsxNodeStatusProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get() (nsxModel.NodeStatusProperties, error)
+	Get() (nsxModel.NsxNodeStatusProperties, error)
 }
 
 type statusClient struct {
@@ -67,7 +70,7 @@ func (sIface *statusClient) GetErrorBindingType(errorName string) vapiBindings_.
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *statusClient) Clearbootuperror() (nsxModel.NodeStatusProperties, error) {
+func (sIface *statusClient) Clearbootuperror() (nsxModel.NsxNodeStatusProperties, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := statusClearbootuperrorRestMetadata()
@@ -77,18 +80,18 @@ func (sIface *statusClient) Clearbootuperror() (nsxModel.NodeStatusProperties, e
 	sv := vapiBindings_.NewStructValueBuilder(statusClearbootuperrorInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsxModel.NodeStatusProperties
+		var emptyOutput nsxModel.NsxNodeStatusProperties
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.status", "clearbootuperror", inputDataValue, executionContext)
-	var emptyOutput nsxModel.NodeStatusProperties
+	var emptyOutput nsxModel.NsxNodeStatusProperties
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatusClearbootuperrorOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsxModel.NodeStatusProperties), nil
+		return output.(nsxModel.NsxNodeStatusProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -98,7 +101,7 @@ func (sIface *statusClient) Clearbootuperror() (nsxModel.NodeStatusProperties, e
 	}
 }
 
-func (sIface *statusClient) Get() (nsxModel.NodeStatusProperties, error) {
+func (sIface *statusClient) Get() (nsxModel.NsxNodeStatusProperties, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := statusGetRestMetadata()
@@ -108,18 +111,18 @@ func (sIface *statusClient) Get() (nsxModel.NodeStatusProperties, error) {
 	sv := vapiBindings_.NewStructValueBuilder(statusGetInputType(), typeConverter)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsxModel.NodeStatusProperties
+		var emptyOutput nsxModel.NsxNodeStatusProperties
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.node.status", "get", inputDataValue, executionContext)
-	var emptyOutput nsxModel.NodeStatusProperties
+	var emptyOutput nsxModel.NsxNodeStatusProperties
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatusGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsxModel.NodeStatusProperties), nil
+		return output.(nsxModel.NsxNodeStatusProperties), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

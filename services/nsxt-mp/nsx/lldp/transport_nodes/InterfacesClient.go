@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,25 +21,31 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type InterfacesClient interface {
 
-	// Read LLDP Neighbor Properties for a specific interface of Transport Node
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param nodeIdParam ID of transport node (required)
 	// @param interfaceNameParam Interface name to read (required)
 	// @return com.vmware.nsx.model.InterfaceNeighborProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get(nodeIdParam string, interfaceNameParam string) (nsxModel.InterfaceNeighborProperties, error)
 
-	// List LLDP Neighbor Properties for all interfaces of Transport Node
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param nodeIdParam ID of transport node (required)
 	// @return com.vmware.nsx.model.InterfaceNeighborPropertyListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

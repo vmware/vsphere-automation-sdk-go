@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -26,6 +27,7 @@ type ContainerApplicationInstancesClient interface {
 	// @return com.vmware.nsx.model.ContainerApplicationInstance
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -34,18 +36,19 @@ type ContainerApplicationInstancesClient interface {
 
 	// Returns information about all container application instance.
 	//
-	// @param containerApplicationIdParam Identifier of the container application (optional)
-	// @param containerClusterIdParam Identifier of the container cluster (optional)
-	// @param containerProjectIdParam Identifier of the container project (optional)
+	// @param containerApplicationIdParam Identifier of the container application. (optional)
+	// @param containerClusterIdParam Identifier of the container cluster. (optional)
+	// @param containerProjectIdParam Identifier of the container project. (optional)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param scopeIdParam Scope id for container cluster (optional)
-	// @param sortAscendingParam (optional)
+	// @param scopeIdParam Specifies scope id for container cluster. Default value is same as identifier of the cluster. (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.ContainerApplicationInstanceListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

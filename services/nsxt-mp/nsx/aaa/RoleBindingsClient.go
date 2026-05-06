@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,35 +21,37 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RoleBindingsClient interface {
 
-	// This API is used to assign a user/group any role(s) of choice. It is recommended to use the new property roles_for_paths instead of roles. When using the roles_for_paths, set the read_roles_for_paths as true. User has union of all the roles assigned to it on a particular path and its sub-tree. User name is dealt case-insensitively.
+	// This API is used to assign a user/group any role(s) of choice. It is recommended to use the new property roles_for_paths instead of roles. When using the roles_for_paths, set the read_roles_for_paths as true. User has union of all the roles assigned to it on a particular path and its sub-tree. User name is dealt case-insensitively. If identity_source_id is provided, the system skips querying all underlying providers, which significantly improves lookup efficiency.
 	//
 	// @param roleBindingParam (required)
 	// @return com.vmware.nsx.model.RoleBinding
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Create(roleBindingParam nsxModel.RoleBinding) (nsxModel.RoleBinding, error)
 
-	// Delete the user/group's role assignment. If the path is provided then deletes only the roles_for_paths that matches the path. If path is provided for the last roles_for_paths then the whole role binding is deleted provided it is not that of a local user.
+	// Delete the user/group's role assignment. If the path is provided then deletes only the roles_for_paths that matches the path. If path is provided for the last roles_for_paths then the whole role binding is deleted provided it is not that of a local user. For deleting multiple paths, please provide semi-colon ';' separated paths in the request parameter.
 	//
 	// @param bindingIdParam User/Group's id (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param identitySourceIdParam Identity source ID (optional)
+	// @param identitySourceIdParam If provided, only return role bindings for the given identity source. Currently only supported for LDAP and OIDC identity source types. (optional)
 	// @param identitySourceTypeParam Identity source type (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param nameParam User/Group name (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param pathParam Exact path of the context (optional)
 	// @param roleParam Role ID (optional)
 	// @param rootPathParam Prefix path of the context (optional)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param type_Param Type (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -58,19 +61,20 @@ type RoleBindingsClient interface {
 	// Delete all stale role assignments
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param identitySourceIdParam Identity source ID (optional)
+	// @param identitySourceIdParam If provided, only return role bindings for the given identity source. Currently only supported for LDAP and OIDC identity source types. (optional)
 	// @param identitySourceTypeParam Identity source type (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param nameParam User/Group name (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param pathParam Exact path of the context (optional)
 	// @param roleParam Role ID (optional)
 	// @param rootPathParam Prefix path of the context (optional)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param type_Param Type (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -81,20 +85,21 @@ type RoleBindingsClient interface {
 	//
 	// @param bindingIdParam User/Group's id (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param identitySourceIdParam Identity source ID (optional)
+	// @param identitySourceIdParam If provided, only return role bindings for the given identity source. Currently only supported for LDAP and OIDC identity source types. (optional)
 	// @param identitySourceTypeParam Identity source type (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param nameParam User/Group name (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param pathParam Exact path of the context (optional)
 	// @param roleParam Role ID (optional)
 	// @param rootPathParam Prefix path of the context (optional)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param type_Param Type (optional)
 	// @return com.vmware.nsx.model.RoleBinding
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -104,20 +109,21 @@ type RoleBindingsClient interface {
 	// Get all users and groups with their roles. If the root_path is provided then only return role bindings that start-with or are sub-trees of the provided root path. Also filter the roles_for_paths such that only those roles_for_paths appear that start-with or are sub-tree of the provided root path.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param identitySourceIdParam Identity source ID (optional)
+	// @param identitySourceIdParam If provided, only return role bindings for the given identity source. Currently only supported for LDAP and OIDC identity source types. (optional)
 	// @param identitySourceTypeParam Identity source type (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param nameParam User/Group name (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param pathParam Exact path of the context (optional)
 	// @param roleParam Role ID (optional)
 	// @param rootPathParam Prefix path of the context (optional)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param type_Param Type (optional)
 	// @return com.vmware.nsx.model.RoleBindingListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -131,6 +137,7 @@ type RoleBindingsClient interface {
 	// @return com.vmware.nsx.model.RoleBinding
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

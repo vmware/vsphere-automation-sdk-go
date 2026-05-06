@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,6 +23,10 @@ type IpPoolsClient interface {
 
 	// Allocates or releases an IP address from the specified IP pool. To allocate an address, include ?action=ALLOCATE in the request and \"allocation_id\":null in the request body. When the request is successful, the response is \"allocation_id\": \"<ip-address>\", where <ip-address> is an IP address from the specified pool. To release an IP address (return it back to the pool), include ?action=RELEASE in the request and \"allocation_id\":<ip-address> in the request body, where <ip-address> is the address to be released. When the request is successful, the response is NULL. Tags, display_name and description attributes are not supported for AllocationIpAddress in this release.
 	//
+	//  This rest routine is deprecated. Use /infra/ip-pools/<ip-pool-id>/ip-allocations/<ip-allocation-id> to Allocate or Release an IP Address from an IP Subnet.
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param poolIdParam IP pool ID (required)
 	// @param allocationIpAddressParam (required)
 	// @param actionParam Specifies allocate or release action (required)
@@ -29,6 +34,7 @@ type IpPoolsClient interface {
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -37,10 +43,15 @@ type IpPoolsClient interface {
 
 	// Creates a new IPv4 or IPv6 address pool. Required parameters are allocation_ranges and cidr. Optional parameters are display_name, description, dns_nameservers, dns_suffix, and gateway_ip.
 	//
+	//  This rest routine is deprecated. Use /infra/ip-pools/<ip-pool-id> with method type as PATCH for creation of a new IP address pool.
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param ipPoolParam (required)
 	// @return com.vmware.nsx.model.IpPool
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -49,10 +60,15 @@ type IpPoolsClient interface {
 
 	// Deletes the specified IP address pool. By default, if the IpPool is used in other configurations (such as transport node template), it won't be deleted. In such situations, pass \"force=true\" as query param to force delete the IpPool
 	//
+	//  This rest routine is deprecated. Use /infra/ip-pools/<ip-pool-id> to delete a ip pool with specified id.
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param poolIdParam IP pool ID (required)
-	// @param forceParam Force delete the resource even if it is being used somewhere (optional, default to false)
+	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -61,10 +77,15 @@ type IpPoolsClient interface {
 
 	// Returns information about the specified IP address pool.
 	//
+	//  This rest routine is deprecated. Use /infra/ip-pools/<ip-pool-id> to get information about the IP address pool with specified id.
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param poolIdParam IP pool ID (required)
 	// @return com.vmware.nsx.model.IpPool
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -73,14 +94,19 @@ type IpPoolsClient interface {
 
 	// Returns information about the configured IP address pools. Information includes the display name and description of the pool and the details of each of the subnets in the pool, including the DNS servers, allocation ranges, gateway, and CIDR subnet address.
 	//
+	//  This rest routine is deprecated. Use /infra/ip-pools to get a paginated list of Ip address pools.
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.IpPoolListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -89,11 +115,16 @@ type IpPoolsClient interface {
 
 	// Modifies the specified IP address pool. Modifiable parameters include the description, display_name, and all subnet information.
 	//
+	//  This rest routine is deprecated. Use /infra/ip-pools/<ip-pool-id> with method type as PUT for updating an IP address pool.
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param poolIdParam IP pool ID (required)
 	// @param ipPoolParam (required)
 	// @return com.vmware.nsx.model.IpPool
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

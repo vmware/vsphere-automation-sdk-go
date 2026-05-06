@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -18,6 +19,15 @@ import (
 	"reflect"
 )
 
+// Possible value for ``nodeType`` of method TransportNodeStatus#getall.
+const TransportNodeStatus_GETALL_NODE_TYPE_HOSTNODE = "HostNode"
+
+// Possible value for ``nodeType`` of method TransportNodeStatus#getall.
+const TransportNodeStatus_GETALL_NODE_TYPE_EDGENODE = "EdgeNode"
+
+// Possible value for ``nodeType`` of method TransportNodeStatus#getall.
+const TransportNodeStatus_GETALL_NODE_TYPE_VIRTUALNETWORKAPPLIANCE = "VirtualNetworkAppliance"
+
 // Possible value for ``source`` of method TransportNodeStatus#getall.
 const TransportNodeStatus_GETALL_SOURCE_REALTIME = "realtime"
 
@@ -35,6 +45,15 @@ const TransportNodeStatus_GETALL_STATUS_DEGRADED = "DEGRADED"
 
 // Possible value for ``status`` of method TransportNodeStatus#getall.
 const TransportNodeStatus_GETALL_STATUS_UNKNOWN = "UNKNOWN"
+
+// Possible value for ``nodeType`` of method TransportNodeStatus#list.
+const TransportNodeStatus_LIST_NODE_TYPE_HOSTNODE = "HostNode"
+
+// Possible value for ``nodeType`` of method TransportNodeStatus#list.
+const TransportNodeStatus_LIST_NODE_TYPE_EDGENODE = "EdgeNode"
+
+// Possible value for ``nodeType`` of method TransportNodeStatus#list.
+const TransportNodeStatus_LIST_NODE_TYPE_VIRTUALNETWORKAPPLIANCE = "VirtualNetworkAppliance"
 
 // Possible value for ``source`` of method TransportNodeStatus#list.
 const TransportNodeStatus_LIST_SOURCE_REALTIME = "realtime"
@@ -58,14 +77,18 @@ func transportNodeStatusGetallInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_dfw_heap_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["include_dfw_heap_stats"] = "IncludeDfwHeapStats"
 	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["node_type"] = "NodeType"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
@@ -89,20 +112,26 @@ func transportNodeStatusGetallRestMetadata() vapiProtocol_.OperationRestMetadata
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_dfw_heap_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["include_dfw_heap_stats"] = "IncludeDfwHeapStats"
 	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["node_type"] = "NodeType"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["source"] = "Source"
 	fieldNameMap["status"] = "Status"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_dfw_heap_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -110,6 +139,8 @@ func transportNodeStatusGetallRestMetadata() vapiProtocol_.OperationRestMetadata
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	queryParams["cursor"] = "cursor"
+	queryParams["include_dfw_heap_stats"] = "include_dfw_heap_stats"
+	queryParams["node_type"] = "node_type"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["sort_by"] = "sort_by"
@@ -136,7 +167,7 @@ func transportNodeStatusGetallRestMetadata() vapiProtocol_.OperationRestMetadata
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func transportNodeStatusListInputType() vapiBindings_.StructType {
@@ -144,7 +175,9 @@ func transportNodeStatusListInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["zone_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_dfw_heap_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -152,7 +185,9 @@ func transportNodeStatusListInputType() vapiBindings_.StructType {
 	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["zone_id"] = "ZoneId"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["include_dfw_heap_stats"] = "IncludeDfwHeapStats"
 	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["node_type"] = "NodeType"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
@@ -177,7 +212,9 @@ func transportNodeStatusListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["zone_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_dfw_heap_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -185,7 +222,9 @@ func transportNodeStatusListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["zone_id"] = "ZoneId"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["include_dfw_heap_stats"] = "IncludeDfwHeapStats"
 	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["node_type"] = "NodeType"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
@@ -193,6 +232,8 @@ func transportNodeStatusListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["status"] = "Status"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["zone_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["include_dfw_heap_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -202,6 +243,8 @@ func transportNodeStatusListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["zoneId"] = vapiBindings_.NewStringType()
 	pathParams["zone_id"] = "zoneId"
 	queryParams["cursor"] = "cursor"
+	queryParams["include_dfw_heap_stats"] = "include_dfw_heap_stats"
+	queryParams["node_type"] = "node_type"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["sort_by"] = "sort_by"
@@ -228,5 +271,5 @@ func transportNodeStatusListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }

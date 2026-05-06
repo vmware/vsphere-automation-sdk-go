@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -26,6 +27,7 @@ type AlarmsClient interface {
 	// @return com.vmware.nsx.model.Alarm
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -34,27 +36,28 @@ type AlarmsClient interface {
 
 	// Returns a list of all Alarms currently known to the system.
 	//
-	// @param afterParam Timestamp in milliseconds since epoch (optional)
-	// @param beforeParam Timestamp in milliseconds since epoch (optional)
-	// @param cursorParam Cursor for pagination (optional)
-	// @param eventTagParam Event tag (optional)
-	// @param eventTypeParam Event Type Filter (optional)
-	// @param featureNameParam Feature Name (optional)
-	// @param idParam Alarm ID (optional)
-	// @param intentPathParam Intent Path for entity ID (optional)
-	// @param nodeIdParam Node ID (optional)
-	// @param nodeResourceTypeParam Node Resource Type (optional)
-	// @param orgParam Org ID (optional)
-	// @param pageSizeParam Page Size for pagination (optional)
-	// @param projectParam Project ID (optional)
-	// @param severityParam Severity (optional)
-	// @param sortAscendingParam Represents order of sorting the values (optional, default to true)
-	// @param sortByParam Key for sorting on this column (optional)
-	// @param statusParam Status (optional)
-	// @param vpcParam VPC ID (optional)
+	// @param afterParam Filter to fetch alarms after the specified time. (optional)
+	// @param beforeParam Filter to fetch alarms before the specified time. (optional)
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page). (optional)
+	// @param eventTagParam Comma delimited list of one or more tags, used to filter alarms, for example, INFRASTRUCTURE, TENANT_NETWORKING, TENANT_SECURITY. (optional)
+	// @param eventTypeParam Comma delimited list of one or more event types, used to filter alarms. Refer to GET /api/v1/events to get valid event types. (optional)
+	// @param featureNameParam Comma delimited list of one or more feature names, used to filter alarms. Refer to GET /api/v1/events to get valid feature names. (optional)
+	// @param idParam Comma delimited list of one or more alarm IDs, used to filter alarms. (optional)
+	// @param intentPathParam Comma delimited list of one or more intent paths, used to filter alarms. (optional)
+	// @param nodeIdParam Comma delimited list of one or more node IDs, used to filter alarms. (optional)
+	// @param nodeResourceTypeParam Comma delimited list of one or more node resource types, used to filter alarms. (optional)
+	// @param orgParam Comma delimited list of one or more Org IDs, used to filter alarms. (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer). (optional)
+	// @param projectParam Comma delimited list of one or more Project IDs, used to filter alarms. (optional)
+	// @param severityParam Comma delimited list of one or more of the following severity levels: CRITICAL, HIGH, MEDIUM, LOW, used to filter alarms. (optional)
+	// @param sortAscendingParam If true, the value of the column are sorted in ascending order. Otherwise, in descending order. (optional, default to true)
+	// @param sortByParam Sorting on column is based on the sort_by. sort_by represents the field in the output data on which sort is requested. (optional)
+	// @param statusParam Comma delimited list of one or more of the following statuses: OPEN, ACKNOWLEDGED, SUPPRESSED, RESOLVED, used to filter alarms. (optional)
+	// @param vpcParam Comma delimited list of one or more VPC IDs, used to filter alarms. (optional)
 	// @return com.vmware.nsx.model.AlarmsListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -64,11 +67,12 @@ type AlarmsClient interface {
 	// Update status of an Alarm. The new_status value can be OPEN, ACKNOWLEDGED, SUPPRESSED, or RESOLVED. If new_status is SUPPRESSED, the suppress_duration query parameter must also be specified.
 	//
 	// @param alarmIdParam (required)
-	// @param newStatusParam Status (required)
-	// @param suppressDurationParam Duration in hours for which Alarm should be suppressed (optional)
+	// @param newStatusParam Specify new alarm status for the alarm. Can be one of OPEN, ACKNOWLEDGED, SUPPRESSED, RESOLVED. (required)
+	// @param suppressDurationParam Specify duration in hours for which Alarm should be suppressed.This value must be specified if the new_status is SUPPRESSED. (optional)
 	// @return com.vmware.nsx.model.Alarm
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -77,28 +81,29 @@ type AlarmsClient interface {
 
 	// Bulk update the status of zero or more Alarms that match the specified filters. The new_status value can be OPEN, ACKNOWLEDGED, SUPPRESSED, or RESOLVED. If new_status is SUPPRESSED, the suppress_duration query parameter must also be specified.
 	//
-	// @param newStatusParam Status (required)
-	// @param afterParam Timestamp in milliseconds since epoch (optional)
-	// @param beforeParam Timestamp in milliseconds since epoch (optional)
-	// @param cursorParam Cursor for pagination (optional)
-	// @param eventTagParam Event tag (optional)
-	// @param eventTypeParam Event Type Filter (optional)
-	// @param featureNameParam Feature Name (optional)
-	// @param idParam Alarm ID (optional)
-	// @param intentPathParam Intent Path for entity ID (optional)
-	// @param nodeIdParam Node ID (optional)
-	// @param nodeResourceTypeParam Node Resource Type (optional)
-	// @param orgParam Org ID (optional)
-	// @param pageSizeParam Page Size for pagination (optional)
-	// @param projectParam Project ID (optional)
-	// @param severityParam Severity (optional)
-	// @param sortAscendingParam Represents order of sorting the values (optional, default to true)
-	// @param sortByParam Key for sorting on this column (optional)
-	// @param statusParam Status (optional)
-	// @param suppressDurationParam Duration in hours for which Alarm should be suppressed (optional)
-	// @param vpcParam VPC ID (optional)
+	// @param newStatusParam Specify new alarm status for filtered alarms. Can be one of OPEN, ACKNOWLEDGED, SUPPRESSED, RESOLVED. (required)
+	// @param afterParam Filter to fetch alarms after the specified time. (optional)
+	// @param beforeParam Filter to fetch alarms before the specified time. (optional)
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page). (optional)
+	// @param eventTagParam Comma delimited list of one or more tags, used to filter alarms, for example, INFRASTRUCTURE, TENANT_NETWORKING, TENANT_SECURITY. (optional)
+	// @param eventTypeParam Comma delimited list of one or more event types, used to filter alarms. Refer to GET /api/v1/events to get valid event types. (optional)
+	// @param featureNameParam Comma delimited list of one or more feature names, used to filter alarms. Refer to GET /api/v1/events to get valid feature names. (optional)
+	// @param idParam Comma delimited list of one or more alarm IDs, used to filter alarms. (optional)
+	// @param intentPathParam Comma delimited list of one or more intent paths, used to filter alarms. (optional)
+	// @param nodeIdParam Comma delimited list of one or more node IDs, used to filter alarms. (optional)
+	// @param nodeResourceTypeParam Comma delimited list of one or more node resource types, used to filter alarms. (optional)
+	// @param orgParam Comma delimited list of one or more Org IDs, used to filter alarms. (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer). (optional)
+	// @param projectParam Comma delimited list of one or more Project IDs, used to filter alarms. (optional)
+	// @param severityParam Comma delimited list of one or more of the following severity levels: CRITICAL, HIGH, MEDIUM, LOW, used to filter alarms. (optional)
+	// @param sortAscendingParam If true, the value of the column are sorted in ascending order. Otherwise, in descending order. (optional, default to true)
+	// @param sortByParam Sorting on column is based on the sort_by. sort_by represents the field in the output data on which sort is requested. (optional)
+	// @param statusParam Comma delimited list of one or more of the following statuses: OPEN, ACKNOWLEDGED, SUPPRESSED, RESOLVED, used to filter alarms. (optional)
+	// @param suppressDurationParam Specify duration in hours for which Alarm should be suppressed.This value must be specified if the new_status is SUPPRESSED. (optional)
+	// @param vpcParam Comma delimited list of one or more VPC IDs, used to filter alarms. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

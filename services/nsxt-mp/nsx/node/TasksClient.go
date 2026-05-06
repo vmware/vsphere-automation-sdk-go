@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -25,8 +26,10 @@ type TasksClient interface {
 	// @param taskIdParam ID of task to delete (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
+	// @throws UnableToAllocateResource  Insufficient Storage
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Cancel(taskIdParam string) error
@@ -37,8 +40,10 @@ type TasksClient interface {
 	//
 	// @throws ConcurrentChange  Conflict
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
+	// @throws UnableToAllocateResource  Insufficient Storage
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete(taskIdParam string) error
@@ -46,29 +51,33 @@ type TasksClient interface {
 	// Read task properties
 	//
 	// @param taskIdParam ID of task to read (required)
-	// @param suppressRedirectParam Suppress redirect status if applicable (optional, default to false)
+	// @param suppressRedirectParam Do not return a redirect HTTP status. (optional, default to false)
 	// @return com.vmware.nsx.model.ApplianceManagementTaskProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
+	// @throws UnableToAllocateResource  Insufficient Storage
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get(taskIdParam string, suppressRedirectParam *bool) (nsxModel.ApplianceManagementTaskProperties, error)
 
 	// List appliance management tasks
 	//
-	// @param fieldsParam Fields to include in query results (optional)
-	// @param requestMethodParam Request method(s) to include in query result (optional)
-	// @param requestPathParam Request URI path(s) to include in query result (optional)
-	// @param requestUriParam Request URI(s) to include in query result (optional)
-	// @param statusParam Status(es) to include in query result (optional)
-	// @param userParam Names of users to include in query result (optional)
+	// @param fieldsParam Comma-separated field names to include in query result (optional)
+	// @param requestMethodParam Comma-separated request methods to include in query result (optional)
+	// @param requestPathParam Comma-separated request paths to include in query result (optional)
+	// @param requestUriParam Comma-separated request URIs to include in query result (optional)
+	// @param statusParam Comma-separated status values to include in query result (optional)
+	// @param userParam Comma-separated user names to include in query result (optional)
 	// @return com.vmware.nsx.model.ApplianceManagementTaskListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
+	// @throws UnableToAllocateResource  Insufficient Storage
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(fieldsParam *string, requestMethodParam *string, requestPathParam *string, requestUriParam *string, statusParam *string, userParam *string) (nsxModel.ApplianceManagementTaskListResult, error)

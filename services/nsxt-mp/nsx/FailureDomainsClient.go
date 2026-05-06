@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,58 +21,73 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FailureDomainsClient interface {
 
-	// Creates a new failure domain.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param failureDomainParam (required)
 	// @return com.vmware.nsx.model.FailureDomain
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Create(failureDomainParam nsxModel.FailureDomain) (nsxModel.FailureDomain, error)
 
-	// Deletes an existing failure domain. You can not delete system generated default failure domain.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param failureDomainIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete(failureDomainIdParam string) error
 
-	// Returns information about a single failure domain.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param failureDomainIdParam (required)
 	// @return com.vmware.nsx.model.FailureDomain
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get(failureDomainIdParam string) (nsxModel.FailureDomain, error)
 
-	// Returns information about configured failure domains.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.FailureDomainListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List() (nsxModel.FailureDomainListResult, error)
 
-	// Updates an existing failure domain. Modifiable parameters are display_name, preferred_active_edge_services flag.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param failureDomainIdParam (required)
 	// @param failureDomainParam (required)
 	// @return com.vmware.nsx.model.FailureDomain
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

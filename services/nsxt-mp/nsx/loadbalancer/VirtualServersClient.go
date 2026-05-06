@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +21,10 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VirtualServersClient interface {
 
+	// Create a load balancer virtual server.
 	//
+	//  Use the following Policy API -
+	//  PATCH /policy/api/v1/infra/lb-virtual-servers/<lb-virtual-server-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -28,13 +32,17 @@ type VirtualServersClient interface {
 	// @return com.vmware.nsx.model.LbVirtualServer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Create(lbVirtualServerParam nsxModel.LbVirtualServer) (nsxModel.LbVirtualServer, error)
 
+	// It is used to create virtual servers, the associated rules and bind the rules to the virtual server. To add new rules, make sure the rules which have no identifier specified, the new rules are automatically generated and associated to the virtual server. If the virtual server need to consume some existed rules without change, those rules should not be specified in this array, otherwise, the rules are updated.
 	//
+	//  Use the following Policy API -
+	//  PATCH /policy/api/v1/infra/lb-virtual-servers/<lb-virtual-server-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -42,27 +50,35 @@ type VirtualServersClient interface {
 	// @return com.vmware.nsx.model.LbVirtualServerWithRule
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Createwithrules(lbVirtualServerWithRuleParam nsxModel.LbVirtualServerWithRule) (nsxModel.LbVirtualServerWithRule, error)
 
+	// Delete a load balancer virtual server.
 	//
+	//  Use the following Policy API -
+	//  DELETE /policy/api/v1/infra/lb-virtual-servers/<lb-virtual-server-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param virtualServerIdParam (required)
-	// @param deleteAssociatedRulesParam Delete associated rules (optional, default to false)
+	// @param deleteAssociatedRulesParam If this is set to true, the associated rules are also deleted when virtual server is deleted if the rules are not used by other virtual servers. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete(virtualServerIdParam string, deleteAssociatedRulesParam *bool) error
 
+	// Retrieve a load balancer virtual server.
 	//
+	//  Use the following Policy API -
+	//  GET /policy/api/v1/infra/lb-virtual-servers/<lb-virtual-server-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -70,6 +86,7 @@ type VirtualServersClient interface {
 	// @return com.vmware.nsx.model.LbVirtualServer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -84,20 +101,24 @@ type VirtualServersClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.LbVirtualServerListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.LbVirtualServerListResult, error)
 
+	// Update a load balancer virtual server.
 	//
+	//  Use the following Policy API -
+	//  PUT/PATCH /policy/api/v1/infra/lb-virtual-servers/<lb-virtual-server-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -106,13 +127,17 @@ type VirtualServersClient interface {
 	// @return com.vmware.nsx.model.LbVirtualServer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Update(virtualServerIdParam string, lbVirtualServerParam nsxModel.LbVirtualServer) (nsxModel.LbVirtualServer, error)
 
+	// It is used to update virtual servers, the associated rules and update the binding of virtual server and rules. To add new rules, make sure the rules which have no identifier specified, the new rules are automatically generated and associated to the virtual server. To delete old rules, the rules should not be configured in new action, the UUID of deleted rules should be also removed from rule_ids. To update rules, the rules should be specified with new change and configured with identifier. If there are some rules which are not modified, those rule should not be specified in the rules list, the UUID list of rules should be specified in rule_ids of LbVirtualServer.
 	//
+	//  Use the following Policy API -
+	//  PUT/PATCH /policy/api/v1/infra/lb-virtual-servers/<lb-virtual-server-id>
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -121,6 +146,7 @@ type VirtualServersClient interface {
 	// @return com.vmware.nsx.model.LbVirtualServerWithRule
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

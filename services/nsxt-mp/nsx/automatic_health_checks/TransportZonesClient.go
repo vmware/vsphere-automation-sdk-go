@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,11 +22,15 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type TransportZonesClient interface {
 
 	// Get health check performed by system automatically for specific transport zone.
+	//  This API is deprecated. Please use policy API /infra/auto-health-checks?transport_zone_path=<transport-zone-path> to get an automatic health check for a specific transport zone.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param transportZoneIdParam (required)
 	// @return com.vmware.nsx.model.AutomaticHealthCheck
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -32,6 +33,7 @@ type HostSwitchProfilesClient interface {
 	// The return value will contain all the properties defined in nsxModel.BaseHostSwitchProfile.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -46,6 +48,7 @@ type HostSwitchProfilesClient interface {
 	// @param hostSwitchProfileIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -62,6 +65,7 @@ type HostSwitchProfilesClient interface {
 	// The return value will contain all the properties defined in nsxModel.BaseHostSwitchProfile.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -74,18 +78,19 @@ type HostSwitchProfilesClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param deploymentTypeParam Supported edge deployment type. (optional)
+	// @param deploymentTypeParam If the node_type is specified, then deployment_type may be specified to filter uplink profiles applicable to only PHYSICAL_MACHINE or VIRTUAL_MACHINE deployments of these nodes. (optional)
 	// @param hostswitchProfileTypeParam Supported HostSwitch profiles. (optional)
 	// @param includeSystemOwnedParam Whether the list result contains system resources (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param nodeTypeParam Fabric node type for which uplink profiles are to be listed (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param nodeTypeParam The fabric node type is the resource_type of the Node such as EdgeNode and PublicCloudGatewayNode. If a fabric node type is given, uplink profiles that apply for nodes of the given type will be returned. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @param uplinkTeamingPolicyNameParam The host switch profile's uplink teaming policy name (optional)
+	// @param uplinkTeamingPolicyNameParam If populated, only UplinkHostSwitchProfiles with the specified uplink teaming policy name are returned. Otherwise, any HostSwitchProfile can be returned. (optional)
 	// @return com.vmware.nsx.model.HostSwitchProfilesListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -104,6 +109,7 @@ type HostSwitchProfilesClient interface {
 	// The return value will contain all the properties defined in nsxModel.BaseHostSwitchProfile.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

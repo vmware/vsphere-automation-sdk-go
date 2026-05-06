@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -31,6 +32,7 @@ type ExcludelistClient interface {
 	// @return com.vmware.nsx.model.ResourceReference
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -39,12 +41,18 @@ type ExcludelistClient interface {
 
 	// Check if the object a member of the exclude list
 	//
+	//  Use the following Policy API -
+	//  POST /policy/api/v1/infra/settings/firewall/security/exclude-list?action=filter
+	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param objectIdParam identifier of the object (required)
-	// @param deepCheckParam Check all parents (optional, default to false)
-	// @param objectTypeParam Object type of an entity (optional)
+	// @param deepCheckParam Deep check all parents of requested object_id if any of them is in exclude list. If found, makes requested entity as excluded. (optional, default to false)
+	// @param objectTypeParam Enum of supported excluded member types. (optional)
 	// @return com.vmware.nsx.model.ResourceReference
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -60,6 +68,7 @@ type ExcludelistClient interface {
 	// @return com.vmware.nsx.model.ExcludeList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -74,11 +83,12 @@ type ExcludelistClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param objectIdParam identifier of the object (required)
-	// @param deepCheckParam Check all parents (optional, default to false)
-	// @param objectTypeParam Object type of an entity (optional)
+	// @param deepCheckParam Deep check all parents of requested object_id if any of them is in exclude list. If found, makes requested entity as excluded. (optional, default to false)
+	// @param objectTypeParam Enum of supported excluded member types. (optional)
 	// @return com.vmware.nsx.model.ResourceReference
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -96,6 +106,7 @@ type ExcludelistClient interface {
 	// @return com.vmware.nsx.model.ExcludeList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

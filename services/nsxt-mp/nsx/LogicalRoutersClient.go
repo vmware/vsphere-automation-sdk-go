@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -34,6 +35,7 @@ type LogicalRoutersClient interface {
 	// @return com.vmware.nsx.model.LogicalRouter
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -49,10 +51,11 @@ type LogicalRoutersClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param logicalRouterIdParam (required)
-	// @param cascadeDeleteLinkedPortsParam Flag to specify whether to delete related logical switch ports (optional, default to false)
-	// @param forceParam Force delete the resource even if it is being used somewhere (optional, default to false)
+	// @param cascadeDeleteLinkedPortsParam When the flag is true, connected logical switch ports which are associated | with the logical router ports will be deleted. Additionally, for Tier1 LR, the associated | Tier 0 router link port will also be deleted. Note that this flag is active only when \"force\" | parameter is also set to true. (optional, default to false)
+	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -73,6 +76,7 @@ type LogicalRoutersClient interface {
 	// @return com.vmware.nsx.model.LogicalRouter
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -88,22 +92,23 @@ type LogicalRoutersClient interface {
 	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param routerTypeParam Type of Logical Router (optional)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param vrfsOnLogicalRouterIdParam List all VRFs on the specified logical router. (optional)
 	// @return com.vmware.nsx.model.LogicalRouterListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, routerTypeParam *string, sortAscendingParam *bool, sortByParam *string, vrfsOnLogicalRouterIdParam *string) (nsxModel.LogicalRouterListResult, error)
 
-	// API to re allocate edge node placement for TIER1 logical router. You can re-allocate service routers of TIER1 in same edge cluster or different edge cluster. You can also place edge nodes manually and provide maximum two indices for HA mode ACTIVE_STANDBY. To re-allocate on new edge cluster you must have existing edge cluster for TIER1 logical router. This will be disruptive operation and all existing statistics of logical router will be remove.
+	// API to re allocate edge node placement for TIER1 logical router. You can re-allocate service routers of TIER1 in same edge cluster or different edge cluster. You can also place edge nodes manually and provide maximum two indices for HA mode ACTIVE_STANDBY. To re-allocate on new edge cluster you must have existing edge cluster for TIER1 logical router. This will be disruptive operation and all existing statistics of logical router will be remove. API also supports manual allocation or rebalance of edge nodes for l2 forwarders of global segments connected to stretched T1 distributed routers. Manual allocation or rebalance only supported within the same edge-cluster where current l2 forwarder edge nodes exist. It does not support different edge-clusters for l2 forwarders. It will be a disruptive operation and inter-site traffic will get affected.
 	//
 	//  In policy there will be no equivalent API but it will be achieved automatically when you will change edge cluster or will remove edge nodes from tier1 locale service
 	//
@@ -114,6 +119,7 @@ type LogicalRoutersClient interface {
 	// @return com.vmware.nsx.model.LogicalRouter
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -131,6 +137,7 @@ type LogicalRoutersClient interface {
 	// @param logicalRouterIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -152,6 +159,7 @@ type LogicalRoutersClient interface {
 	// @return com.vmware.nsx.model.LogicalRouter
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

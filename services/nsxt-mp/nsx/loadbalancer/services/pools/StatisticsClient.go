@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,7 +21,10 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatisticsClient interface {
 
-	// Returns the statistics of the given load balancer pool by given load balancer serives id and load balancer pool id. Currently, only realtime mode is supported.
+	// Returns the statistics of the given load balancer pool by given load balancer service id and load balancer pool id. Currently, only realtime mode is supported.
+	//
+	//  Use the following Policy API -
+	//  GET /policy/api/v1/infra/lb-services/<lb-service-id>/lb-pools/<lb-pool-id>/statistics?source=realtime
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -30,26 +34,12 @@ type StatisticsClient interface {
 	// @return com.vmware.nsx.model.LbPoolStatistics
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get(serviceIdParam string, poolIdParam string, sourceParam *string) (nsxModel.LbPoolStatistics, error)
-
-	// Returns the statistics list of load balancer pools in given load balancer service. Currently, only realtime mode is supported.
-	//
-	// Deprecated: This API element is deprecated.
-	//
-	// @param serviceIdParam (required)
-	// @param sourceParam Data source type. (optional)
-	// @return com.vmware.nsx.model.LbPoolStatisticsListResult
-	//
-	// @throws InvalidRequest  Bad Request, Precondition Failed
-	// @throws Unauthorized  Forbidden
-	// @throws ServiceUnavailable  Service Unavailable
-	// @throws InternalServerError  Internal Server Error
-	// @throws NotFound  Not Found
-	List(serviceIdParam string, sourceParam *string) (nsxModel.LbPoolStatisticsListResult, error)
 }
 
 type statisticsClient struct {
@@ -61,8 +51,7 @@ type statisticsClient struct {
 func NewStatisticsClient(connector vapiProtocolClient_.Connector) *statisticsClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx.loadbalancer.services.pools.statistics")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
-		"list": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -103,39 +92,6 @@ func (sIface *statisticsClient) Get(serviceIdParam string, poolIdParam string, s
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(nsxModel.LbPoolStatistics), nil
-	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
-		if errorInError != nil {
-			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
-		}
-		return emptyOutput, methodError.(error)
-	}
-}
-
-func (sIface *statisticsClient) List(serviceIdParam string, sourceParam *string) (nsxModel.LbPoolStatisticsListResult, error) {
-	typeConverter := sIface.connector.TypeConverter()
-	executionContext := sIface.connector.NewExecutionContext()
-	operationRestMetaData := statisticsListRestMetadata()
-	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
-	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
-
-	sv := vapiBindings_.NewStructValueBuilder(statisticsListInputType(), typeConverter)
-	sv.AddStructField("ServiceId", serviceIdParam)
-	sv.AddStructField("Source", sourceParam)
-	inputDataValue, inputError := sv.GetStructValue()
-	if inputError != nil {
-		var emptyOutput nsxModel.LbPoolStatisticsListResult
-		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
-	}
-
-	methodResult := sIface.connector.GetApiProvider().Invoke("com.vmware.nsx.loadbalancer.services.pools.statistics", "list", inputDataValue, executionContext)
-	var emptyOutput nsxModel.LbPoolStatisticsListResult
-	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), StatisticsListOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(nsxModel.LbPoolStatisticsListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), sIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

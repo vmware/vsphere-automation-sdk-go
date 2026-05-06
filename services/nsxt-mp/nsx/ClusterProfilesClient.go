@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,7 +22,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ClusterProfilesClient interface {
 
-	// Create a cluster profile. The resource_type is required.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param clusterProfileParam (required)
 	// The parameter must contain all the properties defined in nsxModel.ClusterProfile.
@@ -29,55 +32,67 @@ type ClusterProfilesClient interface {
 	// The return value will contain all the properties defined in nsxModel.ClusterProfile.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Create(clusterProfileParam *vapiData_.StructValue) (*vapiData_.StructValue, error)
 
-	// Delete a specified cluster profile.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param clusterProfileIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete(clusterProfileIdParam string) error
 
-	// Returns information about a specified cluster profile.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param clusterProfileIdParam (required)
 	// @return com.vmware.nsx.model.ClusterProfile
 	// The return value will contain all the properties defined in nsxModel.ClusterProfile.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get(clusterProfileIdParam string) (*vapiData_.StructValue, error)
 
-	// Returns paginated list of cluster profiles Cluster profiles define policies for edge cluster and bridge cluster.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeSystemOwnedParam Whether the list result contains system resources (optional, default to true)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param resourceTypeParam Supported cluster profiles. (optional)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.ClusterProfileListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeSystemOwnedParam *bool, includedFieldsParam *string, pageSizeParam *int64, resourceTypeParam *string, sortAscendingParam *bool, sortByParam *string) (nsxModel.ClusterProfileListResult, error)
 
-	// Modifie a specified cluster profile. The body of the PUT request must include the resource_type.
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param clusterProfileIdParam (required)
 	// @param clusterProfileParam (required)
@@ -86,6 +101,7 @@ type ClusterProfilesClient interface {
 	// The return value will contain all the properties defined in nsxModel.ClusterProfile.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

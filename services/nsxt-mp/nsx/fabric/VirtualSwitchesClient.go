@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,27 +21,28 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VirtualSwitchesClient interface {
 
-	// Returns information about all virtual switches based on the request parameters.
+	// Returns information about all Distributed virtual switches based on the request parameters.
 	//
 	// @param cmLocalIdParam Local Id of the virtual switch (optional)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param discoveredNodeIdParam Discovered node ID (optional)
+	// @param discoveredNodeIdParam All virtual switches connected to this discovered node. (optional)
 	// @param displayNameParam Display name of the virtual switch (optional)
 	// @param externalIdParam External id of the virtual switch (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param originIdParam ID of the compute manager (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param uuidParam UUID of the switch (optional)
-	// @return com.vmware.nsx.model.VirtualSwitchListResult
+	// @return com.vmware.nsx.model.DistributedVirtualSwitchListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cmLocalIdParam *string, cursorParam *string, discoveredNodeIdParam *string, displayNameParam *string, externalIdParam *string, includedFieldsParam *string, originIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, uuidParam *string) (nsxModel.VirtualSwitchListResult, error)
+	List(cmLocalIdParam *string, cursorParam *string, discoveredNodeIdParam *string, displayNameParam *string, externalIdParam *string, includedFieldsParam *string, originIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, uuidParam *string) (nsxModel.DistributedVirtualSwitchListResult, error)
 }
 
 type virtualSwitchesClient struct {
@@ -68,7 +70,7 @@ func (vIface *virtualSwitchesClient) GetErrorBindingType(errorName string) vapiB
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (vIface *virtualSwitchesClient) List(cmLocalIdParam *string, cursorParam *string, discoveredNodeIdParam *string, displayNameParam *string, externalIdParam *string, includedFieldsParam *string, originIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, uuidParam *string) (nsxModel.VirtualSwitchListResult, error) {
+func (vIface *virtualSwitchesClient) List(cmLocalIdParam *string, cursorParam *string, discoveredNodeIdParam *string, displayNameParam *string, externalIdParam *string, includedFieldsParam *string, originIdParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, uuidParam *string) (nsxModel.DistributedVirtualSwitchListResult, error) {
 	typeConverter := vIface.connector.TypeConverter()
 	executionContext := vIface.connector.NewExecutionContext()
 	operationRestMetaData := virtualSwitchesListRestMetadata()
@@ -89,18 +91,18 @@ func (vIface *virtualSwitchesClient) List(cmLocalIdParam *string, cursorParam *s
 	sv.AddStructField("Uuid", uuidParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsxModel.VirtualSwitchListResult
+		var emptyOutput nsxModel.DistributedVirtualSwitchListResult
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := vIface.connector.GetApiProvider().Invoke("com.vmware.nsx.fabric.virtual_switches", "list", inputDataValue, executionContext)
-	var emptyOutput nsxModel.VirtualSwitchListResult
+	var emptyOutput nsxModel.DistributedVirtualSwitchListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), VirtualSwitchesListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsxModel.VirtualSwitchListResult), nil
+		return output.(nsxModel.DistributedVirtualSwitchListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), vIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

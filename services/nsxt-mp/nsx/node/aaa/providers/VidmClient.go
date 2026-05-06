@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,10 +21,13 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VidmClient interface {
 
-	// Read AAA provider vIDM properties
+	//
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.NodeAuthProviderVidmProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -31,11 +35,15 @@ type VidmClient interface {
 	Get() (nsxModel.NodeAuthProviderVidmProperties, error)
 
 	// Update AAA provider vIDM properties
+	//  vIDM is deprecated by vIDB. Use API POST /api/v1/trust-management/oidc-uris/action/configure-vidb-oidc-endpoint.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param nodeAuthProviderVidmPropertiesParam (required)
 	// @return com.vmware.nsx.model.NodeAuthProviderVidmProperties
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

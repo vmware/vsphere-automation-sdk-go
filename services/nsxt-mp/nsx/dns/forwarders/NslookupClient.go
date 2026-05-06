@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,16 +22,18 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type NslookupClient interface {
 
 	// Query the nameserver for an ip-address or a FQDN of the given an address optionally using an specified DNS server. If the address is a fqdn, nslookup will resolve ip-address with it. If the address is an ip-address, do a reverse lookup and answer fqdn(s).
+	//  Please use Policy API: GET /policy/api/v1/infra/tier-0s/{tier-0-id}/dns-forwarder/nslookup GET /policy/api/v1/infra/tier-1s/{tier-1-id}/dns-forwarder/nslookup
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param forwarderIdParam (required)
-	// @param addressParam IP address or FQDN for nslookup (optional)
-	// @param serverIpParam IPv4 address (optional)
-	// @param sourceIpParam IPv4 address (optional)
+	// @param addressParam IP address or FQDN for this lookup (optional)
+	// @param serverIpParam If absent, the underlying DNS forwarder will be used as the target server. And the answer could be cached by the forwarder if it was not cached yet. If provided, the query will go directly to the given server. You will need to ensure this address represents a workable and reachale DNS server. The answer will not be cached by the forwarder unless this server_ip is exactly the same listener ip of the forwarder. (optional)
+	// @param sourceIpParam Source ip used for this lookup. If absent, the listener ip of the underlying DNS forwarder will be used as the source ip. If provided, you will need to ensure this source ip is valid and can be routed back to the transport node via data plane (optional)
 	// @return com.vmware.nsx.model.DnsAnswer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

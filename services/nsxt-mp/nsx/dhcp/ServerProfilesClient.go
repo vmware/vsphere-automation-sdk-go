@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type ServerProfilesClient interface {
 
 	// Create a DHCP server profile. If no edge member is specified, edge members to run the dhcp servers will be auto-allocated from the edge cluster.
+	//  Please use Policy API: PATCH /policy/api/v1/infra/dhcp-server-configs/{dhcp-server-config-id}
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -28,6 +30,7 @@ type ServerProfilesClient interface {
 	// @return com.vmware.nsx.model.DhcpProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -35,12 +38,14 @@ type ServerProfilesClient interface {
 	Create(dhcpProfileParam nsxModel.DhcpProfile) (nsxModel.DhcpProfile, error)
 
 	// Delete a DHCP server profile specified by the profile id.
+	//  Please use Policy API: DELETE /policy/api/v1/infra/dhcp-server-configs/{dhcp-server-config-id}
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param profileIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -48,6 +53,7 @@ type ServerProfilesClient interface {
 	Delete(profileIdParam string) error
 
 	// Return the DHCP profile specified by the profile id.
+	//  Please use Policy API: GET /policy/api/v1/infra/dhcp-server-configs/{dhcp-server-config-id}
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -55,6 +61,7 @@ type ServerProfilesClient interface {
 	// @return com.vmware.nsx.model.DhcpProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -62,17 +69,19 @@ type ServerProfilesClient interface {
 	Get(profileIdParam string) (nsxModel.DhcpProfile, error)
 
 	// Get a paginated list of DHCP server profiles.
+	//  Please use Policy API: GET /policy/api/v1/infra/dhcp-server-configs
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.DhcpProfileListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -88,6 +97,7 @@ type ServerProfilesClient interface {
 	// @return com.vmware.nsx.model.DhcpProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -95,6 +105,7 @@ type ServerProfilesClient interface {
 	Reallocate(serverProfileIdParam string, dhcpProfileParam nsxModel.DhcpProfile) (nsxModel.DhcpProfile, error)
 
 	// If both the edge_cluster_member_indexes in the DhcpProfile are changed in a same PUT API, e.g. change from [a,b] to [x,y], the current DHCP server leases will be lost, which could cause the network crash due to ip conflicts. Hence the suggestion is to change only one member index in one single update, e.g. from [a, b] to [a,y]. Please note, the edge_cluster_id in DhcpProfile can NOT be changed by this PUT operation because all existing DHCP leases will lost. If losing leases is not a problem, a dedicated re-allocation API is suggested to modify the edge-cluster-id, i.e. \"POST /api/v1/dhcp/dhcp-profiles/<profileiid>?action=reallocate\". Meanwhile, if the edge_cluster_member_indexes was specified currently but now is changed to none (not specified) via a PUT operation, the edge nodes will not be auto-selected from edge cluster. Instead, the previously-allocated edge nodes will continue to be used by the DHCP server. This is because changing both edge nodes of a DHCP server will lose all existing leases. In case re-allocation is required and leases lost is not a problem (or can be recovered), please invoke the reallocate API mentioned above with new DhcpProfile to accomplish the intent.
+	//  Please use Policy API: PUT /policy/api/v1/infra/dhcp-server-configs/{dhcp-server-config-id}
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -103,6 +114,7 @@ type ServerProfilesClient interface {
 	// @return com.vmware.nsx.model.DhcpProfile
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

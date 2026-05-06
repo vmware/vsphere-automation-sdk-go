@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,6 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type Ipv6StaticBindingsClient interface {
 
 	// Create a static binding for a logical DHCP IPv6 server.
+	//  Please use Policy API: PATCH /policy/api/v1/infra/segments/{segment-id}/dhcp-static-binding-configs/{binding-id}
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -29,6 +31,7 @@ type Ipv6StaticBindingsClient interface {
 	// @return com.vmware.nsx.model.DhcpV6StaticBinding
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -36,6 +39,7 @@ type Ipv6StaticBindingsClient interface {
 	Create(serverIdParam string, dhcpV6StaticBindingParam nsxModel.DhcpV6StaticBinding) (nsxModel.DhcpV6StaticBinding, error)
 
 	// Delete a specific static binding of a given logical DHCP IPv6 server.
+	//  Please use Policy API: DELETE /policy/api/v1/infra/tier-1s/{tier-1-id}/segments/{segment-id}/dhcp-static-binding-configs/{binding-id}
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -43,6 +47,7 @@ type Ipv6StaticBindingsClient interface {
 	// @param bindingIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -50,6 +55,7 @@ type Ipv6StaticBindingsClient interface {
 	Delete(serverIdParam string, bindingIdParam string) error
 
 	// Return a specific static binding of a given logical DHCP IPv6 server.
+	//  Please use Policy API: GET /policy/api/v1/infra/segments/{segment-id}/dhcp-static-binding-configs/{binding-id}
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -58,6 +64,7 @@ type Ipv6StaticBindingsClient interface {
 	// @return com.vmware.nsx.model.DhcpV6StaticBinding
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -65,18 +72,20 @@ type Ipv6StaticBindingsClient interface {
 	Get(serverIdParam string, bindingIdParam string) (nsxModel.DhcpV6StaticBinding, error)
 
 	// Return a paginated list of a static bindings of a given logical DHCP IPv6 server.
+	//  Please use Policy API: GET /policy/api/v1/infra/segments/{segment-id}/dhcp-static-binding-configs
 	//
 	// Deprecated: This API element is deprecated.
 	//
 	// @param serverIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx.model.DhcpV6StaticBindingListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -84,6 +93,7 @@ type Ipv6StaticBindingsClient interface {
 	List(serverIdParam string, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsxModel.DhcpV6StaticBindingListResult, error)
 
 	// Update a specific static binding of a given local DHCP IPv6 server.
+	//  Please use Policy API: PUT /policy/api/v1/infra/segments/{segment-id}/dhcp-static-binding-configs/{binding-id}
 	//
 	// Deprecated: This API element is deprecated.
 	//
@@ -93,6 +103,7 @@ type Ipv6StaticBindingsClient interface {
 	// @return com.vmware.nsx.model.DhcpV6StaticBinding
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

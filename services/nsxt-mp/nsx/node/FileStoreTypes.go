@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -65,7 +66,7 @@ func fileStoreCopyfromremotefileRestMetadata() vapiProtocol_.OperationRestMetada
 		"copy_from_remote_file_properties",
 		"POST",
 		"/api/v1/node/file-store/{fileName}",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
@@ -120,7 +121,7 @@ func fileStoreCopytoremotefileRestMetadata() vapiProtocol_.OperationRestMetadata
 		"copy_to_remote_file_properties",
 		"POST",
 		"/api/v1/node/file-store/{fileName}",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -168,7 +169,7 @@ func fileStoreCreateremotedirectoryRestMetadata() vapiProtocol_.OperationRestMet
 		"create_remote_directory_properties",
 		"POST",
 		"/api/v1/node/file-store",
-		"",
+		"application/json",
 		resultHeaders,
 		204,
 		"",
@@ -223,7 +224,55 @@ func fileStoreDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		204,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
+func fileStoreDeleteremotedirectoryInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["delete_remote_directory_properties"] = vapiBindings_.NewReferenceType(nsxModel.DeleteRemoteDirectoryPropertiesBindingType)
+	fieldNameMap["delete_remote_directory_properties"] = "DeleteRemoteDirectoryProperties"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func FileStoreDeleteremotedirectoryOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
+}
+
+func fileStoreDeleteremotedirectoryRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["delete_remote_directory_properties"] = vapiBindings_.NewReferenceType(nsxModel.DeleteRemoteDirectoryPropertiesBindingType)
+	fieldNameMap["delete_remote_directory_properties"] = "DeleteRemoteDirectoryProperties"
+	paramsTypeMap["delete_remote_directory_properties"] = vapiBindings_.NewReferenceType(nsxModel.DeleteRemoteDirectoryPropertiesBindingType)
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"action=delete_remote_directory",
+		"delete_remote_directory_properties",
+		"DELETE",
+		"/api/v1/node/file-store",
+		"application/json",
+		resultHeaders,
+		204,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func fileStoreGetInputType() vapiBindings_.StructType {
@@ -273,7 +322,7 @@ func fileStoreGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func fileStoreListInputType() vapiBindings_.StructType {
@@ -316,7 +365,55 @@ func fileStoreListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
+func fileStoreRetrievematchinghostkeyalgorithmInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["retrieve_matching_host_key_algorithm_properties"] = vapiBindings_.NewReferenceType(nsxModel.RetrieveMatchingHostKeyAlgorithmPropertiesBindingType)
+	fieldNameMap["retrieve_matching_host_key_algorithm_properties"] = "RetrieveMatchingHostKeyAlgorithmProperties"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func FileStoreRetrievematchinghostkeyalgorithmOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsxModel.RetrieveMatchingHostKeyAlgorithmPropertiesBindingType)
+}
+
+func fileStoreRetrievematchinghostkeyalgorithmRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["retrieve_matching_host_key_algorithm_properties"] = vapiBindings_.NewReferenceType(nsxModel.RetrieveMatchingHostKeyAlgorithmPropertiesBindingType)
+	fieldNameMap["retrieve_matching_host_key_algorithm_properties"] = "RetrieveMatchingHostKeyAlgorithmProperties"
+	paramsTypeMap["retrieve_matching_host_key_algorithm_properties"] = vapiBindings_.NewReferenceType(nsxModel.RetrieveMatchingHostKeyAlgorithmPropertiesBindingType)
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"action=retrieve_matching_host_key_algorithm",
+		"retrieve_matching_host_key_algorithm_properties",
+		"POST",
+		"/api/v1/node/file-store",
+		"application/json",
+		resultHeaders,
+		200,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
 func fileStoreRetrievesshfingerprintInputType() vapiBindings_.StructType {
@@ -359,10 +456,10 @@ func fileStoreRetrievesshfingerprintRestMetadata() vapiProtocol_.OperationRestMe
 		"ssh_fingerprint_properties",
 		"POST",
 		"/api/v1/node/file-store",
-		"",
+		"application/json",
 		resultHeaders,
 		200,
 		"",
 		errorHeaders,
-		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }

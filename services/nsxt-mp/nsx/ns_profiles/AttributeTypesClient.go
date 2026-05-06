@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,9 +22,13 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type AttributeTypesClient interface {
 
 	// Returns supported attribute type strings for NSProfile.
+	//  This API is deprecated. A policy equivalent of this api will be available in later release - 4.2.1(expected). The following are the possible attribute types for 4.2.0 APP_ID DOMAIN_NAME URL_CATEGORY URL_REPUTATION CUSTOM_URL
+	//
+	// Deprecated: This API element is deprecated.
 	// @return com.vmware.nsx.model.NSSupportedAttributeTypesResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
