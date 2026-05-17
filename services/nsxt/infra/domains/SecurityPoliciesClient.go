@@ -68,7 +68,7 @@ type SecurityPoliciesClient interface {
 	// @throws NotFound  Not Found
 	List(domainIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includeRuleCountParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityPolicyListResult, error)
 
-	// Create or partially update a distributed firewall (DFW) security policy for a domain. If a security policy for the given security-policy-id is not present, the object will get created and if it is present it will be updated. This is a full replace. Performance Note: If you want to edit several rules in a security policy use this API. It will perform better than several individual rule APIs. Just pass all the rules which you wish to edit as embedded rules to it.
+	// Create or partially update a distributed firewall (DFW) security policy for a domain. If a security policy for the given security-policy-id is not present, the object will get created and if it is present it will be updated. Performance Note: If you want to edit several rules in a security policy use this API. It will perform better than several individual rule APIs. Just pass all the rules which you wish to edit as embedded rules to it.
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)

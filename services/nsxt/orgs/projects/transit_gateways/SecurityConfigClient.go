@@ -27,7 +27,7 @@ type SecurityConfigClient interface {
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param featureParam Feature to be activated/deactivated per centralized transit gateway. GFW - Gateway Firewall (optional)
+	// @param featureParam Feature to be activated/deactivated per centralized transit gateway. GFW - Gateway Firewall IDPS - Intrusion Detection and Prevention System GEOIP_MONITORING - GeoIP monitoring TLS - Transport Layer Security (optional)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)

@@ -29,13 +29,13 @@ const SecurityConfig_DELETE_FEATURE_IDPS = "IDPS"
 const SecurityConfig_DELETE_FEATURE_MALWAREPREVENTION = "MALWAREPREVENTION"
 
 // Possible value for ``feature`` of method SecurityConfig#delete.
-const SecurityConfig_DELETE_FEATURE_TLS = "TLS"
-
-// Possible value for ``feature`` of method SecurityConfig#delete.
 const SecurityConfig_DELETE_FEATURE_GFW_MULTICAST = "GFW_MULTICAST"
 
 // Possible value for ``feature`` of method SecurityConfig#delete.
 const SecurityConfig_DELETE_FEATURE_GEOIP_MONITORING = "GEOIP_MONITORING"
+
+// Possible value for ``feature`` of method SecurityConfig#delete.
+const SecurityConfig_DELETE_FEATURE_TLS = "TLS"
 
 // Possible value for ``feature`` of method SecurityConfig#get.
 const SecurityConfig_GET_FEATURE_IDFW = "IDFW"
@@ -47,13 +47,13 @@ const SecurityConfig_GET_FEATURE_IDPS = "IDPS"
 const SecurityConfig_GET_FEATURE_MALWAREPREVENTION = "MALWAREPREVENTION"
 
 // Possible value for ``feature`` of method SecurityConfig#get.
-const SecurityConfig_GET_FEATURE_TLS = "TLS"
-
-// Possible value for ``feature`` of method SecurityConfig#get.
 const SecurityConfig_GET_FEATURE_GFW_MULTICAST = "GFW_MULTICAST"
 
 // Possible value for ``feature`` of method SecurityConfig#get.
 const SecurityConfig_GET_FEATURE_GEOIP_MONITORING = "GEOIP_MONITORING"
+
+// Possible value for ``feature`` of method SecurityConfig#get.
+const SecurityConfig_GET_FEATURE_TLS = "TLS"
 
 func securityConfigDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)

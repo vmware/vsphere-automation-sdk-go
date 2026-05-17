@@ -103,7 +103,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Revise(domainIdParam string, securityPolicyIdParam string, ruleIdParam string, ruleParam nsx_policyModel.Rule, anchorPathParam *string, operationParam *string) (nsx_policyModel.Rule, error)
 
-	// Create or update a distributed firewall (DFW) rule within a security policy. If a rule with the given rule-id does not exist it will be created; otherwise it will be replaced in full. Performance Note: If you wish to edit several rules in a security policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/security-policies/<security-policy-id>
+	// Create or update a distributed firewall (DFW) rule within a security policy. If a rule with the given rule-id does not exist it will be created; otherwise it will be updated. Performance Note: If you wish to edit several rules in a security policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/security-policies/<security-policy-id>
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)

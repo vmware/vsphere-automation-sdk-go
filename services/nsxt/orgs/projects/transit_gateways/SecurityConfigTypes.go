@@ -22,6 +22,15 @@ import (
 // Possible value for ``feature`` of method SecurityConfig#get.
 const SecurityConfig_GET_FEATURE_GFW = "GFW"
 
+// Possible value for ``feature`` of method SecurityConfig#get.
+const SecurityConfig_GET_FEATURE_IDPS = "IDPS"
+
+// Possible value for ``feature`` of method SecurityConfig#get.
+const SecurityConfig_GET_FEATURE_GEOIP_MONITORING = "GEOIP_MONITORING"
+
+// Possible value for ``feature`` of method SecurityConfig#get.
+const SecurityConfig_GET_FEATURE_TLS = "TLS"
+
 func securityConfigGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)

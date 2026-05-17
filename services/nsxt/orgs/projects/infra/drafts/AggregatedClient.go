@@ -35,6 +35,24 @@ type AggregatedClient interface {
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, draftIdParam string) (nsx_policyModel.Infra, error)
+
+	// Paginated draft-vs-published deltas for one dependent type (Group, Service, PolicyContextProfile, PolicyFirewallScheduler; not L7—use gateway draft APIs). GET .../aggregated/dependents returns flat inventory and type_summary only.
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param draftIdParam (required)
+	// @param dependentTypeParam (required)
+	// @param cursorParam Cursor for getting next page of records (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (optional, default to 500)
+	// @return com.vmware.nsx_policy.model.DependentAggregatedList
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Get0(orgIdParam string, projectIdParam string, draftIdParam string, dependentTypeParam string, cursorParam *string, pageSizeParam *int64) (nsx_policyModel.DependentAggregatedList, error)
 }
 
 type aggregatedClient struct {
@@ -46,7 +64,8 @@ type aggregatedClient struct {
 func NewAggregatedClient(connector vapiProtocolClient_.Connector) *aggregatedClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.infra.drafts.aggregated")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"get_0": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get_0"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
@@ -87,6 +106,43 @@ func (aIface *aggregatedClient) Get(orgIdParam string, projectIdParam string, dr
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
 		return output.(nsx_policyModel.Infra), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), aIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (aIface *aggregatedClient) Get0(orgIdParam string, projectIdParam string, draftIdParam string, dependentTypeParam string, cursorParam *string, pageSizeParam *int64) (nsx_policyModel.DependentAggregatedList, error) {
+	typeConverter := aIface.connector.TypeConverter()
+	executionContext := aIface.connector.NewExecutionContext()
+	operationRestMetaData := aggregatedGet0RestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(aggregatedGet0InputType(), typeConverter)
+	sv.AddStructField("OrgId", orgIdParam)
+	sv.AddStructField("ProjectId", projectIdParam)
+	sv.AddStructField("DraftId", draftIdParam)
+	sv.AddStructField("DependentType", dependentTypeParam)
+	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("PageSize", pageSizeParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_policyModel.DependentAggregatedList
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := aIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.infra.drafts.aggregated", "get_0", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.DependentAggregatedList
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), AggregatedGet0OutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_policyModel.DependentAggregatedList), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), aIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
