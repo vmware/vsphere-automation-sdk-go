@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VpcLbVirtualServersClient interface {
 
-	// Delete the LBVirtualServer along with all the entities contained by this LBVirtualServer. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Delete the LBVirtualServer along with all the entities contained by this LBVirtualServer. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)
@@ -37,7 +37,7 @@ type VpcLbVirtualServersClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, vpcIdParam string, vpcLbVirtualServerIdParam string, forceParam *bool) error
 
-	// Read a LBVirtualServer. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Read a LBVirtualServer. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)
@@ -53,7 +53,7 @@ type VpcLbVirtualServersClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, vpcIdParam string, vpcLbVirtualServerIdParam string) (nsx_policyModel.LBVirtualServer, error)
 
-	// Paginated list of all LBVirtualServers. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Paginated list of all LBVirtualServers. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)
@@ -74,7 +74,7 @@ type VpcLbVirtualServersClient interface {
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, vpcIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.LBVirtualServerListResult, error)
 
-	// If a LBVirtualServer with the vpc-lb-virtual-server-id is not already present, create a new LBVirtualServer. If it already exists, update the LBVirtualServer. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// If a LBVirtualServer with the vpc-lb-virtual-server-id is not already present, create a new LBVirtualServer. If it already exists, update the LBVirtualServer. This is a full replace. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)
@@ -90,7 +90,7 @@ type VpcLbVirtualServersClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, vpcIdParam string, vpcLbVirtualServerIdParam string, lbVirtualServerParam nsx_policyModel.LBVirtualServer) error
 
-	// If a LBVirtualServer with the vpc-lb-virtual-server-id is not already present, create a new LBVirtualServer. If it already exists, update the LBVirtualServer. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// If a LBVirtualServer with the vpc-lb-virtual-server-id is not already present, create a new LBVirtualServer. If it already exists, update the LBVirtualServer. This is a full replace. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)

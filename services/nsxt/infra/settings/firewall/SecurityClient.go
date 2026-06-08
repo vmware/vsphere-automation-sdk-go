@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SecurityClient interface {
 
-	// Get the current dfw firewall configurations.
+	// Get the current Distributed Firewall (DFW) and Identity Firewall (IDFW) configurations.
 	// @return com.vmware.nsx_policy.model.DfwFirewallConfiguration
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -32,7 +32,7 @@ type SecurityClient interface {
 	// @throws NotFound  Not Found
 	Get() (nsx_policyModel.DfwFirewallConfiguration, error)
 
-	// Update dfw firewall related configurations. Turning off distributed services (\"enable_firewall\": false) will turn off Distributed Firewall, Identity Firewall, Distributed Intrusion Detection and Prevention Service.
+	// Update Distributed Firewall (DFW) and Identity Firewall (IDFW) related configurations. Turning off distributed services (\"enable_firewall\": false) will turn off Distributed Firewall, Identity Firewall, Distributed Intrusion Detection and Prevention Service.
 	//
 	// @param dfwFirewallConfigurationParam (required)
 	//
@@ -44,7 +44,7 @@ type SecurityClient interface {
 	// @throws NotFound  Not Found
 	Patch(dfwFirewallConfigurationParam nsx_policyModel.DfwFirewallConfiguration) error
 
-	// Update dfw firewall related configurations. Turning off distributed services (\"enable_firewall\": false) will turn off Distributed Firewall, Identity Firewall, Distributed Intrusion Detection and Prevention Service.
+	// Update Distributed Firewall (DFW) and Identity Firewall (IDFW) related configurations. Turning off distributed services (\"enable_firewall\": false) will turn off Distributed Firewall, Identity Firewall, Distributed Intrusion Detection and Prevention Service.
 	//
 	// @param dfwFirewallConfigurationParam (required)
 	// @return com.vmware.nsx_policy.model.DfwFirewallConfiguration

@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StandaloneHostSwitchSettingClient interface {
 
-	// Read identity firewall configuration for standalone host
+	// Read identity firewall configuration on standalone host level
 	// @return com.vmware.nsx_policy.model.StandaloneHostIdfwConfiguration
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -32,7 +32,7 @@ type StandaloneHostSwitchSettingClient interface {
 	// @throws NotFound  Not Found
 	Get() (nsx_policyModel.StandaloneHostIdfwConfiguration, error)
 
-	// Patch identity firewall configuration for standalone host
+	// Patch identity firewall configuration on standalone host level
 	//
 	// @param standaloneHostIdfwConfigurationParam (required)
 	//
@@ -44,7 +44,7 @@ type StandaloneHostSwitchSettingClient interface {
 	// @throws NotFound  Not Found
 	Patch(standaloneHostIdfwConfigurationParam nsx_policyModel.StandaloneHostIdfwConfiguration) error
 
-	// Update the idfw configuration for standalone host
+	// Update the idfw configuration on standalone host level
 	//
 	// @param standaloneHostIdfwConfigurationParam (required)
 	// @return com.vmware.nsx_policy.model.StandaloneHostIdfwConfiguration

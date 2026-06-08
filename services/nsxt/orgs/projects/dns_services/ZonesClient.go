@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ZonesClient interface {
 
-	// Delete a ProjectDnsZone. The zone cannot be deleted if any DnsRecord resources reference it via zone_path, or if it is currently shared via a Share resource. Remove all DNS records referencing this zone and all Share resources before deleting.
+	// Delete a DnsZone. The zone cannot be deleted if any DnsRecord resources reference it via zone_path, or if it is currently shared via a Share resource. Remove all DNS records referencing this zone and all Share resources before deleting.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -36,13 +36,13 @@ type ZonesClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, dnsServiceIdParam string, zoneIdParam string) error
 
-	// Read a ProjectDnsZone by ID within the specified PolicyDnsService.
+	// Read a DnsZone by ID within the specified DnsService.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param dnsServiceIdParam (required)
 	// @param zoneIdParam (required)
-	// @return com.vmware.nsx_policy.model.ProjectDnsZone
+	// @return com.vmware.nsx_policy.model.DnsZone
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -50,9 +50,9 @@ type ZonesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, dnsServiceIdParam string, zoneIdParam string) (nsx_policyModel.ProjectDnsZone, error)
+	Get(orgIdParam string, projectIdParam string, dnsServiceIdParam string, zoneIdParam string) (nsx_policyModel.DnsZone, error)
 
-	// List all ProjectDnsZone resources under the specified PolicyDnsService.
+	// List all DnsZone resources under the specified DnsService.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -63,7 +63,7 @@ type ZonesClient interface {
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.ProjectDnsZoneListResult
+	// @return com.vmware.nsx_policy.model.DnsZoneListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -71,15 +71,15 @@ type ZonesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, dnsServiceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ProjectDnsZoneListResult, error)
+	List(orgIdParam string, projectIdParam string, dnsServiceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.DnsZoneListResult, error)
 
-	// Patch a ProjectDnsZone. Only provided fields are updated. The dns_domain_name field is immutable and cannot be changed after creation.
+	// Patch a DnsZone. Only provided fields are updated. The dns_domain_name field is immutable and cannot be changed after creation.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param dnsServiceIdParam (required)
 	// @param zoneIdParam (required)
-	// @param projectDnsZoneParam (required)
+	// @param dnsZoneParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -87,16 +87,16 @@ type ZonesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(orgIdParam string, projectIdParam string, dnsServiceIdParam string, zoneIdParam string, projectDnsZoneParam nsx_policyModel.ProjectDnsZone) error
+	Patch(orgIdParam string, projectIdParam string, dnsServiceIdParam string, zoneIdParam string, dnsZoneParam nsx_policyModel.DnsZone) error
 
-	// Create or update a ProjectDnsZone under the specified PolicyDnsService. The dns_domain_name is immutable after creation. Domain names must be unique within the parent DNS service. Supports forward zones (e.g. \"example.com\") and reverse zones (e.g. \"12.168.192.in-addr.arpa\").
+	// Create or update a DnsZone under the specified DnsService. The dns_domain_name is immutable after creation. Domain names must be unique within the parent DNS service. Supports forward zones (e.g. \"example.com\") and reverse zones (e.g. \"12.168.192.in-addr.arpa\").
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param dnsServiceIdParam (required)
 	// @param zoneIdParam (required)
-	// @param projectDnsZoneParam (required)
-	// @return com.vmware.nsx_policy.model.ProjectDnsZone
+	// @param dnsZoneParam (required)
+	// @return com.vmware.nsx_policy.model.DnsZone
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -104,7 +104,7 @@ type ZonesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(orgIdParam string, projectIdParam string, dnsServiceIdParam string, zoneIdParam string, projectDnsZoneParam nsx_policyModel.ProjectDnsZone) (nsx_policyModel.ProjectDnsZone, error)
+	Update(orgIdParam string, projectIdParam string, dnsServiceIdParam string, zoneIdParam string, dnsZoneParam nsx_policyModel.DnsZone) (nsx_policyModel.DnsZone, error)
 }
 
 type zonesClient struct {
@@ -165,7 +165,7 @@ func (zIface *zonesClient) Delete(orgIdParam string, projectIdParam string, dnsS
 	}
 }
 
-func (zIface *zonesClient) Get(orgIdParam string, projectIdParam string, dnsServiceIdParam string, zoneIdParam string) (nsx_policyModel.ProjectDnsZone, error) {
+func (zIface *zonesClient) Get(orgIdParam string, projectIdParam string, dnsServiceIdParam string, zoneIdParam string) (nsx_policyModel.DnsZone, error) {
 	typeConverter := zIface.connector.TypeConverter()
 	executionContext := zIface.connector.NewExecutionContext()
 	operationRestMetaData := zonesGetRestMetadata()
@@ -179,18 +179,18 @@ func (zIface *zonesClient) Get(orgIdParam string, projectIdParam string, dnsServ
 	sv.AddStructField("ZoneId", zoneIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.ProjectDnsZone
+		var emptyOutput nsx_policyModel.DnsZone
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := zIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.dns_services.zones", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.ProjectDnsZone
+	var emptyOutput nsx_policyModel.DnsZone
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ZonesGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.ProjectDnsZone), nil
+		return output.(nsx_policyModel.DnsZone), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), zIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -200,7 +200,7 @@ func (zIface *zonesClient) Get(orgIdParam string, projectIdParam string, dnsServ
 	}
 }
 
-func (zIface *zonesClient) List(orgIdParam string, projectIdParam string, dnsServiceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ProjectDnsZoneListResult, error) {
+func (zIface *zonesClient) List(orgIdParam string, projectIdParam string, dnsServiceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.DnsZoneListResult, error) {
 	typeConverter := zIface.connector.TypeConverter()
 	executionContext := zIface.connector.NewExecutionContext()
 	operationRestMetaData := zonesListRestMetadata()
@@ -219,18 +219,18 @@ func (zIface *zonesClient) List(orgIdParam string, projectIdParam string, dnsSer
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.ProjectDnsZoneListResult
+		var emptyOutput nsx_policyModel.DnsZoneListResult
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := zIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.dns_services.zones", "list", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.ProjectDnsZoneListResult
+	var emptyOutput nsx_policyModel.DnsZoneListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ZonesListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.ProjectDnsZoneListResult), nil
+		return output.(nsx_policyModel.DnsZoneListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), zIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -240,7 +240,7 @@ func (zIface *zonesClient) List(orgIdParam string, projectIdParam string, dnsSer
 	}
 }
 
-func (zIface *zonesClient) Patch(orgIdParam string, projectIdParam string, dnsServiceIdParam string, zoneIdParam string, projectDnsZoneParam nsx_policyModel.ProjectDnsZone) error {
+func (zIface *zonesClient) Patch(orgIdParam string, projectIdParam string, dnsServiceIdParam string, zoneIdParam string, dnsZoneParam nsx_policyModel.DnsZone) error {
 	typeConverter := zIface.connector.TypeConverter()
 	executionContext := zIface.connector.NewExecutionContext()
 	operationRestMetaData := zonesPatchRestMetadata()
@@ -252,7 +252,7 @@ func (zIface *zonesClient) Patch(orgIdParam string, projectIdParam string, dnsSe
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("DnsServiceId", dnsServiceIdParam)
 	sv.AddStructField("ZoneId", zoneIdParam)
-	sv.AddStructField("ProjectDnsZone", projectDnsZoneParam)
+	sv.AddStructField("DnsZone", dnsZoneParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -270,7 +270,7 @@ func (zIface *zonesClient) Patch(orgIdParam string, projectIdParam string, dnsSe
 	}
 }
 
-func (zIface *zonesClient) Update(orgIdParam string, projectIdParam string, dnsServiceIdParam string, zoneIdParam string, projectDnsZoneParam nsx_policyModel.ProjectDnsZone) (nsx_policyModel.ProjectDnsZone, error) {
+func (zIface *zonesClient) Update(orgIdParam string, projectIdParam string, dnsServiceIdParam string, zoneIdParam string, dnsZoneParam nsx_policyModel.DnsZone) (nsx_policyModel.DnsZone, error) {
 	typeConverter := zIface.connector.TypeConverter()
 	executionContext := zIface.connector.NewExecutionContext()
 	operationRestMetaData := zonesUpdateRestMetadata()
@@ -282,21 +282,21 @@ func (zIface *zonesClient) Update(orgIdParam string, projectIdParam string, dnsS
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("DnsServiceId", dnsServiceIdParam)
 	sv.AddStructField("ZoneId", zoneIdParam)
-	sv.AddStructField("ProjectDnsZone", projectDnsZoneParam)
+	sv.AddStructField("DnsZone", dnsZoneParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.ProjectDnsZone
+		var emptyOutput nsx_policyModel.DnsZone
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := zIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.dns_services.zones", "update", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.ProjectDnsZone
+	var emptyOutput nsx_policyModel.DnsZone
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ZonesUpdateOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.ProjectDnsZone), nil
+		return output.(nsx_policyModel.DnsZone), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), zIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

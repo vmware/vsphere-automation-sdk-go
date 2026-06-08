@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DnsServicesClient interface {
 
-	// Delete a PolicyDnsService. The service cannot be deleted if it has child DNS zones or DNS rules. Delete all zones and rules before deleting the service.
+	// Delete a DnsService. The service cannot be deleted if it has child DNS zones or DNS rules. Delete all zones and rules before deleting the service.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -35,12 +35,12 @@ type DnsServicesClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, dnsServiceIdParam string) error
 
-	// Read a PolicyDnsService by ID within the specified project.
+	// Read a DnsService by ID within the specified project.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param dnsServiceIdParam (required)
-	// @return com.vmware.nsx_policy.model.PolicyDnsService
+	// @return com.vmware.nsx_policy.model.DnsService
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -48,9 +48,9 @@ type DnsServicesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, dnsServiceIdParam string) (nsx_policyModel.PolicyDnsService, error)
+	Get(orgIdParam string, projectIdParam string, dnsServiceIdParam string) (nsx_policyModel.DnsService, error)
 
-	// List all PolicyDnsService resources in the specified project.
+	// List all DnsService resources in the specified project.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -60,7 +60,7 @@ type DnsServicesClient interface {
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.PolicyDnsServiceListResult
+	// @return com.vmware.nsx_policy.model.DnsServiceListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -68,14 +68,14 @@ type DnsServicesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyDnsServiceListResult, error)
+	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.DnsServiceListResult, error)
 
-	// Patch a PolicyDnsService. Only provided fields are updated. Fields omitted from the request body retain their current values.
+	// Patch a DnsService. Only provided fields are updated. Fields omitted from the request body retain their current values.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param dnsServiceIdParam (required)
-	// @param policyDnsServiceParam (required)
+	// @param dnsServiceParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -83,15 +83,15 @@ type DnsServicesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(orgIdParam string, projectIdParam string, dnsServiceIdParam string, policyDnsServiceParam nsx_policyModel.PolicyDnsService) error
+	Patch(orgIdParam string, projectIdParam string, dnsServiceIdParam string, dnsServiceParam nsx_policyModel.DnsService) error
 
-	// Create or update a PolicyDnsService under the specified project. The DNS service is deployed on the configured VNS clusters and provides authoritative DNS resolution for VPCs bound to it via their VpcServiceProfile. Listener IPs must reference valid IpAddressAllocation objects within this project.
+	// Create or update a DnsService under the specified project. The DNS service is deployed on the configured VNS clusters and provides authoritative DNS resolution for VPCs bound to it via their VpcServiceProfile. Listener IPs must reference valid IpAddressAllocation objects within this project.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param dnsServiceIdParam (required)
-	// @param policyDnsServiceParam (required)
-	// @return com.vmware.nsx_policy.model.PolicyDnsService
+	// @param dnsServiceParam (required)
+	// @return com.vmware.nsx_policy.model.DnsService
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -99,7 +99,7 @@ type DnsServicesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(orgIdParam string, projectIdParam string, dnsServiceIdParam string, policyDnsServiceParam nsx_policyModel.PolicyDnsService) (nsx_policyModel.PolicyDnsService, error)
+	Update(orgIdParam string, projectIdParam string, dnsServiceIdParam string, dnsServiceParam nsx_policyModel.DnsService) (nsx_policyModel.DnsService, error)
 }
 
 type dnsServicesClient struct {
@@ -159,7 +159,7 @@ func (dIface *dnsServicesClient) Delete(orgIdParam string, projectIdParam string
 	}
 }
 
-func (dIface *dnsServicesClient) Get(orgIdParam string, projectIdParam string, dnsServiceIdParam string) (nsx_policyModel.PolicyDnsService, error) {
+func (dIface *dnsServicesClient) Get(orgIdParam string, projectIdParam string, dnsServiceIdParam string) (nsx_policyModel.DnsService, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dnsServicesGetRestMetadata()
@@ -172,18 +172,18 @@ func (dIface *dnsServicesClient) Get(orgIdParam string, projectIdParam string, d
 	sv.AddStructField("DnsServiceId", dnsServiceIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.PolicyDnsService
+		var emptyOutput nsx_policyModel.DnsService
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.dns_services", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.PolicyDnsService
+	var emptyOutput nsx_policyModel.DnsService
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DnsServicesGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.PolicyDnsService), nil
+		return output.(nsx_policyModel.DnsService), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -193,7 +193,7 @@ func (dIface *dnsServicesClient) Get(orgIdParam string, projectIdParam string, d
 	}
 }
 
-func (dIface *dnsServicesClient) List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyDnsServiceListResult, error) {
+func (dIface *dnsServicesClient) List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.DnsServiceListResult, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dnsServicesListRestMetadata()
@@ -211,18 +211,18 @@ func (dIface *dnsServicesClient) List(orgIdParam string, projectIdParam string, 
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.PolicyDnsServiceListResult
+		var emptyOutput nsx_policyModel.DnsServiceListResult
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.dns_services", "list", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.PolicyDnsServiceListResult
+	var emptyOutput nsx_policyModel.DnsServiceListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DnsServicesListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.PolicyDnsServiceListResult), nil
+		return output.(nsx_policyModel.DnsServiceListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -232,7 +232,7 @@ func (dIface *dnsServicesClient) List(orgIdParam string, projectIdParam string, 
 	}
 }
 
-func (dIface *dnsServicesClient) Patch(orgIdParam string, projectIdParam string, dnsServiceIdParam string, policyDnsServiceParam nsx_policyModel.PolicyDnsService) error {
+func (dIface *dnsServicesClient) Patch(orgIdParam string, projectIdParam string, dnsServiceIdParam string, dnsServiceParam nsx_policyModel.DnsService) error {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dnsServicesPatchRestMetadata()
@@ -243,7 +243,7 @@ func (dIface *dnsServicesClient) Patch(orgIdParam string, projectIdParam string,
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("DnsServiceId", dnsServiceIdParam)
-	sv.AddStructField("PolicyDnsService", policyDnsServiceParam)
+	sv.AddStructField("DnsService", dnsServiceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -261,7 +261,7 @@ func (dIface *dnsServicesClient) Patch(orgIdParam string, projectIdParam string,
 	}
 }
 
-func (dIface *dnsServicesClient) Update(orgIdParam string, projectIdParam string, dnsServiceIdParam string, policyDnsServiceParam nsx_policyModel.PolicyDnsService) (nsx_policyModel.PolicyDnsService, error) {
+func (dIface *dnsServicesClient) Update(orgIdParam string, projectIdParam string, dnsServiceIdParam string, dnsServiceParam nsx_policyModel.DnsService) (nsx_policyModel.DnsService, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dnsServicesUpdateRestMetadata()
@@ -272,21 +272,21 @@ func (dIface *dnsServicesClient) Update(orgIdParam string, projectIdParam string
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("DnsServiceId", dnsServiceIdParam)
-	sv.AddStructField("PolicyDnsService", policyDnsServiceParam)
+	sv.AddStructField("DnsService", dnsServiceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.PolicyDnsService
+		var emptyOutput nsx_policyModel.DnsService
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.dns_services", "update", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.PolicyDnsService
+	var emptyOutput nsx_policyModel.DnsService
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DnsServicesUpdateOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.PolicyDnsService), nil
+		return output.(nsx_policyModel.DnsService), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

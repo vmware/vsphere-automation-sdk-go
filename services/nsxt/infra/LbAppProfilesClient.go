@@ -22,7 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LbAppProfilesClient interface {
 
-	// Delete the LBAppProfile along with all the entities contained by this LBAppProfile. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Delete the LBAppProfile along with all the entities contained by this LBAppProfile. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbAppProfileIdParam LBAppProfile ID (required)
 	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
@@ -35,7 +35,7 @@ type LbAppProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(lbAppProfileIdParam string, forceParam *bool) error
 
-	// Read a LBAppProfile. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Read a LBAppProfile. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbAppProfileIdParam LBAppProfile ID (required)
 	// @return com.vmware.nsx_policy.model.LBAppProfile
@@ -49,7 +49,7 @@ type LbAppProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(lbAppProfileIdParam string) (*vapiData_.StructValue, error)
 
-	// Paginated list of all LBAppProfiles. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Paginated list of all LBAppProfiles. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
@@ -67,7 +67,7 @@ type LbAppProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.LBAppProfileListResult, error)
 
-	// If a LBAppProfile with the lb-app-profile-id is not already present, create a new LBAppProfile. If it already exists, update the LBAppProfile. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// If a LBAppProfile with the lb-app-profile-id is not already present, create a new LBAppProfile. If it already exists, update the LBAppProfile. This is a full replace. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbAppProfileIdParam LBAppProfile ID (required)
 	// @param lbAppProfileParam (required)
@@ -81,7 +81,7 @@ type LbAppProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(lbAppProfileIdParam string, lbAppProfileParam *vapiData_.StructValue) error
 
-	// If a LBAppProfile with the lb-app-profile-id is not already present, create a new LBAppProfile. If it already exists, update the LBAppProfile. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// If a LBAppProfile with the lb-app-profile-id is not already present, create a new LBAppProfile. If it already exists, update the LBAppProfile. This is a full replace. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbAppProfileIdParam LBAppProfile ID (required)
 	// @param lbAppProfileParam (required)

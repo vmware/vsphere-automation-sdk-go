@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DnsAutoRecordConfigsClient interface {
 
-	// Delete a ProjectDnsAutoRecordConfig from the specified project. Deletion stops future automatic DNS record creation for IPs allocated from the referenced IP block. Already auto-created ProjectDnsRecord entries are NOT removed by this operation.
+	// Delete a DnsAutoRecordConfig from the specified project. Deletion stops future automatic DNS record creation for IPs allocated from the referenced IP block. Already auto-created DnsRecord entries are NOT removed by this operation.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -35,12 +35,12 @@ type DnsAutoRecordConfigsClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, configIdParam string) error
 
-	// Read a ProjectDnsAutoRecordConfig by ID within the specified project.
+	// Read a DnsAutoRecordConfig by ID within the specified project.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param configIdParam (required)
-	// @return com.vmware.nsx_policy.model.ProjectDnsAutoRecordConfig
+	// @return com.vmware.nsx_policy.model.DnsAutoRecordConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -48,9 +48,9 @@ type DnsAutoRecordConfigsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, configIdParam string) (nsx_policyModel.ProjectDnsAutoRecordConfig, error)
+	Get(orgIdParam string, projectIdParam string, configIdParam string) (nsx_policyModel.DnsAutoRecordConfig, error)
 
-	// List all ProjectDnsAutoRecordConfig resources in the specified project.
+	// List all DnsAutoRecordConfig resources in the specified project.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -60,7 +60,7 @@ type DnsAutoRecordConfigsClient interface {
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.ProjectDnsAutoRecordConfigListResult
+	// @return com.vmware.nsx_policy.model.DnsAutoRecordConfigListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -68,14 +68,14 @@ type DnsAutoRecordConfigsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ProjectDnsAutoRecordConfigListResult, error)
+	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.DnsAutoRecordConfigListResult, error)
 
-	// Patch a ProjectDnsAutoRecordConfig. Only provided fields are updated. The ip_block_path field is immutable and cannot be changed after creation.
+	// Patch a DnsAutoRecordConfig. Only provided fields are updated. The ip_block_path field is immutable and cannot be changed after creation.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param configIdParam (required)
-	// @param projectDnsAutoRecordConfigParam (required)
+	// @param dnsAutoRecordConfigParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -83,15 +83,15 @@ type DnsAutoRecordConfigsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(orgIdParam string, projectIdParam string, configIdParam string, projectDnsAutoRecordConfigParam nsx_policyModel.ProjectDnsAutoRecordConfig) error
+	Patch(orgIdParam string, projectIdParam string, configIdParam string, dnsAutoRecordConfigParam nsx_policyModel.DnsAutoRecordConfig) error
 
-	// Create or update a ProjectDnsAutoRecordConfig within the specified project. The ip_block_path is immutable after creation and must be unique per project. The zone_path must reference a locally-owned ProjectDnsZone; shared zones are not permitted. Deletion of this resource does not remove already auto-created ProjectDnsRecord entries; it only stops future auto-creation.
+	// Create or update a DnsAutoRecordConfig within the specified project. The ip_block_path is immutable after creation and must be unique per project. The zone_path must reference a locally-owned DnsZone; shared zones are not permitted. Deletion of this resource does not remove already auto-created DnsRecord entries; it only stops future auto-creation.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param configIdParam (required)
-	// @param projectDnsAutoRecordConfigParam (required)
-	// @return com.vmware.nsx_policy.model.ProjectDnsAutoRecordConfig
+	// @param dnsAutoRecordConfigParam (required)
+	// @return com.vmware.nsx_policy.model.DnsAutoRecordConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -99,7 +99,7 @@ type DnsAutoRecordConfigsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(orgIdParam string, projectIdParam string, configIdParam string, projectDnsAutoRecordConfigParam nsx_policyModel.ProjectDnsAutoRecordConfig) (nsx_policyModel.ProjectDnsAutoRecordConfig, error)
+	Update(orgIdParam string, projectIdParam string, configIdParam string, dnsAutoRecordConfigParam nsx_policyModel.DnsAutoRecordConfig) (nsx_policyModel.DnsAutoRecordConfig, error)
 }
 
 type dnsAutoRecordConfigsClient struct {
@@ -159,7 +159,7 @@ func (dIface *dnsAutoRecordConfigsClient) Delete(orgIdParam string, projectIdPar
 	}
 }
 
-func (dIface *dnsAutoRecordConfigsClient) Get(orgIdParam string, projectIdParam string, configIdParam string) (nsx_policyModel.ProjectDnsAutoRecordConfig, error) {
+func (dIface *dnsAutoRecordConfigsClient) Get(orgIdParam string, projectIdParam string, configIdParam string) (nsx_policyModel.DnsAutoRecordConfig, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dnsAutoRecordConfigsGetRestMetadata()
@@ -172,18 +172,18 @@ func (dIface *dnsAutoRecordConfigsClient) Get(orgIdParam string, projectIdParam 
 	sv.AddStructField("ConfigId", configIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.ProjectDnsAutoRecordConfig
+		var emptyOutput nsx_policyModel.DnsAutoRecordConfig
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.dns_auto_record_configs", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.ProjectDnsAutoRecordConfig
+	var emptyOutput nsx_policyModel.DnsAutoRecordConfig
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DnsAutoRecordConfigsGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.ProjectDnsAutoRecordConfig), nil
+		return output.(nsx_policyModel.DnsAutoRecordConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -193,7 +193,7 @@ func (dIface *dnsAutoRecordConfigsClient) Get(orgIdParam string, projectIdParam 
 	}
 }
 
-func (dIface *dnsAutoRecordConfigsClient) List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ProjectDnsAutoRecordConfigListResult, error) {
+func (dIface *dnsAutoRecordConfigsClient) List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.DnsAutoRecordConfigListResult, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dnsAutoRecordConfigsListRestMetadata()
@@ -211,18 +211,18 @@ func (dIface *dnsAutoRecordConfigsClient) List(orgIdParam string, projectIdParam
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.ProjectDnsAutoRecordConfigListResult
+		var emptyOutput nsx_policyModel.DnsAutoRecordConfigListResult
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.dns_auto_record_configs", "list", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.ProjectDnsAutoRecordConfigListResult
+	var emptyOutput nsx_policyModel.DnsAutoRecordConfigListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DnsAutoRecordConfigsListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.ProjectDnsAutoRecordConfigListResult), nil
+		return output.(nsx_policyModel.DnsAutoRecordConfigListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -232,7 +232,7 @@ func (dIface *dnsAutoRecordConfigsClient) List(orgIdParam string, projectIdParam
 	}
 }
 
-func (dIface *dnsAutoRecordConfigsClient) Patch(orgIdParam string, projectIdParam string, configIdParam string, projectDnsAutoRecordConfigParam nsx_policyModel.ProjectDnsAutoRecordConfig) error {
+func (dIface *dnsAutoRecordConfigsClient) Patch(orgIdParam string, projectIdParam string, configIdParam string, dnsAutoRecordConfigParam nsx_policyModel.DnsAutoRecordConfig) error {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dnsAutoRecordConfigsPatchRestMetadata()
@@ -243,7 +243,7 @@ func (dIface *dnsAutoRecordConfigsClient) Patch(orgIdParam string, projectIdPara
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("ConfigId", configIdParam)
-	sv.AddStructField("ProjectDnsAutoRecordConfig", projectDnsAutoRecordConfigParam)
+	sv.AddStructField("DnsAutoRecordConfig", dnsAutoRecordConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -261,7 +261,7 @@ func (dIface *dnsAutoRecordConfigsClient) Patch(orgIdParam string, projectIdPara
 	}
 }
 
-func (dIface *dnsAutoRecordConfigsClient) Update(orgIdParam string, projectIdParam string, configIdParam string, projectDnsAutoRecordConfigParam nsx_policyModel.ProjectDnsAutoRecordConfig) (nsx_policyModel.ProjectDnsAutoRecordConfig, error) {
+func (dIface *dnsAutoRecordConfigsClient) Update(orgIdParam string, projectIdParam string, configIdParam string, dnsAutoRecordConfigParam nsx_policyModel.DnsAutoRecordConfig) (nsx_policyModel.DnsAutoRecordConfig, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dnsAutoRecordConfigsUpdateRestMetadata()
@@ -272,21 +272,21 @@ func (dIface *dnsAutoRecordConfigsClient) Update(orgIdParam string, projectIdPar
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("ConfigId", configIdParam)
-	sv.AddStructField("ProjectDnsAutoRecordConfig", projectDnsAutoRecordConfigParam)
+	sv.AddStructField("DnsAutoRecordConfig", dnsAutoRecordConfigParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.ProjectDnsAutoRecordConfig
+		var emptyOutput nsx_policyModel.DnsAutoRecordConfig
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.dns_auto_record_configs", "update", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.ProjectDnsAutoRecordConfig
+	var emptyOutput nsx_policyModel.DnsAutoRecordConfig
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DnsAutoRecordConfigsUpdateOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.ProjectDnsAutoRecordConfig), nil
+		return output.(nsx_policyModel.DnsAutoRecordConfig), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

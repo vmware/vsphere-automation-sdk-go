@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AttributesClient interface {
 
-	// Returns supported attribute and sub-attributes for specified attribute key with their supported values, if provided in query/request parameter, else will fetch all supported attributes and sub-attributes for all supported attribute keys. Alternatively, to get a list of supported attributes and sub-attributes fire the following REST API GET https://<policy-mgr>/policy/api/v1/infra/context-profiles/attributes
+	// Returns supported attributes and sub-attributes along with their allowed values. When an attribute_key query parameter is supplied, only the matching attribute and its sub-attributes are returned. When omitted, all supported attribute keys and their corresponding values are returned.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

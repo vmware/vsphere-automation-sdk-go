@@ -73,7 +73,7 @@ type ContextProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, cursorParam *string, hasUnsupportedAppIdsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyContextProfileListResult, error)
 
-	// Creates/Updates a PolicyContextProfile, which encapsulates attribute and sub-attributes of network services. Rules for using attributes and sub-attributes in single PolicyContextProfile 1. One type of attribute can't have multiple occurrences. ( Eg. - Attribute type APP_ID can be used only once per PolicyContextProfile.) 2. For specifying multiple values for an attribute, provide them in an array. 3. If sub-attribtes are mentioned for an attribute, then only single value is allowed for that attribute. 4. To get a list of supported attributes and sub-attributes fire the following REST API GET https://<policy-mgr>/policy/api/v1/infra/context-profiles/attributes 5. Do not create context profile with \"custom_attributes\" id
+	// Creates a new Policy Context Profile or selectively updates the fields provided in the request body of an existing one. Rules for using attributes and sub-attributes in a single PolicyContextProfile: 1. Each attribute key may appear only once per profile. (e.g. APP_ID can be specified at most once.) 2. Multiple values for an attribute must be supplied as an array. 3. When sub-attributes are provided for an attribute, that attribute must have exactly one value. 4. The reserved id \"custom_attributes\" must not be used as a profile id.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -89,7 +89,7 @@ type ContextProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, contextProfileIdParam string, policyContextProfileParam nsx_policyModel.PolicyContextProfile, overrideParam *bool) error
 
-	// Creates/Updates a PolicyContextProfile, which encapsulates attribute and sub-attributes of network services. Rules for using attributes and sub-attributes in single PolicyContextProfile 1. One type of attribute can't have multiple occurrences. ( Eg. - Attribute type APP_ID can be used only once per PolicyContextProfile.) 2. For specifying multiple values for an attribute, provide them in an array. 3. If sub-attribtes are mentioned for an attribute, then only single value is allowed for that attribute. 4. To get a list of supported attributes and sub-attributes fire the following REST API GET https://<policy-mgr>/policy/api/v1/infra/context-profiles/attributes 5. Do not create context profile with \"custom_attributes\" id
+	// Creates a new Policy Context Profile or fully replaces an existing one. The entire profile is replaced with the contents of the request body; any fields not included in the request will be reset to their defaults. Rules for using attributes and sub-attributes in a single PolicyContextProfile: 1. Each attribute key may appear only once per profile. (e.g. APP_ID can be specified at most once.) 2. Multiple values for an attribute must be supplied as an array. 3. When sub-attributes are provided for an attribute, that attribute must have exactly one value. 4. The reserved id \"custom_attributes\" must not be used as a profile id.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

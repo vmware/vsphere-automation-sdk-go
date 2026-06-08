@@ -97,7 +97,7 @@ func dnsRecordsGetInputType() vapiBindings_.StructType {
 }
 
 func DnsRecordsGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.ProjectDnsRecordBindingType)
+	return vapiBindings_.NewReferenceType(nsx_policyModel.DnsRecordBindingType)
 }
 
 func dnsRecordsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -173,7 +173,7 @@ func dnsRecordsListInputType() vapiBindings_.StructType {
 }
 
 func DnsRecordsListOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.ProjectDnsRecordListResultBindingType)
+	return vapiBindings_.NewReferenceType(nsx_policyModel.DnsRecordListResultBindingType)
 }
 
 func dnsRecordsListRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -252,11 +252,11 @@ func dnsRecordsPatchInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["dns_record_id"] = vapiBindings_.NewStringType()
-	fields["project_dns_record"] = vapiBindings_.NewReferenceType(nsx_policyModel.ProjectDnsRecordBindingType)
+	fields["dns_record"] = vapiBindings_.NewReferenceType(nsx_policyModel.DnsRecordBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["dns_record_id"] = "DnsRecordId"
-	fieldNameMap["project_dns_record"] = "ProjectDnsRecord"
+	fieldNameMap["dns_record"] = "DnsRecord"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -277,12 +277,12 @@ func dnsRecordsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["dns_record_id"] = vapiBindings_.NewStringType()
-	fields["project_dns_record"] = vapiBindings_.NewReferenceType(nsx_policyModel.ProjectDnsRecordBindingType)
+	fields["dns_record"] = vapiBindings_.NewReferenceType(nsx_policyModel.DnsRecordBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["dns_record_id"] = "DnsRecordId"
-	fieldNameMap["project_dns_record"] = "ProjectDnsRecord"
-	paramsTypeMap["project_dns_record"] = vapiBindings_.NewReferenceType(nsx_policyModel.ProjectDnsRecordBindingType)
+	fieldNameMap["dns_record"] = "DnsRecord"
+	paramsTypeMap["dns_record"] = vapiBindings_.NewReferenceType(nsx_policyModel.DnsRecordBindingType)
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["dns_record_id"] = vapiBindings_.NewStringType()
@@ -304,7 +304,7 @@ func dnsRecordsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"project_dns_record",
+		"dns_record",
 		"PATCH",
 		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/dns-records/{dnsRecordId}",
 		"application/json",
@@ -321,17 +321,17 @@ func dnsRecordsUpdateInputType() vapiBindings_.StructType {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["dns_record_id"] = vapiBindings_.NewStringType()
-	fields["project_dns_record"] = vapiBindings_.NewReferenceType(nsx_policyModel.ProjectDnsRecordBindingType)
+	fields["dns_record"] = vapiBindings_.NewReferenceType(nsx_policyModel.DnsRecordBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["dns_record_id"] = "DnsRecordId"
-	fieldNameMap["project_dns_record"] = "ProjectDnsRecord"
+	fieldNameMap["dns_record"] = "DnsRecord"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
 func DnsRecordsUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.ProjectDnsRecordBindingType)
+	return vapiBindings_.NewReferenceType(nsx_policyModel.DnsRecordBindingType)
 }
 
 func dnsRecordsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
@@ -346,12 +346,12 @@ func dnsRecordsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["dns_record_id"] = vapiBindings_.NewStringType()
-	fields["project_dns_record"] = vapiBindings_.NewReferenceType(nsx_policyModel.ProjectDnsRecordBindingType)
+	fields["dns_record"] = vapiBindings_.NewReferenceType(nsx_policyModel.DnsRecordBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["dns_record_id"] = "DnsRecordId"
-	fieldNameMap["project_dns_record"] = "ProjectDnsRecord"
-	paramsTypeMap["project_dns_record"] = vapiBindings_.NewReferenceType(nsx_policyModel.ProjectDnsRecordBindingType)
+	fieldNameMap["dns_record"] = "DnsRecord"
+	paramsTypeMap["dns_record"] = vapiBindings_.NewReferenceType(nsx_policyModel.DnsRecordBindingType)
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["dns_record_id"] = vapiBindings_.NewStringType()
@@ -373,7 +373,7 @@ func dnsRecordsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"project_dns_record",
+		"dns_record",
 		"PUT",
 		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/dns-records/{dnsRecordId}",
 		"application/json",

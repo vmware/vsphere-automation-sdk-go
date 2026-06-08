@@ -28,6 +28,7 @@ type PeerConfigClient interface {
 	// @param tier1IdParam (required)
 	// @param serviceIdParam (required)
 	// @param sessionIdParam (required)
+	// @param backwardCompatibleParam The peer code generation has been enhanced for improved security. In case the L2VPN client is running a different (old) release, set backward_compatible=true to download a peer code that is compatible with older releases. It is strongly recommended to upgrade the L2VPN client to the latest release. (optional)
 	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_policy.model.AggregateL2VPNSessionPeerConfig
 	//
@@ -37,7 +38,7 @@ type PeerConfigClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, tier1IdParam string, serviceIdParam string, sessionIdParam string, enforcementPointPathParam *string) (nsx_policyModel.AggregateL2VPNSessionPeerConfig, error)
+	Get(orgIdParam string, projectIdParam string, tier1IdParam string, serviceIdParam string, sessionIdParam string, backwardCompatibleParam *bool, enforcementPointPathParam *string) (nsx_policyModel.AggregateL2VPNSessionPeerConfig, error)
 }
 
 type peerConfigClient struct {
@@ -65,7 +66,7 @@ func (pIface *peerConfigClient) GetErrorBindingType(errorName string) vapiBindin
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (pIface *peerConfigClient) Get(orgIdParam string, projectIdParam string, tier1IdParam string, serviceIdParam string, sessionIdParam string, enforcementPointPathParam *string) (nsx_policyModel.AggregateL2VPNSessionPeerConfig, error) {
+func (pIface *peerConfigClient) Get(orgIdParam string, projectIdParam string, tier1IdParam string, serviceIdParam string, sessionIdParam string, backwardCompatibleParam *bool, enforcementPointPathParam *string) (nsx_policyModel.AggregateL2VPNSessionPeerConfig, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
 	operationRestMetaData := peerConfigGetRestMetadata()
@@ -78,6 +79,7 @@ func (pIface *peerConfigClient) Get(orgIdParam string, projectIdParam string, ti
 	sv.AddStructField("Tier1Id", tier1IdParam)
 	sv.AddStructField("ServiceId", serviceIdParam)
 	sv.AddStructField("SessionId", sessionIdParam)
+	sv.AddStructField("BackwardCompatible", backwardCompatibleParam)
 	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {

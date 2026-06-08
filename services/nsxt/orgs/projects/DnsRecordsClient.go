@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DnsRecordsClient interface {
 
-	// Delete a ProjectDnsRecord from the specified project.
+	// Delete a DnsRecord from the specified project.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -35,12 +35,12 @@ type DnsRecordsClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, dnsRecordIdParam string) error
 
-	// Read a ProjectDnsRecord by ID within the specified project.
+	// Read a DnsRecord by ID within the specified project.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param dnsRecordIdParam (required)
-	// @return com.vmware.nsx_policy.model.ProjectDnsRecord
+	// @return com.vmware.nsx_policy.model.DnsRecord
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -48,9 +48,9 @@ type DnsRecordsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, dnsRecordIdParam string) (nsx_policyModel.ProjectDnsRecord, error)
+	Get(orgIdParam string, projectIdParam string, dnsRecordIdParam string) (nsx_policyModel.DnsRecord, error)
 
-	// List all ProjectDnsRecord resources in the specified project. Supports optional filtering by zone_path query parameter to retrieve records from a specific DNS zone, including both locally-owned and shared zones.
+	// List all DnsRecord resources in the specified project. Supports optional filtering by zone_path query parameter to retrieve records from a specific DNS zone, including both locally-owned and shared zones.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -60,8 +60,8 @@ type DnsRecordsClient interface {
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @param zonePathParam Optional URL-encoded policy path to a ProjectDnsZone. When specified, only DNS records whose zone_path matches this value are returned. Supports filtering records from both locally-owned zones and shared zones. (optional)
-	// @return com.vmware.nsx_policy.model.ProjectDnsRecordListResult
+	// @param zonePathParam Optional URL-encoded policy path to a DnsZone. When specified, only DNS records whose zone_path matches this value are returned. Supports filtering records from both locally-owned zones and shared zones. (optional)
+	// @return com.vmware.nsx_policy.model.DnsRecordListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -69,14 +69,14 @@ type DnsRecordsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, zonePathParam *string) (nsx_policyModel.ProjectDnsRecordListResult, error)
+	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, zonePathParam *string) (nsx_policyModel.DnsRecordListResult, error)
 
-	// Patch a ProjectDnsRecord. Only provided fields are updated. The record_type and zone_path fields are immutable and cannot be changed after creation. The fqdn field is read-only and must not be provided.
+	// Patch a DnsRecord. Only provided fields are updated. The record_type and zone_path fields are immutable and cannot be changed after creation. The fqdn field is read-only and must not be provided.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param dnsRecordIdParam (required)
-	// @param projectDnsRecordParam (required)
+	// @param dnsRecordParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -84,15 +84,15 @@ type DnsRecordsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(orgIdParam string, projectIdParam string, dnsRecordIdParam string, projectDnsRecordParam nsx_policyModel.ProjectDnsRecord) error
+	Patch(orgIdParam string, projectIdParam string, dnsRecordIdParam string, dnsRecordParam nsx_policyModel.DnsRecord) error
 
-	// Create or update a ProjectDnsRecord within the specified project. The zone_path references a ProjectDnsZone (local or shared). The record_type and zone_path are immutable after creation. For shared zones, the zone must be visible via shared-with-me. The fqdn field is system-computed and must not be provided in the request.
+	// Create or update a DnsRecord within the specified project. The zone_path references a DnsZone (local or shared). The record_type and zone_path are immutable after creation. For shared zones, the zone must be visible via shared-with-me. The fqdn field is system-computed and must not be provided in the request.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param dnsRecordIdParam (required)
-	// @param projectDnsRecordParam (required)
-	// @return com.vmware.nsx_policy.model.ProjectDnsRecord
+	// @param dnsRecordParam (required)
+	// @return com.vmware.nsx_policy.model.DnsRecord
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -100,7 +100,7 @@ type DnsRecordsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(orgIdParam string, projectIdParam string, dnsRecordIdParam string, projectDnsRecordParam nsx_policyModel.ProjectDnsRecord) (nsx_policyModel.ProjectDnsRecord, error)
+	Update(orgIdParam string, projectIdParam string, dnsRecordIdParam string, dnsRecordParam nsx_policyModel.DnsRecord) (nsx_policyModel.DnsRecord, error)
 }
 
 type dnsRecordsClient struct {
@@ -160,7 +160,7 @@ func (dIface *dnsRecordsClient) Delete(orgIdParam string, projectIdParam string,
 	}
 }
 
-func (dIface *dnsRecordsClient) Get(orgIdParam string, projectIdParam string, dnsRecordIdParam string) (nsx_policyModel.ProjectDnsRecord, error) {
+func (dIface *dnsRecordsClient) Get(orgIdParam string, projectIdParam string, dnsRecordIdParam string) (nsx_policyModel.DnsRecord, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dnsRecordsGetRestMetadata()
@@ -173,18 +173,18 @@ func (dIface *dnsRecordsClient) Get(orgIdParam string, projectIdParam string, dn
 	sv.AddStructField("DnsRecordId", dnsRecordIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.ProjectDnsRecord
+		var emptyOutput nsx_policyModel.DnsRecord
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.dns_records", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.ProjectDnsRecord
+	var emptyOutput nsx_policyModel.DnsRecord
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DnsRecordsGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.ProjectDnsRecord), nil
+		return output.(nsx_policyModel.DnsRecord), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -194,7 +194,7 @@ func (dIface *dnsRecordsClient) Get(orgIdParam string, projectIdParam string, dn
 	}
 }
 
-func (dIface *dnsRecordsClient) List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, zonePathParam *string) (nsx_policyModel.ProjectDnsRecordListResult, error) {
+func (dIface *dnsRecordsClient) List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, zonePathParam *string) (nsx_policyModel.DnsRecordListResult, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dnsRecordsListRestMetadata()
@@ -213,18 +213,18 @@ func (dIface *dnsRecordsClient) List(orgIdParam string, projectIdParam string, c
 	sv.AddStructField("ZonePath", zonePathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.ProjectDnsRecordListResult
+		var emptyOutput nsx_policyModel.DnsRecordListResult
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.dns_records", "list", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.ProjectDnsRecordListResult
+	var emptyOutput nsx_policyModel.DnsRecordListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DnsRecordsListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.ProjectDnsRecordListResult), nil
+		return output.(nsx_policyModel.DnsRecordListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -234,7 +234,7 @@ func (dIface *dnsRecordsClient) List(orgIdParam string, projectIdParam string, c
 	}
 }
 
-func (dIface *dnsRecordsClient) Patch(orgIdParam string, projectIdParam string, dnsRecordIdParam string, projectDnsRecordParam nsx_policyModel.ProjectDnsRecord) error {
+func (dIface *dnsRecordsClient) Patch(orgIdParam string, projectIdParam string, dnsRecordIdParam string, dnsRecordParam nsx_policyModel.DnsRecord) error {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dnsRecordsPatchRestMetadata()
@@ -245,7 +245,7 @@ func (dIface *dnsRecordsClient) Patch(orgIdParam string, projectIdParam string, 
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("DnsRecordId", dnsRecordIdParam)
-	sv.AddStructField("ProjectDnsRecord", projectDnsRecordParam)
+	sv.AddStructField("DnsRecord", dnsRecordParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -263,7 +263,7 @@ func (dIface *dnsRecordsClient) Patch(orgIdParam string, projectIdParam string, 
 	}
 }
 
-func (dIface *dnsRecordsClient) Update(orgIdParam string, projectIdParam string, dnsRecordIdParam string, projectDnsRecordParam nsx_policyModel.ProjectDnsRecord) (nsx_policyModel.ProjectDnsRecord, error) {
+func (dIface *dnsRecordsClient) Update(orgIdParam string, projectIdParam string, dnsRecordIdParam string, dnsRecordParam nsx_policyModel.DnsRecord) (nsx_policyModel.DnsRecord, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dnsRecordsUpdateRestMetadata()
@@ -274,21 +274,21 @@ func (dIface *dnsRecordsClient) Update(orgIdParam string, projectIdParam string,
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("DnsRecordId", dnsRecordIdParam)
-	sv.AddStructField("ProjectDnsRecord", projectDnsRecordParam)
+	sv.AddStructField("DnsRecord", dnsRecordParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.ProjectDnsRecord
+		var emptyOutput nsx_policyModel.DnsRecord
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.dns_records", "update", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.ProjectDnsRecord
+	var emptyOutput nsx_policyModel.DnsRecord
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DnsRecordsUpdateOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.ProjectDnsRecord), nil
+		return output.(nsx_policyModel.DnsRecord), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

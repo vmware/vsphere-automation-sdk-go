@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VpcLbServerSslProfilesClient interface {
 
-	// Delete the LBServerSslProfile along with all the entities contained by this LBServerSslProfile. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Delete the LBServerSslProfile along with all the entities contained by this LBServerSslProfile. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)
@@ -37,7 +37,7 @@ type VpcLbServerSslProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, vpcIdParam string, vpcLbServerSslProfileIdParam string, forceParam *bool) error
 
-	// Read a LBServerSslProfile. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Read a LBServerSslProfile. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)
@@ -53,7 +53,7 @@ type VpcLbServerSslProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, vpcIdParam string, vpcLbServerSslProfileIdParam string) (nsx_policyModel.LBServerSslProfile, error)
 
-	// Paginated list of all LBServerSslProfiles. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Paginated list of all LBServerSslProfiles. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)
@@ -74,7 +74,7 @@ type VpcLbServerSslProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, vpcIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.LBServerSslProfileListResult, error)
 
-	// If a LBServerSslProfile with the vpc-lb-server-ssl-profile-id is not already present, create a new LBServerSslProfile. If it already exists, update the LBServerSslProfile. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// If a LBServerSslProfile with the vpc-lb-server-ssl-profile-id is not already present, create a new LBServerSslProfile. If it already exists, update the LBServerSslProfile. This is a full replace. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)
@@ -90,7 +90,7 @@ type VpcLbServerSslProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, vpcIdParam string, vpcLbServerSslProfileIdParam string, lbServerSslProfileParam nsx_policyModel.LBServerSslProfile) error
 
-	// If a LBServerSslProfile with the vpc-lb-server-ssl-profile-id is not already present, create a new LBServerSslProfile. If it already exists, update the LBServerSslProfile. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// If a LBServerSslProfile with the vpc-lb-server-ssl-profile-id is not already present, create a new LBServerSslProfile. If it already exists, update the LBServerSslProfile. This is a full replace. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)

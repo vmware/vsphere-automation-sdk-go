@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type VpcLbsClient interface {
 
-	// Delete the load balancer and all the entities contained by this load balancer. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Delete the load balancer and all the entities contained by this load balancer. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)
@@ -37,7 +37,7 @@ type VpcLbsClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, vpcIdParam string, vpcLbIdParam string, forceParam *bool) error
 
-	// Read a load balancer. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Read a load balancer. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)
@@ -53,7 +53,7 @@ type VpcLbsClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, vpcIdParam string, vpcLbIdParam string) (nsx_policyModel.LBService, error)
 
-	// Paginated list of all load balancers. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Paginated list of all load balancers. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)
@@ -74,7 +74,7 @@ type VpcLbsClient interface {
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, vpcIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.LBServiceListResult, error)
 
-	// If a load balancer with the vpc-lb-id doesn't exist, create a new Load Balancer. If it has already existed, update the load balancer. This is a full replacement. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// If a load balancer with the vpc-lb-id doesn't exist, create a new Load Balancer. If it has already existed, update the load balancer. This is a full replacement. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)
@@ -91,7 +91,7 @@ type VpcLbsClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, vpcIdParam string, vpcLbIdParam string, lbServiceParam nsx_policyModel.LBService, actionParam *string) error
 
-	// If a load balancer with the vpc-lb-id doesn't exist, create a new Load Balancer. If it has already existed, update the load balancer. This is a full replacement. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// If a load balancer with the vpc-lb-id doesn't exist, create a new Load Balancer. If it has already existed, update the load balancer. This is a full replacement. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param orgIdParam Org ID (required)
 	// @param projectIdParam Project ID (required)

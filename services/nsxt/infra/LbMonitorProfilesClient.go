@@ -22,7 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LbMonitorProfilesClient interface {
 
-	// Delete the LBMonitorProfile along with all the entities contained by this LBMonitorProfile. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Delete the LBMonitorProfile along with all the entities contained by this LBMonitorProfile. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbMonitorProfileIdParam LBMonitorProfile ID (required)
 	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
@@ -35,7 +35,7 @@ type LbMonitorProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(lbMonitorProfileIdParam string, forceParam *bool) error
 
-	// Read a LBMonitorProfile. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Read a LBMonitorProfile. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbMonitorProfileIdParam LBMonitorProfile ID (required)
 	// @return com.vmware.nsx_policy.model.LBMonitorProfile
@@ -49,7 +49,7 @@ type LbMonitorProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(lbMonitorProfileIdParam string) (*vapiData_.StructValue, error)
 
-	// Paginated list of all LBMonitorProfiles for infra. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Paginated list of all LBMonitorProfiles for infra. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
@@ -67,7 +67,7 @@ type LbMonitorProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.LBMonitorProfileListResult, error)
 
-	// If a LBMonitorProfile with the lb-monitor-profile-id is not already present, create a new LBMonitorProfile. If it already exists, update the LBMonitorProfile. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// If a LBMonitorProfile with the lb-monitor-profile-id is not already present, create a new LBMonitorProfile. If it already exists, update the LBMonitorProfile. This is a full replace. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbMonitorProfileIdParam LBMonitorProfile ID (required)
 	// @param lbMonitorProfileParam (required)
@@ -81,7 +81,7 @@ type LbMonitorProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(lbMonitorProfileIdParam string, lbMonitorProfileParam *vapiData_.StructValue) error
 
-	// If a LBMonitorProfile with the lb-monitor-profile-id is not already present, create a new LBMonitorProfile. If it already exists, update the LBMonitorProfile. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// If a LBMonitorProfile with the lb-monitor-profile-id is not already present, create a new LBMonitorProfile. If it already exists, update the LBMonitorProfile. This is a full replace. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbMonitorProfileIdParam LBMonitorProfile ID (required)
 	// @param lbMonitorProfileParam (required)

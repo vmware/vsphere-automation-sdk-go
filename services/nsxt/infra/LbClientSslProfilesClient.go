@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LbClientSslProfilesClient interface {
 
-	// Delete the LBClientSslProfile along with all the entities contained by this LBClientSslProfile. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Delete the LBClientSslProfile along with all the entities contained by this LBClientSslProfile. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbClientSslProfileIdParam LBClientSslProfile ID (required)
 	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
@@ -34,7 +34,7 @@ type LbClientSslProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(lbClientSslProfileIdParam string, forceParam *bool) error
 
-	// Read a LBClientSslProfile. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Read a LBClientSslProfile. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbClientSslProfileIdParam LBClientSslProfile ID (required)
 	// @return com.vmware.nsx_policy.model.LBClientSslProfile
@@ -47,7 +47,7 @@ type LbClientSslProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(lbClientSslProfileIdParam string) (nsx_policyModel.LBClientSslProfile, error)
 
-	// Paginated list of all LBClientSslProfiles. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Paginated list of all LBClientSslProfiles. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
@@ -65,7 +65,7 @@ type LbClientSslProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.LBClientSslProfileListResult, error)
 
-	// If a LBClientSslProfile with the lb-client-ssl-profile-id is not already present, create a new LBClientSslProfile. If it already exists, update the LBClientSslProfile. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// If a LBClientSslProfile with the lb-client-ssl-profile-id is not already present, create a new LBClientSslProfile. If it already exists, update the LBClientSslProfile. This is a full replace. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbClientSslProfileIdParam LBClientSslProfile ID (required)
 	// @param lbClientSslProfileParam (required)
@@ -78,7 +78,7 @@ type LbClientSslProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(lbClientSslProfileIdParam string, lbClientSslProfileParam nsx_policyModel.LBClientSslProfile) error
 
-	// If a LBClientSslProfile with the lb-client-ssl-profile-id is not already present, create a new LBClientSslProfile. If it already exists, update the LBClientSslProfile. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// If a LBClientSslProfile with the lb-client-ssl-profile-id is not already present, create a new LBClientSslProfile. If it already exists, update the LBClientSslProfile. This is a full replace. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbClientSslProfileIdParam LBClientSslProfile ID (required)
 	// @param lbClientSslProfileParam (required)

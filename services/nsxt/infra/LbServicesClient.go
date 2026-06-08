@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LbServicesClient interface {
 
-	// Delete the LBService along with all the entities contained by this LBService. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Delete the LBService along with all the entities contained by this LBService. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbServiceIdParam LBService ID (required)
 	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
@@ -34,7 +34,7 @@ type LbServicesClient interface {
 	// @throws NotFound  Not Found
 	Delete(lbServiceIdParam string, forceParam *bool) error
 
-	// Read an LBService. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Read an LBService. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbServiceIdParam LBService ID (required)
 	// @return com.vmware.nsx_policy.model.LBService
@@ -47,7 +47,7 @@ type LbServicesClient interface {
 	// @throws NotFound  Not Found
 	Get(lbServiceIdParam string) (nsx_policyModel.LBService, error)
 
-	// Paginated list of all LBService. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// Paginated list of all LBService. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
@@ -65,7 +65,7 @@ type LbServicesClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.LBServiceListResult, error)
 
-	// If a LBService with the lb-service-id is not already present, create a new LBService. If it already exists, update the LBService. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// If a LBService with the lb-service-id is not already present, create a new LBService. If it already exists, update the LBService. This is a full replace. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbServiceIdParam LBService ID (required)
 	// @param lbServiceParam (required)
@@ -78,7 +78,7 @@ type LbServicesClient interface {
 	// @throws NotFound  Not Found
 	Patch(lbServiceIdParam string, lbServiceParam nsx_policyModel.LBService) error
 
-	// If a LBService with the lb-service-id is not already present, create a new LBService. If it already exists, update the LBService. This is a full replace. NSX Load Balancer availability in terms of use-cases and editions is specified in NSX Feature and Edition Guide. Please review before consuming those APIs.
+	// If a LBService with the lb-service-id is not already present, create a new LBService. If it already exists, update the LBService. This is a full replace. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param lbServiceIdParam LBService ID (required)
 	// @param lbServiceParam (required)

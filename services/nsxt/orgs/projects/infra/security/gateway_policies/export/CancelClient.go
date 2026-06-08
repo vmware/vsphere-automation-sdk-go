@@ -4,10 +4,10 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: Exports
+// Interface file for service: Cancel
 // Used by client-side stubs.
 
-package gateway_policies
+package export
 
 import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -19,14 +19,16 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-type ExportsClient interface {
+type CancelClient interface {
 
-	// This api fetch all the exported tasks for gateway firewall. There will be max one entry present for one gateway. The records can also be filtered on the basis of category i.e LOCAL, SHARED and ALL_LOCAL. Also on the basis of scope_path or draft_path.
+	// This operation cancels an gateway firewall export task. Task needs to be in running state. The request have scope_path and category as query param to cancel the particular gateway firewall export task.
 	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param categoryParam Export category for rules like SHARED, ALL_LOCAL or LOCAL. ALL_LOCAL - To export all local gateway rules. LOCAL - To export local gateway rules for provided gateway. SHARED - To export all shared gateway rules. (optional)
 	// @param draftPathParam The draft path for which gateway firewall export was triggered. (optional)
 	// @param scopePathParam It is the scope path for which export was triggered. (optional)
-	// @return com.vmware.nsx_policy.model.FirewallExportListResult
+	// @return com.vmware.nsx_policy.model.FirewallExportTask
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -34,61 +36,63 @@ type ExportsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(categoryParam *string, draftPathParam *string, scopePathParam *string) (nsx_policyModel.FirewallExportListResult, error)
+	Create(orgIdParam string, projectIdParam string, categoryParam *string, draftPathParam *string, scopePathParam *string) (nsx_policyModel.FirewallExportTask, error)
 }
 
-type exportsClient struct {
+type cancelClient struct {
 	connector           vapiProtocolClient_.Connector
 	interfaceDefinition vapiCore_.InterfaceDefinition
 	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewExportsClient(connector vapiProtocolClient_.Connector) *exportsClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.security.gateway_policies.exports")
+func NewCancelClient(connector vapiProtocolClient_.Connector) *cancelClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.infra.security.gateway_policies.export.cancel")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
-		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
-	eIface := exportsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
-	return &eIface
+	cIface := cancelClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &cIface
 }
 
-func (eIface *exportsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
-	if entry, ok := eIface.errorsBindingMap[errorName]; ok {
+func (cIface *cancelClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+	if entry, ok := cIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (eIface *exportsClient) Get(categoryParam *string, draftPathParam *string, scopePathParam *string) (nsx_policyModel.FirewallExportListResult, error) {
-	typeConverter := eIface.connector.TypeConverter()
-	executionContext := eIface.connector.NewExecutionContext()
-	operationRestMetaData := exportsGetRestMetadata()
+func (cIface *cancelClient) Create(orgIdParam string, projectIdParam string, categoryParam *string, draftPathParam *string, scopePathParam *string) (nsx_policyModel.FirewallExportTask, error) {
+	typeConverter := cIface.connector.TypeConverter()
+	executionContext := cIface.connector.NewExecutionContext()
+	operationRestMetaData := cancelCreateRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(exportsGetInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(cancelCreateInputType(), typeConverter)
+	sv.AddStructField("OrgId", orgIdParam)
+	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("Category", categoryParam)
 	sv.AddStructField("DraftPath", draftPathParam)
 	sv.AddStructField("ScopePath", scopePathParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.FirewallExportListResult
+		var emptyOutput nsx_policyModel.FirewallExportTask
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := eIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.security.gateway_policies.exports", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.FirewallExportListResult
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.infra.security.gateway_policies.export.cancel", "create", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.FirewallExportTask
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ExportsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), CancelCreateOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.FirewallExportListResult), nil
+		return output.(nsx_policyModel.FirewallExportTask), nil
 	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), eIface.GetErrorBindingType(methodResult.Error().Name()))
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}

@@ -27,12 +27,14 @@ func peerConfigGetInputType() vapiBindings_.StructType {
 	fields["tier1_id"] = vapiBindings_.NewStringType()
 	fields["service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
+	fields["backward_compatible"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["tier1_id"] = "Tier1Id"
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["session_id"] = "SessionId"
+	fieldNameMap["backward_compatible"] = "BackwardCompatible"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
@@ -56,13 +58,16 @@ func peerConfigGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["tier1_id"] = vapiBindings_.NewStringType()
 	fields["service_id"] = vapiBindings_.NewStringType()
 	fields["session_id"] = vapiBindings_.NewStringType()
+	fields["backward_compatible"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["tier1_id"] = "Tier1Id"
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["session_id"] = "SessionId"
+	fieldNameMap["backward_compatible"] = "BackwardCompatible"
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
+	paramsTypeMap["backward_compatible"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["tier1_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
@@ -79,6 +84,7 @@ func peerConfigGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	pathParams["service_id"] = "serviceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
+	queryParams["backward_compatible"] = "backward_compatible"
 	queryParams["enforcement_point_path"] = "enforcement_point_path"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
