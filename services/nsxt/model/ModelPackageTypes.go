@@ -5474,7 +5474,11 @@ type BackupOverview struct {
 	BackupConfig                 *BackupConfiguration
 	BackupOperationHistory       *BackupOperationHistory
 	CurrentBackupOperationStatus *CurrentBackupOperationStatus
-	RestoreStatus                *ClusterRestoreStatus
+	// true once Fleet has pushed backup config to this NSX instance. Once true, never reverts to false. false means NSX operates in standalone SDDC-managed mode.
+	ManagedByFleet *bool
+	// true once NSX Admin has saved legacy backup config while managed_by_fleet is true. Once true, never reverts to false.
+	NsxConfiguration *bool
+	RestoreStatus    *ClusterRestoreStatus
 }
 
 func (s *BackupOverview) GetType__() vapiBindings_.BindingType {
@@ -15365,6 +15369,61 @@ func (s *ChildIpAddressPoolSubnet) GetDataValue__() (vapiData_.DataValue, []erro
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for ChildIpAddressPoolSubnet._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Child wrapper object for IpBlockRestrictedIps, used in hierarchical API
+type ChildIpBlockRestrictedIps struct {
+	IpBlockRestrictedIps *IpBlockRestrictedIps
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id           *string
+	ResourceType string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// Indicates whether this object is the overridden intent object Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
+	MarkForOverride *bool
+	// During Tier 1 to VPC Conversion, this field is set to the target object path for the object being converted. For example, if the object being converted is a Tier-1, this field is set to the path of the VPC that the Tier-1 is being converted to. This field is used to track the target object path for the object being converted, and to mark the original objects.
+	MarkedForConvert *string
+	// If this field is set to true, delete operation is triggered on the intent tree. This resource along with its all children in intent tree will be deleted. This is a cascade delete and should only be used if intent object along with its all children are to be deleted. This does not support deletion of single non-leaf node within the tree and should be used carefully.
+	MarkedForDelete  *bool
+	RequestParameter *vapiData_.StructValue
+}
+
+func (s *ChildIpBlockRestrictedIps) GetType__() vapiBindings_.BindingType {
+	return ChildIpBlockRestrictedIpsBindingType()
+}
+
+func (s *ChildIpBlockRestrictedIps) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ChildIpBlockRestrictedIps._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -29917,6 +29976,17 @@ type ContainerClusterSummary struct {
 	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_KUBERNETES
 	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_OPENSHIFT
 	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_WCP
+	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_WCP_GUEST
+	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_AKS
+	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_EKS
+	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_TKGM
+	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_TKGI
+	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_GKE
+	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_GARDENER
+	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_RANCHER
+	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_TAS
+	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_SUPERVISORCLUSTER
+	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_WORKLOADCLUSTER
 	// * ContainerClusterSummary#ContainerClusterSummary_TYPE_OTHER
 	//
 	//  Container cluster type.
@@ -29932,6 +30002,17 @@ const ContainerClusterSummary_TYPE_PKS = "PKS"
 const ContainerClusterSummary_TYPE_KUBERNETES = "Kubernetes"
 const ContainerClusterSummary_TYPE_OPENSHIFT = "Openshift"
 const ContainerClusterSummary_TYPE_WCP = "WCP"
+const ContainerClusterSummary_TYPE_WCP_GUEST = "WCP_Guest"
+const ContainerClusterSummary_TYPE_AKS = "AKS"
+const ContainerClusterSummary_TYPE_EKS = "EKS"
+const ContainerClusterSummary_TYPE_TKGM = "TKGm"
+const ContainerClusterSummary_TYPE_TKGI = "TKGi"
+const ContainerClusterSummary_TYPE_GKE = "GKE"
+const ContainerClusterSummary_TYPE_GARDENER = "Gardener"
+const ContainerClusterSummary_TYPE_RANCHER = "Rancher"
+const ContainerClusterSummary_TYPE_TAS = "TAS"
+const ContainerClusterSummary_TYPE_SUPERVISORCLUSTER = "SupervisorCluster"
+const ContainerClusterSummary_TYPE_WORKLOADCLUSTER = "WorkloadCluster"
 const ContainerClusterSummary_TYPE_OTHER = "Other"
 
 func (s *ContainerClusterSummary) GetType__() vapiBindings_.BindingType {
@@ -36397,7 +36478,7 @@ func (s *DistributedVxlanConnectionListResult) GetDataValue__() (vapiData_.DataV
 	return dataVal, nil
 }
 
-// Project-level binding between an IP block and a DNS zone. When a workload IP is allocated from the referenced IP block (e.g. on VM power-on), the system automatically creates a DnsRecord of type A in the referenced zone. The auto-created record is removed when the IP is deallocated (e.g. on VM power-off or deletion). Only one DnsAutoRecordConfig per ip_block_path is allowed per project. The ip_block_path field is immutable after creation. Shared zones are not permitted as the zone_path target.
+// Project-level binding between an IP block and DNS zones. When a workload IP is allocated from the referenced IP block (e.g. on VM power-on), the system automatically creates a DnsRecord of type A in the zone referenced by a_record_zone_path. If ptr_record_zone_path is set, a DnsRecord of type PTR is also auto-created in that zone. Both a_record_zone_path and ptr_record_zone_path accept local or shared zones. The auto-created records are removed when the IP is deallocated (e.g. on VM power-off or deletion). Only one DnsAutoRecordConfig per ip_block_path is allowed per project. The ip_block_path field is immutable after creation.
 type DnsAutoRecordConfig struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -36450,12 +36531,14 @@ type DnsAutoRecordConfig struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Policy path to the IP block from which workload IPs are allocated. When an IP is allocated from this block, an A record is automatically created in the referenced zone. Immutable after creation. Only one DnsAutoRecordConfig per ip_block_path is allowed within a project. The IP block must be visible to the project. Example: /infra/ip-blocks/block-1
+	// Policy path to a DnsZone (local or shared) in which auto-created A records are placed. The zone must exist and be visible to this project. Example: /orgs/default/projects/project-1/dns-services/dns-svc-1/zones/zone-1
+	ARecordZonePath *string
+	// Policy path to the IP block from which workload IPs are allocated. When an IP is allocated from this block, an A record is automatically created in the referenced zone; a PTR record is also created if ptr_record_zone_path is set. Immutable after creation. Only one DnsAutoRecordConfig per ip_block_path is allowed within a project. The IP block must be visible to the project. Example: /infra/ip-blocks/block-1
 	IpBlockPath *string
-	// Time-To-Live in seconds for auto-created A records. Range: 30-86400 seconds. Default: 300. format: int64
+	// Optional policy path to a DnsZone (local or shared) in which auto-created PTR (reverse DNS) records are placed. When absent, no PTR record is auto-created. The zone must exist and be visible to this project. Example: /orgs/default/projects/project-1/dns-services/dns-svc-1/zones/reverse-zone
+	PtrRecordZonePath *string
+	// Time-To-Live in seconds for auto-created A and PTR records. Range: 30-86400 seconds. Default: 300. format: int64
 	Ttl *int64
-	// Policy path to a locally-owned DnsZone in which auto-created A records are placed. The zone must be owned by this project; shared zones are not permitted. Example: /orgs/default/projects/project-1/dns-services/dns-svc-1/zones/zone-1
-	ZonePath *string
 }
 
 func (s *DnsAutoRecordConfig) GetType__() vapiBindings_.BindingType {
@@ -36626,7 +36709,7 @@ func (s *DnsHeader) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// A DNS record at the project level. Unified type for records in locally-owned zones and shared zones from another project. Identified by zone_path reference. Supports A, AAAA, CNAME, PTR, and NS record types. The record_type and zone_path fields are immutable after creation. The fqdn field is system-computed and read-only.
+// A DNS record at the project level. Unified type for records in locally-owned zones and shared zones from another project. Identified by zone_path reference. Supports A, AAAA, CNAME, PTR, NS, and TXT record types. The record_type and zone_path fields are immutable after creation. The fqdn field is system-computed and read-only.
 type DnsRecord struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -36692,10 +36775,11 @@ type DnsRecord struct {
 	// * DnsRecord#DnsRecord_RECORD_TYPE_CNAME
 	// * DnsRecord#DnsRecord_RECORD_TYPE_PTR
 	// * DnsRecord#DnsRecord_RECORD_TYPE_NS
+	// * DnsRecord#DnsRecord_RECORD_TYPE_TXT
 	//
-	//  DNS record type. Immutable after creation. A: IPv4 address record. AAAA: IPv6 address record. CNAME: Canonical name alias record. PTR: Pointer record for reverse DNS lookups. NS: Name server record for subdomain delegation.
+	//  DNS record type. Immutable after creation. A: IPv4 address record. AAAA: IPv6 address record. CNAME: Canonical name alias record. PTR: Pointer record for reverse DNS lookups. NS: Name server record for subdomain delegation. TXT: Text record for arbitrary string metadata.
 	RecordType *string
-	// DNS record data values, consistent with record_type. A: one or more valid IPv4 addresses (e.g. [\"192.168.1.10\"]). AAAA: one or more valid IPv6 addresses (e.g. [\"2001:db8::1\"]). CNAME: exactly one FQDN ending with a dot (e.g. [\"canonical.example.com.\"]). PTR: exactly one FQDN ending with a dot (e.g. [\"host.example.com.\"]). NS: one or more FQDNs ending with a dot (e.g. [\"ns1.example.com.\", \"ns2.example.com.\"]). At least one value is required.
+	// DNS record data values, consistent with record_type. A: one or more valid IPv4 addresses (e.g. [\"192.168.1.10\"]). AAAA: one or more valid IPv6 addresses (e.g. [\"2001:db8::1\"]). CNAME: exactly one FQDN ending with a dot (e.g. [\"canonical.example.com.\"]). PTR: exactly one FQDN ending with a dot (e.g. [\"host.example.com.\"]). NS: one or more FQDNs ending with a dot (e.g. [\"ns1.example.com.\", \"ns2.example.com.\"]). TXT: one or more text strings (e.g. [\"v=spf1 include:example.com ~all\"]). At least one value is required.
 	RecordValues []string
 	// Time-To-Live in seconds for this DNS record. Overrides the zone's default TTL. Range: 30-86400 seconds. Default: 300. format: int64
 	Ttl *int64
@@ -36708,6 +36792,7 @@ const DnsRecord_RECORD_TYPE_AAAA = "AAAA"
 const DnsRecord_RECORD_TYPE_CNAME = "CNAME"
 const DnsRecord_RECORD_TYPE_PTR = "PTR"
 const DnsRecord_RECORD_TYPE_NS = "NS"
+const DnsRecord_RECORD_TYPE_TXT = "TXT"
 
 func (s *DnsRecord) GetType__() vapiBindings_.BindingType {
 	return DnsRecordBindingType()
@@ -36758,7 +36843,7 @@ func (s *DnsRecordListResult) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// A DNS rule attached to a DnsService. Defines an action applied to DNS queries whose domain matches the rule's domain_patterns using longest-prefix match. Supported actions are UPDATE_MEMBERSHIP (dynamically populate an FQDN Group with resolved IPs) and FORWARD (proxy to upstream DNS servers).
+// A DNS rule attached to a DnsService. Defines an action applied to DNS queries whose domain matches the rule's domain_patterns using longest-prefix match. Supported actions are UPDATE_MEMBERSHIP (dynamically populate an FQDN Group with resolved IPs) and FORWARD (proxy queries to either a shared DNS zone via shared_zone_path or to upstream DNS servers via upstream_servers).
 type DnsRule struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -36816,11 +36901,13 @@ type DnsRule struct {
 	// * DnsRule#DnsRule_ACTION_TYPE_UPDATE_MEMBERSHIP
 	// * DnsRule#DnsRule_ACTION_TYPE_FORWARD
 	//
-	//  Action to apply to DNS queries matching domain_patterns via longest-prefix match. UPDATE_MEMBERSHIP: resolved IPs are added to the associated FQDN Group. FORWARD: matching queries are proxied to upstream_servers.
+	//  Action to apply to DNS queries matching domain_patterns via longest-prefix match. UPDATE_MEMBERSHIP: resolved IPs are added to the associated FQDN Group. FORWARD: matching queries are forwarded to either a shared DNS zone (via shared_zone_path) or to upstream DNS servers (via upstream_servers).
 	ActionType *string
-	// List of domain name patterns matched against incoming DNS queries using longest-prefix match. Supports wildcard patterns (e.g. \"\*.broadcom.com\"). At least one pattern is required.
+	// List of domain name patterns matched against incoming DNS queries using longest-prefix match. Supports wildcard patterns (e.g. \"\*.broadcom.com\"). Required and must be non-empty unless action_type is FORWARD and shared_zone_path is set; in that case domain_patterns may be omitted because the matching domains are derived from the referenced shared zone.
 	DomainPatterns []string
-	// Upstream DNS server IP addresses to which matching queries are forwarded. Required and must be non-empty when action_type is FORWARD. Ignored when action_type is UPDATE_MEMBERSHIP. Maximum 3 entries.
+	// Policy path to a DnsZone shared with this project to which matching queries are forwarded. Only valid when action_type is FORWARD. Mutually exclusive with upstream_servers: exactly one of shared_zone_path or upstream_servers must be set on a FORWARD rule.
+	SharedZonePath *string
+	// Upstream DNS server IP addresses to which matching queries are forwarded. Only valid when action_type is FORWARD. Mutually exclusive with shared_zone_path: exactly one of upstream_servers or shared_zone_path must be set on a FORWARD rule. Ignored when action_type is UPDATE_MEMBERSHIP. Maximum 3 entries.
 	UpstreamServers []string
 }
 
@@ -37148,7 +37235,7 @@ type DnsService struct {
 	ForwarderConfig      *DnsServiceForwarderConfig
 	// Policy path to the transit gateway providing north-south connectivity. The DNS service listener IPs are reachable by VPC workloads through this transit gateway.
 	TransitGateway *string
-	// Policy paths to VNS (Virtual Network Service) clusters on which this DNS service is deployed. At least one cluster path is required.
+	// Policy paths to VNS (Virtual Network Service) clusters on which this DNS service is deployed. Currently supports a single VNS cluster per DNS service.
 	VnsClusters []string
 }
 
@@ -37171,9 +37258,19 @@ func (s *DnsService) GetDataValue__() (vapiData_.DataValue, []error) {
 type DnsServiceForwarderConfig struct {
 	// Number of cache entries for DNS answers. Controls the maximum number of DNS responses that can be cached for recursive resolution. Range: 100-100000. format: int64
 	CacheSize *int64
+	// Possible values are:
+	//
+	// * DnsServiceForwarderConfig#DnsServiceForwarderConfig_SHARED_ZONE_FORWARDING_MODE_AUTO
+	// * DnsServiceForwarderConfig#DnsServiceForwarderConfig_SHARED_ZONE_FORWARDING_MODE_MANUAL
+	//
+	//  Controls how DNS forwarding rules are managed for shared zones belonging to this DNS service. AUTO: The system automatically creates internal DNS forwarding rules for all shared zones belonging to the DNS service. MANUAL: The user must explicitly configure DnsRule resources to forward queries for shared zones (e.g. by setting shared_zone_path on a FORWARD rule).
+	SharedZoneForwardingMode *string
 	// Upstream DNS server IP addresses used for catch-all recursive resolution. When a query does not match any authoritative zone or rule, it is forwarded to one of these servers. Maximum 3 entries.
 	UpstreamServers []string
 }
+
+const DnsServiceForwarderConfig_SHARED_ZONE_FORWARDING_MODE_AUTO = "AUTO"
+const DnsServiceForwarderConfig_SHARED_ZONE_FORWARDING_MODE_MANUAL = "MANUAL"
 
 func (s *DnsServiceForwarderConfig) GetType__() vapiBindings_.BindingType {
 	return DnsServiceForwarderConfigBindingType()
@@ -37224,7 +37321,7 @@ func (s *DnsServiceListResult) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// A DNS zone attached to a DnsService. Defines the domain name, optional VPC scope for split-horizon DNS, default TTL, and SOA parameters. Supports A, AAAA, CNAME, PTR, and NS records in mixed mode. The dns_domain_name is immutable after creation.
+// A DNS zone attached to a DnsService. Defines the domain name, optional VPC resolution_scope for split-horizon DNS, default TTL, and SOA parameters. Supports A, AAAA, CNAME, PTR, NS, and TXT records in mixed mode. The dns_domain_name is immutable after creation.
 type DnsZone struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -37279,9 +37376,9 @@ type DnsZone struct {
 	Overridden *bool
 	// The domain name for this zone (e.g. \"example.com\") or a reverse-notation domain for PTR records (e.g. \"12.168.192.in-addr.arpa\"). Must be a valid FQDN or reverse-notation domain. Immutable after creation. Must be unique within the parent DNS service.
 	DnsDomainName *string
-	// Optional policy path to a single VPC within this project. When set, only workloads in the specified VPC can resolve this zone (split-horizon DNS). When unset (default), all VPCs in the project can resolve this zone. A zone shared with other projects must have scope unset.
-	Scope *string
-	Soa   *DnsZoneSoa
+	// Optional array of policy paths to VPCs within this project. When set and non-empty, only workloads in the specified VPCs can resolve this zone (split-horizon DNS). When unset or empty (default), all VPCs in the project can resolve this zone. A zone shared with other projects must have resolution_scope unset or empty.
+	ResolutionScope []string
+	Soa             *DnsZoneSoa
 	// Default Time-To-Live in seconds for DNS records in this zone. Individual DnsRecord objects may override this value. Range: 30-86400 seconds. format: int64
 	Ttl *int64
 }
@@ -41364,6 +41461,56 @@ func (s *Fastpath) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for Fastpath._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Configuration for opt-in features for host transport nodes
+type FeatureOptIn struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id *string
+	// The type of this resource.
+	ResourceType *string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// This value indicates the minimum OS version for all host transport nodes in the system.
+	HostTnMinOsVersion *string
+}
+
+func (s *FeatureOptIn) GetType__() vapiBindings_.BindingType {
+	return FeatureOptInBindingType()
+}
+
+func (s *FeatureOptIn) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for FeatureOptIn._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -59080,7 +59227,7 @@ type IpAddressBlockAllocationState struct {
 	AllocationStates []IpAddressBlockAllocationStateForCidr
 	// Possible values are:
 	//
-	// * IpAddressBlockAllocationState#IpAddressBlockAllocationState_ALLOWED_USE_CASES_LB
+	// * IpAddressBlockAllocationState#IpAddressBlockAllocationState_ALLOWED_USE_CASES_FRONTEND
 	//
 	//  Read-only echo of IpAddressBlockConstraint.allowed_use_cases for the IP block. When a profile exists and restricts use cases, this field surfaces those restrictions to tenants consuming the block so they can set VpcIpAddressAllocation.used_for accordingly. Empty/absent when no profile has been configured for the block.
 	AllowedUseCases []string
@@ -59104,7 +59251,7 @@ type IpAddressBlockAllocationState struct {
 	Visibility *string
 }
 
-const IpAddressBlockAllocationState_ALLOWED_USE_CASES_LB = "VPC_LB"
+const IpAddressBlockAllocationState_ALLOWED_USE_CASES_FRONTEND = "LB_FRONTEND"
 const IpAddressBlockAllocationState_IP_ADDRESS_TYPE_IPV4 = "IPV4"
 const IpAddressBlockAllocationState_IP_ADDRESS_TYPE_IPV6 = "IPV6"
 const IpAddressBlockAllocationState_VISIBILITY_PRIVATE = "PRIVATE"
@@ -59344,7 +59491,7 @@ type IpAddressBlockConstraint struct {
 	Overridden *bool
 	// Possible values are:
 	//
-	// * IpAddressBlockConstraint#IpAddressBlockConstraint_ALLOWED_USE_CASES_LB
+	// * IpAddressBlockConstraint#IpAddressBlockConstraint_ALLOWED_USE_CASES_FRONTEND
 	//
 	//  Restricts which services can perform first-level IP allocations from this block. When a service requests an allocation, it must declare its use case via the used_for field. IPAM will reject the request if the declared use case is not in this list. If this field is empty or not set, the block is unrestricted. This field cannot be modified once there are subnets allocated under the parent IP block. To change the allowed use cases, all subnets must first be removed from the block.
 	AllowedUseCases []string
@@ -59357,7 +59504,7 @@ type IpAddressBlockConstraint struct {
 	DefaultSharingPermission *string
 }
 
-const IpAddressBlockConstraint_ALLOWED_USE_CASES_LB = "VPC_LB"
+const IpAddressBlockConstraint_ALLOWED_USE_CASES_FRONTEND = "LB_FRONTEND"
 const IpAddressBlockConstraint_DEFAULT_SHARING_PERMISSION_READ_ONLY = "READ_ONLY"
 const IpAddressBlockConstraint_DEFAULT_SHARING_PERMISSION_ASSOCIATION_ONLY = "ASSOCIATION_ONLY"
 
@@ -59527,8 +59674,12 @@ type IpAddressBlockVPCSubnets struct {
 	CreationTime *int64
 	// This represents policy path of the VPC subnet.
 	PolicyPath *string
-	// This contains size of VPC subnets format: int64
+	// This contains size of VPC subnets. format: int64
+	//
+	// Deprecated: This API element is deprecated.
 	Size *int64
+	// This contains the size of the VPC subnet expressed as a string to support arbitrarily large numbers required for IPv6. Populated for both IPv4 and IPv6 subnets.
+	SubnetSize *string
 }
 
 func (s *IpAddressBlockVPCSubnets) GetType__() vapiBindings_.BindingType {
@@ -60243,9 +60394,9 @@ type IpBlockRestrictedIps struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Array of CIDR blocks that are restricted from being used in IP Block creation. Supports both IPv4 and IPv6 CIDR notation (e.g., \"192.168.0.0/24\", \"2001:db8::/32\"). This property is mutually exclusive with restricted_ranges. At max 10 restricted CIDRs per resource. format: ip-cidr-block
+	// Array of CIDR blocks that are restricted from being used in IP Block creation. Supports both IPv4 and IPv6 CIDR notation (e.g., \"192.168.0.0/24\", \"2001:db8::/32\"). At max 10 restricted CIDRs per resource. format: ip-cidr-block
 	RestrictedCidrs []string
-	// Array of IP address ranges that are restricted from being used in IP Block creation. Each range is defined by a start and end IP address. Supports both IPv4 and IPv6 addresses. This property is mutually exclusive with restricted_cidrs. At max 10 restricted ranges per resource.
+	// Array of IP address ranges that are restricted from being used in IP Block creation. Each range is defined by a start and end IP address. Supports both IPv4 and IPv6 addresses. At max 10 restricted ranges per resource.
 	RestrictedRanges []IpPoolRange
 	// Possible values are:
 	//
@@ -92726,6 +92877,8 @@ type PolicyPoolUsage struct {
 	AvailableIps *int64
 	// Total number of requested IP allocations in a IpAddressPool format: int64
 	RequestedIpAllocations *int64
+	// Total number of IPs in the pool that are reserved and not available for workload allocation. These are reserved as part of dynamic/static ip-reservations.
+	ReservedIps *string
 	// Total number of IPs in a IpAddressPool format: int64
 	TotalIps *int64
 }
@@ -94700,6 +94853,8 @@ type PolicyTraceflowObservationDroppedLogical struct {
 	// The path of the component that dropped the traceflow packet
 	ComponentPath         *string
 	DstConnectivityPolicy *PolicyTraceflowConnectivityPolicyInfo
+	// Policy path of the IDS/IPS rule when idps_rule_id can be resolved to an intent object.
+	IdpsRulePath *string
 	// Path of interface
 	InterfacePath *string
 	// The path of the jump-to rule that was applied to the traceflow packet
@@ -95158,6 +95313,8 @@ type PolicyTraceflowObservationForwardedLogical struct {
 	// The path of the destination component to which the traceflow packet was forwarded
 	DstComponentPath      *string
 	DstConnectivityPolicy *PolicyTraceflowConnectivityPolicyInfo
+	// Policy path of the IDS/IPS rule when idps_rule_id can be resolved to an intent object.
+	IdpsRulePath *string
 	// Path of interface
 	InterfacePath *string
 	IpsecVpnPath  *PolicyTraceflowObservationIpsecVpn
@@ -98840,11 +98997,25 @@ type ProjectIpAddressAllocation struct {
 	Overridden *bool
 	// The customer needs to pass allocation_ips or allocation_size. If allocation_size is used, the system will allocate IP addresses from unused IP addresses. Range or comma separated is not supported in Project IP allocation. format: address-or-block-or-range
 	AllocationIps *string
-	// The system will allocate IP addresses from unused IP addresses based on allocation size. format: int32
+	// The system will allocate IPv4 addresses from unused IP addresses based on allocation size. format: int32
 	AllocationSize *int64
+	// Hostname used when auto-creating DNS records for IPs allocated from this allocation when the parent IP block is bound to a DnsAutoRecordConfig. If absent or empty, the VM display name is used as a fallback.
+	DnsHostname *string
+	// Possible values are:
+	//
+	// * ProjectIpAddressAllocation#ProjectIpAddressAllocation_IP_ADDRESS_TYPE_IPV4
+	// * ProjectIpAddressAllocation#ProjectIpAddressAllocation_IP_ADDRESS_TYPE_IPV6
+	//
+	//  This defines the type of IP address allocation. In case of IPv4, external blocks from the Project's external_ipv4_blocks will be used. In case of IPv6, blocks from the Project's ipv6_blocks will be used.
+	IpAddressType *string
 	// External IP block path for project IP allocation. Only IP address block of 'External' visibility type is supported.
 	IpBlock *string
+	// Applicable only when ip_address_type is IPV6. Controls the prefix length of the allocated IPv6 subnet. Valid range is /64 to /128. When omitted the system defaults to /64. format: int32
+	Ipv6AllocationPrefixLength *int64
 }
+
+const ProjectIpAddressAllocation_IP_ADDRESS_TYPE_IPV4 = "IPV4"
+const ProjectIpAddressAllocation_IP_ADDRESS_TYPE_IPV6 = "IPV6"
 
 func (s *ProjectIpAddressAllocation) GetType__() vapiBindings_.BindingType {
 	return ProjectIpAddressAllocationBindingType()
@@ -111543,6 +111714,8 @@ type ShaEdgeVodap20secMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -111595,6 +111768,8 @@ type ShaEdgeVodap5minMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -111647,6 +111822,8 @@ type ShaEdgeVodapAdvancedMetricsMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -111699,6 +111876,8 @@ type ShaEsxDatapathMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -111751,6 +111930,8 @@ type ShaEsxHealthMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -111803,6 +111984,8 @@ type ShaEsxObsrvAlarmsMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -111931,6 +112114,8 @@ type ShaEsxObsrvSegmentStatsFileDumpMonitorConfig struct {
 	SegmentList *string
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -111983,6 +112168,8 @@ type ShaEsxObsrvStatsManagementConfig struct {
 	EnableEsxDatapathPerSegmentStats *bool
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -112035,6 +112222,8 @@ type ShaEsxObsrvStatsMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -112091,6 +112280,8 @@ type ShaEsxObsrvTnStatsFileDumpMonitorConfig struct {
 	FileDumpBackupCountDpTnStats *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -112145,6 +112336,8 @@ type ShaEsxResourceMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -112197,6 +112390,8 @@ type ShaEsxTnMetricsMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -112249,6 +112444,8 @@ type ShaEsxTnPnicMetricsMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -112301,6 +112498,8 @@ type ShaEsxTnTopologyMetricsMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -112353,6 +112552,8 @@ type ShaEsxTnVmknicMetricsMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -112405,6 +112606,8 @@ type ShaEsxTnVnicMetricsMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -112457,6 +112660,8 @@ type ShaHardwareUsageMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -112497,6 +112702,29 @@ func (s *ShaHardwareUsageMonitorConfig) GetDataValue__() (vapiData_.DataValue, [
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for ShaHardwareUsageMonitorConfig._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// The metric sampling configuration for a category.
+type ShaMetricCategoryConfig struct {
+	// Flag to show whether this metrics of current category are enabled.
+	Enable *bool
+	// SHA metric category ID
+	Id *string
+}
+
+func (s *ShaMetricCategoryConfig) GetType__() vapiBindings_.BindingType {
+	return ShaMetricCategoryConfigBindingType()
+}
+
+func (s *ShaMetricCategoryConfig) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ShaMetricCategoryConfig._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -112763,6 +112991,8 @@ func (s *ShaMonitor) GetDataValue__() (vapiData_.DataValue, []error) {
 type ShaMonitorConfig struct {
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -114131,6 +114361,8 @@ type ShaUaMetricMonitorConfig struct {
 	CheckInterval *int64
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -114181,6 +114413,8 @@ func (s *ShaUaMetricMonitorConfig) GetDataValue__() (vapiData_.DataValue, []erro
 type ShaVodapAlarmMonitorConfig struct {
 	// Flag to enable/disable this monitor
 	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
 	// Possible values are:
 	//
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
@@ -134498,6 +134732,8 @@ type VpcIpAddressAllocation struct {
 	AllocationIps *string
 	// The system will allocate IP addresses from unused IP addresses based on allocation size. format: int32
 	AllocationSize *int64
+	// Hostname used when auto-creating DNS records for IPs allocated from this allocation when the parent IP block is bound to a DnsAutoRecordConfig. If absent or empty, the VM display name is used as a fallback.
+	DnsHostname *string
 	// Possible values are:
 	//
 	// * VpcIpAddressAllocation#VpcIpAddressAllocation_IP_ADDRESS_BLOCK_VISIBILITY_EXTERNAL
@@ -134761,13 +134997,13 @@ func (s *VpcProfileDhcpV6Config) GetDataValue__() (vapiData_.DataValue, []error)
 	return dataVal, nil
 }
 
-// DNS binding configuration sub-object for VpcServiceProfile. Binds a VPC to the project's authoritative DNS service by specifying IPv4 and/or IPv6 resolver IPs that VPC workloads use for DNS resolution, with optional proxy functionality. Supports dual-stack DNS resolution.
+// DNS binding configuration sub-object for VpcServiceProfile. Specifies the IPv4 and/or IPv6 resolver IPs that VPC workloads use for DNS resolution, with optional proxy functionality. Supports dual-stack DNS resolution.
 type VpcProfileDnsConfig struct {
 	// Enable proxy functionality for DNS requests to the DNS service. When enabled, DNS requests are proxied through the DNS service for enhanced functionality.
 	EnableProxy *bool
-	// IPv4 address of the authoritative DNS service listener that VPC workloads use for DNS resolution. Must be one of the IPv4 IPs allocated on the project's DnsService (i.e. an IPv4 IP from one of the allocated_listener_ips allocations). Optional, but at least one of ipv4_resolver_ip or ipv6_resolver_ip must be provided when dns_config is set.
+	// IPv4 address of the DNS service listener that VPC workloads use for DNS resolution.
 	Ipv4ResolverIp *string
-	// IPv6 address of the authoritative DNS service listener that VPC workloads use for DNS resolution. Must be one of the IPv6 IPs allocated on the project's DnsService (i.e. an IPv6 IP from one of the allocated_listener_ips allocations). Optional, but at least one of ipv4_resolver_ip or ipv6_resolver_ip must be provided when dns_config is set.
+	// IPv6 address of the DNS service listener that VPC workloads use for DNS resolution.
 	Ipv6ResolverIp *string
 }
 
@@ -136068,7 +136304,9 @@ type VpcSubnetPort struct {
 	// This field will refer to the source site on which the segment port is discovered. This field is populated by GM, when it receives corresponding notification from LM.
 	SourceSiteId *string
 	// This is an experimental field. The TOFU workflow will be triggered upon modification of this value to a different non-zero positive value. format: int64
-	TofuVersion            *int64
+	TofuVersion *int64
+	// Hostname used when auto-creating DNS records for the port's IP when the IP is allocated from a block bound to a DnsAutoRecordConfig. If absent or empty, the VM display name is used as a fallback.
+	DnsHostname            *string
 	ExternalAddressBinding *ExternalAddressBinding
 	// Policy path of the PortConfig object associated with this subnet port.
 	PortConfigPath *string
@@ -136358,7 +136596,9 @@ type VpcSubnetStatus struct {
 	StaticIpPoolPath *string
 	// Static IP address ranges used for IP allocation.
 	StaticIpPoolRange *string
-	VlanExtension     *VpcSubnetVlanExtensionStatus
+	// Specifies IP addresses or IP ranges in the subnet CIDR that are unmanaged (not allocated by any IP pool, DHCP range, DHCP reserved ranges, or system-reserved addresses like gateway, network, DHCP server, or broadcast).
+	UnmanagedIps  *string
+	VlanExtension *VpcSubnetVlanExtensionStatus
 }
 
 const VpcSubnetStatus_IP_ADDRESS_TYPE_IPV4 = "IPV4"
@@ -140335,6 +140575,10 @@ func BackupOverviewBindingType() vapiBindings_.BindingType {
 	fieldNameMap["backup_operation_history"] = "BackupOperationHistory"
 	fields["current_backup_operation_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(CurrentBackupOperationStatusBindingType))
 	fieldNameMap["current_backup_operation_status"] = "CurrentBackupOperationStatus"
+	fields["managed_by_fleet"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["managed_by_fleet"] = "ManagedByFleet"
+	fields["nsx_configuration"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["nsx_configuration"] = "NsxConfiguration"
 	fields["restore_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ClusterRestoreStatusBindingType))
 	fieldNameMap["restore_status"] = "RestoreStatus"
 	var validators = []vapiBindings_.Validator{}
@@ -147958,6 +148202,53 @@ func ChildIpAddressPoolSubnetBindingType() vapiBindings_.BindingType {
 	fieldNameMap["request_parameter"] = "RequestParameter"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.child_ip_address_pool_subnet", fields, reflect.TypeOf(ChildIpAddressPoolSubnet{}), fieldNameMap, validators)
+}
+
+func ChildIpBlockRestrictedIpsBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["IpBlockRestrictedIps"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(IpBlockRestrictedIpsBindingType))
+	fieldNameMap["IpBlockRestrictedIps"] = "IpBlockRestrictedIps"
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewStringType()
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["mark_for_override"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["mark_for_override"] = "MarkForOverride"
+	fields["marked_for_convert"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["marked_for_convert"] = "MarkedForConvert"
+	fields["marked_for_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["request_parameter"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(PolicyRequestParameterBindingType)}))
+	fieldNameMap["request_parameter"] = "RequestParameter"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.child_ip_block_restricted_ips", fields, reflect.TypeOf(ChildIpBlockRestrictedIps{}), fieldNameMap, validators)
 }
 
 func ChildIpv6DadProfileBindingType() vapiBindings_.BindingType {
@@ -162450,12 +162741,14 @@ func DnsAutoRecordConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
 	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["overridden"] = "Overridden"
+	fields["a_record_zone_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["a_record_zone_path"] = "ARecordZonePath"
 	fields["ip_block_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["ip_block_path"] = "IpBlockPath"
+	fields["ptr_record_zone_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["ptr_record_zone_path"] = "PtrRecordZonePath"
 	fields["ttl"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["ttl"] = "Ttl"
-	fields["zone_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["zone_path"] = "ZonePath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.dns_auto_record_config", fields, reflect.TypeOf(DnsAutoRecordConfig{}), fieldNameMap, validators)
 }
@@ -162696,6 +162989,8 @@ func DnsRuleBindingType() vapiBindings_.BindingType {
 	fieldNameMap["action_type"] = "ActionType"
 	fields["domain_patterns"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["domain_patterns"] = "DomainPatterns"
+	fields["shared_zone_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["shared_zone_path"] = "SharedZonePath"
 	fields["upstream_servers"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["upstream_servers"] = "UpstreamServers"
 	var validators = []vapiBindings_.Validator{}
@@ -162967,6 +163262,8 @@ func DnsServiceForwarderConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["cache_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["cache_size"] = "CacheSize"
+	fields["shared_zone_forwarding_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["shared_zone_forwarding_mode"] = "SharedZoneForwardingMode"
 	fields["upstream_servers"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["upstream_servers"] = "UpstreamServers"
 	var validators = []vapiBindings_.Validator{}
@@ -163053,8 +163350,8 @@ func DnsZoneBindingType() vapiBindings_.BindingType {
 	fieldNameMap["overridden"] = "Overridden"
 	fields["dns_domain_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["dns_domain_name"] = "DnsDomainName"
-	fields["scope"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["scope"] = "Scope"
+	fields["resolution_scope"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["resolution_scope"] = "ResolutionScope"
 	fields["soa"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(DnsZoneSoaBindingType))
 	fieldNameMap["soa"] = "Soa"
 	fields["ttl"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -165328,6 +165625,45 @@ func FastpathBindingType() vapiBindings_.BindingType {
 	fieldNameMap["tx_drops_uplink"] = "TxDropsUplink"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.fastpath", fields, reflect.TypeOf(Fastpath{}), fieldNameMap, validators)
+}
+
+func FeatureOptInBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["host_tn_min_os_version"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["host_tn_min_os_version"] = "HostTnMinOsVersion"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.feature_opt_in", fields, reflect.TypeOf(FeatureOptIn{}), fieldNameMap, validators)
 }
 
 func FeaturePermissionBindingType() vapiBindings_.BindingType {
@@ -177090,6 +177426,8 @@ func IpAddressBlockVPCSubnetsBindingType() vapiBindings_.BindingType {
 	fieldNameMap["policy_path"] = "PolicyPath"
 	fields["size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["size"] = "Size"
+	fields["subnet_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["subnet_size"] = "SubnetSize"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ip_address_block_VPC_subnets", fields, reflect.TypeOf(IpAddressBlockVPCSubnets{}), fieldNameMap, validators)
 }
@@ -196595,6 +196933,8 @@ func PolicyPoolUsageBindingType() vapiBindings_.BindingType {
 	fieldNameMap["available_ips"] = "AvailableIps"
 	fields["requested_ip_allocations"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["requested_ip_allocations"] = "RequestedIpAllocations"
+	fields["reserved_ips"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["reserved_ips"] = "ReservedIps"
 	fields["total_ips"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["total_ips"] = "TotalIps"
 	var validators = []vapiBindings_.Validator{}
@@ -197716,6 +198056,8 @@ func PolicyTraceflowObservationDroppedLogicalBindingType() vapiBindings_.Binding
 	fieldNameMap["component_path"] = "ComponentPath"
 	fields["dst_connectivity_policy"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(PolicyTraceflowConnectivityPolicyInfoBindingType))
 	fieldNameMap["dst_connectivity_policy"] = "DstConnectivityPolicy"
+	fields["idps_rule_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["idps_rule_path"] = "IdpsRulePath"
 	fields["interface_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["interface_path"] = "InterfacePath"
 	fields["jumpto_rule_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -197860,6 +198202,8 @@ func PolicyTraceflowObservationForwardedLogicalBindingType() vapiBindings_.Bindi
 	fieldNameMap["dst_component_path"] = "DstComponentPath"
 	fields["dst_connectivity_policy"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(PolicyTraceflowConnectivityPolicyInfoBindingType))
 	fieldNameMap["dst_connectivity_policy"] = "DstConnectivityPolicy"
+	fields["idps_rule_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["idps_rule_path"] = "IdpsRulePath"
 	fields["interface_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["interface_path"] = "InterfacePath"
 	fields["ipsec_vpn_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(PolicyTraceflowObservationIpsecVpnBindingType))
@@ -200137,8 +200481,14 @@ func ProjectIpAddressAllocationBindingType() vapiBindings_.BindingType {
 	fieldNameMap["allocation_ips"] = "AllocationIps"
 	fields["allocation_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["allocation_size"] = "AllocationSize"
+	fields["dns_hostname"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["dns_hostname"] = "DnsHostname"
+	fields["ip_address_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["ip_address_type"] = "IpAddressType"
 	fields["ip_block"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["ip_block"] = "IpBlock"
+	fields["ipv6_allocation_prefix_length"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["ipv6_allocation_prefix_length"] = "Ipv6AllocationPrefixLength"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.project_ip_address_allocation", fields, reflect.TypeOf(ProjectIpAddressAllocation{}), fieldNameMap, validators)
 }
@@ -208535,6 +208885,8 @@ func ShaEdgeVodap20secMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208548,6 +208900,8 @@ func ShaEdgeVodap5minMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208561,6 +208915,8 @@ func ShaEdgeVodapAdvancedMetricsMonitorConfigBindingType() vapiBindings_.Binding
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208574,6 +208930,8 @@ func ShaEsxDatapathMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208587,6 +208945,8 @@ func ShaEsxHealthMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208600,6 +208960,8 @@ func ShaEsxObsrvAlarmsMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208645,6 +209007,8 @@ func ShaEsxObsrvSegmentStatsFileDumpMonitorConfigBindingType() vapiBindings_.Bin
 	fieldNameMap["segment_list"] = "SegmentList"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208658,6 +209022,8 @@ func ShaEsxObsrvStatsManagementConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["enable_esx_datapath_per_segment_stats"] = "EnableEsxDatapathPerSegmentStats"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208671,6 +209037,8 @@ func ShaEsxObsrvStatsMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208688,6 +209056,8 @@ func ShaEsxObsrvTnStatsFileDumpMonitorConfigBindingType() vapiBindings_.BindingT
 	fieldNameMap["file_dump_backup_count_dp_tn_stats"] = "FileDumpBackupCountDpTnStats"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208703,6 +209073,8 @@ func ShaEsxResourceMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208716,6 +209088,8 @@ func ShaEsxTnMetricsMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208729,6 +209103,8 @@ func ShaEsxTnPnicMetricsMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208742,6 +209118,8 @@ func ShaEsxTnTopologyMetricsMonitorConfigBindingType() vapiBindings_.BindingType
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208755,6 +209133,8 @@ func ShaEsxTnVmknicMetricsMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208768,6 +209148,8 @@ func ShaEsxTnVnicMetricsMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -208781,10 +209163,23 @@ func ShaHardwareUsageMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.sha_hardware_usage_monitor_config", fields, reflect.TypeOf(ShaHardwareUsageMonitorConfig{}), fieldNameMap, validators)
+}
+
+func ShaMetricCategoryConfigBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["enable"] = "Enable"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.sha_metric_category_config", fields, reflect.TypeOf(ShaMetricCategoryConfig{}), fieldNameMap, validators)
 }
 
 func ShaMetricExporterMonitorBindingType() vapiBindings_.BindingType {
@@ -208930,6 +209325,8 @@ func ShaMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -209750,6 +210147,8 @@ func ShaUaMetricMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["check_interval"] = "CheckInterval"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -209761,6 +210160,8 @@ func ShaVodapAlarmMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
 	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
@@ -221158,6 +221559,8 @@ func VpcIpAddressAllocationBindingType() vapiBindings_.BindingType {
 	fieldNameMap["allocation_ips"] = "AllocationIps"
 	fields["allocation_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["allocation_size"] = "AllocationSize"
+	fields["dns_hostname"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["dns_hostname"] = "DnsHostname"
 	fields["ip_address_block_visibility"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["ip_address_block_visibility"] = "IpAddressBlockVisibility"
 	fields["ip_address_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -222043,6 +222446,8 @@ func VpcSubnetPortBindingType() vapiBindings_.BindingType {
 	fieldNameMap["source_site_id"] = "SourceSiteId"
 	fields["tofu_version"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["tofu_version"] = "TofuVersion"
+	fields["dns_hostname"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["dns_hostname"] = "DnsHostname"
 	fields["external_address_binding"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ExternalAddressBindingBindingType))
 	fieldNameMap["external_address_binding"] = "ExternalAddressBinding"
 	fields["port_config_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -222262,6 +222667,8 @@ func VpcSubnetStatusBindingType() vapiBindings_.BindingType {
 	fieldNameMap["static_ip_pool_path"] = "StaticIpPoolPath"
 	fields["static_ip_pool_range"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["static_ip_pool_range"] = "StaticIpPoolRange"
+	fields["unmanaged_ips"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["unmanaged_ips"] = "UnmanagedIps"
 	fields["vlan_extension"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(VpcSubnetVlanExtensionStatusBindingType))
 	fieldNameMap["vlan_extension"] = "VlanExtension"
 	var validators = []vapiBindings_.Validator{}

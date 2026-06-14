@@ -20,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SyncClient interface {
 
-	// Synchronize VCF licenses from all registered vCenters and update licenses in VCF Networking. This API will not return synchronized VCF licenses and just update them in VCF Networking.
+	// Synchronize VCF licenses from all registered vCenters and update licenses in Network Manager. This API will not return synchronized VCF licenses and just update them in Network Manager.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout

@@ -89,7 +89,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, dnsServiceIdParam string, ruleIdParam string, dnsRuleParam nsx_policyModel.DnsRule) error
 
-	// Create or update a DnsRule under the specified DnsService. Rules are evaluated using longest-prefix domain matching. For FORWARD rules, upstream_servers is required and must be non-empty (max 3). For UPDATE_MEMBERSHIP rules, resolved IPs are added to the associated FQDN Group.
+	// Create or update a DnsRule under the specified DnsService. Rules are evaluated using longest-prefix domain matching. For FORWARD rules, exactly one of shared_zone_path or upstream_servers must be set (mutually exclusive); upstream_servers is limited to a maximum of 3 entries. When shared_zone_path is set on a FORWARD rule, domain_patterns may be omitted because matching domains are derived from the referenced shared zone. For UPDATE_MEMBERSHIP rules, resolved IPs for matching domains are added to the associated FQDN Group.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
