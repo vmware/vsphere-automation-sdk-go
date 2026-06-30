@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DnsSecurityProfileBindingMapsClient interface {
 
-	// API will delete DNS security profile binding map
+	// Deletes the specified DNS security profile binding map.
 	//
 	// @param domainIdParam Domain ID (required)
 	// @param groupIdParam Group ID (required)
@@ -35,7 +35,7 @@ type DnsSecurityProfileBindingMapsClient interface {
 	// @throws NotFound  Not Found
 	Delete(domainIdParam string, groupIdParam string, dnsSecurityProfileBindingMapIdParam string) error
 
-	// API will get DNS security profile binding map
+	// Returns the specified DNS security profile binding map.
 	//
 	// @param domainIdParam Domain ID (required)
 	// @param groupIdParam Group ID (required)
@@ -50,7 +50,7 @@ type DnsSecurityProfileBindingMapsClient interface {
 	// @throws NotFound  Not Found
 	Get(domainIdParam string, groupIdParam string, dnsSecurityProfileBindingMapIdParam string) (nsx_policyModel.DnsSecurityProfileBindingMap, error)
 
-	// API will get DNS security profile binding map
+	// Returns a paginated list of DNS security profile binding maps for the group.
 	//
 	// @param domainIdParam (required)
 	// @param groupIdParam (required)
@@ -70,7 +70,7 @@ type DnsSecurityProfileBindingMapsClient interface {
 	// @throws NotFound  Not Found
 	List(domainIdParam string, groupIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.DnsSecurityProfileBindingMapListResult, error)
 
-	// API will create or update DNS security profile binding map
+	// Creates or updates the DNS security profile binding map for the specified group.
 	//
 	// @param domainIdParam Domain ID (required)
 	// @param groupIdParam Group ID (required)
@@ -85,7 +85,7 @@ type DnsSecurityProfileBindingMapsClient interface {
 	// @throws NotFound  Not Found
 	Patch(domainIdParam string, groupIdParam string, dnsSecurityProfileBindingMapIdParam string, dnsSecurityProfileBindingMapParam nsx_policyModel.DnsSecurityProfileBindingMap) error
 
-	// API will update DNS security profile binding map
+	// Fully replaces the DNS security profile binding map. Omitted fields are reset to their defaults.
 	//
 	// @param domainIdParam Domain ID (required)
 	// @param groupIdParam Group ID (required)

@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type IntrusionServiceGatewayPoliciesClient interface {
 
-	// Delete IDS GatewayPolicy
+	// Deletes the specified Gateway IDS policy.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -90,7 +90,7 @@ type IntrusionServiceGatewayPoliciesClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, domainIdParam string, policyIdParam string, idsGatewayPolicyParam nsx_policyModel.IdsGatewayPolicy) error
 
-	// This is used to set a precedence of a IDS gateway policy w.r.t others.
+	// Re-orders a Gateway Intrusion Detection System (IDS) policy relative to others.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -109,7 +109,7 @@ type IntrusionServiceGatewayPoliciesClient interface {
 	// @throws NotFound  Not Found
 	Revise(orgIdParam string, projectIdParam string, domainIdParam string, policyIdParam string, idsGatewayPolicyParam nsx_policyModel.IdsGatewayPolicy, anchorPathParam *string, operationParam *string) (nsx_policyModel.IdsGatewayPolicy, error)
 
-	// Create or update a gateway intrusion detection policy for a domain.
+	// Create or update a gateway intrusion detection policy for a domain. Rules are evaluated in the order specified; rules not present in the request body are removed.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

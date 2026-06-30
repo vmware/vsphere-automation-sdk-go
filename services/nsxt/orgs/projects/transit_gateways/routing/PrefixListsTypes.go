@@ -4,12 +4,12 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: RouteMaps.
+// Data type definitions file for service: PrefixLists.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package transit_gateways
+package routing
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -19,26 +19,26 @@ import (
 	"reflect"
 )
 
-func routeMapsDeleteInputType() vapiBindings_.StructType {
+func prefixListsDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["route_map_id"] = vapiBindings_.NewStringType()
+	fields["prefix_list_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["route_map_id"] = "RouteMapId"
+	fieldNameMap["prefix_list_id"] = "PrefixListId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func RouteMapsDeleteOutputType() vapiBindings_.BindingType {
+func PrefixListsDeleteOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewVoidType()
 }
 
-func routeMapsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+func prefixListsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -50,23 +50,23 @@ func routeMapsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["route_map_id"] = vapiBindings_.NewStringType()
+	fields["prefix_list_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["route_map_id"] = "RouteMapId"
+	fieldNameMap["prefix_list_id"] = "PrefixListId"
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["route_map_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["prefix_list_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routeMapId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["prefixListId"] = vapiBindings_.NewStringType()
 	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["prefix_list_id"] = "prefixListId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
-	pathParams["route_map_id"] = "routeMapId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -81,7 +81,7 @@ func routeMapsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"DELETE",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/route-maps/{routeMapId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/routing/prefix-lists/{prefixListId}",
 		"",
 		resultHeaders,
 		204,
@@ -90,26 +90,26 @@ func routeMapsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func routeMapsGetInputType() vapiBindings_.StructType {
+func prefixListsGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["route_map_id"] = vapiBindings_.NewStringType()
+	fields["prefix_list_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["route_map_id"] = "RouteMapId"
+	fieldNameMap["prefix_list_id"] = "PrefixListId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func RouteMapsGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRouteMapBindingType)
+func PrefixListsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.PrefixListBindingType)
 }
 
-func routeMapsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func prefixListsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -121,23 +121,23 @@ func routeMapsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["route_map_id"] = vapiBindings_.NewStringType()
+	fields["prefix_list_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["route_map_id"] = "RouteMapId"
+	fieldNameMap["prefix_list_id"] = "PrefixListId"
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["route_map_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["prefix_list_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routeMapId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["prefixListId"] = vapiBindings_.NewStringType()
 	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["prefix_list_id"] = "prefixListId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
-	pathParams["route_map_id"] = "routeMapId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -152,7 +152,7 @@ func routeMapsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/route-maps/{routeMapId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/routing/prefix-lists/{prefixListId}",
 		"",
 		resultHeaders,
 		200,
@@ -161,7 +161,7 @@ func routeMapsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func routeMapsListInputType() vapiBindings_.StructType {
+func prefixListsListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
@@ -186,11 +186,11 @@ func routeMapsListInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func RouteMapsListOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.TgwRouteMapListResultBindingType)
+func PrefixListsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.TgwPrefixListResultBindingType)
 }
 
-func routeMapsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+func prefixListsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -252,7 +252,7 @@ func routeMapsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/route-maps",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/routing/prefix-lists",
 		"",
 		resultHeaders,
 		200,
@@ -261,28 +261,28 @@ func routeMapsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func routeMapsPatchInputType() vapiBindings_.StructType {
+func prefixListsPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["route_map_id"] = vapiBindings_.NewStringType()
-	fields["transit_gateway_route_map"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRouteMapBindingType)
+	fields["prefix_list_id"] = vapiBindings_.NewStringType()
+	fields["prefix_list"] = vapiBindings_.NewReferenceType(nsx_policyModel.PrefixListBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["route_map_id"] = "RouteMapId"
-	fieldNameMap["transit_gateway_route_map"] = "TransitGatewayRouteMap"
+	fieldNameMap["prefix_list_id"] = "PrefixListId"
+	fieldNameMap["prefix_list"] = "PrefixList"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func RouteMapsPatchOutputType() vapiBindings_.BindingType {
+func PrefixListsPatchOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewVoidType()
 }
 
-func routeMapsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+func prefixListsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -294,26 +294,26 @@ func routeMapsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["route_map_id"] = vapiBindings_.NewStringType()
-	fields["transit_gateway_route_map"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRouteMapBindingType)
+	fields["prefix_list_id"] = vapiBindings_.NewStringType()
+	fields["prefix_list"] = vapiBindings_.NewReferenceType(nsx_policyModel.PrefixListBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["route_map_id"] = "RouteMapId"
-	fieldNameMap["transit_gateway_route_map"] = "TransitGatewayRouteMap"
+	fieldNameMap["prefix_list_id"] = "PrefixListId"
+	fieldNameMap["prefix_list"] = "PrefixList"
+	paramsTypeMap["prefix_list"] = vapiBindings_.NewReferenceType(nsx_policyModel.PrefixListBindingType)
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["transit_gateway_route_map"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRouteMapBindingType)
-	paramsTypeMap["route_map_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["prefix_list_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routeMapId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["prefixListId"] = vapiBindings_.NewStringType()
 	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["prefix_list_id"] = "prefixListId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
-	pathParams["route_map_id"] = "routeMapId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -326,9 +326,9 @@ func routeMapsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"transit_gateway_route_map",
+		"prefix_list",
 		"PATCH",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/route-maps/{routeMapId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/routing/prefix-lists/{prefixListId}",
 		"application/json",
 		resultHeaders,
 		204,
@@ -337,28 +337,28 @@ func routeMapsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func routeMapsUpdateInputType() vapiBindings_.StructType {
+func prefixListsUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["route_map_id"] = vapiBindings_.NewStringType()
-	fields["transit_gateway_route_map"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRouteMapBindingType)
+	fields["prefix_list_id"] = vapiBindings_.NewStringType()
+	fields["prefix_list"] = vapiBindings_.NewReferenceType(nsx_policyModel.PrefixListBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["route_map_id"] = "RouteMapId"
-	fieldNameMap["transit_gateway_route_map"] = "TransitGatewayRouteMap"
+	fieldNameMap["prefix_list_id"] = "PrefixListId"
+	fieldNameMap["prefix_list"] = "PrefixList"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func RouteMapsUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRouteMapBindingType)
+func PrefixListsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.PrefixListBindingType)
 }
 
-func routeMapsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+func prefixListsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -370,26 +370,26 @@ func routeMapsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["route_map_id"] = vapiBindings_.NewStringType()
-	fields["transit_gateway_route_map"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRouteMapBindingType)
+	fields["prefix_list_id"] = vapiBindings_.NewStringType()
+	fields["prefix_list"] = vapiBindings_.NewReferenceType(nsx_policyModel.PrefixListBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["route_map_id"] = "RouteMapId"
-	fieldNameMap["transit_gateway_route_map"] = "TransitGatewayRouteMap"
+	fieldNameMap["prefix_list_id"] = "PrefixListId"
+	fieldNameMap["prefix_list"] = "PrefixList"
+	paramsTypeMap["prefix_list"] = vapiBindings_.NewReferenceType(nsx_policyModel.PrefixListBindingType)
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["transit_gateway_route_map"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRouteMapBindingType)
-	paramsTypeMap["route_map_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["prefix_list_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["routeMapId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["prefixListId"] = vapiBindings_.NewStringType()
 	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["prefix_list_id"] = "prefixListId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
-	pathParams["route_map_id"] = "routeMapId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -402,9 +402,9 @@ func routeMapsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"transit_gateway_route_map",
+		"prefix_list",
 		"PUT",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/route-maps/{routeMapId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/routing/prefix-lists/{prefixListId}",
 		"application/json",
 		resultHeaders,
 		200,

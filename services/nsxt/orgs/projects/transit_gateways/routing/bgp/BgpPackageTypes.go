@@ -4,7 +4,7 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for package: com.vmware.nsx_policy.orgs.projects.transit_gateways.bgp.
+// Data type definitions file for package: com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.bgp.
 // Includes binding types of a top level structures and enumerations.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.

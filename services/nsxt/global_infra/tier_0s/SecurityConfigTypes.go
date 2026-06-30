@@ -20,6 +20,9 @@ import (
 )
 
 // Possible value for ``feature`` of method SecurityConfig#get.
+const SecurityConfig_GET_FEATURE_GFW = "GFW"
+
+// Possible value for ``feature`` of method SecurityConfig#get.
 const SecurityConfig_GET_FEATURE_IDFW = "IDFW"
 
 // Possible value for ``feature`` of method SecurityConfig#get.
@@ -29,10 +32,10 @@ const SecurityConfig_GET_FEATURE_IDPS = "IDPS"
 const SecurityConfig_GET_FEATURE_MALWAREPREVENTION = "MALWAREPREVENTION"
 
 // Possible value for ``feature`` of method SecurityConfig#get.
-const SecurityConfig_GET_FEATURE_GFW_MULTICAST = "GFW_MULTICAST"
+const SecurityConfig_GET_FEATURE_GEOIP_MONITORING = "GEOIP_MONITORING"
 
 // Possible value for ``feature`` of method SecurityConfig#get.
-const SecurityConfig_GET_FEATURE_GEOIP_MONITORING = "GEOIP_MONITORING"
+const SecurityConfig_GET_FEATURE_GFW_MULTICAST = "GFW_MULTICAST"
 
 // Possible value for ``feature`` of method SecurityConfig#get.
 const SecurityConfig_GET_FEATURE_TLS = "TLS"

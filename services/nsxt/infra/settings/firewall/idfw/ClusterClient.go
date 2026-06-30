@@ -46,7 +46,7 @@ type ClusterClient interface {
 	// @throws NotFound  Not Found
 	Get(clusterIdParam string) (nsx_policyModel.ComputeClusterIdfwConfiguration, error)
 
-	// API will list all compute cluster wise identity firewall configuration
+	// Returns a paginated list of Identity Firewall (IDFW) configurations for all compute clusters.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
@@ -76,7 +76,7 @@ type ClusterClient interface {
 	// @throws NotFound  Not Found
 	Patch(clusterIdParam string, computeClusterIdfwConfigurationParam nsx_policyModel.ComputeClusterIdfwConfiguration) error
 
-	// Update the compute cluster idfw configuration
+	// Updates the compute cluster IDFW configuration.
 	//
 	// @param clusterIdParam Cluster ID (required)
 	// @param computeClusterIdfwConfigurationParam (required)

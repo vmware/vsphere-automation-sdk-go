@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RulesClient interface {
 
-	// Delete IDS Gateway rule
+	// Deletes the specified IDS rule from the gateway intrusion service policy.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -54,7 +54,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, domainIdParam string, policyIdParam string, ruleIdParam string) (nsx_policyModel.IdsRule, error)
 
-	// List IDS Gateway rules
+	// Returns all IDS rules within the specified Gateway IDS policy, ordered by sequence number.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -93,7 +93,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, domainIdParam string, policyIdParam string, ruleIdParam string, idsRuleParam nsx_policyModel.IdsRule) error
 
-	// This is used to re-order a IDS gateway rule within a IDS gateway policy.
+	// Re-orders a Gateway IDS rule within an IDS gateway policy.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

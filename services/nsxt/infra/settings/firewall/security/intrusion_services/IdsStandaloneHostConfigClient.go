@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type IdsStandaloneHostConfigClient interface {
 
-	// Read intrusion detection system config of standalone hosts.
+	// Returns the IDS configuration for standalone hosts.
 	// @return com.vmware.nsx_policy.model.IdsStandaloneHostConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

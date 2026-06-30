@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DnsSecurityProfileBindingMapsClient interface {
 
-	// API will get DNS security profile binding map
+	// Returns the specified DNS security profile binding map.
 	//
 	// @param domainIdParam Domain ID (required)
 	// @param groupIdParam Group ID (required)
@@ -36,7 +36,7 @@ type DnsSecurityProfileBindingMapsClient interface {
 	// @throws NotFound  Not Found
 	Get(domainIdParam string, groupIdParam string, dnsSecurityProfileBindingMapIdParam string) (nsx_policyModel.DnsSecurityProfileBindingMap, error)
 
-	// API will get DNS security profile binding map
+	// Returns a paginated list of DNS security profile binding maps for the group.
 	//
 	// @param domainIdParam (required)
 	// @param groupIdParam (required)

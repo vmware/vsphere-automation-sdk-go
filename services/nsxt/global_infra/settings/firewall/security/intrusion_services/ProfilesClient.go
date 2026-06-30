@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ProfilesClient interface {
 
-	// This routine will read intrusion detection profile for provided profile id
+	// Returns the specified Intrusion Detection System (IDS) profile.
 	//
 	// @param profileIdParam Profile ID (required)
 	// @return com.vmware.nsx_policy.model.IdsProfile
@@ -34,7 +34,7 @@ type ProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(profileIdParam string) (nsx_policyModel.IdsProfile, error)
 
-	// This routine will list all IDS profiles present in system.
+	// Returns a paginated list of all Intrusion Detection System (IDS) profiles.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)

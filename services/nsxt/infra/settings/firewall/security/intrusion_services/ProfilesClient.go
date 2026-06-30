@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ProfilesClient interface {
 
-	// This routine will delete IDS profile for provided profile id
+	// Deletes the specified Intrusion Detection System (IDS) profile.
 	//
 	// @param profileIdParam Profile ID (required)
 	//
@@ -33,7 +33,7 @@ type ProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(profileIdParam string) error
 
-	// This routine will read intrusion detection profile for provided profile id
+	// Returns the specified Intrusion Detection System (IDS) profile.
 	//
 	// @param profileIdParam Profile ID (required)
 	// @return com.vmware.nsx_policy.model.IdsProfile
@@ -46,7 +46,7 @@ type ProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(profileIdParam string) (nsx_policyModel.IdsProfile, error)
 
-	// This routine will list all IDS profiles present in system.
+	// Returns a paginated list of all Intrusion Detection System (IDS) profiles.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
@@ -64,7 +64,7 @@ type ProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IdsProfileListResult, error)
 
-	// User can provide Profile Severity, Criteria and Override the Signature in the request
+	// Creates or partially updates an Intrusion Detection System (IDS) profile. Specify profile severity thresholds, match criteria, and signature overrides in the request body.
 	//
 	// @param profileIdParam Profile ID (required)
 	// @param idsProfileParam (required)
@@ -77,7 +77,7 @@ type ProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(profileIdParam string, idsProfileParam nsx_policyModel.IdsProfile) error
 
-	// This routine will create or update IDS profile. User can provide Profile Severity, Criteria and can also Override the Signature in the request
+	// Fully creates or replaces an Intrusion Detection System (IDS) profile. Specify profile severity thresholds, match criteria, and signature overrides in the request body.
 	//
 	// @param profileIdParam Profile ID (required)
 	// @param idsProfileParam (required)

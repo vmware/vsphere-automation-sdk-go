@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FirewallSessionTimerProfilesClient interface {
 
-	// API will delete Firewall Session Timer Profile
+	// Deletes the specified Firewall Session Timer Profile.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -36,7 +36,7 @@ type FirewallSessionTimerProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, firewallSessionTimerProfileIdParam string, overrideParam *bool) error
 
-	// API will get Firewall Session Timer Profile
+	// Returns the TCP, UDP, and ICMP session timeout configuration for the specified profile.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -51,7 +51,7 @@ type FirewallSessionTimerProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, firewallSessionTimerProfileIdParam string) (nsx_policyModel.PolicyFirewallSessionTimerProfile, error)
 
-	// API will list all Firewall Session Timer Profiles
+	// Returns a paginated list of all Firewall Session Timer Profiles.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -71,7 +71,7 @@ type FirewallSessionTimerProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyFirewallSessionTimerProfileListResult, error)
 
-	// API will create/update Firewall Session Timer Profile
+	// Creates or partially updates a Firewall Session Timer Profile.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -87,7 +87,7 @@ type FirewallSessionTimerProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, firewallSessionTimerProfileIdParam string, policyFirewallSessionTimerProfileParam nsx_policyModel.PolicyFirewallSessionTimerProfile, overrideParam *bool) error
 
-	// API will update Firewall Session Timer Profile
+	// Fully replaces the specified Firewall Session Timer Profile. Omitted fields are reset to defaults.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type BindingsClient interface {
 
-	// API will list all Flood Protection Profiles bindings.
+	// Returns a paginated list of all bindings for the specified Flood Protection Profile.
 	//
 	// @param floodProtectionProfileIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)

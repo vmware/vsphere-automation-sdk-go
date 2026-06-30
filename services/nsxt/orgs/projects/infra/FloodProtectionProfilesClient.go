@@ -22,7 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FloodProtectionProfilesClient interface {
 
-	// API will delete Flood Protection Profile
+	// Deletes the specified Flood Protection Profile.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -37,7 +37,7 @@ type FloodProtectionProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, floodProtectionProfileIdParam string, overrideParam *bool) error
 
-	// API will get Flood Protection Profile
+	// Returns the specified Flood Protection Profile, including its TCP, UDP, and ICMP connection limits.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -53,7 +53,7 @@ type FloodProtectionProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, floodProtectionProfileIdParam string) (*vapiData_.StructValue, error)
 
-	// API will list all Flood Protection Profiles
+	// Returns a paginated list of all Flood Protection Profiles.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -73,7 +73,7 @@ type FloodProtectionProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.FloodProtectionProfileListResult, error)
 
-	// API will create/update Flood Protection Profile
+	// Creates or partially updates a Flood Protection Profile.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -90,7 +90,7 @@ type FloodProtectionProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, floodProtectionProfileIdParam string, floodProtectionProfileParam *vapiData_.StructValue, overrideParam *bool) error
 
-	// API will update Firewall Flood Protection Profile
+	// Fully replaces the specified Flood Protection Profile. Omitted fields are reset to defaults.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

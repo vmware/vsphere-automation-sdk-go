@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatusClient interface {
 
-	// This API will list all VMs and statuses based on transport node ID of idfw enabled compute collection.
+	// Returns Identity Firewall (IDFW) status for all VMs on the specified Transport Node within an IDFW-enabled compute collection.
 	//
 	// @param transportNodeIdParam Transport node id (required)
 	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)

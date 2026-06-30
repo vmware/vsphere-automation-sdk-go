@@ -114,7 +114,7 @@ type neighborsClient struct {
 }
 
 func NewNeighborsClient(connector vapiProtocolClient_.Connector) *neighborsClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.transit_gateways.bgp.neighbors")
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.bgp.neighbors")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
@@ -153,7 +153,7 @@ func (nIface *neighborsClient) Delete(orgIdParam string, projectIdParam string, 
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.bgp.neighbors", "delete", inputDataValue, executionContext)
+	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.bgp.neighbors", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -183,7 +183,7 @@ func (nIface *neighborsClient) Get(orgIdParam string, projectIdParam string, tra
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.bgp.neighbors", "get", inputDataValue, executionContext)
+	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.bgp.neighbors", "get", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.BgpNeighborConfig
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NeighborsGetOutputType())
@@ -223,7 +223,7 @@ func (nIface *neighborsClient) List(orgIdParam string, projectIdParam string, tr
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.bgp.neighbors", "list", inputDataValue, executionContext)
+	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.bgp.neighbors", "list", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.TgwBgpNeighborConfigListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NeighborsListOutputType())
@@ -258,7 +258,7 @@ func (nIface *neighborsClient) Patch(orgIdParam string, projectIdParam string, t
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.bgp.neighbors", "patch", inputDataValue, executionContext)
+	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.bgp.neighbors", "patch", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -289,7 +289,7 @@ func (nIface *neighborsClient) Update(orgIdParam string, projectIdParam string, 
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.bgp.neighbors", "update", inputDataValue, executionContext)
+	methodResult := nIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.bgp.neighbors", "update", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.BgpNeighborConfig
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), NeighborsUpdateOutputType())

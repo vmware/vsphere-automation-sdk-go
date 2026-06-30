@@ -36,7 +36,7 @@ type RulesClient interface {
 	// @throws NotFound  Not Found
 	Get(domainIdParam string, policyIdParam string, ruleIdParam string) (nsx_policyModel.IdsRule, error)
 
-	// List IDS Gateway rules
+	// Returns all IDS rules within the specified Gateway IDS policy, ordered by sequence number.
 	//
 	// @param domainIdParam (required)
 	// @param policyIdParam (required)

@@ -40,7 +40,6 @@ type VpcSecurityConfigDefaultsClient interface {
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param vPCSecurityConfigDefaultsParam (required)
-	// @return com.vmware.nsx_policy.model.VPCSecurityConfigDefaults
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -48,7 +47,7 @@ type VpcSecurityConfigDefaultsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(orgIdParam string, projectIdParam string, vPCSecurityConfigDefaultsParam nsx_policyModel.VPCSecurityConfigDefaults) (nsx_policyModel.VPCSecurityConfigDefaults, error)
+	Patch(orgIdParam string, projectIdParam string, vPCSecurityConfigDefaultsParam nsx_policyModel.VPCSecurityConfigDefaults) error
 
 	// Performs complete replacement of the Security Configuration Defaults using HTTP PUT semantics. This is a singleton resource per project. This operation requires a full configuration representation in the request body and will replace all modifiable properties of the configuration. All required fields must be provided as omitted fields may be reset to default values.
 	//
@@ -126,7 +125,7 @@ func (vIface *vpcSecurityConfigDefaultsClient) Get(orgIdParam string, projectIdP
 	}
 }
 
-func (vIface *vpcSecurityConfigDefaultsClient) Patch(orgIdParam string, projectIdParam string, vPCSecurityConfigDefaultsParam nsx_policyModel.VPCSecurityConfigDefaults) (nsx_policyModel.VPCSecurityConfigDefaults, error) {
+func (vIface *vpcSecurityConfigDefaultsClient) Patch(orgIdParam string, projectIdParam string, vPCSecurityConfigDefaultsParam nsx_policyModel.VPCSecurityConfigDefaults) error {
 	typeConverter := vIface.connector.TypeConverter()
 	executionContext := vIface.connector.NewExecutionContext()
 	operationRestMetaData := vpcSecurityConfigDefaultsPatchRestMetadata()
@@ -139,24 +138,18 @@ func (vIface *vpcSecurityConfigDefaultsClient) Patch(orgIdParam string, projectI
 	sv.AddStructField("VPCSecurityConfigDefaults", vPCSecurityConfigDefaultsParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.VPCSecurityConfigDefaults
-		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := vIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpc_security_config_defaults", "patch", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.VPCSecurityConfigDefaults
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), VpcSecurityConfigDefaultsPatchOutputType())
-		if errorInOutput != nil {
-			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
-		}
-		return output.(nsx_policyModel.VPCSecurityConfigDefaults), nil
+		return nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), vIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
-			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
-		return emptyOutput, methodError.(error)
+		return methodError.(error)
 	}
 }
 

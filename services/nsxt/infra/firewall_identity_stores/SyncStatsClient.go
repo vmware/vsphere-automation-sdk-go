@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SyncStatsClient interface {
 
-	// Get Firewall identity store sync statistics for the given identifier
+	// Get Identity Firewall (IDFW) directory store synchronization statistics
 	//
 	// @param firewallIdentityStoreIdParam Firewall identity store identifier (required)
 	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)

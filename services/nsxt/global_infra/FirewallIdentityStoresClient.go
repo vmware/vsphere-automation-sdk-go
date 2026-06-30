@@ -20,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FirewallIdentityStoresClient interface {
 
-	// Invoke full sync or delta sync for a specific domain, with additional delay in seconds if needed. Stop sync will try to stop any pending sync if any to return to idle state.
+	// Invoke full sync, delta sync, or stop sync for a directory domain
 	//
 	//  Use the following Policy API -
 	//  POST /infra/identity-firewall-stores/action/delta-sync; POST /infra/identity-firewall-stores/action/full-sync; POST /infra/identity-firewall-stores/action/stop-sync;

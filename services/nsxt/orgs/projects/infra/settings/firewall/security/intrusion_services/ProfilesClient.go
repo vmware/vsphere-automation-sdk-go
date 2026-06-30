@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ProfilesClient interface {
 
-	// This routine will delete IDS profile for provided profile id
+	// Deletes the specified Intrusion Detection System (IDS) profile.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -35,7 +35,7 @@ type ProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(orgIdParam string, projectIdParam string, profileIdParam string) error
 
-	// This routine will read intrusion detection profile for provided profile id
+	// Returns the specified Intrusion Detection System (IDS) profile.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -50,7 +50,7 @@ type ProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(orgIdParam string, projectIdParam string, profileIdParam string) (nsx_policyModel.IdsProfile, error)
 
-	// This routine will list all IDS profiles present in system.
+	// Returns a paginated list of all Intrusion Detection System (IDS) profiles.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -70,7 +70,7 @@ type ProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IdsProfileListResult, error)
 
-	// User can provide Profile Severity, Criteria and Override the Signature in the request
+	// Creates or partially updates an Intrusion Detection System (IDS) profile. Specify profile severity thresholds, match criteria, and signature overrides in the request body.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -85,7 +85,7 @@ type ProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, profileIdParam string, idsProfileParam nsx_policyModel.IdsProfile) error
 
-	// This routine will create or update IDS profile. User can provide Profile Severity, Criteria and can also Override the Signature in the request
+	// Fully creates or replaces an Intrusion Detection System (IDS) profile. Specify profile severity thresholds, match criteria, and signature overrides in the request body.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

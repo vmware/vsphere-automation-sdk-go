@@ -22,7 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FloodProtectionProfilesClient interface {
 
-	// API will delete Flood Protection Profile
+	// Deletes the specified Flood Protection Profile.
 	//
 	// @param floodProtectionProfileIdParam Flood Protection Profile ID (required)
 	// @param overrideParam If true, the global resource can be over written locally. This means that there will be a local only resource in place of the global resource that can reflect local specific settings and values. The global object will continue to exist but will not be used for any configuration until this local object is removed. When the object is overridden the Global resource continues to exist unmodified, while the overridden object is created with all of the user specified values. The Global resource may be updated in the background, however, the overridden object may only be updated by the user. Once the user removes the overridden copy, the Global resource will then resume being used in the configuration. (optional, default to false)
@@ -35,7 +35,7 @@ type FloodProtectionProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(floodProtectionProfileIdParam string, overrideParam *bool) error
 
-	// API will get Flood Protection Profile
+	// Returns the specified Flood Protection Profile, including its TCP, UDP, and ICMP connection limits.
 	//
 	// @param floodProtectionProfileIdParam Flood Protection Profile ID (required)
 	// @return com.vmware.nsx_policy.model.FloodProtectionProfile
@@ -49,7 +49,7 @@ type FloodProtectionProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(floodProtectionProfileIdParam string) (*vapiData_.StructValue, error)
 
-	// API will list all Flood Protection Profiles
+	// Returns a paginated list of all Flood Protection Profiles.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
@@ -67,7 +67,7 @@ type FloodProtectionProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.FloodProtectionProfileListResult, error)
 
-	// API will create/update Flood Protection Profile
+	// Creates or partially updates a Flood Protection Profile.
 	//
 	// @param floodProtectionProfileIdParam Firewall Flood Protection Profile ID (required)
 	// @param floodProtectionProfileParam (required)
@@ -82,7 +82,7 @@ type FloodProtectionProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(floodProtectionProfileIdParam string, floodProtectionProfileParam *vapiData_.StructValue, overrideParam *bool) error
 
-	// API will update Firewall Flood Protection Profile
+	// Fully replaces the specified Flood Protection Profile. Omitted fields are reset to defaults.
 	//
 	// @param floodProtectionProfileIdParam Flood Protection Profile ID (required)
 	// @param floodProtectionProfileParam (required)

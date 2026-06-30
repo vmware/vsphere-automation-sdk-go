@@ -25,7 +25,7 @@ type SecurityConfigClient interface {
 	//
 	// @param tier0IdParam tier0 id (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param featureParam Feature to be activated/deactivated. IDFW - Identity Firewall IDPS - Intrusion Detection System GFW_MULTICAST - Multicast on GFW GEOIP_MONITORING - Geo IP Monitoring MALWAREPREVENTION - Malware Prevention TLS - Transport Layer Security Inspection Use any one of this to enable/disabe it. (optional)
+	// @param featureParam Feature to be activated/deactivated. GFW - Gateway Firewall IDFW - Identity Firewall IDPS - Intrusion Detection System GFW_MULTICAST - Multicast on GFW GEOIP_MONITORING - Geo IP Monitoring MALWAREPREVENTION - Malware Prevention TLS - Transport Layer Security Inspection Use any one of this to enable/disable it. (optional)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)

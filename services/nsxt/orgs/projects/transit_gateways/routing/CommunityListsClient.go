@@ -7,7 +7,7 @@
 // Interface file for service: CommunityLists
 // Used by client-side stubs.
 
-package transit_gateways
+package routing
 
 import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -114,7 +114,7 @@ type communityListsClient struct {
 }
 
 func NewCommunityListsClient(connector vapiProtocolClient_.Connector) *communityListsClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.transit_gateways.community_lists")
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.community_lists")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
@@ -153,7 +153,7 @@ func (cIface *communityListsClient) Delete(orgIdParam string, projectIdParam str
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.community_lists", "delete", inputDataValue, executionContext)
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.community_lists", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -183,7 +183,7 @@ func (cIface *communityListsClient) Get(orgIdParam string, projectIdParam string
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.community_lists", "get", inputDataValue, executionContext)
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.community_lists", "get", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.CommunityList
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), CommunityListsGetOutputType())
@@ -223,7 +223,7 @@ func (cIface *communityListsClient) List(orgIdParam string, projectIdParam strin
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.community_lists", "list", inputDataValue, executionContext)
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.community_lists", "list", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.TgwCommunityListListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), CommunityListsListOutputType())
@@ -258,7 +258,7 @@ func (cIface *communityListsClient) Patch(orgIdParam string, projectIdParam stri
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.community_lists", "patch", inputDataValue, executionContext)
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.community_lists", "patch", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -289,7 +289,7 @@ func (cIface *communityListsClient) Update(orgIdParam string, projectIdParam str
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.community_lists", "update", inputDataValue, executionContext)
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.community_lists", "update", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.CommunityList
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), CommunityListsUpdateOutputType())

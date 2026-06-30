@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type BindingsClient interface {
 
-	// API will list all Session Timer Profiles bindings.
+	// Returns a paginated list of all bindings for the specified Session Timer profile.
 	//
 	// @param sessionTimerProfileIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)

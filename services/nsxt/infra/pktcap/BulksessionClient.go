@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type BulksessionClient interface {
 
-	// Create an new packet capture session on multiple given nodes with specified options
+	// Create a new packet capture session on multiple given nodes with specified options
 	//
 	// @param pktCaptureBulkRequestParam (required)
 	// @return com.vmware.nsx_policy.model.PktCaptureBulkSession

@@ -33,7 +33,7 @@ type ContainerClusterConfigsClient interface {
 	// @throws NotFound  Not Found
 	Delete(containerClusterIdParam string) error
 
-	// This routine will read the IDPS enabled antrea cluster and its related groups
+	// Returns the Intrusion Detection and Prevention System (IDPS) configuration for the specified Antrea cluster, including its related groups.
 	//
 	// @param containerClusterIdParam Container cluster Id (required)
 	// @return com.vmware.nsx_policy.model.ContainerClusterConfig
@@ -46,7 +46,7 @@ type ContainerClusterConfigsClient interface {
 	// @throws NotFound  Not Found
 	Get(containerClusterIdParam string) (nsx_policyModel.ContainerClusterConfig, error)
 
-	// This routine will list all IDS enabled antrea cluster configs.
+	// Returns a list of all Intrusion Detection System (IDS)-enabled Antrea cluster configurations.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)

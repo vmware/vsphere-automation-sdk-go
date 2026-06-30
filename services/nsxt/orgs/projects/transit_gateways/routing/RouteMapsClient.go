@@ -7,7 +7,7 @@
 // Interface file for service: RouteMaps
 // Used by client-side stubs.
 
-package transit_gateways
+package routing
 
 import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -114,7 +114,7 @@ type routeMapsClient struct {
 }
 
 func NewRouteMapsClient(connector vapiProtocolClient_.Connector) *routeMapsClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.transit_gateways.route_maps")
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.route_maps")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
@@ -153,7 +153,7 @@ func (rIface *routeMapsClient) Delete(orgIdParam string, projectIdParam string, 
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.route_maps", "delete", inputDataValue, executionContext)
+	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.route_maps", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -183,7 +183,7 @@ func (rIface *routeMapsClient) Get(orgIdParam string, projectIdParam string, tra
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.route_maps", "get", inputDataValue, executionContext)
+	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.route_maps", "get", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.TransitGatewayRouteMap
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RouteMapsGetOutputType())
@@ -223,7 +223,7 @@ func (rIface *routeMapsClient) List(orgIdParam string, projectIdParam string, tr
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.route_maps", "list", inputDataValue, executionContext)
+	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.route_maps", "list", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.TgwRouteMapListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RouteMapsListOutputType())
@@ -258,7 +258,7 @@ func (rIface *routeMapsClient) Patch(orgIdParam string, projectIdParam string, t
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.route_maps", "patch", inputDataValue, executionContext)
+	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.route_maps", "patch", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -289,7 +289,7 @@ func (rIface *routeMapsClient) Update(orgIdParam string, projectIdParam string, 
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.route_maps", "update", inputDataValue, executionContext)
+	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.route_maps", "update", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.TransitGatewayRouteMap
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RouteMapsUpdateOutputType())

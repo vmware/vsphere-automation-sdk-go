@@ -22,7 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FirewallIdentityStoresClient interface {
 
-	// Invoke full sync or delta sync for a specific domain, with additional delay in seconds if needed. Stop sync will try to stop any pending sync if any to return to idle state.
+	// Invoke full sync, delta sync, or stop sync for a directory domain
 	//
 	//  Use the following Policy API -
 	//  POST /infra/identity-firewall-stores/action/delta-sync; POST /infra/identity-firewall-stores/action/full-sync; POST /infra/identity-firewall-stores/action/stop-sync;
@@ -42,7 +42,7 @@ type FirewallIdentityStoresClient interface {
 	// @throws NotFound  Not Found
 	Create(firewallIdentityStoreIdParam string, actionParam string, delayParam *int64, enforcementPointPathParam *string) error
 
-	// If the firewall identity store is removed, it will stop the identity store synchronization. User will not be able to define new IDFW rules
+	// Deletes the specified Identity Firewall (IDFW) directory store. Removing the store stops directory synchronization; IDFW rules referencing it will no longer match. Deprecated: use DELETE /infra/identity-firewall-stores instead.
 	//
 	//  Use the following Policy API -
 	//  DELETE /infra/identity-firewall-stores/<identity-firewall-store-id>
@@ -80,7 +80,7 @@ type FirewallIdentityStoresClient interface {
 	// @throws NotFound  Not Found
 	Get(firewallIdentityStoreIdParam string, enforcementPointPathParam *string) (*vapiData_.StructValue, error)
 
-	// List all firewall identity stores
+	// Returns a paginated list of all configured Identity Firewall (IDFW) directory stores. Deprecated: use GET /infra/identity-firewall-stores instead.
 	//
 	//  Use the following Policy API -
 	//  GET /infra/identity-firewall-stores

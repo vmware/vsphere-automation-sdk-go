@@ -4,12 +4,12 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: Routing.
+// Data type definitions file for service: BfdPeers.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package transit_gateways
+package routing
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -19,24 +19,26 @@ import (
 	"reflect"
 )
 
-func routingDeleteInputType() vapiBindings_.StructType {
+func bfdPeersDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["bfd_peer_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["bfd_peer_id"] = "BfdPeerId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func RoutingDeleteOutputType() vapiBindings_.BindingType {
+func BfdPeersDeleteOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewVoidType()
 }
 
-func routingDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+func bfdPeersDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -48,15 +50,20 @@ func routingDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["bfd_peer_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["bfd_peer_id"] = "BfdPeerId"
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bfd_peer_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bfdPeerId"] = vapiBindings_.NewStringType()
+	pathParams["bfd_peer_id"] = "bfdPeerId"
 	pathParams["transit_gateway_id"] = "transitGatewayId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
@@ -74,7 +81,7 @@ func routingDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"DELETE",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/routing",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/routing/bfd-peers/{bfdPeerId}",
 		"",
 		resultHeaders,
 		204,
@@ -83,24 +90,26 @@ func routingDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func routingGetInputType() vapiBindings_.StructType {
+func bfdPeersGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["bfd_peer_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["bfd_peer_id"] = "BfdPeerId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func RoutingGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRoutingConfigBindingType)
+func BfdPeersGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayBfdPeerBindingType)
 }
 
-func routingGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func bfdPeersGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -112,15 +121,20 @@ func routingGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["bfd_peer_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["bfd_peer_id"] = "BfdPeerId"
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bfd_peer_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bfdPeerId"] = vapiBindings_.NewStringType()
+	pathParams["bfd_peer_id"] = "bfdPeerId"
 	pathParams["transit_gateway_id"] = "transitGatewayId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
@@ -138,7 +152,7 @@ func routingGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/routing",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/routing/bfd-peers/{bfdPeerId}",
 		"",
 		resultHeaders,
 		200,
@@ -147,26 +161,36 @@ func routingGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func routingPatchInputType() vapiBindings_.StructType {
+func bfdPeersListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["transit_gateway_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRoutingConfigBindingType)
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["transit_gateway_routing_config"] = "TransitGatewayRoutingConfig"
+	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
+	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fieldNameMap["sort_by"] = "SortBy"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func RoutingPatchOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewVoidType()
+func BfdPeersListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayBfdPeerListResultBindingType)
 }
 
-func routingPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+func bfdPeersListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -178,18 +202,115 @@ func routingPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["transit_gateway_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRoutingConfigBindingType)
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["transit_gateway_routing_config"] = "TransitGatewayRoutingConfig"
+	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
+	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fieldNameMap["sort_by"] = "SortBy"
+	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["transit_gateway_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRoutingConfigBindingType)
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	pathParams["transit_gateway_id"] = "transitGatewayId"
+	pathParams["project_id"] = "projectId"
+	pathParams["org_id"] = "orgId"
+	queryParams["cursor"] = "cursor"
+	queryParams["sort_ascending"] = "sort_ascending"
+	queryParams["included_fields"] = "included_fields"
+	queryParams["sort_by"] = "sort_by"
+	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
+	queryParams["page_size"] = "page_size"
+	resultHeaders := map[string]string{}
+	errorHeaders := map[string]map[string]string{}
+	return vapiProtocol_.NewOperationRestMetadata(
+		fields,
+		fieldNameMap,
+		paramsTypeMap,
+		pathParams,
+		queryParams,
+		headerParams,
+		dispatchHeaderParams,
+		bodyFieldsMap,
+		"",
+		"",
+		"GET",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/routing/bfd-peers",
+		"",
+		resultHeaders,
+		200,
+		"",
+		errorHeaders,
+		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
+}
+
+func bfdPeersPatchInputType() vapiBindings_.StructType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["org_id"] = vapiBindings_.NewStringType()
+	fields["project_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["bfd_peer_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_bfd_peer"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayBfdPeerBindingType)
+	fieldNameMap["org_id"] = "OrgId"
+	fieldNameMap["project_id"] = "ProjectId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["bfd_peer_id"] = "BfdPeerId"
+	fieldNameMap["transit_gateway_bfd_peer"] = "TransitGatewayBfdPeer"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
+}
+
+func BfdPeersPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
+}
+
+func bfdPeersPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+	fields := map[string]vapiBindings_.BindingType{}
+	fieldNameMap := map[string]string{}
+	paramsTypeMap := map[string]vapiBindings_.BindingType{}
+	pathParams := map[string]string{}
+	queryParams := map[string]string{}
+	headerParams := map[string]string{}
+	dispatchHeaderParams := map[string]string{}
+	bodyFieldsMap := map[string]string{}
+	fields["org_id"] = vapiBindings_.NewStringType()
+	fields["project_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
+	fields["bfd_peer_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_bfd_peer"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayBfdPeerBindingType)
+	fieldNameMap["org_id"] = "OrgId"
+	fieldNameMap["project_id"] = "ProjectId"
+	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
+	fieldNameMap["bfd_peer_id"] = "BfdPeerId"
+	fieldNameMap["transit_gateway_bfd_peer"] = "TransitGatewayBfdPeer"
+	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bfd_peer_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transit_gateway_bfd_peer"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayBfdPeerBindingType)
+	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bfdPeerId"] = vapiBindings_.NewStringType()
+	pathParams["bfd_peer_id"] = "bfdPeerId"
 	pathParams["transit_gateway_id"] = "transitGatewayId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
@@ -205,9 +326,9 @@ func routingPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"transit_gateway_routing_config",
+		"transit_gateway_bfd_peer",
 		"PATCH",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/routing",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/routing/bfd-peers/{bfdPeerId}",
 		"application/json",
 		resultHeaders,
 		204,
@@ -216,26 +337,28 @@ func routingPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func routingUpdateInputType() vapiBindings_.StructType {
+func bfdPeersUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["transit_gateway_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRoutingConfigBindingType)
+	fields["bfd_peer_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_bfd_peer"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayBfdPeerBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["transit_gateway_routing_config"] = "TransitGatewayRoutingConfig"
+	fieldNameMap["bfd_peer_id"] = "BfdPeerId"
+	fieldNameMap["transit_gateway_bfd_peer"] = "TransitGatewayBfdPeer"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func RoutingUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRoutingConfigBindingType)
+func BfdPeersUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayBfdPeerBindingType)
 }
 
-func routingUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+func bfdPeersUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -247,18 +370,23 @@ func routingUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["transit_gateway_id"] = vapiBindings_.NewStringType()
-	fields["transit_gateway_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRoutingConfigBindingType)
+	fields["bfd_peer_id"] = vapiBindings_.NewStringType()
+	fields["transit_gateway_bfd_peer"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayBfdPeerBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["transit_gateway_id"] = "TransitGatewayId"
-	fieldNameMap["transit_gateway_routing_config"] = "TransitGatewayRoutingConfig"
+	fieldNameMap["bfd_peer_id"] = "BfdPeerId"
+	fieldNameMap["transit_gateway_bfd_peer"] = "TransitGatewayBfdPeer"
 	paramsTypeMap["transit_gateway_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["transit_gateway_routing_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayRoutingConfigBindingType)
+	paramsTypeMap["bfd_peer_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["transit_gateway_bfd_peer"] = vapiBindings_.NewReferenceType(nsx_policyModel.TransitGatewayBfdPeerBindingType)
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transitGatewayId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["bfdPeerId"] = vapiBindings_.NewStringType()
+	pathParams["bfd_peer_id"] = "bfdPeerId"
 	pathParams["transit_gateway_id"] = "transitGatewayId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
@@ -274,9 +402,9 @@ func routingUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"transit_gateway_routing_config",
+		"transit_gateway_bfd_peer",
 		"PUT",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/routing",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/transit-gateways/{transitGatewayId}/routing/bfd-peers/{bfdPeerId}",
 		"application/json",
 		resultHeaders,
 		200,

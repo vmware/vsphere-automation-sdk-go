@@ -22,7 +22,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type IdentityFirewallStoresClient interface {
 
-	// If the firewall identity store is removed, it will stop the identity store synchronization. User will not be able to define new IDFW rules
+	// Deletes the specified Identity Firewall (IDFW) directory store. Removing the store stops directory synchronization; IDFW rules referencing it will no longer match.
 	//
 	// @param identityFirewallStoreIdParam firewall identity store ID (required)
 	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
@@ -50,7 +50,7 @@ type IdentityFirewallStoresClient interface {
 	// @throws NotFound  Not Found
 	Get(identityFirewallStoreIdParam string, enforcementPointPathParam *string) (*vapiData_.StructValue, error)
 
-	// List all firewall identity stores
+	// Returns a paginated list of all configured Identity Firewall (IDFW) directory stores.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)

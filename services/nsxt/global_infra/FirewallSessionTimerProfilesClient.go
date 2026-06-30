@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FirewallSessionTimerProfilesClient interface {
 
-	// API will delete Firewall Session Timer Profile
+	// Deletes the specified Firewall Session Timer Profile.
 	//
 	// @param firewallSessionTimerProfileIdParam Firewall Session Timer Profile ID (required)
 	// @param overrideParam If true, the global resource can be over written locally. This means that there will be a local only resource in place of the global resource that can reflect local specific settings and values. The global object will continue to exist but will not be used for any configuration until this local object is removed. When the object is overridden the Global resource continues to exist unmodified, while the overridden object is created with all of the user specified values. The Global resource may be updated in the background, however, the overridden object may only be updated by the user. Once the user removes the overridden copy, the Global resource will then resume being used in the configuration. (optional, default to false)
@@ -34,7 +34,7 @@ type FirewallSessionTimerProfilesClient interface {
 	// @throws NotFound  Not Found
 	Delete(firewallSessionTimerProfileIdParam string, overrideParam *bool) error
 
-	// API will get Firewall Session Timer Profile
+	// Returns the TCP, UDP, and ICMP session timeout configuration for the specified profile.
 	//
 	// @param firewallSessionTimerProfileIdParam Firewall Session Timer Profile ID (required)
 	// @return com.vmware.nsx_policy.model.PolicyFirewallSessionTimerProfile
@@ -47,7 +47,7 @@ type FirewallSessionTimerProfilesClient interface {
 	// @throws NotFound  Not Found
 	Get(firewallSessionTimerProfileIdParam string) (nsx_policyModel.PolicyFirewallSessionTimerProfile, error)
 
-	// API will list all Firewall Session Timer Profiles
+	// Returns a paginated list of all Firewall Session Timer Profiles.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
@@ -65,7 +65,7 @@ type FirewallSessionTimerProfilesClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyFirewallSessionTimerProfileListResult, error)
 
-	// API will create/update Firewall Session Timer Profile
+	// Creates or partially updates a Firewall Session Timer Profile.
 	//
 	// @param firewallSessionTimerProfileIdParam Firewall Session Timer Profile ID (required)
 	// @param policyFirewallSessionTimerProfileParam (required)
@@ -79,7 +79,7 @@ type FirewallSessionTimerProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(firewallSessionTimerProfileIdParam string, policyFirewallSessionTimerProfileParam nsx_policyModel.PolicyFirewallSessionTimerProfile, overrideParam *bool) error
 
-	// API will update Firewall Session Timer Profile
+	// Fully replaces the specified Firewall Session Timer Profile. Omitted fields are reset to defaults.
 	//
 	// @param firewallSessionTimerProfileIdParam Firewall Session Timer Profile ID (required)
 	// @param policyFirewallSessionTimerProfileParam (required)

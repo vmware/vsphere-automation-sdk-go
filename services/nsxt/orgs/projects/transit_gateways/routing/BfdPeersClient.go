@@ -4,10 +4,10 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: PrefixLists
+// Interface file for service: BfdPeers
 // Used by client-side stubs.
 
-package transit_gateways
+package routing
 
 import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -19,14 +19,14 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-type PrefixListsClient interface {
+type BfdPeersClient interface {
 
-	// Delete a prefix list from the specified transit gateway.
+	// Delete a BFD peer configuration from the specified transit gateway.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param prefixListIdParam (required)
+	// @param bfdPeerIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -34,15 +34,15 @@ type PrefixListsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, prefixListIdParam string) error
+	Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, bfdPeerIdParam string) error
 
-	// Read a prefix list under the specified transit gateway by ID.
+	// Read a BFD peer configuration for a transit gateway by ID.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param prefixListIdParam (required)
-	// @return com.vmware.nsx_policy.model.PrefixList
+	// @param bfdPeerIdParam (required)
+	// @return com.vmware.nsx_policy.model.TransitGatewayBfdPeer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -50,9 +50,9 @@ type PrefixListsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, prefixListIdParam string) (nsx_policyModel.PrefixList, error)
+	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, bfdPeerIdParam string) (nsx_policyModel.TransitGatewayBfdPeer, error)
 
-	// List all prefix lists under the specified transit gateway.
+	// List all BFD peer configurations under the specified transit gateway.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -63,7 +63,7 @@ type PrefixListsClient interface {
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.TgwPrefixListResult
+	// @return com.vmware.nsx_policy.model.TransitGatewayBfdPeerListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -71,15 +71,15 @@ type PrefixListsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, transitGatewayIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.TgwPrefixListResult, error)
+	List(orgIdParam string, projectIdParam string, transitGatewayIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.TransitGatewayBfdPeerListResult, error)
 
-	// Partially update a prefix list under the specified transit gateway. Only the provided fields are updated.
+	// Partially update a BFD peer configuration for a transit gateway. Only the provided fields are updated.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param prefixListIdParam (required)
-	// @param prefixListParam (required)
+	// @param bfdPeerIdParam (required)
+	// @param transitGatewayBfdPeerParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -87,16 +87,16 @@ type PrefixListsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, prefixListIdParam string, prefixListParam nsx_policyModel.PrefixList) error
+	Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, bfdPeerIdParam string, transitGatewayBfdPeerParam nsx_policyModel.TransitGatewayBfdPeer) error
 
-	// Create or replace a prefix list under the specified transit gateway for BGP route filtering. Uses the same PrefixList schema as tier-0 gateways.
+	// Create or replace a BFD peer configuration for fast liveness detection of static route next-hop peers on a transit gateway centralized network attachment.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
-	// @param prefixListIdParam (required)
-	// @param prefixListParam (required)
-	// @return com.vmware.nsx_policy.model.PrefixList
+	// @param bfdPeerIdParam (required)
+	// @param transitGatewayBfdPeerParam (required)
+	// @return com.vmware.nsx_policy.model.TransitGatewayBfdPeer
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -104,17 +104,17 @@ type PrefixListsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, prefixListIdParam string, prefixListParam nsx_policyModel.PrefixList) (nsx_policyModel.PrefixList, error)
+	Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, bfdPeerIdParam string, transitGatewayBfdPeerParam nsx_policyModel.TransitGatewayBfdPeer) (nsx_policyModel.TransitGatewayBfdPeer, error)
 }
 
-type prefixListsClient struct {
+type bfdPeersClient struct {
 	connector           vapiProtocolClient_.Connector
 	interfaceDefinition vapiCore_.InterfaceDefinition
 	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewPrefixListsClient(connector vapiProtocolClient_.Connector) *prefixListsClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.transit_gateways.prefix_lists")
+func NewBfdPeersClient(connector vapiProtocolClient_.Connector) *bfdPeersClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.bfd_peers")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
@@ -125,39 +125,39 @@ func NewPrefixListsClient(connector vapiProtocolClient_.Connector) *prefixListsC
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
-	pIface := prefixListsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
-	return &pIface
+	bIface := bfdPeersClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &bIface
 }
 
-func (pIface *prefixListsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
-	if entry, ok := pIface.errorsBindingMap[errorName]; ok {
+func (bIface *bfdPeersClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+	if entry, ok := bIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (pIface *prefixListsClient) Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, prefixListIdParam string) error {
-	typeConverter := pIface.connector.TypeConverter()
-	executionContext := pIface.connector.NewExecutionContext()
-	operationRestMetaData := prefixListsDeleteRestMetadata()
+func (bIface *bfdPeersClient) Delete(orgIdParam string, projectIdParam string, transitGatewayIdParam string, bfdPeerIdParam string) error {
+	typeConverter := bIface.connector.TypeConverter()
+	executionContext := bIface.connector.NewExecutionContext()
+	operationRestMetaData := bfdPeersDeleteRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(prefixListsDeleteInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(bfdPeersDeleteInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("PrefixListId", prefixListIdParam)
+	sv.AddStructField("BfdPeerId", bfdPeerIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.prefix_lists", "delete", inputDataValue, executionContext)
+	methodResult := bIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.bfd_peers", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), bIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
 			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
@@ -165,34 +165,34 @@ func (pIface *prefixListsClient) Delete(orgIdParam string, projectIdParam string
 	}
 }
 
-func (pIface *prefixListsClient) Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, prefixListIdParam string) (nsx_policyModel.PrefixList, error) {
-	typeConverter := pIface.connector.TypeConverter()
-	executionContext := pIface.connector.NewExecutionContext()
-	operationRestMetaData := prefixListsGetRestMetadata()
+func (bIface *bfdPeersClient) Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, bfdPeerIdParam string) (nsx_policyModel.TransitGatewayBfdPeer, error) {
+	typeConverter := bIface.connector.TypeConverter()
+	executionContext := bIface.connector.NewExecutionContext()
+	operationRestMetaData := bfdPeersGetRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(prefixListsGetInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(bfdPeersGetInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("PrefixListId", prefixListIdParam)
+	sv.AddStructField("BfdPeerId", bfdPeerIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.PrefixList
+		var emptyOutput nsx_policyModel.TransitGatewayBfdPeer
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.prefix_lists", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.PrefixList
+	methodResult := bIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.bfd_peers", "get", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.TransitGatewayBfdPeer
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PrefixListsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), BfdPeersGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.PrefixList), nil
+		return output.(nsx_policyModel.TransitGatewayBfdPeer), nil
 	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), bIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
@@ -200,14 +200,14 @@ func (pIface *prefixListsClient) Get(orgIdParam string, projectIdParam string, t
 	}
 }
 
-func (pIface *prefixListsClient) List(orgIdParam string, projectIdParam string, transitGatewayIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.TgwPrefixListResult, error) {
-	typeConverter := pIface.connector.TypeConverter()
-	executionContext := pIface.connector.NewExecutionContext()
-	operationRestMetaData := prefixListsListRestMetadata()
+func (bIface *bfdPeersClient) List(orgIdParam string, projectIdParam string, transitGatewayIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.TransitGatewayBfdPeerListResult, error) {
+	typeConverter := bIface.connector.TypeConverter()
+	executionContext := bIface.connector.NewExecutionContext()
+	operationRestMetaData := bfdPeersListRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(prefixListsListInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(bfdPeersListInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
@@ -219,20 +219,20 @@ func (pIface *prefixListsClient) List(orgIdParam string, projectIdParam string, 
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.TgwPrefixListResult
+		var emptyOutput nsx_policyModel.TransitGatewayBfdPeerListResult
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.prefix_lists", "list", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.TgwPrefixListResult
+	methodResult := bIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.bfd_peers", "list", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.TransitGatewayBfdPeerListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PrefixListsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), BfdPeersListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.TgwPrefixListResult), nil
+		return output.(nsx_policyModel.TransitGatewayBfdPeerListResult), nil
 	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), bIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
@@ -240,29 +240,29 @@ func (pIface *prefixListsClient) List(orgIdParam string, projectIdParam string, 
 	}
 }
 
-func (pIface *prefixListsClient) Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, prefixListIdParam string, prefixListParam nsx_policyModel.PrefixList) error {
-	typeConverter := pIface.connector.TypeConverter()
-	executionContext := pIface.connector.NewExecutionContext()
-	operationRestMetaData := prefixListsPatchRestMetadata()
+func (bIface *bfdPeersClient) Patch(orgIdParam string, projectIdParam string, transitGatewayIdParam string, bfdPeerIdParam string, transitGatewayBfdPeerParam nsx_policyModel.TransitGatewayBfdPeer) error {
+	typeConverter := bIface.connector.TypeConverter()
+	executionContext := bIface.connector.NewExecutionContext()
+	operationRestMetaData := bfdPeersPatchRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(prefixListsPatchInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(bfdPeersPatchInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("PrefixListId", prefixListIdParam)
-	sv.AddStructField("PrefixList", prefixListParam)
+	sv.AddStructField("BfdPeerId", bfdPeerIdParam)
+	sv.AddStructField("TransitGatewayBfdPeer", transitGatewayBfdPeerParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.prefix_lists", "patch", inputDataValue, executionContext)
+	methodResult := bIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.bfd_peers", "patch", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), bIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
 			return vapiBindings_.VAPIerrorsToError(errorInError)
 		}
@@ -270,35 +270,35 @@ func (pIface *prefixListsClient) Patch(orgIdParam string, projectIdParam string,
 	}
 }
 
-func (pIface *prefixListsClient) Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, prefixListIdParam string, prefixListParam nsx_policyModel.PrefixList) (nsx_policyModel.PrefixList, error) {
-	typeConverter := pIface.connector.TypeConverter()
-	executionContext := pIface.connector.NewExecutionContext()
-	operationRestMetaData := prefixListsUpdateRestMetadata()
+func (bIface *bfdPeersClient) Update(orgIdParam string, projectIdParam string, transitGatewayIdParam string, bfdPeerIdParam string, transitGatewayBfdPeerParam nsx_policyModel.TransitGatewayBfdPeer) (nsx_policyModel.TransitGatewayBfdPeer, error) {
+	typeConverter := bIface.connector.TypeConverter()
+	executionContext := bIface.connector.NewExecutionContext()
+	operationRestMetaData := bfdPeersUpdateRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(prefixListsUpdateInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(bfdPeersUpdateInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
-	sv.AddStructField("PrefixListId", prefixListIdParam)
-	sv.AddStructField("PrefixList", prefixListParam)
+	sv.AddStructField("BfdPeerId", bfdPeerIdParam)
+	sv.AddStructField("TransitGatewayBfdPeer", transitGatewayBfdPeerParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.PrefixList
+		var emptyOutput nsx_policyModel.TransitGatewayBfdPeer
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.prefix_lists", "update", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.PrefixList
+	methodResult := bIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.transit_gateways.routing.bfd_peers", "update", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.TransitGatewayBfdPeer
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PrefixListsUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), BfdPeersUpdateOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.PrefixList), nil
+		return output.(nsx_policyModel.TransitGatewayBfdPeer), nil
 	} else {
-		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), bIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
 		}
