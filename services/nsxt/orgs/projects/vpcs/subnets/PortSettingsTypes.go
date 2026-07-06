@@ -4,7 +4,7 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: PortConfigs.
+// Data type definitions file for service: PortSettings.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
@@ -19,28 +19,28 @@ import (
 	"reflect"
 )
 
-func portConfigsDeleteInputType() vapiBindings_.StructType {
+func portSettingsDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["vpc_id"] = vapiBindings_.NewStringType()
 	fields["subnet_id"] = vapiBindings_.NewStringType()
-	fields["port_config_id"] = vapiBindings_.NewStringType()
+	fields["port_setting_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["vpc_id"] = "VpcId"
 	fieldNameMap["subnet_id"] = "SubnetId"
-	fieldNameMap["port_config_id"] = "PortConfigId"
+	fieldNameMap["port_setting_id"] = "PortSettingId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func PortConfigsDeleteOutputType() vapiBindings_.BindingType {
+func PortSettingsDeleteOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewVoidType()
 }
 
-func portConfigsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+func portSettingsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -53,24 +53,24 @@ func portConfigsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["vpc_id"] = vapiBindings_.NewStringType()
 	fields["subnet_id"] = vapiBindings_.NewStringType()
-	fields["port_config_id"] = vapiBindings_.NewStringType()
+	fields["port_setting_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["vpc_id"] = "VpcId"
 	fieldNameMap["subnet_id"] = "SubnetId"
-	fieldNameMap["port_config_id"] = "PortConfigId"
+	fieldNameMap["port_setting_id"] = "PortSettingId"
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["vpc_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["port_config_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["subnet_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["port_setting_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["vpcId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["subnetId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["portConfigId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["portSettingId"] = vapiBindings_.NewStringType()
 	pathParams["subnet_id"] = "subnetId"
-	pathParams["port_config_id"] = "portConfigId"
+	pathParams["port_setting_id"] = "portSettingId"
 	pathParams["vpc_id"] = "vpcId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
@@ -88,7 +88,7 @@ func portConfigsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"DELETE",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpcs/{vpcId}/subnets/{subnetId}/port-configs/{portConfigId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpcs/{vpcId}/subnets/{subnetId}/port-settings/{portSettingId}",
 		"",
 		resultHeaders,
 		204,
@@ -97,28 +97,28 @@ func portConfigsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func portConfigsGetInputType() vapiBindings_.StructType {
+func portSettingsGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["vpc_id"] = vapiBindings_.NewStringType()
 	fields["subnet_id"] = vapiBindings_.NewStringType()
-	fields["port_config_id"] = vapiBindings_.NewStringType()
+	fields["port_setting_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["vpc_id"] = "VpcId"
 	fieldNameMap["subnet_id"] = "SubnetId"
-	fieldNameMap["port_config_id"] = "PortConfigId"
+	fieldNameMap["port_setting_id"] = "PortSettingId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func PortConfigsGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortConfigBindingType)
+func PortSettingsGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortSettingBindingType)
 }
 
-func portConfigsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func portSettingsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -131,24 +131,24 @@ func portConfigsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["vpc_id"] = vapiBindings_.NewStringType()
 	fields["subnet_id"] = vapiBindings_.NewStringType()
-	fields["port_config_id"] = vapiBindings_.NewStringType()
+	fields["port_setting_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["vpc_id"] = "VpcId"
 	fieldNameMap["subnet_id"] = "SubnetId"
-	fieldNameMap["port_config_id"] = "PortConfigId"
+	fieldNameMap["port_setting_id"] = "PortSettingId"
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["vpc_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["port_config_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["subnet_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["port_setting_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["vpcId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["subnetId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["portConfigId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["portSettingId"] = vapiBindings_.NewStringType()
 	pathParams["subnet_id"] = "subnetId"
-	pathParams["port_config_id"] = "portConfigId"
+	pathParams["port_setting_id"] = "portSettingId"
 	pathParams["vpc_id"] = "vpcId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
@@ -166,7 +166,7 @@ func portConfigsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpcs/{vpcId}/subnets/{subnetId}/port-configs/{portConfigId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpcs/{vpcId}/subnets/{subnetId}/port-settings/{portSettingId}",
 		"",
 		resultHeaders,
 		200,
@@ -175,7 +175,7 @@ func portConfigsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func portConfigsListInputType() vapiBindings_.StructType {
+func portSettingsListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
@@ -202,11 +202,11 @@ func portConfigsListInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func PortConfigsListOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortConfigListResultBindingType)
+func PortSettingsListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortSettingListResultBindingType)
 }
 
-func portConfigsListRestMetadata() vapiProtocol_.OperationRestMetadata {
+func portSettingsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -273,7 +273,7 @@ func portConfigsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpcs/{vpcId}/subnets/{subnetId}/port-configs",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpcs/{vpcId}/subnets/{subnetId}/port-settings",
 		"",
 		resultHeaders,
 		200,
@@ -282,30 +282,30 @@ func portConfigsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func portConfigsPatchInputType() vapiBindings_.StructType {
+func portSettingsPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["vpc_id"] = vapiBindings_.NewStringType()
 	fields["subnet_id"] = vapiBindings_.NewStringType()
-	fields["port_config_id"] = vapiBindings_.NewStringType()
-	fields["vpc_subnet_port_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortConfigBindingType)
+	fields["port_setting_id"] = vapiBindings_.NewStringType()
+	fields["vpc_subnet_port_setting"] = vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortSettingBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["vpc_id"] = "VpcId"
 	fieldNameMap["subnet_id"] = "SubnetId"
-	fieldNameMap["port_config_id"] = "PortConfigId"
-	fieldNameMap["vpc_subnet_port_config"] = "VpcSubnetPortConfig"
+	fieldNameMap["port_setting_id"] = "PortSettingId"
+	fieldNameMap["vpc_subnet_port_setting"] = "VpcSubnetPortSetting"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func PortConfigsPatchOutputType() vapiBindings_.BindingType {
+func PortSettingsPatchOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewVoidType()
 }
 
-func portConfigsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+func portSettingsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -318,27 +318,27 @@ func portConfigsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["vpc_id"] = vapiBindings_.NewStringType()
 	fields["subnet_id"] = vapiBindings_.NewStringType()
-	fields["port_config_id"] = vapiBindings_.NewStringType()
-	fields["vpc_subnet_port_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortConfigBindingType)
+	fields["port_setting_id"] = vapiBindings_.NewStringType()
+	fields["vpc_subnet_port_setting"] = vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortSettingBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["vpc_id"] = "VpcId"
 	fieldNameMap["subnet_id"] = "SubnetId"
-	fieldNameMap["port_config_id"] = "PortConfigId"
-	fieldNameMap["vpc_subnet_port_config"] = "VpcSubnetPortConfig"
+	fieldNameMap["port_setting_id"] = "PortSettingId"
+	fieldNameMap["vpc_subnet_port_setting"] = "VpcSubnetPortSetting"
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["vpc_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["port_config_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["vpc_subnet_port_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortConfigBindingType)
 	paramsTypeMap["subnet_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["port_setting_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["vpc_subnet_port_setting"] = vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortSettingBindingType)
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["vpcId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["subnetId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["portConfigId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["portSettingId"] = vapiBindings_.NewStringType()
 	pathParams["subnet_id"] = "subnetId"
-	pathParams["port_config_id"] = "portConfigId"
+	pathParams["port_setting_id"] = "portSettingId"
 	pathParams["vpc_id"] = "vpcId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
@@ -354,9 +354,9 @@ func portConfigsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"vpc_subnet_port_config",
+		"vpc_subnet_port_setting",
 		"PATCH",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpcs/{vpcId}/subnets/{subnetId}/port-configs/{portConfigId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpcs/{vpcId}/subnets/{subnetId}/port-settings/{portSettingId}",
 		"application/json",
 		resultHeaders,
 		204,
@@ -365,30 +365,30 @@ func portConfigsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func portConfigsUpdateInputType() vapiBindings_.StructType {
+func portSettingsUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["org_id"] = vapiBindings_.NewStringType()
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["vpc_id"] = vapiBindings_.NewStringType()
 	fields["subnet_id"] = vapiBindings_.NewStringType()
-	fields["port_config_id"] = vapiBindings_.NewStringType()
-	fields["vpc_subnet_port_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortConfigBindingType)
+	fields["port_setting_id"] = vapiBindings_.NewStringType()
+	fields["vpc_subnet_port_setting"] = vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortSettingBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["vpc_id"] = "VpcId"
 	fieldNameMap["subnet_id"] = "SubnetId"
-	fieldNameMap["port_config_id"] = "PortConfigId"
-	fieldNameMap["vpc_subnet_port_config"] = "VpcSubnetPortConfig"
+	fieldNameMap["port_setting_id"] = "PortSettingId"
+	fieldNameMap["vpc_subnet_port_setting"] = "VpcSubnetPortSetting"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func PortConfigsUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortConfigBindingType)
+func PortSettingsUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortSettingBindingType)
 }
 
-func portConfigsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+func portSettingsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -401,27 +401,27 @@ func portConfigsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["vpc_id"] = vapiBindings_.NewStringType()
 	fields["subnet_id"] = vapiBindings_.NewStringType()
-	fields["port_config_id"] = vapiBindings_.NewStringType()
-	fields["vpc_subnet_port_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortConfigBindingType)
+	fields["port_setting_id"] = vapiBindings_.NewStringType()
+	fields["vpc_subnet_port_setting"] = vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortSettingBindingType)
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["vpc_id"] = "VpcId"
 	fieldNameMap["subnet_id"] = "SubnetId"
-	fieldNameMap["port_config_id"] = "PortConfigId"
-	fieldNameMap["vpc_subnet_port_config"] = "VpcSubnetPortConfig"
+	fieldNameMap["port_setting_id"] = "PortSettingId"
+	fieldNameMap["vpc_subnet_port_setting"] = "VpcSubnetPortSetting"
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["vpc_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["port_config_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["vpc_subnet_port_config"] = vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortConfigBindingType)
 	paramsTypeMap["subnet_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["port_setting_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["vpc_subnet_port_setting"] = vapiBindings_.NewReferenceType(nsx_policyModel.VpcSubnetPortSettingBindingType)
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["vpcId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["subnetId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["portConfigId"] = vapiBindings_.NewStringType()
+	paramsTypeMap["portSettingId"] = vapiBindings_.NewStringType()
 	pathParams["subnet_id"] = "subnetId"
-	pathParams["port_config_id"] = "portConfigId"
+	pathParams["port_setting_id"] = "portSettingId"
 	pathParams["vpc_id"] = "vpcId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
@@ -437,9 +437,9 @@ func portConfigsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"vpc_subnet_port_config",
+		"vpc_subnet_port_setting",
 		"PUT",
-		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpcs/{vpcId}/subnets/{subnetId}/port-configs/{portConfigId}",
+		"/policy/api/v1/orgs/{orgId}/projects/{projectId}/vpcs/{vpcId}/subnets/{subnetId}/port-settings/{portSettingId}",
 		"application/json",
 		resultHeaders,
 		200,

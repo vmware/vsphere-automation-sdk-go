@@ -4,7 +4,7 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: IpfixCollectorProfiles.
+// Data type definitions file for service: IpfixFlowCollectorProfiles.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
@@ -19,7 +19,7 @@ import (
 	"reflect"
 )
 
-func ipfixCollectorProfilesDeleteInputType() vapiBindings_.StructType {
+func ipfixFlowCollectorProfilesDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["ipfix_collector_profile_id"] = vapiBindings_.NewStringType()
@@ -30,11 +30,11 @@ func ipfixCollectorProfilesDeleteInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func IpfixCollectorProfilesDeleteOutputType() vapiBindings_.BindingType {
+func IpfixFlowCollectorProfilesDeleteOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewVoidType()
 }
 
-func ipfixCollectorProfilesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipfixFlowCollectorProfilesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -66,7 +66,7 @@ func ipfixCollectorProfilesDeleteRestMetadata() vapiProtocol_.OperationRestMetad
 		"",
 		"",
 		"DELETE",
-		"/policy/api/v1/infra/ipfix-collector-profiles/{ipfixCollectorProfileId}",
+		"/policy/api/v1/infra/ipfix-flow-collector-profiles/{ipfixCollectorProfileId}",
 		"",
 		resultHeaders,
 		204,
@@ -75,7 +75,7 @@ func ipfixCollectorProfilesDeleteRestMetadata() vapiProtocol_.OperationRestMetad
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func ipfixCollectorProfilesGetInputType() vapiBindings_.StructType {
+func ipfixFlowCollectorProfilesGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["ipfix_collector_profile_id"] = vapiBindings_.NewStringType()
@@ -84,11 +84,11 @@ func ipfixCollectorProfilesGetInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func IpfixCollectorProfilesGetOutputType() vapiBindings_.BindingType {
+func IpfixFlowCollectorProfilesGetOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewReferenceType(nsx_policyModel.IPFIXFlowCollectorProfileBindingType)
 }
 
-func ipfixCollectorProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipfixFlowCollectorProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -116,7 +116,7 @@ func ipfixCollectorProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/ipfix-collector-profiles/{ipfixCollectorProfileId}",
+		"/policy/api/v1/infra/ipfix-flow-collector-profiles/{ipfixCollectorProfileId}",
 		"",
 		resultHeaders,
 		200,
@@ -125,7 +125,7 @@ func ipfixCollectorProfilesGetRestMetadata() vapiProtocol_.OperationRestMetadata
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func ipfixCollectorProfilesListInputType() vapiBindings_.StructType {
+func ipfixFlowCollectorProfilesListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -144,11 +144,11 @@ func ipfixCollectorProfilesListInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func IpfixCollectorProfilesListOutputType() vapiBindings_.BindingType {
+func IpfixFlowCollectorProfilesListOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewReferenceType(nsx_policyModel.IPFIXFlowCollectorProfileListResultBindingType)
 }
 
-func ipfixCollectorProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipfixFlowCollectorProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -195,7 +195,7 @@ func ipfixCollectorProfilesListRestMetadata() vapiProtocol_.OperationRestMetadat
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/ipfix-collector-profiles",
+		"/policy/api/v1/infra/ipfix-flow-collector-profiles",
 		"",
 		resultHeaders,
 		200,
@@ -204,7 +204,7 @@ func ipfixCollectorProfilesListRestMetadata() vapiProtocol_.OperationRestMetadat
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func ipfixCollectorProfilesPatchInputType() vapiBindings_.StructType {
+func ipfixFlowCollectorProfilesPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["ipfix_collector_profile_id"] = vapiBindings_.NewStringType()
@@ -217,11 +217,11 @@ func ipfixCollectorProfilesPatchInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func IpfixCollectorProfilesPatchOutputType() vapiBindings_.BindingType {
+func IpfixFlowCollectorProfilesPatchOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewVoidType()
 }
 
-func ipfixCollectorProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipfixFlowCollectorProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -256,7 +256,7 @@ func ipfixCollectorProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetada
 		"",
 		"i_PFIX_flow_collector_profile",
 		"PATCH",
-		"/policy/api/v1/infra/ipfix-collector-profiles/{ipfixCollectorProfileId}",
+		"/policy/api/v1/infra/ipfix-flow-collector-profiles/{ipfixCollectorProfileId}",
 		"application/json",
 		resultHeaders,
 		204,
@@ -265,7 +265,7 @@ func ipfixCollectorProfilesPatchRestMetadata() vapiProtocol_.OperationRestMetada
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func ipfixCollectorProfilesUpdateInputType() vapiBindings_.StructType {
+func ipfixFlowCollectorProfilesUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["ipfix_collector_profile_id"] = vapiBindings_.NewStringType()
@@ -278,11 +278,11 @@ func ipfixCollectorProfilesUpdateInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func IpfixCollectorProfilesUpdateOutputType() vapiBindings_.BindingType {
+func IpfixFlowCollectorProfilesUpdateOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewReferenceType(nsx_policyModel.IPFIXFlowCollectorProfileBindingType)
 }
 
-func ipfixCollectorProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipfixFlowCollectorProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -317,7 +317,7 @@ func ipfixCollectorProfilesUpdateRestMetadata() vapiProtocol_.OperationRestMetad
 		"",
 		"i_PFIX_flow_collector_profile",
 		"PUT",
-		"/policy/api/v1/infra/ipfix-collector-profiles/{ipfixCollectorProfileId}",
+		"/policy/api/v1/infra/ipfix-flow-collector-profiles/{ipfixCollectorProfileId}",
 		"application/json",
 		resultHeaders,
 		200,

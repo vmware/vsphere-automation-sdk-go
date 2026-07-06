@@ -85,7 +85,7 @@ type DnsServicesClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, dnsServiceIdParam string, dnsServiceParam nsx_policyModel.DnsService) error
 
-	// Create or update a DnsService under the specified project. The DNS service is deployed on the configured VNS clusters and provides authoritative DNS resolution for VPCs bound to it via their VpcServiceProfile. Listener IPs must reference valid IpAddressAllocation objects within this project.
+	// Create or update a DnsService under the specified project. The DNS service provides authoritative DNS resolution for VPCs bound to it via their VpcServiceProfile. Listener IPs must reference valid IpAddressAllocation objects within this project.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)

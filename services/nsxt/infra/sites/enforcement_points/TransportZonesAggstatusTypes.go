@@ -19,15 +19,20 @@ import (
 	"reflect"
 )
 
+// Possible value for ``tzFilter`` of method TransportZonesAggstatus#get.
+const TransportZonesAggstatus_GET_TZ_FILTER_TZ = "EXCLUDE_INTERNAL_TZ"
+
 func transportZonesAggstatusGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
 	fields["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["tz_filter"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	fieldNameMap["include_system_owned"] = "IncludeSystemOwned"
+	fieldNameMap["tz_filter"] = "TzFilter"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -48,17 +53,21 @@ func transportZonesAggstatusGetRestMetadata() vapiProtocol_.OperationRestMetadat
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
 	fields["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["tz_filter"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	fieldNameMap["include_system_owned"] = "IncludeSystemOwned"
+	fieldNameMap["tz_filter"] = "TzFilter"
 	paramsTypeMap["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["enforcement_point_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["tz_filter"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["enforcementPointId"] = vapiBindings_.NewStringType()
 	pathParams["site_id"] = "siteId"
 	pathParams["enforcement_point_id"] = "enforcementPointId"
 	queryParams["include_system_owned"] = "include_system_owned"
+	queryParams["tz_filter"] = "tz_filter"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(

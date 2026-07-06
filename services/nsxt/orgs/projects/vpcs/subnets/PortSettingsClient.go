@@ -4,7 +4,7 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: PortConfigs
+// Interface file for service: PortSettings
 // Used by client-side stubs.
 
 package subnets
@@ -19,7 +19,7 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-type PortConfigsClient interface {
+type PortSettingsClient interface {
 
 	// Delete VPC Subnet PortConfig.
 	//
@@ -27,7 +27,7 @@ type PortConfigsClient interface {
 	// @param projectIdParam (required)
 	// @param vpcIdParam (required)
 	// @param subnetIdParam (required)
-	// @param portConfigIdParam (required)
+	// @param portSettingIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -35,7 +35,7 @@ type PortConfigsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portConfigIdParam string) error
+	Delete(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portSettingIdParam string) error
 
 	// Get VPC Subnet PortConfig
 	//
@@ -43,8 +43,8 @@ type PortConfigsClient interface {
 	// @param projectIdParam (required)
 	// @param vpcIdParam (required)
 	// @param subnetIdParam (required)
-	// @param portConfigIdParam (required)
-	// @return com.vmware.nsx_policy.model.VpcSubnetPortConfig
+	// @param portSettingIdParam (required)
+	// @return com.vmware.nsx_policy.model.VpcSubnetPortSetting
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -52,7 +52,7 @@ type PortConfigsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portConfigIdParam string) (nsx_policyModel.VpcSubnetPortConfig, error)
+	Get(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portSettingIdParam string) (nsx_policyModel.VpcSubnetPortSetting, error)
 
 	// Paginated list of VPC Subnet PortConfig.
 	//
@@ -66,7 +66,7 @@ type PortConfigsClient interface {
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.VpcSubnetPortConfigListResult
+	// @return com.vmware.nsx_policy.model.VpcSubnetPortSettingListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -74,16 +74,16 @@ type PortConfigsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.VpcSubnetPortConfigListResult, error)
+	List(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.VpcSubnetPortSettingListResult, error)
 
-	// If a VPC Subnet PortConfig with the port-config-id is not already present, create a new VPC Subnet PortConfig. If it already exists, update the VPC Subnet PortConfig information by replacing the fields which are present in the request body.
+	// If a VPC Subnet PortConfig with the port-setting-id is not already present, create a new VPC Subnet PortConfig. If it already exists, update the VPC Subnet PortConfig information by replacing the fields which are present in the request body.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param vpcIdParam (required)
 	// @param subnetIdParam (required)
-	// @param portConfigIdParam (required)
-	// @param vpcSubnetPortConfigParam (required)
+	// @param portSettingIdParam (required)
+	// @param vpcSubnetPortSettingParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -91,17 +91,17 @@ type PortConfigsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portConfigIdParam string, vpcSubnetPortConfigParam nsx_policyModel.VpcSubnetPortConfig) error
+	Patch(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portSettingIdParam string, vpcSubnetPortSettingParam nsx_policyModel.VpcSubnetPortSetting) error
 
-	// If a VPC Subnet PortConfig with the port-config-id is not already present, create a new VPC Subnet PortConfig. If it already exists, update the VPC Subnet PortConfig information by replacing the fields which are present in the request body.
+	// If a VPC Subnet PortConfig with the port-setting-id is not already present, create a new VPC Subnet PortConfig. If it already exists, update the VPC Subnet PortConfig information by replacing the fields which are present in the request body.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param vpcIdParam (required)
 	// @param subnetIdParam (required)
-	// @param portConfigIdParam (required)
-	// @param vpcSubnetPortConfigParam (required)
-	// @return com.vmware.nsx_policy.model.VpcSubnetPortConfig
+	// @param portSettingIdParam (required)
+	// @param vpcSubnetPortSettingParam (required)
+	// @return com.vmware.nsx_policy.model.VpcSubnetPortSetting
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -109,17 +109,17 @@ type PortConfigsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portConfigIdParam string, vpcSubnetPortConfigParam nsx_policyModel.VpcSubnetPortConfig) (nsx_policyModel.VpcSubnetPortConfig, error)
+	Update(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portSettingIdParam string, vpcSubnetPortSettingParam nsx_policyModel.VpcSubnetPortSetting) (nsx_policyModel.VpcSubnetPortSetting, error)
 }
 
-type portConfigsClient struct {
+type portSettingsClient struct {
 	connector           vapiProtocolClient_.Connector
 	interfaceDefinition vapiCore_.InterfaceDefinition
 	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewPortConfigsClient(connector vapiProtocolClient_.Connector) *portConfigsClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.vpcs.subnets.port_configs")
+func NewPortSettingsClient(connector vapiProtocolClient_.Connector) *portSettingsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.orgs.projects.vpcs.subnets.port_settings")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
@@ -130,36 +130,36 @@ func NewPortConfigsClient(connector vapiProtocolClient_.Connector) *portConfigsC
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
-	pIface := portConfigsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	pIface := portSettingsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &pIface
 }
 
-func (pIface *portConfigsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+func (pIface *portSettingsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := pIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (pIface *portConfigsClient) Delete(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portConfigIdParam string) error {
+func (pIface *portSettingsClient) Delete(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portSettingIdParam string) error {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	operationRestMetaData := portConfigsDeleteRestMetadata()
+	operationRestMetaData := portSettingsDeleteRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(portConfigsDeleteInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(portSettingsDeleteInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("VpcId", vpcIdParam)
 	sv.AddStructField("SubnetId", subnetIdParam)
-	sv.AddStructField("PortConfigId", portConfigIdParam)
+	sv.AddStructField("PortSettingId", portSettingIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpcs.subnets.port_configs", "delete", inputDataValue, executionContext)
+	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpcs.subnets.port_settings", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -171,33 +171,33 @@ func (pIface *portConfigsClient) Delete(orgIdParam string, projectIdParam string
 	}
 }
 
-func (pIface *portConfigsClient) Get(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portConfigIdParam string) (nsx_policyModel.VpcSubnetPortConfig, error) {
+func (pIface *portSettingsClient) Get(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portSettingIdParam string) (nsx_policyModel.VpcSubnetPortSetting, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	operationRestMetaData := portConfigsGetRestMetadata()
+	operationRestMetaData := portSettingsGetRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(portConfigsGetInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(portSettingsGetInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("VpcId", vpcIdParam)
 	sv.AddStructField("SubnetId", subnetIdParam)
-	sv.AddStructField("PortConfigId", portConfigIdParam)
+	sv.AddStructField("PortSettingId", portSettingIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.VpcSubnetPortConfig
+		var emptyOutput nsx_policyModel.VpcSubnetPortSetting
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpcs.subnets.port_configs", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.VpcSubnetPortConfig
+	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpcs.subnets.port_settings", "get", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.VpcSubnetPortSetting
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PortConfigsGetOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PortSettingsGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.VpcSubnetPortConfig), nil
+		return output.(nsx_policyModel.VpcSubnetPortSetting), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -207,14 +207,14 @@ func (pIface *portConfigsClient) Get(orgIdParam string, projectIdParam string, v
 	}
 }
 
-func (pIface *portConfigsClient) List(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.VpcSubnetPortConfigListResult, error) {
+func (pIface *portSettingsClient) List(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.VpcSubnetPortSettingListResult, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	operationRestMetaData := portConfigsListRestMetadata()
+	operationRestMetaData := portSettingsListRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(portConfigsListInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(portSettingsListInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("VpcId", vpcIdParam)
@@ -227,18 +227,18 @@ func (pIface *portConfigsClient) List(orgIdParam string, projectIdParam string, 
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.VpcSubnetPortConfigListResult
+		var emptyOutput nsx_policyModel.VpcSubnetPortSettingListResult
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpcs.subnets.port_configs", "list", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.VpcSubnetPortConfigListResult
+	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpcs.subnets.port_settings", "list", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.VpcSubnetPortSettingListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PortConfigsListOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PortSettingsListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.VpcSubnetPortConfigListResult), nil
+		return output.(nsx_policyModel.VpcSubnetPortSettingListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
@@ -248,26 +248,26 @@ func (pIface *portConfigsClient) List(orgIdParam string, projectIdParam string, 
 	}
 }
 
-func (pIface *portConfigsClient) Patch(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portConfigIdParam string, vpcSubnetPortConfigParam nsx_policyModel.VpcSubnetPortConfig) error {
+func (pIface *portSettingsClient) Patch(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portSettingIdParam string, vpcSubnetPortSettingParam nsx_policyModel.VpcSubnetPortSetting) error {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	operationRestMetaData := portConfigsPatchRestMetadata()
+	operationRestMetaData := portSettingsPatchRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(portConfigsPatchInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(portSettingsPatchInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("VpcId", vpcIdParam)
 	sv.AddStructField("SubnetId", subnetIdParam)
-	sv.AddStructField("PortConfigId", portConfigIdParam)
-	sv.AddStructField("VpcSubnetPortConfig", vpcSubnetPortConfigParam)
+	sv.AddStructField("PortSettingId", portSettingIdParam)
+	sv.AddStructField("VpcSubnetPortSetting", vpcSubnetPortSettingParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpcs.subnets.port_configs", "patch", inputDataValue, executionContext)
+	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpcs.subnets.port_settings", "patch", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -279,34 +279,34 @@ func (pIface *portConfigsClient) Patch(orgIdParam string, projectIdParam string,
 	}
 }
 
-func (pIface *portConfigsClient) Update(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portConfigIdParam string, vpcSubnetPortConfigParam nsx_policyModel.VpcSubnetPortConfig) (nsx_policyModel.VpcSubnetPortConfig, error) {
+func (pIface *portSettingsClient) Update(orgIdParam string, projectIdParam string, vpcIdParam string, subnetIdParam string, portSettingIdParam string, vpcSubnetPortSettingParam nsx_policyModel.VpcSubnetPortSetting) (nsx_policyModel.VpcSubnetPortSetting, error) {
 	typeConverter := pIface.connector.TypeConverter()
 	executionContext := pIface.connector.NewExecutionContext()
-	operationRestMetaData := portConfigsUpdateRestMetadata()
+	operationRestMetaData := portSettingsUpdateRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(portConfigsUpdateInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(portSettingsUpdateInputType(), typeConverter)
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("VpcId", vpcIdParam)
 	sv.AddStructField("SubnetId", subnetIdParam)
-	sv.AddStructField("PortConfigId", portConfigIdParam)
-	sv.AddStructField("VpcSubnetPortConfig", vpcSubnetPortConfigParam)
+	sv.AddStructField("PortSettingId", portSettingIdParam)
+	sv.AddStructField("VpcSubnetPortSetting", vpcSubnetPortSettingParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.VpcSubnetPortConfig
+		var emptyOutput nsx_policyModel.VpcSubnetPortSetting
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpcs.subnets.port_configs", "update", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.VpcSubnetPortConfig
+	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.orgs.projects.vpcs.subnets.port_settings", "update", inputDataValue, executionContext)
+	var emptyOutput nsx_policyModel.VpcSubnetPortSetting
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PortConfigsUpdateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PortSettingsUpdateOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.VpcSubnetPortConfig), nil
+		return output.(nsx_policyModel.VpcSubnetPortSetting), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {
