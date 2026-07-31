@@ -22,6 +22,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type AffectedIpsClient interface {
 
 	// Get the list of gateways where an intrusion event matching a signature was detected.
+	//  This rest routine is deprecated. Use /infra/settings/firewall/security/intrusion-services/affected-entities with entity_type set to GATEWAY to get the list of affected gateways.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

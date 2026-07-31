@@ -1630,6 +1630,27 @@ func (s *AddressBindingEntry) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Provides the rx/tx counters for a single address family (IPv4 or IPv6) on a logical router port. Populated only when the dataplane reports per-address-family statistics; unset on older edges or when the VpcIpv6 feature is off.
+type AddressFamilyLogicalRouterPortCounters struct {
+	Rx *LogicalRouterPortCounters
+	Tx *LogicalRouterPortCounters
+}
+
+func (s *AddressFamilyLogicalRouterPortCounters) GetType__() vapiBindings_.BindingType {
+	return AddressFamilyLogicalRouterPortCountersBindingType()
+}
+
+func (s *AddressFamilyLogicalRouterPortCounters) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for AddressFamilyLogicalRouterPortCounters._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // IP and MAC address
 type Addresses struct {
 	// IPv4 or IPv6 address format: ip
@@ -2742,6 +2763,8 @@ func (s *AggregatedFeatureStateDetails) GetDataValue__() (vapiData_.DataValue, [
 
 // Provides the following aggregated information of the logical router ports: - <b>Incoming packet counters</b> on the logical router ports. It includes the total number of packets received, dropped, and the number of errors and failures causing the drops. The counters are from the time the logical router port was created. The interface statistics from a given transport node will be reset on edge reboot or edge dataplane restart of that node. - <b>Outgoing packet counters</b> on the logical router ports. It includes the total number of packets sent, dropped, and the number of errors and failures causing the drops. The counters are from the time logical router port was created. The logical router port statistics from a given transport node will be reset on edge reboot or edge dataplane restart of that node. - Some of the packet drop reasons include, the DAD (Duplicate Address Detection) status of the IP is not in ASSIGNED state, firewall rules, failed to fragment the packet, receive malformed packet, could not find route to destination, absence of the receiver, insufficient memory, incomplete ARP resolution of the next-hop, RPF check failure, failed to redirect packet to KNI interface, TTL exceeded, port does not have a linked peer port and and unsupported - destination, protocol or L4 port. - Some of the IPSec packet drop reasons include the missing security association or VTI interface. It also includes packets dropped due to policy lookup error or block policy. - Provides the total number of service-insertion, KNI, non-IP and IPv6 packets dropped.
 type AggregatedLogicalRouterPortCounters struct {
+	Ipv4 *AddressFamilyLogicalRouterPortCounters
+	Ipv6 *AddressFamilyLogicalRouterPortCounters
 	// Timestamp when the data was last updated; unset if data source has never updated the data. format: int64
 	LastUpdateTimestamp *int64
 	Rx                  *LogicalRouterPortCounters
@@ -5787,6 +5810,47 @@ func (s *BaseCompatibilityCheckResult) GetDataValue__() (vapiData_.DataValue, []
 	return dataVal, nil
 }
 
+// Base type for Consolidated Realized Status Per Enforcement Point. This type serves as the base for NSX-T specific consolidated status.
+type BaseConsolidatedStatusPerEnforcementPoint struct {
+	Alarm *PolicyRuntimeAlarm
+	// Policy Path referencing the enforcement point where the info is fetched.
+	EnforcementPointPath *string
+	ConsolidatedStatus   *ConsolidatedStatus
+	// Enforcement Point Id.
+	EnforcementPointId *string
+	// Possible values are:
+	//
+	// * BaseConsolidatedStatusPerEnforcementPoint#BaseConsolidatedStatusPerEnforcementPoint_RESOURCE_TYPE_CONSOLIDATEDSTATUSPERENFORCEMENTPOINT
+	// * BaseConsolidatedStatusPerEnforcementPoint#BaseConsolidatedStatusPerEnforcementPoint_RESOURCE_TYPE_CONSOLIDATEDSTATUSNSXT
+	//
+	//  The type of this resource. Value is \"ConsolidatedStatusPerEnforcementPoint\" for basic status, or \"ConsolidatedStatusNsxT\" when detailed enforced status is included.
+	ResourceType string
+	// The site where this enforcement point resides.
+	SitePath *string
+}
+
+// Identifier denoting this class, when it is used in polymorphic context.
+//
+// This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
+const BaseConsolidatedStatusPerEnforcementPoint__TYPE_IDENTIFIER = "BaseConsolidatedStatusPerEnforcementPoint"
+const BaseConsolidatedStatusPerEnforcementPoint_RESOURCE_TYPE_CONSOLIDATEDSTATUSPERENFORCEMENTPOINT = "ConsolidatedStatusPerEnforcementPoint"
+const BaseConsolidatedStatusPerEnforcementPoint_RESOURCE_TYPE_CONSOLIDATEDSTATUSNSXT = "ConsolidatedStatusNsxT"
+
+func (s *BaseConsolidatedStatusPerEnforcementPoint) GetType__() vapiBindings_.BindingType {
+	return BaseConsolidatedStatusPerEnforcementPointBindingType()
+}
+
+func (s *BaseConsolidatedStatusPerEnforcementPoint) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for BaseConsolidatedStatusPerEnforcementPoint._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // The count action results from aggregating checkpoints per port.
 type BaseCountObservation struct {
 	Checkpoints *CheckpointCounterResult
@@ -7748,7 +7812,7 @@ type BgpRouteFiltering struct {
 	// * BgpRouteFiltering#BgpRouteFiltering_ADDRESS_FAMILY_IPV6
 	// * BgpRouteFiltering#BgpRouteFiltering_ADDRESS_FAMILY_L2VPN_EVPN
 	//
-	//  Address family type. If not configured, this property automatically derived for IPv4 & IPv6 peer configuration.
+	//  Address family type. If not configured, this property automatically derived for IPv4 & IPv6 peer configuration. For Route Controller BGP neighbors, the IPv4 and IPV6 address families are read-only, and route filters cannot be configured for it.
 	AddressFamily *string
 	// Flag to enable address family.
 	Enabled *bool
@@ -8161,6 +8225,8 @@ type BluecatIPAMProvider struct {
 	ServerCertificate *string
 	// Ipam ThirdParty provider user name
 	Username *string
+	// When set to true, the hostname of the third party IPAM provider is verified against the Subject/Subject Alternative Name of the server certificate during the secure connection handshake. When set to false, hostname verification is skipped. Defaults to true, so a new registration that does not specify this flag has hostname verification enabled. This flag cannot be modified once the provider registration is complete.
+	VerifyHostname *bool
 }
 
 // Identifier denoting this class, when it is used in polymorphic context.
@@ -21768,6 +21834,66 @@ func (s *ChildRouteControllerInterface) GetDataValue__() (vapiData_.DataValue, [
 	return dataVal, nil
 }
 
+// Child wrapper object for route controller route map, used in hierarchical API.
+type ChildRouteControllerRouteMap struct {
+	RouteControllerRouteMap *RouteControllerRouteMap
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id           *string
+	ResourceType string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// Indicates whether this object is the overridden intent object Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
+	MarkForOverride *bool
+	// During Tier 1 to VPC Conversion, this field is set to the target object path for the object being converted. For example, if the object being converted is a Tier-1, this field is set to the path of the VPC that the Tier-1 is being converted to. This field is used to track the target object path for the object being converted, and to mark the original objects.
+	MarkedForConvert *string
+	// If this field is set to true, delete operation is triggered on the intent tree. This resource along with its all children in intent tree will be deleted. This is a cascade delete and should only be used if intent object along with its all children are to be deleted. This does not support deletion of single non-leaf node within the tree and should be used carefully.
+	MarkedForDelete  *bool
+	RequestParameter *vapiData_.StructValue
+}
+
+// Identifier denoting this class, when it is used in polymorphic context.
+//
+// This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
+const ChildRouteControllerRouteMap__TYPE_IDENTIFIER = "ChildRouteControllerRouteMap"
+
+func (s *ChildRouteControllerRouteMap) GetType__() vapiBindings_.BindingType {
+	return ChildRouteControllerRouteMapBindingType()
+}
+
+func (s *ChildRouteControllerRouteMap) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ChildRouteControllerRouteMap._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Child wrapper object for Rule, used in hierarchical API
 type ChildRule struct {
 	Rule *Rule
@@ -27335,6 +27461,73 @@ func (s *ClusterBasedSpan) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Contains the cluster identifier and its aggregated hypervisor security protection status derived from all hosts in the cluster.
+type ClusterCompatibilityInfo struct {
+	// External ID of the vSphere cluster.
+	ClusterId *string
+	// Possible values are:
+	//
+	// * ClusterCompatibilityInfo#ClusterCompatibilityInfo_STATUS_COMPATIBLE
+	// * ClusterCompatibilityInfo#ClusterCompatibilityInfo_STATUS_PARTIALLY_COMPATIBLE
+	// * ClusterCompatibilityInfo#ClusterCompatibilityInfo_STATUS_INCOMPATIBLE
+	//
+	//  Cluster protection status
+	Status *string
+}
+
+const ClusterCompatibilityInfo_STATUS_COMPATIBLE = "COMPATIBLE"
+const ClusterCompatibilityInfo_STATUS_PARTIALLY_COMPATIBLE = "PARTIALLY_COMPATIBLE"
+const ClusterCompatibilityInfo_STATUS_INCOMPATIBLE = "INCOMPATIBLE"
+
+func (s *ClusterCompatibilityInfo) GetType__() vapiBindings_.BindingType {
+	return ClusterCompatibilityInfoBindingType()
+}
+
+func (s *ClusterCompatibilityInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ClusterCompatibilityInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Paged collection of cluster compatibility info
+type ClusterCompatibilityInfoListResult struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy *string
+	// Cluster compatibility info list
+	Results []ClusterCompatibilityInfo
+}
+
+func (s *ClusterCompatibilityInfoListResult) GetType__() vapiBindings_.BindingType {
+	return ClusterCompatibilityInfoListResultBindingType()
+}
+
+func (s *ClusterCompatibilityInfoListResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ClusterCompatibilityInfoListResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Cluster control plane is a hierarchical extension of the NSX-T control plane. It allows NSX to manage multiple clusters. There is an instance of cluster control plane in each managed cluster. The cluster control plane is responsible for the traffic management, span calculation and it can work on its own. NSX-T central control plane distributes high-level network configurations like security policies and groups to cluster control planes, and each cluster control plane computes and realizes the configurations on the managed cluster.
 type ClusterControlPlane struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -28337,7 +28530,7 @@ type CommunityList struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// List of BGP community entries. Both standard and large communities are supported. Standard community format: aa:nn where aa and nn must be within the range [1 - 65536]. Large BGP Community format: aa:bb:nn where aa (Global Administrator), bb (Local Data Part 1) and nn (Local Data Part 2) must be within the range [1 - 4294967295]. In additon to numbered communites (e.g. 3356:2040), predefined communities (NO_EXPORT, NO_ADVERTISE, NO_EXPORT_SUBCONFED) are supported.
+	// List of BGP community entries. Standard, large and extended communities are supported. Standard community format: aa:nn where aa and nn must be within the range [1 - 65536]. Large BGP Community format: aa:bb:nn where aa (Global Administrator), bb (Local Data Part 1) and nn (Local Data Part 2) must be within the range [1 - 4294967295]. Extended community format: rt:ASN:NN (rt:2byte:4byte or rt:4byte:2byte) or rt:IP:NN (rt:Ipv4Address:2byte). In additon to numbered communites (e.g. 3356:2040), predefined communities (NO_EXPORT,NO_ADVERTISE, NO_EXPORT_SUBCONFED) are supported. Extended communities are supported only for route controller community list.
 	Communities []string
 }
 
@@ -28384,6 +28577,45 @@ func (s *CommunityListListResult) GetDataValue__() (vapiData_.DataValue, []error
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for CommunityListListResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Community list match criteria used in a RouteController route map entry.
+type CommunityListMatch struct {
+	// Match criteria based on a community list.
+	Criteria *string
+	// Possible values are:
+	//
+	// * CommunityListMatch#CommunityListMatch_MATCH_OPERATOR_ANY
+	// * CommunityListMatch#CommunityListMatch_MATCH_OPERATOR_ALL
+	// * CommunityListMatch#CommunityListMatch_MATCH_OPERATOR_EXACT
+	// * CommunityListMatch#CommunityListMatch_MATCH_OPERATOR_COMMUNITY_REGEX
+	// * CommunityListMatch#CommunityListMatch_MATCH_OPERATOR_LARGE_COMMUNITY_REGEX
+	// * CommunityListMatch#CommunityListMatch_MATCH_OPERATOR_EXT_COMMUNITY_REGEX
+	//
+	//  Match operator for community list entries.
+	MatchOperator *string
+}
+
+const CommunityListMatch_MATCH_OPERATOR_ANY = "MATCH_ANY"
+const CommunityListMatch_MATCH_OPERATOR_ALL = "MATCH_ALL"
+const CommunityListMatch_MATCH_OPERATOR_EXACT = "MATCH_EXACT"
+const CommunityListMatch_MATCH_OPERATOR_COMMUNITY_REGEX = "MATCH_COMMUNITY_REGEX"
+const CommunityListMatch_MATCH_OPERATOR_LARGE_COMMUNITY_REGEX = "MATCH_LARGE_COMMUNITY_REGEX"
+const CommunityListMatch_MATCH_OPERATOR_EXT_COMMUNITY_REGEX = "MATCH_EXT_COMMUNITY_REGEX"
+
+func (s *CommunityListMatch) GetType__() vapiBindings_.BindingType {
+	return CommunityListMatchBindingType()
+}
+
+func (s *CommunityListMatch) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for CommunityListMatch._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -28835,6 +29067,7 @@ type Condition struct {
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_FQDNEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -29543,6 +29776,7 @@ type ConjunctionOperator struct {
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_FQDNEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -29866,8 +30100,8 @@ type ConsolidatedRealizedStatus struct {
 	// Intent path of object, forward slashes must be escaped using %2F.
 	IntentPath         *string
 	ConsolidatedStatus *ConsolidatedStatus
-	// List of Consolidated Realized Status per enforcement point. An enforcement point represents an enforcing system — NSX is the default; others include Antrea, or a site (on the global manager). Within an NSX enforcement point, ESXi(for distributed firewall) and Edge Nodes (for gateway firewall) are tracked as Transport Nodes, not as enforcement points. Each item is a ConsolidatedStatusNsxT, which extends ConsolidatedStatusPerEnforcementPoint. The resource_type field indicates the effective response shape: \"ConsolidatedStatusNsxT\" when include_enforced_status=true — the enforced_status field is populated with detailed per-transport-node enforcement information. \"ConsolidatedStatusPerEnforcementPoint\" when include_enforced_status=false (default) — the enforced_status field is absent.
-	ConsolidatedStatusPerEnforcementPoint []ConsolidatedStatusNsxt
+	// List of Consolidated Realized Status per enforcement point. An enforcement point represents an enforcing system — NSX is the default; others include Antrea, or a site (on the global manager). Within an NSX enforcement point, ESXi(for distributed firewall) and Edge Nodes (for gateway firewall) are tracked as Transport Nodes, not as enforcement points. Each item is a ConsolidatedStatusPerEnforcementPoint or its sub-type ConsolidatedStatusNsxT. The resource_type field indicates the effective response shape: \"ConsolidatedStatusNsxT\" when include_enforced_status=true — the enforced_status field is populated with detailed per-transport-node enforcement information. \"ConsolidatedStatusPerEnforcementPoint\" when include_enforced_status=false (default) — the enforced_status field is absent.
+	ConsolidatedStatusPerEnforcementPoint []ConsolidatedStatusPerEnforcementPoint
 	// Represent highest intent version across all realized objects
 	IntentVersion *string
 	// Possible values are:
@@ -29952,17 +30186,22 @@ func (s *ConsolidatedStatus) GetDataValue__() (vapiData_.DataValue, []error) {
 
 // Consolidated Realized Status for NSX-T enforcement points. The enforced_status field is optional and only populated when the include_enforced_status query parameter is set to true.
 type ConsolidatedStatusNsxt struct {
-	Alarm *PolicyRuntimeAlarm
+	EnforcedStatus *EnforcedStatusDetailsNsxt
+	Alarm          *PolicyRuntimeAlarm
 	// Policy Path referencing the enforcement point where the info is fetched.
 	EnforcementPointPath *string
 	ConsolidatedStatus   *ConsolidatedStatus
 	// Enforcement Point Id.
 	EnforcementPointId *string
-	// The type of this resource. Value is \"ConsolidatedStatusPerEnforcementPoint\" for basic status, or \"ConsolidatedStatusNsxT\" when detailed enforced status is included.
-	ResourceType *string
+	// Possible values are:
+	//
+	// * BaseConsolidatedStatusPerEnforcementPoint#BaseConsolidatedStatusPerEnforcementPoint_RESOURCE_TYPE_CONSOLIDATEDSTATUSPERENFORCEMENTPOINT
+	// * BaseConsolidatedStatusPerEnforcementPoint#BaseConsolidatedStatusPerEnforcementPoint_RESOURCE_TYPE_CONSOLIDATEDSTATUSNSXT
+	//
+	//  The type of this resource. Value is \"ConsolidatedStatusPerEnforcementPoint\" for basic status, or \"ConsolidatedStatusNsxT\" when detailed enforced status is included.
+	ResourceType string
 	// The site where this enforcement point resides.
-	SitePath       *string
-	EnforcedStatus *EnforcedStatusDetailsNsxt
+	SitePath *string
 }
 
 func (s *ConsolidatedStatusNsxt) GetType__() vapiBindings_.BindingType {
@@ -29980,7 +30219,7 @@ func (s *ConsolidatedStatusNsxt) GetDataValue__() (vapiData_.DataValue, []error)
 	return dataVal, nil
 }
 
-// Base type for Consolidated Realized Status Per Enforcement Point. This type serves as the base for NSX-T specific consolidated status.
+// Consolidated Realized Status Per Enforcement Point.
 type ConsolidatedStatusPerEnforcementPoint struct {
 	Alarm *PolicyRuntimeAlarm
 	// Policy Path referencing the enforcement point where the info is fetched.
@@ -29988,11 +30227,21 @@ type ConsolidatedStatusPerEnforcementPoint struct {
 	ConsolidatedStatus   *ConsolidatedStatus
 	// Enforcement Point Id.
 	EnforcementPointId *string
-	// The type of this resource. Value is \"ConsolidatedStatusPerEnforcementPoint\" for basic status, or \"ConsolidatedStatusNsxT\" when detailed enforced status is included.
-	ResourceType *string
+	// Possible values are:
+	//
+	// * BaseConsolidatedStatusPerEnforcementPoint#BaseConsolidatedStatusPerEnforcementPoint_RESOURCE_TYPE_CONSOLIDATEDSTATUSPERENFORCEMENTPOINT
+	// * BaseConsolidatedStatusPerEnforcementPoint#BaseConsolidatedStatusPerEnforcementPoint_RESOURCE_TYPE_CONSOLIDATEDSTATUSNSXT
+	//
+	//  The type of this resource. Value is \"ConsolidatedStatusPerEnforcementPoint\" for basic status, or \"ConsolidatedStatusNsxT\" when detailed enforced status is included.
+	ResourceType string
 	// The site where this enforcement point resides.
 	SitePath *string
 }
+
+// Identifier denoting this class, when it is used in polymorphic context.
+//
+// This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
+const ConsolidatedStatusPerEnforcementPoint__TYPE_IDENTIFIER = "ConsolidatedStatusPerEnforcementPoint"
 
 func (s *ConsolidatedStatusPerEnforcementPoint) GetType__() vapiBindings_.BindingType {
 	return ConsolidatedStatusPerEnforcementPointBindingType()
@@ -30878,6 +31127,33 @@ func (s *ConversionImpactWarningMessage) GetDataValue__() (vapiData_.DataValue, 
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for ConversionImpactWarningMessage._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Workflow state for conversion workflows, including conversion impacts and validation failures.
+type ConversionWorkflowState struct {
+	// Global error messages populated by the backend.
+	Errors []string
+	// Status within the current phase.
+	Status *string
+	// Plan or validation impacts populated by the backend.
+	ConversionImpacts []ConversionImpactEntry
+	// Detailed failure messages populated by the backend.
+	ValidationFailures []ValidationFailureEntry
+}
+
+func (s *ConversionWorkflowState) GetType__() vapiBindings_.BindingType {
+	return ConversionWorkflowStateBindingType()
+}
+
+func (s *ConversionWorkflowState) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ConversionWorkflowState._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -37071,7 +37347,7 @@ type DistributedVxlanConnection struct {
 	//
 	//  Ethernet Virtual Private Network (EVPN) connectivity type, which defaults to L3 network layer.
 	ConnectivityType *string
-	// Controls how learned routes are installed into Distributed Transit Gateway. If this field is set to false, only default routes are installed as it happens today. No change in the behavior. If this field is set to true, all learned routes are installed in addition to default routes. Update of direct_path field is not supported. To update direct_path, delete and re-create the Distributed VXLAN connection with new direct_path value.
+	// Controls how learned routes are installed into Distributed Transit Gateway. If this field is set to false, only default routes are installed as it happens today. No change in the behavior. If this field is set to true, all learned routes are installed in addition to default routes.
 	DirectPath *bool
 	// L3 VNI for overlay traffic. format: int32
 	L3Vni *int64
@@ -37134,7 +37410,82 @@ func (s *DistributedVxlanConnectionListResult) GetDataValue__() (vapiData_.DataV
 	return dataVal, nil
 }
 
-// Project-level binding between an IP block and DNS zones. When a workload IP is allocated from the referenced IP block (e.g. on VM power-on), the system automatically creates a DnsRecord of type A in the zone referenced by a_record_zone_path. If ptr_record_zone_path is set, a DnsRecord of type PTR is also auto-created in that zone. Both a_record_zone_path and ptr_record_zone_path accept local or shared zones. The auto-created records are removed when the IP is deallocated (e.g. on VM power-off or deletion). Only one DnsAutoRecordConfig per ip_block_path is allowed per project. The ip_block_path field is immutable after creation.
+// Distributed vxlan connection state. Each distributed vxlan connection is realized as a VRF which is a child of the realized Tier0 gateway of its associated route controller.
+type DistributedVxlanConnectionState struct {
+	// Timestamp when the distributed vxlan connection state was last updated. format: int64
+	LastUpdateTimestamp *int64
+	// The Id of the realized VRF logical gateway backing the distributed vxlan connection.
+	LogicalGatewayId *string
+	// Per node status
+	PerNodeStatus []DistributedVxlanConnectionStateNodeStatus
+	// Policy path of the route controller associated with this distributed vxlan connection.
+	RouteControllerPath *string
+}
+
+func (s *DistributedVxlanConnectionState) GetType__() vapiBindings_.BindingType {
+	return DistributedVxlanConnectionStateBindingType()
+}
+
+func (s *DistributedVxlanConnectionState) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for DistributedVxlanConnectionState._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Distributed vxlan connection state node status
+type DistributedVxlanConnectionStateNodeStatus struct {
+	// Possible values are:
+	//
+	// * DistributedVxlanConnectionStateNodeStatus#DistributedVxlanConnectionStateNodeStatus_HIGH_AVAILABILITY_STATUS_ACTIVE
+	// * DistributedVxlanConnectionStateNodeStatus#DistributedVxlanConnectionStateNodeStatus_HIGH_AVAILABILITY_STATUS_STANDBY
+	// * DistributedVxlanConnectionStateNodeStatus#DistributedVxlanConnectionStateNodeStatus_HIGH_AVAILABILITY_STATUS_DOWN
+	// * DistributedVxlanConnectionStateNodeStatus#DistributedVxlanConnectionStateNodeStatus_HIGH_AVAILABILITY_STATUS_SYNC
+	// * DistributedVxlanConnectionStateNodeStatus#DistributedVxlanConnectionStateNodeStatus_HIGH_AVAILABILITY_STATUS_UNKNOWN
+	// * DistributedVxlanConnectionStateNodeStatus#DistributedVxlanConnectionStateNodeStatus_HIGH_AVAILABILITY_STATUS_ADMIN_DOWN
+	//
+	//  High availability status of the distributed vxlan connection's VRF on the virtual network appliance node.
+	HighAvailabilityStatus *string
+	// Possible values are:
+	//
+	// * DistributedVxlanConnectionStateNodeStatus#DistributedVxlanConnectionStateNodeStatus_NODE_TYPE_APPLIANCE
+	//
+	//  Type of node.
+	NodeType *string
+	// The Id of the service gateway where the status is retrieved.
+	ServiceGatewayId *string
+	// Policy path of virtual network appliance where the node status is retrieved. Virtual network appliance cluster should be member of enforcement point.
+	VirtualNetworkAppliancePath *string
+}
+
+const DistributedVxlanConnectionStateNodeStatus_HIGH_AVAILABILITY_STATUS_ACTIVE = "ACTIVE"
+const DistributedVxlanConnectionStateNodeStatus_HIGH_AVAILABILITY_STATUS_STANDBY = "STANDBY"
+const DistributedVxlanConnectionStateNodeStatus_HIGH_AVAILABILITY_STATUS_DOWN = "DOWN"
+const DistributedVxlanConnectionStateNodeStatus_HIGH_AVAILABILITY_STATUS_SYNC = "SYNC"
+const DistributedVxlanConnectionStateNodeStatus_HIGH_AVAILABILITY_STATUS_UNKNOWN = "UNKNOWN"
+const DistributedVxlanConnectionStateNodeStatus_HIGH_AVAILABILITY_STATUS_ADMIN_DOWN = "ADMIN_DOWN"
+const DistributedVxlanConnectionStateNodeStatus_NODE_TYPE_APPLIANCE = "VIRTUAL_NETWORK_APPLIANCE"
+
+func (s *DistributedVxlanConnectionStateNodeStatus) GetType__() vapiBindings_.BindingType {
+	return DistributedVxlanConnectionStateNodeStatusBindingType()
+}
+
+func (s *DistributedVxlanConnectionStateNodeStatus) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for DistributedVxlanConnectionStateNodeStatus._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Project-level binding between an IP block and DNS zones. When a workload IP is allocated from the referenced IP block (e.g. on VM power-on), the system automatically creates a DnsRecord of type A in the zone referenced by a_record_zone_path. If ptr_record_zone_paths is set, a DnsRecord of type PTR is also auto-created; when the IP block spans multiple CIDRs, the PTR record for an allocated IP is placed in whichever referenced zone's domain name matches that IP's CIDR. Both a_record_zone_path and the ptr_record_zone_paths entries accept local or shared zones. The auto-created records are removed when the IP is deallocated (e.g. on VM power-off or deletion). Only one DnsAutoRecordConfig per ip_block_path is allowed per project. The ip_block_path field is immutable after creation.
 type DnsAutoRecordConfig struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -37191,10 +37542,10 @@ type DnsAutoRecordConfig struct {
 	Overridden *bool
 	// Policy path to a DnsZone (local or shared) in which auto-created A records are placed. The zone must exist and be visible to this project. Example: /orgs/default/projects/project-1/dns-services/dns-svc-1/zones/zone-1
 	ARecordZonePath *string
-	// Policy path to the IP block from which workload IPs are allocated. When an IP is allocated from this block, an A record is automatically created in the referenced zone; a PTR record is also created if ptr_record_zone_path is set. Immutable after creation. Only one DnsAutoRecordConfig per ip_block_path is allowed within a project. The IP block must be visible to the project. Example: /infra/ip-blocks/block-1
+	// Policy path to the IP block from which workload IPs are allocated. When an IP is allocated from this block, an A record is automatically created in the referenced zone; a PTR record is also created if ptr_record_zone_paths is set. Immutable after creation. Only one DnsAutoRecordConfig per ip_block_path is allowed within a project. The IP block must be visible to the project. Example: /infra/ip-blocks/block-1
 	IpBlockPath *string
-	// Optional policy path to a DnsZone (local or shared) in which auto-created PTR (reverse DNS) records are placed. When absent, no PTR record is auto-created. The zone must exist and be visible to this project. Example: /orgs/default/projects/project-1/dns-services/dns-svc-1/zones/reverse-zone
-	PtrRecordZonePath *string
+	// Optional policy paths to DnsZones (local or shared) in which auto-created PTR (reverse DNS) records are placed. When absent or empty, no PTR record is auto-created. If the IP block referenced by ip_block_path spans multiple CIDRs, the PTR record for an allocated IP is placed in whichever referenced zone's domain name matches that IP's CIDR. Each zone must exist and be visible to this project. Example: /orgs/default/projects/project-1/dns-services/dns-svc-1/zones/reverse-zone
+	PtrRecordZonePaths []string
 	// Time-To-Live in seconds for auto-created A and PTR records. Range: 30-86400 seconds. Default: 300. format: int64
 	Ttl *int64
 }
@@ -41657,6 +42008,7 @@ type Expression struct {
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_FQDNEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -41700,6 +42052,7 @@ const Expression_RESOURCE_TYPE_PATHEXPRESSION = "PathExpression"
 const Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION = "IdentityGroupExpression"
 const Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION = "GeoLocationExpression"
 const Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION = "NamespaceVmNameExpression"
+const Expression_RESOURCE_TYPE_FQDNEXPRESSION = "FqdnExpression"
 
 func (s *Expression) GetType__() vapiBindings_.BindingType {
 	return ExpressionBindingType()
@@ -41814,6 +42167,7 @@ type ExternalIDExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_FQDNEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -42357,6 +42711,8 @@ type FeatureUsages struct {
 	GATEWAYTLS *string
 	// Network Detection Response feature count.
 	NETWORKDETECTIONRESPONSE *string
+	// Network Traffic Analysis feature count.
+	NETWORKTRAFFICANALYSIS *string
 }
 
 func (s *FeatureUsages) GetType__() vapiBindings_.BindingType {
@@ -43835,6 +44191,120 @@ func (s *FqdnAnalysisConfig) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Represents FQDN (Fully Qualified Domain Name) expressions in the form of an array, to support addition of FQDNs in a group. Groups with FqdnExpression resolve to IPAddress group type. Both specific FQDNs and wildcard FQDNs (e.g. \*.example.com) are supported. FqdnExpression is not supported in VPC-level groups and on Global Manager.
+type FqdnExpression struct {
+	// This array can consist of one or more fully qualified domain names. Wildcard FQDNs such as \*.example.com are supported.
+	Fqdns []string
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id *string
+	// Possible values are:
+	//
+	// * Expression#Expression_RESOURCE_TYPE_CONDITION
+	// * Expression#Expression_RESOURCE_TYPE_CONJUNCTIONOPERATOR
+	// * Expression#Expression_RESOURCE_TYPE_NESTEDEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_IPADDRESSEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_MACADDRESSEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_EXTERNALIDEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_PATHEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_FQDNEXPRESSION
+	ResourceType string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// Set by the system when an asynchronous conversion workflow claims exclusive ownership of this resource. Cleared automatically, when the workflow is deleted. Clients cannot set or modify this value.
+	LockedByWorkflow *string
+	// This is a UUID generated by the system for knowing which site owns an object.
+	OriginSiteId *string
+	// This is a UUID generated by the system for knowing who owns this object.
+	OwnerId *string
+	// Path of its parent
+	ParentPath *string
+	// Absolute path of this object
+	Path *string
+	// This is a UUID generated by the system for realizing the entity object. In most cases this should be same as 'unique_id' of the entity. However, in some cases this can be different because of entities have migrated their unique identifier to NSX Policy intent objects later in the timeline and did not use unique_id for realization. Realization id is helpful for users to debug data path to correlate the configuration with corresponding intent.
+	RealizationId *string
+	// Path relative from its parent
+	RelativePath *string
+	// This path is populated only in case of multi-site scenario. Currently it is supported only for LM objects. When LM is onboarded to multi-site platform like NAPP or GM, remote_path will be set to the globally unique path across multi-site topology . It is generated based on local site-name and uses /org tree namespace. Note: It is populated only for LM objects. Not supported on the GM.
+	RemotePath *string
+	// This is a UUID generated by the GM/LM to uniquely identify entities in a federated environment. For entities that are stretched across multiple sites, the same ID will be used on all the stretched sites.
+	UniqueId *string
+	// Subtree for this type within policy tree containing nested elements. Note that this type is applicable to be used in Hierarchical API only.
+	Children []*vapiData_.StructValue
+	// Intent objects are not directly deleted from the system when a delete is invoked on them. They are marked for deletion and only when all the realized entities for that intent object get deleted, the intent object is deleted. Objects that are marked for deletion are not returned in GET call. One can use the search API to get these objects.
+	MarkedForDelete *bool
+	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
+	Overridden *bool
+}
+
+// Identifier denoting this class, when it is used in polymorphic context.
+//
+// This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
+const FqdnExpression__TYPE_IDENTIFIER = "FqdnExpression"
+
+func (s *FqdnExpression) GetType__() vapiBindings_.BindingType {
+	return FqdnExpressionBindingType()
+}
+
+func (s *FqdnExpression) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for FqdnExpression._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Represents a single FQDN and the set of IP addresses it has been resolved to.
+type FqdnRecord struct {
+	// The fully qualified domain name, e.g. www.example.com or \*.example.com.
+	Fqdn *string
+	// IP addresses that this FQDN currently resolves to. The list may be empty if DNS resolution has not yet completed or the FQDN does not resolve. format: address-or-block-or-range
+	IpAddresses []string
+}
+
+func (s *FqdnRecord) GetType__() vapiBindings_.BindingType {
+	return FqdnRecordBindingType()
+}
+
+func (s *FqdnRecord) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for FqdnRecord._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Current resolution for one FQDN—IPs, status, and last successful resolution time.
 type FqdnResolvedIpState struct {
 	// The FQDN.
@@ -43845,17 +44315,19 @@ type FqdnResolvedIpState struct {
 	//
 	// * FqdnResolvedIpState#FqdnResolvedIpState_RESOLUTION_STATUS_RESOLVED
 	// * FqdnResolvedIpState#FqdnResolvedIpState_RESOLUTION_STATUS_FAILED
+	// * FqdnResolvedIpState#FqdnResolvedIpState_RESOLUTION_STATUS_NO_RECORDS
 	// * FqdnResolvedIpState#FqdnResolvedIpState_RESOLUTION_STATUS_TIMEOUT
 	// * FqdnResolvedIpState#FqdnResolvedIpState_RESOLUTION_STATUS_UNKNOWN
 	//
 	//  DNS resolution outcome.
 	ResolutionStatus *string
-	// Resolved IPv4/IPv6 addresses; empty if FAILED or TIMEOUT. format: ip
+	// Resolved IPv4/IPv6 addresses; empty if FAILED, NO_RECORDS, or TIMEOUT. format: ip
 	ResolvedIpAddresses []string
 }
 
 const FqdnResolvedIpState_RESOLUTION_STATUS_RESOLVED = "RESOLVED"
 const FqdnResolvedIpState_RESOLUTION_STATUS_FAILED = "FAILED"
+const FqdnResolvedIpState_RESOLUTION_STATUS_NO_RECORDS = "NO_RECORDS"
 const FqdnResolvedIpState_RESOLUTION_STATUS_TIMEOUT = "TIMEOUT"
 const FqdnResolvedIpState_RESOLUTION_STATUS_UNKNOWN = "UNKNOWN"
 
@@ -44406,23 +44878,78 @@ func (s *GatewayDnsResolverEdgeNodeStatus) GetDataValue__() (vapiData_.DataValue
 	return dataVal, nil
 }
 
-// Gateway path and per-resolver status for gateway-firewall FQDN resolution.
-type GatewayDnsResolverStatus struct {
+// Per-resolver reachability status for a Tier-0 gateway.
+type GatewayDnsResolverMonitoringStatus struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id *string
+	// The type of this resource.
+	ResourceType *string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// Set by the system when an asynchronous conversion workflow claims exclusive ownership of this resource. Cleared automatically, when the workflow is deleted. Clients cannot set or modify this value.
+	LockedByWorkflow *string
+	// This is a UUID generated by the system for knowing which site owns an object.
+	OriginSiteId *string
+	// This is a UUID generated by the system for knowing who owns this object.
+	OwnerId *string
+	// Path of its parent
+	ParentPath *string
+	// Absolute path of this object
+	Path *string
+	// This is a UUID generated by the system for realizing the entity object. In most cases this should be same as 'unique_id' of the entity. However, in some cases this can be different because of entities have migrated their unique identifier to NSX Policy intent objects later in the timeline and did not use unique_id for realization. Realization id is helpful for users to debug data path to correlate the configuration with corresponding intent.
+	RealizationId *string
+	// Path relative from its parent
+	RelativePath *string
+	// This path is populated only in case of multi-site scenario. Currently it is supported only for LM objects. When LM is onboarded to multi-site platform like NAPP or GM, remote_path will be set to the globally unique path across multi-site topology . It is generated based on local site-name and uses /org tree namespace. Note: It is populated only for LM objects. Not supported on the GM.
+	RemotePath *string
+	// This is a UUID generated by the GM/LM to uniquely identify entities in a federated environment. For entities that are stretched across multiple sites, the same ID will be used on all the stretched sites.
+	UniqueId *string
+	// Subtree for this type within policy tree containing nested elements. Note that this type is applicable to be used in Hierarchical API only.
+	Children []*vapiData_.StructValue
+	// Intent objects are not directly deleted from the system when a delete is invoked on them. They are marked for deletion and only when all the realized entities for that intent object get deleted, the intent object is deleted. Objects that are marked for deletion are not returned in GET call. One can use the search API to get these objects.
+	MarkedForDelete *bool
+	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
+	Overridden *bool
 	// One entry per configured resolver (consolidated + per-node status).
 	DnsResolverStatus []GatewayDnsResolverStatusEntry
-	// Policy path of the gateway.
+	// Policy path of the gateway (e.g. /infra/tier-0s/gw1).
 	GatewayPath *string
+	// Epoch milliseconds when the status was last refreshed. format: int64
+	LastUpdatedMs *int64
 }
 
-func (s *GatewayDnsResolverStatus) GetType__() vapiBindings_.BindingType {
-	return GatewayDnsResolverStatusBindingType()
+func (s *GatewayDnsResolverMonitoringStatus) GetType__() vapiBindings_.BindingType {
+	return GatewayDnsResolverMonitoringStatusBindingType()
 }
 
-func (s *GatewayDnsResolverStatus) GetDataValue__() (vapiData_.DataValue, []error) {
+func (s *GatewayDnsResolverMonitoringStatus) GetDataValue__() (vapiData_.DataValue, []error) {
 	typeConverter := vapiBindings_.NewTypeConverter()
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
-		vapiLog_.Errorf("Error in ConvertToVapi for GatewayDnsResolverStatus._GetDataValue method - %s",
+		vapiLog_.Errorf("Error in ConvertToVapi for GatewayDnsResolverMonitoringStatus._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -46085,6 +46612,7 @@ type GeoLocationExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_FQDNEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -46316,7 +46844,9 @@ type GlobalConfig struct {
 	// * GlobalConfig#GlobalConfig_DEFAULT_HOST_SWITCH_MODE_ENS_INTERRUPT
 	// * GlobalConfig#GlobalConfig_DEFAULT_HOST_SWITCH_MODE_STANDARD
 	//
-	//  The value of this field will be used only if TN/TNP create API does not contain hostswitch mode. ENS_INTERRUPT - This is an interrupt driven variant of the Enhanced Data Path mode. Please, consult your account representative for applicability. This mode is available only on ESX hypervisor (7.0 and above). STANDARD - This mode was formerly the default and is realized as pktHandle mode in the datapath.
+	//  The value of this field will be used only if TN/TNP create API does not contain hostswitch mode. ENS_INTERRUPT - This is an interrupt driven variant of the Enhanced Data Path mode. Please, consult your account representative for applicability. This mode is available only on ESX hypervisor (7.0 and above). STANDARD - The realized host switch mode will be chosen automatically (best applicable as per uplink capabilities) by the data-plane in the transport node and may change in future.
+	//
+	// Deprecated: This API element is deprecated.
 	DefaultHostSwitchMode *string
 	ExternalGatewayBfd    *ExternalGatewayBfdConfig
 	Fips                  *FIPSGlobalConfig
@@ -48377,6 +48907,7 @@ type GroupScopeExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_FQDNEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -48830,6 +49361,73 @@ func (s *HighPerformanceConfigParams) GetDataValue__() (vapiData_.DataValue, []e
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for HighPerformanceConfigParams._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Contains the host identifier and its aggregated hypervisor security protection status derived from all its VMKs.
+type HostCompatibilityInfo struct {
+	// External ID of the ESXi host.
+	HostId *string
+	// Possible values are:
+	//
+	// * HostCompatibilityInfo#HostCompatibilityInfo_STATUS_COMPATIBLE
+	// * HostCompatibilityInfo#HostCompatibilityInfo_STATUS_PARTIALLY_COMPATIBLE
+	// * HostCompatibilityInfo#HostCompatibilityInfo_STATUS_INCOMPATIBLE
+	//
+	//  Host protection status
+	Status *string
+}
+
+const HostCompatibilityInfo_STATUS_COMPATIBLE = "COMPATIBLE"
+const HostCompatibilityInfo_STATUS_PARTIALLY_COMPATIBLE = "PARTIALLY_COMPATIBLE"
+const HostCompatibilityInfo_STATUS_INCOMPATIBLE = "INCOMPATIBLE"
+
+func (s *HostCompatibilityInfo) GetType__() vapiBindings_.BindingType {
+	return HostCompatibilityInfoBindingType()
+}
+
+func (s *HostCompatibilityInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for HostCompatibilityInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Paged collection of host compatibility info
+type HostCompatibilityInfoListResult struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy *string
+	// Host compatibility info list
+	Results []HostCompatibilityInfo
+}
+
+func (s *HostCompatibilityInfoListResult) GetType__() vapiBindings_.BindingType {
+	return HostCompatibilityInfoListResultBindingType()
+}
+
+func (s *HostCompatibilityInfoListResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for HostCompatibilityInfoListResult._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -49334,6 +49932,15 @@ type HostSwitchState struct {
 	Endpoints []Endpoint
 	// External ID of the HostSwitch
 	HostSwitchId *string
+	// Possible values are:
+	//
+	// * HostSwitchState#HostSwitchState_HOST_SWITCH_MODE_STANDARD
+	// * HostSwitchState#HostSwitchState_HOST_SWITCH_MODE_ENS
+	// * HostSwitchState#HostSwitchState_HOST_SWITCH_MODE_ENS_INTERRUPT
+	// * HostSwitchState#HostSwitchState_HOST_SWITCH_MODE_LEGACY
+	//
+	//  Realized mode of a HostSwitch in datapath.
+	HostSwitchMode *string
 	// The name must be unique among all host switches specified in a given Transport Node.
 	HostSwitchName *string
 	// Possible values are:
@@ -49351,6 +49958,10 @@ type HostSwitchState struct {
 	Vtepless *bool
 }
 
+const HostSwitchState_HOST_SWITCH_MODE_STANDARD = "STANDARD"
+const HostSwitchState_HOST_SWITCH_MODE_ENS = "ENS"
+const HostSwitchState_HOST_SWITCH_MODE_ENS_INTERRUPT = "ENS_INTERRUPT"
+const HostSwitchState_HOST_SWITCH_MODE_LEGACY = "LEGACY"
 const HostSwitchState_HOST_SWITCH_TYPE_NVDS = "NVDS"
 const HostSwitchState_HOST_SWITCH_TYPE_VDS = "VDS"
 
@@ -49788,6 +50399,80 @@ func (s *HostVnic) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for HostVnic._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Singleton resource that holds a list of NSX Group paths that are excluded from Hypervisor Security (ESXi management-VMKNic firewall) enforcement. This list is independent of the DFW exclude list.
+type HypervisorSecurityExcludeList struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id *string
+	// The type of this resource.
+	ResourceType *string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// Set by the system when an asynchronous conversion workflow claims exclusive ownership of this resource. Cleared automatically, when the workflow is deleted. Clients cannot set or modify this value.
+	LockedByWorkflow *string
+	// This is a UUID generated by the system for knowing which site owns an object.
+	OriginSiteId *string
+	// This is a UUID generated by the system for knowing who owns this object.
+	OwnerId *string
+	// Path of its parent
+	ParentPath *string
+	// Absolute path of this object
+	Path *string
+	// This is a UUID generated by the system for realizing the entity object. In most cases this should be same as 'unique_id' of the entity. However, in some cases this can be different because of entities have migrated their unique identifier to NSX Policy intent objects later in the timeline and did not use unique_id for realization. Realization id is helpful for users to debug data path to correlate the configuration with corresponding intent.
+	RealizationId *string
+	// Path relative from its parent
+	RelativePath *string
+	// This path is populated only in case of multi-site scenario. Currently it is supported only for LM objects. When LM is onboarded to multi-site platform like NAPP or GM, remote_path will be set to the globally unique path across multi-site topology . It is generated based on local site-name and uses /org tree namespace. Note: It is populated only for LM objects. Not supported on the GM.
+	RemotePath *string
+	// This is a UUID generated by the GM/LM to uniquely identify entities in a federated environment. For entities that are stretched across multiple sites, the same ID will be used on all the stretched sites.
+	UniqueId *string
+	// Subtree for this type within policy tree containing nested elements. Note that this type is applicable to be used in Hierarchical API only.
+	Children []*vapiData_.StructValue
+	// Intent objects are not directly deleted from the system when a delete is invoked on them. They are marked for deletion and only when all the realized entities for that intent object get deleted, the intent object is deleted. Objects that are marked for deletion are not returned in GET call. One can use the search API to get these objects.
+	MarkedForDelete *bool
+	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
+	Overridden *bool
+	// List of NSX Group paths to exempt from Hypervisor Security enforcement. Each entry must reference a valid NSX Group.
+	Members []string
+}
+
+func (s *HypervisorSecurityExcludeList) GetType__() vapiBindings_.BindingType {
+	return HypervisorSecurityExcludeListBindingType()
+}
+
+func (s *HypervisorSecurityExcludeList) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for HypervisorSecurityExcludeList._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -50324,6 +51009,7 @@ type IPAddressExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_FQDNEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -54404,6 +55090,7 @@ type IdentityGroupExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_FQDNEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -55292,20 +55979,10 @@ type IdsCustomSignature struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Technical description of the signature operation (markdown)
-	_Abstract *string
 	// Signature action.
 	Action *string
 	// Products affected by the signature.
 	AffectedProducts []AffectedProductDetail
-	// Possible values are:
-	//
-	// * IdsCustomSignature#IdsCustomSignature_ALERT_TYPE_IDS
-	// * IdsCustomSignature#IdsCustomSignature_ALERT_TYPE_FILE_TRANSFER
-	// * IdsCustomSignature#IdsCustomSignature_ALERT_TYPE_REPUTATION
-	//
-	//  Differentiates standard IDPS alerts from file transfer alerts.
-	AlertType *string
 	// Target of the signature.
 	AttackTarget *string
 	// Possible values are:
@@ -55320,8 +55997,6 @@ type IdsCustomSignature struct {
 	ClassType *string
 	// Signature's confidence score.
 	Confidence *string
-	// List of CVEs associated with the signature.
-	CveV3 []IdsSignatureCveEntry
 	// CVE score
 	Cves []string
 	// Possible values are:
@@ -55345,14 +56020,8 @@ type IdsCustomSignature struct {
 	Direction *string
 	// Flag which tells whether the signature is enabled or not.
 	Enable *bool
-	// Underlying assumptions that could lead to false negatives (markdown)
-	FalseNegatives *string
-	// Known potential for false positives (markdown)
-	FalsePositives *string
 	// Flow established from server, from client etc.
 	Flow *string
-	// Short description of the goal of a Suricata signature (plaintext)
-	Goal *string
 	// Impact of Signature.
 	Impact *string
 	// Family of the malware tracked in the signature.
@@ -55393,16 +56062,7 @@ type IdsCustomSignature struct {
 	SignatureSeverity *string
 	// Vendor assigned classification tag.
 	Tag       []string
-	Threat    *IdsSignatureThreat
 	Threshold *IdsSignatureThreshold
-	// Possible values are:
-	//
-	// * IdsCustomSignature#IdsCustomSignature_TRAFFIC_TYPE_REGULAR
-	// * IdsCustomSignature#IdsCustomSignature_TRAFFIC_TYPE_DECRYPTED
-	// * IdsCustomSignature#IdsCustomSignature_TRAFFIC_TYPE_ALL
-	//
-	//  Defines which traffic types the signature is valid for.
-	TrafficType *string
 	// Signature type.
 	Type_ []string
 	// List of mitre attack URLs pertaining to signature
@@ -55428,9 +56088,6 @@ type IdsCustomSignature struct {
 	ValidationStatus *string
 }
 
-const IdsCustomSignature_ALERT_TYPE_IDS = "IDS"
-const IdsCustomSignature_ALERT_TYPE_FILE_TRANSFER = "FILE_TRANSFER"
-const IdsCustomSignature_ALERT_TYPE_REPUTATION = "REPUTATION"
 const IdsCustomSignature_CATEGORIES_APPLICATION = "APPLICATION"
 const IdsCustomSignature_CATEGORIES_MALWARE = "MALWARE"
 const IdsCustomSignature_CATEGORIES_VULNERABILITY = "VULNERABILITY"
@@ -55443,9 +56100,6 @@ const IdsCustomSignature_PROTOCOL_ROLE_INFRASTRUCTURE = "INFRASTRUCTURE"
 const IdsCustomSignature_PROTOCOL_ROLE_APPLICATION = "APPLICATION"
 const IdsCustomSignature_PROTOCOL_ROLE_DATA_TRANSFER = "DATA_TRANSFER"
 const IdsCustomSignature_PROTOCOL_ROLE_SHARED_SERVICES = "SHARED_SERVICES"
-const IdsCustomSignature_TRAFFIC_TYPE_REGULAR = "REGULAR"
-const IdsCustomSignature_TRAFFIC_TYPE_DECRYPTED = "DECRYPTED"
-const IdsCustomSignature_TRAFFIC_TYPE_ALL = "ALL"
 const IdsCustomSignature_VALIDATION_STATUS_VALID = "VALID"
 const IdsCustomSignature_VALIDATION_STATUS_INVALID = "INVALID"
 const IdsCustomSignature_VALIDATION_STATUS_PENDING = "PENDING"
@@ -56542,6 +57196,7 @@ type IdsProfile struct {
 	// * IdsProfile#IdsProfile_PROFILE_SEVERITY_MEDIUM
 	// * IdsProfile#IdsProfile_PROFILE_SEVERITY_LOW
 	// * IdsProfile#IdsProfile_PROFILE_SEVERITY_SUSPICIOUS
+	// * IdsProfile#IdsProfile_PROFILE_SEVERITY_INFORMATIONAL
 	//
 	//  Represents the severities of signatures which are part of this profile.
 	ProfileSeverity []string
@@ -56556,6 +57211,7 @@ const IdsProfile_PROFILE_SEVERITY_HIGH = "HIGH"
 const IdsProfile_PROFILE_SEVERITY_MEDIUM = "MEDIUM"
 const IdsProfile_PROFILE_SEVERITY_LOW = "LOW"
 const IdsProfile_PROFILE_SEVERITY_SUSPICIOUS = "SUSPICIOUS"
+const IdsProfile_PROFILE_SEVERITY_INFORMATIONAL = "INFORMATIONAL"
 
 func (s *IdsProfile) GetType__() vapiBindings_.BindingType {
 	return IdsProfileBindingType()
@@ -57698,20 +58354,10 @@ type IdsSignature struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Technical description of the signature operation (markdown)
-	_Abstract *string
 	// Signature action.
 	Action *string
 	// Products affected by the signature.
 	AffectedProducts []AffectedProductDetail
-	// Possible values are:
-	//
-	// * IdsSignature#IdsSignature_ALERT_TYPE_IDS
-	// * IdsSignature#IdsSignature_ALERT_TYPE_FILE_TRANSFER
-	// * IdsSignature#IdsSignature_ALERT_TYPE_REPUTATION
-	//
-	//  Differentiates standard IDPS alerts from file transfer alerts.
-	AlertType *string
 	// Target of the signature.
 	AttackTarget *string
 	// Possible values are:
@@ -57726,8 +58372,6 @@ type IdsSignature struct {
 	ClassType *string
 	// Signature's confidence score.
 	Confidence *string
-	// List of CVEs associated with the signature.
-	CveV3 []IdsSignatureCveEntry
 	// CVE score
 	Cves []string
 	// Possible values are:
@@ -57751,14 +58395,8 @@ type IdsSignature struct {
 	Direction *string
 	// Flag which tells whether the signature is enabled or not.
 	Enable *bool
-	// Underlying assumptions that could lead to false negatives (markdown)
-	FalseNegatives *string
-	// Known potential for false positives (markdown)
-	FalsePositives *string
 	// Flow established from server, from client etc.
 	Flow *string
-	// Short description of the goal of a Suricata signature (plaintext)
-	Goal *string
 	// Impact of Signature.
 	Impact *string
 	// Family of the malware tracked in the signature.
@@ -57799,25 +58437,13 @@ type IdsSignature struct {
 	SignatureSeverity *string
 	// Vendor assigned classification tag.
 	Tag       []string
-	Threat    *IdsSignatureThreat
 	Threshold *IdsSignatureThreshold
-	// Possible values are:
-	//
-	// * IdsSignature#IdsSignature_TRAFFIC_TYPE_REGULAR
-	// * IdsSignature#IdsSignature_TRAFFIC_TYPE_DECRYPTED
-	// * IdsSignature#IdsSignature_TRAFFIC_TYPE_ALL
-	//
-	//  Defines which traffic types the signature is valid for.
-	TrafficType *string
 	// Signature type.
 	Type_ []string
 	// List of mitre attack URLs pertaining to signature
 	Urls []string
 }
 
-const IdsSignature_ALERT_TYPE_IDS = "IDS"
-const IdsSignature_ALERT_TYPE_FILE_TRANSFER = "FILE_TRANSFER"
-const IdsSignature_ALERT_TYPE_REPUTATION = "REPUTATION"
 const IdsSignature_CATEGORIES_APPLICATION = "APPLICATION"
 const IdsSignature_CATEGORIES_MALWARE = "MALWARE"
 const IdsSignature_CATEGORIES_VULNERABILITY = "VULNERABILITY"
@@ -57830,9 +58456,6 @@ const IdsSignature_PROTOCOL_ROLE_INFRASTRUCTURE = "INFRASTRUCTURE"
 const IdsSignature_PROTOCOL_ROLE_APPLICATION = "APPLICATION"
 const IdsSignature_PROTOCOL_ROLE_DATA_TRANSFER = "DATA_TRANSFER"
 const IdsSignature_PROTOCOL_ROLE_SHARED_SERVICES = "SHARED_SERVICES"
-const IdsSignature_TRAFFIC_TYPE_REGULAR = "REGULAR"
-const IdsSignature_TRAFFIC_TYPE_DECRYPTED = "DECRYPTED"
-const IdsSignature_TRAFFIC_TYPE_ALL = "ALL"
 
 func (s *IdsSignature) GetType__() vapiBindings_.BindingType {
 	return IdsSignatureBindingType()
@@ -57843,29 +58466,6 @@ func (s *IdsSignature) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for IdsSignature._GetDataValue method - %s",
-			vapiBindings_.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-// List of CVEs associated with the signature.
-type IdsSignatureCveEntry struct {
-	// CVE identifier string.
-	Id *string
-	// Whether this CVE is a Known Exploited Vulnerability (KEV).
-	Kev *bool
-}
-
-func (s *IdsSignatureCveEntry) GetType__() vapiBindings_.BindingType {
-	return IdsSignatureCveEntryBindingType()
-}
-
-func (s *IdsSignatureCveEntry) GetDataValue__() (vapiData_.DataValue, []error) {
-	typeConverter := vapiBindings_.NewTypeConverter()
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		vapiLog_.Errorf("Error in ConvertToVapi for IdsSignatureCveEntry._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -58113,29 +58713,6 @@ func (s *IdsSignatureStatus) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for IdsSignatureStatus._GetDataValue method - %s",
-			vapiBindings_.VAPIerrorsToError(err).Error())
-		return nil, err
-	}
-	return dataVal, nil
-}
-
-// Threat details associated with an IDS signature.
-type IdsSignatureThreat struct {
-	// Description about the threat.
-	Details *string
-	// Name of the threat.
-	Name *string
-}
-
-func (s *IdsSignatureThreat) GetType__() vapiBindings_.BindingType {
-	return IdsSignatureThreatBindingType()
-}
-
-func (s *IdsSignatureThreat) GetDataValue__() (vapiData_.DataValue, []error) {
-	typeConverter := vapiBindings_.NewTypeConverter()
-	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
-	if err != nil {
-		vapiLog_.Errorf("Error in ConvertToVapi for IdsSignatureThreat._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -59124,6 +59701,8 @@ type InfobloxIPAMProvider struct {
 	ServerCertificate *string
 	// Ipam ThirdParty provider user name
 	Username *string
+	// When set to true, the hostname of the third party IPAM provider is verified against the Subject/Subject Alternative Name of the server certificate during the secure connection handshake. When set to false, hostname verification is skipped. Defaults to true, so a new registration that does not specify this flag has hostname verification enabled. This flag cannot be modified once the provider registration is complete.
+	VerifyHostname *bool
 }
 
 // Identifier denoting this class, when it is used in polymorphic context.
@@ -62010,7 +62589,7 @@ func (s *IpBlockQuotaUsageForConsumer) GetDataValue__() (vapiData_.DataValue, []
 	return dataVal, nil
 }
 
-// A resource that defines IP address ranges and CIDRs that are restricted from being used in IP Block creation. This provides administrative control to prevent conflicts with reserved or restricted IP address spaces. - All CIDRs and ranges within a single resource must be mutually exclusive (no overlaps). - All IpBlockRestrictedIps resources must be mutually exclusive (no overlaps across resources).
+// A resource that defines IP address ranges and CIDRs that are restricted from being used in IP Block creation. This provides administrative control to prevent conflicts with reserved or restricted IP address spaces. - All CIDRs and ranges within a single resource must be mutually exclusive (no overlaps).
 type IpBlockRestrictedIps struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -62067,22 +62646,20 @@ type IpBlockRestrictedIps struct {
 	Overridden *bool
 	// Policy path of the PolicySpan associated with this resource. The PolicySpan defines which regions or sites the resource should be distributed to.
 	PolicySpanPath *string
-	// Array of CIDR blocks that are restricted from being used in IP Block creation. Supports both IPv4 and IPv6 CIDR notation (e.g., \"192.168.0.0/24\", \"2001:db8::/32\"). At max 10 restricted CIDRs per resource. format: ip-cidr-block
+	// Array of CIDR blocks that are restricted from being used in IP Block creation. Supports both IPv4 and IPv6 CIDR notation (e.g., \"192.168.0.0/24\", \"2001:db8::/32\"). A maximum of 10 restricted CIDRs are allowed. format: ip-cidr-block
 	RestrictedCidrs []string
-	// Array of IP address ranges that are restricted from being used in IP Block creation. Each range is defined by a start and end IP address. Supports both IPv4 and IPv6 addresses. At max 10 restricted ranges per resource.
+	// Array of IP address ranges that are restricted from being used in IP Block creation. Each range is defined by a start and end IP address. Supports both IPv4 and IPv6 addresses. A maximum of 10 restricted ranges are allowed.
 	RestrictedRanges []IpPoolRange
 	// Possible values are:
 	//
-	// * IpBlockRestrictedIps#IpBlockRestrictedIps_SCOPE_PROVIDER_IP_BLOCKS
 	// * IpBlockRestrictedIps#IpBlockRestrictedIps_SCOPE_ALL_CUSTOM_PROJECTS_IP_BLOCKS
 	// * IpBlockRestrictedIps#IpBlockRestrictedIps_SCOPE_SPECIFIC_PROJECT_IP_BLOCKS
 	// * IpBlockRestrictedIps#IpBlockRestrictedIps_SCOPE_GLOBAL
 	//
-	//  Represents the scope of IP blocks on which this restriction will be applied. Supported values: \* \\\\`PROVIDER_IP_BLOCKS\\\\`: Applies to IP blocks that will be created in /infra. \* \\\\`ALL_CUSTOM_PROJECTS_IP_BLOCKS\\\\`: Applies to IP blocks that will be created in any non-default project. \* \\\\`SPECIFIC_PROJECT_IP_BLOCKS\\\\`: Applies to IP blocks that will be created in specific projects. To apply, the project needs to refer to this IpBlockRestrictedIps via ProjectProfile. \* \\\\`GLOBAL\\\\`: Applies to any IP block that will be created in the system.
+	//  Represents the scope of IP blocks on which this restriction will be applied. Supported values: \* \\\\`ALL_CUSTOM_PROJECTS_IP_BLOCKS\\\\`: Applies to IP blocks that will be created in any non-default project. \* \\\\`SPECIFIC_PROJECT_IP_BLOCKS\\\\`: Applies to IP blocks that will be created in specific projects. To apply, the project needs to refer to this IpBlockRestrictedIps via ProjectProfile. \* \\\\`GLOBAL\\\\`: Applies to any IP block that will be created in the system.
 	Scope *string
 }
 
-const IpBlockRestrictedIps_SCOPE_PROVIDER_IP_BLOCKS = "PROVIDER_IP_BLOCKS"
 const IpBlockRestrictedIps_SCOPE_ALL_CUSTOM_PROJECTS_IP_BLOCKS = "ALL_CUSTOM_PROJECTS_IP_BLOCKS"
 const IpBlockRestrictedIps_SCOPE_SPECIFIC_PROJECT_IP_BLOCKS = "SPECIFIC_PROJECT_IP_BLOCKS"
 const IpBlockRestrictedIps_SCOPE_GLOBAL = "GLOBAL"
@@ -62375,6 +62952,8 @@ type IpamThirdPartyProvider struct {
 	ServerCertificate *string
 	// Ipam ThirdParty provider user name
 	Username *string
+	// When set to true, the hostname of the third party IPAM provider is verified against the Subject/Subject Alternative Name of the server certificate during the secure connection handshake. When set to false, hostname verification is skipped. Defaults to true, so a new registration that does not specify this flag has hostname verification enabled. This flag cannot be modified once the provider registration is complete.
+	VerifyHostname *bool
 }
 
 // Identifier denoting this class, when it is used in polymorphic context.
@@ -73192,6 +73771,8 @@ func (s *LimitListResult) GetDataValue__() (vapiData_.DataValue, []error) {
 
 // Object representing the operational state of a limit
 type LimitState struct {
+	// Display name of the limit resource
+	DisplayName *string
 	// Limit policy path
 	IntentPath *string
 	Quota      *vapiData_.StructValue
@@ -74391,6 +74972,8 @@ func (s *LogicalRouterPortStatistics) GetDataValue__() (vapiData_.DataValue, []e
 
 // Provides the following information about a logical router port in a given transport node: - The subcluster ID of the logical port. - Transport node ID. - <b>Incoming packet counters</b> on the logical router port in a given transport node. It includes the total number of packets received, dropped, and the number of errors and failures causing the drops. The counters are from the time the logical router port was created. The packet counters will be reset on edge reboot or edge dataplane restart. - <b>Outgoing packet counters</b> on the logical router port in a given transport node. It includes the total number of packets sent, dropped, and the number of errors and failures causing the drops. The counters are from the time the logical router port was created. The packet counters will be reset on edge reboot or edge dataplane restart. - Some of the packet drop reasons include, the DAD (Duplicate Address Detection) status of the IP is not in ASSIGNED state, firewall rules, failed to fragment the packet, receive malformed packet, could not find route to destination, absence of the receiver, insufficient memory, incomplete ARP resolution of the next-hop, RPF check failure, failed to redirect packet to KNI interface, TTL exceeded, port does not have a linked peer port and and unsupported - destination, protocol or L4 port. - Some of the IPSec packet drop reasons include the missing security association or VTI interface. It also includes packets dropped due to policy lookup error or block policy. - Provides the total number of service-insertion, KNI, non-IP and IPv6 packets dropped.
 type LogicalRouterPortStatisticsPerNode struct {
+	Ipv4 *AddressFamilyLogicalRouterPortCounters
+	Ipv6 *AddressFamilyLogicalRouterPortCounters
 	// Timestamp when the data was last updated; unset if data source has never updated the data. format: int64
 	LastUpdateTimestamp *int64
 	Rx                  *LogicalRouterPortCounters
@@ -74418,6 +75001,8 @@ func (s *LogicalRouterPortStatisticsPerNode) GetDataValue__() (vapiData_.DataVal
 
 // Provides the aggregated statistics of a logical router port across all transport nodes on a specific enforcement point since the time the logical router port was created. The logical router port statistics from a given transport node will be reset on edge reboot or edge dataplane restart of that node. It includes the following information: - Logical router port ID. - <b>Aggregated incoming packet counters</b> on the logical router port across all transport nodes. It includes the total number of packets received, dropped, and the number of errors and failures causing the drops. The counters are from the time the logical router port was created. The logical router port statistics from a given transport node will be reset on edge reboot or edge dataplane restart of that node. - <b>Aggregated outgoing packet counters</b> on the logical router port across all transport nodes. It includes the total number of packets sent, dropped, and the number of errors and failures causing the drops. The counters are from the time the logical router port was created. The logical router port statistics from a given transport node will be reset on edge reboot or edge dataplane restart of that node. - Some of the packet drop reasons include, the DAD (Duplicate Address Detection) status of the IP is not in ASSIGNED state, firewall rules, failed to fragment the packet, receive malformed packet, could not find route to destination, absence of the receiver, insufficient memory, incomplete ARP resolution of the next-hop, RPF check failure, failed to redirect packet to KNI interface, TTL exceeded, port does not have a linked peer port and and unsupported - destination, protocol or L4 port. - Some of the IPSec packet drop reasons include the missing security association or VTI interface. It also includes packets dropped due to policy lookup error or block policy. - Provides the total number of service-insertion, KNI, non-IP and IPv6 packets dropped.
 type LogicalRouterPortStatisticsSummary struct {
+	Ipv4 *AddressFamilyLogicalRouterPortCounters
+	Ipv6 *AddressFamilyLogicalRouterPortCounters
 	// Timestamp when the data was last updated; unset if data source has never updated the data. format: int64
 	LastUpdateTimestamp *int64
 	Rx                  *LogicalRouterPortCounters
@@ -74918,6 +75503,7 @@ type MACAddressExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_FQDNEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -77477,6 +78063,7 @@ type NamespaceVmNameExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_FQDNEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -77909,6 +78496,7 @@ type NestedExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_FQDNEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -78466,6 +79054,7 @@ type NodeDetails struct {
 	// * NodeDetails#NodeDetails_FEATURES_ENABLED_DISTRIBUTED_BAREMETAL
 	// * NodeDetails#NodeDetails_FEATURES_ENABLED_DISTRIBUTED_IPFIX_BAREMETAL
 	// * NodeDetails#NodeDetails_FEATURES_ENABLED_DISTRIBUTED_INTELLIGENCE_BAREMETAL
+	// * NodeDetails#NodeDetails_FEATURES_ENABLED_NETWORK_TRAFFIC_ANALYSIS
 	//
 	//  List of the features enabled on the node.
 	FeaturesEnabled []string
@@ -78511,6 +79100,7 @@ const NodeDetails_FEATURES_ENABLED_NETWORK_DETECTION_RESPONSE = "NETWORK_DETECTI
 const NodeDetails_FEATURES_ENABLED_DISTRIBUTED_BAREMETAL = "DISTRIBUTED_BAREMETAL"
 const NodeDetails_FEATURES_ENABLED_DISTRIBUTED_IPFIX_BAREMETAL = "DISTRIBUTED_IPFIX_BAREMETAL"
 const NodeDetails_FEATURES_ENABLED_DISTRIBUTED_INTELLIGENCE_BAREMETAL = "DISTRIBUTED_INTELLIGENCE_BAREMETAL"
+const NodeDetails_FEATURES_ENABLED_NETWORK_TRAFFIC_ANALYSIS = "NETWORK_TRAFFIC_ANALYSIS"
 const NodeDetails_MAINTENANCE_MODE_ENABLED = "ENABLED"
 const NodeDetails_MAINTENANCE_MODE_FORCE_ENABLED = "FORCE_ENABLED"
 const NodeDetails_MAINTENANCE_MODE_DISABLED = "DISABLED"
@@ -79371,6 +79961,138 @@ func (s *NorthSouthFirewall) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for NorthSouthFirewall._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Reference to a policy object eligible for NPS promotion.
+type NpsPromotableObjectRef struct {
+	//
+	ResourcePath *string
+}
+
+func (s *NpsPromotableObjectRef) GetType__() vapiBindings_.BindingType {
+	return NpsPromotableObjectRefBindingType()
+}
+
+func (s *NpsPromotableObjectRef) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for NpsPromotableObjectRef._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Per-object promotion status populated by the backend.
+type NpsPromotionObjectStatus struct {
+	// Detailed message about the promotion status of this object.
+	Message *string
+	// Policy resource path of the object being promoted.
+	ResourcePath *string
+	// Promotion status for this object: PENDING, IN_PROGRESS, SUCCESS, FAILED, COMPLETED_WITH_WARN.
+	Status *string
+}
+
+func (s *NpsPromotionObjectStatus) GetType__() vapiBindings_.BindingType {
+	return NpsPromotionObjectStatusBindingType()
+}
+
+func (s *NpsPromotionObjectStatus) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for NpsPromotionObjectStatus._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Workflow for promoting NPS-discovered objects to NPS-managed state. Promotion moves objects from the /discovered-sites/<regionId> tree to the global infra tree, removes the site prefix, and associates a PolicySpan for the region. Supported promotable types: IpBlock, Limit, GatewayConnection, DistributedVlanConnection, DistributedVxlanConnection. Third-party IpBlocks are excluded.
+type NpsPromotionWorkflow struct {
+	// Possible values are:
+	//
+	// * NpsPromotionWorkflow#NpsPromotionWorkflow_DESIRED_STATE_PROMOTION
+	//
+	//  Phase the client requests. PROMOTION triggers the full promotion pipeline: reconcile from NSX Manager, validate, promote objects, update ownership, associate PolicySpan.
+	DesiredState *string
+	// Optional list of specific objects to promote within region_id. When omitted, all eligible objects in the region are promoted.
+	Objects []NpsPromotableObjectRef
+	// Region for which promotion is requested. All eligible objects in the region are promoted when no explicit objects list is provided.
+	RegionId      *string
+	WorkflowState *PromotionWorkflowState
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id *string
+	// Possible values are:
+	//
+	// * BaseWorkflowObject#BaseWorkflowObject_RESOURCE_TYPE_VPCCONVERSIONWORKFLOW
+	// * BaseWorkflowObject#BaseWorkflowObject_RESOURCE_TYPE_SUBNETSCONVERSIONWORKFLOW
+	ResourceType string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// Set by the system when an asynchronous conversion workflow claims exclusive ownership of this resource. Cleared automatically, when the workflow is deleted. Clients cannot set or modify this value.
+	LockedByWorkflow *string
+	// This is a UUID generated by the system for knowing which site owns an object.
+	OriginSiteId *string
+	// This is a UUID generated by the system for knowing who owns this object.
+	OwnerId *string
+	// Path of its parent
+	ParentPath *string
+	// Absolute path of this object
+	Path *string
+	// This is a UUID generated by the system for realizing the entity object. In most cases this should be same as 'unique_id' of the entity. However, in some cases this can be different because of entities have migrated their unique identifier to NSX Policy intent objects later in the timeline and did not use unique_id for realization. Realization id is helpful for users to debug data path to correlate the configuration with corresponding intent.
+	RealizationId *string
+	// Path relative from its parent
+	RelativePath *string
+	// This path is populated only in case of multi-site scenario. Currently it is supported only for LM objects. When LM is onboarded to multi-site platform like NAPP or GM, remote_path will be set to the globally unique path across multi-site topology . It is generated based on local site-name and uses /org tree namespace. Note: It is populated only for LM objects. Not supported on the GM.
+	RemotePath *string
+	// This is a UUID generated by the GM/LM to uniquely identify entities in a federated environment. For entities that are stretched across multiple sites, the same ID will be used on all the stretched sites.
+	UniqueId *string
+}
+
+// Identifier denoting this class, when it is used in polymorphic context.
+//
+// This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
+const NpsPromotionWorkflow__TYPE_IDENTIFIER = "NpsPromotionWorkflow"
+const NpsPromotionWorkflow_DESIRED_STATE_PROMOTION = "PROMOTION"
+
+func (s *NpsPromotionWorkflow) GetType__() vapiBindings_.BindingType {
+	return NpsPromotionWorkflowBindingType()
+}
+
+func (s *NpsPromotionWorkflow) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for NpsPromotionWorkflow._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -83411,6 +84133,7 @@ type PathExpression struct {
 	// * Expression#Expression_RESOURCE_TYPE_IDENTITYGROUPEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_GEOLOCATIONEXPRESSION
 	// * Expression#Expression_RESOURCE_TYPE_NAMESPACEVMNAMEEXPRESSION
+	// * Expression#Expression_RESOURCE_TYPE_FQDNEXPRESSION
 	ResourceType string
 	// Opaque identifiers meaningful to the API user
 	Tags []Tag
@@ -90954,6 +91677,40 @@ func (s *PolicyGroupAssociatedKubernetesClusterListResult) GetDataValue__() (vap
 	return dataVal, nil
 }
 
+// Paginated collection of FQDN members belonging to a Group, each with their resolved IP addresses.
+type PolicyGroupFqdnMembersListResult struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy *string
+	// Paged collection of FQDN records for this Group
+	Results []FqdnRecord
+}
+
+func (s *PolicyGroupFqdnMembersListResult) GetType__() vapiBindings_.BindingType {
+	return PolicyGroupFqdnMembersListResultBindingType()
+}
+
+func (s *PolicyGroupFqdnMembersListResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for PolicyGroupFqdnMembersListResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Paginated collection of IP members belonging to a Group.
 type PolicyGroupIPMembersListResult struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -91887,6 +92644,105 @@ func (s *PolicyIdfwGroupVmDetailListResult) GetDataValue__() (vapiData_.DataValu
 	return dataVal, nil
 }
 
+// Request to retrieve affected entities
+type PolicyIdsAffectedEntitiesRequest struct {
+	// Possible values are:
+	//
+	// * PolicyIdsAffectedEntitiesRequest#PolicyIdsAffectedEntitiesRequest_ENTITY_TYPE_VM
+	// * PolicyIdsAffectedEntitiesRequest#PolicyIdsAffectedEntitiesRequest_ENTITY_TYPE_GATEWAY
+	//
+	//  Affected Entity Type
+	EntityType *string
+	// Filters
+	Filters []FilterRequest
+}
+
+const PolicyIdsAffectedEntitiesRequest_ENTITY_TYPE_VM = "VM"
+const PolicyIdsAffectedEntitiesRequest_ENTITY_TYPE_GATEWAY = "GATEWAY"
+
+func (s *PolicyIdsAffectedEntitiesRequest) GetType__() vapiBindings_.BindingType {
+	return PolicyIdsAffectedEntitiesRequestBindingType()
+}
+
+func (s *PolicyIdsAffectedEntitiesRequest) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for PolicyIdsAffectedEntitiesRequest._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Details of an affected entity.
+type PolicyIdsAffectedEntity struct {
+	// Display name of the entity.
+	DisplayName *string
+	// Possible values are:
+	//
+	// * PolicyIdsAffectedEntity#PolicyIdsAffectedEntity_ENTITY_TYPE_VM
+	// * PolicyIdsAffectedEntity#PolicyIdsAffectedEntity_ENTITY_TYPE_GATEWAY
+	//
+	//  Type of the entity.
+	EntityType *string
+	// Unique ID of the entity.
+	Id *string
+	// Display name of the VPC
+	VpcName *string
+}
+
+const PolicyIdsAffectedEntity_ENTITY_TYPE_VM = "VM"
+const PolicyIdsAffectedEntity_ENTITY_TYPE_GATEWAY = "GATEWAY"
+
+func (s *PolicyIdsAffectedEntity) GetType__() vapiBindings_.BindingType {
+	return PolicyIdsAffectedEntityBindingType()
+}
+
+func (s *PolicyIdsAffectedEntity) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for PolicyIdsAffectedEntity._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Paginated collection of affected entities.
+type PolicyIdsAffectedEntityListResult struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy  *string
+	Results []PolicyIdsAffectedEntity
+}
+
+func (s *PolicyIdsAffectedEntityListResult) GetType__() vapiBindings_.BindingType {
+	return PolicyIdsAffectedEntityListResultBindingType()
+}
+
+func (s *PolicyIdsAffectedEntityListResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for PolicyIdsAffectedEntityListResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Filtering parameters to get only a subset of intrusion events.
 type PolicyIdsEventDataRequest struct {
 	// An array of filter conditions.
@@ -92709,6 +93565,8 @@ func (s *PolicyInterfaceStatistics) GetDataValue__() (vapiData_.DataValue, []err
 
 // Provides the aggregated statistics of a Tier0 or Tier1 interface across all transport nodes on a specific enforcement point since the time the interface was created. The statistics from a given transport node will be reset on edge reboot or edge dataplane restart of that node. It includes the following details: - Logical router port ID. - <b>Aggregated incoming packet counters</b> on the logical router port across all transport nodes. It includes the total number of packets received, dropped, and the number of errors and failures causing the drops. The counters are from the time the logical router port was created. The statistics from a given transport node will be reset on edge reboot or edge dataplane restart of that node. - <b>Aggregated outgoing packet counters</b> on the logical router port across all transport nodes. It includes the total number of packets sent, dropped, and the number of errors and failures causing the drops. The counters are from the time the logical router port was created. The statistics from a given transport node will be reset on edge reboot or edge dataplane restart of that node. - Some of the packet drop reasons include, the DAD (Duplicate Address Detection) status of the IP is not in ASSIGNED state, firewall rules, failed to fragment the packet, receive malformed packet, could not find route to destination, absence of the receiver, insufficient memory, incomplete ARP resolution of the next-hop, RPF check failure, failed to redirect packet to KNI interface, TTL exceeded, port does not have a linked peer port and and unsupported - destination, protocol or L4 port. - Some of the IPSec packet drop reasons include the missing security association or VTI interface. It also includes packets dropped due to policy lookup error or block policy. - Provides the total number of service-insertion, KNI, non-IP and IPv6 packets dropped.
 type PolicyInterfaceStatisticsSummary struct {
+	Ipv4 *AddressFamilyLogicalRouterPortCounters
+	Ipv6 *AddressFamilyLogicalRouterPortCounters
 	// Timestamp when the data was last updated; unset if data source has never updated the data. format: int64
 	LastUpdateTimestamp *int64
 	Rx                  *LogicalRouterPortCounters
@@ -96050,7 +96908,6 @@ type PolicySubAttributes struct {
 	// * PolicySubAttributes#PolicySubAttributes_KEY_TLS_CIPHER_SUITE
 	// * PolicySubAttributes#PolicySubAttributes_KEY_TLS_VERSION
 	// * PolicySubAttributes#PolicySubAttributes_KEY_CIFS_SMB_VERSION
-	// * PolicySubAttributes#PolicySubAttributes_KEY_SMB_VERSION
 	//
 	//  Key for sub attribute
 	Key *string
@@ -96062,7 +96919,6 @@ const PolicySubAttributes_DATATYPE_STRING = "STRING"
 const PolicySubAttributes_KEY_TLS_CIPHER_SUITE = "TLS_CIPHER_SUITE"
 const PolicySubAttributes_KEY_TLS_VERSION = "TLS_VERSION"
 const PolicySubAttributes_KEY_CIFS_SMB_VERSION = "CIFS_SMB_VERSION"
-const PolicySubAttributes_KEY_SMB_VERSION = "SMB_VERSION"
 
 func (s *PolicySubAttributes) GetType__() vapiBindings_.BindingType {
 	return PolicySubAttributesBindingType()
@@ -99133,9 +99989,9 @@ type PolicyVpcNatRule struct {
 	//
 	//  Source NAT(SNAT) - translates a source IP address into an outbound packet so that the packet appears to originate from a different network. Destination NAT(DNAT) - translates the destination IP address of inbound packets so that packets are delivered to a target address into another network. Reflexive NAT(REFLEXIVE) - one-to-one mapping of source and destination IP addresses. NO_SNAT and NO_DNAT - These do not have support for translated_fields, only source_network and destination_network fields are supported.
 	Action *string
-	// This supports single IPv4 address or comma separated list of single IPv4 addresses or IPv4 CIDR. This does not support IP range or IP sets. For DNAT and NO_DNAT rules, this is a mandatory field, and represents the destination network for the incoming packets. For SNAT and NO_SNAT rules, optionally it can contain destination network of outgoing packets. For REFLEXIVE this should be empty. In case of DNAT NATRule, destination network address should be single IPv4 address or IPv4 CIDR allocated from External Block associated with VPC. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
+	// This supports single IPv4 address or comma separated list of single IPv4 addresses or IPv4 CIDR. This does not support IP range or IP sets. For DNAT rules, either this field or destination_network_allocation_path must be provided. This field is mutually exclusive with destination_network_allocation_path. For NO_DNAT rules, this is a mandatory field. For SNAT and NO_SNAT rules, optionally it can contain destination network of outgoing packets. For REFLEXIVE this should be empty. In case of DNAT NATRule, destination network address should be single IPv4 address or IPv4 CIDR allocated from External Block associated with VPC. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
 	DestinationNetwork *string
-	// Policy path to a VpcIpAddressAllocation for DNAT rules. The system resolves the allocated IP and uses it as the destination_network. This field is mutually exclusive with destination_network. Only valid for DNAT action.
+	// Policy path to a VpcIpAddressAllocation or ProjectIpAddressAllocation for DNAT rules. The system resolves the allocated IP and uses it as the destination_network. When this field is provided, destination_network should not be specified. For VPC NAT rules, the path must reference a VpcIpAddressAllocation under the same VPC. For Transit Gateway NAT rules, the path must reference a ProjectIpAddressAllocation under the same Project. This field is mutually exclusive with destination_network. Either this field or destination_network must be provided for DNAT action. Only valid for DNAT action.
 	DestinationNetworkAllocationPath *string
 	// The flag, which suggests whether the NAT rule is enabled or disabled. The default is True.
 	Enabled *bool
@@ -99154,9 +100010,9 @@ type PolicyVpcNatRule struct {
 	ServiceEntry   *NatServiceEntry
 	// This supports single IPv4 address or IPv4 CIDR. This does not support IP range or IP sets. SNAT, NO_SNAT, DNAT, NO_DNAT, support comma seperated list of single IP. For NO_SNAT and REFLEXIVE rules, this is a mandatory field and represents the source network of the packets leaving the network. For SNAT, DNAT and NO_DNAT rules, optionally it can contain source network of incoming packets. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
 	SourceNetwork *string
-	// This supports single IPv4 address and does not support IP range or IP sets. If user specifies CIDR for DNAT rule, this value is actually used as an IP pool that includes both the subnet and broadcast addresses as valid for NAT translations. For SNAT, DNAT and REFLEXIVE rules, this ia a mandatory field, which represents the translated network address. For NO_SNAT and NO_DNAT this should be empty. In case of SNAT and REFLEXIVE NATRule, translated network address should be single IPv4 address or IPv4 CIDR allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
+	// This supports single IPv4 address and does not support IP range or IP sets. If user specifies CIDR for DNAT rule, this value is actually used as an IP pool that includes both the subnet and broadcast addresses as valid for NAT translations. For SNAT, DNAT and REFLEXIVE rules, either this field or the corresponding allocation path (translated_network_allocation_path for SNAT/REFLEXIVE) must be provided. This field is mutually exclusive with translated_network_allocation_path. For NO_SNAT and NO_DNAT this should be empty. In case of SNAT and REFLEXIVE NATRule, translated network address should be single IPv4 address or IPv4 CIDR allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
 	TranslatedNetwork *string
-	// Policy path to a VpcIpAddressAllocation. For SNAT and REFLEXIVE rules, the system resolves the allocated IP and uses it as the translated_network. This field is mutually exclusive with translated_network. Only valid for SNAT and REFLEXIVE actions.
+	// Policy path to a VpcIpAddressAllocation or ProjectIpAddressAllocation. For SNAT and REFLEXIVE rules, the system resolves the allocated IP and uses it as the translated_network. When this field is provided, translated_network should not be specified. For VPC NAT rules, the path must reference a VpcIpAddressAllocation under the same VPC. For Transit Gateway NAT rules, the path must reference a ProjectIpAddressAllocation under the same Project. This field is mutually exclusive with translated_network. Either this field or translated_network must be provided for SNAT and REFLEXIVE actions. Only valid for SNAT and REFLEXIVE actions.
 	TranslatedNetworkAllocationPath *string
 }
 
@@ -100977,6 +101833,8 @@ type Project struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
+	// Policy path of the PolicySpan associated with this resource. The PolicySpan defines which regions or sites the resource should be distributed to.
+	PolicySpanPath *string
 	// By default, Project is created with default distributed firewall rules, this flag allows to deactivate those default rules . If not set, the default rules are enabled. The system will expect the API user to pass this flag as \"false\" when the system is not entitled to distributed firewall.
 	ActivateDefaultDfwRules *bool
 	DedicatedResources      *DedicatedResources
@@ -101339,6 +102197,33 @@ func (s *ProjectState) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for ProjectState._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// State information for an NPS promotion workflow. Extends WorkflowState with promotion-specific per-object status.
+type PromotionWorkflowState struct {
+	// Global error messages populated by the backend.
+	Errors []string
+	// Status within the current phase.
+	Status *string
+	// Detailed message describing the overall promotion status.
+	Message *string
+	// Per-object promotion status populated by the backend.
+	ObjectsStatus []NpsPromotionObjectStatus
+}
+
+func (s *PromotionWorkflowState) GetType__() vapiBindings_.BindingType {
+	return PromotionWorkflowStateBindingType()
+}
+
+func (s *PromotionWorkflowState) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for PromotionWorkflowState._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -104676,6 +105561,8 @@ type RealizedVirtualMachine struct {
 	PowerState *string
 	// Supervisor namespace name of the virtual machine
 	SupervisorNamespaceName *string
+	// Virtual Machine type; Edge, Regular,Pod, or other. Edge, Service, MP, Intelligence, and VC System types are derived by NSX from internal heuristics. Pod indicates a Kubernetes Pod-backed VM, determined from its Supervisor namespace mapping.
+	VmType *string
 }
 
 const RealizedVirtualMachine_STATE_UNAVAILABLE = "UNAVAILABLE"
@@ -105497,6 +106384,8 @@ func (s *RenderConfiguration) GetDataValue__() (vapiData_.DataValue, []error) {
 type ReservationInfo struct {
 	CpuReservation    *CPUReservation
 	MemoryReservation *MemoryReservation
+	// It specifies the percentage of max system cpu cycles to be reserved for the vmkernel networking datapath threads. format: int64
+	SystemCpuReservation *int64
 }
 
 func (s *ReservationInfo) GetType__() vapiBindings_.BindingType {
@@ -107234,6 +108123,8 @@ func (s *RouteControllerInterfaceStatistics) GetDataValue__() (vapiData_.DataVal
 
 // Route controller interface statistics
 type RouteControllerInterfaceStatisticsPerNode struct {
+	Ipv4 *AddressFamilyLogicalRouterPortCounters
+	Ipv6 *AddressFamilyLogicalRouterPortCounters
 	// Timestamp when the data was last updated; unset if data source has never updated the data. format: int64
 	LastUpdateTimestamp *int64
 	Rx                  *LogicalRouterPortCounters
@@ -107265,6 +108156,8 @@ func (s *RouteControllerInterfaceStatisticsPerNode) GetDataValue__() (vapiData_.
 
 // Provides the aggregated statistics of all the logical router ports of the route controller interface.
 type RouteControllerInterfaceStatisticsSummary struct {
+	Ipv4 *AddressFamilyLogicalRouterPortCounters
+	Ipv6 *AddressFamilyLogicalRouterPortCounters
 	// Timestamp when the data was last updated; unset if data source has never updated the data. format: int64
 	LastUpdateTimestamp *int64
 	Rx                  *LogicalRouterPortCounters
@@ -107316,6 +108209,195 @@ func (s *RouteControllerListResult) GetDataValue__() (vapiData_.DataValue, []err
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for RouteControllerListResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Match criteria for route map entry.
+type RouteControllerMatchCriteria struct {
+	CommunityListMatchValue *CommunityListMatch
+	// Possible values are:
+	//
+	// * RouteControllerMatchCriteria#RouteControllerMatchCriteria_MATCH_TYPE_COMMUNITY_LIST
+	// * RouteControllerMatchCriteria#RouteControllerMatchCriteria_MATCH_TYPE_EVPN_ROUTE_TYPE
+	// * RouteControllerMatchCriteria#RouteControllerMatchCriteria_MATCH_TYPE_EVPN_RD
+	// * RouteControllerMatchCriteria#RouteControllerMatchCriteria_MATCH_TYPE_EVPN_VNI
+	// * RouteControllerMatchCriteria#RouteControllerMatchCriteria_MATCH_TYPE_AS_PATH_REGEX
+	//
+	//  COMMUNITY_LIST - Match based on BGP community list. Use community_list_match_value to specify the community list path and match operator. EVPN_ROUTE_TYPE - Match EVPN route type. Only Type-5 (IP Prefix) is supported. Supports MATCH_EXACT operator. EVPN_RD - Match EVPN Route Distinguisher. Supports MATCH_EXACT operator. EVPN_VNI - Match EVPN VNI (Virtual Network Identifier). Supports MATCH_EXACT operator. AS_PATH_REGEX - Match AS-Path using a regular expression pattern. Supports MATCH_REGEX operator.
+	MatchType *string
+	//
+	MatchValue *string
+}
+
+const RouteControllerMatchCriteria_MATCH_TYPE_COMMUNITY_LIST = "COMMUNITY_LIST"
+const RouteControllerMatchCriteria_MATCH_TYPE_EVPN_ROUTE_TYPE = "EVPN_ROUTE_TYPE"
+const RouteControllerMatchCriteria_MATCH_TYPE_EVPN_RD = "EVPN_RD"
+const RouteControllerMatchCriteria_MATCH_TYPE_EVPN_VNI = "EVPN_VNI"
+const RouteControllerMatchCriteria_MATCH_TYPE_AS_PATH_REGEX = "AS_PATH_REGEX"
+
+func (s *RouteControllerMatchCriteria) GetType__() vapiBindings_.BindingType {
+	return RouteControllerMatchCriteriaBindingType()
+}
+
+func (s *RouteControllerMatchCriteria) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for RouteControllerMatchCriteria._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// RouteMap for redistributing routes to BGP and other routing protocols. RouteMaps are applied per route controller bgp neighbor.
+type RouteControllerRouteMap struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id *string
+	// The type of this resource.
+	ResourceType *string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// Set by the system when an asynchronous conversion workflow claims exclusive ownership of this resource. Cleared automatically, when the workflow is deleted. Clients cannot set or modify this value.
+	LockedByWorkflow *string
+	// This is a UUID generated by the system for knowing which site owns an object.
+	OriginSiteId *string
+	// This is a UUID generated by the system for knowing who owns this object.
+	OwnerId *string
+	// Path of its parent
+	ParentPath *string
+	// Absolute path of this object
+	Path *string
+	// This is a UUID generated by the system for realizing the entity object. In most cases this should be same as 'unique_id' of the entity. However, in some cases this can be different because of entities have migrated their unique identifier to NSX Policy intent objects later in the timeline and did not use unique_id for realization. Realization id is helpful for users to debug data path to correlate the configuration with corresponding intent.
+	RealizationId *string
+	// Path relative from its parent
+	RelativePath *string
+	// This path is populated only in case of multi-site scenario. Currently it is supported only for LM objects. When LM is onboarded to multi-site platform like NAPP or GM, remote_path will be set to the globally unique path across multi-site topology . It is generated based on local site-name and uses /org tree namespace. Note: It is populated only for LM objects. Not supported on the GM.
+	RemotePath *string
+	// This is a UUID generated by the GM/LM to uniquely identify entities in a federated environment. For entities that are stretched across multiple sites, the same ID will be used on all the stretched sites.
+	UniqueId *string
+	// Subtree for this type within policy tree containing nested elements. Note that this type is applicable to be used in Hierarchical API only.
+	Children []*vapiData_.StructValue
+	// Intent objects are not directly deleted from the system when a delete is invoked on them. They are marked for deletion and only when all the realized entities for that intent object get deleted, the intent object is deleted. Objects that are marked for deletion are not returned in GET call. One can use the search API to get these objects.
+	MarkedForDelete *bool
+	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
+	Overridden *bool
+	// Ordered list of route map entries. Route map entries are evaluated in order.
+	Entries []RouteControllerRouteMapEntry
+}
+
+func (s *RouteControllerRouteMap) GetType__() vapiBindings_.BindingType {
+	return RouteControllerRouteMapBindingType()
+}
+
+func (s *RouteControllerRouteMap) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for RouteControllerRouteMap._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// A single entry in a RouteController route map. Entries are evaluated in sequence order. Each entry requires at least one match criterion and an action.
+type RouteControllerRouteMapEntry struct {
+	// Possible values are:
+	//
+	// * RouteControllerRouteMapEntry#RouteControllerRouteMapEntry_ACTION_PERMIT
+	// * RouteControllerRouteMapEntry#RouteControllerRouteMapEntry_ACTION_DENY
+	//
+	//  Action to take for routes matching this entry. PERMIT action allow the route and apply the set clause. DENY action reject the route.
+	Action *string
+	// Match criteria for this route map entry.
+	MatchCriteria []RouteControllerMatchCriteria
+	// Possible values are:
+	//
+	// * RouteControllerRouteMapEntry#RouteControllerRouteMapEntry_MATCH_OPERATOR_ANY
+	// * RouteControllerRouteMapEntry#RouteControllerRouteMapEntry_MATCH_OPERATOR_ALL
+	//
+	//  Operator that determines how match_criteria is evaluated when multiple criteria are present. MATCH_ANY: The entry matches if any one of the criteria matches. MATCH_ALL: The entry matches only if all criteria match.
+	MatchOperator *string
+	// Sequence number determines the order 'route map entries' are evaluated. Entries are evaluated in ascending sequence number order. If no sequence number is specified, a default value 0 is assigned. If multiple route map entries have the same sequence number, the order of evaluation is undefined. format: int64
+	SequenceNumber *int64
+	Set            *RouteMapEntrySet
+}
+
+const RouteControllerRouteMapEntry_ACTION_PERMIT = "PERMIT"
+const RouteControllerRouteMapEntry_ACTION_DENY = "DENY"
+const RouteControllerRouteMapEntry_MATCH_OPERATOR_ANY = "MATCH_ANY"
+const RouteControllerRouteMapEntry_MATCH_OPERATOR_ALL = "MATCH_ALL"
+
+func (s *RouteControllerRouteMapEntry) GetType__() vapiBindings_.BindingType {
+	return RouteControllerRouteMapEntryBindingType()
+}
+
+func (s *RouteControllerRouteMapEntry) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for RouteControllerRouteMapEntry._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// List of route controller route maps
+type RouteControllerRouteMapListResult struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy *string
+	// Route controller route map list results.
+	Results []RouteControllerRouteMap
+}
+
+func (s *RouteControllerRouteMapListResult) GetType__() vapiBindings_.BindingType {
+	return RouteControllerRouteMapListResultBindingType()
+}
+
+func (s *RouteControllerRouteMapListResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for RouteControllerRouteMapListResult._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -107540,7 +108622,7 @@ func (s *RouteMapEntry) GetDataValue__() (vapiData_.DataValue, []error) {
 type RouteMapEntrySet struct {
 	// AS path prepend to influence route selection.
 	AsPathPrepend *string
-	// Set BGP regular or large community for matching routes. A maximum of one value for each community type separated by space. Well-known community name, community value in aa:nn (2byte:2byte) format for regular community and community value in aa:bb:nn (4byte:4byte:4byte) format for large community are supported.
+	// Set BGP regular, large or extended community for matching routes. A maximum of one value for each community type separated by space. Well-known community name, community value in aa:nn (2byte:2byte) format for regular community, community value in aa:bb:nn (4byte:4byte:4byte) format for large community and community value in rt:ASN:NN (rt:2byte:4byte or rt:4byte:2byte) or rt:IP:NN (rt:Ipv4Address:2byte) format for extended community are supported. Extended communities are supported only for route controller communities.
 	Community *string
 	// Local preference indicates the degree of preference for one BGP route over other BGP routes. The path with highest local preference is preferred. format: int64
 	LocalPreference *int64
@@ -109207,6 +110289,8 @@ type SecurityLicenseUsageCSVRecord struct {
 	LicensedHostCoreCountDistributedMps *string
 	// Licensed host core count used by ndr
 	LicensedHostCoreCountNdr *string
+	// Licensed host core count used by nta
+	LicensedHostCoreCountNta *string
 	// licensed total core count on firewall atp edition
 	LicensedTotalCoreCountFirewallAtpEdition *string
 	// licensed total core count on firewall edition
@@ -109289,6 +110373,8 @@ type SecurityLicenseUsageCSVRecord struct {
 	RawHostCoreCountDistributedMps *string
 	// Raw host core count used by ndr
 	RawHostCoreCountNdr *string
+	// Raw host core count used by nta
+	RawHostCoreCountNta *string
 	// Telemetry info about the 'recommendation_sessions_total'
 	RecommendationSessionsTotal *string
 	// Telemetry info about the 'total_firewall_ipfix_profiles'
@@ -109805,6 +110891,8 @@ type SecurityProfileAttachment struct {
 	EastWestFirewall   *EastWestFirewall
 	NorthSouthFirewall *NorthSouthFirewall
 	// Security Profile attachment defines the Security Profile attached to a VPC
+	//
+	// Deprecated: This API element is deprecated.
 	SecurityProfile *string
 }
 
@@ -113944,8 +115032,9 @@ type ShaEdgeVodap20secMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -113998,8 +115087,9 @@ type ShaEdgeVodap5minMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114052,8 +115142,9 @@ type ShaEdgeVodapAdvancedMetricsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114106,8 +115197,9 @@ type ShaEsxDatapathMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114160,8 +115252,9 @@ type ShaEsxHealthMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114214,8 +115307,9 @@ type ShaEsxObsrvAlarmsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114344,8 +115438,9 @@ type ShaEsxObsrvSegmentStatsFileDumpMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114398,8 +115493,9 @@ type ShaEsxObsrvStatsManagementConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114452,8 +115548,9 @@ type ShaEsxObsrvStatsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114510,8 +115607,9 @@ type ShaEsxObsrvTnStatsFileDumpMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114566,8 +115664,9 @@ type ShaEsxResourceMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114620,8 +115719,9 @@ type ShaEsxTnMetricsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114674,8 +115774,9 @@ type ShaEsxTnPnicMetricsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114728,8 +115829,9 @@ type ShaEsxTnTopologyMetricsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114782,8 +115884,9 @@ type ShaEsxTnVmknicMetricsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114836,8 +115939,9 @@ type ShaEsxTnVnicMetricsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -114855,6 +115959,61 @@ func (s *ShaEsxTnVnicMetricsMonitorConfig) GetDataValue__() (vapiData_.DataValue
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for ShaEsxTnVnicMetricsMonitorConfig._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Gateway DNS resolver status monitor configuration
+type ShaGatewayDnsResolverStatusMonitorConfig struct {
+	// The interval (in seconds) for collecting DNS resolver status from a node format: int64
+	CheckInterval *int64
+	// Flag to enable/disable this monitor
+	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
+	// Possible values are:
+	//
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVSTATSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVSTATSMANAGEMENTCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVSEGMENTSTATSFILEDUMPMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVTNSTATSFILEDUMPMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAUAMETRICMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAHARDWAREUSAGEMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXHEALTHMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXRESOURCEMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXTNMETRICSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXTNVNICMETRICSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXTNVMKNICMETRICSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXTNPNICMETRICSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXTNTOPOLOGYMETRICSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXDATAPATHMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP20SECMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	//
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	ResourceType string
+}
+
+// Identifier denoting this class, when it is used in polymorphic context.
+//
+// This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
+const ShaGatewayDnsResolverStatusMonitorConfig__TYPE_IDENTIFIER = "ShaGatewayDnsResolverStatusMonitorConfig"
+
+func (s *ShaGatewayDnsResolverStatusMonitorConfig) GetType__() vapiBindings_.BindingType {
+	return ShaGatewayDnsResolverStatusMonitorConfigBindingType()
+}
+
+func (s *ShaGatewayDnsResolverStatusMonitorConfig) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ShaGatewayDnsResolverStatusMonitorConfig._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -114890,8 +116049,9 @@ type ShaHardwareUsageMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -115225,8 +116385,9 @@ type ShaMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -115253,6 +116414,7 @@ const ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP20SECMONITORCONFIG = "ShaEdgeVo
 const ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG = "ShaEdgeVodap5minMonitorConfig"
 const ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG = "ShaEdgeVodapAdvancedMetricsMonitorConfig"
 const ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG = "ShaVodapAlarmMonitorConfig"
+const ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG = "ShaGatewayDnsResolverStatusMonitorConfig"
 
 func (s *ShaMonitorConfig) GetType__() vapiBindings_.BindingType {
 	return ShaMonitorConfigBindingType()
@@ -116611,8 +117773,9 @@ type ShaUaMetricMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -116663,8 +117826,9 @@ type ShaVodapAlarmMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
 	ResourceType string
 }
 
@@ -116863,6 +118027,8 @@ type SharedResource struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
+	// An allowlist of policy API type IDs (such as \"SecurityPolicy\" or \"Group\") that are permitted to link to the items listed in 'resource_objects'. This restriction applies uniformly to every single entry in 'resource_objects', regardless of its specific type. It works completely independently from 'with_permission'; while 'with_permission' controls whether a user has read or link access, 'permitted_consumer_types' strictly limits which object types are allowed to build the connection. If this field is empty or left out, the system defaults to unrestricted access, meaning any object type allowed by 'with_permission' can link to these resources.
+	PermittedConsumerTypes []string
 	// Represents the path and other properties of the resource to be shared. The entity represented by this shared resource is shared with all the Orgs or Projects contexts that the Share container references.
 	ResourceObjects []ResourceObject
 	// Read only field. Shows subset (shared-with-me API context) of sharedWith used in Share.
@@ -116873,13 +118039,15 @@ type SharedResource struct {
 	//
 	// * SharedResource#SharedResource_WITH_PERMISSION_READ_ONLY
 	// * SharedResource#SharedResource_WITH_PERMISSION_ASSOCIATION_ONLY
+	// * SharedResource#SharedResource_WITH_PERMISSION_READ_AND_ASSOCIATION
 	//
-	//  Defines the level of access granted to the target of the share. This permission applies only when sharing with a Project or a VPC. READ_ONLY - Grants read-only access to the shared resources. The target entity can view the content of the resources but cannot modify it. ASSOCIATION_ONLY - Grants association-level access only. The target entity can reference or associate with the resources, but cannot view its content.
+	//  Defines the level of access granted to the target of the share. This permission applies only when sharing with a Project or a VPC. READ_ONLY - Grants read-only access. The target can inspect the resource but cannot create cross-references to it. ASSOCIATION_ONLY - Grants association access only; the target can reference the resource but is shown only its basic properties. READ_AND_ASSOCIATION - Grants both read access and association access. The target can view the resource and reference it. This is default value if not provided.
 	WithPermission *string
 }
 
 const SharedResource_WITH_PERMISSION_READ_ONLY = "READ_ONLY"
 const SharedResource_WITH_PERMISSION_ASSOCIATION_ONLY = "ASSOCIATION_ONLY"
+const SharedResource_WITH_PERMISSION_READ_AND_ASSOCIATION = "READ_AND_ASSOCIATION"
 
 func (s *SharedResource) GetType__() vapiBindings_.BindingType {
 	return SharedResourceBindingType()
@@ -119758,7 +120926,7 @@ type StaticRoutes struct {
 	EnabledOnSecondary *bool
 	// Specify network address in CIDR format. In case of VPC, user can optionally use allocated IP from one of the external blocks associated with VPC. Only /32 CIDR is allowed in case IP overlaps with external blocks. This property is required when network_ip_allocation_path is not specified. Exactly one of network or network_ip_allocation_path must be provided for VPC. For Tier-0, Tier-1 and Transit Gateway static routes only network property is supported. format: address-or-block-or-range
 	Network *string
-	// Policy path to a VpcIpAddressAllocation (VPC context). When specified, NSX resolves the allocated IP and uses it as the network with /32 CIDR. This field is mutually exclusive with network. Exactly one of network or network_ip_allocation_path must be specified. Only supported for VPC and static routes. Not supported for Tier-0, Tier-1 and Transit Gateway static routes.
+	// Policy path to a VpcIpAddressAllocation (VPC context). When specified, NSX resolves the allocated IP and uses it as the network CIDR. For single-IP allocations the resolved network is a /32; for CIDR-block allocations (e.g. allocation_size=256) the full CIDR (e.g. /24) is used. This field is mutually exclusive with network. Exactly one of network or network_ip_allocation_path must be specified. Only supported for VPC static routes. Not supported for Tier-0, Tier-1 and Transit Gateway static routes.
 	NetworkIpAllocationPath *string
 	// Specify next hop routes for network.
 	NextHops []RouterNexthop
@@ -120764,7 +121932,7 @@ type SubnetsConversionWorkflow struct {
 	Segments []Segments
 	// Target VPC where subnets will be created. VPC must already exist.
 	VpcPath       *string
-	WorkflowState *WorkflowState
+	WorkflowState *ConversionWorkflowState
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
 	// Schema for this resource
@@ -126212,6 +127380,8 @@ type TraceflowConfig struct {
 	Overridden *bool
 	// This field should be provided when the source of traceflow is a host VM with containers running on it. The value of this field is the path of the segment or VPC subnet connected to the containers.
 	ConnectedParentPathAsSource *string
+	// Policy path or UUID of the port at which the traceflow packet is expected to arrive. This property should be set when the destination is within the VCF network scope. When this property is provided, the VCF will automatically determine if there is a need to overwrite the traceflow packet's destination MAC address to properly route the traceflow packet to the expected destination. This property must be left empty in any of the following cases, and in those cases property 'routed' should be set correctly: - the destination lies outside the VCF network scope. - the destination is specified as an IP or MAC address rather than a port. This property is not applicable for Global Manager (GM) traceflow sessions. This property should not be set along with routed field.
+	ExpectedDestinationId *string
 	// This field indicates if intent is transient and will be cleaned up by the system if set to true
 	IsTransient *bool
 	Packet      *vapiData_.StructValue
@@ -129612,9 +130782,9 @@ type TransitGatewayNatRule struct {
 	//
 	//  Source NAT(SNAT) - translates a source IP address into an outbound packet so that the packet appears to originate from a different network. Destination NAT(DNAT) - translates the destination IP address of inbound packets so that packets are delivered to a target address into another network. Reflexive NAT(REFLEXIVE) - one-to-one mapping of source and destination IP addresses. NO_SNAT and NO_DNAT - These do not have support for translated_fields, only source_network and destination_network fields are supported.
 	Action *string
-	// This supports single IPv4 address or comma separated list of single IPv4 addresses or IPv4 CIDR. This does not support IP range or IP sets. For DNAT and NO_DNAT rules, this is a mandatory field, and represents the destination network for the incoming packets. For SNAT and NO_SNAT rules, optionally it can contain destination network of outgoing packets. For REFLEXIVE this should be empty. In case of DNAT NATRule, destination network address should be single IPv4 address or IPv4 CIDR allocated from External Block associated with VPC. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
+	// This supports single IPv4 address or comma separated list of single IPv4 addresses or IPv4 CIDR. This does not support IP range or IP sets. For DNAT rules, either this field or destination_network_allocation_path must be provided. This field is mutually exclusive with destination_network_allocation_path. For NO_DNAT rules, this is a mandatory field. For SNAT and NO_SNAT rules, optionally it can contain destination network of outgoing packets. For REFLEXIVE this should be empty. In case of DNAT NATRule, destination network address should be single IPv4 address or IPv4 CIDR allocated from External Block associated with VPC. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
 	DestinationNetwork *string
-	// Policy path to a VpcIpAddressAllocation for DNAT rules. The system resolves the allocated IP and uses it as the destination_network. This field is mutually exclusive with destination_network. Only valid for DNAT action.
+	// Policy path to a VpcIpAddressAllocation or ProjectIpAddressAllocation for DNAT rules. The system resolves the allocated IP and uses it as the destination_network. When this field is provided, destination_network should not be specified. For VPC NAT rules, the path must reference a VpcIpAddressAllocation under the same VPC. For Transit Gateway NAT rules, the path must reference a ProjectIpAddressAllocation under the same Project. This field is mutually exclusive with destination_network. Either this field or destination_network must be provided for DNAT action. Only valid for DNAT action.
 	DestinationNetworkAllocationPath *string
 	// The flag, which suggests whether the NAT rule is enabled or disabled. The default is True.
 	Enabled *bool
@@ -129633,9 +130803,9 @@ type TransitGatewayNatRule struct {
 	ServiceEntry   *NatServiceEntry
 	// This supports single IPv4 address or IPv4 CIDR. This does not support IP range or IP sets. SNAT, NO_SNAT, DNAT, NO_DNAT, support comma seperated list of single IP. For NO_SNAT and REFLEXIVE rules, this is a mandatory field and represents the source network of the packets leaving the network. For SNAT, DNAT and NO_DNAT rules, optionally it can contain source network of incoming packets. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
 	SourceNetwork *string
-	// This supports single IPv4 address and does not support IP range or IP sets. If user specifies CIDR for DNAT rule, this value is actually used as an IP pool that includes both the subnet and broadcast addresses as valid for NAT translations. For SNAT, DNAT and REFLEXIVE rules, this ia a mandatory field, which represents the translated network address. For NO_SNAT and NO_DNAT this should be empty. In case of SNAT and REFLEXIVE NATRule, translated network address should be single IPv4 address or IPv4 CIDR allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
+	// This supports single IPv4 address and does not support IP range or IP sets. If user specifies CIDR for DNAT rule, this value is actually used as an IP pool that includes both the subnet and broadcast addresses as valid for NAT translations. For SNAT, DNAT and REFLEXIVE rules, either this field or the corresponding allocation path (translated_network_allocation_path for SNAT/REFLEXIVE) must be provided. This field is mutually exclusive with translated_network_allocation_path. For NO_SNAT and NO_DNAT this should be empty. In case of SNAT and REFLEXIVE NATRule, translated network address should be single IPv4 address or IPv4 CIDR allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
 	TranslatedNetwork *string
-	// Policy path to a VpcIpAddressAllocation. For SNAT and REFLEXIVE rules, the system resolves the allocated IP and uses it as the translated_network. This field is mutually exclusive with translated_network. Only valid for SNAT and REFLEXIVE actions.
+	// Policy path to a VpcIpAddressAllocation or ProjectIpAddressAllocation. For SNAT and REFLEXIVE rules, the system resolves the allocated IP and uses it as the translated_network. When this field is provided, translated_network should not be specified. For VPC NAT rules, the path must reference a VpcIpAddressAllocation under the same VPC. For Transit Gateway NAT rules, the path must reference a ProjectIpAddressAllocation under the same Project. This field is mutually exclusive with translated_network. Either this field or translated_network must be provided for SNAT and REFLEXIVE actions. Only valid for SNAT and REFLEXIVE actions.
 	TranslatedNetworkAllocationPath *string
 	// Contains the list of policy paths of TGW Attachments on which the NAT rule is applied.
 	Scope []string
@@ -131662,6 +132832,8 @@ func (s *TunnelList) GetDataValue__() (vapiData_.DataValue, []error) {
 
 // Provides the following information of a tunnel port in a given transport node: - Port ID and source address of the tunnel. - The subcluster ID of the logical tunnel port. - Transport node ID. - <b>Incoming packet counters</b> on the tunnel port in a given transport node. It includes the total number of packets received, dropped, and the number of errors and failures causing the drops. The counters are from the time the tunnel port was created. The counters will be reset on edge reboot or edge dataplane restart. - <b>Outgoing packet counters</b> on the tunnel port in a given transport node. It includes the total number of packets sent, dropped, and the number of errors and failures causing the drops. The counters are from the time the tunnel port was created. The counters will be reset on edge reboot or edge dataplane restart. - Some of the packet drop reasons include, the DAD (Duplicate Address Detection) status of the IP is not in ASSIGNED state, firewall rules, failed to fragment the packet, receive malformed packet, could not find route to destination, absence of the receiver, insufficient memory, incomplete ARP resolution of the next-hop, RPF check failure, failed to redirect packet to KNI interface, TTL exceeded, port does not have a linked peer port and and unsupported - destination, protocol or L4 port. - Some of the IPSec packet drop reasons include the missing security association or VTI interface. It also includes packets dropped due to policy lookup error or block policy. - Provides the total number of service-insertion, KNI, non-IP and IPv6 packets dropped.
 type TunnelPortStatisticsPerNode struct {
+	Ipv4 *AddressFamilyLogicalRouterPortCounters
+	Ipv6 *AddressFamilyLogicalRouterPortCounters
 	// Timestamp when the data was last updated; unset if data source has never updated the data. format: int64
 	LastUpdateTimestamp *int64
 	Rx                  *LogicalRouterPortCounters
@@ -133432,11 +134604,22 @@ func (s *VdsScopeMember) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Collection of VDS scope members for a VPC subnet
+// Retrieves a paginated list of VDS scope members associated with a specific VPC subnet.
 type VdsScopeMembersListResult struct {
-	// Number of VDS scope members returned format: int64
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
 	ResultCount *int64
-	// Array of VDS scope members meeting version compatibility requirements (vCenter 9.2+)
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy *string
+	// Array of VDS scope members meeting version compatibility requirements (vCenter 9.0+)
 	Results []VdsScopeMember
 }
 
@@ -135756,6 +136939,8 @@ type VmPlacementState struct {
 	FormFactor *string
 	// Host ID on which the edge node/service node virtual machine resides.
 	HostMoref *string
+	// Realized system CPU reservation (in Mhz) provisioned for the edge VM. format: int64
+	SystemCpuReservation *int64
 	// The edge node/service node vm instance uuid for specified VM on vcenter server.
 	VmInstanceUuid *string
 }
@@ -135843,6 +137028,88 @@ func (s *VmkAllocation) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for VmkAllocation._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Contains the VMK identifier, the services enabled on it, its compatibility status, and the list of reasons if the status is INCOMPATIBLE.
+type VmkCompatibilityInfo struct {
+	// List of service tags enabled on this VMK, e.g. Management, VMotion.
+	EnabledServices []string
+	// External ID of the ESXi host on which this VMK resides.
+	HostId *string
+	// Possible values are:
+	//
+	// * VmkCompatibilityInfo#VmkCompatibilityInfo_INCOMPATIBLE_REASONS_DEFAULT_TCPIP_STACK
+	// * VmkCompatibilityInfo#VmkCompatibilityInfo_INCOMPATIBLE_REASONS_VMK_ON_VSS
+	// * VmkCompatibilityInfo#VmkCompatibilityInfo_INCOMPATIBLE_REASONS_VDS_NOT_USED_IN_HOST_PREP
+	// * VmkCompatibilityInfo#VmkCompatibilityInfo_INCOMPATIBLE_REASONS_HOST_VERSION_UNSUPPORTED
+	//
+	//  List of reasons why this VMK is incompatible with hypervisor security. Empty when status is COMPATIBLE.
+	IncompatibleReasons []string
+	// Possible values are:
+	//
+	// * VmkCompatibilityInfo#VmkCompatibilityInfo_STATUS_COMPATIBLE
+	// * VmkCompatibilityInfo#VmkCompatibilityInfo_STATUS_INCOMPATIBLE
+	//
+	//  VMK compatibility status
+	Status *string
+	// The VMkernel interface key, e.g. vmk0.
+	VmkId *string
+}
+
+const VmkCompatibilityInfo_INCOMPATIBLE_REASONS_DEFAULT_TCPIP_STACK = "DEFAULT_TCPIP_STACK"
+const VmkCompatibilityInfo_INCOMPATIBLE_REASONS_VMK_ON_VSS = "VMK_ON_VSS"
+const VmkCompatibilityInfo_INCOMPATIBLE_REASONS_VDS_NOT_USED_IN_HOST_PREP = "VDS_NOT_USED_IN_HOST_PREP"
+const VmkCompatibilityInfo_INCOMPATIBLE_REASONS_HOST_VERSION_UNSUPPORTED = "HOST_VERSION_UNSUPPORTED"
+const VmkCompatibilityInfo_STATUS_COMPATIBLE = "COMPATIBLE"
+const VmkCompatibilityInfo_STATUS_INCOMPATIBLE = "INCOMPATIBLE"
+
+func (s *VmkCompatibilityInfo) GetType__() vapiBindings_.BindingType {
+	return VmkCompatibilityInfoBindingType()
+}
+
+func (s *VmkCompatibilityInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for VmkCompatibilityInfo._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Paged collection of VMK compatibility info
+type VmkCompatibilityInfoListResult struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy *string
+	// VMK compatibility info list
+	Results []VmkCompatibilityInfo
+}
+
+func (s *VmkCompatibilityInfoListResult) GetType__() vapiBindings_.BindingType {
+	return VmkCompatibilityInfoListResultBindingType()
+}
+
+func (s *VmkCompatibilityInfoListResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for VmkCompatibilityInfoListResult._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -136509,7 +137776,7 @@ type VpcConversionWorkflow struct {
 	// Tier-1 gateway to analyze or convert.
 	Tier1Path     *string
 	VpcInfo       *VpcInfo
-	WorkflowState *WorkflowState
+	WorkflowState *ConversionWorkflowState
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
 	// Schema for this resource
@@ -137320,6 +138587,12 @@ func (s *VpcIpAddressAllocationListResult) GetDataValue__() (vapiData_.DataValue
 // Policy VPC IP block
 type VpcIpAddressBlock struct {
 	AllocatedByVpc *AllocatedByVpc
+	// Possible values are:
+	//
+	// * VpcIpAddressBlock#VpcIpAddressBlock_ALLOWED_USE_CASES_FRONTEND
+	//
+	//  Read-only echo of IpAddressBlockConstraint.allowed_use_cases for this IP block. Empty/absent when no constraint has been configured for the block.
+	AllowedUseCases []string
 	// Available IP address space format: int64
 	Available *int64
 	// CIDR address for IP block
@@ -137341,6 +138614,8 @@ type VpcIpAddressBlock struct {
 	// Visibility of IP block
 	Visibility *string
 }
+
+const VpcIpAddressBlock_ALLOWED_USE_CASES_FRONTEND = "LB_FRONTEND"
 
 func (s *VpcIpAddressBlock) GetType__() vapiBindings_.BindingType {
 	return VpcIpAddressBlockBindingType()
@@ -139906,14 +141181,10 @@ func (s *WidgetPlotConfiguration) GetDataValue__() (vapiData_.DataValue, []error
 
 // Workflow state information.
 type WorkflowState struct {
-	// Plan or validation impacts populated by the backend.
-	ConversionImpacts []ConversionImpactEntry
 	// Global error messages populated by the backend.
 	Errors []string
 	// Status within the current phase.
 	Status *string
-	// Detailed failure messages populated by the backend.
-	ValidationFailures []ValidationFailureEntry
 }
 
 func (s *WorkflowState) GetType__() vapiBindings_.BindingType {
@@ -141039,6 +142310,17 @@ func AddressBindingEntryBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.address_binding_entry", fields, reflect.TypeOf(AddressBindingEntry{}), fieldNameMap, validators)
 }
 
+func AddressFamilyLogicalRouterPortCountersBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
+	fieldNameMap["rx"] = "Rx"
+	fields["tx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
+	fieldNameMap["tx"] = "Tx"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.address_family_logical_router_port_counters", fields, reflect.TypeOf(AddressFamilyLogicalRouterPortCounters{}), fieldNameMap, validators)
+}
+
 func AddressesBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -141565,6 +142847,10 @@ func AggregatedFeatureStateDetailsBindingType() vapiBindings_.BindingType {
 func AggregatedLogicalRouterPortCountersBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["ipv4"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AddressFamilyLogicalRouterPortCountersBindingType))
+	fieldNameMap["ipv4"] = "Ipv4"
+	fields["ipv6"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AddressFamilyLogicalRouterPortCountersBindingType))
+	fieldNameMap["ipv6"] = "Ipv6"
 	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
@@ -143290,6 +144576,25 @@ func BaseCompatibilityCheckResultBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.base_compatibility_check_result", fields, reflect.TypeOf(BaseCompatibilityCheckResult{}), fieldNameMap, validators)
 }
 
+func BaseConsolidatedStatusPerEnforcementPointBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["alarm"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(PolicyRuntimeAlarmBindingType))
+	fieldNameMap["alarm"] = "Alarm"
+	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
+	fields["consolidated_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ConsolidatedStatusBindingType))
+	fieldNameMap["consolidated_status"] = "ConsolidatedStatus"
+	fields["enforcement_point_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
+	fields["resource_type"] = vapiBindings_.NewStringType()
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["site_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["site_path"] = "SitePath"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.base_consolidated_status_per_enforcement_point", fields, reflect.TypeOf(BaseConsolidatedStatusPerEnforcementPoint{}), fieldNameMap, validators)
+}
+
 func BaseCountObservationBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -144877,6 +146182,8 @@ func BluecatIPAMProviderBindingType() vapiBindings_.BindingType {
 	fieldNameMap["server_certificate"] = "ServerCertificate"
 	fields["username"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["username"] = "Username"
+	fields["verify_hostname"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["verify_hostname"] = "VerifyHostname"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.bluecat_IPAM_provider", fields, reflect.TypeOf(BluecatIPAMProvider{}), fieldNameMap, validators)
 }
@@ -155868,6 +157175,53 @@ func ChildRouteControllerInterfaceBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.child_route_controller_interface", fields, reflect.TypeOf(ChildRouteControllerInterface{}), fieldNameMap, validators)
 }
 
+func ChildRouteControllerRouteMapBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["RouteControllerRouteMap"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(RouteControllerRouteMapBindingType))
+	fieldNameMap["RouteControllerRouteMap"] = "RouteControllerRouteMap"
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewStringType()
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["mark_for_override"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["mark_for_override"] = "MarkForOverride"
+	fields["marked_for_convert"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["marked_for_convert"] = "MarkedForConvert"
+	fields["marked_for_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["request_parameter"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(PolicyRequestParameterBindingType)}))
+	fieldNameMap["request_parameter"] = "RequestParameter"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.child_route_controller_route_map", fields, reflect.TypeOf(ChildRouteControllerRouteMap{}), fieldNameMap, validators)
+}
+
 func ChildRuleBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -160143,6 +161497,40 @@ func ClusterBasedSpanBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.cluster_based_span", fields, reflect.TypeOf(ClusterBasedSpan{}), fieldNameMap, validators)
 }
 
+func ClusterCompatibilityInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["cluster_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cluster_id"] = "ClusterId"
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["status"] = "Status"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.cluster_compatibility_info", fields, reflect.TypeOf(ClusterCompatibilityInfo{}), fieldNameMap, validators)
+}
+
+func ClusterCompatibilityInfoListResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ClusterCompatibilityInfoBindingType), reflect.TypeOf([]ClusterCompatibilityInfo{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.cluster_compatibility_info_list_result", fields, reflect.TypeOf(ClusterCompatibilityInfoListResult{}), fieldNameMap, validators)
+}
+
 func ClusterControlPlaneBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -160883,6 +162271,17 @@ func CommunityListListResultBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.community_list_list_result", fields, reflect.TypeOf(CommunityListListResult{}), fieldNameMap, validators)
 }
 
+func CommunityListMatchBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["criteria"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["criteria"] = "Criteria"
+	fields["match_operator"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["match_operator"] = "MatchOperator"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.community_list_match", fields, reflect.TypeOf(CommunityListMatch{}), fieldNameMap, validators)
+}
+
 func CommunityMatchCriteriaBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -161434,7 +162833,7 @@ func ConsolidatedRealizedStatusBindingType() vapiBindings_.BindingType {
 	fieldNameMap["intent_path"] = "IntentPath"
 	fields["consolidated_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ConsolidatedStatusBindingType))
 	fieldNameMap["consolidated_status"] = "ConsolidatedStatus"
-	fields["consolidated_status_per_enforcement_point"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ConsolidatedStatusNsxtBindingType), reflect.TypeOf([]ConsolidatedStatusNsxt{})))
+	fields["consolidated_status_per_enforcement_point"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ConsolidatedStatusPerEnforcementPointBindingType), reflect.TypeOf([]ConsolidatedStatusPerEnforcementPoint{})))
 	fieldNameMap["consolidated_status_per_enforcement_point"] = "ConsolidatedStatusPerEnforcementPoint"
 	fields["intent_version"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["intent_version"] = "IntentVersion"
@@ -161462,6 +162861,8 @@ func ConsolidatedStatusBindingType() vapiBindings_.BindingType {
 func ConsolidatedStatusNsxtBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["enforced_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(EnforcedStatusDetailsNsxtBindingType))
+	fieldNameMap["enforced_status"] = "EnforcedStatus"
 	fields["alarm"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(PolicyRuntimeAlarmBindingType))
 	fieldNameMap["alarm"] = "Alarm"
 	fields["enforcement_point_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -161470,12 +162871,10 @@ func ConsolidatedStatusNsxtBindingType() vapiBindings_.BindingType {
 	fieldNameMap["consolidated_status"] = "ConsolidatedStatus"
 	fields["enforcement_point_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
-	fields["resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	fields["site_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["site_path"] = "SitePath"
-	fields["enforced_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(EnforcedStatusDetailsNsxtBindingType))
-	fieldNameMap["enforced_status"] = "EnforcedStatus"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.consolidated_status_nsxt", fields, reflect.TypeOf(ConsolidatedStatusNsxt{}), fieldNameMap, validators)
 }
@@ -161491,7 +162890,7 @@ func ConsolidatedStatusPerEnforcementPointBindingType() vapiBindings_.BindingTyp
 	fieldNameMap["consolidated_status"] = "ConsolidatedStatus"
 	fields["enforcement_point_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
-	fields["resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["resource_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["resource_type"] = "ResourceType"
 	fields["site_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["site_path"] = "SitePath"
@@ -162028,6 +163427,21 @@ func ConversionImpactWarningMessageBindingType() vapiBindings_.BindingType {
 	fieldNameMap["recommended_action"] = "RecommendedAction"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.conversion_impact_warning_message", fields, reflect.TypeOf(ConversionImpactWarningMessage{}), fieldNameMap, validators)
+}
+
+func ConversionWorkflowStateBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["errors"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["errors"] = "Errors"
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["status"] = "Status"
+	fields["conversion_impacts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ConversionImpactEntryBindingType), reflect.TypeOf([]ConversionImpactEntry{})))
+	fieldNameMap["conversion_impacts"] = "ConversionImpacts"
+	fields["validation_failures"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ValidationFailureEntryBindingType), reflect.TypeOf([]ValidationFailureEntry{})))
+	fieldNameMap["validation_failures"] = "ValidationFailures"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.conversion_workflow_state", fields, reflect.TypeOf(ConversionWorkflowState{}), fieldNameMap, validators)
 }
 
 func CoreCountByEditionBindingType() vapiBindings_.BindingType {
@@ -165718,6 +167132,36 @@ func DistributedVxlanConnectionListResultBindingType() vapiBindings_.BindingType
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.distributed_vxlan_connection_list_result", fields, reflect.TypeOf(DistributedVxlanConnectionListResult{}), fieldNameMap, validators)
 }
 
+func DistributedVxlanConnectionStateBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
+	fields["logical_gateway_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["logical_gateway_id"] = "LogicalGatewayId"
+	fields["per_node_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(DistributedVxlanConnectionStateNodeStatusBindingType), reflect.TypeOf([]DistributedVxlanConnectionStateNodeStatus{})))
+	fieldNameMap["per_node_status"] = "PerNodeStatus"
+	fields["route_controller_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["route_controller_path"] = "RouteControllerPath"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.distributed_vxlan_connection_state", fields, reflect.TypeOf(DistributedVxlanConnectionState{}), fieldNameMap, validators)
+}
+
+func DistributedVxlanConnectionStateNodeStatusBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["high_availability_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["high_availability_status"] = "HighAvailabilityStatus"
+	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["node_type"] = "NodeType"
+	fields["service_gateway_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["service_gateway_id"] = "ServiceGatewayId"
+	fields["virtual_network_appliance_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["virtual_network_appliance_path"] = "VirtualNetworkAppliancePath"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.distributed_vxlan_connection_state_node_status", fields, reflect.TypeOf(DistributedVxlanConnectionStateNodeStatus{}), fieldNameMap, validators)
+}
+
 func DnsAutoRecordConfigBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -165779,8 +167223,8 @@ func DnsAutoRecordConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["a_record_zone_path"] = "ARecordZonePath"
 	fields["ip_block_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["ip_block_path"] = "IpBlockPath"
-	fields["ptr_record_zone_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["ptr_record_zone_path"] = "PtrRecordZonePath"
+	fields["ptr_record_zone_paths"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["ptr_record_zone_paths"] = "PtrRecordZonePaths"
 	fields["ttl"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["ttl"] = "Ttl"
 	var validators = []vapiBindings_.Validator{}
@@ -168827,6 +170271,8 @@ func FeatureUsagesBindingType() vapiBindings_.BindingType {
 	fieldNameMap["GATEWAY_TLS"] = "GATEWAYTLS"
 	fields["NETWORK_DETECTION_RESPONSE"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["NETWORK_DETECTION_RESPONSE"] = "NETWORKDETECTIONRESPONSE"
+	fields["NETWORK_TRAFFIC_ANALYSIS"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["NETWORK_TRAFFIC_ANALYSIS"] = "NETWORKTRAFFICANALYSIS"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.feature_usages", fields, reflect.TypeOf(FeatureUsages{}), fieldNameMap, validators)
 }
@@ -169699,6 +171145,80 @@ func FqdnAnalysisConfigBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.fqdn_analysis_config", fields, reflect.TypeOf(FqdnAnalysisConfig{}), fieldNameMap, validators)
 }
 
+func FqdnExpressionBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["fqdns"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["fqdns"] = "Fqdns"
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewStringType()
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["locked_by_workflow"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["locked_by_workflow"] = "LockedByWorkflow"
+	fields["origin_site_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["origin_site_id"] = "OriginSiteId"
+	fields["owner_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["owner_id"] = "OwnerId"
+	fields["parent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["realization_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["realization_id"] = "RealizationId"
+	fields["relative_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["remote_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["remote_path"] = "RemotePath"
+	fields["unique_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["unique_id"] = "UniqueId"
+	fields["children"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(ChildPolicyConfigResourceBindingType)}), reflect.TypeOf([]*vapiData_.StructValue{})))
+	fieldNameMap["children"] = "Children"
+	fields["marked_for_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["overridden"] = "Overridden"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.fqdn_expression", fields, reflect.TypeOf(FqdnExpression{}), fieldNameMap, validators)
+}
+
+func FqdnRecordBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["fqdn"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["fqdn"] = "Fqdn"
+	fields["ip_addresses"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["ip_addresses"] = "IpAddresses"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.fqdn_record", fields, reflect.TypeOf(FqdnRecord{}), fieldNameMap, validators)
+}
+
 func FqdnResolvedIpStateBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -170042,15 +171562,71 @@ func GatewayDnsResolverEdgeNodeStatusBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.gateway_dns_resolver_edge_node_status", fields, reflect.TypeOf(GatewayDnsResolverEdgeNodeStatus{}), fieldNameMap, validators)
 }
 
-func GatewayDnsResolverStatusBindingType() vapiBindings_.BindingType {
+func GatewayDnsResolverMonitoringStatusBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["locked_by_workflow"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["locked_by_workflow"] = "LockedByWorkflow"
+	fields["origin_site_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["origin_site_id"] = "OriginSiteId"
+	fields["owner_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["owner_id"] = "OwnerId"
+	fields["parent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["realization_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["realization_id"] = "RealizationId"
+	fields["relative_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["remote_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["remote_path"] = "RemotePath"
+	fields["unique_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["unique_id"] = "UniqueId"
+	fields["children"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(ChildPolicyConfigResourceBindingType)}), reflect.TypeOf([]*vapiData_.StructValue{})))
+	fieldNameMap["children"] = "Children"
+	fields["marked_for_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["overridden"] = "Overridden"
 	fields["dns_resolver_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(GatewayDnsResolverStatusEntryBindingType), reflect.TypeOf([]GatewayDnsResolverStatusEntry{})))
 	fieldNameMap["dns_resolver_status"] = "DnsResolverStatus"
 	fields["gateway_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["gateway_path"] = "GatewayPath"
+	fields["last_updated_ms"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["last_updated_ms"] = "LastUpdatedMs"
 	var validators = []vapiBindings_.Validator{}
-	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.gateway_dns_resolver_status", fields, reflect.TypeOf(GatewayDnsResolverStatus{}), fieldNameMap, validators)
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.gateway_dns_resolver_monitoring_status", fields, reflect.TypeOf(GatewayDnsResolverMonitoringStatus{}), fieldNameMap, validators)
 }
 
 func GatewayDnsResolverStatusEntryBindingType() vapiBindings_.BindingType {
@@ -172876,6 +174452,40 @@ func HighPerformanceConfigParamsBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.high_performance_config_params", fields, reflect.TypeOf(HighPerformanceConfigParams{}), fieldNameMap, validators)
 }
 
+func HostCompatibilityInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["host_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["host_id"] = "HostId"
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["status"] = "Status"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.host_compatibility_info", fields, reflect.TypeOf(HostCompatibilityInfo{}), fieldNameMap, validators)
+}
+
+func HostCompatibilityInfoListResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(HostCompatibilityInfoBindingType), reflect.TypeOf([]HostCompatibilityInfo{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.host_compatibility_info_list_result", fields, reflect.TypeOf(HostCompatibilityInfoListResult{}), fieldNameMap, validators)
+}
+
 func HostConfigCsvRecordBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -173173,6 +174783,8 @@ func HostSwitchStateBindingType() vapiBindings_.BindingType {
 	fieldNameMap["endpoints"] = "Endpoints"
 	fields["host_switch_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["host_switch_id"] = "HostSwitchId"
+	fields["host_switch_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["host_switch_mode"] = "HostSwitchMode"
 	fields["host_switch_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["host_switch_name"] = "HostSwitchName"
 	fields["host_switch_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -173513,6 +175125,69 @@ func HostVnicBindingType() vapiBindings_.BindingType {
 	fieldNameMap["txpps"] = "Txpps"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.host_vnic", fields, reflect.TypeOf(HostVnic{}), fieldNameMap, validators)
+}
+
+func HypervisorSecurityExcludeListBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["locked_by_workflow"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["locked_by_workflow"] = "LockedByWorkflow"
+	fields["origin_site_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["origin_site_id"] = "OriginSiteId"
+	fields["owner_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["owner_id"] = "OwnerId"
+	fields["parent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["realization_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["realization_id"] = "RealizationId"
+	fields["relative_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["remote_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["remote_path"] = "RemotePath"
+	fields["unique_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["unique_id"] = "UniqueId"
+	fields["children"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(ChildPolicyConfigResourceBindingType)}), reflect.TypeOf([]*vapiData_.StructValue{})))
+	fieldNameMap["children"] = "Children"
+	fields["marked_for_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["overridden"] = "Overridden"
+	fields["members"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["members"] = "Members"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.hypervisor_security_exclude_list", fields, reflect.TypeOf(HypervisorSecurityExcludeList{}), fieldNameMap, validators)
 }
 
 func HypervisorSecurityFeatureBindingType() vapiBindings_.BindingType {
@@ -177239,14 +178914,10 @@ func IdsCustomSignatureBindingType() vapiBindings_.BindingType {
 	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
 	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["overridden"] = "Overridden"
-	fields["abstract"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["abstract"] = "_Abstract"
 	fields["action"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["action"] = "Action"
 	fields["affected_products"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(AffectedProductDetailBindingType), reflect.TypeOf([]AffectedProductDetail{})))
 	fieldNameMap["affected_products"] = "AffectedProducts"
-	fields["alert_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["alert_type"] = "AlertType"
 	fields["attack_target"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["attack_target"] = "AttackTarget"
 	fields["categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
@@ -177255,8 +178926,6 @@ func IdsCustomSignatureBindingType() vapiBindings_.BindingType {
 	fieldNameMap["class_type"] = "ClassType"
 	fields["confidence"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["confidence"] = "Confidence"
-	fields["cve_v3"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(IdsSignatureCveEntryBindingType), reflect.TypeOf([]IdsSignatureCveEntry{})))
-	fieldNameMap["cve_v3"] = "CveV3"
 	fields["cves"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["cves"] = "Cves"
 	fields["cvss"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -177273,14 +178942,8 @@ func IdsCustomSignatureBindingType() vapiBindings_.BindingType {
 	fieldNameMap["direction"] = "Direction"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
-	fields["false_negatives"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["false_negatives"] = "FalseNegatives"
-	fields["false_positives"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["false_positives"] = "FalsePositives"
 	fields["flow"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["flow"] = "Flow"
-	fields["goal"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["goal"] = "Goal"
 	fields["impact"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["impact"] = "Impact"
 	fields["malware_family"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -177315,12 +178978,8 @@ func IdsCustomSignatureBindingType() vapiBindings_.BindingType {
 	fieldNameMap["signature_severity"] = "SignatureSeverity"
 	fields["tag"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["tag"] = "Tag"
-	fields["threat"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(IdsSignatureThreatBindingType))
-	fieldNameMap["threat"] = "Threat"
 	fields["threshold"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(IdsSignatureThresholdBindingType))
 	fieldNameMap["threshold"] = "Threshold"
-	fields["traffic_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["traffic_type"] = "TrafficType"
 	fields["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["type"] = "Type_"
 	fields["urls"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
@@ -178972,14 +180631,10 @@ func IdsSignatureBindingType() vapiBindings_.BindingType {
 	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
 	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["overridden"] = "Overridden"
-	fields["abstract"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["abstract"] = "_Abstract"
 	fields["action"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["action"] = "Action"
 	fields["affected_products"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(AffectedProductDetailBindingType), reflect.TypeOf([]AffectedProductDetail{})))
 	fieldNameMap["affected_products"] = "AffectedProducts"
-	fields["alert_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["alert_type"] = "AlertType"
 	fields["attack_target"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["attack_target"] = "AttackTarget"
 	fields["categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
@@ -178988,8 +180643,6 @@ func IdsSignatureBindingType() vapiBindings_.BindingType {
 	fieldNameMap["class_type"] = "ClassType"
 	fields["confidence"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["confidence"] = "Confidence"
-	fields["cve_v3"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(IdsSignatureCveEntryBindingType), reflect.TypeOf([]IdsSignatureCveEntry{})))
-	fieldNameMap["cve_v3"] = "CveV3"
 	fields["cves"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["cves"] = "Cves"
 	fields["cvss"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -179006,14 +180659,8 @@ func IdsSignatureBindingType() vapiBindings_.BindingType {
 	fieldNameMap["direction"] = "Direction"
 	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enable"] = "Enable"
-	fields["false_negatives"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["false_negatives"] = "FalseNegatives"
-	fields["false_positives"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["false_positives"] = "FalsePositives"
 	fields["flow"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["flow"] = "Flow"
-	fields["goal"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["goal"] = "Goal"
 	fields["impact"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["impact"] = "Impact"
 	fields["malware_family"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -179048,29 +180695,14 @@ func IdsSignatureBindingType() vapiBindings_.BindingType {
 	fieldNameMap["signature_severity"] = "SignatureSeverity"
 	fields["tag"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["tag"] = "Tag"
-	fields["threat"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(IdsSignatureThreatBindingType))
-	fieldNameMap["threat"] = "Threat"
 	fields["threshold"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(IdsSignatureThresholdBindingType))
 	fieldNameMap["threshold"] = "Threshold"
-	fields["traffic_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["traffic_type"] = "TrafficType"
 	fields["type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["type"] = "Type_"
 	fields["urls"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["urls"] = "Urls"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ids_signature", fields, reflect.TypeOf(IdsSignature{}), fieldNameMap, validators)
-}
-
-func IdsSignatureCveEntryBindingType() vapiBindings_.BindingType {
-	fields := make(map[string]vapiBindings_.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["id"] = "Id"
-	fields["kev"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fieldNameMap["kev"] = "Kev"
-	var validators = []vapiBindings_.Validator{}
-	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ids_signature_cve_entry", fields, reflect.TypeOf(IdsSignatureCveEntry{}), fieldNameMap, validators)
 }
 
 func IdsSignatureCvssScoresV3BindingType() vapiBindings_.BindingType {
@@ -179223,17 +180855,6 @@ func IdsSignatureStatusBindingType() vapiBindings_.BindingType {
 	fieldNameMap["version_id"] = "VersionId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ids_signature_status", fields, reflect.TypeOf(IdsSignatureStatus{}), fieldNameMap, validators)
-}
-
-func IdsSignatureThreatBindingType() vapiBindings_.BindingType {
-	fields := make(map[string]vapiBindings_.BindingType)
-	fieldNameMap := make(map[string]string)
-	fields["details"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["details"] = "Details"
-	fields["name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["name"] = "Name"
-	var validators = []vapiBindings_.Validator{}
-	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ids_signature_threat", fields, reflect.TypeOf(IdsSignatureThreat{}), fieldNameMap, validators)
 }
 
 func IdsSignatureThresholdBindingType() vapiBindings_.BindingType {
@@ -179892,6 +181513,8 @@ func InfobloxIPAMProviderBindingType() vapiBindings_.BindingType {
 	fieldNameMap["server_certificate"] = "ServerCertificate"
 	fields["username"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["username"] = "Username"
+	fields["verify_hostname"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["verify_hostname"] = "VerifyHostname"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.infoblox_IPAM_provider", fields, reflect.TypeOf(InfobloxIPAMProvider{}), fieldNameMap, validators)
 }
@@ -181953,6 +183576,8 @@ func IpamThirdPartyProviderBindingType() vapiBindings_.BindingType {
 	fieldNameMap["server_certificate"] = "ServerCertificate"
 	fields["username"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["username"] = "Username"
+	fields["verify_hostname"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["verify_hostname"] = "VerifyHostname"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.ipam_third_party_provider", fields, reflect.TypeOf(IpamThirdPartyProvider{}), fieldNameMap, validators)
 }
@@ -187757,6 +189382,8 @@ func LimitListResultBindingType() vapiBindings_.BindingType {
 func LimitStateBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
 	fields["intent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["intent_path"] = "IntentPath"
 	fields["quota"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(QuotaStateBindingType)}))
@@ -188472,6 +190099,10 @@ func LogicalRouterPortStatisticsBindingType() vapiBindings_.BindingType {
 func LogicalRouterPortStatisticsPerNodeBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["ipv4"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AddressFamilyLogicalRouterPortCountersBindingType))
+	fieldNameMap["ipv4"] = "Ipv4"
+	fields["ipv6"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AddressFamilyLogicalRouterPortCountersBindingType))
+	fieldNameMap["ipv6"] = "Ipv6"
 	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
@@ -188489,6 +190120,10 @@ func LogicalRouterPortStatisticsPerNodeBindingType() vapiBindings_.BindingType {
 func LogicalRouterPortStatisticsSummaryBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["ipv4"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AddressFamilyLogicalRouterPortCountersBindingType))
+	fieldNameMap["ipv4"] = "Ipv4"
+	fields["ipv6"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AddressFamilyLogicalRouterPortCountersBindingType))
+	fieldNameMap["ipv6"] = "Ipv6"
 	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
@@ -191208,6 +192843,91 @@ func NorthSouthFirewallBindingType() vapiBindings_.BindingType {
 	fieldNameMap["enabled"] = "Enabled"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.north_south_firewall", fields, reflect.TypeOf(NorthSouthFirewall{}), fieldNameMap, validators)
+}
+
+func NpsPromotableObjectRefBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["resource_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["resource_path"] = "ResourcePath"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.nps_promotable_object_ref", fields, reflect.TypeOf(NpsPromotableObjectRef{}), fieldNameMap, validators)
+}
+
+func NpsPromotionObjectStatusBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["message"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["message"] = "Message"
+	fields["resource_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["resource_path"] = "ResourcePath"
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["status"] = "Status"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.nps_promotion_object_status", fields, reflect.TypeOf(NpsPromotionObjectStatus{}), fieldNameMap, validators)
+}
+
+func NpsPromotionWorkflowBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["desired_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["desired_state"] = "DesiredState"
+	fields["objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(NpsPromotableObjectRefBindingType), reflect.TypeOf([]NpsPromotableObjectRef{})))
+	fieldNameMap["objects"] = "Objects"
+	fields["region_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["region_id"] = "RegionId"
+	fields["workflow_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(PromotionWorkflowStateBindingType))
+	fieldNameMap["workflow_state"] = "WorkflowState"
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewStringType()
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["locked_by_workflow"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["locked_by_workflow"] = "LockedByWorkflow"
+	fields["origin_site_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["origin_site_id"] = "OriginSiteId"
+	fields["owner_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["owner_id"] = "OwnerId"
+	fields["parent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["realization_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["realization_id"] = "RealizationId"
+	fields["relative_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["remote_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["remote_path"] = "RemotePath"
+	fields["unique_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["unique_id"] = "UniqueId"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.nps_promotion_workflow", fields, reflect.TypeOf(NpsPromotionWorkflow{}), fieldNameMap, validators)
 }
 
 func NsxRoleBindingType() vapiBindings_.BindingType {
@@ -198522,6 +200242,29 @@ func PolicyGroupAssociatedKubernetesClusterListResultBindingType() vapiBindings_
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.policy_group_associated_kubernetes_cluster_list_result", fields, reflect.TypeOf(PolicyGroupAssociatedKubernetesClusterListResult{}), fieldNameMap, validators)
 }
 
+func PolicyGroupFqdnMembersListResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(FqdnRecordBindingType), reflect.TypeOf([]FqdnRecord{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.policy_group_fqdn_members_list_result", fields, reflect.TypeOf(PolicyGroupFqdnMembersListResult{}), fieldNameMap, validators)
+}
+
 func PolicyGroupIPMembersListResultBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -199087,6 +200830,55 @@ func PolicyIdfwGroupVmDetailListResultBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.policy_idfw_group_vm_detail_list_result", fields, reflect.TypeOf(PolicyIdfwGroupVmDetailListResult{}), fieldNameMap, validators)
 }
 
+func PolicyIdsAffectedEntitiesRequestBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["entity_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["entity_type"] = "EntityType"
+	fields["filters"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(FilterRequestBindingType), reflect.TypeOf([]FilterRequest{})))
+	fieldNameMap["filters"] = "Filters"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.policy_ids_affected_entities_request", fields, reflect.TypeOf(PolicyIdsAffectedEntitiesRequest{}), fieldNameMap, validators)
+}
+
+func PolicyIdsAffectedEntityBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["entity_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["entity_type"] = "EntityType"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["vpc_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["vpc_name"] = "VpcName"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.policy_ids_affected_entity", fields, reflect.TypeOf(PolicyIdsAffectedEntity{}), fieldNameMap, validators)
+}
+
+func PolicyIdsAffectedEntityListResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(PolicyIdsAffectedEntityBindingType), reflect.TypeOf([]PolicyIdsAffectedEntity{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.policy_ids_affected_entity_list_result", fields, reflect.TypeOf(PolicyIdsAffectedEntityListResult{}), fieldNameMap, validators)
+}
+
 func PolicyIdsEventDataRequestBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -199634,6 +201426,10 @@ func PolicyInterfaceStatisticsBindingType() vapiBindings_.BindingType {
 func PolicyInterfaceStatisticsSummaryBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["ipv4"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AddressFamilyLogicalRouterPortCountersBindingType))
+	fieldNameMap["ipv4"] = "Ipv4"
+	fields["ipv6"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AddressFamilyLogicalRouterPortCountersBindingType))
+	fieldNameMap["ipv6"] = "Ipv6"
 	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
@@ -204617,6 +206413,8 @@ func ProjectBindingType() vapiBindings_.BindingType {
 	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
 	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["overridden"] = "Overridden"
+	fields["policy_span_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["policy_span_path"] = "PolicySpanPath"
 	fields["activate_default_dfw_rules"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["activate_default_dfw_rules"] = "ActivateDefaultDfwRules"
 	fields["dedicated_resources"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(DedicatedResourcesBindingType))
@@ -204878,6 +206676,21 @@ func ProjectStateBindingType() vapiBindings_.BindingType {
 	fieldNameMap["network_stack"] = "NetworkStack"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.project_state", fields, reflect.TypeOf(ProjectState{}), fieldNameMap, validators)
+}
+
+func PromotionWorkflowStateBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["errors"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["errors"] = "Errors"
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["status"] = "Status"
+	fields["message"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["message"] = "Message"
+	fields["objects_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(NpsPromotionObjectStatusBindingType), reflect.TypeOf([]NpsPromotionObjectStatus{})))
+	fieldNameMap["objects_status"] = "ObjectsStatus"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.promotion_workflow_state", fields, reflect.TypeOf(PromotionWorkflowState{}), fieldNameMap, validators)
 }
 
 func PropertyItemBindingType() vapiBindings_.BindingType {
@@ -207224,6 +209037,8 @@ func RealizedVirtualMachineBindingType() vapiBindings_.BindingType {
 	fieldNameMap["power_state"] = "PowerState"
 	fields["supervisor_namespace_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["supervisor_namespace_name"] = "SupervisorNamespaceName"
+	fields["vm_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["vm_type"] = "VmType"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.realized_virtual_machine", fields, reflect.TypeOf(RealizedVirtualMachine{}), fieldNameMap, validators)
 }
@@ -207756,6 +209571,8 @@ func ReservationInfoBindingType() vapiBindings_.BindingType {
 	fieldNameMap["cpu_reservation"] = "CpuReservation"
 	fields["memory_reservation"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(MemoryReservationBindingType))
 	fieldNameMap["memory_reservation"] = "MemoryReservation"
+	fields["system_cpu_reservation"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["system_cpu_reservation"] = "SystemCpuReservation"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.reservation_info", fields, reflect.TypeOf(ReservationInfo{}), fieldNameMap, validators)
 }
@@ -208850,6 +210667,10 @@ func RouteControllerInterfaceStatisticsBindingType() vapiBindings_.BindingType {
 func RouteControllerInterfaceStatisticsPerNodeBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["ipv4"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AddressFamilyLogicalRouterPortCountersBindingType))
+	fieldNameMap["ipv4"] = "Ipv4"
+	fields["ipv6"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AddressFamilyLogicalRouterPortCountersBindingType))
+	fieldNameMap["ipv6"] = "Ipv6"
 	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
@@ -208871,6 +210692,10 @@ func RouteControllerInterfaceStatisticsPerNodeBindingType() vapiBindings_.Bindin
 func RouteControllerInterfaceStatisticsSummaryBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["ipv4"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AddressFamilyLogicalRouterPortCountersBindingType))
+	fieldNameMap["ipv4"] = "Ipv4"
+	fields["ipv6"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AddressFamilyLogicalRouterPortCountersBindingType))
+	fieldNameMap["ipv6"] = "Ipv6"
 	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
@@ -208904,6 +210729,122 @@ func RouteControllerListResultBindingType() vapiBindings_.BindingType {
 	fieldNameMap["results"] = "Results"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.route_controller_list_result", fields, reflect.TypeOf(RouteControllerListResult{}), fieldNameMap, validators)
+}
+
+func RouteControllerMatchCriteriaBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["community_list_match_value"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(CommunityListMatchBindingType))
+	fieldNameMap["community_list_match_value"] = "CommunityListMatchValue"
+	fields["match_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["match_type"] = "MatchType"
+	fields["match_value"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["match_value"] = "MatchValue"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.route_controller_match_criteria", fields, reflect.TypeOf(RouteControllerMatchCriteria{}), fieldNameMap, validators)
+}
+
+func RouteControllerRouteMapBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["locked_by_workflow"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["locked_by_workflow"] = "LockedByWorkflow"
+	fields["origin_site_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["origin_site_id"] = "OriginSiteId"
+	fields["owner_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["owner_id"] = "OwnerId"
+	fields["parent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["realization_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["realization_id"] = "RealizationId"
+	fields["relative_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["remote_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["remote_path"] = "RemotePath"
+	fields["unique_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["unique_id"] = "UniqueId"
+	fields["children"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(ChildPolicyConfigResourceBindingType)}), reflect.TypeOf([]*vapiData_.StructValue{})))
+	fieldNameMap["children"] = "Children"
+	fields["marked_for_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["overridden"] = "Overridden"
+	fields["entries"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(RouteControllerRouteMapEntryBindingType), reflect.TypeOf([]RouteControllerRouteMapEntry{})))
+	fieldNameMap["entries"] = "Entries"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.route_controller_route_map", fields, reflect.TypeOf(RouteControllerRouteMap{}), fieldNameMap, validators)
+}
+
+func RouteControllerRouteMapEntryBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["action"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["action"] = "Action"
+	fields["match_criteria"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(RouteControllerMatchCriteriaBindingType), reflect.TypeOf([]RouteControllerMatchCriteria{})))
+	fieldNameMap["match_criteria"] = "MatchCriteria"
+	fields["match_operator"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["match_operator"] = "MatchOperator"
+	fields["sequence_number"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["sequence_number"] = "SequenceNumber"
+	fields["set"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(RouteMapEntrySetBindingType))
+	fieldNameMap["set"] = "Set"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.route_controller_route_map_entry", fields, reflect.TypeOf(RouteControllerRouteMapEntry{}), fieldNameMap, validators)
+}
+
+func RouteControllerRouteMapListResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(RouteControllerRouteMapBindingType), reflect.TypeOf([]RouteControllerRouteMap{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.route_controller_route_map_list_result", fields, reflect.TypeOf(RouteControllerRouteMapListResult{}), fieldNameMap, validators)
 }
 
 func RouteControllerRoutingTableBindingType() vapiBindings_.BindingType {
@@ -210068,6 +212009,8 @@ func SecurityLicenseUsageCSVRecordBindingType() vapiBindings_.BindingType {
 	fieldNameMap["licensed_host_core_count_distributed_mps"] = "LicensedHostCoreCountDistributedMps"
 	fields["licensed_host_core_count_ndr"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["licensed_host_core_count_ndr"] = "LicensedHostCoreCountNdr"
+	fields["licensed_host_core_count_nta"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["licensed_host_core_count_nta"] = "LicensedHostCoreCountNta"
 	fields["licensed_total_core_count_firewall_atp_edition"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["licensed_total_core_count_firewall_atp_edition"] = "LicensedTotalCoreCountFirewallAtpEdition"
 	fields["licensed_total_core_count_firewall_edition"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -210150,6 +212093,8 @@ func SecurityLicenseUsageCSVRecordBindingType() vapiBindings_.BindingType {
 	fieldNameMap["raw_host_core_count_distributed_mps"] = "RawHostCoreCountDistributedMps"
 	fields["raw_host_core_count_ndr"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["raw_host_core_count_ndr"] = "RawHostCoreCountNdr"
+	fields["raw_host_core_count_nta"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["raw_host_core_count_nta"] = "RawHostCoreCountNta"
 	fields["recommendation_sessions_total"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["recommendation_sessions_total"] = "RecommendationSessionsTotal"
 	fields["total_firewall_ipfix_profiles"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -213511,6 +215456,21 @@ func ShaEsxTnVnicMetricsMonitorConfigBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.sha_esx_tn_vnic_metrics_monitor_config", fields, reflect.TypeOf(ShaEsxTnVnicMetricsMonitorConfig{}), fieldNameMap, validators)
 }
 
+func ShaGatewayDnsResolverStatusMonitorConfigBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["check_interval"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["check_interval"] = "CheckInterval"
+	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
+	fields["resource_type"] = vapiBindings_.NewStringType()
+	fieldNameMap["resource_type"] = "ResourceType"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.sha_gateway_dns_resolver_status_monitor_config", fields, reflect.TypeOf(ShaGatewayDnsResolverStatusMonitorConfig{}), fieldNameMap, validators)
+}
+
 func ShaHardwareUsageMonitorConfigBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -214688,6 +216648,8 @@ func SharedResourceBindingType() vapiBindings_.BindingType {
 	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
 	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["overridden"] = "Overridden"
+	fields["permitted_consumer_types"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["permitted_consumer_types"] = "PermittedConsumerTypes"
 	fields["resource_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceObjectBindingType), reflect.TypeOf([]ResourceObject{})))
 	fieldNameMap["resource_objects"] = "ResourceObjects"
 	fields["share_shared_with"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
@@ -217087,7 +219049,7 @@ func SubnetsConversionWorkflowBindingType() vapiBindings_.BindingType {
 	fieldNameMap["segments"] = "Segments"
 	fields["vpc_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["vpc_path"] = "VpcPath"
-	fields["workflow_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(WorkflowStateBindingType))
+	fields["workflow_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ConversionWorkflowStateBindingType))
 	fieldNameMap["workflow_state"] = "WorkflowState"
 	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
 	fieldNameMap["_links"] = "Links"
@@ -220557,6 +222519,8 @@ func TraceflowConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["overridden"] = "Overridden"
 	fields["connected_parent_path_as_source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["connected_parent_path_as_source"] = "ConnectedParentPathAsSource"
+	fields["expected_destination_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["expected_destination_id"] = "ExpectedDestinationId"
 	fields["is_transient"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["is_transient"] = "IsTransient"
 	fields["packet"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(PacketDataBindingType)}))
@@ -222796,6 +224760,10 @@ func TunnelListBindingType() vapiBindings_.BindingType {
 func TunnelPortStatisticsPerNodeBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["ipv4"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AddressFamilyLogicalRouterPortCountersBindingType))
+	fieldNameMap["ipv4"] = "Ipv4"
+	fields["ipv6"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AddressFamilyLogicalRouterPortCountersBindingType))
+	fieldNameMap["ipv6"] = "Ipv6"
 	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(LogicalRouterPortCountersBindingType))
@@ -223867,8 +225835,8 @@ func VdsScopeMemberBindingType() vapiBindings_.BindingType {
 	fieldNameMap["cm_name"] = "CmName"
 	fields["dc_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["dc_name"] = "DcName"
-	fields["vds_externalId"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["vds_externalId"] = "VdsExternalId"
+	fields["vds_external_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["vds_external_id"] = "VdsExternalId"
 	fields["vds_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["vds_name"] = "VdsName"
 	var validators = []vapiBindings_.Validator{}
@@ -223878,8 +225846,20 @@ func VdsScopeMemberBindingType() vapiBindings_.BindingType {
 func VdsScopeMembersListResultBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
 	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
 	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(VdsScopeMemberBindingType), reflect.TypeOf([]VdsScopeMember{})))
 	fieldNameMap["results"] = "Results"
 	var validators = []vapiBindings_.Validator{}
@@ -225172,6 +227152,8 @@ func VmPlacementStateBindingType() vapiBindings_.BindingType {
 	fieldNameMap["form_factor"] = "FormFactor"
 	fields["host_moref"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["host_moref"] = "HostMoref"
+	fields["system_cpu_reservation"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["system_cpu_reservation"] = "SystemCpuReservation"
 	fields["vm_instance_uuid"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["vm_instance_uuid"] = "VmInstanceUuid"
 	var validators = []vapiBindings_.Validator{}
@@ -225220,6 +227202,46 @@ func VmkAllocationBindingType() vapiBindings_.BindingType {
 	fieldNameMap["vds_uuid"] = "VdsUuid"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vmk_allocation", fields, reflect.TypeOf(VmkAllocation{}), fieldNameMap, validators)
+}
+
+func VmkCompatibilityInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["enabled_services"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["enabled_services"] = "EnabledServices"
+	fields["host_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["host_id"] = "HostId"
+	fields["incompatible_reasons"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["incompatible_reasons"] = "IncompatibleReasons"
+	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["status"] = "Status"
+	fields["vmk_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["vmk_id"] = "VmkId"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vmk_compatibility_info", fields, reflect.TypeOf(VmkCompatibilityInfo{}), fieldNameMap, validators)
+}
+
+func VmkCompatibilityInfoListResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(VmkCompatibilityInfoBindingType), reflect.TypeOf([]VmkCompatibilityInfo{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vmk_compatibility_info_list_result", fields, reflect.TypeOf(VmkCompatibilityInfoListResult{}), fieldNameMap, validators)
 }
 
 func VmkConfigSpecBindingType() vapiBindings_.BindingType {
@@ -225697,7 +227719,7 @@ func VpcConversionWorkflowBindingType() vapiBindings_.BindingType {
 	fieldNameMap["tier_1_path"] = "Tier1Path"
 	fields["vpc_info"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(VpcInfoBindingType))
 	fieldNameMap["vpc_info"] = "VpcInfo"
-	fields["workflow_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(WorkflowStateBindingType))
+	fields["workflow_state"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ConversionWorkflowStateBindingType))
 	fieldNameMap["workflow_state"] = "WorkflowState"
 	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
 	fieldNameMap["_links"] = "Links"
@@ -226209,6 +228231,8 @@ func VpcIpAddressBlockBindingType() vapiBindings_.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["allocated_by_vpc"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(AllocatedByVpcBindingType))
 	fieldNameMap["allocated_by_vpc"] = "AllocatedByVpc"
+	fields["allowed_use_cases"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["allowed_use_cases"] = "AllowedUseCases"
 	fields["available"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["available"] = "Available"
 	fields["cidr"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -227741,14 +229765,10 @@ func WidgetPlotConfigurationBindingType() vapiBindings_.BindingType {
 func WorkflowStateBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["conversion_impacts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ConversionImpactEntryBindingType), reflect.TypeOf([]ConversionImpactEntry{})))
-	fieldNameMap["conversion_impacts"] = "ConversionImpacts"
 	fields["errors"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["errors"] = "Errors"
 	fields["status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["status"] = "Status"
-	fields["validation_failures"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ValidationFailureEntryBindingType), reflect.TypeOf([]ValidationFailureEntry{})))
-	fieldNameMap["validation_failures"] = "ValidationFailures"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.workflow_state", fields, reflect.TypeOf(WorkflowState{}), fieldNameMap, validators)
 }

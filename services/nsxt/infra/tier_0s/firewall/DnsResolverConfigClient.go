@@ -33,7 +33,7 @@ type DnsResolverConfigClient interface {
 	// @throws NotFound  Not Found
 	Delete(tier0IdParam string) error
 
-	// API to get Tier-0 Gateway DNS Resolver Configuration.
+	// Get the DNS Resolver Configuration for a Tier-0 gateway.
 	//
 	// @param tier0IdParam (required)
 	// @return com.vmware.nsx_policy.model.GatewayDnsResolverConfig

@@ -85,7 +85,7 @@ type DnsAutoRecordConfigsClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, configIdParam string, dnsAutoRecordConfigParam nsx_policyModel.DnsAutoRecordConfig) error
 
-	// Create or update a DnsAutoRecordConfig within the specified project. The ip_block_path is immutable after creation and must be unique per project. Both a_record_zone_path and ptr_record_zone_path accept local or shared zones. The ptr_record_zone_path is optional; when absent, no PTR record is auto-created. Deletion of this resource does not remove already auto-created DnsRecord entries; it only stops future auto-creation.
+	// Create or update a DnsAutoRecordConfig within the specified project. The ip_block_path is immutable after creation and must be unique per project. Both a_record_zone_path and the ptr_record_zone_paths entries accept local or shared zones. The ptr_record_zone_paths is an optional array of zone paths; when absent or empty, no PTR record is auto-created. When the IP block spans multiple CIDRs, the PTR record for an allocated IP is placed in whichever referenced zone's domain name matches that IP's CIDR. Deletion of this resource does not remove already auto-created DnsRecord entries; it only stops future auto-creation.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)

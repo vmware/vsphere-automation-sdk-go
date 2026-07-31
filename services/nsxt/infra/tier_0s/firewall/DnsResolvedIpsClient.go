@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type DnsResolvedIpsClient interface {
 
-	// Current resolved IPs, resolution status, and last success time for the FQDN. Query parameter fqdn is required.
+	// Current resolved IPs, resolution status, and last success time for the FQDN. Query parameter fqdn is required. The FQDN must be present in at least one gateway firewall rule scoped to the specified Tier-0; otherwise 400 is returned.
 	//
 	// @param tier0IdParam (required)
 	// @param fqdnParam FQDN to look up on this Tier-0 gateway. (required)

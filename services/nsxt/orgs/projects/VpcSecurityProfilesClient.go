@@ -23,6 +23,8 @@ type VpcSecurityProfilesClient interface {
 
 	// Retrieves a specific VPC Security Profile by its unique identifier within a project context. The security profile contains comprehensive security configurations including north-south (Gateway Firewall) and east-west (Distributed Firewall) settings. This API returns detailed information about VPC Gateway firewall enablement status and associated security strategies that define the security posture for VPCs. Currently, this API primarily returns system-generated default security profiles at the project level.
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param vpcSecurityProfileIdParam (required)
@@ -37,6 +39,8 @@ type VpcSecurityProfilesClient interface {
 	Get(orgIdParam string, projectIdParam string, vpcSecurityProfileIdParam string) (nsx_policyModel.VpcSecurityProfile, error)
 
 	// Retrieves a paginated collection of all VPC Security Profiles available within a specified project. Each security profile in the response includes comprehensive security configuration details such as north-south and east-west firewall settings, associated security strategies, and profile metadata. The API supports standard pagination parameters for efficient data retrieval and includes sorting capabilities. Currently, this API returns multiple predefined security profiles including the default profile and additional system-generated profiles that offer various security postures (isolation, external connectivity, essential services, etc.) for different VPC deployment scenarios.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
@@ -58,6 +62,8 @@ type VpcSecurityProfilesClient interface {
 
 	// Performs partial updates to an existing VPC Security Profile. This operation allows modification of specific security profile properties such as north-south firewall enablement status. It does not allow updating the security strategy defined in the east-west firewall settings. Note: Users can modify existing security profiles but cannot create new custom security profiles.
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param vpcSecurityProfileIdParam (required)
@@ -72,6 +78,8 @@ type VpcSecurityProfilesClient interface {
 	Patch(orgIdParam string, projectIdParam string, vpcSecurityProfileIdParam string, vpcSecurityProfileParam nsx_policyModel.VpcSecurityProfile) error
 
 	// Performs partial updates to an existing VPC Security Profile. This operation allows modification of specific security profile properties such as north-south firewall enablement status. It does not allow updating the security strategy defined in the east-west firewall settings. Note: Users can modify existing security profiles but cannot create new custom security profiles.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)

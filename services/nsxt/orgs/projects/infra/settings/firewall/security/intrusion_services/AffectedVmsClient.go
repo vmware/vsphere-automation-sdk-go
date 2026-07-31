@@ -22,6 +22,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type AffectedVmsClient interface {
 
 	// Get the list of the VMs affected pertaining to a specific signature.
+	//  This rest routine is deprecated. Use /infra/settings/firewall/security/intrusion-services/affected-entities with entity_type set to VM to get the list of affected VMs.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)

@@ -29,7 +29,7 @@ func dnsResolverStatusGetInputType() vapiBindings_.StructType {
 }
 
 func DnsResolverStatusGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.GatewayDnsResolverStatusBindingType)
+	return vapiBindings_.NewReferenceType(nsx_policyModel.GatewayDnsResolverMonitoringStatusBindingType)
 }
 
 func dnsResolverStatusGetRestMetadata() vapiProtocol_.OperationRestMetadata {

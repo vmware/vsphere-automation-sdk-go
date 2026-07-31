@@ -26,10 +26,12 @@ func resourcesDeleteInputType() vapiBindings_.StructType {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["share_id"] = vapiBindings_.NewStringType()
 	fields["shared_resource_id"] = vapiBindings_.NewStringType()
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["share_id"] = "ShareId"
 	fieldNameMap["shared_resource_id"] = "SharedResourceId"
+	fieldNameMap["force"] = "Force"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -51,14 +53,17 @@ func resourcesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["project_id"] = vapiBindings_.NewStringType()
 	fields["share_id"] = vapiBindings_.NewStringType()
 	fields["shared_resource_id"] = vapiBindings_.NewStringType()
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["share_id"] = "ShareId"
 	fieldNameMap["shared_resource_id"] = "SharedResourceId"
+	fieldNameMap["force"] = "Force"
 	paramsTypeMap["share_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["shared_resource_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["shareId"] = vapiBindings_.NewStringType()
@@ -67,6 +72,7 @@ func resourcesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	pathParams["shared_resource_id"] = "sharedResourceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
+	queryParams["force"] = "force"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -239,11 +245,13 @@ func resourcesPatchInputType() vapiBindings_.StructType {
 	fields["share_id"] = vapiBindings_.NewStringType()
 	fields["shared_resource_id"] = vapiBindings_.NewStringType()
 	fields["shared_resource"] = vapiBindings_.NewReferenceType(nsx_policyModel.SharedResourceBindingType)
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["share_id"] = "ShareId"
 	fieldNameMap["shared_resource_id"] = "SharedResourceId"
 	fieldNameMap["shared_resource"] = "SharedResource"
+	fieldNameMap["force"] = "Force"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -266,15 +274,18 @@ func resourcesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["share_id"] = vapiBindings_.NewStringType()
 	fields["shared_resource_id"] = vapiBindings_.NewStringType()
 	fields["shared_resource"] = vapiBindings_.NewReferenceType(nsx_policyModel.SharedResourceBindingType)
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["share_id"] = "ShareId"
 	fieldNameMap["shared_resource_id"] = "SharedResourceId"
 	fieldNameMap["shared_resource"] = "SharedResource"
+	fieldNameMap["force"] = "Force"
 	paramsTypeMap["share_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["shared_resource_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["shared_resource"] = vapiBindings_.NewReferenceType(nsx_policyModel.SharedResourceBindingType)
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
@@ -284,6 +295,7 @@ func resourcesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	pathParams["shared_resource_id"] = "sharedResourceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
+	queryParams["force"] = "force"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -315,11 +327,13 @@ func resourcesUpdateInputType() vapiBindings_.StructType {
 	fields["share_id"] = vapiBindings_.NewStringType()
 	fields["shared_resource_id"] = vapiBindings_.NewStringType()
 	fields["shared_resource"] = vapiBindings_.NewReferenceType(nsx_policyModel.SharedResourceBindingType)
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["share_id"] = "ShareId"
 	fieldNameMap["shared_resource_id"] = "SharedResourceId"
 	fieldNameMap["shared_resource"] = "SharedResource"
+	fieldNameMap["force"] = "Force"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -342,15 +356,18 @@ func resourcesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["share_id"] = vapiBindings_.NewStringType()
 	fields["shared_resource_id"] = vapiBindings_.NewStringType()
 	fields["shared_resource"] = vapiBindings_.NewReferenceType(nsx_policyModel.SharedResourceBindingType)
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["org_id"] = "OrgId"
 	fieldNameMap["project_id"] = "ProjectId"
 	fieldNameMap["share_id"] = "ShareId"
 	fieldNameMap["shared_resource_id"] = "SharedResourceId"
 	fieldNameMap["shared_resource"] = "SharedResource"
+	fieldNameMap["force"] = "Force"
 	paramsTypeMap["share_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["shared_resource_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["org_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["shared_resource"] = vapiBindings_.NewReferenceType(nsx_policyModel.SharedResourceBindingType)
 	paramsTypeMap["orgId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["projectId"] = vapiBindings_.NewStringType()
@@ -360,6 +377,7 @@ func resourcesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	pathParams["shared_resource_id"] = "sharedResourceId"
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
+	queryParams["force"] = "force"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(

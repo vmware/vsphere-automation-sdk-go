@@ -23,6 +23,8 @@ type SecurityStrategiesClient interface {
 
 	// Retrieves a specific Security Strategy by its unique identifier, providing detailed rule template definitions that define security postures for a VPC. Security strategies are system-generated resources created under the default project during system initialization and are automatically shared across all projects. The response includes comprehensive rule template specifications with source/destination criteria, traffic actions, service definitions, and placeholder references that are dynamically resolved when applied to specific VPCs. These strategies serve as building blocks for VPC security profiles and define common security patterns such as VPC isolation, external connectivity controls, essential service access, and inter-VPC communication policies. All security strategies returned by this API are predefined, validated configurations maintained by the system.
 	//
+	// Deprecated: This API element is deprecated.
+	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param securityStrategyIdParam (required)
@@ -37,6 +39,8 @@ type SecurityStrategiesClient interface {
 	Get(orgIdParam string, projectIdParam string, securityStrategyIdParam string) (nsx_policyModel.SecurityStrategy, error)
 
 	// Retrieves a paginated collection of all available Security Strategies that can be used in VPC Security Profiles. Each security strategy in the response contains detailed rule template definitions that specify distributed firewall rules for various security scenarios. The strategies are pre-created during system initialization under the default project and are automatically shared across all projects for consumption in security profiles. The API returns comprehensive information including rule templates with traffic flow specifications, actions, service definitions, and placeholder references for dynamic resource resolution. Available strategies typically include patterns for VPC isolation, external connectivity, vpc isolation with essential services access, secure connections. The response supports pagination and sorting for efficient data retrieval and includes metadata about each strategy's purpose and rule composition.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)

@@ -23,7 +23,9 @@ func sharesDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["share_id"] = vapiBindings_.NewStringType()
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["share_id"] = "ShareId"
+	fieldNameMap["force"] = "Force"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -42,10 +44,14 @@ func sharesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
 	fields["share_id"] = vapiBindings_.NewStringType()
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["share_id"] = "ShareId"
+	fieldNameMap["force"] = "Force"
 	paramsTypeMap["share_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["shareId"] = vapiBindings_.NewStringType()
 	pathParams["share_id"] = "shareId"
+	queryParams["force"] = "force"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -203,8 +209,10 @@ func sharesPatchInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["share_id"] = vapiBindings_.NewStringType()
 	fields["share"] = vapiBindings_.NewReferenceType(nsx_policyModel.ShareBindingType)
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["share_id"] = "ShareId"
 	fieldNameMap["share"] = "Share"
+	fieldNameMap["force"] = "Force"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -224,12 +232,16 @@ func sharesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["share_id"] = vapiBindings_.NewStringType()
 	fields["share"] = vapiBindings_.NewReferenceType(nsx_policyModel.ShareBindingType)
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["share_id"] = "ShareId"
 	fieldNameMap["share"] = "Share"
+	fieldNameMap["force"] = "Force"
 	paramsTypeMap["share_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["share"] = vapiBindings_.NewReferenceType(nsx_policyModel.ShareBindingType)
+	paramsTypeMap["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["shareId"] = vapiBindings_.NewStringType()
 	pathParams["share_id"] = "shareId"
+	queryParams["force"] = "force"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -258,8 +270,10 @@ func sharesUpdateInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["share_id"] = vapiBindings_.NewStringType()
 	fields["share"] = vapiBindings_.NewReferenceType(nsx_policyModel.ShareBindingType)
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["share_id"] = "ShareId"
 	fieldNameMap["share"] = "Share"
+	fieldNameMap["force"] = "Force"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
@@ -279,12 +293,16 @@ func sharesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["share_id"] = vapiBindings_.NewStringType()
 	fields["share"] = vapiBindings_.NewReferenceType(nsx_policyModel.ShareBindingType)
+	fields["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["share_id"] = "ShareId"
 	fieldNameMap["share"] = "Share"
+	fieldNameMap["force"] = "Force"
 	paramsTypeMap["share_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["share"] = vapiBindings_.NewReferenceType(nsx_policyModel.ShareBindingType)
+	paramsTypeMap["force"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["shareId"] = vapiBindings_.NewStringType()
 	pathParams["share_id"] = "shareId"
+	queryParams["force"] = "force"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(

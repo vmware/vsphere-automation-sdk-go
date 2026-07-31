@@ -24,7 +24,7 @@ type DnsResolverStatusClient interface {
 	// Per-resolver status for gateway-firewall FQDN resolution: consolidated value across Edge nodes and per-node status.
 	//
 	// @param tier0IdParam (required)
-	// @return com.vmware.nsx_policy.model.GatewayDnsResolverStatus
+	// @return com.vmware.nsx_policy.model.GatewayDnsResolverMonitoringStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -32,7 +32,7 @@ type DnsResolverStatusClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(tier0IdParam string) (nsx_policyModel.GatewayDnsResolverStatus, error)
+	Get(tier0IdParam string) (nsx_policyModel.GatewayDnsResolverMonitoringStatus, error)
 }
 
 type dnsResolverStatusClient struct {
@@ -60,7 +60,7 @@ func (dIface *dnsResolverStatusClient) GetErrorBindingType(errorName string) vap
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (dIface *dnsResolverStatusClient) Get(tier0IdParam string) (nsx_policyModel.GatewayDnsResolverStatus, error) {
+func (dIface *dnsResolverStatusClient) Get(tier0IdParam string) (nsx_policyModel.GatewayDnsResolverMonitoringStatus, error) {
 	typeConverter := dIface.connector.TypeConverter()
 	executionContext := dIface.connector.NewExecutionContext()
 	operationRestMetaData := dnsResolverStatusGetRestMetadata()
@@ -71,18 +71,18 @@ func (dIface *dnsResolverStatusClient) Get(tier0IdParam string) (nsx_policyModel
 	sv.AddStructField("Tier0Id", tier0IdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.GatewayDnsResolverStatus
+		var emptyOutput nsx_policyModel.GatewayDnsResolverMonitoringStatus
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := dIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.tier_0s.firewall.dns_resolver_status", "get", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.GatewayDnsResolverStatus
+	var emptyOutput nsx_policyModel.GatewayDnsResolverMonitoringStatus
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), DnsResolverStatusGetOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.GatewayDnsResolverStatus), nil
+		return output.(nsx_policyModel.GatewayDnsResolverMonitoringStatus), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), dIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

@@ -26,6 +26,7 @@ type SharesClient interface {
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
 	// @param shareIdParam (required)
+	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -33,7 +34,7 @@ type SharesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(orgIdParam string, projectIdParam string, shareIdParam string) error
+	Delete(orgIdParam string, projectIdParam string, shareIdParam string, forceParam *bool) error
 
 	// Get single instance of a share
 	//
@@ -76,6 +77,7 @@ type SharesClient interface {
 	// @param projectIdParam The project ID (required)
 	// @param shareIdParam Share ID (required)
 	// @param shareParam (required)
+	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -83,7 +85,7 @@ type SharesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(orgIdParam string, projectIdParam string, shareIdParam string, shareParam nsx_policyModel.Share) error
+	Patch(orgIdParam string, projectIdParam string, shareIdParam string, shareParam nsx_policyModel.Share, forceParam *bool) error
 
 	// If a Share with the given ID already exists, and the revision is 0, throw error
 	//
@@ -91,6 +93,7 @@ type SharesClient interface {
 	// @param projectIdParam The project ID (required)
 	// @param shareIdParam Share ID (required)
 	// @param shareParam (required)
+	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	// @return com.vmware.nsx_policy.model.Share
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -99,7 +102,7 @@ type SharesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(orgIdParam string, projectIdParam string, shareIdParam string, shareParam nsx_policyModel.Share) (nsx_policyModel.Share, error)
+	Update(orgIdParam string, projectIdParam string, shareIdParam string, shareParam nsx_policyModel.Share, forceParam *bool) (nsx_policyModel.Share, error)
 }
 
 type sharesClient struct {
@@ -131,7 +134,7 @@ func (sIface *sharesClient) GetErrorBindingType(errorName string) vapiBindings_.
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *sharesClient) Delete(orgIdParam string, projectIdParam string, shareIdParam string) error {
+func (sIface *sharesClient) Delete(orgIdParam string, projectIdParam string, shareIdParam string, forceParam *bool) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := sharesDeleteRestMetadata()
@@ -142,6 +145,7 @@ func (sIface *sharesClient) Delete(orgIdParam string, projectIdParam string, sha
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("ShareId", shareIdParam)
+	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -232,7 +236,7 @@ func (sIface *sharesClient) List(orgIdParam string, projectIdParam string, curso
 	}
 }
 
-func (sIface *sharesClient) Patch(orgIdParam string, projectIdParam string, shareIdParam string, shareParam nsx_policyModel.Share) error {
+func (sIface *sharesClient) Patch(orgIdParam string, projectIdParam string, shareIdParam string, shareParam nsx_policyModel.Share, forceParam *bool) error {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := sharesPatchRestMetadata()
@@ -244,6 +248,7 @@ func (sIface *sharesClient) Patch(orgIdParam string, projectIdParam string, shar
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("ShareId", shareIdParam)
 	sv.AddStructField("Share", shareParam)
+	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -261,7 +266,7 @@ func (sIface *sharesClient) Patch(orgIdParam string, projectIdParam string, shar
 	}
 }
 
-func (sIface *sharesClient) Update(orgIdParam string, projectIdParam string, shareIdParam string, shareParam nsx_policyModel.Share) (nsx_policyModel.Share, error) {
+func (sIface *sharesClient) Update(orgIdParam string, projectIdParam string, shareIdParam string, shareParam nsx_policyModel.Share, forceParam *bool) (nsx_policyModel.Share, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := sharesUpdateRestMetadata()
@@ -273,6 +278,7 @@ func (sIface *sharesClient) Update(orgIdParam string, projectIdParam string, sha
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("ShareId", shareIdParam)
 	sv.AddStructField("Share", shareParam)
+	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.Share

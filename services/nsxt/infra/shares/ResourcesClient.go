@@ -25,6 +25,7 @@ type ResourcesClient interface {
 	//
 	// @param shareIdParam (required)
 	// @param sharedResourceIdParam (required)
+	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -32,7 +33,7 @@ type ResourcesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(shareIdParam string, sharedResourceIdParam string) error
+	Delete(shareIdParam string, sharedResourceIdParam string, forceParam *bool) error
 
 	// Get the shared resource that represents shared objects.
 	//
@@ -67,6 +68,7 @@ type ResourcesClient interface {
 	// @param shareIdParam Share ID (required)
 	// @param sharedResourceIdParam Shared resource id (required)
 	// @param sharedResourceParam (required)
+	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -74,13 +76,14 @@ type ResourcesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(shareIdParam string, sharedResourceIdParam string, sharedResourceParam nsx_policyModel.SharedResource) error
+	Patch(shareIdParam string, sharedResourceIdParam string, sharedResourceParam nsx_policyModel.SharedResource, forceParam *bool) error
 
 	// If Shared resource already exists, update the shared resource entity. User Presence of the shared resource denotes sharing of the parent object.
 	//
 	// @param shareIdParam Share ID (required)
 	// @param sharedResourceIdParam Shared resource id (required)
 	// @param sharedResourceParam (required)
+	// @param forceParam If true, deleting the resource succeeds even if it is being referred as a resource reference. (optional, default to false)
 	// @return com.vmware.nsx_policy.model.SharedResource
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -89,7 +92,7 @@ type ResourcesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(shareIdParam string, sharedResourceIdParam string, sharedResourceParam nsx_policyModel.SharedResource) (nsx_policyModel.SharedResource, error)
+	Update(shareIdParam string, sharedResourceIdParam string, sharedResourceParam nsx_policyModel.SharedResource, forceParam *bool) (nsx_policyModel.SharedResource, error)
 }
 
 type resourcesClient struct {
@@ -121,7 +124,7 @@ func (rIface *resourcesClient) GetErrorBindingType(errorName string) vapiBinding
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (rIface *resourcesClient) Delete(shareIdParam string, sharedResourceIdParam string) error {
+func (rIface *resourcesClient) Delete(shareIdParam string, sharedResourceIdParam string, forceParam *bool) error {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
 	operationRestMetaData := resourcesDeleteRestMetadata()
@@ -131,6 +134,7 @@ func (rIface *resourcesClient) Delete(shareIdParam string, sharedResourceIdParam
 	sv := vapiBindings_.NewStructValueBuilder(resourcesDeleteInputType(), typeConverter)
 	sv.AddStructField("ShareId", shareIdParam)
 	sv.AddStructField("SharedResourceId", sharedResourceIdParam)
+	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -214,7 +218,7 @@ func (rIface *resourcesClient) List(shareIdParam string, resourceTypeParam *stri
 	}
 }
 
-func (rIface *resourcesClient) Patch(shareIdParam string, sharedResourceIdParam string, sharedResourceParam nsx_policyModel.SharedResource) error {
+func (rIface *resourcesClient) Patch(shareIdParam string, sharedResourceIdParam string, sharedResourceParam nsx_policyModel.SharedResource, forceParam *bool) error {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
 	operationRestMetaData := resourcesPatchRestMetadata()
@@ -225,6 +229,7 @@ func (rIface *resourcesClient) Patch(shareIdParam string, sharedResourceIdParam 
 	sv.AddStructField("ShareId", shareIdParam)
 	sv.AddStructField("SharedResourceId", sharedResourceIdParam)
 	sv.AddStructField("SharedResource", sharedResourceParam)
+	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
@@ -242,7 +247,7 @@ func (rIface *resourcesClient) Patch(shareIdParam string, sharedResourceIdParam 
 	}
 }
 
-func (rIface *resourcesClient) Update(shareIdParam string, sharedResourceIdParam string, sharedResourceParam nsx_policyModel.SharedResource) (nsx_policyModel.SharedResource, error) {
+func (rIface *resourcesClient) Update(shareIdParam string, sharedResourceIdParam string, sharedResourceParam nsx_policyModel.SharedResource, forceParam *bool) (nsx_policyModel.SharedResource, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
 	operationRestMetaData := resourcesUpdateRestMetadata()
@@ -253,6 +258,7 @@ func (rIface *resourcesClient) Update(shareIdParam string, sharedResourceIdParam
 	sv.AddStructField("ShareId", shareIdParam)
 	sv.AddStructField("SharedResourceId", sharedResourceIdParam)
 	sv.AddStructField("SharedResource", sharedResourceParam)
+	sv.AddStructField("Force", forceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		var emptyOutput nsx_policyModel.SharedResource
