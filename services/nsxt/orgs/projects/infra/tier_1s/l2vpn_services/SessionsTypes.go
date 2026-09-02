@@ -266,6 +266,7 @@ func sessionsListInputType() vapiBindings_.StructType {
 	fields["tier1_id"] = vapiBindings_.NewStringType()
 	fields["service_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -276,6 +277,7 @@ func sessionsListInputType() vapiBindings_.StructType {
 	fieldNameMap["tier1_id"] = "Tier1Id"
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["include_conflicts"] = "IncludeConflicts"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
@@ -303,6 +305,7 @@ func sessionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["tier1_id"] = vapiBindings_.NewStringType()
 	fields["service_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -313,12 +316,14 @@ func sessionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["tier1_id"] = "Tier1Id"
 	fieldNameMap["service_id"] = "ServiceId"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["include_conflicts"] = "IncludeConflicts"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["tier1_id"] = vapiBindings_.NewStringType()
@@ -337,6 +342,7 @@ func sessionsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	pathParams["project_id"] = "projectId"
 	pathParams["org_id"] = "orgId"
 	queryParams["cursor"] = "cursor"
+	queryParams["include_conflicts"] = "include_conflicts"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["sort_by"] = "sort_by"

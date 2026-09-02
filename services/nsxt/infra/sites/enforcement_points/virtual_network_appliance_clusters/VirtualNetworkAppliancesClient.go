@@ -62,6 +62,7 @@ type VirtualNetworkAppliancesClient interface {
 	// @param virtualNetworkApplianceClusterIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param inMaintenanceModeParam If the flag is true then virtual network appliances (VNA) with maintenance mode 'ENABLED' in desired state will be returned, otherwise virtual network appliances (VNA) in 'DISABLED' desired state will be returned. (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param managementIpParam Virtual network appliance(VNA) with provided management IP address will be returned. This property can only be used alone. It can not be combined with other filtering properties. (optional)
@@ -77,7 +78,7 @@ type VirtualNetworkAppliancesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(siteIdParam string, enforcementpointIdParam string, virtualNetworkApplianceClusterIdParam string, cursorParam *string, inMaintenanceModeParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, managementIpParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, transportZonePathParam *string) (nsx_policyModel.VirtualNetworkApplianceListResult, error)
+	List(siteIdParam string, enforcementpointIdParam string, virtualNetworkApplianceClusterIdParam string, cursorParam *string, inMaintenanceModeParam *bool, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, managementIpParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, transportZonePathParam *string) (nsx_policyModel.VirtualNetworkApplianceListResult, error)
 
 	// If the passed VirtualNetworkAppliance(VNA) does not already exist, create a new VirtualNetworkAppliance. If it already exists, patch it.
 	//
@@ -210,7 +211,7 @@ func (vIface *virtualNetworkAppliancesClient) Get(siteIdParam string, enforcemen
 	}
 }
 
-func (vIface *virtualNetworkAppliancesClient) List(siteIdParam string, enforcementpointIdParam string, virtualNetworkApplianceClusterIdParam string, cursorParam *string, inMaintenanceModeParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, managementIpParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, transportZonePathParam *string) (nsx_policyModel.VirtualNetworkApplianceListResult, error) {
+func (vIface *virtualNetworkAppliancesClient) List(siteIdParam string, enforcementpointIdParam string, virtualNetworkApplianceClusterIdParam string, cursorParam *string, inMaintenanceModeParam *bool, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, managementIpParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, transportZonePathParam *string) (nsx_policyModel.VirtualNetworkApplianceListResult, error) {
 	typeConverter := vIface.connector.TypeConverter()
 	executionContext := vIface.connector.NewExecutionContext()
 	operationRestMetaData := virtualNetworkAppliancesListRestMetadata()
@@ -223,6 +224,7 @@ func (vIface *virtualNetworkAppliancesClient) List(siteIdParam string, enforceme
 	sv.AddStructField("VirtualNetworkApplianceClusterId", virtualNetworkApplianceClusterIdParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("InMaintenanceMode", inMaintenanceModeParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("ManagementIp", managementIpParam)

@@ -198,6 +198,7 @@ func transportNodeMonitoringProfileBindingMapsListInputType() vapiBindings_.Stru
 	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
 	fields["host_transport_node_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -209,6 +210,7 @@ func transportNodeMonitoringProfileBindingMapsListInputType() vapiBindings_.Stru
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	fieldNameMap["host_transport_node_id"] = "HostTransportNodeId"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["include_conflicts"] = "IncludeConflicts"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
@@ -237,6 +239,7 @@ func transportNodeMonitoringProfileBindingMapsListRestMetadata() vapiProtocol_.O
 	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
 	fields["host_transport_node_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -248,6 +251,7 @@ func transportNodeMonitoringProfileBindingMapsListRestMetadata() vapiProtocol_.O
 	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	fieldNameMap["host_transport_node_id"] = "HostTransportNodeId"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["include_conflicts"] = "IncludeConflicts"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
@@ -255,6 +259,7 @@ func transportNodeMonitoringProfileBindingMapsListRestMetadata() vapiProtocol_.O
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["host_transport_node_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["project_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -275,6 +280,7 @@ func transportNodeMonitoringProfileBindingMapsListRestMetadata() vapiProtocol_.O
 	pathParams["org_id"] = "orgId"
 	pathParams["enforcement_point_id"] = "enforcementPointId"
 	queryParams["cursor"] = "cursor"
+	queryParams["include_conflicts"] = "include_conflicts"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["sort_by"] = "sort_by"

@@ -175,6 +175,7 @@ func virtualNetworkAppliancesListInputType() vapiBindings_.StructType {
 	fields["virtual_network_appliance_cluster_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["in_maintenance_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["management_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -187,6 +188,7 @@ func virtualNetworkAppliancesListInputType() vapiBindings_.StructType {
 	fieldNameMap["virtual_network_appliance_cluster_id"] = "VirtualNetworkApplianceClusterId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["in_maintenance_mode"] = "InMaintenanceMode"
+	fieldNameMap["include_conflicts"] = "IncludeConflicts"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["management_ip"] = "ManagementIp"
@@ -216,6 +218,7 @@ func virtualNetworkAppliancesListRestMetadata() vapiProtocol_.OperationRestMetad
 	fields["virtual_network_appliance_cluster_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["in_maintenance_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fields["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["management_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -228,6 +231,7 @@ func virtualNetworkAppliancesListRestMetadata() vapiProtocol_.OperationRestMetad
 	fieldNameMap["virtual_network_appliance_cluster_id"] = "VirtualNetworkApplianceClusterId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["in_maintenance_mode"] = "InMaintenanceMode"
+	fieldNameMap["include_conflicts"] = "IncludeConflicts"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["management_ip"] = "ManagementIp"
@@ -236,15 +240,16 @@ func virtualNetworkAppliancesListRestMetadata() vapiProtocol_.OperationRestMetad
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["transport_zone_path"] = "TransportZonePath"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["in_maintenance_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["virtual_network_appliance_cluster_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["transport_zone_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["management_ip"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["in_maintenance_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
@@ -255,6 +260,7 @@ func virtualNetworkAppliancesListRestMetadata() vapiProtocol_.OperationRestMetad
 	pathParams["site_id"] = "siteId"
 	queryParams["cursor"] = "cursor"
 	queryParams["transport_zone_path"] = "transport_zone_path"
+	queryParams["include_conflicts"] = "include_conflicts"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["management_ip"] = "management_ip"

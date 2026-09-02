@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type LbServiceUsageSummaryClient interface {
 
-	// API is used to retrieve the load balancer usage summary for all load balancer services. If the parameter ?include_usages=true exists, the property service-usages is included in the response. By default, service-usages is not included in the response. VCF Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
+	// API is used to retrieve the load balancer usage summary for all load balancer services. If the parameter ?include_usages=true exists, the property service-usages is included in the response. By default, service-usages is not included in the response. NSX Load Balancer availability in terms of use-cases and editions is specified in the VMware Cloud Foundation Feature Comparison and Upgrade Paths Guide. Please review before consuming these APIs.
 	//
 	// @param includeUsagesParam Specify whether to include usages in response. (optional)
 	// @return com.vmware.nsx_policy.model.LBServiceUsageSummary

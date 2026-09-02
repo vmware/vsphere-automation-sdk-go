@@ -155,6 +155,7 @@ func hostNetworkConfigsListInputType() vapiBindings_.StructType {
 	fields["compute_collection_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["device_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -165,6 +166,7 @@ func hostNetworkConfigsListInputType() vapiBindings_.StructType {
 	fieldNameMap["compute_collection_id"] = "ComputeCollectionId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["device_id"] = "DeviceId"
+	fieldNameMap["include_conflicts"] = "IncludeConflicts"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
@@ -192,6 +194,7 @@ func hostNetworkConfigsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["compute_collection_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["device_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -202,6 +205,7 @@ func hostNetworkConfigsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["compute_collection_id"] = "ComputeCollectionId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["device_id"] = "DeviceId"
+	fieldNameMap["include_conflicts"] = "IncludeConflicts"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
@@ -210,6 +214,7 @@ func hostNetworkConfigsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["device_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
@@ -223,6 +228,7 @@ func hostNetworkConfigsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	pathParams["site_id"] = "siteId"
 	queryParams["cursor"] = "cursor"
 	queryParams["device_id"] = "device_id"
+	queryParams["include_conflicts"] = "include_conflicts"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["sort_by"] = "sort_by"

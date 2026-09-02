@@ -50,6 +50,7 @@ type IpfixL2ProfilesClient interface {
 	// API provides list IPFIX L2 Profiles available on selected logical l2.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
@@ -63,7 +64,7 @@ type IpfixL2ProfilesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPFIXL2ProfileListResult, error)
+	List(cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPFIXL2ProfileListResult, error)
 
 	// Create a new IPFIX L2 profile if the IPFIX L2 profile with given id does not already exist. If the IPFIX L2 profile with the given id already exists, patch with the existing IPFIX L2 profile.
 	//
@@ -79,7 +80,7 @@ type IpfixL2ProfilesClient interface {
 	// @throws NotFound  Not Found
 	Patch(ipfixL2ProfileIdParam string, iPFIXL2ProfileParam nsx_policyModel.IPFIXL2Profile, overrideParam *bool) error
 
-	// Create or replace IPFIX L2 Profile. Profile is reusable entity. Single profile can attached multiple bindings e.g group, segment and port.
+	// Create or replace IPFIX L2 Profile. Profile is reusable entity. Single profile can attach multiple bindings e.g group, segment and port.
 	//
 	// @param ipfixL2ProfileIdParam IPFIX L2 Profile ID (required)
 	// @param iPFIXL2ProfileParam (required)
@@ -183,7 +184,7 @@ func (iIface *ipfixL2ProfilesClient) Get(ipfixL2ProfileIdParam string) (nsx_poli
 	}
 }
 
-func (iIface *ipfixL2ProfilesClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPFIXL2ProfileListResult, error) {
+func (iIface *ipfixL2ProfilesClient) List(cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IPFIXL2ProfileListResult, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
 	operationRestMetaData := ipfixL2ProfilesListRestMetadata()
@@ -192,6 +193,7 @@ func (iIface *ipfixL2ProfilesClient) List(cursorParam *string, includeMarkForDel
 
 	sv := vapiBindings_.NewStructValueBuilder(ipfixL2ProfilesListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)

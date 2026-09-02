@@ -61,6 +61,7 @@ type L3vpnsClient interface {
 	// @param tier0IdParam (required)
 	// @param localeServiceIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param l3vpnSessionParam - A Policy Based L3Vpn is a configuration in which protect rules to match local and remote subnet needs to be defined. Tunnel is established for each pair of local and remote subnet defined in protect rules. - A Route Based L3Vpn is more flexible, more powerful and recommended over policy based. IP Tunnel subnet is created and all traffic routed through tunnel subnet (commonly known as VTI) is sent over tunnel. Routes can be learned through BGP. A route based L3Vpn is required when using redundant L3Vpn. (optional)
@@ -75,7 +76,7 @@ type L3vpnsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(tier0IdParam string, localeServiceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, l3vpnSessionParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.L3VpnListResult, error)
+	List(tier0IdParam string, localeServiceIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, l3vpnSessionParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.L3VpnListResult, error)
 
 	// Create the new L3Vpn if it does not exist. If the L3Vpn already exists, merge with the the existing one. This is a patch. - If the passed L3Vpn is a policy-based one and has new L3VpnRules, add them to the existing L3VpnRules. - If the passed L3Vpn is a policy-based one and also has existing L3VpnRules, update the existing L3VpnRules. This API is deprecated. Please use the following APIs instead: - PATCH /infra/ipsec-vpn-tunnel-profiles/<tunnel-profile-id> to patch the IPSecVpnTunnelProfile. - PATCH /infra/ipsec-vpn-ike-profiles/<ike-profile-id> to patch the IPSecVpnIkeProfile. - PATCH /infra/ipsec-vpn-dpd-profiles/<dpd-profile-id> to patch the IPSecVpnDpdProfile. - PATCH /infra/tier-0s/<tier-0-id>/locale-services/<locale-service-id>/ipsec-vpn-services/ default/local-endpoints/<local-endpoint-id> to patch the IPSecVpnLocalEndpoint. - PATCH /infra/tier-0s/<tier-0-id>/locale-services/<locale-service-id>/ipsec-vpn-services/ default/sessions/<l3vpn-id> to patch the IPSecVpnSession. If used, this deprecated API will result in the following objects being internally created/patched: - IPSecVpnTunnelProfile: /infra/ipsec-vpn-tunnel-profiles/L3VPN_<l3vpn-id>. - IPSecVpnIkeProfile: /infra/ipsec-vpn-ike-profiles/L3VPN_<l3vpn-id>. - IPSecVpnDpdProfile: /infra/ipsec-vpn-dpd-profiles/L3VPN_<l3vpn-id>. - IPSecVpnLocalEndpoint: /infra/tier-0s/<tier-0-id>/locale-services/<locale-service-id>/ ipsec-vpn-services/default/local-endpoints/<local-endpoint-id>. If an object with the same \"local_address\" already exists, then it will be re-used. - IPSecVpnSession: /infra/tier-0s/<tier-0-id>/locale-services/<locale-service-id>/ ipsec-vpn-services/default/sessions/L3VPN_<l3vpn-id>.
 	//
@@ -222,7 +223,7 @@ func (lIface *l3vpnsClient) Get(tier0IdParam string, localeServiceIdParam string
 	}
 }
 
-func (lIface *l3vpnsClient) List(tier0IdParam string, localeServiceIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, l3vpnSessionParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.L3VpnListResult, error) {
+func (lIface *l3vpnsClient) List(tier0IdParam string, localeServiceIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, l3vpnSessionParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.L3VpnListResult, error) {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
 	operationRestMetaData := l3vpnsListRestMetadata()
@@ -233,6 +234,7 @@ func (lIface *l3vpnsClient) List(tier0IdParam string, localeServiceIdParam strin
 	sv.AddStructField("Tier0Id", tier0IdParam)
 	sv.AddStructField("LocaleServiceId", localeServiceIdParam)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("L3vpnSession", l3vpnSessionParam)

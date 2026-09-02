@@ -53,12 +53,14 @@ type HostSwitchProfilesClient interface {
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param deploymentTypeParam If the node_type is specified, then deployment_type may be specified to filter uplink profiles applicable to only PHYSICAL_MACHINE or VIRTUAL_MACHINE deployments of these nodes. (optional)
 	// @param hostswitchProfileTypeParam Supported HostSwitch profiles. (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includeSystemOwnedParam Whether the list result contains system resources (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param maxActiveUplinkCountParam Filter uplink profiles whose number of active uplinks in teaming policy is less than or equal to max_active_uplink_count. (optional)
 	// @param nodeTypeParam The fabric node type is the resource_type of the Node such as EdgeNode and PublicCloudGatewayNode. If a fabric node type is given, uplink profiles that apply for nodes of the given type will be returned. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param passthroughModeParam NONE- Disables the passthrough UPT- Uniform PassThrough, underlying passthrough technology built over traditional vmxnet3 interface. DVX- Device Virtual Exchange, underlying passthrough technology built over SR-IOV. DEVICE_PASSTHROUGH- Provides a way of consuming the physical nic PCI device enabled for passthrough, using DirectPath I/O passthrough technology. (optional)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @param uplinkTeamingPolicyNameParam If populated, only UplinkHostSwitchProfiles with the specified uplink teaming policy name are returned. Otherwise, any HostSwitchProfile can be returned. (optional)
@@ -70,7 +72,7 @@ type HostSwitchProfilesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, deploymentTypeParam *string, hostswitchProfileTypeParam *string, includeMarkForDeleteObjectsParam *bool, includeSystemOwnedParam *bool, includedFieldsParam *string, maxActiveUplinkCountParam *int64, nodeTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, uplinkTeamingPolicyNameParam *string) (nsx_policyModel.PolicyHostSwitchProfilesListResult, error)
+	List(cursorParam *string, deploymentTypeParam *string, hostswitchProfileTypeParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includeSystemOwnedParam *bool, includedFieldsParam *string, maxActiveUplinkCountParam *int64, nodeTypeParam *string, pageSizeParam *int64, passthroughModeParam *string, sortAscendingParam *bool, sortByParam *string, uplinkTeamingPolicyNameParam *string) (nsx_policyModel.PolicyHostSwitchProfilesListResult, error)
 
 	// Patch a hostswitch profile. The resource_type is required and needs to be one of the following, UplinkHostSwitchProfile, LldpHostSwitchProfile, NiocProfile & ExtraConfigHostSwitchProfile. Uplink profile - For uplink profiles, the teaming and policy parameters are required. By default, the mtu is 1600 and the transport_vlan is 0. The supported MTU range is 1280 through (uplink_mtu_threshold). uplink_mtu_threshold is 9000 by default. Range can be extended by modifying (uplink_mtu_threshold) in SwitchingGlobalConfig to the required upper threshold. Teaming defined in this profile allows NSX to load balance traffic across different physical NICs (PNICs) on the hypervisor hosts. Multiple teaming policies are supported, including LACP active, LACP passive, load balancing based on source ID, and failover order. Lldp profile - Activate or deactivate sending LLDP packets NiocProfile - Network I/O Control settings: defines limits, shares and reservations for various host traffic types. ExtraConfig - Vendor specific configuration on HostSwitch, logical switch or logical port
 	//
@@ -192,7 +194,7 @@ func (hIface *hostSwitchProfilesClient) Get(hostSwitchProfileIdParam string) (*v
 	}
 }
 
-func (hIface *hostSwitchProfilesClient) List(cursorParam *string, deploymentTypeParam *string, hostswitchProfileTypeParam *string, includeMarkForDeleteObjectsParam *bool, includeSystemOwnedParam *bool, includedFieldsParam *string, maxActiveUplinkCountParam *int64, nodeTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, uplinkTeamingPolicyNameParam *string) (nsx_policyModel.PolicyHostSwitchProfilesListResult, error) {
+func (hIface *hostSwitchProfilesClient) List(cursorParam *string, deploymentTypeParam *string, hostswitchProfileTypeParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includeSystemOwnedParam *bool, includedFieldsParam *string, maxActiveUplinkCountParam *int64, nodeTypeParam *string, pageSizeParam *int64, passthroughModeParam *string, sortAscendingParam *bool, sortByParam *string, uplinkTeamingPolicyNameParam *string) (nsx_policyModel.PolicyHostSwitchProfilesListResult, error) {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
 	operationRestMetaData := hostSwitchProfilesListRestMetadata()
@@ -203,12 +205,14 @@ func (hIface *hostSwitchProfilesClient) List(cursorParam *string, deploymentType
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("DeploymentType", deploymentTypeParam)
 	sv.AddStructField("HostswitchProfileType", hostswitchProfileTypeParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludeSystemOwned", includeSystemOwnedParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("MaxActiveUplinkCount", maxActiveUplinkCountParam)
 	sv.AddStructField("NodeType", nodeTypeParam)
 	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("PassthroughMode", passthroughModeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
 	sv.AddStructField("UplinkTeamingPolicyName", uplinkTeamingPolicyNameParam)

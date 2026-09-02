@@ -153,6 +153,7 @@ func edgeClusterHighAvailabilityProfilesListInputType() vapiBindings_.StructType
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -162,6 +163,7 @@ func edgeClusterHighAvailabilityProfilesListInputType() vapiBindings_.StructType
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["include_conflicts"] = "IncludeConflicts"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["include_system_owned"] = "IncludeSystemOwned"
 	fieldNameMap["included_fields"] = "IncludedFields"
@@ -188,6 +190,7 @@ func edgeClusterHighAvailabilityProfilesListRestMetadata() vapiProtocol_.Operati
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -197,6 +200,7 @@ func edgeClusterHighAvailabilityProfilesListRestMetadata() vapiProtocol_.Operati
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
 	fieldNameMap["cursor"] = "Cursor"
+	fieldNameMap["include_conflicts"] = "IncludeConflicts"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["include_system_owned"] = "IncludeSystemOwned"
 	fieldNameMap["included_fields"] = "IncludedFields"
@@ -206,6 +210,7 @@ func edgeClusterHighAvailabilityProfilesListRestMetadata() vapiProtocol_.Operati
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
@@ -218,6 +223,7 @@ func edgeClusterHighAvailabilityProfilesListRestMetadata() vapiProtocol_.Operati
 	pathParams["site_id"] = "siteId"
 	queryParams["cursor"] = "cursor"
 	queryParams["include_system_owned"] = "include_system_owned"
+	queryParams["include_conflicts"] = "include_conflicts"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["sort_by"] = "sort_by"

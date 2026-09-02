@@ -52,6 +52,7 @@ type ContextProfilesClient interface {
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param hasUnsupportedAppIdsParam If true, returns only context profiles that contain unsupported App IDs. If false, returns only context profiles with supported App IDs. If not specified, returns all context profiles regardless of App ID status. (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
@@ -65,7 +66,7 @@ type ContextProfilesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, hasUnsupportedAppIdsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyContextProfileListResult, error)
+	List(cursorParam *string, hasUnsupportedAppIdsParam *bool, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyContextProfileListResult, error)
 
 	// Creates a new Policy Context Profile or selectively updates the fields provided in the request body of an existing one. Rules for using attributes and sub-attributes in a single PolicyContextProfile: 1. Each attribute key may appear only once per profile. (e.g. APP_ID can be specified at most once.) 2. Multiple values for an attribute must be supplied as an array. 3. When sub-attributes are provided for an attribute, that attribute must have exactly one value. 4. The reserved id \"custom_attributes\" must not be used as a profile id.
 	//
@@ -186,7 +187,7 @@ func (cIface *contextProfilesClient) Get(contextProfileIdParam string) (nsx_poli
 	}
 }
 
-func (cIface *contextProfilesClient) List(cursorParam *string, hasUnsupportedAppIdsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyContextProfileListResult, error) {
+func (cIface *contextProfilesClient) List(cursorParam *string, hasUnsupportedAppIdsParam *bool, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.PolicyContextProfileListResult, error) {
 	typeConverter := cIface.connector.TypeConverter()
 	executionContext := cIface.connector.NewExecutionContext()
 	operationRestMetaData := contextProfilesListRestMetadata()
@@ -196,6 +197,7 @@ func (cIface *contextProfilesClient) List(cursorParam *string, hasUnsupportedApp
 	sv := vapiBindings_.NewStructValueBuilder(contextProfilesListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("HasUnsupportedAppIds", hasUnsupportedAppIdsParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)

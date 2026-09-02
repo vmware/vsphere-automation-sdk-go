@@ -46,11 +46,26 @@ const HostSwitchProfiles_LIST_HOSTSWITCH_PROFILE_TYPE_POLICYVTEPHAHOSTSWITCHPROF
 // Possible value for ``hostswitchProfileType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_HOSTSWITCH_PROFILE_TYPE_POLICYHIGHPERFORMANCEHOSTSWITCHPROFILE = "PolicyHighPerformanceHostSwitchProfile"
 
+// Possible value for ``hostswitchProfileType`` of method HostSwitchProfiles#list.
+const HostSwitchProfiles_LIST_HOSTSWITCH_PROFILE_TYPE_POLICYNETWORKINFRARESILIENCYHOSTSWITCHPROFILE = "PolicyNetworkInfraResiliencyHostSwitchProfile"
+
 // Possible value for ``nodeType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_NODE_TYPE_EDGENODE = "EdgeNode"
 
 // Possible value for ``nodeType`` of method HostSwitchProfiles#list.
 const HostSwitchProfiles_LIST_NODE_TYPE_PUBLICCLOUDGATEWAYNODE = "PublicCloudGatewayNode"
+
+// Possible value for ``passthroughMode`` of method HostSwitchProfiles#list.
+const HostSwitchProfiles_LIST_PASSTHROUGH_MODE_NONE = "NONE"
+
+// Possible value for ``passthroughMode`` of method HostSwitchProfiles#list.
+const HostSwitchProfiles_LIST_PASSTHROUGH_MODE_UPT = "UPT"
+
+// Possible value for ``passthroughMode`` of method HostSwitchProfiles#list.
+const HostSwitchProfiles_LIST_PASSTHROUGH_MODE_DVX = "DVX"
+
+// Possible value for ``passthroughMode`` of method HostSwitchProfiles#list.
+const HostSwitchProfiles_LIST_PASSTHROUGH_MODE_DEVICE_PASSTHROUGH = "DEVICE_PASSTHROUGH"
 
 func hostSwitchProfilesDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
@@ -158,24 +173,28 @@ func hostSwitchProfilesListInputType() vapiBindings_.StructType {
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["deployment_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["hostswitch_profile_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["max_active_uplink_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["passthrough_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["uplink_teaming_policy_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["deployment_type"] = "DeploymentType"
 	fieldNameMap["hostswitch_profile_type"] = "HostswitchProfileType"
+	fieldNameMap["include_conflicts"] = "IncludeConflicts"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["include_system_owned"] = "IncludeSystemOwned"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["max_active_uplink_count"] = "MaxActiveUplinkCount"
 	fieldNameMap["node_type"] = "NodeType"
 	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["passthrough_mode"] = "PassthroughMode"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["uplink_teaming_policy_name"] = "UplinkTeamingPolicyName"
@@ -199,49 +218,57 @@ func hostSwitchProfilesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["deployment_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["hostswitch_profile_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["max_active_uplink_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["passthrough_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["uplink_teaming_policy_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["deployment_type"] = "DeploymentType"
 	fieldNameMap["hostswitch_profile_type"] = "HostswitchProfileType"
+	fieldNameMap["include_conflicts"] = "IncludeConflicts"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["include_system_owned"] = "IncludeSystemOwned"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["max_active_uplink_count"] = "MaxActiveUplinkCount"
 	fieldNameMap["node_type"] = "NodeType"
 	fieldNameMap["page_size"] = "PageSize"
+	fieldNameMap["passthrough_mode"] = "PassthroughMode"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	fieldNameMap["uplink_teaming_policy_name"] = "UplinkTeamingPolicyName"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["hostswitch_profile_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["max_active_uplink_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	paramsTypeMap["passthrough_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["uplink_teaming_policy_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["deployment_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["include_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	paramsTypeMap["max_active_uplink_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["node_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	queryParams["cursor"] = "cursor"
 	queryParams["hostswitch_profile_type"] = "hostswitch_profile_type"
+	queryParams["max_active_uplink_count"] = "max_active_uplink_count"
+	queryParams["passthrough_mode"] = "passthrough_mode"
+	queryParams["sort_by"] = "sort_by"
 	queryParams["uplink_teaming_policy_name"] = "uplink_teaming_policy_name"
 	queryParams["deployment_type"] = "deployment_type"
 	queryParams["include_system_owned"] = "include_system_owned"
-	queryParams["max_active_uplink_count"] = "max_active_uplink_count"
 	queryParams["node_type"] = "node_type"
+	queryParams["include_conflicts"] = "include_conflicts"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
-	queryParams["sort_by"] = "sort_by"
 	queryParams["include_mark_for_delete_objects"] = "include_mark_for_delete_objects"
 	queryParams["page_size"] = "page_size"
 	resultHeaders := map[string]string{}

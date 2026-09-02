@@ -58,6 +58,7 @@ type IpAllocationsClient interface {
 	// @param projectIdParam The project ID (required)
 	// @param ipPoolIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
@@ -71,9 +72,9 @@ type IpAllocationsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, ipPoolIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IpAddressAllocationListResult, error)
+	List(orgIdParam string, projectIdParam string, ipPoolIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IpAddressAllocationListResult, error)
 
-	// If allocation of the same ID is found, this is a no-op. If no allocation of the specified ID is found, then a new allocation is created. An allocation cannot be updated once created. When an allocation is requested from an IpAddressPool, the IP could be allocated from any subnet in the pool that has the available capacity. Request to allocate an IP will fail if no subnet was previously created. If specific IP was requested, the status of allocation is reflected in the realized state. If any IP is requested, the IP finally allocated is obtained by polling on the realized state until the allocated IP is returned in the extended attributes.
+	// If allocation of the same ID is found and allocation_ip is unchanged (or omitted), this is a no-op. If allocation_ip is changed to a different, specific IP, the allocation is re-pointed to that IP (the previously held IP is released back to the pool). If no allocation of the specified ID is found, then a new allocation is created. When an allocation is requested from an IpAddressPool, the IP could be allocated from any subnet in the pool that has the available capacity. Request to allocate an IP will fail if no subnet was previously created. If specific IP was requested, the status of allocation is reflected in the realized state. If any IP is requested, the IP finally allocated is obtained by polling on the realized state until the allocated IP is returned in the extended attributes. Omitting allocation_ip on an update (whether the allocation was originally created with a specific IP or with any IP) keeps the currently realized IP unchanged — it does not trigger a new IP to be picked.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -89,7 +90,7 @@ type IpAllocationsClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, ipPoolIdParam string, ipAllocationIdParam string, ipAddressAllocationParam nsx_policyModel.IpAddressAllocation) error
 
-	// If allocation of the same ID is found, this is a no-op. If no allocation of the specified ID is found, then a new allocation is created. An allocation cannot be updated once created. When an IP allocation is requested from an IpAddressPool, the IP could be allocated from any subnet in the pool that has the available capacity. Request to allocate an IP will fail if no subnet was previously created. If specific IP was requested, the status of allocation is reflected in the realized state. If any IP is requested, the IP finally allocated is obtained by polling on the realized state until the allocated IP is returned in the extended attributes. An allocation cannot be updated once created.
+	// If allocation of the same ID is found and allocation_ip is unchanged (or omitted), this is a no-op. If allocation_ip is changed to a different, specific IP, the allocation is re-pointed to that IP (the previously held IP is released back to the pool). If no allocation of the specified ID is found, then a new allocation is created. When an IP allocation is requested from an IpAddressPool, the IP could be allocated from any subnet in the pool that has the available capacity. Request to allocate an IP will fail if no subnet was previously created. If specific IP was requested, the status of allocation is reflected in the realized state. If any IP is requested, the IP finally allocated is obtained by polling on the realized state until the allocated IP is returned in the extended attributes. Omitting allocation_ip on an update (whether the allocation was originally created with a specific IP or with any IP) keeps the currently realized IP unchanged — it does not trigger a new IP to be picked.
 	//
 	// @param orgIdParam The organization ID (required)
 	// @param projectIdParam The project ID (required)
@@ -200,7 +201,7 @@ func (iIface *ipAllocationsClient) Get(orgIdParam string, projectIdParam string,
 	}
 }
 
-func (iIface *ipAllocationsClient) List(orgIdParam string, projectIdParam string, ipPoolIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IpAddressAllocationListResult, error) {
+func (iIface *ipAllocationsClient) List(orgIdParam string, projectIdParam string, ipPoolIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IpAddressAllocationListResult, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
 	operationRestMetaData := ipAllocationsListRestMetadata()
@@ -212,6 +213,7 @@ func (iIface *ipAllocationsClient) List(orgIdParam string, projectIdParam string
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("IpPoolId", ipPoolIdParam)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)

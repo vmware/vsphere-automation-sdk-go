@@ -25,6 +25,7 @@ type MembersClient interface {
 	//
 	// @param spanIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param memberTypeParam StandaloneHost - Member type StandaloneHost is supported only for default Span. It is not supported for user defined span. (optional, default to VcCluster)
@@ -39,7 +40,7 @@ type MembersClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(spanIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, memberTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SpanMembersListResult, error)
+	List(spanIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, memberTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SpanMembersListResult, error)
 }
 
 type membersClient struct {
@@ -67,7 +68,7 @@ func (mIface *membersClient) GetErrorBindingType(errorName string) vapiBindings_
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (mIface *membersClient) List(spanIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, memberTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SpanMembersListResult, error) {
+func (mIface *membersClient) List(spanIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, memberTypeParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SpanMembersListResult, error) {
 	typeConverter := mIface.connector.TypeConverter()
 	executionContext := mIface.connector.NewExecutionContext()
 	operationRestMetaData := membersListRestMetadata()
@@ -77,6 +78,7 @@ func (mIface *membersClient) List(spanIdParam string, cursorParam *string, inclu
 	sv := vapiBindings_.NewStructValueBuilder(membersListInputType(), typeConverter)
 	sv.AddStructField("SpanId", spanIdParam)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("MemberType", memberTypeParam)

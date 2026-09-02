@@ -49,6 +49,7 @@ type IpBlockRestrictedIpsClient interface {
 	// Paginated list of IP Block restricted IPs. These define CIDRs and ranges that are disallowed in IP Block creation.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
@@ -62,7 +63,7 @@ type IpBlockRestrictedIpsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IpBlockRestrictedIpsListResult, error)
+	List(cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IpBlockRestrictedIpsListResult, error)
 
 	// Create a new IP Block restricted IPs resource with specified ID if not already present. If the resource of given ID already exists, it is updated.
 	//
@@ -179,7 +180,7 @@ func (iIface *ipBlockRestrictedIpsClient) Get(restrictedIpsIdParam string) (nsx_
 	}
 }
 
-func (iIface *ipBlockRestrictedIpsClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IpBlockRestrictedIpsListResult, error) {
+func (iIface *ipBlockRestrictedIpsClient) List(cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.IpBlockRestrictedIpsListResult, error) {
 	typeConverter := iIface.connector.TypeConverter()
 	executionContext := iIface.connector.NewExecutionContext()
 	operationRestMetaData := ipBlockRestrictedIpsListRestMetadata()
@@ -188,6 +189,7 @@ func (iIface *ipBlockRestrictedIpsClient) List(cursorParam *string, includeMarkF
 
 	sv := vapiBindings_.NewStructValueBuilder(ipBlockRestrictedIpsListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)

@@ -57,6 +57,7 @@ type L7AccessProfilesClient interface {
 	// @param projectIdParam The project ID (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param hasUnsupportedAppIdsParam If true, returns only L7 access profiles that contain unsupported App IDs. If false, returns only L7 access profiles with supported App IDs. If not specified, returns all L7 access profiles regardless of App ID status. (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
 	// @param includeEntryCountParam If true, populate the entry_count field with the count of rules in the particular policy. By default, entry_count will not be populated. (optional, default to false)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
@@ -71,7 +72,7 @@ type L7AccessProfilesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, cursorParam *string, hasUnsupportedAppIdsParam *bool, includeEntryCountParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.L7AccessProfileListResult, error)
+	List(orgIdParam string, projectIdParam string, cursorParam *string, hasUnsupportedAppIdsParam *bool, includeConflictsParam *bool, includeEntryCountParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.L7AccessProfileListResult, error)
 
 	// API will create/update L7 Access Profile
 	//
@@ -200,7 +201,7 @@ func (lIface *l7AccessProfilesClient) Get(orgIdParam string, projectIdParam stri
 	}
 }
 
-func (lIface *l7AccessProfilesClient) List(orgIdParam string, projectIdParam string, cursorParam *string, hasUnsupportedAppIdsParam *bool, includeEntryCountParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.L7AccessProfileListResult, error) {
+func (lIface *l7AccessProfilesClient) List(orgIdParam string, projectIdParam string, cursorParam *string, hasUnsupportedAppIdsParam *bool, includeConflictsParam *bool, includeEntryCountParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.L7AccessProfileListResult, error) {
 	typeConverter := lIface.connector.TypeConverter()
 	executionContext := lIface.connector.NewExecutionContext()
 	operationRestMetaData := l7AccessProfilesListRestMetadata()
@@ -212,6 +213,7 @@ func (lIface *l7AccessProfilesClient) List(orgIdParam string, projectIdParam str
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("HasUnsupportedAppIds", hasUnsupportedAppIdsParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
 	sv.AddStructField("IncludeEntryCount", includeEntryCountParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)

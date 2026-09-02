@@ -57,6 +57,7 @@ type EdgeTransportNodesClient interface {
 	// @param enforcementpointIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param inMaintenanceModeParam If the flag is true then edge transport nodes with maintenance mode 'ENABLED' in desired state will be returned, otherwise edge transport nodes in 'DISABLED' desired state will be returned. (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param managementIpParam Edge transport node with provided management IP address will be returned. This property can only be used alone. It can not be combined with other filtering properties. (optional)
@@ -73,7 +74,7 @@ type EdgeTransportNodesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(siteIdParam string, enforcementpointIdParam string, cursorParam *string, inMaintenanceModeParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, managementIpParam *string, nodeTypesParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, transportZonePathParam *string) (nsx_policyModel.PolicyEdgeTransportNodeListResult, error)
+	List(siteIdParam string, enforcementpointIdParam string, cursorParam *string, inMaintenanceModeParam *bool, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, managementIpParam *string, nodeTypesParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, transportZonePathParam *string) (nsx_policyModel.PolicyEdgeTransportNodeListResult, error)
 
 	// If the passed Edge Transport Node does not already exist, create a new Edge Transport Node. If it already exists, patch it. Transport nodes are hypervisor NSX Edges that will participate in an NSX-T overlay.this means that it will have Tier0/TIer1 uplinks and downlinks. This API creates/updates the edge node (router) in the transport network. Additional documentation on creating a transport node can be found in the NSX-T Installation Guide. In order for the transport node to forward packets, the switch_spec property must be specified. When creating a edge transport node, you need to specify if the edge TN switches are already manually preconfigured on the node, or if NSX should create and manage the edge TN switches. You specify this choice by the type of host switches you pass in the switch_spec property of the Edge Transport Node request payload. For a NSX edge node, NSX Manager always configures the edge TN switch. To allow NSX to manage the Edge TN switch configuration on NSX Edge nodes, pass an array of switches objects in the switch_spec property, and NSX will automatically create edge TN switches with the properties you provide. In the current NSX-T release, up to 16 host switches can be automatically managed. See the switch_spec schema definition for documentation on the properties that must be provided. If the edge node (router) is already added in system then it can be converted to transport node by providing node_id in request. If edge transport node (router) is not already present in system then new edge transport node can be created using this API.
 	//
@@ -199,7 +200,7 @@ func (eIface *edgeTransportNodesClient) Get(siteIdParam string, enforcementpoint
 	}
 }
 
-func (eIface *edgeTransportNodesClient) List(siteIdParam string, enforcementpointIdParam string, cursorParam *string, inMaintenanceModeParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, managementIpParam *string, nodeTypesParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, transportZonePathParam *string) (nsx_policyModel.PolicyEdgeTransportNodeListResult, error) {
+func (eIface *edgeTransportNodesClient) List(siteIdParam string, enforcementpointIdParam string, cursorParam *string, inMaintenanceModeParam *bool, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, managementIpParam *string, nodeTypesParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, transportZonePathParam *string) (nsx_policyModel.PolicyEdgeTransportNodeListResult, error) {
 	typeConverter := eIface.connector.TypeConverter()
 	executionContext := eIface.connector.NewExecutionContext()
 	operationRestMetaData := edgeTransportNodesListRestMetadata()
@@ -211,6 +212,7 @@ func (eIface *edgeTransportNodesClient) List(siteIdParam string, enforcementpoin
 	sv.AddStructField("EnforcementpointId", enforcementpointIdParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("InMaintenanceMode", inMaintenanceModeParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("ManagementIp", managementIpParam)

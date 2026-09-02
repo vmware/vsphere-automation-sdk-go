@@ -20,9 +20,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AsyncClient interface {
 
-	// Trigger to query VCF licenses from all registered vCenters and update licenses in Network Manager in an asynchronous manner. If only_sync_unlicensed_vc is true, only query the licenses from the VCs that do not have a license in Network Manager asynchronously. If only_sync_unlicensed_vc is false, query the licenses from all VCs in Network Manager.
+	// Trigger to query VCF licenses from all registered vCenters and update licenses in NSX in an asynchronous manner. If only_sync_unlicensed_vc is true, only query the licenses from the VCs that do not have a license in NSX asynchronously. If only_sync_unlicensed_vc is false, query the licenses from all VCs in NSX.
 	//
-	// @param onlySyncUnlicensedVcParam Specify whether to only query the licenses from the VCs that do not have a license in Network Manager asynchronously. (optional, default to false)
+	// @param onlySyncUnlicensedVcParam Specify whether to only query the licenses from the VCs that do not have a license in NSX asynchronously. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout

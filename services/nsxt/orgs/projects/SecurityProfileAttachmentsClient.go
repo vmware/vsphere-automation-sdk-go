@@ -38,9 +38,10 @@ type SecurityProfileAttachmentsClient interface {
 
 	// Retrieves a paginated collection of all Security Profile Attachments within a specified project, providing a comprehensive view of VPC-to-security-profile associations. Each attachment in the response includes details about the target VPC, the assigned security profile, and relevant metadata details. This API enables project administrators to understand current security posture assignments, and manage security configuration consistency within the project. The response supports standard pagination parameters and sorting capabilities for efficient data retrieval and analysis of security profile usage patterns.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
@@ -54,12 +55,12 @@ type SecurityProfileAttachmentsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityProfileAttachmentListResult, error)
+	List(orgIdParam string, projectIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityProfileAttachmentListResult, error)
 
 	// Creates a new Security Profile Attachment or performs partial updates to an existing attachment using HTTP PATCH semantics. This operation enables project administrators to associate a VPC with a specific security profile or modify an existing attachment by changing the assigned security profile. The API supports attaching different security profiles to VPCs to customize their security posture based on workload requirements and compliance needs. When updating an existing attachment, only the provided fields in the request body will be modified while preserving other attachment properties. The operation ensures that each VPC maintains exactly one active security profile attachment at any time, automatically managing the association lifecycle.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param securityProfileAttachmentIdParam (required)
 	// @param securityProfileAttachmentParam (required)
 	//
@@ -73,8 +74,8 @@ type SecurityProfileAttachmentsClient interface {
 
 	// Performs complete replacement of an existing Security Profile Attachment using HTTP PUT semantics. This operation requires a full attachment representation in the request body and will replace all modifiable properties of the target attachment. The API enables comprehensive updates to VPC-security-profile associations, allowing administrators to change the assigned security profile and update attachment metadata. All required fields must be provided in the request as omitted fields may be reset to default values. The response includes the updated attachment with current configuration, ensuring that the VPC's security posture is properly configured according to the new security profile assignment.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param securityProfileAttachmentIdParam (required)
 	// @param securityProfileAttachmentParam (required)
 	// @return com.vmware.nsx_policy.model.SecurityProfileAttachment
@@ -150,7 +151,7 @@ func (sIface *securityProfileAttachmentsClient) Get(orgIdParam string, projectId
 	}
 }
 
-func (sIface *securityProfileAttachmentsClient) List(orgIdParam string, projectIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityProfileAttachmentListResult, error) {
+func (sIface *securityProfileAttachmentsClient) List(orgIdParam string, projectIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityProfileAttachmentListResult, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := securityProfileAttachmentsListRestMetadata()
@@ -161,6 +162,7 @@ func (sIface *securityProfileAttachmentsClient) List(orgIdParam string, projectI
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)

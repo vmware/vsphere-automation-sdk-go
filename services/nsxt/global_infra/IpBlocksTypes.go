@@ -4,12 +4,12 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: DvsTeamingPolicies.
+// Data type definitions file for service: IpBlocks.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package enforcement_points
+package global_infra
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -19,24 +19,20 @@ import (
 	"reflect"
 )
 
-func dvsTeamingPoliciesDeleteInputType() vapiBindings_.StructType {
+func ipBlocksDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["site_id"] = vapiBindings_.NewStringType()
-	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
-	fields["teaming_policy_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["site_id"] = "SiteId"
-	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
-	fieldNameMap["teaming_policy_id"] = "TeamingPolicyId"
+	fields["ip_block_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["ip_block_id"] = "IpBlockId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func DvsTeamingPoliciesDeleteOutputType() vapiBindings_.BindingType {
+func IpBlocksDeleteOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewVoidType()
 }
 
-func dvsTeamingPoliciesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipBlocksDeleteRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -45,21 +41,11 @@ func dvsTeamingPoliciesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata 
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["site_id"] = vapiBindings_.NewStringType()
-	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
-	fields["teaming_policy_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["site_id"] = "SiteId"
-	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
-	fieldNameMap["teaming_policy_id"] = "TeamingPolicyId"
-	paramsTypeMap["teaming_policy_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["enforcement_point_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["enforcementPointId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["teamingPolicyId"] = vapiBindings_.NewStringType()
-	pathParams["site_id"] = "siteId"
-	pathParams["enforcement_point_id"] = "enforcementPointId"
-	pathParams["teaming_policy_id"] = "teamingPolicyId"
+	fields["ip_block_id"] = vapiBindings_.NewStringType()
+	fieldNameMap["ip_block_id"] = "IpBlockId"
+	paramsTypeMap["ip_block_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ipBlockId"] = vapiBindings_.NewStringType()
+	pathParams["ip_block_id"] = "ipBlockId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -74,7 +60,7 @@ func dvsTeamingPoliciesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata 
 		"",
 		"",
 		"DELETE",
-		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementPointId}/dvs-teaming-policies/{teamingPolicyId}",
+		"/policy/api/v1/global-infra/ip-blocks/{ipBlockId}",
 		"",
 		resultHeaders,
 		204,
@@ -83,24 +69,22 @@ func dvsTeamingPoliciesDeleteRestMetadata() vapiProtocol_.OperationRestMetadata 
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func dvsTeamingPoliciesGetInputType() vapiBindings_.StructType {
+func ipBlocksGetInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["site_id"] = vapiBindings_.NewStringType()
-	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
-	fields["teaming_policy_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["site_id"] = "SiteId"
-	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
-	fieldNameMap["teaming_policy_id"] = "TeamingPolicyId"
+	fields["ip_block_id"] = vapiBindings_.NewStringType()
+	fields["ignore_ipblock_usage"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["ip_block_id"] = "IpBlockId"
+	fieldNameMap["ignore_ipblock_usage"] = "IgnoreIpblockUsage"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func DvsTeamingPoliciesGetOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.DistributedVirtualSwitchNamedTeamingBindingType)
+func IpBlocksGetOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressBlockBindingType)
 }
 
-func dvsTeamingPoliciesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipBlocksGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -109,21 +93,15 @@ func dvsTeamingPoliciesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["site_id"] = vapiBindings_.NewStringType()
-	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
-	fields["teaming_policy_id"] = vapiBindings_.NewStringType()
-	fieldNameMap["site_id"] = "SiteId"
-	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
-	fieldNameMap["teaming_policy_id"] = "TeamingPolicyId"
-	paramsTypeMap["teaming_policy_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["enforcement_point_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["enforcementPointId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["teamingPolicyId"] = vapiBindings_.NewStringType()
-	pathParams["site_id"] = "siteId"
-	pathParams["enforcement_point_id"] = "enforcementPointId"
-	pathParams["teaming_policy_id"] = "teamingPolicyId"
+	fields["ip_block_id"] = vapiBindings_.NewStringType()
+	fields["ignore_ipblock_usage"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["ip_block_id"] = "IpBlockId"
+	fieldNameMap["ignore_ipblock_usage"] = "IgnoreIpblockUsage"
+	paramsTypeMap["ip_block_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ignore_ipblock_usage"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	paramsTypeMap["ipBlockId"] = vapiBindings_.NewStringType()
+	pathParams["ip_block_id"] = "ipBlockId"
+	queryParams["ignore_ipblock_usage"] = "ignore_ipblock_usage"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -138,7 +116,7 @@ func dvsTeamingPoliciesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementPointId}/dvs-teaming-policies/{teamingPolicyId}",
+		"/policy/api/v1/global-infra/ip-blocks/{ipBlockId}",
 		"",
 		resultHeaders,
 		200,
@@ -147,22 +125,18 @@ func dvsTeamingPoliciesGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func dvsTeamingPoliciesListInputType() vapiBindings_.StructType {
+func ipBlocksListInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["site_id"] = vapiBindings_.NewStringType()
-	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["dvs_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["site_id"] = "SiteId"
-	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	fieldNameMap["cursor"] = "Cursor"
-	fieldNameMap["dvs_id"] = "DvsId"
+	fieldNameMap["include_conflicts"] = "IncludeConflicts"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
@@ -172,11 +146,11 @@ func dvsTeamingPoliciesListInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func DvsTeamingPoliciesListOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.DistributedVirtualSwitchNamedTeamingListResultBindingType)
+func IpBlocksListOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressBlockListResultBindingType)
 }
 
-func dvsTeamingPoliciesListRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipBlocksListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -185,39 +159,29 @@ func dvsTeamingPoliciesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["site_id"] = vapiBindings_.NewStringType()
-	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fields["dvs_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["site_id"] = "SiteId"
-	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
 	fieldNameMap["cursor"] = "Cursor"
-	fieldNameMap["dvs_id"] = "DvsId"
+	fieldNameMap["include_conflicts"] = "IncludeConflicts"
 	fieldNameMap["include_mark_for_delete_objects"] = "IncludeMarkForDeleteObjects"
 	fieldNameMap["included_fields"] = "IncludedFields"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["dvs_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["include_conflicts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["enforcement_point_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["include_mark_for_delete_objects"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
-	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["enforcementPointId"] = vapiBindings_.NewStringType()
-	pathParams["site_id"] = "siteId"
-	pathParams["enforcement_point_id"] = "enforcementPointId"
 	queryParams["cursor"] = "cursor"
-	queryParams["dvs_id"] = "dvs_id"
+	queryParams["include_conflicts"] = "include_conflicts"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["sort_by"] = "sort_by"
@@ -237,7 +201,7 @@ func dvsTeamingPoliciesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementPointId}/dvs-teaming-policies",
+		"/policy/api/v1/global-infra/ip-blocks",
 		"",
 		resultHeaders,
 		200,
@@ -246,26 +210,22 @@ func dvsTeamingPoliciesListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func dvsTeamingPoliciesPatchInputType() vapiBindings_.StructType {
+func ipBlocksPatchInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["site_id"] = vapiBindings_.NewStringType()
-	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
-	fields["teaming_policy_id"] = vapiBindings_.NewStringType()
-	fields["distributed_virtual_switch_named_teaming"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedVirtualSwitchNamedTeamingBindingType)
-	fieldNameMap["site_id"] = "SiteId"
-	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
-	fieldNameMap["teaming_policy_id"] = "TeamingPolicyId"
-	fieldNameMap["distributed_virtual_switch_named_teaming"] = "DistributedVirtualSwitchNamedTeaming"
+	fields["ip_block_id"] = vapiBindings_.NewStringType()
+	fields["ip_address_block"] = vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressBlockBindingType)
+	fieldNameMap["ip_block_id"] = "IpBlockId"
+	fieldNameMap["ip_address_block"] = "IpAddressBlock"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func DvsTeamingPoliciesPatchOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.DistributedVirtualSwitchNamedTeamingBindingType)
+func IpBlocksPatchOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewVoidType()
 }
 
-func dvsTeamingPoliciesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipBlocksPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -274,24 +234,14 @@ func dvsTeamingPoliciesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["site_id"] = vapiBindings_.NewStringType()
-	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
-	fields["teaming_policy_id"] = vapiBindings_.NewStringType()
-	fields["distributed_virtual_switch_named_teaming"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedVirtualSwitchNamedTeamingBindingType)
-	fieldNameMap["site_id"] = "SiteId"
-	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
-	fieldNameMap["teaming_policy_id"] = "TeamingPolicyId"
-	fieldNameMap["distributed_virtual_switch_named_teaming"] = "DistributedVirtualSwitchNamedTeaming"
-	paramsTypeMap["distributed_virtual_switch_named_teaming"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedVirtualSwitchNamedTeamingBindingType)
-	paramsTypeMap["teaming_policy_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["enforcement_point_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["enforcementPointId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["teamingPolicyId"] = vapiBindings_.NewStringType()
-	pathParams["site_id"] = "siteId"
-	pathParams["enforcement_point_id"] = "enforcementPointId"
-	pathParams["teaming_policy_id"] = "teamingPolicyId"
+	fields["ip_block_id"] = vapiBindings_.NewStringType()
+	fields["ip_address_block"] = vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressBlockBindingType)
+	fieldNameMap["ip_block_id"] = "IpBlockId"
+	fieldNameMap["ip_address_block"] = "IpAddressBlock"
+	paramsTypeMap["ip_block_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ip_address_block"] = vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressBlockBindingType)
+	paramsTypeMap["ipBlockId"] = vapiBindings_.NewStringType()
+	pathParams["ip_block_id"] = "ipBlockId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -304,37 +254,33 @@ func dvsTeamingPoliciesPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"distributed_virtual_switch_named_teaming",
+		"ip_address_block",
 		"PATCH",
-		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementPointId}/dvs-teaming-policies/{teamingPolicyId}",
+		"/policy/api/v1/global-infra/ip-blocks/{ipBlockId}",
 		"application/json",
 		resultHeaders,
-		200,
+		204,
 		"",
 		errorHeaders,
 		map[string]int{"com.vmware.vapi.std.errors.invalid_request": 400, "com.vmware.vapi.std.errors.timed_out": 500, "com.vmware.vapi.std.errors.unauthorized": 403, "com.vmware.vapi.std.errors.service_unavailable": 503, "com.vmware.vapi.std.errors.internal_server_error": 500, "com.vmware.vapi.std.errors.not_found": 404})
 }
 
-func dvsTeamingPoliciesUpdateInputType() vapiBindings_.StructType {
+func ipBlocksUpdateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["site_id"] = vapiBindings_.NewStringType()
-	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
-	fields["teaming_policy_id"] = vapiBindings_.NewStringType()
-	fields["distributed_virtual_switch_named_teaming"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedVirtualSwitchNamedTeamingBindingType)
-	fieldNameMap["site_id"] = "SiteId"
-	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
-	fieldNameMap["teaming_policy_id"] = "TeamingPolicyId"
-	fieldNameMap["distributed_virtual_switch_named_teaming"] = "DistributedVirtualSwitchNamedTeaming"
+	fields["ip_block_id"] = vapiBindings_.NewStringType()
+	fields["ip_address_block"] = vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressBlockBindingType)
+	fieldNameMap["ip_block_id"] = "IpBlockId"
+	fieldNameMap["ip_address_block"] = "IpAddressBlock"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func DvsTeamingPoliciesUpdateOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.DistributedVirtualSwitchNamedTeamingBindingType)
+func IpBlocksUpdateOutputType() vapiBindings_.BindingType {
+	return vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressBlockBindingType)
 }
 
-func dvsTeamingPoliciesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
+func ipBlocksUpdateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -343,24 +289,14 @@ func dvsTeamingPoliciesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata 
 	headerParams := map[string]string{}
 	dispatchHeaderParams := map[string]string{}
 	bodyFieldsMap := map[string]string{}
-	fields["site_id"] = vapiBindings_.NewStringType()
-	fields["enforcement_point_id"] = vapiBindings_.NewStringType()
-	fields["teaming_policy_id"] = vapiBindings_.NewStringType()
-	fields["distributed_virtual_switch_named_teaming"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedVirtualSwitchNamedTeamingBindingType)
-	fieldNameMap["site_id"] = "SiteId"
-	fieldNameMap["enforcement_point_id"] = "EnforcementPointId"
-	fieldNameMap["teaming_policy_id"] = "TeamingPolicyId"
-	fieldNameMap["distributed_virtual_switch_named_teaming"] = "DistributedVirtualSwitchNamedTeaming"
-	paramsTypeMap["distributed_virtual_switch_named_teaming"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedVirtualSwitchNamedTeamingBindingType)
-	paramsTypeMap["teaming_policy_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["enforcement_point_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["enforcementPointId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["teamingPolicyId"] = vapiBindings_.NewStringType()
-	pathParams["site_id"] = "siteId"
-	pathParams["enforcement_point_id"] = "enforcementPointId"
-	pathParams["teaming_policy_id"] = "teamingPolicyId"
+	fields["ip_block_id"] = vapiBindings_.NewStringType()
+	fields["ip_address_block"] = vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressBlockBindingType)
+	fieldNameMap["ip_block_id"] = "IpBlockId"
+	fieldNameMap["ip_address_block"] = "IpAddressBlock"
+	paramsTypeMap["ip_block_id"] = vapiBindings_.NewStringType()
+	paramsTypeMap["ip_address_block"] = vapiBindings_.NewReferenceType(nsx_policyModel.IpAddressBlockBindingType)
+	paramsTypeMap["ipBlockId"] = vapiBindings_.NewStringType()
+	pathParams["ip_block_id"] = "ipBlockId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -373,9 +309,9 @@ func dvsTeamingPoliciesUpdateRestMetadata() vapiProtocol_.OperationRestMetadata 
 		dispatchHeaderParams,
 		bodyFieldsMap,
 		"",
-		"distributed_virtual_switch_named_teaming",
+		"ip_address_block",
 		"PUT",
-		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementPointId}/dvs-teaming-policies/{teamingPolicyId}",
+		"/policy/api/v1/global-infra/ip-blocks/{ipBlockId}",
 		"application/json",
 		resultHeaders,
 		200,

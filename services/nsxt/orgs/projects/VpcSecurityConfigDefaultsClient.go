@@ -37,8 +37,8 @@ type VpcSecurityConfigDefaultsClient interface {
 
 	// Performs partial updates to the Security Configuration Defaults using HTTP PATCH semantics. This is a singleton resource per project. This operation allows modification of specific default configuration properties such as default security strategy or firewall enablement settings while preserving other properties.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vPCSecurityConfigDefaultsParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -51,8 +51,8 @@ type VpcSecurityConfigDefaultsClient interface {
 
 	// Performs complete replacement of the Security Configuration Defaults using HTTP PUT semantics. This is a singleton resource per project. This operation requires a full configuration representation in the request body and will replace all modifiable properties of the configuration. All required fields must be provided as omitted fields may be reset to default values.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vPCSecurityConfigDefaultsParam (required)
 	// @return com.vmware.nsx_policy.model.VPCSecurityConfigDefaults
 	//

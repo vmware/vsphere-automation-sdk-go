@@ -60,8 +60,10 @@ type HostVmkAllocationsClient interface {
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param deviceIdParam Device ID of the vmknic to get the network id for. e.g. vmk0, vmk1. (optional)
 	// @param hostExternalIdParam The external ID of the specific host in NSX. This is in the format compute-manager-uuid:host-moid and can be retrieved from the discovered node API in NSX, GET https://&lt;policy-mgr&gt;/policy/api/v1/fabric/discovered-nodes/ e.g. 5a0b7b11-4475-4b72-8822-225e348f4b4e:host-10 (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param infraNetworkPathParam Policy path of the Infra Network to filter vmk allocations by. (optional)
 	// @param ipPoolPathParam Policy path of the IPv4 or IPv6 pool (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
@@ -74,9 +76,9 @@ type HostVmkAllocationsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, cursorParam *string, deviceIdParam *string, hostExternalIdParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, ipPoolPathParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.HostVmkAllocationListResult, error)
+	List(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, cursorParam *string, deviceIdParam *string, hostExternalIdParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, infraNetworkPathParam *string, ipPoolPathParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.HostVmkAllocationListResult, error)
 
-	// Patch a Host Vmk Allocation which specifies how vmk on infraNetwork is allocated and deallocated ipv4 and ipv6 addresses.
+	// Patch a Host Vmk Allocation which specifies how vmk on infraNetwork is allocated and deallocated ipv4 and ipv6 addresses. Note: The 'vmk_allocations' list should always include the complete list of desired allocations. Any missing allocations from the list will be considered as not desired and freed up.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
@@ -93,7 +95,7 @@ type HostVmkAllocationsClient interface {
 	// @throws NotFound  Not Found
 	Patch(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, allocationIdParam string, hostVmkAllocationParam nsx_policyModel.HostVmkAllocation) (nsx_policyModel.HostVmkAllocation, error)
 
-	// Create or update a Host Vmk Allocation which specifies how vmk on infraNetwork is allocated and deallocated ipv4 and ipv6 addresses.
+	// Create or update a Host Vmk Allocation which specifies how vmk on infraNetwork is allocated and deallocated ipv4 and ipv6 addresses. Note: The 'vmk_allocations' list should always include the complete list of desired allocations. Any missing allocations from the list will be considered as not desired and freed up.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
@@ -204,7 +206,7 @@ func (hIface *hostVmkAllocationsClient) Get(siteIdParam string, enforcementpoint
 	}
 }
 
-func (hIface *hostVmkAllocationsClient) List(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, cursorParam *string, deviceIdParam *string, hostExternalIdParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, ipPoolPathParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.HostVmkAllocationListResult, error) {
+func (hIface *hostVmkAllocationsClient) List(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, cursorParam *string, deviceIdParam *string, hostExternalIdParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, infraNetworkPathParam *string, ipPoolPathParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.HostVmkAllocationListResult, error) {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
 	operationRestMetaData := hostVmkAllocationsListRestMetadata()
@@ -218,8 +220,10 @@ func (hIface *hostVmkAllocationsClient) List(siteIdParam string, enforcementpoin
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("DeviceId", deviceIdParam)
 	sv.AddStructField("HostExternalId", hostExternalIdParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("InfraNetworkPath", infraNetworkPathParam)
 	sv.AddStructField("IpPoolPath", ipPoolPathParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
