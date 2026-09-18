@@ -20,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type EnterMaintenanceModeClient interface {
 
-	// Put edge transport node into maintenance mode if there is no VIFs attached. When EdgeTransportNode is in maintenance mode, no configuration changes are allowed.
+	// Puts this edge transport node into maintenance mode. While in maintenance mode, no configuration changes are allowed on the node. Use this before disruptive operations like host/VM maintenance or a redeploy so services fail over to a healthy peer first, keeping at least the recommended minimum of healthy edge nodes in the cluster during the operation. Before calling this action, it is recommended to call the peer edge health check API (POST /api/v1/upgrade/pre-upgrade-checks/edge/planned-maintenance) to confirm the peer edges in this node's cluster are healthy and prepared to take over its services.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)

@@ -9,7 +9,7 @@
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package intrusion_services
+package security
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -60,7 +60,7 @@ func containerClusterConfigsDeleteRestMetadata() vapiProtocol_.OperationRestMeta
 		"",
 		"",
 		"DELETE",
-		"/policy/api/v1/infra/settings/firewall/security/intrusion-services/container-cluster-configs/{containerClusterId}",
+		"/policy/api/v1/infra/settings/firewall/security/container-cluster-configs/{containerClusterId}",
 		"",
 		resultHeaders,
 		204,
@@ -110,7 +110,7 @@ func containerClusterConfigsGetRestMetadata() vapiProtocol_.OperationRestMetadat
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/settings/firewall/security/intrusion-services/container-cluster-configs/{containerClusterId}",
+		"/policy/api/v1/infra/settings/firewall/security/container-cluster-configs/{containerClusterId}",
 		"",
 		resultHeaders,
 		200,
@@ -195,7 +195,7 @@ func containerClusterConfigsListRestMetadata() vapiProtocol_.OperationRestMetada
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/settings/firewall/security/intrusion-services/container-cluster-configs",
+		"/policy/api/v1/infra/settings/firewall/security/container-cluster-configs",
 		"",
 		resultHeaders,
 		200,
@@ -250,7 +250,7 @@ func containerClusterConfigsPatchRestMetadata() vapiProtocol_.OperationRestMetad
 		"",
 		"container_cluster_config",
 		"PATCH",
-		"/policy/api/v1/infra/settings/firewall/security/intrusion-services/container-cluster-configs/{containerClusterId}",
+		"/policy/api/v1/infra/settings/firewall/security/container-cluster-configs/{containerClusterId}",
 		"application/json",
 		resultHeaders,
 		204,
@@ -305,7 +305,7 @@ func containerClusterConfigsUpdateRestMetadata() vapiProtocol_.OperationRestMeta
 		"",
 		"container_cluster_config",
 		"PUT",
-		"/policy/api/v1/infra/settings/firewall/security/intrusion-services/container-cluster-configs/{containerClusterId}",
+		"/policy/api/v1/infra/settings/firewall/security/container-cluster-configs/{containerClusterId}",
 		"application/json",
 		resultHeaders,
 		200,

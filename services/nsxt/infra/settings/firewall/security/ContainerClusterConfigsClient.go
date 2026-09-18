@@ -7,7 +7,7 @@
 // Interface file for service: ContainerClusterConfigs
 // Used by client-side stubs.
 
-package intrusion_services
+package security
 
 import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -21,9 +21,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ContainerClusterConfigsClient interface {
 
-	// To disable IDPS for any Kubernetes Antrea cluster, the corresponding container cluster configuration must be deleted. This routine handles the deletion of the container cluster configuration.
+	// Deletes the security feature configuration for the specified VKS Cluster with Antrea CNI. Any group, IDS/IPS security policy, and rules that were automatically created while IDPS was active are also removed.
 	//
-	// @param containerClusterIdParam Container cluster Id (required)
+	// @param containerClusterIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -33,9 +33,9 @@ type ContainerClusterConfigsClient interface {
 	// @throws NotFound  Not Found
 	Delete(containerClusterIdParam string) error
 
-	// Returns the Intrusion Detection and Prevention System (IDPS) configuration for the specified Antrea cluster, including its related groups.
+	// Returns the security feature configuration for the specified VKS Cluster with Antrea CNI, including the activation status of each configured feature, for example IDPS.
 	//
-	// @param containerClusterIdParam Container cluster Id (required)
+	// @param containerClusterIdParam (required)
 	// @return com.vmware.nsx_policy.model.ContainerClusterConfig
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -46,7 +46,7 @@ type ContainerClusterConfigsClient interface {
 	// @throws NotFound  Not Found
 	Get(containerClusterIdParam string) (nsx_policyModel.ContainerClusterConfig, error)
 
-	// Returns a list of all Intrusion Detection System (IDS)-enabled Antrea cluster configurations.
+	// Returns a paginated list of security feature configurations for all VKS Clusters with Antrea CNI.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
@@ -65,9 +65,9 @@ type ContainerClusterConfigsClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ContainerClusterConfigListResult, error)
 
-	// To enable IDPS for any Kubernetes Antrea cluster, a container cluster configuration must be created using the container cluster ID. This routine is responsible for creating or updating the container cluster configuration.
+	// Creates or updates the security feature configuration for a VKS (vSphere Kubernetes Service) Cluster with Antrea CNI (Container Network Interface). Activating IDPS (Intrusion Detection and Prevention System) causes NSX to automatically create the required group, IDS/IPS security policy, and rules for the cluster; deactivating IDPS removes them.
 	//
-	// @param containerClusterIdParam Container cluster Id (required)
+	// @param containerClusterIdParam (required)
 	// @param containerClusterConfigParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -78,9 +78,9 @@ type ContainerClusterConfigsClient interface {
 	// @throws NotFound  Not Found
 	Patch(containerClusterIdParam string, containerClusterConfigParam nsx_policyModel.ContainerClusterConfig) error
 
-	// To enable IDPS for any Kubernetes Antrea cluster, a container cluster configuration must be created using the container cluster ID. This routine is responsible for creating or updating the container cluster configuration.
+	// Creates or updates the security feature configuration for a VKS (vSphere Kubernetes Service) Cluster with Antrea CNI (Container Network Interface). Activating IDPS (Intrusion Detection and Prevention System) causes NSX to automatically create the required group, IDS/IPS security policy, and rules for the cluster; deactivating IDPS removes them.
 	//
-	// @param containerClusterIdParam Container cluster Id (required)
+	// @param containerClusterIdParam (required)
 	// @param containerClusterConfigParam (required)
 	// @return com.vmware.nsx_policy.model.ContainerClusterConfig
 	//
@@ -100,7 +100,7 @@ type containerClusterConfigsClient struct {
 }
 
 func NewContainerClusterConfigsClient(connector vapiProtocolClient_.Connector) *containerClusterConfigsClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.settings.firewall.security.intrusion_services.container_cluster_configs")
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.settings.firewall.security.container_cluster_configs")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
@@ -136,7 +136,7 @@ func (cIface *containerClusterConfigsClient) Delete(containerClusterIdParam stri
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.intrusion_services.container_cluster_configs", "delete", inputDataValue, executionContext)
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.container_cluster_configs", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -163,7 +163,7 @@ func (cIface *containerClusterConfigsClient) Get(containerClusterIdParam string)
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.intrusion_services.container_cluster_configs", "get", inputDataValue, executionContext)
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.container_cluster_configs", "get", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.ContainerClusterConfig
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ContainerClusterConfigsGetOutputType())
@@ -201,7 +201,7 @@ func (cIface *containerClusterConfigsClient) List(cursorParam *string, includeCo
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.intrusion_services.container_cluster_configs", "list", inputDataValue, executionContext)
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.container_cluster_configs", "list", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.ContainerClusterConfigListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ContainerClusterConfigsListOutputType())
@@ -233,7 +233,7 @@ func (cIface *containerClusterConfigsClient) Patch(containerClusterIdParam strin
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.intrusion_services.container_cluster_configs", "patch", inputDataValue, executionContext)
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.container_cluster_configs", "patch", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -261,7 +261,7 @@ func (cIface *containerClusterConfigsClient) Update(containerClusterIdParam stri
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.intrusion_services.container_cluster_configs", "update", inputDataValue, executionContext)
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.settings.firewall.security.container_cluster_configs", "update", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.ContainerClusterConfig
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ContainerClusterConfigsUpdateOutputType())

@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ClusterCompatibilityClient interface {
 
-	// Returns the aggregated hypervisor security compatibility status for all clusters known to NSX. The cluster status is derived from the compatibility status of all hosts in the cluster. COMPATIBLE: all hosts are COMPATIBLE. PARTIALLY_COMPATIBLE: at least one host is COMPATIBLE but not all. INCOMPATIBLE: no hosts are COMPATIBLE. Supports filtering by cluster status via the status query parameter.
+	// Returns the aggregated hypervisor security compatibility status for all clusters known to NSX. The cluster status is derived from the compatibility status of all hosts in the cluster. COMPATIBLE: all hosts are COMPATIBLE. PARTIALLY_COMPATIBLE: at least one host is COMPATIBLE but not all. INCOMPATIBLE: no hosts are COMPATIBLE. A host with no VMKernel interfaces configured is skipped when deriving its cluster's status, and a cluster where every host has no VMKernel interfaces configured is skipped entirely and does not appear in the results. Supports filtering by cluster status via the status query parameter.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)

@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RedeployClient interface {
 
-	// Redeploys an edge transport node at NSX Manager that replaces the edge transport node with identifier <node-id>. If NSX Manager can access the specified edge node, then the node is put into maintenance mode and then the associated VM is deleted. This is a means to reset all configuration on the edge node. The communication channel between NSX Manager and edge is established after this operation.
+	// Redeploys an edge transport node at NSX Manager that replaces the edge transport node with identifier <node-id>. If NSX Manager can access the specified edge node, then the node is put into maintenance mode and then the associated VM is deleted. This is a means to reset all configuration on the edge node. The communication channel between NSX Manager and edge is established after this operation. This action is supported only for LCM-managed (VIRTUAL_MACHINE) edge nodes with vm_deployment_config set - it destroys and recreates the VM via vCenter. It is rejected for bare metal and manually-joined nodes, whose lifecycle NSX does not own. For edges that are members of the same edge cluster, redeploy them one at a time in a rolling fashion - at most one edge node of a given cluster should be redeployed at any time - so that redundancy is preserved for the cluster's services while the redeployed node is down.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)

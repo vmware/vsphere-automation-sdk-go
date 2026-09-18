@@ -4,7 +4,7 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Interface file for service: VmStatus
+// Interface file for service: VmsStatus
 // Used by client-side stubs.
 
 package distributed_tls_monitoring
@@ -19,7 +19,7 @@ import (
 
 const _ = vapiCore_.SupportedByRuntimeVersion2
 
-type VmStatusClient interface {
+type VmsStatusClient interface {
 
 	// API to get Distributed TLS Virtual Machines Status from Hosts.
 	//
@@ -40,39 +40,39 @@ type VmStatusClient interface {
 	Create(distributedTlsVMStatusRequestParam nsx_policyModel.DistributedTlsVMStatusRequest, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.DistributedTlsVMStatusListResult, error)
 }
 
-type vmStatusClient struct {
+type vmsStatusClient struct {
 	connector           vapiProtocolClient_.Connector
 	interfaceDefinition vapiCore_.InterfaceDefinition
 	errorsBindingMap    map[string]vapiBindings_.BindingType
 }
 
-func NewVmStatusClient(connector vapiProtocolClient_.Connector) *vmStatusClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.distributed_tls_monitoring.vm_status")
+func NewVmsStatusClient(connector vapiProtocolClient_.Connector) *vmsStatusClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.distributed_tls_monitoring.vms_status")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 	}
 	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
 	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
 
-	vIface := vmStatusClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	vIface := vmsStatusClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
 	return &vIface
 }
 
-func (vIface *vmStatusClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+func (vIface *vmsStatusClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
 	if entry, ok := vIface.errorsBindingMap[errorName]; ok {
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (vIface *vmStatusClient) Create(distributedTlsVMStatusRequestParam nsx_policyModel.DistributedTlsVMStatusRequest, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.DistributedTlsVMStatusListResult, error) {
+func (vIface *vmsStatusClient) Create(distributedTlsVMStatusRequestParam nsx_policyModel.DistributedTlsVMStatusRequest, cursorParam *string, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.DistributedTlsVMStatusListResult, error) {
 	typeConverter := vIface.connector.TypeConverter()
 	executionContext := vIface.connector.NewExecutionContext()
-	operationRestMetaData := vmStatusCreateRestMetadata()
+	operationRestMetaData := vmsStatusCreateRestMetadata()
 	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
 	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
 
-	sv := vapiBindings_.NewStructValueBuilder(vmStatusCreateInputType(), typeConverter)
+	sv := vapiBindings_.NewStructValueBuilder(vmsStatusCreateInputType(), typeConverter)
 	sv.AddStructField("DistributedTlsVMStatusRequest", distributedTlsVMStatusRequestParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
@@ -85,10 +85,10 @@ func (vIface *vmStatusClient) Create(distributedTlsVMStatusRequestParam nsx_poli
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := vIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.distributed_tls_monitoring.vm_status", "create", inputDataValue, executionContext)
+	methodResult := vIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.distributed_tls_monitoring.vms_status", "create", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.DistributedTlsVMStatusListResult
 	if methodResult.IsSuccess() {
-		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), VmStatusCreateOutputType())
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), VmsStatusCreateOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}

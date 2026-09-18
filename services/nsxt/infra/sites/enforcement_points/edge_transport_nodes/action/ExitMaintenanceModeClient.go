@@ -20,7 +20,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ExitMaintenanceModeClient interface {
 
-	// This APi will exit from maintenance mode
+	// Takes this edge transport node back out of maintenance mode, restoring it to normal operation so it can again host services. After exiting maintenance mode, wait for this edge to come back UP, its services to become active, and its BGP sessions to establish, before putting another node of the same edge cluster into maintenance mode.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)

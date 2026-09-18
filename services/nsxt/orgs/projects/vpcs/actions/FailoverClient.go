@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FailoverClient interface {
 
-	// The API is only supported if gateway high availability mode is active/standby and using non-preemptive failover mode. The preferred edge node must be one of the two node paths where a gateway already exists. To check existing edge nodes and their high availability status, refer to the VPC gateway state API.
+	// The API is only supported if gateway high availability mode is active/standby and using non-preemptive failover mode. The preferred edge, VNA or VNS node must be one of the two node paths where a gateway already exists. To check existing edge, VNA or VNS nodes and their high availability status, refer to the VPC gateway state API. For a VPC gateway whose service instance is hosted on a Virtual Network Service (VNS) cluster, please provide preferred_vns_node_path instead of preferred_active_edge_path.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)

@@ -159,7 +159,7 @@ func hypervisorSecurityPoliciesListInputType() vapiBindings_.StructType {
 }
 
 func HypervisorSecurityPoliciesListOutputType() vapiBindings_.BindingType {
-	return vapiBindings_.NewReferenceType(nsx_policyModel.SecurityPolicyListResultBindingType)
+	return vapiBindings_.NewReferenceType(nsx_policyModel.HypervisorSecurityPolicyListResultBindingType)
 }
 
 func hypervisorSecurityPoliciesListRestMetadata() vapiProtocol_.OperationRestMetadata {

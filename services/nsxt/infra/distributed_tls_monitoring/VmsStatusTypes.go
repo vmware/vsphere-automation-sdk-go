@@ -4,7 +4,7 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for service: VmStatus.
+// Data type definitions file for service: VmsStatus.
 // Includes binding types of a structures and enumerations defined in the service.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
@@ -19,7 +19,7 @@ import (
 	"reflect"
 )
 
-func vmStatusCreateInputType() vapiBindings_.StructType {
+func vmsStatusCreateInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
 	fields["distributed_tls_VM_status_request"] = vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsVMStatusRequestBindingType)
@@ -38,11 +38,11 @@ func vmStatusCreateInputType() vapiBindings_.StructType {
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
 }
 
-func VmStatusCreateOutputType() vapiBindings_.BindingType {
+func VmsStatusCreateOutputType() vapiBindings_.BindingType {
 	return vapiBindings_.NewReferenceType(nsx_policyModel.DistributedTlsVMStatusListResultBindingType)
 }
 
-func vmStatusCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
+func vmsStatusCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields := map[string]vapiBindings_.BindingType{}
 	fieldNameMap := map[string]string{}
 	paramsTypeMap := map[string]vapiBindings_.BindingType{}
@@ -88,7 +88,7 @@ func vmStatusCreateRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"distributed_tls_VM_status_request",
 		"POST",
-		"/policy/api/v1/infra/distributed-tls-monitoring/vm-status",
+		"/policy/api/v1/infra/distributed-tls-monitoring/vms-status",
 		"application/json",
 		resultHeaders,
 		201,

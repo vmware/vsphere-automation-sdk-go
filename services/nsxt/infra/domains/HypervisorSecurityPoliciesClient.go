@@ -59,7 +59,7 @@ type HypervisorSecurityPoliciesClient interface {
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @return com.vmware.nsx_policy.model.SecurityPolicyListResult
+	// @return com.vmware.nsx_policy.model.HypervisorSecurityPolicyListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout
@@ -67,7 +67,7 @@ type HypervisorSecurityPoliciesClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(domainIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includeRuleCountParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityPolicyListResult, error)
+	List(domainIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includeRuleCountParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.HypervisorSecurityPolicyListResult, error)
 
 	// Patch a hypervisor security policy.
 	//
@@ -188,7 +188,7 @@ func (hIface *hypervisorSecurityPoliciesClient) Get(domainIdParam string, securi
 	}
 }
 
-func (hIface *hypervisorSecurityPoliciesClient) List(domainIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includeRuleCountParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.SecurityPolicyListResult, error) {
+func (hIface *hypervisorSecurityPoliciesClient) List(domainIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includeRuleCountParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.HypervisorSecurityPolicyListResult, error) {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
 	operationRestMetaData := hypervisorSecurityPoliciesListRestMetadata()
@@ -207,18 +207,18 @@ func (hIface *hypervisorSecurityPoliciesClient) List(domainIdParam string, curso
 	sv.AddStructField("SortBy", sortByParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
-		var emptyOutput nsx_policyModel.SecurityPolicyListResult
+		var emptyOutput nsx_policyModel.HypervisorSecurityPolicyListResult
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
 	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.domains.hypervisor_security_policies", "list", inputDataValue, executionContext)
-	var emptyOutput nsx_policyModel.SecurityPolicyListResult
+	var emptyOutput nsx_policyModel.HypervisorSecurityPolicyListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), HypervisorSecurityPoliciesListOutputType())
 		if errorInOutput != nil {
 			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
 		}
-		return output.(nsx_policyModel.SecurityPolicyListResult), nil
+		return output.(nsx_policyModel.HypervisorSecurityPolicyListResult), nil
 	} else {
 		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), hIface.GetErrorBindingType(methodResult.Error().Name()))
 		if errorInError != nil {

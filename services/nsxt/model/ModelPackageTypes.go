@@ -2974,9 +2974,11 @@ func (s *AlbControllerVsphereClusterNodeVmDeploymentConfig) GetDataValue__() (va
 type AllocatedByVpc struct {
 	// Access mode of VPC subnet
 	AccessMode *string
-	// Count of used resources by VPC on IP block format: int64
+	// Number of IP addresses used by the VPC in this IPv4 IP block. Exclusively for IPv4 blocks; unset for IPv6 blocks when the VpcIpv6 feature is enabled, since an IPv6 block's count can exceed a 64-bit integer; see ipv6_count instead. format: int64
 	Count       *int64
 	IpAddresses []VpcIpAddress
+	// Number of IP addresses used by the VPC in this IPv6 IP block, as a decimal string. Exclusively for IPv6 blocks, since the count can exceed a 64-bit integer; unset for IPv4 blocks, see count instead.
+	Ipv6Count *string
 	// Percentage of used IP address resources by VPC
 	PercentageUsed *string
 }
@@ -3000,6 +3002,8 @@ func (s *AllocatedByVpc) GetDataValue__() (vapiData_.DataValue, []error) {
 type AllocationBasedOnFailureDomain struct {
 	// Enable placement algorithm to consider failure domain of edge transport nodes and place active and standby contexts in different failure domains.
 	Enabled *bool
+	// This attribute is only honored when the failover mode is set to preemptive. It specifies the IDs of Infrastructure Fault Domains (IFDs) or IFD groups whose edge nodes are preferred to host the active context during pre-emptive failover. If failure domain-based allocation is enabled and this field is set, any other edge node containing IFDs or IFD groups within the same cluster not included in this list will be considered for standby allocation.
+	PreferredFaultDomainsForPreemptiveMode []string
 	// Possible values are:
 	//
 	// * AllocationRuleAction#AllocationRuleAction_ACTION_TYPE_ALLOCATIONBASEDONFAILUREDOMAIN
@@ -6545,6 +6549,8 @@ func (s *BaseRuleListResult) GetDataValue__() (vapiData_.DataValue, []error) {
 
 // All the Span types extend from this abstract class. This is present for extensibility.
 type BaseSpan struct {
+	// An array of VDS objects identified by their NSX inventory IDs. The transit gateway and corresponding VPC networks are realized on all default VDS host-switch instances in the span. If a VC cluster has multiple VDS instances that are capable of VPC networking, then this attribute can be used to override the TGW realization to a non-default VDS. The provided custom VDS attachment is applicable to all clusters that are associated to this span.
+	CustomVdsAttachments []string
 	// Possible values are:
 	//
 	// * BaseSpan#BaseSpan_TYPE_CLUSTERBASEDSPAN
@@ -6892,7 +6898,7 @@ func (s *BfdHealthMonitoringConfig) GetDataValue__() (vapiData_.DataValue, []err
 	return dataVal, nil
 }
 
-// Bidirectional Forwarding Detection configuration for BGP peers
+// A reusable, named Bidirectional Forwarding Detection (BFD) profile that can be applied to static route peers or a LocaleServices (via bfd_profile_path) for fast link/peer failure detection, independent of a specific BGP neighbor's own BgpBfdConfig.
 type BfdProfile struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -6949,7 +6955,7 @@ type BfdProfile struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Time interval between heartbeat packets in milliseconds. format: int32
+	// Time interval (in milliseconds) between BFD heartbeat packets. format: int32
 	Interval *int64
 	// Declare dead multiple. Number of times heartbeat packet is missed before BFD declares the neighbor is down. format: int32
 	Multiple *int64
@@ -7042,11 +7048,11 @@ func (s *BgpAddressFamily) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// BFD configuration for BGP peers
+// Per-neighbor Bidirectional Forwarding Detection (BFD) configuration, used to detect link/peer failure much faster than BGP's own hold-down timer so the BGP session can be torn down sooner.
 type BgpBfdConfig struct {
-	// Flag to enable BFD cofiguration.
+	// Flag to enable BFD (Bidirectional Forwarding Detection) for faster failure detection on this BGP peering session.
 	Enabled *bool
-	// Time interval between heartbeat packets in milliseconds. format: int32
+	// Time interval (in milliseconds) between BFD heartbeat packets exchanged with the peer. format: int32
 	Interval *int64
 	// Declare dead multiple. Number of times heartbeat packet is missed before BFD declares the neighbor is down. format: int32
 	Multiple *int64
@@ -7331,7 +7337,7 @@ type BgpNeighborConfig struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Flag to enable allowas_in option for BGP neighbor
+	// Flag to enable the allowas_in option: accept routes from this neighbor even if this gateway's own AS number appears in the AS-path, which is normally rejected as a routing loop. Used for topologies that legitimately re-advertise routes back through the same AS.
 	AllowAsIn *bool
 	Bfd       *BgpBfdConfig
 	// Flag to enable/disable BGP peering. Disabling will stop the BGP peering. True - indicates enable BGP peering, False - indicates disable BGP peering. Default is True.
@@ -7344,7 +7350,7 @@ type BgpNeighborConfig struct {
 	//
 	//  If mode is DISABLE, then graceful restart and helper modes are disabled. If mode is GR_AND_HELPER, then both graceful restart and helper modes are enabled. If mode is HELPER_ONLY, then helper mode is enabled. HELPER_ONLY mode is the ability for a BGP speaker to indicate its ability to preserve forwarding state during BGP restart. GRACEFUL_RESTART mode is the ability of a BGP speaker to advertise its restart to its peers.
 	GracefulRestartMode *string
-	// Wait time in seconds before declaring peer dead. format: int32
+	// Hold-down timer (in seconds): if no BGP keep-alive/update is received from the peer within this time, the session is declared dead. Conventionally set to 3x keep_alive_time. format: int32
 	HoldDownTime *int64
 	// Specify path of prefix-list or route map to filter routes for IN direction. This property is deprecated, use route_filtering instead. Specifying different values for both properties will result in error.
 	//
@@ -7352,9 +7358,9 @@ type BgpNeighborConfig struct {
 	InRouteFilters []string
 	// Interval (in seconds) between keep alive messages sent to peer. format: int32
 	KeepAliveTime *int64
-	// Maximum number of hops allowed to reach BGP neighbor. format: int32
+	// Time-to-live (TTL)/hop-count limit for BGP packets to this neighbor. A value greater than 1 enables multi-hop eBGP (the neighbor need not be directly connected), and in that case source_addresses must be specified. format: int32
 	MaximumHopLimit *int64
-	// Neighbor IP Address format: address-or-cidr-block
+	// IP address (or CIDR block, for a dynamic/range neighbor) of the BGP peer to establish this session with. format: address-or-cidr-block
 	NeighborAddress       *string
 	NeighborLocalAsConfig *BgpNeighborLocalAsConfig
 	// Specify path of prefix-list or route map to filter routes for OUT direction. When not specified, a built-in prefix-list named 'prefixlist-out-default' is automatically applied. This property is deprecated, use route_filtering instead. Specifying different values for both properties will result in error.
@@ -7363,9 +7369,9 @@ type BgpNeighborConfig struct {
 	OutRouteFilters []string
 	// Specify password for BGP neighbor authentication. Empty string (\"\") clears existing password.
 	Password *string
-	// 4 Byte ASN of the neighbor in ASPLAIN Format
+	// Autonomous System Number (ASN) of the BGP peer, in ASPLAIN format (e.g. \"65546\").
 	RemoteAsNum *string
-	// Enable address families and route filtering in each direction.
+	// Per-address-family (IPv4/IPv6/L2VPN_EVPN) configuration of whether that family is enabled with this neighbor, and its IN/OUT route filters and max-routes limit. See BgpRouteFiltering. Supersedes the deprecated in_route_filters/out_route_filters fields.
 	RouteFiltering []BgpRouteFiltering
 	// Source addresses should belong to Tier0 external or loopback or VTI interface IP Addresses. BGP peering is formed from all these addresses. This property is mandatory when maximum_hop_limit is greater than 1. This property is not supported for transit gateway BGP neighbors; use source_attachment instead when configuring BGP neighbors under a transit gateway. format: ip
 	SourceAddresses []string
@@ -7851,7 +7857,7 @@ type BgpRouteFiltering struct {
 	Enabled *bool
 	// Specify path of prefix-list or route map to filter routes for IN direction.
 	InRouteFilters []string
-	// Maximum number of routes for the address family. format: int32
+	// Expected maximum number of routes to receive from this neighbor for this address family. Exceeding it does not affect routing or traffic - routes from this neighbor continue to be accepted and processed as normal - it only raises a system alarm (warning as the count approaches the limit, critical once breached) to flag a possibly misbehaving peer. format: int32
 	MaximumRoutes *int64
 	// Specify path of prefix-list or route map to filter routes for OUT direction. When not specified, a built-in prefix-list named 'prefixlist-out-default' is automatically applied.
 	OutRouteFilters []string
@@ -7998,7 +8004,7 @@ type BgpRoutingConfig struct {
 	Overridden *bool
 	// Administrative distance for IPv4 and IPv6 eBGP learnt routes(inbound). User is allowed to set this value only if BGP is disabled. format: int32
 	EbgpAdminDistance *int64
-	// Flag to enable ECMP.
+	// Flag to enable Equal-Cost Multi-Path (ECMP) routing: when multiple BGP-learned routes to the same destination have equal cost, traffic is load-balanced across all of them instead of using only one.
 	Ecmp *bool
 	// Flag to enable BGP configuration. Disabling will stop feature and BGP peering.
 	Enabled               *bool
@@ -8009,9 +8015,9 @@ type BgpRoutingConfig struct {
 	InterSrIbgp *bool
 	// Specify BGP AS number for Tier-0 to advertize to BGP peers. AS number can be specified in ASPLAIN (e.g., \"65546\") or ASDOT (e.g., \"1.10\") format. Empty string disables BGP feature. It is required by normal tier0 but not required in vrf tier0.
 	LocalAsNum *string
-	// Flag to enable BGP multipath relax option.
+	// Flag to enable BGP multipath relax: allows ECMP across routes learned from neighbors in different remote AS numbers (not just the same AS), as long as all other BGP attributes used for best-path selection are equal.
 	MultipathRelax *bool
-	// List of routes to be aggregated.
+	// List of routes (CIDR prefixes) to summarize/aggregate before advertising to BGP peers, to reduce the number of routes advertised. See RouteAggregationEntry.
 	RouteAggregations []RouteAggregationEntry
 }
 
@@ -9613,7 +9619,7 @@ func (s *CdoModeTimedOutNodeInfo) GetDataValue__() (vapiData_.DataValue, []error
 	return dataVal, nil
 }
 
-// Singleton child resource under a transit gateway that holds high-availability mode and edge cluster for centralized connectivity. When a gateway attachment is created and no CentralizedConfig exists, the system auto-creates one using the project's authorized edge cluster. Not used for distributed VLAN or VXLAN connections.
+// Singleton child resource under a Centralized Transit Gateway (CTGW) that holds high-availability mode and edge cluster placement for its centralized data path. Not used for Distributed (DTGW) transit gateways - HA config is rejected if only distributed VLAN/VXLAN attachments exist. When the first GatewayConnection-type attachment is created and no CentralizedConfig exists, the system auto-creates one (ACTIVE_STANDBY by default) using the project's authorized edge cluster. Cannot be deleted while any GatewayConnection-type attachment still exists.
 type CentralizedConfig struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -9670,21 +9676,21 @@ type CentralizedConfig struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Policy paths of edge clusters. Must be authorized for the project.
+	// Policy path of exactly one edge cluster (the whole cluster, not specific nodes) that this Transit Gateway's centralized data path is placed on. Must be authorized for the project.
 	EdgeClusterPaths []string
 	// Possible values are:
 	//
 	// * CentralizedConfig#CentralizedConfig_FAILOVER_MODE_PREEMPTIVE
 	// * CentralizedConfig#CentralizedConfig_FAILOVER_MODE_NON_PREEMPTIVE
 	//
-	//  Failover mode for active/standby centralized transit gateway failover control. PREEMPTIVE: Higher priority edge node preempts lower priority. NON_PREEMPTIVE: No preemption, failover only on failure.
+	//  Failover mode for active/standby centralized transit gateway failover control. Only meaningful when ha_mode is ACTIVE_STANDBY. Once set, the VPC service gateways of connected VPCs also inherit the same failover mode. PREEMPTIVE: Higher priority edge node preempts lower priority. This is useful when edges are located across fault domains and a particular fault domain is preferred for running active nodes. NON_PREEMPTIVE: No preemption, failover only on failure.
 	FailoverMode *string
 	// Possible values are:
 	//
 	// * CentralizedConfig#CentralizedConfig_HA_MODE_ACTIVE
 	// * CentralizedConfig#CentralizedConfig_HA_MODE_STANDBY
 	//
-	//  High-availability mode
+	//  High-availability mode for this Transit Gateway's centralized data path. ACTIVE_STANDBY pins exactly 2 edge nodes (an active/standby pair) from edge_cluster_paths; ACTIVE_ACTIVE uses and can scale up to 8 edge nodes. HA mode cannot be changed once any TransitGatewayAttachment exists on this Transit Gateway; all attachments must first be deleted before it can be changed.
 	HaMode *string
 }
 
@@ -11137,6 +11143,61 @@ func (s *ChildConstraintGlobalConfig) GetDataValue__() (vapiData_.DataValue, []e
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for ChildConstraintGlobalConfig._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Wrapper object for ContainerClusterConfig
+type ChildContainerClusterConfig struct {
+	ContainerClusterConfig *ContainerClusterConfig
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id           *string
+	ResourceType string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// Indicates whether this object is the overridden intent object Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
+	MarkForOverride *bool
+	// During Tier 1 to VPC Conversion, this field is set to the target object path for the object being converted. For example, if the object being converted is a Tier-1, this field is set to the path of the VPC that the Tier-1 is being converted to. This field is used to track the target object path for the object being converted, and to mark the original objects.
+	MarkedForConvert *string
+	// If this field is set to true, delete operation is triggered on the intent tree. This resource along with its all children in intent tree will be deleted. This is a cascade delete and should only be used if intent object along with its all children are to be deleted. This does not support deletion of single non-leaf node within the tree and should be used carefully.
+	MarkedForDelete  *bool
+	RequestParameter *vapiData_.StructValue
+}
+
+func (s *ChildContainerClusterConfig) GetType__() vapiBindings_.BindingType {
+	return ChildContainerClusterConfigBindingType()
+}
+
+func (s *ChildContainerClusterConfig) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ChildContainerClusterConfig._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -27740,6 +27801,8 @@ func (s *ClusterBackupInfoListResult) GetDataValue__() (vapiData_.DataValue, []e
 type ClusterBasedSpan struct {
 	// Policy path of associated network span object. This defines the TransitGateway/VLAN span based on vSphere Clusters which are members of the consumed NetworkSpan object referred by the span_path For Project TGW - This Span object should be shared with the project by the provider. Default Value - When this property is not specified, the system will set \"span_path\" to the default value which is derived as follows For default project - TransitGateway/DistributedVlanConnection will be associated with System default span, For user defined project - TransitGateway will be associated with Project default span configured as part of project configuration.
 	SpanPath *string
+	// An array of VDS objects identified by their NSX inventory IDs. The transit gateway and corresponding VPC networks are realized on all default VDS host-switch instances in the span. If a VC cluster has multiple VDS instances that are capable of VPC networking, then this attribute can be used to override the TGW realization to a non-default VDS. The provided custom VDS attachment is applicable to all clusters that are associated to this span.
+	CustomVdsAttachments []string
 	// Possible values are:
 	//
 	// * BaseSpan#BaseSpan_TYPE_CLUSTERBASEDSPAN
@@ -30342,11 +30405,11 @@ func (s *ConjunctionOperator) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Indicates which connectivity policy a VPC belongs to.
+// Read-only pairing, returned by the \"list connected VPCs\" query, of a VPC attached to this Transit Gateway with the ConnectivityPolicy group it belongs to (if any).
 type ConnectedVpc struct {
-	// Path of connectivity policy that the VPC belongs to.
+	// Policy path of the ConnectivityPolicy group this VPC belongs to. Unset if the VPC is not a member of any ConnectivityPolicy group.
 	ConnectivityPolicy *string
-	// Path of VPC.
+	// Policy path of the VPC attached to this Transit Gateway.
 	Vpc *string
 }
 
@@ -30369,7 +30432,7 @@ func (s *ConnectedVpc) GetDataValue__() (vapiData_.DataValue, []error) {
 type ConnectedVpcListRequestBody struct {
 	// Return VPC info for all VPCs which have connectivity to the given VPC via Connectivity Policies.
 	ConnectedToVpc *string
-	// Connectivity Policy paths
+	// Return VPC info for the given array of Connectivity Policy paths.
 	ConnectivityPolicyPaths []string
 	// Return VPC info for all VPCs which do not have connectivity to the given VPC via Connectivity Policies.
 	DisconnectedFromVpc *string
@@ -30455,6 +30518,7 @@ func (s *ConnectivityAdvancedConfig) GetDataValue__() (vapiData_.DataValue, []er
 	return dataVal, nil
 }
 
+// Defines the connectivity behavior (see connectivity_scope: ISOLATED/COMMUNITY/PROMISCUOUS) for a group of VPCs sharing this Transit Gateway. A VPC's membership across ConnectivityPolicy groups is queryable via ConnectedVpc.
 type ConnectivityPolicy struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -31133,7 +31197,7 @@ func (s *ConstraintValue) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Provides information about the IDS Enabled antrea cluster and its related groups
+// Security feature configuration for a VKS (vSphere Kubernetes Service) Cluster with Antrea CNI (Container Network Interface). Controls which security features, such as IDPS, are activated or deactivated on the cluster.
 type ContainerClusterConfig struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -31189,10 +31253,10 @@ type ContainerClusterConfig struct {
 	// Intent objects are not directly deleted from the system when a delete is invoked on them. They are marked for deletion and only when all the realized entities for that intent object get deleted, the intent object is deleted. Objects that are marked for deletion are not returned in GET call. One can use the search API to get these objects.
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
-	Overridden *bool
-	Cluster    *PolicyResourceReference
-	// Provides information about the groups related to antrea cluster
-	Groups []string
+	Overridden       *bool
+	ContainerCluster *ContainerClusterInfo
+	// Security features to activate or deactivate on the VKS Cluster.
+	Features []ContainerClusterFeature
 }
 
 func (s *ContainerClusterConfig) GetType__() vapiBindings_.BindingType {
@@ -31210,7 +31274,7 @@ func (s *ContainerClusterConfig) GetDataValue__() (vapiData_.DataValue, []error)
 	return dataVal, nil
 }
 
-// Paged collection of container cluster configs
+// Paginated list of security feature configurations for VKS Clusters with Antrea CNI.
 type ContainerClusterConfigListResult struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -31225,7 +31289,7 @@ type ContainerClusterConfigListResult struct {
 	SortAscending *bool
 	// Field by which records are sorted
 	SortBy *string
-	// Container cluster config list results
+	// VKS Cluster Security Configuration List
 	Results []ContainerClusterConfig
 }
 
@@ -31238,6 +31302,58 @@ func (s *ContainerClusterConfigListResult) GetDataValue__() (vapiData_.DataValue
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for ContainerClusterConfigListResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Represents a single security feature and its activation status on a VKS Cluster with Antrea CNI.
+type ContainerClusterFeature struct {
+	// Set to true to activate the feature, false to deactivate it.
+	Enabled *bool
+	// Possible values are:
+	//
+	// * ContainerClusterFeature#ContainerClusterFeature_FEATURE_IDPS
+	//
+	//  The security feature to activate or deactivate, for example IDPS.
+	Feature *string
+}
+
+const ContainerClusterFeature_FEATURE_IDPS = "IDPS"
+
+func (s *ContainerClusterFeature) GetType__() vapiBindings_.BindingType {
+	return ContainerClusterFeatureBindingType()
+}
+
+func (s *ContainerClusterFeature) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ContainerClusterFeature._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Identifies the VKS (vSphere Kubernetes Service) Cluster with Antrea CNI (Container Network Interface) on which the security feature configuration applies.
+type ContainerClusterInfo struct {
+	// External identifier of the VKS Cluster with Antrea CNI.
+	TargetId *string
+	// Type of the target cluster, for example VKS_Antrea_Cluster.
+	TargetType *string
+}
+
+func (s *ContainerClusterInfo) GetType__() vapiBindings_.BindingType {
+	return ContainerClusterInfoBindingType()
+}
+
+func (s *ContainerClusterInfo) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ContainerClusterInfo._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -32682,6 +32798,8 @@ type DatapathPacketDrops struct {
 	FirewallStateTableFullPacketDrops *int64
 	// Firewall total packet drops. format: int64
 	FirewallTotalPacketDrops *int64
+	// Firewall drops/rejects on vmk interfaces. format: int64
+	FirewallVmkPacketDrops *int64
 	// RX Drops at vswitch due to network mismatch. format: int64
 	HostswitchNetworkMismatchPacketDrops *int64
 	// RX drops at vswtich due to forged mac. format: int64
@@ -33735,9 +33853,9 @@ func (s *DhcpDeleteLeaseRequestParameters) GetDataValue__() (vapiData_.DataValue
 	return dataVal, nil
 }
 
-// List of DHCP leases to be deleted
+// Request body to force-delete one or more active DHCP leases from a DhcpServerConfig or Segment, e.g. to reclaim an address before its lease naturally expires.
 type DhcpDeleteLeases struct {
-	// List of DHCP leases
+	// DHCP leases (IP/MAC pairs) to delete.
 	Leases []DhcpDeleteLeaseRequestParameters
 }
 
@@ -33814,16 +33932,16 @@ func (s *DhcpIpPoolUsage) GetDataValue__() (vapiData_.DataValue, []error) {
 
 // IPv6 address pool usage statistics for a DHCPv6 server.
 type DhcpIpv6IpPoolUsage struct {
-	// Number of allocated IPv6 addresses format: int64
-	AllocatedNumber *int64
+	// Number of allocated IPv6 addresses, as a decimal string, since an IPv6 pool can hold more addresses than a 64-bit integer can represent.
+	AllocatedNumber *string
 	// Percentage of allocated IPv6 addresses
 	AllocatedPercentage *float64
-	// The consumed number is intended to display the total number of IPv6 addresses consumed by DHCPv6 clients. However, it may not always reflect an accurate count due to the asynchronous running DHCP data path. format: int64
-	ConsumedNumber *int64
+	// The consumed number is intended to display the total number of IPv6 addresses consumed by DHCPv6 clients, as a decimal string, since an IPv6 pool can hold more addresses than a 64-bit integer can represent. However, it may not always reflect an accurate count due to the asynchronous running DHCP data path.
+	ConsumedNumber *string
 	// The policy path of the DHCP IPv6 pool
 	DhcpIpPoolId *string
-	// Total size of the IPv6 address pool format: int64
-	PoolSize *int64
+	// Total size of the IPv6 address pool, as a decimal string, since an IPv6 pool (for example a /64 or larger) can hold more addresses than a 64-bit integer can represent.
+	PoolSize *string
 }
 
 func (s *DhcpIpv6IpPoolUsage) GetType__() vapiBindings_.BindingType {
@@ -34214,7 +34332,7 @@ type DhcpServerConfig struct {
 	//
 	// Deprecated: This API element is deprecated.
 	LeaseTime *int64
-	// Policy paths to edge nodes on which the DHCP servers run. The first edge node is assigned as active edge, and second one as standby edge. If only one edge node is specified, the DHCP servers will run without HA support. When this property is not specified, edge nodes are auto-assigned during realization of the DHCP server.
+	// Policy paths to edge nodes (of type PolicyEdgeNode), from the edge_cluster_path's edge cluster, on which the DHCP servers run. The first edge node is assigned as active edge, and second one as standby edge. If only one edge node is specified, the DHCP servers will run without HA support. When this property is not specified, edge nodes are auto-assigned during realization of the DHCP server.
 	PreferredEdgePaths []string
 	// DHCP server address in CIDR format. Prefix length should be less than or equal to 30. DHCP server is deployed as DHCP relay service. This property is deprecated, use server_addresses instead. Both properties cannot be specified together with different new values. format: ip-cidr-block
 	//
@@ -35029,9 +35147,9 @@ type DhcpV4StaticBindingConfig struct {
 	HostName *string
 	// IP assigned to host. The IP address must belong to the subnet, if any, configured on Segment. format: ipv4
 	IpAddress *string
-	// DHCP lease time in seconds. format: int64
+	// DHCP lease time in seconds for this specific binding, overriding the DhcpServerConfig's default lease_time. format: int64
 	LeaseTime *int64
-	// MAC address of the host. format: mac-address
+	// MAC address of the client host; must be unique among the static bindings on this segment. format: mac-address
 	MacAddress *string
 	Options    *DhcpV4Options
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -35136,6 +35254,8 @@ type DhcpV6Lease struct {
 	IpAddresses []string
 	// lease time of the ip address, in seconds
 	LeaseTime *string
+	// mac address of client
+	MacAddress *string
 	// start time of lease
 	StartTime *string
 }
@@ -35191,7 +35311,7 @@ type DhcpV6StaticBindingConfig struct {
 	DomainNames []string
 	// When not specified, no ip address will be assigned to client host. format: ipv6
 	IpAddresses []string
-	// Lease time, in seconds. format: int64
+	// DHCPv6 valid lifetime, in seconds: how long the client may use the leased address before it must renew or stop using it. format: int64
 	LeaseTime *int64
 	// The MAC address of the client host. Either client-duid or mac-address, but not both. format: mac-address
 	MacAddress *string
@@ -37496,7 +37616,7 @@ func (s *DistributedTlsHostVMStatsListResult) GetDataValue__() (vapiData_.DataVa
 
 // Request parameters for retrieving Distributed TLS Host Virtual Machine stats.
 type DistributedTlsHostVMStatsRequest struct {
-	// Retrieve Distributed TLS Host VM Stats for specific Cluster IDs.
+	// Retrieve Distributed TLS Host VM Stats for specific Cluster IDs. An error is returned if any Cluster ID does not exist.
 	ClusterIds []string
 	// Optional filter to retrieve Hosts by specific IDs.
 	HostIdFilters []string
@@ -37693,7 +37813,7 @@ type DistributedTlsVMStatusRequest struct {
 	//
 	//  Optional filter to retrieve Virtual Machines by specific Distributed TLS statuses.
 	DistributedTlsStatusFilters []string
-	// Retrieve Distributed TLS VM Status for specific Host IDs.
+	// Retrieve Distributed TLS VM Status for specific Host IDs. An error is returned if any Host ID does not exist.
 	HostIds []string
 	// Optional filter to retrieve Virtual Machines by specific Names.
 	VmNameFilters []string
@@ -37926,7 +38046,7 @@ type DistributedVxlanConnection struct {
 	DirectPath *bool
 	// L3 VNI for overlay traffic. format: int32
 	L3Vni *int64
-	// Policy path of route controller.
+	// Policy path of the RouteController used to learn and exchange EVPN routes via BGP for this connection.
 	RouteControllerPath *string
 	//
 	RouteDistinguisher *string
@@ -38437,9 +38557,9 @@ type DnsRecord struct {
 	Overridden *bool
 	// System-computed fully qualified domain name for this record, formed by combining record_name with the zone's dns_domain_name. This field is read-only and must not be set in create or update requests.
 	Fqdn *string
-	// The IPv4 address being mapped by a PTR record. When provided, the system validates that record_name matches the host octet of ip_address within the parent reverse zone. Only applicable when record_type is PTR; must not be set for other record types. format: ip
+	// The IP address being mapped by a PTR record. When provided, the system validates that network portion matches the domain name of the parent reverse DNS zone. Only applicable when record_type is PTR; must not be set for other record types. format: ip
 	IpAddress *string
-	// DNS record name or, for PTR records, the host-octet label within the reverse zone. Must be a valid DNS label. For A/AAAA/CNAME records: the hostname portion of the FQDN (e.g. \"www\"). For PTR records: the host octet of the IP address (e.g. \"10\" for 10.0.0.10 in zone \"0.0.10.in-addr.arpa\"). Only lowercase characters allowed. format: lowercase
+	// Target hostname for A/AAAA/CNAME (non-PTR) records. The hostname portion of the FQDN (e.g. \"www\"). Applicable when record type is not PTR; must not be set for PTR record types. Only lowercase characters allowed. format: lowercase
 	RecordName *string
 	// Possible values are:
 	//
@@ -38456,7 +38576,7 @@ type DnsRecord struct {
 	RecordValues []string
 	// Time-To-Live in seconds for this DNS record. Overrides the zone's default TTL. Range: 30-86400 seconds. Default: 300. format: int64
 	Ttl *int64
-	//
+	// Policy path to the local DnsZone in which this record is placed. For PTR records, the path must point to a reverse DNS zone. For all other records, the path must point to a forward DNS zone. Shared DnsZone not allowed.
 	ZonePath *string
 }
 
@@ -40310,6 +40430,120 @@ func (s *DvpgToSubnetWorkflowState) GetDataValue__() (vapiData_.DataValue, []err
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for DvpgToSubnetWorkflowState._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// A single compatibility issue found on a Distributed Virtual Port Group during the VALIDATION phase.
+type DvpgValidationIssue struct {
+	// What happens to this setting if the migration proceeds without remediation.
+	MigrationImpact *string
+	// Suggested action to resolve the issue before migration.
+	Remediation *string
+	// Distributed Virtual Port Group setting that caused the issue (e.g. network_resource_pool, vlan_config).
+	Setting *string
+	// Possible values are:
+	//
+	// * DvpgValidationIssue#DvpgValidationIssue_SEVERITY_WARNING
+	// * DvpgValidationIssue#DvpgValidationIssue_SEVERITY_ERROR
+	//
+	//  Issue severity: WARNING or ERROR.
+	Severity *string
+	// Short human-readable description of the issue.
+	Summary *string
+}
+
+const DvpgValidationIssue_SEVERITY_WARNING = "WARNING"
+const DvpgValidationIssue_SEVERITY_ERROR = "ERROR"
+
+func (s *DvpgValidationIssue) GetType__() vapiBindings_.BindingType {
+	return DvpgValidationIssueBindingType()
+}
+
+func (s *DvpgValidationIssue) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for DvpgValidationIssue._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Compatibility assessment for a single Distributed Virtual Port Group produced by the VALIDATION phase.
+type DvpgValidationResult struct {
+	// Possible values are:
+	//
+	// * DvpgValidationResult#DvpgValidationResult_COMPATIBILITY_SUPPORTED
+	// * DvpgValidationResult#DvpgValidationResult_COMPATIBILITY_PARTIALLY_SUPPORTED
+	// * DvpgValidationResult#DvpgValidationResult_COMPATIBILITY_UNSUPPORTED
+	//
+	//  Overall compatibility verdict: SUPPORTED, PARTIALLY_SUPPORTED, or UNSUPPORTED.
+	Compatibility *string
+	// True if this Distributed Virtual Port Group was derived (auto-created) from a VPC subnet.
+	Derived *bool
+	// Display name of the DistributedVirtualPortgroup in vCenter.
+	DvpgName *string
+	// vCenter MO reference for the DistributedVirtualPortgroup.
+	DvpgRef *string
+	// List of compatibility issues found on this Distributed Virtual Port Group. Empty when compatibility is SUPPORTED.
+	Issues []DvpgValidationIssue
+	// VLAN configuration for the Distributed Virtual Port Group. Supports: - Single VLAN: \"101\" - VLAN Range / Trunk: \"20-40\" or \"10,20,30-40\" - Private VLAN: \"pvlan 50\" (or \"pvlan 100/101\") - None / Untagged: \"0\"
+	VlanId *string
+	// Number of virtual machines currently connected to this Distributed Virtual Port Group. format: int64
+	VmCount *int64
+}
+
+const DvpgValidationResult_COMPATIBILITY_SUPPORTED = "SUPPORTED"
+const DvpgValidationResult_COMPATIBILITY_PARTIALLY_SUPPORTED = "PARTIALLY_SUPPORTED"
+const DvpgValidationResult_COMPATIBILITY_UNSUPPORTED = "UNSUPPORTED"
+
+func (s *DvpgValidationResult) GetType__() vapiBindings_.BindingType {
+	return DvpgValidationResultBindingType()
+}
+
+func (s *DvpgValidationResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for DvpgValidationResult._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Paged collection of per-Distributed Virtual Port Group compatibility results from the last VALIDATION phase.
+type DvpgValidationResultsList struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy *string
+	// Per-Distributed Virtual Port Group validation results.
+	Results []DvpgValidationResult
+}
+
+func (s *DvpgValidationResultsList) GetType__() vapiBindings_.BindingType {
+	return DvpgValidationResultsListBindingType()
+}
+
+func (s *DvpgValidationResultsList) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for DvpgValidationResultsList._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -43833,7 +44067,7 @@ func (s *FederationConnectivityConfig) GetDataValue__() (vapiData_.DataValue, []
 type FederationGatewayConfig struct {
 	// Global id for by Layer3 services for federation usecases. format: int64
 	GlobalOverlayId *int64
-	// inter site transit vlan id format: int32
+	// System-assigned VLAN ID used to tag (as a guest VLAN) traffic on the transit segment connecting this VRF gateway's service routers across sites, for federation. format: int32
 	InterSiteTransitVlanId *int64
 	// Indices for cross site allocation for edge cluster and its members referred by gateway.
 	SiteAllocationIndices []SiteAllocationIndexForEdge
@@ -44680,6 +44914,68 @@ func (s *FirewallExportTask) GetDataValue__() (vapiData_.DataValue, []error) {
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for FirewallExportTask._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type FirewallVmk struct {
+	// Total number of packets dropped/rejected by Firewall on vmk interfaces. format: int64
+	FirewallVmkPacketDrops *int64
+}
+
+func (s *FirewallVmk) GetType__() vapiBindings_.BindingType {
+	return FirewallVmkBindingType()
+}
+
+func (s *FirewallVmk) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for FirewallVmk._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type FirewallVmkDebugStats struct {
+	HostFirewallVmk *HostFirewallVmkDebugStats
+	// Timestamp when the data was last updated; unset if data source has never updated the data. format: int64
+	LastUpdateTimestamp *int64
+}
+
+func (s *FirewallVmkDebugStats) GetType__() vapiBindings_.BindingType {
+	return FirewallVmkDebugStatsBindingType()
+}
+
+func (s *FirewallVmkDebugStats) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for FirewallVmkDebugStats._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type FirewallVmkMonitorStats struct {
+	HostFirewallVmk *HostFirewallVmkMonitorStats
+	// Timestamp when the data was last updated; unset if data source has never updated the data. format: int64
+	LastUpdateTimestamp *int64
+}
+
+func (s *FirewallVmkMonitorStats) GetType__() vapiBindings_.BindingType {
+	return FirewallVmkMonitorStatsBindingType()
+}
+
+func (s *FirewallVmkMonitorStats) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for FirewallVmkMonitorStats._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -45671,7 +45967,7 @@ func (s *FullSyncStateListResult) GetDataValue__() (vapiData_.DataValue, []error
 	return dataVal, nil
 }
 
-// Policy gateway connection
+// Provider-managed connectivity point between a Tier-0 gateway and one or more Transit Gateways: a TransitGatewayAttachment reaches this Tier-0 by setting its connection_path to this GatewayConnection's path. This GatewayConnection's path must be listed in a Project's own tgw_external_connections attribute before a Transit Gateway in that project can attach to it via a TransitGatewayAttachment. It centralizes what would otherwise be per-tenant configuration - which routes are advertised in each direction, provider-managed NAT, and QoS - for everything sharing it. A GatewayConnection can be marked for exclusive sharing (limited to a single Transit Gateway) to enable advertising that Transit Gateway's private networks to the Tier-0 (see advertise_outbound_networks.allow_private).
 type GatewayConnection struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -45731,15 +46027,15 @@ type GatewayConnection struct {
 	// Policy path of the PolicySpan associated with this resource. The PolicySpan defines which regions or sites the resource should be distributed to.
 	PolicySpanPath            *string
 	AdvertiseOutboundNetworks *ProviderAdvertiseOutBoundNetworks
-	// Array of path of a prefixlist object that will have Transit gateway to tier-0 gateway advertise route filter.
+	// Policy path of a PrefixList (at most one) that allows custom filtering of prefixes consumed by the Transit Gateway and its VPCs, to be advertised or denied to the connected Tier-0. Prefer authorizing external IP blocks directly via advertise_outbound_networks where possible; use this field only when custom prefix-level filtering is needed. This controls prefixes advertised from the Transit Gateway to the Tier-0 as TGW_STATIC-type static routes; to further redistribute these routes over BGP, separately enable TGW_STATIC in the Tier-0's route redistribution configuration. By default, if neither this field nor advertise_outbound_networks is configured, all prefixes consumed from external IP blocks are advertised. Enabling allow_private additionally advertises prefixes consumed from the Transit Gateway's private IP blocks. VPC-private IP addresses are never advertised to the Tier-0.
 	AdvertiseOutboundRouteFilters []string
 	// Configure aggregate TGW_PREFIXES routes on Tier-0 gateway for prefixes owned by TGW gateway. If not specified then in-use prefixes are configured as TGW_PREFIXES routes on Tier-0 gateway. Supports both IPv4 and IPv6 CIDRs. format: ip-cidr-block
 	AggregateRoutes []string
-	// List of inbound remote network routes for transit gateways. Default route [0.0.0.0/0, ::/0] will be assumed if remote networks are not configured. For multiple attachments on TGW, only one gateway connection can support default route. Other gateway connections must have networks configured. Supports both IPv4 and IPv6 CIDRs. format: ip-cidr-block
+	// Adds a static route on the Transit Gateway for these networks, pointing at this connection, so traffic to them is forwarded from the Transit Gateway to the connected Tier-0. If not specified, a default route ([0.0.0.0/0, ::/0], covering both IPv4 and IPv6) is configured on the Transit Gateway instead, forwarding all otherwise-unmatched traffic to this Tier-0. If specific networks are configured here, only routes for those networks are added - traffic to other destinations is not forwarded via this connection. For multiple attachments on TGW, only one gateway connection can support default route. Other gateway connections must have networks configured. Supports both IPv4 and IPv6 CIDRs. format: ip-cidr-block
 	InboundRemoteNetworks []string
 	NatConfig             *ProviderNatConfig
 	QosConfig             *GatewayQosProfileConfig
-	// Tier-0 gateway object path
+	// Policy path of the Tier-0 gateway this connection refers to. A Transit Gateway connects to this Tier-0 by defining an attachment whose connection_path points at this GatewayConnection, rather than at the Tier-0 directly.
 	Tier0Path *string
 }
 
@@ -46085,8 +46381,10 @@ func (s *GatewayDnsResolverStatusesRequest) GetDataValue__() (vapiData_.DataValu
 type GatewayFailoverRequestParameters struct {
 	// String Path of the enforcement point.
 	EnforcementPointPath *string
-	// Failover gateway to the specified edge node or VNA policy path. If the node is already active, then the failover is skipped. The path must be one of the edge nodes/VNAs allocated for the gateway. The API is only supported if high availability mode is active/standby and using non-preemptive failover.
+	// Failover gateway to the specified edge node or VNA policy path. If the node is already active, then the failover is skipped. The path must be one of the edge nodes/VNAs allocated for the gateway. The API is only supported if high availability mode is active/standby and using non-preemptive failover. Mutually exclusive with preferred_vns_node_path, which applies to VNS clusters only.
 	PreferredActiveEdgePath *string
+	// Failover gateway to the specified VNS node policy path. If the node is already active, then the failover is skipped. The path must be one of the VNS nodes allocated for the gateway's service instance. Applicable only when the gateway's service instance is hosted on a Virtual Network Service (VNS) cluster, and the API is only supported if high availability mode is active/standby and using non-preemptive failover. Mutually exclusive with preferred_active_edge_path, which applies to edge/VNA clusters only.
+	PreferredVnsNodePath *string
 }
 
 func (s *GatewayFailoverRequestParameters) GetType__() vapiBindings_.BindingType {
@@ -46400,9 +46698,9 @@ func (s *GatewayGeneralSecurityProfile) GetDataValue__() (vapiData_.DataValue, [
 	return dataVal, nil
 }
 
-// Contains gateway interface details.
+// Contains gateway interface details. Used as a member entry of a Tier0InterfaceGroup or Tier1InterfaceGroup (via BaseInterfaceGroup.members).
 type GatewayInterfaceReference struct {
-	// Absolute policy path of member interface.
+	// Absolute policy path of the member interface (a Tier0Interface when the containing group is a Tier0InterfaceGroup, or a Tier1Interface when it is a Tier1InterfaceGroup).
 	InterfacePath *string
 }
 
@@ -46640,7 +46938,7 @@ type GatewayQosProfile struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Burst size in bytes. format: int32
+	// Maximum burst size in bytes allowed above committed_bandwidth before excess_action applies. format: int32
 	BurstSize *int64
 	// Committed bandwidth in both directions specified in Mbps. Bandwidth is limited to line rate when the value configured is greater than line rate. format: int32
 	CommittedBandwidth *int64
@@ -46652,7 +46950,7 @@ type GatewayQosProfile struct {
 	//
 	// * GatewayQosProfile#GatewayQosProfile_EXCESS_ACTION_DROP
 	//
-	//  Action on traffic exceeding bandwidth.
+	//  Action taken on traffic exceeding committed_bandwidth (and burst_size); DROP is currently the only supported action.
 	ExcessAction *string
 }
 
@@ -46736,7 +47034,8 @@ type GatewayReallocationRequestParameters struct {
 	// Supported only for CTGW stateless active-active gateways. Provide a minimum count of two and a maximum of eight to achieve scale-out or scale-in. format: int32
 	NumberOfEdgeNodes *int64
 	// Preferred edge node or VNA policy paths must belong to the same edge or VNA cluster on which the gateway currently exists. For an active-standby gateway, you must provide two preferred nodes path to maintain high availability. For active-active CTGW, provide a minimum of two and a maximum of eight edge node paths to achieve scale-out or scale-in.
-	PreferredEdgePaths []string
+	PreferredEdgePaths    []string
+	VnsReallocationConfig *VnsReallocationConfig
 }
 
 func (s *GatewayReallocationRequestParameters) GetType__() vapiBindings_.BindingType {
@@ -46754,13 +47053,13 @@ func (s *GatewayReallocationRequestParameters) GetDataValue__() (vapiData_.DataV
 	return dataVal, nil
 }
 
-// Recovery site config
+// Recovery site config. One entry of GatewaySiteFailoverActionConfig.to_primary_site_config, identifying which Tier-0 gateway to fail over and which Site to make its new primary site.
 type GatewayRecoverySiteConfig struct {
 	// Linked Tier1 gateway whose primary site matches from_site_path and are stretched to new primary site are recovered on new primary site path.
 	FailoverLinkedTier1Gateway *bool
-	// Path of Tier-0 gateway
+	// Policy path of the Tier-0 gateway to fail over.
 	Tier0GatewayPath *string
-	// Recovery site path
+	// Policy path of the Site that becomes the new primary site for the gateway.
 	ToPrimarySitePath *string
 }
 
@@ -49139,7 +49438,7 @@ type GreTunnel struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Enable/Disable Tunnel
+	// Flag to enable/disable this tunnel. Disabling tears down the tunnel without deleting its configuration.
 	Enabled *bool
 	// Maximum transmission unit(MTU) in bytes specifies the size of the largest packet that a tunnel can transmit. format: int32
 	Mtu *int64
@@ -50661,6 +50960,82 @@ func (s *HostConfigReportRequest) GetDataValue__() (vapiData_.DataValue, []error
 	return dataVal, nil
 }
 
+type HostFirewallVmkDebugStats struct {
+	// Packets dropped by Firewall for IPv4 traffic received on vmk interfaces. format: int64
+	RxIpv4DropPkts *int64
+	// Packets rejected by Firewall for IPv4 traffic received on vmk interfaces. format: int64
+	RxIpv4RejectPkts *int64
+	// Packets dropped by Firewall for IPv6 traffic received on vmk interfaces. format: int64
+	RxIpv6DropPkts *int64
+	// Packets rejected by Firewall for IPv6 traffic received on vmk interfaces. format: int64
+	RxIpv6RejectPkts *int64
+	// Packets dropped by Firewall for L2 traffic received on vmk interfaces. format: int64
+	RxL2DropPkts *int64
+	// Packets dropped by Firewall for IPv4 traffic transmitted from vmk interfaces. format: int64
+	TxIpv4DropPkts *int64
+	// Packets rejected by Firewall for IPv4 traffic transmitted from vmk interfaces. format: int64
+	TxIpv4RejectPkts *int64
+	// Packets dropped by Firewall for IPv6 traffic transmitted from vmk interfaces. format: int64
+	TxIpv6DropPkts *int64
+	// Packets rejected by Firewall for IPv6 traffic transmitted from vmk interfaces. format: int64
+	TxIpv6RejectPkts *int64
+	// Packets dropped by Firewall for L2 traffic transmitted from vmk interfaces. format: int64
+	TxL2DropPkts *int64
+}
+
+func (s *HostFirewallVmkDebugStats) GetType__() vapiBindings_.BindingType {
+	return HostFirewallVmkDebugStatsBindingType()
+}
+
+func (s *HostFirewallVmkDebugStats) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for HostFirewallVmkDebugStats._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+type HostFirewallVmkMonitorStats struct {
+	// Packets dropped by Firewall for IPv4 traffic received on vmk interfaces. format: int64
+	RxIpv4DropPkts *int64
+	// Packets rejected by Firewall for IPv4 traffic received on vmk interfaces. format: int64
+	RxIpv4RejectPkts *int64
+	// Packets dropped by Firewall for IPv6 traffic received on vmk interfaces. format: int64
+	RxIpv6DropPkts *int64
+	// Packets rejected by Firewall for IPv6 traffic received on vmk interfaces. format: int64
+	RxIpv6RejectPkts *int64
+	// Packets dropped by Firewall for L2 traffic received on vmk interfaces. format: int64
+	RxL2DropPkts *int64
+	// Packets dropped by Firewall for IPv4 traffic transmitted from vmk interfaces. format: int64
+	TxIpv4DropPkts *int64
+	// Packets rejected by Firewall for IPv4 traffic transmitted from vmk interfaces. format: int64
+	TxIpv4RejectPkts *int64
+	// Packets dropped by Firewall for IPv6 traffic transmitted from vmk interfaces. format: int64
+	TxIpv6DropPkts *int64
+	// Packets rejected by Firewall for IPv6 traffic transmitted from vmk interfaces. format: int64
+	TxIpv6RejectPkts *int64
+	// Packets dropped by Firewall for L2 traffic transmitted from vmk interfaces. format: int64
+	TxL2DropPkts *int64
+}
+
+func (s *HostFirewallVmkMonitorStats) GetType__() vapiBindings_.BindingType {
+	return HostFirewallVmkMonitorStatsBindingType()
+}
+
+func (s *HostFirewallVmkMonitorStats) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for HostFirewallVmkMonitorStats._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // Fields required for host movement across sub-clusters
 type HostMovementSpec struct {
 	// This is the policy path of destination sub-cluster to which hosts will be moved to. If this value is null, then we assume the host is moved into the cluster.
@@ -51748,50 +52123,9 @@ type HypervisorSecurityPolicy struct {
 	Stateful *bool
 	// Enforces a 3-way TCP handshake before allowing data packets. Only applicable when the security policy is stateful. If not specified, the server automatically sets tcp_strict to true for stateful policies and false for stateless policies. See also: stateful field.
 	TcpStrict *bool
-	// This field indicates the application connectivity policy for the security policy.
-	ApplicationConnectivityStrategy []ApplicationConnectivityStrategy
-	// Possible values are:
-	//
-	// * HypervisorSecurityPolicy#HypervisorSecurityPolicy_CONNECTIVITY_PREFERENCE_ALLOWLIST
-	// * HypervisorSecurityPolicy#HypervisorSecurityPolicy_CONNECTIVITY_PREFERENCE_DENYLIST
-	// * HypervisorSecurityPolicy#HypervisorSecurityPolicy_CONNECTIVITY_PREFERENCE_ALLOWLIST_ENABLE_LOGGING
-	// * HypervisorSecurityPolicy#HypervisorSecurityPolicy_CONNECTIVITY_PREFERENCE_DENYLIST_ENABLE_LOGGING
-	// * HypervisorSecurityPolicy#HypervisorSecurityPolicy_CONNECTIVITY_PREFERENCE_NONE
-	//
-	//  This field indicates the default connectivity policy for the security policy. Based on the connectivity preference, a default rule for this security policy will be created. An appropriate action will be set on the rule based on the value of the connectivity preference. If NONE is selected or no connectivity preference is specified, then no default rule for the security policy gets created. The default rule that gets created will be a any-any rule and applied to entities specified in the scope of the security policy. Specifying the connectivity_preference without specifying the scope is not allowed. The scope has to be a Group and one cannot specify IPAddress directly in the group that is used as scope. This default rule is only applicable for the Layer3 security policies. ALLOWLIST - Adds a default drop rule. Administrator can then use \"allow\" rules to allow traffic between groups DENYLIST - Adds a default allow rule. Admin can then use \"drop\" rules to block traffic between groups ALLOWLIST_ENABLE_LOGGING - Allowlisting with logging enabled DENYLIST_ENABLE_LOGGING - Denylisting with logging enabled NONE - No default rule is created.
-	ConnectivityPreference *string
-	// Possible values are:
-	//
-	// * HypervisorSecurityPolicy#HypervisorSecurityPolicy_CONNECTIVITY_STRATEGY_WHITELIST
-	// * HypervisorSecurityPolicy#HypervisorSecurityPolicy_CONNECTIVITY_STRATEGY_BLACKLIST
-	// * HypervisorSecurityPolicy#HypervisorSecurityPolicy_CONNECTIVITY_STRATEGY_WHITELIST_ENABLE_LOGGING
-	// * HypervisorSecurityPolicy#HypervisorSecurityPolicy_CONNECTIVITY_STRATEGY_BLACKLIST_ENABLE_LOGGING
-	// * HypervisorSecurityPolicy#HypervisorSecurityPolicy_CONNECTIVITY_STRATEGY_NONE
-	//
-	//  This field indicates the default connectivity policy for the security policy. Based on the connectivity strategy, a default rule for this security policy will be created. An appropriate action will be set on the rule based on the value of the connectivity strategy. If NONE is selected or no connectivity strategy is specified, then no default rule for the security policy gets created. The default rule that gets created will be a any-any rule and applied to entities specified in the scope of the security policy. Specifying the connectivity_strategy without specifying the scope is not allowed. The scope has to be a Group and one cannot specify IPAddress directly in the group that is used as scope. This default rule is only applicable for the Layer3 security policies. This property is deprecated. Use the type connectivity_preference instead. WHITELIST - Adds a default drop rule. Administrator can then use \"allow\" rules (aka whitelist) to allow traffic between groups BLACKLIST - Adds a default allow rule. Admin can then use \"drop\" rules (aka blacklist) to block traffic between groups WHITELIST_ENABLE_LOGGING - Whitelising with logging enabled BLACKLIST_ENABLE_LOGGING - Blacklisting with logging enabled NONE - No default rule is created.
-	//
-	// Deprecated: This API element is deprecated.
-	ConnectivityStrategy *string
-	// Based on the value of the connectivity_preference, a default rule is created for the security policy. The rule id is internally assigned by the system for this default rule. format: int64
-	DefaultRuleId *int64
-	// Deprecated. Flag to enable logging for all rules in this security policy. If true, logging is enabled for all rules in the policy. If false, the individual rule-level logging flag is honored. Use per-rule logging instead.
-	//
-	// Deprecated: This API element is deprecated.
-	LoggingEnabled *bool
-	//
+	// Hypervisor security Rules that are a part of this HypervisorSecurityPolicy
 	Rules []HypervisorSecurityRule
 }
-
-const HypervisorSecurityPolicy_CONNECTIVITY_PREFERENCE_ALLOWLIST = "ALLOWLIST"
-const HypervisorSecurityPolicy_CONNECTIVITY_PREFERENCE_DENYLIST = "DENYLIST"
-const HypervisorSecurityPolicy_CONNECTIVITY_PREFERENCE_ALLOWLIST_ENABLE_LOGGING = "ALLOWLIST_ENABLE_LOGGING"
-const HypervisorSecurityPolicy_CONNECTIVITY_PREFERENCE_DENYLIST_ENABLE_LOGGING = "DENYLIST_ENABLE_LOGGING"
-const HypervisorSecurityPolicy_CONNECTIVITY_PREFERENCE_NONE = "NONE"
-const HypervisorSecurityPolicy_CONNECTIVITY_STRATEGY_WHITELIST = "WHITELIST"
-const HypervisorSecurityPolicy_CONNECTIVITY_STRATEGY_BLACKLIST = "BLACKLIST"
-const HypervisorSecurityPolicy_CONNECTIVITY_STRATEGY_WHITELIST_ENABLE_LOGGING = "WHITELIST_ENABLE_LOGGING"
-const HypervisorSecurityPolicy_CONNECTIVITY_STRATEGY_BLACKLIST_ENABLE_LOGGING = "BLACKLIST_ENABLE_LOGGING"
-const HypervisorSecurityPolicy_CONNECTIVITY_STRATEGY_NONE = "NONE"
 
 func (s *HypervisorSecurityPolicy) GetType__() vapiBindings_.BindingType {
 	return HypervisorSecurityPolicyBindingType()
@@ -51802,6 +52136,40 @@ func (s *HypervisorSecurityPolicy) GetDataValue__() (vapiData_.DataValue, []erro
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for HypervisorSecurityPolicy._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Paged collection of hypervisor security policies
+type HypervisorSecurityPolicyListResult struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy *string
+	// Hypervisor security policy list results
+	Results []HypervisorSecurityPolicy
+}
+
+func (s *HypervisorSecurityPolicyListResult) GetType__() vapiBindings_.BindingType {
+	return HypervisorSecurityPolicyListResultBindingType()
+}
+
+func (s *HypervisorSecurityPolicyListResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for HypervisorSecurityPolicyListResult._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -62337,11 +62705,11 @@ func (s *InterfaceNeighborPropertyListResult) GetDataValue__() (vapiData_.DataVa
 	return dataVal, nil
 }
 
-// Subnet specification for interface connectivity
+// One or more IP addresses on the same interface, sharing a common subnet prefix length.
 type InterfaceSubnet struct {
-	// IP addresses assigned to interface format: ip
+	// IP address(es) to assign to the interface. Multiple addresses on the same interface must be of the same IP family and share prefix_len. format: ip
 	IpAddresses []string
-	// Subnet prefix length format: int32
+	// Subnet prefix length shared by all ip_addresses on this interface. format: int32
 	PrefixLen *int64
 }
 
@@ -62362,13 +62730,13 @@ func (s *InterfaceSubnet) GetDataValue__() (vapiData_.DataValue, []error) {
 
 // Intersite gateway configuration.
 type IntersiteGatewayConfig struct {
-	// Fallback site to be used as new primary site on current primary site failure. Disaster recovery must be initiated via API/UI. Fallback site configuration is supported only for T0 gateway. T1 gateway will follow T0 gateway's primary site during disaster recovery.
+	// Fallback sites (policy paths of Site resources) to be used as new primary site on current primary site failure. Disaster recovery must be initiated via API/UI. Fallback site configuration is supported only for T0 gateway. T1 gateway will follow T0 gateway's primary site during disaster recovery.
 	FallbackSites []string
 	// IPv4 subnet for inter-site transit segment connecting service routers across sites for stretched gateway. For IPv6 link local subnet is auto configured. This is unused field in VRF, only applicable for stretched gateways and VRF will always use parent T0's intersite_transit_subnet. format: ip-cidr-block
 	IntersiteTransitSubnet *string
 	// Epoch(in seconds) is auto updated based on system current timestamp when primary locale service is updated. It is used for resolving conflict during site failover. If system clock not in sync then User can optionally override this. New value must be higher than the current value. format: int64
 	LastAdminActiveEpoch *int64
-	// Primary egress site for gateway. T0/T1 gateway in Active/Standby mode supports stateful services on primary site. In this mode primary site must be set if gateway is stretched to more than one site. For T0 gateway in Active/Active primary site is optional field. If set then secondary site prefers routes learned from primary over locally learned routes. This field is not applicable for T1 gateway with no services.
+	// Primary egress site for gateway (policy path of a Site). T0/T1 gateway in Active/Standby mode supports stateful services on primary site. In this mode primary site must be set if gateway is stretched to more than one site. For T0 gateway in Active/Active primary site is optional field. If set then secondary site prefers routes learned from primary over locally learned routes. This field is not applicable for T1 gateway with no services.
 	PrimarySitePath *string
 }
 
@@ -62652,11 +63020,17 @@ type IpAddressBlock struct {
 	// If this property is set to true, realization of intent will be called synchronously
 	SyncRealization *bool
 	ThirdPartyIpam  *ThirdPartyIPAMInfo
-	// This size indicates total allocation size of an IpAddressBlock.
+	// This size indicates total allocation size of an IpAddressBlock. This property is deprecated, use overall_ips_count from the GET /infra/ip-blocks/<ip-block-id>/usage API instead.
+	//
+	// Deprecated: This API element is deprecated.
 	TotalSize *string
-	// Percentage of block size that is used up.
+	// Percentage of block size that is used up. This property is deprecated, use the GET /infra/ip-blocks/<ip-block-id>/usage API instead; the percentage can be computed from the fields it returns.
+	//
+	// Deprecated: This API element is deprecated.
 	UsagePercentage *float64
-	// Indicates the total number of IPs in the IpAddressBlock that is used up
+	// Indicates the total number of IPs in the IpAddressBlock that is used up. This property is deprecated, use used_ips_count from the GET /infra/ip-blocks/<ip-block-id>/usage API instead.
+	//
+	// Deprecated: This API element is deprecated.
 	UsedSize *string
 	// Possible values are:
 	//
@@ -64668,7 +65042,7 @@ func (s *Ipv6AssignmentSpec) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Duplicate address detection profile.
+// A reusable, named IPv6 Duplicate Address Detection (DAD) profile: controls how a gateway verifies an IPv6 address isn't already in use before assigning it (e.g. via Tier0/Tier1 ipv6_profile_paths).
 type Ipv6DadProfile struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -64730,7 +65104,7 @@ type Ipv6DadProfile struct {
 	// * Ipv6DadProfile#Ipv6DadProfile_DAD_MODE_LOOSE
 	// * Ipv6DadProfile#Ipv6DadProfile_DAD_MODE_STRICT
 	//
-	//  DAD Mode
+	//  How strictly to enforce Duplicate Address Detection: LOOSE keeps the address in use even if a duplicate is detected (logs and raises an alarm); see DADMode for other modes.
 	DadMode *string
 	// Number of Neighbor solicitation packets generated before completing the Duplicate address detection process. format: int64
 	NsRetries *int64
@@ -64838,6 +65212,7 @@ func (s *Ipv6MacPair) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+// A reusable, named IPv6 Neighbor Discovery / Router Advertisement (NDRA) profile: controls Router Advertisement mode and timers for interfaces/gateways it is applied to (e.g. via Tier0/Tier1/Tier0Interface/Tier1Interface ipv6_profile_paths).
 type Ipv6NdraProfile struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -64906,7 +65281,7 @@ type Ipv6NdraProfile struct {
 	// * Ipv6NdraProfile#Ipv6NdraProfile_RA_MODE_DHCP_ADDRESS_AND_DNS_THROUGH_DHCP
 	// * Ipv6NdraProfile#Ipv6NdraProfile_RA_MODE_SLAAC_AND_ADDRESS_DNS_THROUGH_DHCP
 	//
-	//  RA Mode
+	//  Router Advertisement mode: whether/how this gateway sends Router Advertisements and DNS information (via RA vs. stateless/stateful DHCPv6). See RAMode for the full set of values.
 	RaMode *string
 	// Neighbour reachable time duration in milliseconds. A value of 0 means unspecified. format: int64
 	ReachableTimer *int64
@@ -65314,20 +65689,20 @@ type L2BridgeEndpointProfile struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// List of policy paths to edge nodes. Edge allocation for L2 bridging.
+	// List of policy paths to edge nodes (of type PolicyEdgeNode). Edge allocation for L2 bridging.
 	EdgePaths []string
 	// Possible values are:
 	//
 	// * L2BridgeEndpointProfile#L2BridgeEndpointProfile_FAILOVER_MODE_PREEMPTIVE
 	// * L2BridgeEndpointProfile#L2BridgeEndpointProfile_FAILOVER_MODE_NON_PREEMPTIVE
 	//
-	//  Failover mode for the edge bridge cluster
+	//  Behavior when the preferred (first) edge node in edge_paths recovers after a failover: PREEMPTIVE takes it back over even if that causes another failover; NON_PREEMPTIVE leaves the current active edge node in place.
 	FailoverMode *string
 	// Possible values are:
 	//
 	// * L2BridgeEndpointProfile#L2BridgeEndpointProfile_HA_MODE_STANDBY
 	//
-	//  High avaialability mode can be active-active or active-standby. High availability mode cannot be modified after realization.
+	//  High-availability mode for the edge bridge cluster. Currently only ACTIVE_STANDBY is supported. Cannot be modified after realization.
 	HaMode *string
 }
 
@@ -65384,7 +65759,7 @@ func (s *L2BridgeEndpointProfileListResult) GetDataValue__() (vapiData_.DataValu
 	return dataVal, nil
 }
 
-// Segment specific L2 VPN configuration
+// Configuration for stretching a Segment's L2 broadcast domain over one or more L2VPN sessions to a remote site/network.
 type L2Extension struct {
 	// This property has been deprecated. Please use the property l2vpn_paths for setting the paths of associated L2 VPN session. This property will continue to work as expected to provide backwards compatibility. However, when both l2vpn_path and l2vpn_paths properties are specified, only l2vpn_paths is used.
 	//
@@ -65393,7 +65768,7 @@ type L2Extension struct {
 	// Policy paths corresponding to the associated L2 VPN sessions
 	L2vpnPaths  []string
 	LocalEgress *LocalEgress
-	// Tunnel ID format: int32
+	// VLAN-like tunnel ID used to distinguish this segment's traffic within the shared L2VPN tunnel(s). format: int32
 	TunnelId *int64
 }
 
@@ -68357,8 +68732,9 @@ type LBEdgeNodeCapacity struct {
 	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_MEDIUM_VIRTUAL_MACHINE
 	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_LARGE_VIRTUAL_MACHINE
 	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_XLARGE_VIRTUAL_MACHINE
+	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_PHYSICAL_MACHINE
 	//
-	//  Form factor in use for deployment.
+	//  Form factor in use for deployment. PHYSICAL_MACHINE applies only to edge nodes. Other form factors apply to both edge nodes and virtual network appliances.
 	FormFactor *string
 	// The property identifies the node path. For example, node_path=/infra/sites/default/enforcement-points/default/ edge-clusters/46a3612a-85ac-4545-ba3c-2dbaa4f0b48c/edge-nodes/1.
 	NodePath *string
@@ -70622,8 +70998,9 @@ type LBNodeCapacity struct {
 	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_MEDIUM_VIRTUAL_MACHINE
 	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_LARGE_VIRTUAL_MACHINE
 	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_XLARGE_VIRTUAL_MACHINE
+	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_PHYSICAL_MACHINE
 	//
-	//  Form factor in use for deployment.
+	//  Form factor in use for deployment. PHYSICAL_MACHINE applies only to edge nodes. Other form factors apply to both edge nodes and virtual network appliances.
 	FormFactor *string
 	// The property identifies the node path. For example, node_path=/infra/sites/default/enforcement-points/default/ edge-clusters/46a3612a-85ac-4545-ba3c-2dbaa4f0b48c/edge-nodes/1.
 	NodePath *string
@@ -70653,6 +71030,7 @@ const LBNodeCapacity_FORM_FACTOR_SMALL_VIRTUAL_MACHINE = "SMALL_VIRTUAL_MACHINE"
 const LBNodeCapacity_FORM_FACTOR_MEDIUM_VIRTUAL_MACHINE = "MEDIUM_VIRTUAL_MACHINE"
 const LBNodeCapacity_FORM_FACTOR_LARGE_VIRTUAL_MACHINE = "LARGE_VIRTUAL_MACHINE"
 const LBNodeCapacity_FORM_FACTOR_XLARGE_VIRTUAL_MACHINE = "XLARGE_VIRTUAL_MACHINE"
+const LBNodeCapacity_FORM_FACTOR_PHYSICAL_MACHINE = "PHYSICAL_MACHINE"
 
 func (s *LBNodeCapacity) GetType__() vapiBindings_.BindingType {
 	return LBNodeCapacityBindingType()
@@ -72065,8 +72443,9 @@ type LBServiceApplianceNodeCapacity struct {
 	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_MEDIUM_VIRTUAL_MACHINE
 	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_LARGE_VIRTUAL_MACHINE
 	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_XLARGE_VIRTUAL_MACHINE
+	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_PHYSICAL_MACHINE
 	//
-	//  Form factor in use for deployment.
+	//  Form factor in use for deployment. PHYSICAL_MACHINE applies only to edge nodes. Other form factors apply to both edge nodes and virtual network appliances.
 	FormFactor *string
 	// The property identifies the node path. For example, node_path=/infra/sites/default/enforcement-points/default/ edge-clusters/46a3612a-85ac-4545-ba3c-2dbaa4f0b48c/edge-nodes/1.
 	NodePath *string
@@ -73645,8 +74024,9 @@ type LBVirtualNetworkApplianceCapacity struct {
 	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_MEDIUM_VIRTUAL_MACHINE
 	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_LARGE_VIRTUAL_MACHINE
 	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_XLARGE_VIRTUAL_MACHINE
+	// * LBNodeCapacity#LBNodeCapacity_FORM_FACTOR_PHYSICAL_MACHINE
 	//
-	//  Form factor in use for deployment.
+	//  Form factor in use for deployment. PHYSICAL_MACHINE applies only to edge nodes. Other form factors apply to both edge nodes and virtual network appliances.
 	FormFactor *string
 	// The property identifies the node path. For example, node_path=/infra/sites/default/enforcement-points/default/ edge-clusters/46a3612a-85ac-4545-ba3c-2dbaa4f0b48c/edge-nodes/1.
 	NodePath *string
@@ -73766,6 +74146,55 @@ func (s *LBVirtualNetworkApplianceUsage) GetDataValue__() (vapiData_.DataValue, 
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for LBVirtualNetworkApplianceUsage._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// It contains the load balancer node usage information for the given virtual network service node.
+type LBVirtualNetworkServiceNodeUsage struct {
+	// The count of pools configured on the node. format: int64
+	CurrentPoolCount *int64
+	// The count of pool members configured on the node. format: int64
+	CurrentPoolMemberCount *int64
+	// The count of small load balancer services configured on the node. format: int64
+	CurrentSmallLoadBalancerCount *int64
+	// The count of virtual servers configured on the node. format: int64
+	CurrentVirtualServerCount *int64
+	// Possible values are:
+	//
+	// * LBVirtualNetworkServiceNodeUsage#LBVirtualNetworkServiceNodeUsage_FORM_FACTOR_SMALL
+	// * LBVirtualNetworkServiceNodeUsage#LBVirtualNetworkServiceNodeUsage_FORM_FACTOR_MEDIUM
+	// * LBVirtualNetworkServiceNodeUsage#LBVirtualNetworkServiceNodeUsage_FORM_FACTOR_LARGE
+	//
+	//  The form factor of the given virtual network service node.
+	FormFactor *string
+	// The path of virtual network service cluster which contains the virtual network service node.
+	VirtualNetworkServiceClusterPath *string
+	// The property identifies the node path for load balancer node usage. For example, node_path=/infra/sites/default/enforcement-points/default /edge-clusters/85175e0b-4d74-461d-83e1-f3b785adef9c/edge-nodes /86e077c0-449f-11e9-87c8-02004eb37029.
+	NodePath *string
+	// The property identifies the load balancer node usage type.
+	ResourceType string
+}
+
+// Identifier denoting this class, when it is used in polymorphic context.
+//
+// This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
+const LBVirtualNetworkServiceNodeUsage__TYPE_IDENTIFIER = "LBVirtualNetworkServiceNodeUsage"
+const LBVirtualNetworkServiceNodeUsage_FORM_FACTOR_SMALL = "SMALL"
+const LBVirtualNetworkServiceNodeUsage_FORM_FACTOR_MEDIUM = "MEDIUM"
+const LBVirtualNetworkServiceNodeUsage_FORM_FACTOR_LARGE = "LARGE"
+
+func (s *LBVirtualNetworkServiceNodeUsage) GetType__() vapiBindings_.BindingType {
+	return LBVirtualNetworkServiceNodeUsageBindingType()
+}
+
+func (s *LBVirtualNetworkServiceNodeUsage) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for LBVirtualNetworkServiceNodeUsage._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -75995,7 +76424,7 @@ func (s *LocalWorkloadsTransmittedReceivedPackets) GetDataValue__() (vapiData_.D
 	return dataVal, nil
 }
 
-// Site specific configuration of Tier0 in multi-site scenario
+// Site (enforcement point) specific configuration of a Tier-0 or Tier-1 gateway, e.g. which edge cluster/edge nodes and BGP/static-routing configuration apply at that site. A gateway has one LocaleServices child per site it is stretched to (single-site deployments have exactly one). Nested under /infra/tier-0s/<tier-0-id>/locale-services or /infra/tier-1s/<tier-1-id>/locale-services.
 type LocaleServices struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -76058,7 +76487,7 @@ type LocaleServices struct {
 	EdgeClusterPath *string
 	// This configuration can be defined only for Active-Standby Tier0 gateway to provide redundancy. For mulitple external interfaces, multiple HA VIP configs must be defined and each config will pair exactly two external interfaces. The VIP will move and will always be owned by the Active node. When this property is configured, configuration of dynamic-routing is not allowed.
 	HaVipConfigs []Tier0HaVipConfig
-	// Policy paths to edge nodes. For Tier1 gateway, the field is used to statically assign the ordered list of up to two edge nodes for stateful services. To enable auto allocation of nodes from the specified edge cluster the field must be left unset. The auto allocation of nodes is supported only for the Tier1 gateway. For Tier0 gateway specified edge is used as a preferred edge node when failover mode is set to PREEMPTIVE, not applicable otherwise.
+	// Policy paths to edge nodes (of type PolicyEdgeNode), from the edge_cluster_path's edge cluster. For Tier1 gateway, the field is used to statically assign the ordered list of up to two edge nodes for stateful services. To enable auto allocation of nodes from the specified edge cluster the field must be left unset. The auto allocation of nodes is supported only for the Tier1 gateway. For Tier0 gateway specified edge is used as a preferred edge node when ha mode is Active/Standby and failover mode is set to PREEMPTIVE, not applicable otherwise.
 	PreferredEdgePaths        []string
 	RouteRedistributionConfig *Tier0RouteRedistributionConfig
 	// Possible values are:
@@ -79644,7 +80073,7 @@ type NatServiceEntry struct {
 	// * NatServiceEntry#NatServiceEntry_PROTOCOL_UDP
 	// * NatServiceEntry#NatServiceEntry_PROTOCOL_ICMP
 	//
-	//  protocol supports TCP, UDP and ICMP v4
+	//  Protocol this service entry matches on. source_ports/destination_ports/translated_ports only apply when protocol is TCP or UDP; they are ignored for ICMP.
 	Protocol *string
 	// Gives the match source ports. format: port-or-range
 	SourcePorts *string
@@ -80140,6 +80569,139 @@ func (s *NetworkPolicyImportResponse) GetDataValue__() (vapiData_.DataValue, []e
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for NetworkPolicyImportResponse._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Read-only record of the node allocation currently in effect for a VPC's or Transit Gateway's network services on an Edge, VNA or VNS cluster. This record reflects allocation state only and is not user intent; it cannot be created, updated or deleted through the API.
+type NetworkServiceAllocation struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// The _revision property describes the current revision of the resource. To prevent clients from overwriting each other's changes, PUT operations must include the current _revision of the resource, which clients should obtain by issuing a GET operation. If the _revision provided in a PUT request is missing or stale, the operation will be rejected. format: int32
+	Revision *int64
+	// Timestamp of resource creation format: int64
+	CreateTime *int64
+	// ID of the user who created this resource
+	CreateUser *string
+	// Timestamp of last modification format: int64
+	LastModifiedTime *int64
+	// ID of the user who last modified this resource
+	LastModifiedUser *string
+	// Protection status is one of the following: PROTECTED - the client who retrieved the entity is not allowed to modify it. NOT_PROTECTED - the client who retrieved the entity is allowed to modify it REQUIRE_OVERRIDE - the client who retrieved the entity is a super user and can modify it, but only when providing the request header X-Allow-Overwrite=true. UNKNOWN - the _protection field could not be determined for this entity.
+	Protection *string
+	// Indicates system owned resource
+	SystemOwned *bool
+	// Description of this resource
+	Description *string
+	// Defaults to ID if not set
+	DisplayName *string
+	// Unique identifier of this resource
+	Id *string
+	// The type of this resource.
+	ResourceType *string
+	// Opaque identifiers meaningful to the API user
+	Tags []Tag
+	// Set by the system when an asynchronous conversion workflow claims exclusive ownership of this resource. Cleared automatically, when the workflow is deleted. Clients cannot set or modify this value.
+	LockedByWorkflow *string
+	// This is a UUID generated by the system for knowing which site owns an object.
+	OriginSiteId *string
+	// This is a UUID generated by the system for knowing who owns this object.
+	OwnerId *string
+	// Path of its parent
+	ParentPath *string
+	// Absolute path of this object
+	Path *string
+	// This is a UUID generated by the system for realizing the entity object. In most cases this should be same as 'unique_id' of the entity. However, in some cases this can be different because of entities have migrated their unique identifier to NSX Policy intent objects later in the timeline and did not use unique_id for realization. Realization id is helpful for users to debug data path to correlate the configuration with corresponding intent.
+	RealizationId *string
+	// Path relative from its parent
+	RelativePath *string
+	// This path is populated only in case of multi-site scenario. Currently it is supported only for LM objects. When LM is onboarded to multi-site platform like NAPP or GM, remote_path will be set to the globally unique path across multi-site topology . It is generated based on local site-name and uses /org tree namespace. Note: It is populated only for LM objects. Not supported on the GM.
+	RemotePath *string
+	// This is a UUID generated by the GM/LM to uniquely identify entities in a federated environment. For entities that are stretched across multiple sites, the same ID will be used on all the stretched sites.
+	UniqueId *string
+	// Policy path of the Edge, VNA or VNS cluster the service instance is currently allocated on.
+	NetworkServiceClusterPath *string
+	// Possible values are:
+	//
+	// * NetworkServiceAllocation#NetworkServiceAllocation_NETWORK_SERVICE_CLUSTER_TYPE_EDGE
+	// * NetworkServiceAllocation#NetworkServiceAllocation_NETWORK_SERVICE_CLUSTER_TYPE_VIRTUAL_NETWORK_APPLIANCE
+	// * NetworkServiceAllocation#NetworkServiceAllocation_NETWORK_SERVICE_CLUSTER_TYPE_VIRTUAL_NETWORK_SERVICE
+	//
+	//  Type of the Edge, VNA or VNS cluster identified by network_service_cluster_path.
+	NetworkServiceClusterType *string
+	// Policy paths of the individual cluster member nodes hosting the service instance.
+	NetworkServiceNodePaths []string
+	// Possible values are:
+	//
+	// * NetworkServiceAllocation#NetworkServiceAllocation_SERVICES_NAT
+	// * NetworkServiceAllocation#NetworkServiceAllocation_SERVICES_LOAD_BALANCER
+	// * NetworkServiceAllocation#NetworkServiceAllocation_SERVICES_DNS
+	// * NetworkServiceAllocation#NetworkServiceAllocation_SERVICES_EXTERNAL_DHCP_RELAY
+	//
+	//  Network services (NAT, load balancer, DNS and external DHCP relay) enabled on network_service_node_paths for this allocation.
+	Services []string
+	// Policy path of the Transit Gateway (CTGW or DTGW) this allocation belongs to. Exactly one of vpc_path / transit_gateway_path is set. Unset when the allocation is owned by a VPC instead (see vpc_path).
+	TransitGatewayPath *string
+	// Policy path of the VPC this allocation belongs to. Exactly one of vpc_path / transit_gateway_path is set. Unset when the allocation is owned by a Transit Gateway instead (see transit_gateway_path).
+	VpcPath *string
+}
+
+const NetworkServiceAllocation_NETWORK_SERVICE_CLUSTER_TYPE_EDGE = "EDGE"
+const NetworkServiceAllocation_NETWORK_SERVICE_CLUSTER_TYPE_VIRTUAL_NETWORK_APPLIANCE = "VIRTUAL_NETWORK_APPLIANCE"
+const NetworkServiceAllocation_NETWORK_SERVICE_CLUSTER_TYPE_VIRTUAL_NETWORK_SERVICE = "VIRTUAL_NETWORK_SERVICE"
+const NetworkServiceAllocation_SERVICES_NAT = "NAT"
+const NetworkServiceAllocation_SERVICES_LOAD_BALANCER = "LOAD_BALANCER"
+const NetworkServiceAllocation_SERVICES_DNS = "DNS"
+const NetworkServiceAllocation_SERVICES_EXTERNAL_DHCP_RELAY = "EXTERNAL_DHCP_RELAY"
+
+func (s *NetworkServiceAllocation) GetType__() vapiBindings_.BindingType {
+	return NetworkServiceAllocationBindingType()
+}
+
+func (s *NetworkServiceAllocation) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for NetworkServiceAllocation._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Paged collection of network service allocation records
+type NetworkServiceAllocationListResult struct {
+	// The server will populate this field when returing the resource. Ignored on PUT and POST.
+	Links []ResourceLink
+	// Schema for this resource
+	Schema *string
+	Self   *SelfResourceLink
+	// Opaque cursor to be used for getting next page of records (supplied by current result page)
+	Cursor *string
+	// Count of results found (across all pages), set only on first page format: int64
+	ResultCount *int64
+	// If true, results are sorted in ascending order
+	SortAscending *bool
+	// Field by which records are sorted
+	SortBy *string
+	// List of NetworkServiceAllocation records
+	Results []NetworkServiceAllocation
+}
+
+func (s *NetworkServiceAllocationListResult) GetType__() vapiBindings_.BindingType {
+	return NetworkServiceAllocationListResultBindingType()
+}
+
+func (s *NetworkServiceAllocationListResult) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for NetworkServiceAllocationListResult._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -81433,9 +81995,9 @@ type NpsPromotionWorkflow struct {
 	//
 	//  Phase the client requests. PROMOTION triggers the full promotion pipeline: reconcile from NSX Manager, validate, promote objects, update ownership, associate PolicySpan.
 	DesiredState *string
-	// Optional list of specific objects to promote within region_id. When omitted, all eligible objects in the region are promoted.
+	// List of specific objects to promote within region_id. Required and must contain at least one entry — every promotion request must explicitly enumerate the objects to promote. Callers with a large number of objects to promote should split the work across multiple requests (chunks); NPS promotes each request atomically (all objects in the request succeed together or none do).
 	Objects []NpsPromotableObjectRef
-	// Region for which promotion is requested. All eligible objects in the region are promoted when no explicit objects list is provided.
+	// Region for which promotion is requested. objects must all belong to this region.
 	RegionId      *string
 	WorkflowState *PromotionWorkflowState
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
@@ -81902,6 +82464,7 @@ func (s *ObjectRolePermissionGroupListResult) GetDataValue__() (vapiData_.DataVa
 type ObservabilityCounterDebugQueryResult struct {
 	FastPathLcoreUsageStats *FastPathLcoreUsageStats
 	FastPathSysStats        *FastPathSysStats
+	FirewallVmkStats        *FirewallVmkDebugStats
 	PacketStats             *PacketDebugStats
 	PlatformCpuUsageStats   *PlatformCpuUsageDebugStats
 	PlatformPacketStats     *PlatformPacketStats
@@ -81926,6 +82489,7 @@ func (s *ObservabilityCounterDebugQueryResult) GetDataValue__() (vapiData_.DataV
 type ObservabilityCounterMonitorQueryResult struct {
 	FastPathLcoreUsageStats *FastPathLcoreUsageStats
 	FastPathSysStats        *FastPathSysStats
+	FirewallVmkStats        *FirewallVmkMonitorStats
 	PacketStats             *PacketMonitorStats
 	PlatformCpuUsageStats   *PlatformCpuUsageMonitorStats
 	PlatformPacketStats     *PlatformPacketStats
@@ -81985,6 +82549,8 @@ type OdsArgumentCandidateValueListResult struct {
 	SortAscending *bool
 	// Field by which records are sorted
 	SortBy *string
+	// Timestamp when the runbook argument candidate values were last updated. format: int64
+	LastUpdateTimestamp *int64
 	// List results of Online Diagnostic System runbook argument candidate values.
 	Results []OdsArgumentCandidateValue
 }
@@ -85299,6 +85865,7 @@ type PacketDebugStats struct {
 	DatapathL3          *DataPathL3
 	DistributedFirewall *DistributedFirewall
 	Fastpath            *Fastpath
+	FirewallVmk         *FirewallVmk
 	// Timestamp when the data was last updated; unset if data source has never updated the data. format: int64
 	LastUpdateTimestamp *int64
 	OverlayDatapathL2   *OverlayDataPathL2
@@ -89962,7 +90529,7 @@ func (s *PolicyDraftPaginatedAggregatedConfigurationResult) GetDataValue__() (va
 	return dataVal, nil
 }
 
-// Edge Cluster.
+// A group of Edge Transport Nodes hosted at one enforcement point, managed as a single unit for placement and high availability. All members should share the same deployment_type, and, for the VM form factor, the same VM form factor size - this is a best-practice recommendation, not independently enforced (to support transition cases), since a mismatch can lead to uneven capacity across the cluster. Edge services for VPC/Centralised TGW/Tier-0/Tier-1 gateway are placed across an edge cluster's members (see allocation_rules); a PolicyEdgeHighAvailabilityProfile (edge_cluster_profile) tunes inter-node failure detection and standby relocation. Best practice is to size a cluster with enough healthy members to tolerate at least one node failure without losing active/standby redundancy.
 type PolicyEdgeCluster struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -90019,7 +90586,7 @@ type PolicyEdgeCluster struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Set of allocation rules to auto-allocate nodes for Tier0/Tier1 Gateways, and DHCP on edge cluster members.
+	// Set of allocation rules to auto-allocate nodes on edge cluster members. Adding a rule that enables failure-domain-based allocation is what actually turns on failure-domain-aware placement for this cluster - member failure_domain_path values alone have no effect on placement unless such a rule is present. Enabling it requires the cluster's members to span at least two distinct failure domains.
 	AllocationRules []AllocationRule
 	// Possible values are:
 	//
@@ -90028,7 +90595,7 @@ type PolicyEdgeCluster struct {
 	// * PolicyEdgeCluster#PolicyEdgeCluster_CORE_ALLOCATION_PROFILE_L4LBSERVICE
 	// * PolicyEdgeCluster#PolicyEdgeCluster_CORE_ALLOCATION_PROFILE_SECURITY
 	//
-	//  The Core Allocation Profile attribute defines the core allocation for edge transport nodes within a cluster, and any new or redeployed edge will utilize this profile. It can be updated to another supported profile, which subsequently updates the core profile on all edges in the cluster. Note that a manual reboot is required for the new profile to be applied to the edge appliance. To verify the current profile applied to cluster members, use the Edge Cluster State API.
+	//  The Core Allocation Profile attribute defines the core allocation for edge transport nodes within a cluster, and any new or redeployed edge will utilize this profile. It can be updated to another supported profile, which subsequently updates the core profile on all edges in the cluster. Available profiles differ by member form factor - see PolicyEdgeTransportNode's core_allocation_profile field for the VM-vs-bare-metal breakdown - so a profile chosen here must be supported by every member's form factor. Note that a manual reboot is required for the new profile to be applied to the edge appliance. To verify the current profile applied to cluster members, use the Edge Cluster State API.
 	// https://<nsx-mgr>/policy/api/v1/infra/sites/default/enforcement-points/<enforcementpoint-id>/edge-clusters/cluster/<edge-cluster-id>/state
 	CoreAllocationProfile *string
 	// Possible values are:
@@ -90039,9 +90606,9 @@ type PolicyEdgeCluster struct {
 	//
 	//  This field is a readonly field which shows the deployment_type of members. It returns UNKNOWN if there are no members, and returns VIRTUAL_MACHINE| PHYSICAL_MACHINE if all edge members are VIRTUAL_MACHINE|PHYSICAL_MACHINE.
 	DeploymentType *string
-	// This field is optional and if not provided, default profile path will be considered.
+	// Policy path of the PolicyEdgeHighAvailabilityProfile (inter-edge BFD heartbeat and standby relocation tuning) applied to this cluster's members. Optional - if not provided, a fixed system-created default profile is used (not simply whichever profile a user marked default).
 	EdgeClusterProfile *string
-	// Flag indicates that edge cluster has inter-site forwarding enabled and remote tunnel points is configured for all the members. This is required to deploy stretch gateways.
+	// Indicates that this edge cluster has inter-site forwarding enabled, with remote tunnel endpoints (RTEPs) configured on all of its members. This is required to deploy a stretched (federation, cross-site) gateway on this cluster.
 	InterSiteForwardingEnabled *bool
 	// Possible values are:
 	//
@@ -90049,15 +90616,15 @@ type PolicyEdgeCluster struct {
 	// * PolicyEdgeCluster#PolicyEdgeCluster_MEMBER_NODE_TYPE_PUBLIC_CLOUD_GATEWAY_NODE
 	// * PolicyEdgeCluster#PolicyEdgeCluster_MEMBER_NODE_TYPE_UNKNOWN
 	//
-	//  This field contains the info of type of transport nodes. Edge cluster is homogenous collection of transport nodes. Hence all transport nodes of the cluster must be of same type.
+	//  Read-only; derived from the fabric node type (e.g. EDGE_NODE, PUBLIC_CLOUD_GATEWAY_NODE) of this cluster's members. This is a hard constraint - adding a member whose fabric node type differs from the existing members is rejected. Note this is a different axis from deployment_type (VIRTUAL_MACHINE vs PHYSICAL_MACHINE).
 	MemberNodeType *string
 	// This field is deprecated.Refer policy edge cluster **unique_id** to get the policy edge cluster uuid.
 	//
 	// Deprecated: This API element is deprecated.
 	NsxId *string
-	// Setting to true enables VCF password management for all edge nodes in the cluster.
+	// When true, credentials (cli/root/audit passwords) for all edge nodes in this cluster are managed by VMware Cloud Foundation (VCF) rather than through NSX's own credential fields. Applicable only when this NSX Manager is registered with VCF-Suite; not applicable in standalone mode.
 	PasswordManagedByVcf *bool
-	// This field contains the list of edge cluster members. Using this field, multiple members can be add and remove.
+	// List of this cluster's members. Multiple members can be added or removed in a single request through this field; see PolicyEdgeClusterMember for per-member semantics, and use the replace-edge-transport-node action to swap the edge transport node backing an existing member instead of editing this list directly.
 	PolicyEdgeNodes []PolicyEdgeClusterMember
 	//
 	//
@@ -90260,7 +90827,7 @@ func (s *PolicyEdgeClusterListResult) GetDataValue__() (vapiData_.DataValue, []e
 	return dataVal, nil
 }
 
-// Policy edge cluster member represents policy edge node resource and associates edge transport node to the edge cluster.
+// Request/response shape used to add or list a member in PolicyEdgeCluster.policy_edge_nodes: it binds one edge_transport_node_path into the cluster. Adding a member here causes NSX to create a corresponding child PolicyEdgeNode resource (see policy_edge_node_path) representing that membership.
 type PolicyEdgeClusterMember struct {
 	//
 	EdgeTransportNodePath *string
@@ -90462,7 +91029,7 @@ func (s *PolicyEdgeClusterMemberRemoteTunnelConnectivityStatus) GetDataValue__()
 	return dataVal, nil
 }
 
-// Policy Edge Cluster Members Configuration State
+// Configuration-realization state of a single edge cluster member (as opposed to PolicyEdgeClusterMemberStatus's runtime/connectivity health). Part of PolicyEdgeClusterState.details.
 type PolicyEdgeClusterMemberState struct {
 	ConfigurationState *PolicyEdgeClusterMemberConfigurationState
 	// Possible values are:
@@ -90533,6 +91100,7 @@ func (s *PolicyEdgeClusterMemberState) GetDataValue__() (vapiData_.DataValue, []
 	return dataVal, nil
 }
 
+// Runtime status of a single edge cluster member: overall node status, VTEP/storage health, read/write latency, and status of its peer edge nodes. Part of PolicyEdgeClusterStatus.
 type PolicyEdgeClusterMemberStatus struct {
 	// Display name of the edge node whose status is being reported.
 	DisplayName *string
@@ -90750,6 +91318,7 @@ func (s *PolicyEdgeClusterState) GetDataValue__() (vapiData_.DataValue, []error)
 	return dataVal, nil
 }
 
+// Runtime (data-plane/connectivity) health of an edge cluster and each of its members, as opposed to PolicyEdgeClusterState's configuration-realization status. Use this to monitor cluster health and detect a member that has gone DOWN or DEGRADED.
 type PolicyEdgeClusterStatus struct {
 	// Display name of the edge cluster whose status is being reported.
 	EdgeClusterName *string
@@ -90789,7 +91358,7 @@ func (s *PolicyEdgeClusterStatus) GetDataValue__() (vapiData_.DataValue, []error
 	return dataVal, nil
 }
 
-// PolicyEdgeHighAvailabilityProfile
+// Tunable knobs for how an Edge Cluster's members detect a peer failure and react to it. This profile only governs edge-to-edge health detection and failover within the cluster - it is unrelated to the BFD sessions a Tier-0's BGP peers run over the physical network (see BfdProfile/BgpBfdConfig). For this edge-to-edge health detection, each edge runs two BFD sessions with its peers in the cluster - one over the management network and another over the TEP (tunnel endpoint) network. Applied to a cluster via PolicyEdgeCluster.edge_cluster_profile; if a cluster does not reference one explicitly, a system default profile is used. As a rule of thumb, tighten bfd_probe_interval/bfd_declare_dead_multiple for faster failover when both the management and TEP networks between edge nodes are stable and low-latency, and relax them if either network is shared or higher-latency, to avoid false-positive failovers from transient packet loss.
 type PolicyEdgeHighAvailabilityProfile struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -90846,14 +91415,14 @@ type PolicyEdgeHighAvailabilityProfile struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Value of BFD allowed hops format: int64
+	// Maximum number of IP hops a BFD control packet between two edge nodes may traverse (BFD TTL). format: int64
 	BfdAllowedHops *int64
-	// Number of times a packet is missed before BFD declares the neighbor down. format: int64
+	// Number of consecutive BFD probe packets that must be missed before an edge node declares its peer down. See bfd_probe_interval for how this combines with the probe interval to determine total failure-detection time. format: int64
 	BfdDeclareDeadMultiple *int64
-	// The time interval (in millisec) between probe packets for heartbeat purpose format: int64
+	// Time interval (in milliseconds) between BFD heartbeat packets exchanged between edge nodes in the cluster. Combined with bfd_declare_dead_multiple, this determines how quickly a peer failure is detected: with the defaults (500ms x 3 missed packets), a peer is declared down after roughly 1.5 seconds of silence. format: int64
 	BfdProbeInterval        *int64
 	StandbyRelocationConfig *StandbyRelocationConfig
-	// When BGP connection is failing, wait for this configured time interval (in seconds) before moving VIP from Active to Standby service node. This is applied to virtual network appliance cluster with service type \"ROUTER_CONTROLLER\" only. format: int64
+	// When a BGP session is failing, wait for this configured time interval (in seconds) before moving the HA virtual IP from the active to the standby service node, instead of failing over immediately. This dampens VIP flapping/failover churn caused by a transient BGP session drop. Applies only to a virtual network appliance cluster whose service type is \"ROUTER_CONTROLLER\". format: int64
 	VipMaxHoldTimer *int64
 }
 
@@ -90872,6 +91441,7 @@ func (s *PolicyEdgeHighAvailabilityProfile) GetDataValue__() (vapiData_.DataValu
 	return dataVal, nil
 }
 
+// Allocation status of a single edge cluster member: its identity, and the pools/services currently allocated to it. Part of PolicyEdgeClusterAllocationStatus.members.
 type PolicyEdgeMemberAllocationStatus struct {
 	// List of services allocated on the edge node.
 	AllocatedServices []PolicyAllocatedService
@@ -90881,7 +91451,9 @@ type PolicyEdgeMemberAllocationStatus struct {
 	DisplayName *string
 	// Policy edge transport node path.
 	EdgeTransportNodePath *string
-	// Path of the edge transport node whose status is being reported. format: int32
+	// This field contains information regarding the fault_domain that hosts the given edge node.
+	FaultDomain *string
+	// System-generated index of this member within the edge cluster (matches PolicyEdgeClusterMember.member_index). format: int32
 	MemberIndex *int64
 	// Policy edge node backed by an Edge Transport node.
 	PolicyEdgeNodePath *string
@@ -90902,7 +91474,7 @@ func (s *PolicyEdgeMemberAllocationStatus) GetDataValue__() (vapiData_.DataValue
 	return dataVal, nil
 }
 
-// PolicyEdgeNode represents the member node of the policy edge cluster and refers to the policy edge transport node. It should not be mistaken for the edge transport node itself. Consuming services can refer <br>edge_transport_node_uuid</br/<br>edge_transport_node_path</br> property to get the unique id/path of the policy edge transport node referred by the policy edge node.
+// PolicyEdgeNode is the entity that builds the relationship between an edge cluster and an edge transport node - it represents a cluster member, and should not be mistaken for the edge transport node itself. To fetch the actual edge details, refer to the policy edge transport node identified by this node's edge_transport_node_path (or edge_transport_node_uuid). Edge services always refer to an edge transport node indirectly, via a policy edge node path, rather than an edge transport node path directly. This indirection is what allows a policy edge node to be repointed at an alternate edge transport node - e.g. in the event of a node failure - without affecting the logical service configuration that references it.
 type PolicyEdgeNode struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -91215,7 +91787,7 @@ func (s *PolicyEdgeNodeListResult) GetDataValue__() (vapiData_.DataValue, []erro
 	return dataVal, nil
 }
 
-// PolicyEdgeNode relocate and remove
+// Request body identifying which cluster member to relocate-and-remove; see the relocate-and-remove-edge-transport-node action for the operation this drives.
 type PolicyEdgeNodeRelocateAndRemoveMember struct {
 	// The path of PolicyEdgeNode to perform the relocate and remove operation.
 	PolicyEdgeNodePath *string
@@ -91260,7 +91832,7 @@ func (s *PolicyEdgeNodeRemoteTepStatistics) GetDataValue__() (vapiData_.DataValu
 	return dataVal, nil
 }
 
-// PolicyEdgeNode replace operation
+// Request body for swapping the edge transport node backing an existing cluster member without changing that member's index/id; see the replace-edge-transport-node action.
 type PolicyEdgeNodeReplaceMember struct {
 	// The Path of edge transport node, which will replace the edge_transport_node_path of the given policy edge node.
 	EdgeTransportNodePath *string
@@ -91305,7 +91877,7 @@ func (s *PolicyEdgeTransportManagementInterface) GetDataValue__() (vapiData_.Dat
 	return dataVal, nil
 }
 
-// Policy Edge Transport is the object,where edge transport node related parameters are configured.
+// An Edge Transport Node is an NSX Edge appliance participating in the NSX overlay as a router - it hosts VPC services, Centralized Transit Gateway (CTGW), Tier-0/Tier-1 service routers, and other edge services, and is grouped with peers into a PolicyEdgeCluster for placement and high availability. deployment_type splits the lifecycle model sharply in two: - VIRTUAL_MACHINE (LCM-managed): NSX owns the appliance's lifecycle end to end. Creating a node this way requires vm_deployment_config (vCenter placement) and management_interface together; NSX deploys the OVF, pushes credentials as guest customization, and can redeploy (destroy and recreate) the VM on demand via the redeploy action. It is recommended to reserve the edge VM's CPU/memory on its host, and to avoid over-provisioning the host, so that resource contention does not introduce scheduling delays. form_factor determines the CPU/memory/disk resources allocated to the VM; LARGE is recommended for production deployments - refer to the NSX sizing and best-practices documentation when choosing one. - PHYSICAL_MACHINE (bare metal): the appliance already exists and is joined to NSX using the appliance's own join-management-plane CLI; this create/PUT/PATCH API is not how it gets provisioned. Refer to the NSX hardware compatibility list / installation guide for the supported CPU architectures and NIC models/driver versions before joining a bare-metal appliance.
 type PolicyEdgeTransportNode struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -91372,9 +91944,9 @@ type PolicyEdgeTransportNode struct {
 	// * PolicyEdgeTransportNode#PolicyEdgeTransportNode_DEPLOYMENT_TYPE_PHYSICAL_MACHINE
 	// * PolicyEdgeTransportNode#PolicyEdgeTransportNode_DEPLOYMENT_TYPE_UNKNOWN
 	//
-	//  The edge node deployment type may be physical or virtual.
+	//  Read-only; reflects how this node was provisioned - VIRTUAL_MACHINE, PHYSICAL_MACHINE for bare metal joined via the appliance CLI. Determines which of vm_deployment_config/management_interface/form_factor/passthrough settings apply; see this type's description.
 	DeploymentType *string
-	// Set failure domain of edge transport node which will help in auto placement of TIER1 logical routers, DHCP Servers and MDProxies, if failure domain based allocation is enabled in edge cluster API. In case failure domain is not set by user explicitly, it will be always assigned with default system created failure domain.
+	// Failure domain of this edge transport node, used by auto-placement of edge services to spread active/standby instances across domains - but only when the owning edge cluster has failure-domain-based allocation enabled via allocation_rules; setting this field alone has no placement effect otherwise. If not set explicitly, the node is assigned to the default system-created failure domain.
 	FailureDomainPath *string
 	// Possible values are:
 	//
@@ -91384,7 +91956,7 @@ type PolicyEdgeTransportNode struct {
 	// * PolicyEdgeTransportNode#PolicyEdgeTransportNode_FORM_FACTOR_XLARGE
 	// * PolicyEdgeTransportNode#PolicyEdgeTransportNode_FORM_FACTOR_XLARGE_PLUS
 	//
-	//  The XLARGE_PLUS form factor is exclusively available for edge VMs using passthrough technologies.
+	//  Edge VM size (SMALL/MEDIUM/LARGE/XLARGE/XLARGE_PLUS), sizing vCPU/memory and interface limits. VM/LCM-only: read-only and left unpopulated for bare metal or manually-joined nodes, whose capacity is simply whatever the physical server provides.
 	FormFactor *string
 	// Desired host name/FQDN for the VM to be deployed.
 	Hostname            *string
@@ -91394,7 +91966,7 @@ type PolicyEdgeTransportNode struct {
 	// * PolicyEdgeTransportNode#PolicyEdgeTransportNode_NODE_TYPE_EDGE_NODE
 	// * PolicyEdgeTransportNode#PolicyEdgeTransportNode_NODE_TYPE_VIRTUAL_NETWORK_APPLIANCE
 	//
-	//  This field contains the info of type of edge transport node.
+	//  Role this node plays in the fabric: EDGE_NODE is what this API manages - it hosts VPC services, Centralized Transit Gateway (CTGW), and other edge services, and is what a PolicyEdgeCluster groups. VIRTUAL_NETWORK_APPLIANCE (VNA) instead backs Distributed Transit Gateway (DTGW) services and is managed via the VirtualNetworkApplianceCluster API.
 	NodeType           *string
 	SwitchSpec         *PolicyEdgeTransportNodeSwitchSpec
 	VmDeploymentConfig *vapiData_.StructValue
@@ -91569,15 +92141,15 @@ func (s *PolicyEdgeTransportNodeListResult) GetDataValue__() (vapiData_.DataValu
 	return dataVal, nil
 }
 
-// Physical NIC specification
+// Binds one NIC on this node to a named uplink (or LAG) declared in the teaming policy of the switch's bound UplinkHostSwitchProfile. For a VM edge this is a vNIC - device_name identifies the vNIC slot, which is itself bound, outside of NSX, to an underlying ESX pnic (vmnic) by the vSphere teaming policy of the portgroup/segment the vNIC is connected to (datapath_network_id). For bare metal, device_name identifies the appliance's own physical NIC directly, with no such vSphere-level indirection.
 type PolicyEdgeTransportNodePnic struct {
 	// Distributed portgroup, VLAN logical switch identifier or segment path to which the datapath serving vnics of edge node vm will be connected. If a VM network interface is not configured, it is disconnected and represented as an empty string. For Manual and BM nodes this field is optional.
 	DatapathNetworkId *string
-	// Device name or key e.g. fp-eth0, fp-eth1 etc.
+	// Name/key of the physical NIC to bind to this uplink. The fp-eth0/fp-eth1/... convention (up to 4 slots) is a vSphere/VM edge naming scheme; bare metal and manually-configured nodes use the appliance's own physical NIC device names instead.
 	DeviceName *string
 	// Passthrough device identifier for this uplink. Provide the ID of the passthrough-enabled network PCI device to map with the device name.
 	PassthroughDeviceId *string
-	// Uplink name for this Pnic. This name will be used to reference this Pnic in other configurations.
+	// Must match the name of an uplink (or a LAG) declared in the teaming policy of this switch's bound UplinkHostSwitchProfile.
 	UplinkName *string
 }
 
@@ -91698,19 +92270,19 @@ func (s *PolicyEdgeTransportNodeStateListResult) GetDataValue__() (vapiData_.Dat
 	return dataVal, nil
 }
 
-// single edge TN switch specification
+// An edge TN switch maps this edge's logical networking (segments/subnets) to physical connectivity. profile_paths selects the switch's UplinkHostSwitchProfile - a separate, reusable construct that declares how many uplinks the switch has (each either a single NIC or a LAG) and their failover/teaming policy - and pnics then binds each of those declared uplink (or LAG) names to an actual NIC on this node: a vNIC for a VM edge, which is in turn bound outside of NSX to an underlying ESX pnic (vmnic) by the vSphere teaming policy of the portgroup/segment the vNIC connects to, or a physical NIC directly for bare metal. See profile_paths and pnics for details; which teaming policies and whether LAG is available differs between VM and bare-metal edges.
 type PolicyEdgeTransportNodeSwitch struct {
 	// Overlay transport zone path for switch configuration
 	OverlayTransportZonePaths []string
-	// Physical NICs connected to the edge Tn switch
+	// Maps each uplink (or LAG) declared in this switch's bound UplinkHostSwitchProfile to an actual NIC on this node, via PolicyEdgeTransportNodePnic.uplink_name - a vNIC for a VM edge, or a physical NIC directly for bare metal. See PolicyEdgeTransportNodePnic.
 	Pnics []PolicyEdgeTransportNodePnic
-	// switch profiles bound to this edge Tn switch. If a profile path is not provided for any HostSwitchProfileType that is supported by the transport node, the corresponding default profile will be bound to the edge Tn switch.
+	// Switch profiles bound to this edge TN switch. The UplinkHostSwitchProfile entry is the reusable construct that declares this switch's uplinks - how many there are, whether each is a single NIC or a LAG - and their failover/teaming policy; pnics then maps each declared uplink (or LAG) name to an actual NIC on this node. Which teaming policies and whether LAG is allowed differs between VM, bare-metal, and passthrough modes. If a profile path is not provided for any HostSwitchProfileType supported by the transport node, the corresponding default profile is bound instead.
 	ProfilePaths []PolicyEdgeTransportNodeSwitchProfileTypePathEntry
-	// This should be configured only on a single edge switch. This configuration will be used by overlay traffic that is meant to be sent between NSX inter site domains.
+	// Defines this switch's remote tunnel endpoint (RTEP) - the IP and VLAN used to establish cross-site overlay connectivity between NSX Federation sites. This node's RTEP must have IP connectivity to the RTEPs of the remote site's edge nodes. This should be configured only on a single edge switch. On a given uplink/LAG, a VLAN is used exclusively for one purpose - TEP, RTEP, bridging, or a gateway interface - never shared between them.
 	RemoteTunnelEndpoint []PolicyEdgeTransportNodeRtepConfig
 	// If this name is unset or empty then the default host switch name will be used. The name must be unique among all host switches specified in a given edge transport node; unset name, empty name and the default host switch name are considered the same in terms of uniqueness.
 	SwitchName *string
-	// Edge Tn Switch tunnel configuration
+	// Defines this switch's local TEP interface - the IP(s) and VLAN used for overlay tunnel traffic within this site. On a given uplink/LAG, a VLAN is used exclusively for one purpose - TEP, RTEP, bridging, or a gateway interface - never shared between them.
 	TunnelEndpoints []PolicyEdgeTransportNodeSwitchTunnelEndPoint
 	// Vlan transport zone paths for switch configuration
 	VlanTransportZonePaths []string
@@ -95041,7 +95613,7 @@ func (s *PolicyInsertParameters) GetDataValue__() (vapiData_.DataValue, []error)
 	return dataVal, nil
 }
 
-// policy inter-vrf routing config.
+// Policy inter-VRF routing config. Nested under a Tier-0 (/infra/tier-0s/<tier-0-id>/inter-vrf-routing); describes route leaking between that Tier-0/VRF and the target_path VRF (another Tier-0 sharing the same parent Tier-0).
 type PolicyInterVrfRoutingConfig struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -95098,10 +95670,10 @@ type PolicyInterVrfRoutingConfig struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Import / export BGP routes.
+	// Import and/or export BGP route-leaking configuration (route-map based filtering) between this VRF and the target_path VRF, as an alternative to static_route_advertisement.
 	BgpRouteLeaking          []BgpRouteLeaking
 	StaticRouteAdvertisement *PolicyStaticRouteAdvertisement
-	// Policy path to tier0/vrf belongs to the same parent tier0.
+	// Policy path of the target Tier-0 VRF (a Tier0 sharing the same parent Tier-0) to leak routes with.
 	TargetPath *string
 }
 
@@ -96571,7 +97143,7 @@ type PolicyNat struct {
 	// * PolicyNat#PolicyNat_NAT_TYPE_DEFAULT
 	// * PolicyNat#PolicyNat_NAT_TYPE_NAT64
 	//
-	//  Represents a NAT section under tier-0/tier-1.
+	//  Represents a NAT section under tier-0/tier-1. INTERNAL, USER, and DEFAULT rules are evaluated in that priority order (see PolicyNatRule.sequence_number/rule_priority for the exact numeric ranges reserved to each section); NAT64 rules translate between external IPv6 and internal IPv4 addresses.
 	NatType *string
 }
 
@@ -96629,7 +97201,7 @@ func (s *PolicyNatListResult) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Represents a NAT rule between source and destination at T0/T1 router.
+// Represents a NAT rule between source and destination at a Tier-0/Tier-1 router, created under a PolicyNat section (INTERNAL/USER/DEFAULT/NAT64). See action for the supported rule types (SNAT/DNAT/REFLEXIVE/NO_SNAT/NO_DNAT/NAT64) and which of this type's other fields apply to each.
 type PolicyNatRule struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -96699,7 +97271,7 @@ type PolicyNatRule struct {
 	Action *string
 	// This supports single IP address or comma separated list of single IP addresses or CIDR. This does not support IP range or IP sets. For DNAT and NO_DNAT rules, this is a mandatory field, and represents the destination network for the incoming packets. For other type of rules, optionally it can contain destination network of outgoing packets. NULL value for this field represents ANY network. For VPC DNAT NATRule, destination network address should be IPv4 address allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
 	DestinationNetwork *string
-	// The flag, which suggests whether the NAT rule is enabled or disabled. The default is True.
+	// Flag to enable or disable this NAT rule. Disabled rules are not evaluated but remain configured. Default is true.
 	Enabled *bool
 	// Possible values are:
 	//
@@ -96709,29 +97281,29 @@ type PolicyNatRule struct {
 	//
 	//  It indicates how the firewall matches the address after NATing if firewall stage is not skipped. MATCH_EXTERNAL_ADDRESS indicates the firewall will be applied to external address of a NAT rule. For SNAT, the external address is the translated source address after NAT is done. For DNAT, the external address is the original destination address before NAT is done. For REFLEXIVE, to egress traffic, the firewall will be applied to the translated source address after NAT is done; To ingress traffic, the firewall will be applied to the original destination address before NAT is done. MATCH_INTERNAL_ADDRESS indicates the firewall will be applied to internal address of a NAT rule. For SNAT, the internal address is the original source address before NAT is done. For DNAT, the internal address is the translated destination address after NAT is done. For REFLEXIVE, to egress traffic, the firewall will be applied to the original source address before NAT is done; To ingress traffic, the firewall will be applied to the translated destination address after NAT is done. BYPASS indicates the firewall stage will be skipped.
 	FirewallMatch *string
-	// The flag, which suggests whether the logging of NAT rule is enabled or disabled. The default is False.
+	// Flag to enable or disable logging of packets matching this NAT rule. Default is false.
 	Logging *bool
 	// Possible values are:
 	//
 	// * PolicyNatRule#PolicyNatRule_POLICY_BASED_VPN_MODE_BYPASS
 	// * PolicyNatRule#PolicyNatRule_POLICY_BASED_VPN_MODE_MATCH
 	//
-	//  It indicates how the NSX edge applies Nat Policy for VPN traffic. It is supported only for Nat Rule action type DNAT and NO_DNAT. For all other NAT action, leave it unassigned. BYPASS - Default vpn mode. It indicates that Nat policy will be applied to the inbound traffic on Routed Based VPN tunnel, if the policy based VTI is in the \"scope\" for this rule. Default value will be set to BYPASS if MATCH - It indicates that this NAT rule will only match the Policy Based VPN traffic.
+	//  It indicates how the NSX edge applies Nat Policy for VPN traffic. It is supported only for Nat Rule action type DNAT and NO_DNAT. For all other NAT action, leave it unassigned. BYPASS - Default vpn mode. It indicates that Nat policy will be applied to the inbound traffic on Routed Based VPN tunnel, if the policy based VTI is in the \"scope\" for this rule. MATCH - It indicates that this NAT rule will only match the Policy Based VPN traffic.
 	PolicyBasedVpnMode *string
-	// Represents the array of policy paths of ProviderInterface or NetworkInterface or labels of type ProviderInterface or NetworkInterface or IPSecVpnSession on which the NAT rule should get enforced. The interfaces must belong to the same router for which the NAT Rule is created.
+	// Restricts which interface(s)/attachment(s) this NAT rule is enforced on. When left empty, the rule is enforced on every interface of the router instead - scope exists specifically to narrow that down, e.g. to one or more selected uplinks of a multi-homed Tier-0/Tier-1, or to a specific route-based VPN VTI (see policy_based_vpn_mode). Valid entries: - A Tier0Interface or Tier1Interface. - The Tier-0 or Tier-1 gateway itself (must be the same gateway this NAT rule is created under). - A LocaleServices, or a Tier0InterfaceGroup/Tier1InterfaceGroup. - An IPSecVpnSession, to scope the rule to that specific route-based VPN tunnel. Interface-path entries (Tier0Interface/Tier1Interface) are expected to belong to the same router this NAT rule is created under.
 	Scope []string
-	// The sequence_number decides the rule_priority of a NAT rule. Sequence_number and rule_priority have 1:1 mapping.For each NAT section, there will be reserved rule_priority numbers.The valid range of rule_priority number is from 0 to 2147483647(MAX_INT). 1. INTERNAL section rule_priority reserved from 0 - 1023 (1024 rules) valid sequence_number range 0 - 1023 2. USER section rule_priority reserved from 1024 - 2147482623 (2147481600 rules) valid sequence_number range 0 - 2147481599 3. DEFAULT section rule_priority reserved from 2147482624 - 2147483647 (1024 rules) valid sequence_number range 0 - 1023 format: int32
+	// The sequence_number decides the rule_priority of a NAT rule; rules are evaluated in ascending rule_priority order. Sequence_number and rule_priority have 1:1 mapping.For each NAT section, there will be reserved rule_priority numbers.The valid range of rule_priority number is from 0 to 2147483647(MAX_INT). 1. INTERNAL section rule_priority reserved from 0 - 1023 (1024 rules) valid sequence_number range 0 - 1023 2. USER section rule_priority reserved from 1024 - 2147482623 (2147481600 rules) valid sequence_number range 0 - 2147481599 3. DEFAULT section rule_priority reserved from 2147482624 - 2147483647 (1024 rules) valid sequence_number range 0 - 1023 format: int32
 	SequenceNumber *int64
-	// It represents the path of Service on which the NAT rule will be applied. If not provided or if it is blank then Policy manager will consider it as ANY. Please note, if this is a DNAT, the destination_port of the service will be realized on NSX Manager as the translated_port. And if this is a SNAT, the destination_port will be ignored. Please note, service is deprecated. It is recommended to use NatServiceEntry instead.
+	// It represents the path of Service on which the NAT rule will be applied. If not provided or if it is blank then Policy manager will consider it as ANY. The referenced Service typically defines l4_protocol, source_ports, and destination_ports (see L4PortSetServiceEntry). For SNAT, service is applicable and matches on both destination_ports and source_ports as specified, with no port translation involved. For DNAT, port handling is reversed from what this suggests: the Service's own destination_ports (not its source_ports) is realized as the rule's translated port, while translated_ports (below) is instead used as the match/destination port. For NAT64, both fields behave as their names suggest: this Service's destination_ports is used for matching, and translated_ports is the translated port (no reversal). This field's port handling described above is not applicable for NO_SNAT, NO_DNAT, or REFLEXIVE actions.
 	//
 	// Deprecated: This API element is deprecated.
 	Service      *string
 	ServiceEntry *NatServiceEntry
 	// This supports single IP address or comma separated list of single IP addresses or CIDR. This does not support IP range or IP sets. For SNAT, NO_SNAT, NAT64 and REFLEXIVE rules, this is a mandatory field and represents the source network of the packets leaving the network. For DNAT and NO_DNAT rules, optionally it can contain source network of incoming packets. NULL value for this field represents ANY network. format: list-of-address-or-block-or-range
 	SourceNetwork *string
-	// This supports single IP address or comma separated list of single IP addresses or CIDR. If user specify the CIDR, this value is actually used as an IP pool that includes both the subnet and broadcast addresses as valid for NAT translations. This does not support IP range or IP sets. Comma separated list of single IP addresses is not suported for DNAT and REFLEXIVE rules. For SNAT, DNAT, NAT64 and REFLEXIVE rules, this ia a mandatory field, which represents the translated network address. For NO_SNAT and NO_DNAT this should be empty. For VPC SNAT and Refelexive NATRule, translated network address should be IPv4 address allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
+	// This supports single IP address or comma separated list of single IP addresses or CIDR. If user specify the CIDR, this value is actually used as an IP pool that includes both the subnet and broadcast addresses as valid for NAT translations. This does not support IP range or IP sets. Comma separated list of single IP addresses is not supported for DNAT and REFLEXIVE rules. For SNAT, DNAT, NAT64 and REFLEXIVE rules, this is a mandatory field, which represents the translated network address. For NO_SNAT and NO_DNAT this should be empty. For VPC SNAT and Reflexive NATRule, translated network address should be IPv4 address allocated from External Block associated with VPC. format: list-of-address-or-block-or-range
 	TranslatedNetwork *string
-	// Please note, if there is service configured in this NAT rule, the translated_port will be realized on NSX Manager as the destination_port. If there is no sevice configured, the port will be ignored. format: port-or-range
+	// Port handling for DNAT action is reversed from what this field's name suggests: when service (above) is also configured, this field's value is applied as the match/destination port instead of the translated port - the actual translated port instead comes from the port configured on service. If there is no service configured, this field is ignored. For NAT64, this field behaves as its name suggests: it is the translated port (no reversal), independent of service. This field is not applicable for SNAT, NO_SNAT, NO_DNAT, or REFLEXIVE actions. format: port-or-range
 	//
 	// Deprecated: This API element is deprecated.
 	TranslatedPorts *string
@@ -96865,7 +97437,7 @@ func (s *PolicyNatRuleStatisticsListResult) GetDataValue__() (vapiData_.DataValu
 type PolicyNatRuleStatisticsPerEnforcementPoint struct {
 	// Policy Path referencing the enforcement point from where the statistics are fetched.
 	EnforcementPointPath *string
-	// Path of NAT Rule.
+	// Policy path of the PolicyNatRule these statistics were collected for.
 	RulePath *string
 	// Provides the current number of active traffic sessions matching the NAT rule, the total number of packets and bytes processed on the NAT rule since the time the rule was created.
 	RuleStatistics []PolicyNatRuleStatistics
@@ -96894,7 +97466,7 @@ type PolicyNatRuleStatisticsPerLogicalRouter struct {
 	LastUpdateTimestamp *int64
 	// Provides the statistics of all NAT rules in a transport node. It includes the current number of active traffic sessions matching the NAT rules and the total number of packets processed on the NAT rules since the time the rules were created.
 	PerNodeStatistics []PolicyNatRuleStatisticsPerTransportNode
-	// Path of the router.
+	// Policy path of the Tier-0/Tier-1 router these aggregated statistics were collected for.
 	RouterPath *string
 	Statistics *PolicyNATRuleCounters
 }
@@ -97992,7 +98564,7 @@ func (s *PolicyResourceReferenceListResult) GetDataValue__() (vapiData_.DataValu
 	return dataVal, nil
 }
 
-// policy route advertisement rule.
+// One rule of a PolicyStaticRouteAdvertisement: which subnets (filtered by prefix_operator) of which route type(s) to advertise as static routes to the target VRF.
 type PolicyRouteAdvertisementRule struct {
 	// Possible values are:
 	//
@@ -98001,7 +98573,7 @@ type PolicyRouteAdvertisementRule struct {
 	//
 	//  Action to advertise filtered routes to the connected Tier0 gateway. PERMIT: Enables the advertisment DENY: Disables the advertisement
 	Action *string
-	// Display name for rule.
+	// User-friendly name for this rule; not used for matching.
 	Name *string
 	// Possible values are:
 	//
@@ -98025,9 +98597,9 @@ type PolicyRouteAdvertisementRule struct {
 	// * PolicyRouteAdvertisementRule#PolicyRouteAdvertisementRule_ROUTE_ADVERTISEMENT_TYPES_TIER1_DNS_FORWARDER_IP
 	// * PolicyRouteAdvertisementRule#PolicyRouteAdvertisementRule_ROUTE_ADVERTISEMENT_TYPES_TIER1_IPSEC_LOCAL_ENDPOINT
 	//
-	//  Enable different types of route advertisements.
+	//  Route type(s) (see InterVrfRouteAdvertisementTypes) to advertise as static routes to the target VRF.
 	RouteAdvertisementTypes []string
-	// Network CIDRs to be routed. format: ip-cidr-block
+	// Network CIDRs to be routed. Required unless route_advertisement_types alone is sufficient to select the routes to advertise. format: ip-cidr-block
 	Subnets []string
 }
 
@@ -98724,9 +99296,9 @@ func (s *PolicyServiceProfileListResult) GetDataValue__() (vapiData_.DataValue, 
 	return dataVal, nil
 }
 
-// policy static route advertisement.
+// Configuration, on a PolicyInterVrfRoutingConfig, for advertising the local VRF's subnets as static routes to the target VRF (target_path) as an alternative to BGP route leaking.
 type PolicyStaticRouteAdvertisement struct {
-	// Route advertisement rules.
+	// Rules selecting which subnets/route-types to advertise as static routes to the target VRF. See PolicyRouteAdvertisementRule.
 	AdvertisementRules []PolicyRouteAdvertisementRule
 	// Paths of ordered Prefix list, it breaks after first match.
 	InFilterPrefixList []string
@@ -101625,7 +102197,7 @@ type PolicyVmApplianceConfig struct {
 	// * PolicyVmApplianceConfig#PolicyVmApplianceConfig_CORE_ALLOCATION_PROFILE_L4LBSERVICE
 	// * PolicyVmApplianceConfig#PolicyVmApplianceConfig_CORE_ALLOCATION_PROFILE_SECURITY
 	//
-	//  This attribute enables the creation of an edge transport node using a core allocation profile, with the understanding that the edge is initially outside the cluster and must be added later. For redeployment and update operations: If the edge transport node is already part of a cluster, the core allocation profile defined at the edge cluster level will be applied to that node. The API will throw a validation error if the cluster-level and node-level core allocation profile values are not identical.
+	//  Controls how this edge appliance's CPU cores are split between the DPDK dataplane (packet-forwarding fast-path threads) and other functions (control plane / L4-L7 services). Available profiles depend on the node's form factor. Changing this value takes effect only after a manual reboot of the edge appliance. This attribute enables the creation of an edge transport node using a core allocation profile, with the understanding that the edge is initially outside the cluster and must be added later. For redeployment and update operations: If the edge transport node is already part of a cluster, the core allocation profile defined at the edge cluster level will be applied to that node. The API will throw a validation error if the cluster-level and node-level core allocation profile values are not identical.
 	CoreAllocationProfile *string
 	// List of DNS servers. format: ip
 	DnsServers []string
@@ -101772,12 +102344,16 @@ func (s *PolicyVpcDnsForwarder) GetDataValue__() (vapiData_.DataValue, []error) 
 	return dataVal, nil
 }
 
-// Represents LogSwitchPortEipBindingMsg data for a given VPC in CCP.
+// A realized External IP (EIP) binding for one logical switch port of a VPC, as reported by the Central Control Plane (CCP) - i.e. which internal IP on that port is currently NAT-translated to which external IP.
 type PolicyVpcLogPortEipBinding struct {
-	Error_       *string
+	// Error message, if this binding could not be realized.
+	Error_ *string
+	// The external (post-NAT) IPv4 address this port's traffic is translated to.
 	ExternalIpv4 *string
+	// The port's internal (pre-NAT) IPv4 address.
 	InternalIpv4 *string
-	PortId       *string
+	// Identifier of the logical switch port this binding is for.
+	PortId *string
 }
 
 func (s *PolicyVpcLogPortEipBinding) GetType__() vapiBindings_.BindingType {
@@ -101795,7 +102371,7 @@ func (s *PolicyVpcLogPortEipBinding) GetDataValue__() (vapiData_.DataValue, []er
 	return dataVal, nil
 }
 
-// Represents a NAT rule between source and destination at for a given VPC.
+// Represents a NAT rule between source and destination for a given VPC. Whether and how this rule is actually evaluated depends on how the VPC's Transit Gateway is attached: - Distributed attachment (DTGW): NAT is only supported when the NAT service is enabled on a VNA (Virtual Network Appliance), not a VNS (Virtual Network Service). Traffic is redirected to the SNAT service - and therefore evaluated against this rule - only when the source is a private address with no EIP (External IP) configured: either a private VPC address egressing out of the VPC, or a private Transit Gateway address egressing out of the TGW. If the source address is already public, it is not redirected to SNAT and this rule is not evaluated for it. - Centralized attachment (CTGW): the service gateway follows an inline model, so this rule is evaluated for all north-south (NS) traffic egressing the VPC, and any matching rule is applied.
 type PolicyVpcNatRule struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -101866,7 +102442,7 @@ type PolicyVpcNatRule struct {
 	DestinationNetwork *string
 	// Policy path to a VpcIpAddressAllocation or ProjectIpAddressAllocation for DNAT rules. The system resolves the allocated IP and uses it as the destination_network. When this field is provided, destination_network should not be specified. For VPC NAT rules, the path must reference a VpcIpAddressAllocation under the same VPC. For Transit Gateway NAT rules, the path must reference a ProjectIpAddressAllocation under the same Project. This field is mutually exclusive with destination_network. Either this field or destination_network must be provided for DNAT action. Only valid for DNAT action.
 	DestinationNetworkAllocationPath *string
-	// The flag, which suggests whether the NAT rule is enabled or disabled. The default is True.
+	// Flag to enable or disable this NAT rule. Disabled rules are not evaluated but remain configured. Default is true.
 	Enabled *bool
 	// Possible values are:
 	//
@@ -101876,7 +102452,7 @@ type PolicyVpcNatRule struct {
 	//
 	//  It indicates how the firewall matches the address after NATing if firewall stage is not skipped. MATCH_EXTERNAL_ADDRESS indicates the firewall will be applied to external address of a NAT rule. For SNAT, the external address is the translated source address after NAT is done. For DNAT, the external address is the original destination address before NAT is done. For REFLEXIVE, to egress traffic, the firewall will be applied to the translated source address after NAT is done; To ingress traffic, the firewall will be applied to the original destination address before NAT is done. MATCH_INTERNAL_ADDRESS indicates the firewall will be applied to internal address of a NAT rule. For SNAT, the internal address is the original source address before NAT is done. For DNAT, the internal address is the translated destination address after NAT is done. For REFLEXIVE, to egress traffic, the firewall will be applied to the original source address before NAT is done; To ingress traffic, the firewall will be applied to the translated destination address after NAT is done. BYPASS indicates the firewall stage will be skipped. For NO_SNAT or NO_DNAT, it must be BYPASS or leave it unassigned
 	FirewallMatch *string
-	// The flag, which suggests whether the logging of NAT rule is enabled or disabled. The default is False.
+	// Flag to enable or disable logging of packets matching this NAT rule. Default is false.
 	Logging *bool
 	// The sequence_number decides the rule_priority of a NAT rule. Sequence_number and rule_priority have 1:1 mapping.For each NAT section, there will be reserved rule_priority numbers.The valid range of rule_priority number is from 0 to 2147483647(MAX_INT). 1. INTERNAL section rule_priority reserved from 0 - 1023 (1024 rules) valid sequence_number range 0 - 1023 2. USER section rule_priority reserved from 1024 - 2147482623 (2147481600 rules) valid sequence_number range 0 - 2147481599 3. DEFAULT section rule_priority reserved from 2147482624 - 2147483647 (1024 rules) valid sequence_number range 0 - 1023 format: int32
 	SequenceNumber *int64
@@ -102253,7 +102829,7 @@ type PortAddressBindingEntry struct {
 	IpAddress *string
 	// Mac address for port binding format: mac-address
 	MacAddress *string
-	// VLAN ID for port binding format: int64
+	// VLAN ID this static IP/MAC address binding applies to, for a trunk port carrying multiple VLANs. format: int64
 	VlanId *int64
 }
 
@@ -103348,18 +103924,18 @@ func (s *PreconfiguredHostSwitchSpec) GetDataValue__() (vapiData_.DataValue, []e
 	return dataVal, nil
 }
 
-// Network prefix entry
+// One match/action entry of a PrefixList: a network prefix (optionally with a min/max prefix length range) and whether matching routes are PERMITted or DENYed.
 type PrefixEntry struct {
 	// Possible values are:
 	//
 	// * PrefixEntry#PrefixEntry_ACTION_PERMIT
 	// * PrefixEntry#PrefixEntry_ACTION_DENY
 	//
-	//  Action for the prefix list.
+	//  Whether a route matching this entry's network/le/ge is PERMITted (allowed through) or DENYed (filtered out).
 	Action *string
-	// Prefix length greater than or equal to. format: int32
+	// Match only if the route's prefix length is greater than or equal to this value (i.e. the network is this CIDR or a more-specific subnet of it, from this length up). format: int32
 	Ge *int64
-	// Prefix length less than or equal to. format: int32
+	// Match only if the route's prefix length is less than or equal to this value (i.e. the network is this CIDR or a less-specific/broader aggregate of it, up to this length). format: int32
 	Le *int64
 	// Network prefix in CIDR format. \"ANY\" matches all networks.
 	Network *string
@@ -103832,7 +104408,7 @@ type ProjectIpAddressAllocation struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// The customer needs to pass allocation_ips or allocation_size. If allocation_size is used, the system will allocate IP addresses from unused IP addresses. Range or comma separated is not supported in Project IP allocation. format: address-or-block-or-range
+	// Static IPv4/IPv6 address or CIDR to pin for this allocation (within ip_block), mutually exclusive with allocation_size. For IPv6 use ipv6_allocation_prefix_length to size the pinned prefix (default /64; 128 for a single host). Ranges/comma-separated lists unsupported. format: address-or-block-or-range
 	AllocationIps *string
 	// The system will allocate IPv4 addresses from unused IP addresses based on allocation size. format: int32
 	AllocationSize *int64
@@ -104209,11 +104785,11 @@ func (s *ProtocolVersion) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// List of outbound network ip blocks used by TGW via gateway connection, including TGW private ip blocks if the allow_private is enabled.
+// Configures which external IP blocks' prefixes, consumed by the Transit Gateway(s)/Project(s) attached via a GatewayConnection, are advertised from the Transit Gateway to the connected Tier-0 (as TGW_STATIC-type static routes), including private IP blocks if allow_private is enabled.
 type ProviderAdvertiseOutBoundNetworks struct {
-	// IP blocks used in advertisement filter to advertise prefixes from transit gateway.
+	// Policy paths of IP address blocks whose prefixes are advertised to the connected Tier-0 on behalf of the attached Transit Gateway(s)/Project(s). An address from one of these blocks is what ProviderNatConfig.ip_block must reference when provider-managed SNAT is enabled.
 	AllowExternalBlocks []string
-	// Setting to true allows tenant user to configure advertisement rules and nat. If this field is set to true, the gateway connection referencing this object can't be used in multiple TGWs. If this field is set to true, enable_snat, under nat_config in gateway connection, referencing this object cannot be true.
+	// When true, prefixes consumed from the Transit Gateway's private IP blocks are also advertised to the Tier-0 (in addition to the external IP block prefixes advertised by default) - allowing the tenant to configure advertisement rules and NAT against private addresses as well. VPC-private IP addresses are never advertised to the Tier-0, regardless of this setting. If this field is set to true, the gateway connection referencing this object can't be used in multiple TGWs. If this field is set to true, enable_snat, under nat_config in gateway connection, referencing this object cannot be true.
 	AllowPrivate *bool
 }
 
@@ -104301,13 +104877,13 @@ func (s *ProviderMetadataListResult) GetDataValue__() (vapiData_.DataValue, []er
 	return dataVal, nil
 }
 
-// Provider managed NAT config for transit gateway.
+// Provider-managed Source NAT (SNAT) configuration for traffic from the Transit Gateway(s)/ Project(s) attached via a GatewayConnection, translating their source addresses to one from ip_block as it exits through this connection. This acts as a default/fallback SNAT rule: any user-configured NAT rule on the Transit Gateway (TransitGatewayNatRule) matching the same traffic takes precedence over it.
 type ProviderNatConfig struct {
-	// Enable the provider managed SNAT rule with translated ip from ip_blocks. with enable_snat set to true, allow_private in advertise_outbound_networks in same GatewayConnection will not be supported.
+	// Enable the provider-managed SNAT rule, translating source addresses to ip_block. This is a default/fallback rule - a user-configured NAT rule on the Transit Gateway (TransitGatewayNatRule) matching the same traffic takes precedence over it. Mutually exclusive with allow_private on the same GatewayConnection's advertise_outbound_networks - both cannot be set at once.
 	EnableSnat *bool
-	// Policy path of ip block for SNAT. NAT ip_block must be part of allow_external_blocks for advertisement.
+	// Policy path of the IP address block SNAT translates into. Must be part of advertise_outbound_networks.allow_external_blocks, so the translated addresses are actually reachable/advertised.
 	IpBlock *string
-	// Enable NAT translation logging.
+	// Enable logging of provider-managed SNAT translations for this connection.
 	LoggingEnabled *bool
 }
 
@@ -109204,9 +109780,9 @@ func (s *RouteAdvertisementRule) GetDataValue__() (vapiData_.DataValue, []error)
 	return dataVal, nil
 }
 
-// List of routes to be aggregated
+// One CIDR to summarize/aggregate matching BGP routes into, on a BgpRoutingConfig.
 type RouteAggregationEntry struct {
-	// CIDR of aggregate address format: ip-cidr-block
+	// The summary/aggregate CIDR to advertise in place of the more-specific routes it covers. format: ip-cidr-block
 	Prefix *string
 	// Send only summarized route. Summarization reduces number of routes advertised by representing multiple related routes with prefix property.
 	SummaryOnly *bool
@@ -110365,7 +110941,7 @@ type RouteControllerRouteMapEntry struct {
 	MatchOperator *string
 	// Sequence number determines the order 'route map entries' are evaluated. Entries are evaluated in ascending sequence number order. If no sequence number is specified, a default value 0 is assigned. If multiple route map entries have the same sequence number, the order of evaluation is undefined. format: int64
 	SequenceNumber *int64
-	Set            *RouteMapEntrySet
+	Set            *RouteControllerRouteMapEntrySet
 }
 
 const RouteControllerRouteMapEntry_ACTION_PERMIT = "PERMIT"
@@ -110381,6 +110957,29 @@ func (s *RouteControllerRouteMapEntry) GetDataValue__() (vapiData_.DataValue, []
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for RouteControllerRouteMapEntry._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// Set criteria for route controller route map entry
+type RouteControllerRouteMapEntrySet struct {
+	// AS path prepend to influence route selection.
+	AsPathPrepend *string
+	// Set a list of BGP standard(regular or well-known), large or extended communities for matching routes. Well-known community name, community value in aa:nn (2byte:2byte) format for regular community, community value in aa:bb:nn (4byte:4byte:4byte) format for large community and community value in rt:ASN:NN (rt:2byte:4byte or rt:4byte:2byte) or rt:IP:NN (rt:Ipv4Address:2byte) format for extended community are supported. Multiple communities of each community type are supported.
+	Communities []string
+}
+
+func (s *RouteControllerRouteMapEntrySet) GetType__() vapiBindings_.BindingType {
+	return RouteControllerRouteMapEntrySetBindingType()
+}
+
+func (s *RouteControllerRouteMapEntrySet) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for RouteControllerRouteMapEntrySet._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -110601,14 +111200,14 @@ func (s *RouteDetails) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Route map entry
+// One match/action entry of a Tier0RouteMap: matches routes by community-list or prefix-list criteria, then either PERMITs them (optionally modifying attributes via \\\\`set\\\\`) or DENYs them.
 type RouteMapEntry struct {
 	// Possible values are:
 	//
 	// * RouteMapEntry#RouteMapEntry_ACTION_PERMIT
 	// * RouteMapEntry#RouteMapEntry_ACTION_DENY
 	//
-	//  Action for the route map entry
+	//  Whether routes matching this entry's community_list_matches/prefix_list_matches are PERMITted (allowed through, with \\\\`set\\\\` attributes applied) or DENYed (filtered out).
 	Action *string
 	// Community list match criteria for route map. Properties community_list_matches and prefix_list_matches are mutually exclusive and cannot be used in the same route map entry.
 	CommunityListMatches []CommunityMatchCriteria
@@ -110637,9 +111236,9 @@ func (s *RouteMapEntry) GetDataValue__() (vapiData_.DataValue, []error) {
 
 // Set criteria for route map entry
 type RouteMapEntrySet struct {
-	// AS path prepend to influence route selection.
+	// Space-separated AS number(s) to prepend to the route's AS-path before advertising it, making the route appear to have traversed more autonomous systems so peers prefer other, shorter paths instead.
 	AsPathPrepend *string
-	// Set BGP regular, large or extended community for matching routes. A maximum of one value for each community type separated by space. Well-known community name, community value in aa:nn (2byte:2byte) format for regular community, community value in aa:bb:nn (4byte:4byte:4byte) format for large community and community value in rt:ASN:NN (rt:2byte:4byte or rt:4byte:2byte) or rt:IP:NN (rt:Ipv4Address:2byte) format for extended community are supported. Extended communities are supported only for route controller communities.
+	// Set BGP regular or large community for matching routes. A maximum of one value for each community type separated by space. Well-known community name, community value in aa:nn (2byte:2byte) format for regular community and community value in aa:bb:nn (4byte:4byte:4byte) format for large community.
 	Community *string
 	// Local preference indicates the degree of preference for one BGP route over other BGP routes. The path with highest local preference is preferred. format: int64
 	LocalPreference *int64
@@ -110666,13 +111265,13 @@ func (s *RouteMapEntrySet) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Next hop configuration for network
+// One next-hop of a StaticRoutes entry: either a next-hop gateway IP address, or an interface scope (e.g. an IPSec VPN session or Transit Gateway attachment path) to route out of directly.
 type RouterNexthop struct {
-	// Cost associated with next hop route format: int32
+	// Administrative distance for this next hop; when multiple next hops/routes to the same destination exist, the one with the lowest admin_distance is preferred. format: int32
 	AdminDistance *int64
-	// Next hop gateway IP address format: ip
+	// Next hop gateway IP address to route matching traffic to. format: ip
 	IpAddress *string
-	// Interface path associated with current route. For example: specify a policy path referencing the IPSec VPN Session. Should not be provided while creating routes under VPC. Transit Gateway static route will be created with Transit gateway attachment as scope. Only single scope filed will be support for Transit gateway static route.
+	// Policy path(s) narrowing this next hop to a specific interface/attachment/session, i.e. what the route's traffic is actually routed over. Valid values depend on where the static route is configured: - Tier-0: an IPSecVpnSession, a Tier0Interface, or a connected Segment - routes over IPsec or a specific Tier-0 interface. - Tier-1: an IPSecVpnSession, a Tier1Interface, or a connected Segment. - Transit Gateway: a TransitGatewayAttachment, an IPSecVpnSession, or a connected VPC; only a single scope path is supported. - VPC: a VPC Subnet or VPC Subnet Port. For federation, if the route needs to be configured only on a specific site, scope can instead be set to that site's LocaleServices.
 	Scope []string
 }
 
@@ -113164,7 +113763,7 @@ func (s *SecurityStrategyListResult) GetDataValue__() (vapiData_.DataValue, []er
 	return dataVal, nil
 }
 
-// Segment configuration to attach workloads.
+// Segment configuration to attach workloads. A Segment is an L2 broadcast domain, scoped to a transport zone (transport_zone_path) that determines which transport nodes it can be realized on. There are two kinds, depending on the transport zone: - Overlay Segments: connected to an Overlay Transport Zone and assigned an overlay_id (VNI). They use Geneve encapsulation to tunnel traffic across the physical (Layer 3) network without requiring physical network configuration. Typically attached to a Tier-1 (or, for Infra segments, a Tier-0) gateway via connectivity_path. - VLAN Segments: connected to a VLAN Transport Zone. They map directly to a traditional VLAN on the physical network switches; if multiple VLAN IDs are configured, the segment acts as a trunk VLAN segment. Typically attached to a Tier-0 for external connectivity, or to Tier-1 interfaces for services.
 type Segment struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -113239,7 +113838,7 @@ type Segment struct {
 	ConnectivityPath *string
 	// Policy path to DHCP server or relay configuration to use for all IPv4 & IPv6 subnets configured on this segment.
 	DhcpConfigPath *string
-	// DNS domain name
+	// DNS domain name to hand out to DHCP clients on this segment.
 	DomainName *string
 	// Flag to indicate if the Segment is a Child-Segment of type EVPN.
 	EvpnSegment *bool
@@ -113266,9 +113865,9 @@ type Segment struct {
 	//
 	//  If this field is not set for overlay segment, then the default of MTEP will be used.
 	ReplicationMode *string
-	// Subnet configuration. Max 1 subnet
+	// Gateway IP/prefix (and optional DHCP config) for this segment, one entry per subnet. At most 1 IPv4 subnet and at most 2 IPv6 subnets are supported per segment.
 	Subnets []SegmentSubnet
-	// Policy path to the transport zone. Supported for VLAN backed segments as well as Overlay Segments. - This field is required for VLAN backed Segments. - For overlay Segments, it is auto assigned if only one transport zone exists in the enforcement point. Default transport zone is auto assigned for overlay segments if none specified.
+	// Policy path to the transport zone (of type PolicyTransportZone). Supported for VLAN backed segments as well as Overlay Segments. - This field is required for VLAN backed Segments. - For overlay Segments, it is auto assigned if only one transport zone exists in the enforcement point. Default transport zone is auto assigned for overlay segments if none specified.
 	TransportZonePath *string
 	// Possible values are:
 	//
@@ -113277,7 +113876,7 @@ type Segment struct {
 	// * Segment#Segment_TYPE_ROUTED_AND_EXTENDED
 	// * Segment#Segment_TYPE_DISCONNECTED
 	//
-	//  Segment type based on configuration.
+	//  Read-only, derived from configuration: ROUTED (has connectivity_path to a gateway), EXTENDED (has l2_extension to an L2VPN session), ROUTED_AND_EXTENDED (both), or DISCONNECTED (neither).
 	Type_ *string
 	// List of VLAN IDs or ranges for a VLAN-backed segment. Each element is either a single VLAN ID (0-4094) or a contiguous range in the format 'start-end' (e.g. '100-200'). Mixed arrays are supported (e.g. ['100', '200-300', '400']). Required when creating a VLAN-backed segment; not applicable to overlay segments.
 	VlanIds []string
@@ -113797,6 +114396,8 @@ type SegmentDhcpConfig struct {
 	//
 	// * SegmentDhcpConfig#SegmentDhcpConfig_RESOURCE_TYPE_SEGMENTDHCPV4CONFIG
 	// * SegmentDhcpConfig#SegmentDhcpConfig_RESOURCE_TYPE_SEGMENTDHCPV6CONFIG
+	//
+	//  Polymorphic discriminator: SegmentDhcpV4Config for IPv4 DHCP configuration, or SegmentDhcpV6Config for IPv6.
 	ResourceType string
 	// IP address of the DHCP server in CIDR format. The server_address is mandatory in case this segment has provided a dhcp_config_path and it represents a DHCP server config. If this SegmentDhcpConfig is a SegmentDhcpV4Config, the address must be an IPv4 address. If this is a SegmentDhcpV6Config, the address must be an IPv6 address. This address must not overlap the ip-ranges of the subnet, or the gateway address of the subnet, or the DHCP static-binding addresses of this segment. format: ip-cidr-block
 	ServerAddress *string
@@ -113835,6 +114436,8 @@ type SegmentDhcpV4Config struct {
 	//
 	// * SegmentDhcpConfig#SegmentDhcpConfig_RESOURCE_TYPE_SEGMENTDHCPV4CONFIG
 	// * SegmentDhcpConfig#SegmentDhcpConfig_RESOURCE_TYPE_SEGMENTDHCPV6CONFIG
+	//
+	//  Polymorphic discriminator: SegmentDhcpV4Config for IPv4 DHCP configuration, or SegmentDhcpV6Config for IPv6.
 	ResourceType string
 	// IP address of the DHCP server in CIDR format. The server_address is mandatory in case this segment has provided a dhcp_config_path and it represents a DHCP server config. If this SegmentDhcpConfig is a SegmentDhcpV4Config, the address must be an IPv4 address. If this is a SegmentDhcpV6Config, the address must be an IPv6 address. This address must not overlap the ip-ranges of the subnet, or the gateway address of the subnet, or the DHCP static-binding addresses of this segment. format: ip-cidr-block
 	ServerAddress *string
@@ -113862,7 +114465,7 @@ func (s *SegmentDhcpV4Config) GetDataValue__() (vapiData_.DataValue, []error) {
 
 // DHCP configuration of IPv6 subnet in a segment
 type SegmentDhcpV6Config struct {
-	// Domain names for subnet.
+	// DNS domain names to hand out to DHCPv6 clients on this subnet.
 	DomainNames []string
 	// Excluded addresses to define dynamic ip allocation ranges. format: address-or-block-or-range
 	ExcludedRanges []string
@@ -113878,6 +114481,8 @@ type SegmentDhcpV6Config struct {
 	//
 	// * SegmentDhcpConfig#SegmentDhcpConfig_RESOURCE_TYPE_SEGMENTDHCPV4CONFIG
 	// * SegmentDhcpConfig#SegmentDhcpConfig_RESOURCE_TYPE_SEGMENTDHCPV6CONFIG
+	//
+	//  Polymorphic discriminator: SegmentDhcpV4Config for IPv4 DHCP configuration, or SegmentDhcpV6Config for IPv6.
 	ResourceType string
 	// IP address of the DHCP server in CIDR format. The server_address is mandatory in case this segment has provided a dhcp_config_path and it represents a DHCP server config. If this SegmentDhcpConfig is a SegmentDhcpV4Config, the address must be an IPv4 address. If this is a SegmentDhcpV6Config, the address must be an IPv6 address. This address must not overlap the ip-ranges of the subnet, or the gateway address of the subnet, or the DHCP static-binding addresses of this segment. format: ip-cidr-block
 	ServerAddress *string
@@ -114871,7 +115476,7 @@ func (s *SegmentRealTimeEthProfileBindingMapListResult) GetDataValue__() (vapiDa
 
 // Segment request parameter, used in hierarchical API.
 type SegmentRequestParameter struct {
-	// Force segment update.
+	// Force this segment operation (e.g. delete) even if it has dependent objects (ports, DHCP static bindings) that would normally block it.
 	Force *bool
 	// The type of this request parameter.
 	ResourceType string
@@ -117108,8 +117713,9 @@ type ShaEdgeVodap20secMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -117163,8 +117769,9 @@ type ShaEdgeVodap5minMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -117218,8 +117825,9 @@ type ShaEdgeVodapAdvancedMetricsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -117273,8 +117881,9 @@ type ShaEsxDatapathMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -117328,8 +117937,9 @@ type ShaEsxHealthMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -117383,8 +117993,9 @@ type ShaEsxObsrvAlarmsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -117514,8 +118125,9 @@ type ShaEsxObsrvSegmentStatsFileDumpMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -117569,8 +118181,9 @@ type ShaEsxObsrvStatsManagementConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -117624,8 +118237,9 @@ type ShaEsxObsrvStatsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -117683,8 +118297,9 @@ type ShaEsxObsrvTnStatsFileDumpMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -117740,8 +118355,9 @@ type ShaEsxResourceMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -117795,8 +118411,9 @@ type ShaEsxTnMetricsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -117850,8 +118467,9 @@ type ShaEsxTnPnicMetricsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -117905,8 +118523,9 @@ type ShaEsxTnTopologyMetricsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -117960,8 +118579,9 @@ type ShaEsxTnVmknicMetricsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -118015,8 +118635,9 @@ type ShaEsxTnVnicMetricsMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -118070,8 +118691,9 @@ type ShaGatewayDnsResolverStatusMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -118125,8 +118747,9 @@ type ShaHardwareUsageMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -118465,8 +119088,9 @@ type ShaMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -118494,6 +119118,7 @@ const ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG = "ShaEdgeVod
 const ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG = "ShaEdgeVodapAdvancedMetricsMonitorConfig"
 const ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG = "ShaVodapAlarmMonitorConfig"
 const ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG = "ShaGatewayDnsResolverStatusMonitorConfig"
+const ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG = "ShaVnsDpStatsMonitorConfig"
 
 func (s *ShaMonitorConfig) GetType__() vapiBindings_.BindingType {
 	return ShaMonitorConfigBindingType()
@@ -119869,8 +120494,9 @@ type ShaUaMetricMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -119888,6 +120514,62 @@ func (s *ShaUaMetricMonitorConfig) GetDataValue__() (vapiData_.DataValue, []erro
 	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
 	if err != nil {
 		vapiLog_.Errorf("Error in ConvertToVapi for ShaUaMetricMonitorConfig._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// VNS datapath statistics monitor configuration
+type ShaVnsDpStatsMonitorConfig struct {
+	// The interval (in seconds) for collecting the VNS datapath statistics from a node format: int64
+	CheckInterval *int64
+	// Flag to enable/disable this monitor
+	Enable *bool
+	// SHA metric category config list
+	MetricCategories []ShaMetricCategoryConfig
+	// Possible values are:
+	//
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVALARMSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVSTATSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVSTATSMANAGEMENTCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVSEGMENTSTATSFILEDUMPMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXOBSRVTNSTATSFILEDUMPMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAUAMETRICMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAHARDWAREUSAGEMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXHEALTHMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXRESOURCEMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXTNMETRICSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXTNVNICMETRICSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXTNVMKNICMETRICSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXTNPNICMETRICSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXTNTOPOLOGYMETRICSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAESXDATAPATHMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP20SECMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAP5MINMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
+	//
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
+	ResourceType string
+}
+
+// Identifier denoting this class, when it is used in polymorphic context.
+//
+// This value should be assigned to the property which is used to discriminate the actual type used in the polymorphic context.
+const ShaVnsDpStatsMonitorConfig__TYPE_IDENTIFIER = "ShaVnsDpStatsMonitorConfig"
+
+func (s *ShaVnsDpStatsMonitorConfig) GetType__() vapiBindings_.BindingType {
+	return ShaVnsDpStatsMonitorConfigBindingType()
+}
+
+func (s *ShaVnsDpStatsMonitorConfig) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for ShaVnsDpStatsMonitorConfig._GetDataValue method - %s",
 			vapiBindings_.VAPIerrorsToError(err).Error())
 		return nil, err
 	}
@@ -119922,8 +120604,9 @@ type ShaVodapAlarmMonitorConfig struct {
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAEDGEVODAPADVANCEDMETRICSMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVODAPALARMMONITORCONFIG
 	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAGATEWAYDNSRESOLVERSTATUSMONITORCONFIG
+	// * ShaMonitorConfig#ShaMonitorConfig_RESOURCE_TYPE_SHAVNSDPSTATSMONITORCONFIG
 	//
-	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor
+	//  The resource type of configuration for monitors. ShaEsxObsrvAlarmsMonitorConfig - The configuration for SHA monitor esx-obsrv-alarms-monitor ShaEsxObsrvStatsMonitorConfig - The configuration for SHA monitor esx-obsrv-stats-monitor ShaEsxObsrvStatsManagementConfig - The configuration for SHA monitor esx-obsrv-stats-management ShaEsxObsrvSegmentStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-segment-stats-file-dump-monitor ShaEsxObsrvTnStatsFileDumpMonitorConfig - The configuration for SHA monitor esx-obsrv-tn-stats-file-dump-monitor ShaUaMetricMonitorConfig - The configuration for SHA monitor ua-metric-monitor ShaHardwareUsageMonitorConfig - The configuration for SHA monitor hardware-usage-monitor ShaEsxHealthMonitorConfig - The configuration for SHA monitor esx-health-monitor ShaEsxResourceMonitorConfig - The configuration for SHA monitor esx-resource-monitor ShaVodapAlarmMonitorConfig - The configuration for SHA monitor vodap-alarm-monitor ShaEsxTnMetricsMonitorConfig - The configuration for SHA monitor esx-tn-metrics-monitor ShaEsxTnVnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vnic-metrics-monitor ShaEsxTnVmknicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-vmknic-metrics-monitor ShaEsxTnPnicMetricsMonitorConfig - The configuration for SHA monitor esx-tn-pnic-metrics-monitor ShaEsxTnTopologyMetricsMonitorConfig - The configuration for SHA monitor esx-tn-topology-metrics-monitor ShaEsxDatapathMonitorConfig - The configuration for SHA monitor esx-datapath-monitor ShaEdgeVodap20secMonitorConfig - The configuration for SHA monitor edge-vodap-20sec-monitor ShaEdgeVodap5minMonitorConfig - The configuration for SHA monitor edge-vodap-5min-monitor ShaEdgeVodapAdvancedMetricsMonitorConfig - The configuration for SHA monitor edge-vodap-advanced-metrics-monitor ShaGatewayDnsResolverStatusMonitorConfig - The configuration for SHA monitor gateway-dns-resolver-status-monitor ShaVnsDpStatsMonitorConfig - The configuration for SHA monitor vns-dp-stats-monitor
 	ResourceType string
 }
 
@@ -120296,7 +120979,7 @@ func (s *Site) GetDataValue__() (vapiData_.DataValue, []error) {
 type SiteAllocationIndexForEdge struct {
 	// Unique edge cluster node index across sites based on stretch of the Gateway. For example, if a Gateway is stretched to sites S1 with one edge cluster of 3 nodes and site S2 with one edge cluster of 2 nodes, the in the Global Manager will allocate the index for 5 edge nodes and 2 cluster in the rage 0 to 7. format: int64
 	Index *int64
-	// Edge cluster or edge node path
+	// Policy path of the specific PolicyEdgeCluster or PolicyEdgeNode this index was allocated for (which one depends on context; this is an internal, system-computed field).
 	TargetResourcePath *string
 }
 
@@ -121887,9 +122570,9 @@ type StaticARPConfig struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// IP Address format: ip
+	// IP address to statically map to mac_address, bypassing ARP discovery. format: ip
 	IpAddress *string
-	// MAC Address format: mac-address
+	// MAC address to statically associate with ip_address. format: mac-address
 	MacAddress *string
 }
 
@@ -122798,7 +123481,7 @@ func (s *StaticPoolConfig) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Static Route Bidirectional Forwarding Detection Peer
+// Bidirectional Forwarding Detection (BFD) monitoring for a static route's next-hop peer, used to quickly detect link failure and withdraw the route (independent of BGP's own BFD/hold-timers).
 type StaticRouteBfdPeer struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -122857,7 +123540,7 @@ type StaticRouteBfdPeer struct {
 	Overridden *bool
 	// Bfd Profile is not supported for IPv6 networks.
 	BfdProfilePath *string
-	// Flag to enable BFD peer.
+	// Flag to enable BFD monitoring of this static route peer.
 	Enabled *bool
 	// Both IPv4 and IPv6 addresses are supported. Only a single BFD config per peer address is allowed.
 	PeerAddress *string
@@ -125523,7 +126206,7 @@ func (s *ThreatStatus) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Tier-0 configuration for external connectivity.
+// Tier-0 configuration for external connectivity. A Tier-0 gateway is the top-level provider router: it terminates north-south connectivity to the physical/external network via BGP or static routes. Underneath, it connects Tier-1 gateways directly and Transit Gateways via a Gateway Connection (GatewayConnection). A Tier-0 can be deployed as a VRF by configuring vrf_config. In a multi-tenancy environment, Tier-0s also serve as the provider gateway shared across tenants/projects.
 type Tier0 struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -125822,9 +126505,9 @@ func (s *Tier0GatewayState) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Tier0 HA VIP Config
+// A floating Virtual IP (VIP) shared between exactly two Tier-0 external interfaces (external_interface_paths), always owned by whichever is currently Active. Applicable only when the Tier-0's ha_mode is ACTIVE_STANDBY.
 type Tier0HaVipConfig struct {
-	// Flag to enable this HA VIP config.
+	// Flag to enable/disable this floating VIP pairing between the two external_interface_paths.
 	Enabled *bool
 	// Policy paths to Tier0 external interfaces which are to be paired to provide redundancy. Floating IP will be owned by one of these interfaces depending upon which edge node is Active.
 	ExternalInterfacePaths []string
@@ -125847,7 +126530,7 @@ func (s *Tier0HaVipConfig) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Tier-0 interface configuration for external connectivity.
+// Tier-0 interface configuration for external connectivity. A Tier-0's service router is configured on the edge node(s) where its Tier-0 interfaces are defined. A Tier-0 VRF is configured on edge nodes matching its parent Tier-0's. A Tier-0 can have up to 8 active edge nodes in Active-Active (A/A) mode, or 2 edge nodes in Active-Standby (A/S) mode. Nested under a Tier-0's LocaleServices (/infra/tier-0s/<tier-0-id>/locale-services/<locale-service-id>/interfaces).
 type Tier0Interface struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -125908,7 +126591,7 @@ type Tier0Interface struct {
 	DhcpRelayPath *string
 	// Specify IP address and network prefix for interface.
 	Subnets []InterfaceSubnet
-	// Vlan id. format: int64
+	// VLAN ID to tag traffic on this interface with, when the interface is attached to a VLAN Segment that itself carries multiple VLANs (trunk). format: int64
 	AccessVlanId *int64
 	// Possible values are:
 	//
@@ -125921,11 +126604,11 @@ type Tier0Interface struct {
 	//
 	// Deprecated: This API element is deprecated.
 	EdgeClusterMemberIndex *int64
-	// Policy path to edge node to handle external connectivity. Required when interface type is EXTERNAL. Edge path is required for service interface when tier0 is in ACTIVE_ACTIVE ha_mode. Edge path is required for VRF service interface when parent tier0 is in ACTIVE_ACTIVE ha_mode.
+	// Policy path to the edge node (of type PolicyEdgeNode) that hosts this interface, handling external connectivity. Required when interface type is EXTERNAL. Edge path is required for service interface when tier0 is in ACTIVE_ACTIVE ha_mode. Edge path is required for VRF service interface when parent tier0 is in ACTIVE_ACTIVE ha_mode.
 	EdgePath *string
-	// IGMP local join groups configuration. format: ipv4
+	// IPv4 multicast group addresses that this interface should statically join, as if a receiver on this interface sent an IGMP (Internet Group Management Protocol) join for each group, without requiring an actual client to do so. format: ipv4
 	IgmpLocalJoinGroups []string
-	// Configuration IPv6 NDRA profile. Only one NDRA profile can be configured.
+	// Policy path(s) of the Ipv6NdraProfile to configure IPv6 NDRA profile. Only one NDRA profile can be configured.
 	Ipv6ProfilePaths []string
 	// Specify logical switch to which tier-0 interface is connected for external access. This property is deprecated, use segment_path instead. Both properties cannot be used together.
 	//
@@ -125949,14 +126632,14 @@ type Tier0Interface struct {
 	// * Tier0Interface#Tier0Interface_TYPE_LOOPBACK
 	// * Tier0Interface#Tier0Interface_TYPE_INTERVRF
 	//
-	//  Interface type
+	//  Interface type: EXTERNAL for uplinks to the physical/external network, SERVICE for interfaces used by stateful services (e.g. NAT, load balancer) or standalone/VRF service ports, LOOPBACK for a loopback interface, INTERVRF for the auto-created interface connecting a VRF Tier-0 to its parent Tier-0.
 	Type_ *string
 	// Possible values are:
 	//
 	// * Tier0Interface#Tier0Interface_URPF_MODE_NONE
 	// * Tier0Interface#Tier0Interface_URPF_MODE_STRICT
 	//
-	//  Unicast Reverse Path Forwarding mode
+	//  Unicast Reverse Path Forwarding (uRPF) mode for this interface. STRICT drops a packet unless the best route back to its source address is out this same interface, guarding against IP spoofing; NONE disables the check.
 	UrpfMode *string
 }
 
@@ -126128,9 +126811,9 @@ func (s *Tier0InterfaceListResult) GetDataValue__() (vapiData_.DataValue, []erro
 	return dataVal, nil
 }
 
-// Multicast PIM configuration.
+// Protocol Independent Multicast (PIM) configuration for a Tier-0 interface, used to build multicast distribution trees with upstream/downstream multicast routers.
 type Tier0InterfacePimConfig struct {
-	// enable/disable PIM configuration.
+	// Flag to enable/disable PIM on this interface.
 	Enabled *bool
 	// PIM hello interval(seconds) at interface level. format: int32
 	HelloInterval *int64
@@ -126210,7 +126893,7 @@ func (s *Tier0NumberOfRoutesResult) GetDataValue__() (vapiData_.DataValue, []err
 	return dataVal, nil
 }
 
-// RouteMap for redistributing routes to BGP and other routing protocols
+// A named, ordered list of match/set entries (matching on prefix-lists, community-lists, AS path etc.) used to filter and modify routes during redistribution or BGP route advertisement on a Tier-0 gateway. Referenced by Tier0RouteRedistributionRule.route_map_path and by BGP neighbor route-map fields.
 type Tier0RouteMap struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -126267,7 +126950,7 @@ type Tier0RouteMap struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Ordered list of route map entries.
+	// Ordered list of route map entries (see RouteMapEntry); evaluated in order, first match wins.
 	Entries []RouteMapEntry
 }
 
@@ -126320,11 +127003,11 @@ func (s *Tier0RouteMapListResult) GetDataValue__() (vapiData_.DataValue, []error
 	return dataVal, nil
 }
 
-// Route Redistribution config
+// Controls which route types (static, connected, BGP, NAT, etc. - see Tier0RouteRedistributionTypes) are redistributed into BGP and/or OSPF on this LocaleServices, via one or more redistribution_rules.
 type Tier0RouteRedistributionConfig struct {
-	// Flag to enable route redistribution for BGP.
+	// Flag to enable route redistribution into BGP. When false, redistribution_rules with destination BGP have no effect.
 	BgpEnabled *bool
-	// Flag to enable route redistribution for OSPF.
+	// Flag to enable route redistribution into OSPF. When false, redistribution_rules with destination OSPF have no effect.
 	OspfEnabled *bool
 	// List of redistribution rules.
 	RedistributionRules []Tier0RouteRedistributionRule
@@ -126345,7 +127028,7 @@ func (s *Tier0RouteRedistributionConfig) GetDataValue__() (vapiData_.DataValue, 
 	return dataVal, nil
 }
 
-// Single route redistribution rule
+// One rule of a Tier0RouteRedistributionConfig: which route type(s) to redistribute, to which destination protocol(s), optionally filtered/tagged by a route map.
 type Tier0RouteRedistributionRule struct {
 	// Possible values are:
 	//
@@ -126354,9 +127037,9 @@ type Tier0RouteRedistributionRule struct {
 	//
 	//  Each rule can have more than one destinations. If destinations not specified for a given rule, default destionation will be BGP
 	Destinations []string
-	// Rule name
+	// User-friendly name for this redistribution rule; not used for matching.
 	Name *string
-	// Route map to be associated with the redistribution rule
+	// Policy path of the Tier0RouteMap to be associated with this redistribution rule. When set, routes matched/permitted by the route map's entries further filter which redistributed routes are advertised.
 	RouteMapPath *string
 	// Possible values are:
 	//
@@ -126383,7 +127066,7 @@ type Tier0RouteRedistributionRule struct {
 	// * Tier0RouteRedistributionRule#Tier0RouteRedistributionRule_ROUTE_REDISTRIBUTION_TYPES_INTER_VRF_STATIC
 	// * Tier0RouteRedistributionRule#Tier0RouteRedistributionRule_ROUTE_REDISTRIBUTION_TYPES_TGW_STATIC
 	//
-	//  List of redistribution types
+	//  Route type(s) (e.g. TIER0_STATIC, TIER0_CONNECTED, TIER1_STATIC, ...) to redistribute. See Tier0RouteRedistributionTypes for the full set and meaning of each value.
 	RouteRedistributionTypes []string
 }
 
@@ -126719,7 +127402,7 @@ func (s *Tier0VrfConfig) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Tier-1 instance configuration.
+// Tier-1 instance configuration. A Tier-1 gateway provides tenant/application-level routing and services (NAT, firewall, load balancing, DHCP relay); it is typically connected to a Tier-0 gateway (tier0_path) for external connectivity and is the parent of any Segments attached beneath it.
 type Tier1 struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -126821,7 +127504,7 @@ type Tier1 struct {
 	//  Supports edge node allocation at different sizes for routing and load balancer service to meet performance and scalability requirements. ROUTING: Allocate edge node to provide routing services. LB_SMALL, LB_MEDIUM, LB_LARGE, LB_XLARGE: Specify size of load balancer service that will be configured on TIER1 gateway.
 	PoolAllocation *string
 	QosProfile     *GatewayQosProfileConfig
-	// Route advertisement rules and filtering
+	// Rules to allow or deny specific prefixes from being advertised to the connected Tier-0, instead of all prefixes of the route type(s) enabled in route_advertisement_types. See RouteAdvertisementRule.
 	RouteAdvertisementRules []RouteAdvertisementRule
 	// Possible values are:
 	//
@@ -126833,7 +127516,7 @@ type Tier1 struct {
 	// * Tier1#Tier1_ROUTE_ADVERTISEMENT_TYPES_DNS_FORWARDER_IP
 	// * Tier1#Tier1_ROUTE_ADVERTISEMENT_TYPES_IPSEC_LOCAL_ENDPOINT
 	//
-	//  Enable different types of route advertisements. When not specified, routes to IPSec VPN local-endpoint subnets (TIER1_IPSEC_LOCAL_ENDPOINT) are automatically advertised.
+	//  Route type(s) to advertise to the connected Tier-0. Once a type is enabled here, all of its qualified prefixes are advertised; to instead allow or deny specific prefixes rather than all prefixes of a type, use route_advertisement_rules. When not specified, routes to IPSec VPN local-endpoint subnets (TIER1_IPSEC_LOCAL_ENDPOINT) are automatically advertised.
 	RouteAdvertisementTypes []string
 	// The reference to the Tier-0 instance using the policy path of the Tier-0 of type Provider. Specify the Tier-1 connectivity to Tier-0 instance. .
 	Tier0Path *string
@@ -126984,7 +127667,7 @@ func (s *Tier1GatewayState) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Tier-1 interface configuration for attaching services.
+// Tier-1 interface configuration for attaching services. Nested under a Tier-1's LocaleServices (/infra/tier-1s/<tier-1-id>/locale-services/<locale-service-id>/interfaces).
 type Tier1Interface struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -127052,7 +127735,7 @@ type Tier1Interface struct {
 	//
 	//  This flag is used to enable/disable admin state on tier-1 service port. If admin_state flag value is not specified then default is UP. When set to UP then traffic on service port will be enabled and service port is enabled from routing perspective. When set to DOWN then traffic on service port will be disabled and service port is down from routing perspective. This flag is experimental because it will be used in V2T BYOT migration.
 	AdminState *string
-	// Configrue IPv6 NDRA profile. Only one NDRA profile can be configured.
+	// Policy path(s) of the Ipv6NdraProfile to configure IPv6 NDRA profile. Only one NDRA profile can be configured.
 	Ipv6ProfilePaths []string
 	// Maximum transmission unit (MTU) specifies the size of the largest packet that a network protocol can transmit. format: int32
 	Mtu *int64
@@ -127063,7 +127746,7 @@ type Tier1Interface struct {
 	// * Tier1Interface#Tier1Interface_URPF_MODE_NONE
 	// * Tier1Interface#Tier1Interface_URPF_MODE_STRICT
 	//
-	//  Unicast Reverse Path Forwarding mode
+	//  Unicast Reverse Path Forwarding (uRPF) mode for this interface. STRICT drops a packet unless the best route back to its source address is out this same interface, guarding against IP spoofing; NONE disables the check.
 	UrpfMode *string
 }
 
@@ -132191,7 +132874,28 @@ func (s *TrafficRateLimits) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Policy VPC transit gateway
+// Tx/Rx totals restricted to a single address family (IPv4 or IPv6). Only the totals (bytes, packets, dropped) are reported per address family; aggregated dataplane drop reasons remain on the parent counters. Populated only when the dataplane reports per-address-family statistics; unset on older edges or when the VpcIpv6 feature is off.
+type TrafficStatsPerAddrFamily struct {
+	Rx *ServiceGatewayCounterCommon
+	Tx *ServiceGatewayCounterCommon
+}
+
+func (s *TrafficStatsPerAddrFamily) GetType__() vapiBindings_.BindingType {
+	return TrafficStatsPerAddrFamilyBindingType()
+}
+
+func (s *TrafficStatsPerAddrFamily) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for TrafficStatsPerAddrFamily._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
+// A Transit Gateway (TGW) is the routing hub for VPC networking: it connects VPCs to each other (grouped and scoped by a ConnectivityPolicy) and to the outside world. Based on how its TransitGatewayAttachment(s) attach it externally, a TGW takes on one of two mutually exclusive connectivity models: - Centralized (CTGW): has attachment(s) with connection_path pointing to a GatewayConnection and/or cna_path pointing to one or more CentralizedNetworkAttachments (CNA) - a GatewayConnection attachment is not required; a CTGW can consist of CNA attachment(s) alone, or both kinds together. A CTGW has a singleton CentralizedConfig child controlling its HA mode and edge cluster placement, which can likewise be defined with a GatewayConnection attachment, CNA attachment(s) alone, or both. - Distributed (DTGW): attachment(s) with connection_path pointing to a DistributedVlanConnection or DistributedVxlanConnection. A DTGW has no CentralizedConfig/HA mode; its data path is distributed rather than edge-hosted. GatewayConnection-type and distributed VLAN/VXLAN-type attachments cannot coexist on the same Transit Gateway.
 type TransitGateway struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -132280,7 +132984,7 @@ func (s *TransitGateway) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Transit Gateway Attachment
+// Attaches a Transit Gateway externally, via exactly one of two mutually exclusive mechanisms (connection_path or cna_path). The first GatewayConnection-type attachment added to a Transit Gateway auto-creates its CentralizedConfig (ha_mode/edge cluster) if one doesn't already exist.
 type TransitGatewayAttachment struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -132342,11 +133046,11 @@ type TransitGatewayAttachment struct {
 	// * TransitGatewayAttachment#TransitGatewayAttachment_ADMIN_STATE_UP
 	// * TransitGatewayAttachment#TransitGatewayAttachment_ADMIN_STATE_DOWN
 	//
-	//  Administrative state of the centralized network attachment interface. UP: Interface is administratively enabled. DOWN: Interface is administratively disabled.
+	//  Administrative state of the centralized network attachment (CNA) interface; only applicable to cna_path-based attachments. UP: Interface is administratively enabled. DOWN: Interface is administratively disabled.
 	AdminState *string
-	// Policy path to centralized network attachment. Either connection_path or cna_path must be provided, but not both. When connection_path is provided, this field must not be set.
+	// Policy path to a pre-existing CentralizedNetworkAttachment (CNA), layering additional centralized connectivity onto a CTGW. On this attachment object, connection_path and cna_path are mutually exclusive - set one or the other, not both - but a CTGW itself can have both a GatewayConnection-type attachment and one or more CNA-type attachments at the same time, each as its own separate TransitGatewayAttachment.
 	CnaPath *string
-	// Policy path of connectivity profile. Either connection_path or cna_path must be provided, but not both. When cna_path is provided, this field must not be set.
+	// Policy path to a GatewayConnection, DistributedVlanConnection, or DistributedVxlanConnection - which one determines the Transit Gateway's connectivity model: GatewayConnection makes it Centralized (CTGW), the other two make it Distributed (DTGW). GatewayConnection-type and distributed-type attachments cannot coexist on the same Transit Gateway. Either connection_path or cna_path must be provided, but not both; when cna_path is provided, this field must not be set.
 	ConnectionPath *string
 	// List of route advertisements rules. When not specified, PUBLIC route advertisements rule will be created by default.
 	RouteAdvertisementRules []TransitGatewayRouteAdvertisementRule
@@ -132355,7 +133059,7 @@ type TransitGatewayAttachment struct {
 	// * TransitGatewayAttachment#TransitGatewayAttachment_URPF_MODE_NONE
 	// * TransitGatewayAttachment#TransitGatewayAttachment_URPF_MODE_STRICT
 	//
-	//  Unicast Reverse Path Forwarding mode
+	//  Unicast Reverse Path Forwarding (uRPF) mode for this attachment. STRICT drops a packet unless the best route back to its source address is out this same attachment, guarding against IP spoofing; NONE disables the check.
 	UrpfMode *string
 }
 
@@ -132874,7 +133578,7 @@ type TransitGatewayBgpRoutingConfig struct {
 	Overridden *bool
 	// Administrative distance for IPv4 and IPv6 eBGP learnt routes(inbound). User is allowed to set this value only if BGP is disabled. format: int32
 	EbgpAdminDistance *int64
-	// Flag to enable ECMP.
+	// Flag to enable Equal-Cost Multi-Path (ECMP) routing: when multiple BGP-learned routes to the same destination have equal cost, traffic is load-balanced across all of them instead of using only one.
 	Ecmp *bool
 	// Flag to enable BGP configuration. Disabling will stop feature and BGP peering.
 	Enabled               *bool
@@ -132885,9 +133589,9 @@ type TransitGatewayBgpRoutingConfig struct {
 	InterSrIbgp *bool
 	// Specify BGP AS number for Tier-0 to advertize to BGP peers. AS number can be specified in ASPLAIN (e.g., \"65546\") or ASDOT (e.g., \"1.10\") format. Empty string disables BGP feature. It is required by normal tier0 but not required in vrf tier0.
 	LocalAsNum *string
-	// Flag to enable BGP multipath relax option.
+	// Flag to enable BGP multipath relax: allows ECMP across routes learned from neighbors in different remote AS numbers (not just the same AS), as long as all other BGP attributes used for best-path selection are equal.
 	MultipathRelax *bool
-	// List of routes to be aggregated.
+	// List of routes (CIDR prefixes) to summarize/aggregate before advertising to BGP peers, to reduce the number of routes advertised. See RouteAggregationEntry.
 	RouteAggregations []RouteAggregationEntry
 	// Timer value in seconds controlling how long the transit gateway waits before marking forwarding as active after a failover event. Valid range is 0 to 100 seconds. Default is 5 seconds. format: int64
 	ForwardingUpTimer         *int64
@@ -132943,7 +133647,7 @@ func (s *TransitGatewayListResult) GetDataValue__() (vapiData_.DataValue, []erro
 	return dataVal, nil
 }
 
-// Represents a NAT section for a given VPC transit gateway. This object is created by default when the corresponding VPC transit gateway is created. Under a transit gateway there will be 4 different NATs (sections) -- (INTERNAL, USER, DEFAULT and NAT64).
+// Represents a NAT section for a given VPC transit gateway. This object is created by default when the corresponding VPC transit gateway is created. Under a transit gateway there will be 4 different NATs (sections) -- (INTERNAL, USER, DEFAULT and NAT64). NAT (USER section) rules are only supported on a Centralized Transit Gateway (CTGW) - one with a GatewayConnection-type attachment and/or a CentralizedNetworkAttachment (CNA)-type attachment; they are rejected on a Distributed Transit Gateway (DTGW).
 type TransitGatewayNat struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -133007,7 +133711,7 @@ type TransitGatewayNat struct {
 	// * TransitGatewayNat#TransitGatewayNat_NAT_TYPE_DEFAULT
 	// * TransitGatewayNat#TransitGatewayNat_NAT_TYPE_NAT64
 	//
-	//  Represents a NAT section under tier-0/tier-1.
+	//  Represents a NAT section under tier-0/tier-1. INTERNAL, USER, and DEFAULT rules are evaluated in that priority order (see PolicyNatRule.sequence_number/rule_priority for the exact numeric ranges reserved to each section); NAT64 rules translate between external IPv6 and internal IPv4 addresses.
 	NatType *string
 }
 
@@ -133065,7 +133769,7 @@ func (s *TransitGatewayNatListResult) GetDataValue__() (vapiData_.DataValue, []e
 	return dataVal, nil
 }
 
-// Represents a NAT rule between source and destination at for a given VPC transit gateway.
+// Represents a NAT rule between source and destination for a given VPC transit gateway.
 type TransitGatewayNatRule struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -133136,7 +133840,7 @@ type TransitGatewayNatRule struct {
 	DestinationNetwork *string
 	// Policy path to a VpcIpAddressAllocation or ProjectIpAddressAllocation for DNAT rules. The system resolves the allocated IP and uses it as the destination_network. When this field is provided, destination_network should not be specified. For VPC NAT rules, the path must reference a VpcIpAddressAllocation under the same VPC. For Transit Gateway NAT rules, the path must reference a ProjectIpAddressAllocation under the same Project. This field is mutually exclusive with destination_network. Either this field or destination_network must be provided for DNAT action. Only valid for DNAT action.
 	DestinationNetworkAllocationPath *string
-	// The flag, which suggests whether the NAT rule is enabled or disabled. The default is True.
+	// Flag to enable or disable this NAT rule. Disabled rules are not evaluated but remain configured. Default is true.
 	Enabled *bool
 	// Possible values are:
 	//
@@ -133146,7 +133850,7 @@ type TransitGatewayNatRule struct {
 	//
 	//  It indicates how the firewall matches the address after NATing if firewall stage is not skipped. MATCH_EXTERNAL_ADDRESS indicates the firewall will be applied to external address of a NAT rule. For SNAT, the external address is the translated source address after NAT is done. For DNAT, the external address is the original destination address before NAT is done. For REFLEXIVE, to egress traffic, the firewall will be applied to the translated source address after NAT is done; To ingress traffic, the firewall will be applied to the original destination address before NAT is done. MATCH_INTERNAL_ADDRESS indicates the firewall will be applied to internal address of a NAT rule. For SNAT, the internal address is the original source address before NAT is done. For DNAT, the internal address is the translated destination address after NAT is done. For REFLEXIVE, to egress traffic, the firewall will be applied to the original source address before NAT is done; To ingress traffic, the firewall will be applied to the translated destination address after NAT is done. BYPASS indicates the firewall stage will be skipped. For NO_SNAT or NO_DNAT, it must be BYPASS or leave it unassigned
 	FirewallMatch *string
-	// The flag, which suggests whether the logging of NAT rule is enabled or disabled. The default is False.
+	// Flag to enable or disable logging of packets matching this NAT rule. Default is false.
 	Logging *bool
 	// The sequence_number decides the rule_priority of a NAT rule. Sequence_number and rule_priority have 1:1 mapping.For each NAT section, there will be reserved rule_priority numbers.The valid range of rule_priority number is from 0 to 2147483647(MAX_INT). 1. INTERNAL section rule_priority reserved from 0 - 1023 (1024 rules) valid sequence_number range 0 - 1023 2. USER section rule_priority reserved from 1024 - 2147482623 (2147481600 rules) valid sequence_number range 0 - 2147481599 3. DEFAULT section rule_priority reserved from 2147482624 - 2147483647 (1024 rules) valid sequence_number range 0 - 1023 format: int32
 	SequenceNumber *int64
@@ -133157,7 +133861,7 @@ type TransitGatewayNatRule struct {
 	TranslatedNetwork *string
 	// Policy path to a VpcIpAddressAllocation or ProjectIpAddressAllocation. For SNAT and REFLEXIVE rules, the system resolves the allocated IP and uses it as the translated_network. When this field is provided, translated_network should not be specified. For VPC NAT rules, the path must reference a VpcIpAddressAllocation under the same VPC. For Transit Gateway NAT rules, the path must reference a ProjectIpAddressAllocation under the same Project. This field is mutually exclusive with translated_network. Either this field or translated_network must be provided for SNAT and REFLEXIVE actions. Only valid for SNAT and REFLEXIVE actions.
 	TranslatedNetworkAllocationPath *string
-	// Contains the list of policy paths of TGW Attachments on which the NAT rule is applied.
+	// Policy path of the single TransitGatewayAttachment or IPSecVpnSession this NAT rule is scoped to. This overrides/narrows the scope field for Transit Gateway NAT rules: only a TransitGatewayAttachment or IPSecVpnSession path is accepted here (not interfaces or gateways, which apply to Tier-0/Tier-1 NAT rules instead). When left empty, the rule is applied to whichever attachment(s) are authorized for its translated IP: the IP block that address was allocated from is checked against each attachment's GatewayConnection or CentralizedNetworkAttachment (CNA) advertise_outbound_networks.allow_external_blocks - the rule is applied to an attachment if its IP block is listed there, or if allow_external_blocks is empty (meaning that attachment allows all blocks).
 	Scope []string
 }
 
@@ -133220,6 +133924,8 @@ func (s *TransitGatewayNatRuleListResult) GetDataValue__() (vapiData_.DataValue,
 }
 
 type TransitGatewayPortExternalCounters struct {
+	Ipv4 *TrafficStatsPerAddrFamily
+	Ipv6 *TrafficStatsPerAddrFamily
 	// Timestamp when the data was last updated. format: int64
 	LastUpdateTimestamp *int64
 	Rx                  *ServiceGatewayCounter
@@ -133242,6 +133948,8 @@ func (s *TransitGatewayPortExternalCounters) GetDataValue__() (vapiData_.DataVal
 }
 
 type TransitGatewayPortInternalCounters struct {
+	Ipv4 *TrafficStatsPerAddrFamily
+	Ipv6 *TrafficStatsPerAddrFamily
 	// Timestamp when the data was last updated. format: int64
 	LastUpdateTimestamp *int64
 	Rx                  *ServiceGatewayCounterCommon
@@ -134991,7 +135699,7 @@ func (s *TransportZoneProfileTypeIdEntry) GetDataValue__() (vapiData_.DataValue,
 	return dataVal, nil
 }
 
-// polymorphic resource type and support resource types - GreTunnel
+// Polymorphic resource type and support resource types - GreTunnel. Nested under a Tier-0's LocaleServices (/infra/tier-0s/<tier-0-id>/locale-services/<locale-svc-id>/tunnels); each tunnel_address entry (of type TunnelAddress) pins the tunnel to an edge node.
 type Tunnel struct {
 	// The server will populate this field when returing the resource. Ignored on PUT and POST.
 	Links []ResourceLink
@@ -135052,7 +135760,7 @@ type Tunnel struct {
 	MarkedForDelete *bool
 	// Global intent objects cannot be modified locally by the user. However, certain global intent objects can be overridden locally by use of this property. In such cases, the overridden local values take precedence over the globally defined values for the properties.
 	Overridden *bool
-	// Enable/Disable Tunnel
+	// Flag to enable/disable this tunnel. Disabling tears down the tunnel without deleting its configuration.
 	Enabled *bool
 	// Maximum transmission unit(MTU) in bytes specifies the size of the largest packet that a tunnel can transmit. format: int32
 	Mtu *int64
@@ -135081,9 +135789,9 @@ func (s *Tunnel) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
-// Tunnel Address request parameters
+// Contains Tunnel address details for GRE Tunnel.
 type TunnelAddress struct {
-	// policy path of edge node where tunnel will be realized with the subnet specified.
+	// Policy path of the edge node (of type PolicyEdgeNode) where tunnel will be realized with the subnet specified.
 	EdgePath *string
 	// Specify IPv4 source addresses as the tunnel local end point addresses. format: ipv4
 	SourceAddress *string
@@ -135128,15 +135836,15 @@ func (s *TunnelInterfaceIPSubnet) GetDataValue__() (vapiData_.DataValue, []error
 	return dataVal, nil
 }
 
-// Tunnel Keep Alive
+// Keep-alive configuration for a GRE tunnel, used to detect a dead peer and tear down the tunnel.
 type TunnelKeepAlive struct {
-	// Dead time multiplier format: int32
+	// Number of missed keep-alive intervals before the peer is declared dead. format: int32
 	DeadTimeMultiplier *int64
-	// Enable tunnel keep alive acknowledge
+	// Flag to require an acknowledgement for each keep-alive packet sent.
 	EnableKeepaliveAck *bool
-	// Enable/Disable tunnel keep alive
+	// Flag to enable/disable sending keep-alive packets on this tunnel.
 	Enabled *bool
-	// Keep alive interval format: int32
+	// Interval, in seconds, between keep-alive packets. format: int32
 	KeepaliveInterval *int64
 }
 
@@ -139713,6 +140421,29 @@ func (s *VniPoolConfigListResult) GetDataValue__() (vapiData_.DataValue, []error
 	return dataVal, nil
 }
 
+// Reallocation or re-balance configuration for a gateway service instance hosted on a Virtual Network Service (VNS) cluster. This applies both to a VPC gateway's own service instance and to a transit gateway's internal service VPC (for example the VPC hosting its DNS service).
+type VnsReallocationConfig struct {
+	// Preferred VNS node policy paths must belong to the VNS cluster identified by vns_cluster_path. Exactly two node paths must be provided, to maintain high availability of the active-standby gateway service instance. VNS nodes are allocated in fixed pairs, so the two node paths provided here must either: - already form an existing pair together, or - both be currently unpaired, i.e. neither node is already paired with a different node. A combination of one paired and one unpaired node, or two nodes belonging to two different existing pairs, is not accepted. When two unpaired nodes are provided, they are combined into a new pair for this placement; any later reallocation request for the same gateway that reuses this pair's nodes will be placed on that same pair again.
+	PreferredVnsNodePaths []string
+	// Policy path of the Virtual Network Service (VNS) cluster on which the gateway's service instance currently exists, or on which it should be re-balanced/reallocated.
+	VnsClusterPath *string
+}
+
+func (s *VnsReallocationConfig) GetType__() vapiBindings_.BindingType {
+	return VnsReallocationConfigBindingType()
+}
+
+func (s *VnsReallocationConfig) GetDataValue__() (vapiData_.DataValue, []error) {
+	typeConverter := vapiBindings_.NewTypeConverter()
+	dataVal, err := typeConverter.ConvertToVapi(s, s.GetType__())
+	if err != nil {
+		vapiLog_.Errorf("Error in ConvertToVapi for VnsReallocationConfig._GetDataValue method - %s",
+			vapiBindings_.VAPIerrorsToError(err).Error())
+		return nil, err
+	}
+	return dataVal, nil
+}
+
 // VODAP collector is defined to export metrics to VCF-OPS for monitoring and streaming analysis.
 type VodapGlobalCollector struct {
 	// Client ID which is used to request token from vIDB.
@@ -141041,7 +141772,7 @@ type VpcIpAddressBlock struct {
 	//
 	//  Read-only echo of IpAddressBlockConstraint.allowed_use_cases for this IP block. Empty/absent when no constraint has been configured for the block.
 	AllowedUseCases []string
-	// Available IP address space format: int64
+	// Available size of the IPv4 IP block. Exclusively for IPv4 blocks; unset for IPv6 blocks when the VpcIpv6 feature is enabled, since an IPv6 block (for example a /32) can hold more addresses than a 64-bit integer can represent; see ipv6_available instead. format: int64
 	Available *int64
 	// CIDR address for IP block
 	//
@@ -141051,13 +141782,17 @@ type VpcIpAddressBlock struct {
 	Cidrs []string
 	// Represents list of excluded IP address in the form of start and end IPs
 	ExcludedIps []IpPoolRange
+	// Available size of the IPv6 IP block, as a decimal string. Exclusively for IPv6 blocks, since its size (for example a /32) can exceed a 64-bit integer; unset for IPv4 blocks, see available instead.
+	Ipv6Available *string
+	// Total size of the IPv6 IP block, as a decimal string. Exclusively for IPv6 blocks, since its size (for example a /32) can exceed a 64-bit integer; unset for IPv4 blocks, see total instead.
+	Ipv6Total *string
 	// Path for IP block
 	Path *string
 	// Percentage of used IP address space
 	PercentageUsed *string
 	// Represents list of IP address ranges in the form of start and end IPs
 	Ranges []IpPoolRange
-	// Total ip address space format: int64
+	// Total size of the IPv4 IP block. Exclusively for IPv4 blocks; unset for IPv6 blocks when the VpcIpv6 feature is enabled, since an IPv6 block (for example a /32) can hold more addresses than a 64-bit integer can represent; see ipv6_total instead. format: int64
 	Total *int64
 	// Visibility of IP block
 	Visibility *string
@@ -141568,6 +142303,8 @@ func (s *VpcServiceGatewayConfig) GetDataValue__() (vapiData_.DataValue, []error
 }
 
 type VpcServiceGatewayPortExternalCounters struct {
+	Ipv4 *TrafficStatsPerAddrFamily
+	Ipv6 *TrafficStatsPerAddrFamily
 	// Timestamp when the data was last updated. format: int64
 	LastUpdateTimestamp *int64
 	Rx                  *ServiceGatewayCounter
@@ -141590,6 +142327,8 @@ func (s *VpcServiceGatewayPortExternalCounters) GetDataValue__() (vapiData_.Data
 }
 
 type VpcServiceGatewayPortInternalCounters struct {
+	Ipv4 *TrafficStatsPerAddrFamily
+	Ipv6 *TrafficStatsPerAddrFamily
 	// Timestamp when the data was last updated. format: int64
 	LastUpdateTimestamp *int64
 	Rx                  *ServiceGatewayCounterCommon
@@ -143026,12 +143765,13 @@ func (s *VrfEvpnL2VniConfig) GetDataValue__() (vapiData_.DataValue, []error) {
 	return dataVal, nil
 }
 
+// Ties a Layer-2 VNI to a VRF for EVPN, with its route distinguisher and route targets so routes for this VNI can be correctly imported/exported between VRFs.
 type VrfL2VniConfig struct {
 	// L2 VNI associated with the VRF. It must be unique and available from the VNI pool defined for EVPN service. format: int32
 	L2Vni *int64
 	//
 	RouteDistinguisher *string
-	// Route targets.
+	// Import/export route targets (see VrfRouteTargets) for this VNI's EVPN routes.
 	RouteTargets []VrfRouteTargets
 }
 
@@ -143056,7 +143796,7 @@ type VrfRouteTargets struct {
 	//
 	// * VrfRouteTargets#VrfRouteTargets_ADDRESS_FAMILY_EVPN
 	//
-	//  Address family.
+	//  BGP address family these route targets apply to; currently only L2VPN_EVPN is supported.
 	AddressFamily *string
 	//
 	ExportRouteTargets []string
@@ -143827,6 +144567,8 @@ type ZoneBasedSpan struct {
 	UseDefaultZones *bool
 	// An array of Zone objects identified by their external IDs. Zone object is a vCenter managed object and discovered through NSX inventory. Each Zone object is identified by a \"external_id\" in the inventory. Please refer NSX Zone APIs - GET /fabric/zones - to list all discovered zones GET /fabric/zones/{zone-id} - to view a specific zone configuration.
 	ZoneExternalIds []string
+	// An array of VDS objects identified by their NSX inventory IDs. The transit gateway and corresponding VPC networks are realized on all default VDS host-switch instances in the span. If a VC cluster has multiple VDS instances that are capable of VPC networking, then this attribute can be used to override the TGW realization to a non-default VDS. The provided custom VDS attachment is applicable to all clusters that are associated to this span.
+	CustomVdsAttachments []string
 	// Possible values are:
 	//
 	// * BaseSpan#BaseSpan_TYPE_CLUSTERBASEDSPAN
@@ -145458,6 +146200,8 @@ func AllocatedByVpcBindingType() vapiBindings_.BindingType {
 	fieldNameMap["count"] = "Count"
 	fields["ip_addresses"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(VpcIpAddressBindingType), reflect.TypeOf([]VpcIpAddress{})))
 	fieldNameMap["ip_addresses"] = "IpAddresses"
+	fields["ipv6_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["ipv6_count"] = "Ipv6Count"
 	fields["percentage_used"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["percentage_used"] = "PercentageUsed"
 	var validators = []vapiBindings_.Validator{}
@@ -145469,6 +146213,8 @@ func AllocationBasedOnFailureDomainBindingType() vapiBindings_.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["enabled"] = "Enabled"
+	fields["preferred_fault_domains_for_preemptive_mode"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["preferred_fault_domains_for_preemptive_mode"] = "PreferredFaultDomainsForPreemptiveMode"
 	fields["action_type"] = vapiBindings_.NewStringType()
 	fieldNameMap["action_type"] = "ActionType"
 	var validators = []vapiBindings_.Validator{}
@@ -147551,6 +148297,8 @@ func BaseRuleListResultBindingType() vapiBindings_.BindingType {
 func BaseSpanBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["custom_vds_attachments"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["custom_vds_attachments"] = "CustomVdsAttachments"
 	fields["type"] = vapiBindings_.NewStringType()
 	fieldNameMap["type"] = "Type_"
 	var validators = []vapiBindings_.Validator{}
@@ -150774,6 +151522,53 @@ func ChildConstraintGlobalConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["request_parameter"] = "RequestParameter"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.child_constraint_global_config", fields, reflect.TypeOf(ChildConstraintGlobalConfig{}), fieldNameMap, validators)
+}
+
+func ChildContainerClusterConfigBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["ContainerClusterConfig"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ContainerClusterConfigBindingType))
+	fieldNameMap["ContainerClusterConfig"] = "ContainerClusterConfig"
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewStringType()
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["mark_for_override"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["mark_for_override"] = "MarkForOverride"
+	fields["marked_for_convert"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["marked_for_convert"] = "MarkedForConvert"
+	fields["marked_for_delete"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
+	fields["request_parameter"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDynamicStructType([]vapiBindings_.ReferenceType{vapiBindings_.NewReferenceType(PolicyRequestParameterBindingType)}))
+	fieldNameMap["request_parameter"] = "RequestParameter"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.child_container_cluster_config", fields, reflect.TypeOf(ChildContainerClusterConfig{}), fieldNameMap, validators)
 }
 
 func ChildDeploymentZoneBindingType() vapiBindings_.BindingType {
@@ -164212,6 +165007,8 @@ func ClusterBasedSpanBindingType() vapiBindings_.BindingType {
 	fieldNameMap := make(map[string]string)
 	fields["span_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["span_path"] = "SpanPath"
+	fields["custom_vds_attachments"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["custom_vds_attachments"] = "CustomVdsAttachments"
 	fields["type"] = vapiBindings_.NewStringType()
 	fieldNameMap["type"] = "Type_"
 	var validators = []vapiBindings_.Validator{}
@@ -166049,10 +166846,10 @@ func ContainerClusterConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["marked_for_delete"] = "MarkedForDelete"
 	fields["overridden"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["overridden"] = "Overridden"
-	fields["cluster"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(PolicyResourceReferenceBindingType))
-	fieldNameMap["cluster"] = "Cluster"
-	fields["groups"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
-	fieldNameMap["groups"] = "Groups"
+	fields["container_cluster"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ContainerClusterInfoBindingType))
+	fieldNameMap["container_cluster"] = "ContainerCluster"
+	fields["features"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ContainerClusterFeatureBindingType), reflect.TypeOf([]ContainerClusterFeature{})))
+	fieldNameMap["features"] = "Features"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.container_cluster_config", fields, reflect.TypeOf(ContainerClusterConfig{}), fieldNameMap, validators)
 }
@@ -166078,6 +166875,28 @@ func ContainerClusterConfigListResultBindingType() vapiBindings_.BindingType {
 	fieldNameMap["results"] = "Results"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.container_cluster_config_list_result", fields, reflect.TypeOf(ContainerClusterConfigListResult{}), fieldNameMap, validators)
+}
+
+func ContainerClusterFeatureBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["enabled"] = "Enabled"
+	fields["feature"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["feature"] = "Feature"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.container_cluster_feature", fields, reflect.TypeOf(ContainerClusterFeature{}), fieldNameMap, validators)
+}
+
+func ContainerClusterInfoBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["target_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["target_id"] = "TargetId"
+	fields["target_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["target_type"] = "TargetType"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.container_cluster_info", fields, reflect.TypeOf(ContainerClusterInfo{}), fieldNameMap, validators)
 }
 
 func ContainerClusterStatusBindingType() vapiBindings_.BindingType {
@@ -166911,6 +167730,8 @@ func DatapathPacketDropsBindingType() vapiBindings_.BindingType {
 	fieldNameMap["firewall_state_table_full_packet_drops"] = "FirewallStateTableFullPacketDrops"
 	fields["firewall_total_packet_drops"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["firewall_total_packet_drops"] = "FirewallTotalPacketDrops"
+	fields["firewall_vmk_packet_drops"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["firewall_vmk_packet_drops"] = "FirewallVmkPacketDrops"
 	fields["hostswitch_network_mismatch_packet_drops"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["hostswitch_network_mismatch_packet_drops"] = "HostswitchNetworkMismatchPacketDrops"
 	fields["hostswitch_received_forged_mac_packet_drops"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
@@ -167523,15 +168344,15 @@ func DhcpIpPoolUsageBindingType() vapiBindings_.BindingType {
 func DhcpIpv6IpPoolUsageBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
-	fields["allocated_number"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["allocated_number"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["allocated_number"] = "AllocatedNumber"
 	fields["allocated_percentage"] = vapiBindings_.NewOptionalType(vapiBindings_.NewDoubleType())
 	fieldNameMap["allocated_percentage"] = "AllocatedPercentage"
-	fields["consumed_number"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["consumed_number"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["consumed_number"] = "ConsumedNumber"
 	fields["dhcp_ip_pool_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["dhcp_ip_pool_id"] = "DhcpIpPoolId"
-	fields["pool_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fields["pool_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["pool_size"] = "PoolSize"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.dhcp_ipv6_ip_pool_usage", fields, reflect.TypeOf(DhcpIpv6IpPoolUsage{}), fieldNameMap, validators)
@@ -168151,6 +168972,8 @@ func DhcpV6LeaseBindingType() vapiBindings_.BindingType {
 	fieldNameMap["ip_addresses"] = "IpAddresses"
 	fields["lease_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["lease_time"] = "LeaseTime"
+	fields["mac_address"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["mac_address"] = "MacAddress"
 	fields["start_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["start_time"] = "StartTime"
 	var validators = []vapiBindings_.Validator{}
@@ -171547,6 +172370,67 @@ func DvpgToSubnetWorkflowStateBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.dvpg_to_subnet_workflow_state", fields, reflect.TypeOf(DvpgToSubnetWorkflowState{}), fieldNameMap, validators)
 }
 
+func DvpgValidationIssueBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["migration_impact"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["migration_impact"] = "MigrationImpact"
+	fields["remediation"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["remediation"] = "Remediation"
+	fields["setting"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["setting"] = "Setting"
+	fields["severity"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["severity"] = "Severity"
+	fields["summary"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["summary"] = "Summary"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.dvpg_validation_issue", fields, reflect.TypeOf(DvpgValidationIssue{}), fieldNameMap, validators)
+}
+
+func DvpgValidationResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["compatibility"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["compatibility"] = "Compatibility"
+	fields["derived"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["derived"] = "Derived"
+	fields["dvpg_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["dvpg_name"] = "DvpgName"
+	fields["dvpg_ref"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["dvpg_ref"] = "DvpgRef"
+	fields["issues"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(DvpgValidationIssueBindingType), reflect.TypeOf([]DvpgValidationIssue{})))
+	fieldNameMap["issues"] = "Issues"
+	fields["vlan_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["vlan_id"] = "VlanId"
+	fields["vm_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["vm_count"] = "VmCount"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.dvpg_validation_result", fields, reflect.TypeOf(DvpgValidationResult{}), fieldNameMap, validators)
+}
+
+func DvpgValidationResultsListBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(DvpgValidationResultBindingType), reflect.TypeOf([]DvpgValidationResult{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.dvpg_validation_results_list", fields, reflect.TypeOf(DvpgValidationResultsList{}), fieldNameMap, validators)
+}
+
 func DynamicIpAddressReservationBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -173958,6 +174842,37 @@ func FirewallExportTaskBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.firewall_export_task", fields, reflect.TypeOf(FirewallExportTask{}), fieldNameMap, validators)
 }
 
+func FirewallVmkBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["firewall_vmk_packet_drops"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["firewall_vmk_packet_drops"] = "FirewallVmkPacketDrops"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.firewall_vmk", fields, reflect.TypeOf(FirewallVmk{}), fieldNameMap, validators)
+}
+
+func FirewallVmkDebugStatsBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["host_firewall_vmk"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(HostFirewallVmkDebugStatsBindingType))
+	fieldNameMap["host_firewall_vmk"] = "HostFirewallVmk"
+	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.firewall_vmk_debug_stats", fields, reflect.TypeOf(FirewallVmkDebugStats{}), fieldNameMap, validators)
+}
+
+func FirewallVmkMonitorStatsBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["host_firewall_vmk"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(HostFirewallVmkMonitorStatsBindingType))
+	fieldNameMap["host_firewall_vmk"] = "HostFirewallVmk"
+	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.firewall_vmk_monitor_stats", fields, reflect.TypeOf(FirewallVmkMonitorStats{}), fieldNameMap, validators)
+}
+
 func FirstnSamplingBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -174823,6 +175738,8 @@ func GatewayFailoverRequestParametersBindingType() vapiBindings_.BindingType {
 	fieldNameMap["enforcement_point_path"] = "EnforcementPointPath"
 	fields["preferred_active_edge_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["preferred_active_edge_path"] = "PreferredActiveEdgePath"
+	fields["preferred_vns_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["preferred_vns_node_path"] = "PreferredVnsNodePath"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.gateway_failover_request_parameters", fields, reflect.TypeOf(GatewayFailoverRequestParameters{}), fieldNameMap, validators)
 }
@@ -175268,6 +176185,8 @@ func GatewayReallocationRequestParametersBindingType() vapiBindings_.BindingType
 	fieldNameMap["number_of_edge_nodes"] = "NumberOfEdgeNodes"
 	fields["preferred_edge_paths"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["preferred_edge_paths"] = "PreferredEdgePaths"
+	fields["vns_reallocation_config"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(VnsReallocationConfigBindingType))
+	fieldNameMap["vns_reallocation_config"] = "VnsReallocationConfig"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.gateway_reallocation_request_parameters", fields, reflect.TypeOf(GatewayReallocationRequestParameters{}), fieldNameMap, validators)
 }
@@ -177757,6 +178676,60 @@ func HostConfigReportRequestBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.host_config_report_request", fields, reflect.TypeOf(HostConfigReportRequest{}), fieldNameMap, validators)
 }
 
+func HostFirewallVmkDebugStatsBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["rx_ipv4_drop_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["rx_ipv4_drop_pkts"] = "RxIpv4DropPkts"
+	fields["rx_ipv4_reject_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["rx_ipv4_reject_pkts"] = "RxIpv4RejectPkts"
+	fields["rx_ipv6_drop_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["rx_ipv6_drop_pkts"] = "RxIpv6DropPkts"
+	fields["rx_ipv6_reject_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["rx_ipv6_reject_pkts"] = "RxIpv6RejectPkts"
+	fields["rx_l2_drop_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["rx_l2_drop_pkts"] = "RxL2DropPkts"
+	fields["tx_ipv4_drop_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["tx_ipv4_drop_pkts"] = "TxIpv4DropPkts"
+	fields["tx_ipv4_reject_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["tx_ipv4_reject_pkts"] = "TxIpv4RejectPkts"
+	fields["tx_ipv6_drop_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["tx_ipv6_drop_pkts"] = "TxIpv6DropPkts"
+	fields["tx_ipv6_reject_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["tx_ipv6_reject_pkts"] = "TxIpv6RejectPkts"
+	fields["tx_l2_drop_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["tx_l2_drop_pkts"] = "TxL2DropPkts"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.host_firewall_vmk_debug_stats", fields, reflect.TypeOf(HostFirewallVmkDebugStats{}), fieldNameMap, validators)
+}
+
+func HostFirewallVmkMonitorStatsBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["rx_ipv4_drop_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["rx_ipv4_drop_pkts"] = "RxIpv4DropPkts"
+	fields["rx_ipv4_reject_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["rx_ipv4_reject_pkts"] = "RxIpv4RejectPkts"
+	fields["rx_ipv6_drop_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["rx_ipv6_drop_pkts"] = "RxIpv6DropPkts"
+	fields["rx_ipv6_reject_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["rx_ipv6_reject_pkts"] = "RxIpv6RejectPkts"
+	fields["rx_l2_drop_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["rx_l2_drop_pkts"] = "RxL2DropPkts"
+	fields["tx_ipv4_drop_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["tx_ipv4_drop_pkts"] = "TxIpv4DropPkts"
+	fields["tx_ipv4_reject_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["tx_ipv4_reject_pkts"] = "TxIpv4RejectPkts"
+	fields["tx_ipv6_drop_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["tx_ipv6_drop_pkts"] = "TxIpv6DropPkts"
+	fields["tx_ipv6_reject_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["tx_ipv6_reject_pkts"] = "TxIpv6RejectPkts"
+	fields["tx_l2_drop_pkts"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["tx_l2_drop_pkts"] = "TxL2DropPkts"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.host_firewall_vmk_monitor_stats", fields, reflect.TypeOf(HostFirewallVmkMonitorStats{}), fieldNameMap, validators)
+}
+
 func HostMovementSpecBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -178518,20 +179491,33 @@ func HypervisorSecurityPolicyBindingType() vapiBindings_.BindingType {
 	fieldNameMap["stateful"] = "Stateful"
 	fields["tcp_strict"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	fieldNameMap["tcp_strict"] = "TcpStrict"
-	fields["application_connectivity_strategy"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ApplicationConnectivityStrategyBindingType), reflect.TypeOf([]ApplicationConnectivityStrategy{})))
-	fieldNameMap["application_connectivity_strategy"] = "ApplicationConnectivityStrategy"
-	fields["connectivity_preference"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["connectivity_preference"] = "ConnectivityPreference"
-	fields["connectivity_strategy"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	fieldNameMap["connectivity_strategy"] = "ConnectivityStrategy"
-	fields["default_rule_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
-	fieldNameMap["default_rule_id"] = "DefaultRuleId"
-	fields["logging_enabled"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
-	fieldNameMap["logging_enabled"] = "LoggingEnabled"
 	fields["rules"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(HypervisorSecurityRuleBindingType), reflect.TypeOf([]HypervisorSecurityRule{})))
 	fieldNameMap["rules"] = "Rules"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.hypervisor_security_policy", fields, reflect.TypeOf(HypervisorSecurityPolicy{}), fieldNameMap, validators)
+}
+
+func HypervisorSecurityPolicyListResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(HypervisorSecurityPolicyBindingType), reflect.TypeOf([]HypervisorSecurityPolicy{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.hypervisor_security_policy_list_result", fields, reflect.TypeOf(HypervisorSecurityPolicyListResult{}), fieldNameMap, validators)
 }
 
 func HypervisorSecurityRuleBindingType() vapiBindings_.BindingType {
@@ -192091,6 +193077,29 @@ func LBVirtualNetworkApplianceUsageBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.LB_virtual_network_appliance_usage", fields, reflect.TypeOf(LBVirtualNetworkApplianceUsage{}), fieldNameMap, validators)
 }
 
+func LBVirtualNetworkServiceNodeUsageBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["current_pool_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["current_pool_count"] = "CurrentPoolCount"
+	fields["current_pool_member_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["current_pool_member_count"] = "CurrentPoolMemberCount"
+	fields["current_small_load_balancer_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["current_small_load_balancer_count"] = "CurrentSmallLoadBalancerCount"
+	fields["current_virtual_server_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["current_virtual_server_count"] = "CurrentVirtualServerCount"
+	fields["form_factor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["form_factor"] = "FormFactor"
+	fields["virtual_network_service_cluster_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["virtual_network_service_cluster_path"] = "VirtualNetworkServiceClusterPath"
+	fields["node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["node_path"] = "NodePath"
+	fields["resource_type"] = vapiBindings_.NewStringType()
+	fieldNameMap["resource_type"] = "ResourceType"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.LB_virtual_network_service_node_usage", fields, reflect.TypeOf(LBVirtualNetworkServiceNodeUsage{}), fieldNameMap, validators)
+}
+
 func LBVirtualServerBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -195800,6 +196809,96 @@ func NetworkPolicyImportResponseBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.network_policy_import_response", fields, reflect.TypeOf(NetworkPolicyImportResponse{}), fieldNameMap, validators)
 }
 
+func NetworkServiceAllocationBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["_revision"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_revision"] = "Revision"
+	fields["_create_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_create_time"] = "CreateTime"
+	fields["_create_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_create_user"] = "CreateUser"
+	fields["_last_modified_time"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["_last_modified_time"] = "LastModifiedTime"
+	fields["_last_modified_user"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_last_modified_user"] = "LastModifiedUser"
+	fields["_protection"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_protection"] = "Protection"
+	fields["_system_owned"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["_system_owned"] = "SystemOwned"
+	fields["description"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["description"] = "Description"
+	fields["display_name"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["display_name"] = "DisplayName"
+	fields["id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["id"] = "Id"
+	fields["resource_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["resource_type"] = "ResourceType"
+	fields["tags"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(TagBindingType), reflect.TypeOf([]Tag{})))
+	fieldNameMap["tags"] = "Tags"
+	fields["locked_by_workflow"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["locked_by_workflow"] = "LockedByWorkflow"
+	fields["origin_site_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["origin_site_id"] = "OriginSiteId"
+	fields["owner_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["owner_id"] = "OwnerId"
+	fields["parent_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["parent_path"] = "ParentPath"
+	fields["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["path"] = "Path"
+	fields["realization_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["realization_id"] = "RealizationId"
+	fields["relative_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["relative_path"] = "RelativePath"
+	fields["remote_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["remote_path"] = "RemotePath"
+	fields["unique_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["unique_id"] = "UniqueId"
+	fields["network_service_cluster_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["network_service_cluster_path"] = "NetworkServiceClusterPath"
+	fields["network_service_cluster_type"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["network_service_cluster_type"] = "NetworkServiceClusterType"
+	fields["network_service_node_paths"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["network_service_node_paths"] = "NetworkServiceNodePaths"
+	fields["services"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["services"] = "Services"
+	fields["transit_gateway_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["transit_gateway_path"] = "TransitGatewayPath"
+	fields["vpc_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["vpc_path"] = "VpcPath"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.network_service_allocation", fields, reflect.TypeOf(NetworkServiceAllocation{}), fieldNameMap, validators)
+}
+
+func NetworkServiceAllocationListResultBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["_links"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ResourceLinkBindingType), reflect.TypeOf([]ResourceLink{})))
+	fieldNameMap["_links"] = "Links"
+	fields["_schema"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["_schema"] = "Schema"
+	fields["_self"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(SelfResourceLinkBindingType))
+	fieldNameMap["_self"] = "Self"
+	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["cursor"] = "Cursor"
+	fields["result_count"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["result_count"] = "ResultCount"
+	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["sort_ascending"] = "SortAscending"
+	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["sort_by"] = "SortBy"
+	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(NetworkServiceAllocationBindingType), reflect.TypeOf([]NetworkServiceAllocation{})))
+	fieldNameMap["results"] = "Results"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.network_service_allocation_list_result", fields, reflect.TypeOf(NetworkServiceAllocationListResult{}), fieldNameMap, validators)
+}
+
 func NetworkSpanBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -196634,6 +197733,8 @@ func ObservabilityCounterDebugQueryResultBindingType() vapiBindings_.BindingType
 	fieldNameMap["fast_path_lcore_usage_stats"] = "FastPathLcoreUsageStats"
 	fields["fast_path_sys_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(FastPathSysStatsBindingType))
 	fieldNameMap["fast_path_sys_stats"] = "FastPathSysStats"
+	fields["firewall_vmk_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(FirewallVmkDebugStatsBindingType))
+	fieldNameMap["firewall_vmk_stats"] = "FirewallVmkStats"
 	fields["packet_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(PacketDebugStatsBindingType))
 	fieldNameMap["packet_stats"] = "PacketStats"
 	fields["platform_cpu_usage_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(PlatformCpuUsageDebugStatsBindingType))
@@ -196653,6 +197754,8 @@ func ObservabilityCounterMonitorQueryResultBindingType() vapiBindings_.BindingTy
 	fieldNameMap["fast_path_lcore_usage_stats"] = "FastPathLcoreUsageStats"
 	fields["fast_path_sys_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(FastPathSysStatsBindingType))
 	fieldNameMap["fast_path_sys_stats"] = "FastPathSysStats"
+	fields["firewall_vmk_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(FirewallVmkMonitorStatsBindingType))
+	fieldNameMap["firewall_vmk_stats"] = "FirewallVmkStats"
 	fields["packet_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(PacketMonitorStatsBindingType))
 	fieldNameMap["packet_stats"] = "PacketStats"
 	fields["platform_cpu_usage_stats"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(PlatformCpuUsageMonitorStatsBindingType))
@@ -196693,6 +197796,8 @@ func OdsArgumentCandidateValueListResultBindingType() vapiBindings_.BindingType 
 	fieldNameMap["sort_ascending"] = "SortAscending"
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["sort_by"] = "SortBy"
+	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["results"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(OdsArgumentCandidateValueBindingType), reflect.TypeOf([]OdsArgumentCandidateValue{})))
 	fieldNameMap["results"] = "Results"
 	var validators = []vapiBindings_.Validator{}
@@ -198774,6 +199879,8 @@ func PacketDebugStatsBindingType() vapiBindings_.BindingType {
 	fieldNameMap["distributed_firewall"] = "DistributedFirewall"
 	fields["fastpath"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(FastpathBindingType))
 	fieldNameMap["fastpath"] = "Fastpath"
+	fields["firewall_vmk"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(FirewallVmkBindingType))
+	fieldNameMap["firewall_vmk"] = "FirewallVmk"
 	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["overlay_datapath_l2"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(OverlayDataPathL2BindingType))
@@ -202185,6 +203292,8 @@ func PolicyEdgeMemberAllocationStatusBindingType() vapiBindings_.BindingType {
 	fieldNameMap["display_name"] = "DisplayName"
 	fields["edge_transport_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["edge_transport_node_path"] = "EdgeTransportNodePath"
+	fields["fault_domain"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["fault_domain"] = "FaultDomain"
 	fields["member_index"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["member_index"] = "MemberIndex"
 	fields["policy_edge_node_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -214738,10 +215847,21 @@ func RouteControllerRouteMapEntryBindingType() vapiBindings_.BindingType {
 	fieldNameMap["match_operator"] = "MatchOperator"
 	fields["sequence_number"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["sequence_number"] = "SequenceNumber"
-	fields["set"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(RouteMapEntrySetBindingType))
+	fields["set"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(RouteControllerRouteMapEntrySetBindingType))
 	fieldNameMap["set"] = "Set"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.route_controller_route_map_entry", fields, reflect.TypeOf(RouteControllerRouteMapEntry{}), fieldNameMap, validators)
+}
+
+func RouteControllerRouteMapEntrySetBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["as_path_prepend"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["as_path_prepend"] = "AsPathPrepend"
+	fields["communities"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["communities"] = "Communities"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.route_controller_route_map_entry_set", fields, reflect.TypeOf(RouteControllerRouteMapEntrySet{}), fieldNameMap, validators)
 }
 
 func RouteControllerRouteMapListResultBindingType() vapiBindings_.BindingType {
@@ -220486,6 +221606,21 @@ func ShaUaMetricMonitorConfigBindingType() vapiBindings_.BindingType {
 	fieldNameMap["resource_type"] = "ResourceType"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.sha_ua_metric_monitor_config", fields, reflect.TypeOf(ShaUaMetricMonitorConfig{}), fieldNameMap, validators)
+}
+
+func ShaVnsDpStatsMonitorConfigBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["check_interval"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
+	fieldNameMap["check_interval"] = "CheckInterval"
+	fields["enable"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
+	fieldNameMap["enable"] = "Enable"
+	fields["metric_categories"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(ShaMetricCategoryConfigBindingType), reflect.TypeOf([]ShaMetricCategoryConfig{})))
+	fieldNameMap["metric_categories"] = "MetricCategories"
+	fields["resource_type"] = vapiBindings_.NewStringType()
+	fieldNameMap["resource_type"] = "ResourceType"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.sha_vns_dp_stats_monitor_config", fields, reflect.TypeOf(ShaVnsDpStatsMonitorConfig{}), fieldNameMap, validators)
 }
 
 func ShaVodapAlarmMonitorConfigBindingType() vapiBindings_.BindingType {
@@ -227318,6 +228453,17 @@ func TrafficRateLimitsBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.traffic_rate_limits", fields, reflect.TypeOf(TrafficRateLimits{}), fieldNameMap, validators)
 }
 
+func TrafficStatsPerAddrFamilyBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ServiceGatewayCounterCommonBindingType))
+	fieldNameMap["rx"] = "Rx"
+	fields["tx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ServiceGatewayCounterCommonBindingType))
+	fieldNameMap["tx"] = "Tx"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.traffic_stats_per_addr_family", fields, reflect.TypeOf(TrafficStatsPerAddrFamily{}), fieldNameMap, validators)
+}
+
 func TransitGatewayBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -228054,6 +229200,10 @@ func TransitGatewayNatRuleListResultBindingType() vapiBindings_.BindingType {
 func TransitGatewayPortExternalCountersBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["ipv4"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TrafficStatsPerAddrFamilyBindingType))
+	fieldNameMap["ipv4"] = "Ipv4"
+	fields["ipv6"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TrafficStatsPerAddrFamilyBindingType))
+	fieldNameMap["ipv6"] = "Ipv6"
 	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ServiceGatewayCounterBindingType))
@@ -228067,6 +229217,10 @@ func TransitGatewayPortExternalCountersBindingType() vapiBindings_.BindingType {
 func TransitGatewayPortInternalCountersBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["ipv4"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TrafficStatsPerAddrFamilyBindingType))
+	fieldNameMap["ipv4"] = "Ipv4"
+	fields["ipv6"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TrafficStatsPerAddrFamilyBindingType))
+	fieldNameMap["ipv6"] = "Ipv6"
 	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ServiceGatewayCounterCommonBindingType))
@@ -231608,6 +232762,17 @@ func VniPoolConfigListResultBindingType() vapiBindings_.BindingType {
 	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vni_pool_config_list_result", fields, reflect.TypeOf(VniPoolConfigListResult{}), fieldNameMap, validators)
 }
 
+func VnsReallocationConfigBindingType() vapiBindings_.BindingType {
+	fields := make(map[string]vapiBindings_.BindingType)
+	fieldNameMap := make(map[string]string)
+	fields["preferred_vns_node_paths"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["preferred_vns_node_paths"] = "PreferredVnsNodePaths"
+	fields["vns_cluster_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["vns_cluster_path"] = "VnsClusterPath"
+	var validators = []vapiBindings_.Validator{}
+	return vapiBindings_.NewStructType("com.vmware.nsx_policy.model.vns_reallocation_config", fields, reflect.TypeOf(VnsReallocationConfig{}), fieldNameMap, validators)
+}
+
 func VodapGlobalCollectorBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
@@ -232501,6 +233666,10 @@ func VpcIpAddressBlockBindingType() vapiBindings_.BindingType {
 	fieldNameMap["cidrs"] = "Cidrs"
 	fields["excluded_ips"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewReferenceType(IpPoolRangeBindingType), reflect.TypeOf([]IpPoolRange{})))
 	fieldNameMap["excluded_ips"] = "ExcludedIps"
+	fields["ipv6_available"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["ipv6_available"] = "Ipv6Available"
+	fields["ipv6_total"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fieldNameMap["ipv6_total"] = "Ipv6Total"
 	fields["path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["path"] = "Path"
 	fields["percentage_used"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -232832,6 +234001,10 @@ func VpcServiceGatewayConfigBindingType() vapiBindings_.BindingType {
 func VpcServiceGatewayPortExternalCountersBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["ipv4"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TrafficStatsPerAddrFamilyBindingType))
+	fieldNameMap["ipv4"] = "Ipv4"
+	fields["ipv6"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TrafficStatsPerAddrFamilyBindingType))
+	fieldNameMap["ipv6"] = "Ipv6"
 	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ServiceGatewayCounterBindingType))
@@ -232845,6 +234018,10 @@ func VpcServiceGatewayPortExternalCountersBindingType() vapiBindings_.BindingTyp
 func VpcServiceGatewayPortInternalCountersBindingType() vapiBindings_.BindingType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)
+	fields["ipv4"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TrafficStatsPerAddrFamilyBindingType))
+	fieldNameMap["ipv4"] = "Ipv4"
+	fields["ipv6"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(TrafficStatsPerAddrFamilyBindingType))
+	fieldNameMap["ipv6"] = "Ipv6"
 	fields["last_update_timestamp"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fieldNameMap["last_update_timestamp"] = "LastUpdateTimestamp"
 	fields["rx"] = vapiBindings_.NewOptionalType(vapiBindings_.NewReferenceType(ServiceGatewayCounterCommonBindingType))
@@ -234169,6 +235346,8 @@ func ZoneBasedSpanBindingType() vapiBindings_.BindingType {
 	fieldNameMap["use_default_zones"] = "UseDefaultZones"
 	fields["zone_external_ids"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
 	fieldNameMap["zone_external_ids"] = "ZoneExternalIds"
+	fields["custom_vds_attachments"] = vapiBindings_.NewOptionalType(vapiBindings_.NewListType(vapiBindings_.NewStringType(), reflect.TypeOf([]string{})))
+	fieldNameMap["custom_vds_attachments"] = "CustomVdsAttachments"
 	fields["type"] = vapiBindings_.NewStringType()
 	fieldNameMap["type"] = "Type_"
 	var validators = []vapiBindings_.Validator{}

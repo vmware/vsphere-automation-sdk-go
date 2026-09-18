@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type HostCompatibilityClient interface {
 
-	// Returns the aggregated hypervisor security compatibility status for each host in the specified cluster. The host status is derived from the VMK compatibility of all VMKs on that host. COMPATIBLE: all VMKs are COMPATIBLE. PARTIALLY_COMPATIBLE: some VMKs are COMPATIBLE. INCOMPATIBLE: no VMKs are COMPATIBLE. Supports filtering by host status via the status query parameter.
+	// Returns the aggregated hypervisor security compatibility status for each host in the specified cluster. The host status is derived from the VMK compatibility of all VMKs on that host. COMPATIBLE: all VMKs are COMPATIBLE. PARTIALLY_COMPATIBLE: some VMKs are COMPATIBLE. INCOMPATIBLE: no VMKs are COMPATIBLE. A host with no VMKernel interfaces configured is skipped entirely and does not appear in the results, since no compatibility status can be derived for it. Supports filtering by host status via the status query parameter.
 	//
 	// @param clusterExternalIdParam Cluster external ID (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
