@@ -2,6 +2,7 @@
 // The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
+
 // Auto generated code. DO NOT EDIT.
 
 // Data type definitions file for package: com.vmware.nsx_policy.model.
