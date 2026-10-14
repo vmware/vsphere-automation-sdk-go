@@ -23,8 +23,8 @@ type GatewayPoliciesClient interface {
 
 	// Delete Gateway Policy.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param gatewayPolicyIdParam (required)
 	//
@@ -38,8 +38,8 @@ type GatewayPoliciesClient interface {
 
 	// Get Gateway Policy
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param gatewayPolicyIdParam (required)
 	// @return com.vmware.nsx_policy.model.GatewayPolicy
@@ -54,8 +54,8 @@ type GatewayPoliciesClient interface {
 
 	// Paginated list of VPC gateway policies.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
@@ -77,8 +77,8 @@ type GatewayPoliciesClient interface {
 
 	// If a GatewayPolicy with the policy-id is not already present, create a new GatewayPolicy. If it already exists, update the GatewayPolicy. This is a full replace.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param gatewayPolicyIdParam (required)
 	// @param gatewayPolicyParam (required)
@@ -93,8 +93,8 @@ type GatewayPoliciesClient interface {
 
 	// This is used to set a precedence of a VPC gateway policy w.r.t others.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param gatewayPolicyIdParam (required)
 	// @param gatewayPolicyParam (required)
@@ -112,8 +112,8 @@ type GatewayPoliciesClient interface {
 
 	// Update the Gateway Policy.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param gatewayPolicyIdParam (required)
 	// @param gatewayPolicyParam (required)

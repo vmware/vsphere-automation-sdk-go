@@ -47,6 +47,7 @@ type TunnelsClient interface {
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param encapParam The encapsulation type of tunnel. VXLAN - tunnel with VXLAN encapsulation GENEVE - tunnel with GENEVE encapsulation UNKNOWN_ENCAP - tunnel with unknown encapsulation (optional)
 	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param mtuCheckStatusParam The state of overlay MTU check. UP - MTU check succeeded INIT - MTU check probe sent or ready to send DOWN - MTU check probe timed out or failed (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
 	// @param remoteNodeIdParam The ID of the remote node to query (optional)
 	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
@@ -61,7 +62,7 @@ type TunnelsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(siteIdParam string, enforcementPointIdParam string, nodeIdParam string, bfdDiagnosticCodeParam *string, cursorParam *string, encapParam *string, includedFieldsParam *string, pageSizeParam *int64, remoteNodeIdParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsx_policyModel.TunnelList, error)
+	List(siteIdParam string, enforcementPointIdParam string, nodeIdParam string, bfdDiagnosticCodeParam *string, cursorParam *string, encapParam *string, includedFieldsParam *string, mtuCheckStatusParam *string, pageSizeParam *int64, remoteNodeIdParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsx_policyModel.TunnelList, error)
 }
 
 type tunnelsClient struct {
@@ -126,7 +127,7 @@ func (tIface *tunnelsClient) Get(siteIdParam string, enforcementPointIdParam str
 	}
 }
 
-func (tIface *tunnelsClient) List(siteIdParam string, enforcementPointIdParam string, nodeIdParam string, bfdDiagnosticCodeParam *string, cursorParam *string, encapParam *string, includedFieldsParam *string, pageSizeParam *int64, remoteNodeIdParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsx_policyModel.TunnelList, error) {
+func (tIface *tunnelsClient) List(siteIdParam string, enforcementPointIdParam string, nodeIdParam string, bfdDiagnosticCodeParam *string, cursorParam *string, encapParam *string, includedFieldsParam *string, mtuCheckStatusParam *string, pageSizeParam *int64, remoteNodeIdParam *string, sortAscendingParam *bool, sortByParam *string, sourceParam *string, statusParam *string) (nsx_policyModel.TunnelList, error) {
 	typeConverter := tIface.connector.TypeConverter()
 	executionContext := tIface.connector.NewExecutionContext()
 	operationRestMetaData := tunnelsListRestMetadata()
@@ -141,6 +142,7 @@ func (tIface *tunnelsClient) List(siteIdParam string, enforcementPointIdParam st
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("Encap", encapParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("MtuCheckStatus", mtuCheckStatusParam)
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("RemoteNodeId", remoteNodeIdParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)

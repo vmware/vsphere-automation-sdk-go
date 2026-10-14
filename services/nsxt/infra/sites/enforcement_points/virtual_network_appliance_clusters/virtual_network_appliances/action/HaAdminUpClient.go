@@ -1,0 +1,91 @@
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
+
+// Auto generated code. DO NOT EDIT.
+
+// Interface file for service: HaAdminUp
+// Used by client-side stubs.
+
+package action
+
+import (
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+)
+
+const _ = vapiCore_.SupportedByRuntimeVersion2
+
+type HaAdminUpClient interface {
+
+	// Restores normal operation on a virtual network appliance(VNA) previously set to ha_admin_down, making it eligible again to carry services. This is the only supported way to clear ha_admin_down; it cannot be set via PATCH/PUT.
+	//
+	// @param siteIdParam (required)
+	// @param enforcementpointIdParam (required)
+	// @param virtualNetworkApplianceClusterIdParam (required)
+	// @param virtualNetworkApplianceIdParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Create(siteIdParam string, enforcementpointIdParam string, virtualNetworkApplianceClusterIdParam string, virtualNetworkApplianceIdParam string) error
+}
+
+type haAdminUpClient struct {
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
+}
+
+func NewHaAdminUpClient(connector vapiProtocolClient_.Connector) *haAdminUpClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.enforcement_points.virtual_network_appliance_clusters.virtual_network_appliances.action.ha_admin_up")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
+	}
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
+
+	hIface := haAdminUpClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &hIface
+}
+
+func (hIface *haAdminUpClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+	if entry, ok := hIface.errorsBindingMap[errorName]; ok {
+		return entry
+	}
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
+}
+
+func (hIface *haAdminUpClient) Create(siteIdParam string, enforcementpointIdParam string, virtualNetworkApplianceClusterIdParam string, virtualNetworkApplianceIdParam string) error {
+	typeConverter := hIface.connector.TypeConverter()
+	executionContext := hIface.connector.NewExecutionContext()
+	operationRestMetaData := haAdminUpCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(haAdminUpCreateInputType(), typeConverter)
+	sv.AddStructField("SiteId", siteIdParam)
+	sv.AddStructField("EnforcementpointId", enforcementpointIdParam)
+	sv.AddStructField("VirtualNetworkApplianceClusterId", virtualNetworkApplianceClusterIdParam)
+	sv.AddStructField("VirtualNetworkApplianceId", virtualNetworkApplianceIdParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.virtual_network_appliance_clusters.virtual_network_appliances.action.ha_admin_up", "create", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), hIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
+}

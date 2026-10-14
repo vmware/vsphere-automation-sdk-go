@@ -4,9 +4,9 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for package: com.vmware.nsx_policy.infra.sites.enforcement_points.host_network_configs.
+// Data type definitions file for package: com.vmware.nsx_policy.infra.distributed_vlan_connections.action.
 // Includes binding types of a top level structures and enumerations.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package host_network_configs
+package action

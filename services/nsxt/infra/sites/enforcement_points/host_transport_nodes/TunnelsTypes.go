@@ -88,6 +88,15 @@ const Tunnels_LIST_ENCAP_GENEVE = "GENEVE"
 // Possible value for ``encap`` of method Tunnels#list.
 const Tunnels_LIST_ENCAP_VXLAN = "VXLAN"
 
+// Possible value for ``mtuCheckStatus`` of method Tunnels#list.
+const Tunnels_LIST_MTU_CHECK_STATUS_UP = "UP"
+
+// Possible value for ``mtuCheckStatus`` of method Tunnels#list.
+const Tunnels_LIST_MTU_CHECK_STATUS_INIT = "INIT"
+
+// Possible value for ``mtuCheckStatus`` of method Tunnels#list.
+const Tunnels_LIST_MTU_CHECK_STATUS_DOWN = "DOWN"
+
 // Possible value for ``source`` of method Tunnels#list.
 const Tunnels_LIST_SOURCE_REALTIME = "realtime"
 
@@ -187,6 +196,7 @@ func tunnelsListInputType() vapiBindings_.StructType {
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["encap"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["mtu_check_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["remote_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
@@ -200,6 +210,7 @@ func tunnelsListInputType() vapiBindings_.StructType {
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["encap"] = "Encap"
 	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["mtu_check_status"] = "MtuCheckStatus"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["remote_node_id"] = "RemoteNodeId"
 	fieldNameMap["sort_ascending"] = "SortAscending"
@@ -230,6 +241,7 @@ func tunnelsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["encap"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	fields["mtu_check_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	fields["remote_node_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
@@ -243,6 +255,7 @@ func tunnelsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["encap"] = "Encap"
 	fieldNameMap["included_fields"] = "IncludedFields"
+	fieldNameMap["mtu_check_status"] = "MtuCheckStatus"
 	fieldNameMap["page_size"] = "PageSize"
 	fieldNameMap["remote_node_id"] = "RemoteNodeId"
 	fieldNameMap["sort_ascending"] = "SortAscending"
@@ -255,6 +268,7 @@ func tunnelsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["encap"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["source"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
+	paramsTypeMap["mtu_check_status"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_ascending"] = vapiBindings_.NewOptionalType(vapiBindings_.NewBooleanType())
 	paramsTypeMap["included_fields"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
@@ -269,6 +283,7 @@ func tunnelsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	pathParams["node_id"] = "nodeId"
 	pathParams["enforcement_point_id"] = "enforcementPointId"
 	queryParams["cursor"] = "cursor"
+	queryParams["mtu_check_status"] = "mtu_check_status"
 	queryParams["sort_ascending"] = "sort_ascending"
 	queryParams["included_fields"] = "included_fields"
 	queryParams["bfd_diagnostic_code"] = "bfd_diagnostic_code"

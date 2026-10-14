@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ArgumentFilterClient interface {
 
-	// Read Online Diagnostic System Dynamic Runbook Argument Filter.
+	// Read Online Diagnostic System Dynamic Runbook Argument Filter. Results are cached for up to 5 minutes (300 seconds) matching on the dynamic runbook instance, argument identifier, target node, and context parameters. Cached responses are returned immediately during this 5-minute interval.
 	//
 	// @param instanceIdParam Identifier of a Dynamic Runbook Instance (required)
 	// @param odsArgumentFilterRequestParam (required)

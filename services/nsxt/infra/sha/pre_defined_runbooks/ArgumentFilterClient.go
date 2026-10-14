@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type ArgumentFilterClient interface {
 
-	// Read Online Diagnostic System Runbook Argument Filter.
+	// Read Online Diagnostic System Runbook Argument Filter. Results are cached for up to 5 minutes (300 seconds) matching on the runbook, argument identifier, target node, and context parameters. Cached responses are returned immediately during this 5-minute interval.
 	//
 	// @param runbookIdParam Identifier of a Predefined Runbook (required)
 	// @param odsArgumentFilterRequestParam (required)

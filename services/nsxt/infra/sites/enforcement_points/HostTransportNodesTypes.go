@@ -28,6 +28,12 @@ const HostTransportNodes_UPDATEMAINTENANCEMODE_ACTION_FORCED_ENTER_MAINTENANCE_M
 // Possible value for ``action`` of method HostTransportNodes#updatemaintenancemode.
 const HostTransportNodes_UPDATEMAINTENANCEMODE_ACTION_EXIT_MAINTENANCE_MODE = "exit_maintenance_mode"
 
+// Possible value for ``action`` of method HostTransportNodes#updatemaintenancemode.
+const HostTransportNodes_UPDATEMAINTENANCEMODE_ACTION_HA_ADMIN_DOWN = "ha_admin_down"
+
+// Possible value for ``action`` of method HostTransportNodes#updatemaintenancemode.
+const HostTransportNodes_UPDATEMAINTENANCEMODE_ACTION_HA_ADMIN_UP = "ha_admin_up"
+
 func hostTransportNodesDeleteInputType() vapiBindings_.StructType {
 	fields := make(map[string]vapiBindings_.BindingType)
 	fieldNameMap := make(map[string]string)

@@ -7,7 +7,7 @@
 // Interface file for service: HostVmkAllocations
 // Used by client-side stubs.
 
-package host_network_configs
+package enforcement_points
 
 import (
 	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
@@ -25,7 +25,6 @@ type HostVmkAllocationsClient interface {
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
-	// @param hostNetworkConfigsIdParam (required)
 	// @param allocationIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
@@ -34,13 +33,12 @@ type HostVmkAllocationsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Delete(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, allocationIdParam string) error
+	Delete(siteIdParam string, enforcementpointIdParam string, allocationIdParam string) error
 
 	// Get a Host Vmk Allocation by ID.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
-	// @param hostNetworkConfigsIdParam (required)
 	// @param allocationIdParam (required)
 	// @return com.vmware.nsx_policy.model.HostVmkAllocation
 	//
@@ -50,13 +48,12 @@ type HostVmkAllocationsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, allocationIdParam string) (nsx_policyModel.HostVmkAllocation, error)
+	Get(siteIdParam string, enforcementpointIdParam string, allocationIdParam string) (nsx_policyModel.HostVmkAllocation, error)
 
-	// List all host vmknic allocations for a given host network config.
+	// List all host vmknic allocations for a given enforcement point.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
-	// @param hostNetworkConfigsIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param deviceIdParam Device ID of the vmknic to get the network id for. e.g. vmk0, vmk1. (optional)
 	// @param hostExternalIdParam The external ID of the specific host in NSX. This is in the format compute-manager-uuid:host-moid and can be retrieved from the discovered node API in NSX, GET https://&lt;policy-mgr&gt;/policy/api/v1/fabric/discovered-nodes/ e.g. 5a0b7b11-4475-4b72-8822-225e348f4b4e:host-10 (optional)
@@ -76,13 +73,12 @@ type HostVmkAllocationsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, cursorParam *string, deviceIdParam *string, hostExternalIdParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, infraNetworkPathParam *string, ipPoolPathParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.HostVmkAllocationListResult, error)
+	List(siteIdParam string, enforcementpointIdParam string, cursorParam *string, deviceIdParam *string, hostExternalIdParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, infraNetworkPathParam *string, ipPoolPathParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.HostVmkAllocationListResult, error)
 
 	// Patch a Host Vmk Allocation which specifies how vmk on infraNetwork is allocated and deallocated ipv4 and ipv6 addresses. Note: The 'vmk_allocations' list should always include the complete list of desired allocations. Any missing allocations from the list will be considered as not desired and freed up.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
-	// @param hostNetworkConfigsIdParam (required)
 	// @param allocationIdParam (required)
 	// @param hostVmkAllocationParam (required)
 	// @return com.vmware.nsx_policy.model.HostVmkAllocation
@@ -93,13 +89,12 @@ type HostVmkAllocationsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Patch(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, allocationIdParam string, hostVmkAllocationParam nsx_policyModel.HostVmkAllocation) (nsx_policyModel.HostVmkAllocation, error)
+	Patch(siteIdParam string, enforcementpointIdParam string, allocationIdParam string, hostVmkAllocationParam nsx_policyModel.HostVmkAllocation) (nsx_policyModel.HostVmkAllocation, error)
 
 	// Create or update a Host Vmk Allocation which specifies how vmk on infraNetwork is allocated and deallocated ipv4 and ipv6 addresses. Note: The 'vmk_allocations' list should always include the complete list of desired allocations. Any missing allocations from the list will be considered as not desired and freed up.
 	//
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
-	// @param hostNetworkConfigsIdParam (required)
 	// @param allocationIdParam (required)
 	// @param hostVmkAllocationParam (required)
 	// @return com.vmware.nsx_policy.model.HostVmkAllocation
@@ -110,7 +105,7 @@ type HostVmkAllocationsClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Update(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, allocationIdParam string, hostVmkAllocationParam nsx_policyModel.HostVmkAllocation) (nsx_policyModel.HostVmkAllocation, error)
+	Update(siteIdParam string, enforcementpointIdParam string, allocationIdParam string, hostVmkAllocationParam nsx_policyModel.HostVmkAllocation) (nsx_policyModel.HostVmkAllocation, error)
 }
 
 type hostVmkAllocationsClient struct {
@@ -120,7 +115,7 @@ type hostVmkAllocationsClient struct {
 }
 
 func NewHostVmkAllocationsClient(connector vapiProtocolClient_.Connector) *hostVmkAllocationsClient {
-	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.enforcement_points.host_network_configs.host_vmk_allocations")
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_policy.infra.sites.enforcement_points.host_vmk_allocations")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
 		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
 		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
@@ -142,7 +137,7 @@ func (hIface *hostVmkAllocationsClient) GetErrorBindingType(errorName string) va
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (hIface *hostVmkAllocationsClient) Delete(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, allocationIdParam string) error {
+func (hIface *hostVmkAllocationsClient) Delete(siteIdParam string, enforcementpointIdParam string, allocationIdParam string) error {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
 	operationRestMetaData := hostVmkAllocationsDeleteRestMetadata()
@@ -152,14 +147,13 @@ func (hIface *hostVmkAllocationsClient) Delete(siteIdParam string, enforcementpo
 	sv := vapiBindings_.NewStructValueBuilder(hostVmkAllocationsDeleteInputType(), typeConverter)
 	sv.AddStructField("SiteId", siteIdParam)
 	sv.AddStructField("EnforcementpointId", enforcementpointIdParam)
-	sv.AddStructField("HostNetworkConfigsId", hostNetworkConfigsIdParam)
 	sv.AddStructField("AllocationId", allocationIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
 		return vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_network_configs.host_vmk_allocations", "delete", inputDataValue, executionContext)
+	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_vmk_allocations", "delete", inputDataValue, executionContext)
 	if methodResult.IsSuccess() {
 		return nil
 	} else {
@@ -171,7 +165,7 @@ func (hIface *hostVmkAllocationsClient) Delete(siteIdParam string, enforcementpo
 	}
 }
 
-func (hIface *hostVmkAllocationsClient) Get(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, allocationIdParam string) (nsx_policyModel.HostVmkAllocation, error) {
+func (hIface *hostVmkAllocationsClient) Get(siteIdParam string, enforcementpointIdParam string, allocationIdParam string) (nsx_policyModel.HostVmkAllocation, error) {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
 	operationRestMetaData := hostVmkAllocationsGetRestMetadata()
@@ -181,7 +175,6 @@ func (hIface *hostVmkAllocationsClient) Get(siteIdParam string, enforcementpoint
 	sv := vapiBindings_.NewStructValueBuilder(hostVmkAllocationsGetInputType(), typeConverter)
 	sv.AddStructField("SiteId", siteIdParam)
 	sv.AddStructField("EnforcementpointId", enforcementpointIdParam)
-	sv.AddStructField("HostNetworkConfigsId", hostNetworkConfigsIdParam)
 	sv.AddStructField("AllocationId", allocationIdParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {
@@ -189,7 +182,7 @@ func (hIface *hostVmkAllocationsClient) Get(siteIdParam string, enforcementpoint
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_network_configs.host_vmk_allocations", "get", inputDataValue, executionContext)
+	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_vmk_allocations", "get", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.HostVmkAllocation
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), HostVmkAllocationsGetOutputType())
@@ -206,7 +199,7 @@ func (hIface *hostVmkAllocationsClient) Get(siteIdParam string, enforcementpoint
 	}
 }
 
-func (hIface *hostVmkAllocationsClient) List(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, cursorParam *string, deviceIdParam *string, hostExternalIdParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, infraNetworkPathParam *string, ipPoolPathParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.HostVmkAllocationListResult, error) {
+func (hIface *hostVmkAllocationsClient) List(siteIdParam string, enforcementpointIdParam string, cursorParam *string, deviceIdParam *string, hostExternalIdParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, infraNetworkPathParam *string, ipPoolPathParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.HostVmkAllocationListResult, error) {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
 	operationRestMetaData := hostVmkAllocationsListRestMetadata()
@@ -216,7 +209,6 @@ func (hIface *hostVmkAllocationsClient) List(siteIdParam string, enforcementpoin
 	sv := vapiBindings_.NewStructValueBuilder(hostVmkAllocationsListInputType(), typeConverter)
 	sv.AddStructField("SiteId", siteIdParam)
 	sv.AddStructField("EnforcementpointId", enforcementpointIdParam)
-	sv.AddStructField("HostNetworkConfigsId", hostNetworkConfigsIdParam)
 	sv.AddStructField("Cursor", cursorParam)
 	sv.AddStructField("DeviceId", deviceIdParam)
 	sv.AddStructField("HostExternalId", hostExternalIdParam)
@@ -234,7 +226,7 @@ func (hIface *hostVmkAllocationsClient) List(siteIdParam string, enforcementpoin
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_network_configs.host_vmk_allocations", "list", inputDataValue, executionContext)
+	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_vmk_allocations", "list", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.HostVmkAllocationListResult
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), HostVmkAllocationsListOutputType())
@@ -251,7 +243,7 @@ func (hIface *hostVmkAllocationsClient) List(siteIdParam string, enforcementpoin
 	}
 }
 
-func (hIface *hostVmkAllocationsClient) Patch(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, allocationIdParam string, hostVmkAllocationParam nsx_policyModel.HostVmkAllocation) (nsx_policyModel.HostVmkAllocation, error) {
+func (hIface *hostVmkAllocationsClient) Patch(siteIdParam string, enforcementpointIdParam string, allocationIdParam string, hostVmkAllocationParam nsx_policyModel.HostVmkAllocation) (nsx_policyModel.HostVmkAllocation, error) {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
 	operationRestMetaData := hostVmkAllocationsPatchRestMetadata()
@@ -261,7 +253,6 @@ func (hIface *hostVmkAllocationsClient) Patch(siteIdParam string, enforcementpoi
 	sv := vapiBindings_.NewStructValueBuilder(hostVmkAllocationsPatchInputType(), typeConverter)
 	sv.AddStructField("SiteId", siteIdParam)
 	sv.AddStructField("EnforcementpointId", enforcementpointIdParam)
-	sv.AddStructField("HostNetworkConfigsId", hostNetworkConfigsIdParam)
 	sv.AddStructField("AllocationId", allocationIdParam)
 	sv.AddStructField("HostVmkAllocation", hostVmkAllocationParam)
 	inputDataValue, inputError := sv.GetStructValue()
@@ -270,7 +261,7 @@ func (hIface *hostVmkAllocationsClient) Patch(siteIdParam string, enforcementpoi
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_network_configs.host_vmk_allocations", "patch", inputDataValue, executionContext)
+	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_vmk_allocations", "patch", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.HostVmkAllocation
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), HostVmkAllocationsPatchOutputType())
@@ -287,7 +278,7 @@ func (hIface *hostVmkAllocationsClient) Patch(siteIdParam string, enforcementpoi
 	}
 }
 
-func (hIface *hostVmkAllocationsClient) Update(siteIdParam string, enforcementpointIdParam string, hostNetworkConfigsIdParam string, allocationIdParam string, hostVmkAllocationParam nsx_policyModel.HostVmkAllocation) (nsx_policyModel.HostVmkAllocation, error) {
+func (hIface *hostVmkAllocationsClient) Update(siteIdParam string, enforcementpointIdParam string, allocationIdParam string, hostVmkAllocationParam nsx_policyModel.HostVmkAllocation) (nsx_policyModel.HostVmkAllocation, error) {
 	typeConverter := hIface.connector.TypeConverter()
 	executionContext := hIface.connector.NewExecutionContext()
 	operationRestMetaData := hostVmkAllocationsUpdateRestMetadata()
@@ -297,7 +288,6 @@ func (hIface *hostVmkAllocationsClient) Update(siteIdParam string, enforcementpo
 	sv := vapiBindings_.NewStructValueBuilder(hostVmkAllocationsUpdateInputType(), typeConverter)
 	sv.AddStructField("SiteId", siteIdParam)
 	sv.AddStructField("EnforcementpointId", enforcementpointIdParam)
-	sv.AddStructField("HostNetworkConfigsId", hostNetworkConfigsIdParam)
 	sv.AddStructField("AllocationId", allocationIdParam)
 	sv.AddStructField("HostVmkAllocation", hostVmkAllocationParam)
 	inputDataValue, inputError := sv.GetStructValue()
@@ -306,7 +296,7 @@ func (hIface *hostVmkAllocationsClient) Update(siteIdParam string, enforcementpo
 		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
 	}
 
-	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_network_configs.host_vmk_allocations", "update", inputDataValue, executionContext)
+	methodResult := hIface.connector.GetApiProvider().Invoke("com.vmware.nsx_policy.infra.sites.enforcement_points.host_vmk_allocations", "update", inputDataValue, executionContext)
 	var emptyOutput nsx_policyModel.HostVmkAllocation
 	if methodResult.IsSuccess() {
 		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), HostVmkAllocationsUpdateOutputType())

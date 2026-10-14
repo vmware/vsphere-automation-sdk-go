@@ -171,7 +171,7 @@ type HostTransportNodesClient interface {
 	// @param siteIdParam (required)
 	// @param enforcementpointIdParam (required)
 	// @param hostTransportNodeIdParam (required)
-	// @param actionParam User could use this parameter to put transport node into maintenance mode or exit from maintenance mode. 'enter_maintenance_mode' will put Transport Node into maintenance mode if there is no VIFs attached. 'forced_enter_maintenance_mode' will put transport node into maintenance mode forcibly regardless of whether or not VIF attached. 'exit_maintenance_mode' will exit from maintenance mode. (optional)
+	// @param actionParam User could use this parameter to put transport node into maintenance mode, exit from maintenance mode, or (edge transport nodes only) toggle HA admin state. 'enter_maintenance_mode' will put Transport Node into maintenance mode if there is no VIFs attached. 'forced_enter_maintenance_mode' will put transport node into maintenance mode forcibly regardless of whether or not VIF attached. 'exit_maintenance_mode' will exit from maintenance mode. 'ha_admin_down' fails over all services on the edge transport node to its peers and keeps it administratively down. 'ha_admin_up' restores an edge transport node to normal operation. (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
 	// @throws TimedOut  Gateway Timeout

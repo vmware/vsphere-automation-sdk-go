@@ -23,8 +23,8 @@ type RulesClient interface {
 
 	// Delete N-S Firewall Rule DELETE /orgs/org1/projects/project1/vpcs/vpc-1/gateway-policies/default/rules/rule-1
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param gatewayPolicyIdParam (required)
 	// @param ruleIdParam (required)
@@ -39,8 +39,8 @@ type RulesClient interface {
 
 	// Read N-S Firewall Rule GET /orgs/org1/projects/project1/vpcs/vpc-1/gateway-policies/default/rules/rule-1
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param gatewayPolicyIdParam (required)
 	// @param ruleIdParam (required)
@@ -56,8 +56,8 @@ type RulesClient interface {
 
 	// List N-S Firewall Rules GET /orgs/org1/projects/project1/vpcs/vpc-1/gateway-policies/default/rules
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param gatewayPolicyIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
@@ -79,8 +79,8 @@ type RulesClient interface {
 
 	// Patch the N-S Firewall Rule. If a Rule for the given Rule-id is not present, the object will get created and if it is present it will be updated. This is a full replace PATCH /orgs/org1/projects/project1/vpcs/vpc-1/gateway-policies/default/rules/rule-1
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param gatewayPolicyIdParam (required)
 	// @param ruleIdParam (required)
@@ -96,8 +96,8 @@ type RulesClient interface {
 
 	// This is used to re-order a rule within a VPC gateway policy.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param gatewayPolicyIdParam (required)
 	// @param ruleIdParam (required)
@@ -116,8 +116,8 @@ type RulesClient interface {
 
 	// Update the N-S Firewall Rule. If a Rule with the rule-id is not already present, this API fails with a 404. Creation of Rules is not allowed using this API. PUT /orgs/org1/projects/project1/vpcs/vpc-1/gateway-policies/default/rules/rule-1
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param gatewayPolicyIdParam (required)
 	// @param ruleIdParam (required)

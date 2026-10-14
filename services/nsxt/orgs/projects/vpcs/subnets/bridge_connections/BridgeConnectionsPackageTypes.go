@@ -4,9 +4,9 @@
 
 // Auto generated code. DO NOT EDIT.
 
-// Data type definitions file for package: com.vmware.nsx_policy.cluster.api_service.
+// Data type definitions file for package: com.vmware.nsx_policy.orgs.projects.vpcs.subnets.bridge_connections.
 // Includes binding types of a top level structures and enumerations.
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package api_service
+package bridge_connections

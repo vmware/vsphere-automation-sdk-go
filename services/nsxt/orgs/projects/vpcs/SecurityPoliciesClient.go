@@ -23,8 +23,8 @@ type SecurityPoliciesClient interface {
 
 	// Delete SecurityPolicy.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param securityPolicyIdParam (required)
 	//
@@ -38,8 +38,8 @@ type SecurityPoliciesClient interface {
 
 	// Get SecurityPolicy
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param securityPolicyIdParam (required)
 	// @return com.vmware.nsx_policy.model.SecurityPolicy
@@ -54,8 +54,8 @@ type SecurityPoliciesClient interface {
 
 	// Paginated list of VPC security policies.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
@@ -77,8 +77,8 @@ type SecurityPoliciesClient interface {
 
 	// If a SecurityPolicy with the policy-id is not already present, create a new SecurityPolicy. If it already exists, update the SecurityPolicy. This is a full replace.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param securityPolicyIdParam (required)
 	// @param securityPolicyParam (required)
@@ -93,8 +93,8 @@ type SecurityPoliciesClient interface {
 
 	// This is used to set a precedence of a VPC security policy w.r.t others.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param securityPolicyIdParam (required)
 	// @param securityPolicyParam (required)
@@ -112,8 +112,8 @@ type SecurityPoliciesClient interface {
 
 	// Update the SecurityPolicy.
 	//
-	// @param orgIdParam (required)
-	// @param projectIdParam (required)
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
 	// @param vpcIdParam (required)
 	// @param securityPolicyIdParam (required)
 	// @param securityPolicyParam (required)

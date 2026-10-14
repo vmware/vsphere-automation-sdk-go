@@ -21,7 +21,7 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type AdvertisedRoutesClient interface {
 
-	// Returns routes advertised by BGP neighbor from all virtual network appliance nodes on which this neighbor is currently enabled in CSV format.
+	// Returns routes advertised by BGP neighbor from all virtual network appliance nodes on which this neighbor is currently enabled.
 	//
 	// @param routeControllerIdParam (required)
 	// @param neighborIdParam (required)

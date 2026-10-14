@@ -9,7 +9,7 @@
 // Shared by client-side stubs and server-side skeletons to ensure type
 // compatibility.
 
-package host_network_configs
+package enforcement_points
 
 import (
 	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
@@ -24,11 +24,9 @@ func hostVmkAllocationsDeleteInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	fields["host_network_configs_id"] = vapiBindings_.NewStringType()
 	fields["allocation_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
-	fieldNameMap["host_network_configs_id"] = "HostNetworkConfigsId"
 	fieldNameMap["allocation_id"] = "AllocationId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
@@ -49,24 +47,19 @@ func hostVmkAllocationsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata 
 	bodyFieldsMap := map[string]string{}
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	fields["host_network_configs_id"] = vapiBindings_.NewStringType()
 	fields["allocation_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
-	fieldNameMap["host_network_configs_id"] = "HostNetworkConfigsId"
 	fieldNameMap["allocation_id"] = "AllocationId"
 	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["host_network_configs_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["allocation_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["hostNetworkConfigsId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["allocationId"] = vapiBindings_.NewStringType()
 	pathParams["enforcementpoint_id"] = "enforcementpointId"
 	pathParams["site_id"] = "siteId"
 	pathParams["allocation_id"] = "allocationId"
-	pathParams["host_network_configs_id"] = "hostNetworkConfigsId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -81,7 +74,7 @@ func hostVmkAllocationsDeleteRestMetadata() vapiProtocol_.OperationRestMetadata 
 		"",
 		"",
 		"DELETE",
-		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/host-network-configs/{hostNetworkConfigsId}/host-vmk-allocations/{allocationId}",
+		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/host-vmk-allocations/{allocationId}",
 		"",
 		resultHeaders,
 		204,
@@ -95,11 +88,9 @@ func hostVmkAllocationsGetInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	fields["host_network_configs_id"] = vapiBindings_.NewStringType()
 	fields["allocation_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
-	fieldNameMap["host_network_configs_id"] = "HostNetworkConfigsId"
 	fieldNameMap["allocation_id"] = "AllocationId"
 	var validators = []vapiBindings_.Validator{}
 	return vapiBindings_.NewStructType("operation-input", fields, reflect.TypeOf(vapiData_.StructValue{}), fieldNameMap, validators)
@@ -120,24 +111,19 @@ func hostVmkAllocationsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	fields["host_network_configs_id"] = vapiBindings_.NewStringType()
 	fields["allocation_id"] = vapiBindings_.NewStringType()
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
-	fieldNameMap["host_network_configs_id"] = "HostNetworkConfigsId"
 	fieldNameMap["allocation_id"] = "AllocationId"
 	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["host_network_configs_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["allocation_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["hostNetworkConfigsId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["allocationId"] = vapiBindings_.NewStringType()
 	pathParams["enforcementpoint_id"] = "enforcementpointId"
 	pathParams["site_id"] = "siteId"
 	pathParams["allocation_id"] = "allocationId"
-	pathParams["host_network_configs_id"] = "hostNetworkConfigsId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -152,7 +138,7 @@ func hostVmkAllocationsGetRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/host-network-configs/{hostNetworkConfigsId}/host-vmk-allocations/{allocationId}",
+		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/host-vmk-allocations/{allocationId}",
 		"",
 		resultHeaders,
 		200,
@@ -166,7 +152,6 @@ func hostVmkAllocationsListInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	fields["host_network_configs_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["device_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["host_external_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -180,7 +165,6 @@ func hostVmkAllocationsListInputType() vapiBindings_.StructType {
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
-	fieldNameMap["host_network_configs_id"] = "HostNetworkConfigsId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["device_id"] = "DeviceId"
 	fieldNameMap["host_external_id"] = "HostExternalId"
@@ -211,7 +195,6 @@ func hostVmkAllocationsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	fields["host_network_configs_id"] = vapiBindings_.NewStringType()
 	fields["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["device_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fields["host_external_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -225,7 +208,6 @@ func hostVmkAllocationsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fields["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
-	fieldNameMap["host_network_configs_id"] = "HostNetworkConfigsId"
 	fieldNameMap["cursor"] = "Cursor"
 	fieldNameMap["device_id"] = "DeviceId"
 	fieldNameMap["host_external_id"] = "HostExternalId"
@@ -239,7 +221,6 @@ func hostVmkAllocationsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	fieldNameMap["sort_by"] = "SortBy"
 	paramsTypeMap["cursor"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["infra_network_path"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
-	paramsTypeMap["host_network_configs_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["device_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["sort_by"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
 	paramsTypeMap["host_external_id"] = vapiBindings_.NewOptionalType(vapiBindings_.NewStringType())
@@ -253,10 +234,8 @@ func hostVmkAllocationsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 	paramsTypeMap["page_size"] = vapiBindings_.NewOptionalType(vapiBindings_.NewIntegerType())
 	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["hostNetworkConfigsId"] = vapiBindings_.NewStringType()
 	pathParams["enforcementpoint_id"] = "enforcementpointId"
 	pathParams["site_id"] = "siteId"
-	pathParams["host_network_configs_id"] = "hostNetworkConfigsId"
 	queryParams["cursor"] = "cursor"
 	queryParams["infra_network_path"] = "infra_network_path"
 	queryParams["device_id"] = "device_id"
@@ -282,7 +261,7 @@ func hostVmkAllocationsListRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"",
 		"GET",
-		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/host-network-configs/{hostNetworkConfigsId}/host-vmk-allocations",
+		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/host-vmk-allocations",
 		"",
 		resultHeaders,
 		200,
@@ -296,12 +275,10 @@ func hostVmkAllocationsPatchInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	fields["host_network_configs_id"] = vapiBindings_.NewStringType()
 	fields["allocation_id"] = vapiBindings_.NewStringType()
 	fields["host_vmk_allocation"] = vapiBindings_.NewReferenceType(nsx_policyModel.HostVmkAllocationBindingType)
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
-	fieldNameMap["host_network_configs_id"] = "HostNetworkConfigsId"
 	fieldNameMap["allocation_id"] = "AllocationId"
 	fieldNameMap["host_vmk_allocation"] = "HostVmkAllocation"
 	var validators = []vapiBindings_.Validator{}
@@ -323,27 +300,22 @@ func hostVmkAllocationsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 	bodyFieldsMap := map[string]string{}
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	fields["host_network_configs_id"] = vapiBindings_.NewStringType()
 	fields["allocation_id"] = vapiBindings_.NewStringType()
 	fields["host_vmk_allocation"] = vapiBindings_.NewReferenceType(nsx_policyModel.HostVmkAllocationBindingType)
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
-	fieldNameMap["host_network_configs_id"] = "HostNetworkConfigsId"
 	fieldNameMap["allocation_id"] = "AllocationId"
 	fieldNameMap["host_vmk_allocation"] = "HostVmkAllocation"
 	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["host_network_configs_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["host_vmk_allocation"] = vapiBindings_.NewReferenceType(nsx_policyModel.HostVmkAllocationBindingType)
 	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["allocation_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["hostNetworkConfigsId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["allocationId"] = vapiBindings_.NewStringType()
 	pathParams["enforcementpoint_id"] = "enforcementpointId"
 	pathParams["site_id"] = "siteId"
 	pathParams["allocation_id"] = "allocationId"
-	pathParams["host_network_configs_id"] = "hostNetworkConfigsId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -358,7 +330,7 @@ func hostVmkAllocationsPatchRestMetadata() vapiProtocol_.OperationRestMetadata {
 		"",
 		"host_vmk_allocation",
 		"PATCH",
-		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/host-network-configs/{hostNetworkConfigsId}/host-vmk-allocations/{allocationId}",
+		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/host-vmk-allocations/{allocationId}",
 		"application/json",
 		resultHeaders,
 		200,
@@ -372,12 +344,10 @@ func hostVmkAllocationsUpdateInputType() vapiBindings_.StructType {
 	fieldNameMap := make(map[string]string)
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	fields["host_network_configs_id"] = vapiBindings_.NewStringType()
 	fields["allocation_id"] = vapiBindings_.NewStringType()
 	fields["host_vmk_allocation"] = vapiBindings_.NewReferenceType(nsx_policyModel.HostVmkAllocationBindingType)
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
-	fieldNameMap["host_network_configs_id"] = "HostNetworkConfigsId"
 	fieldNameMap["allocation_id"] = "AllocationId"
 	fieldNameMap["host_vmk_allocation"] = "HostVmkAllocation"
 	var validators = []vapiBindings_.Validator{}
@@ -399,27 +369,22 @@ func hostVmkAllocationsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata 
 	bodyFieldsMap := map[string]string{}
 	fields["site_id"] = vapiBindings_.NewStringType()
 	fields["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	fields["host_network_configs_id"] = vapiBindings_.NewStringType()
 	fields["allocation_id"] = vapiBindings_.NewStringType()
 	fields["host_vmk_allocation"] = vapiBindings_.NewReferenceType(nsx_policyModel.HostVmkAllocationBindingType)
 	fieldNameMap["site_id"] = "SiteId"
 	fieldNameMap["enforcementpoint_id"] = "EnforcementpointId"
-	fieldNameMap["host_network_configs_id"] = "HostNetworkConfigsId"
 	fieldNameMap["allocation_id"] = "AllocationId"
 	fieldNameMap["host_vmk_allocation"] = "HostVmkAllocation"
 	paramsTypeMap["enforcementpoint_id"] = vapiBindings_.NewStringType()
-	paramsTypeMap["host_network_configs_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["host_vmk_allocation"] = vapiBindings_.NewReferenceType(nsx_policyModel.HostVmkAllocationBindingType)
 	paramsTypeMap["site_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["allocation_id"] = vapiBindings_.NewStringType()
 	paramsTypeMap["siteId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["enforcementpointId"] = vapiBindings_.NewStringType()
-	paramsTypeMap["hostNetworkConfigsId"] = vapiBindings_.NewStringType()
 	paramsTypeMap["allocationId"] = vapiBindings_.NewStringType()
 	pathParams["enforcementpoint_id"] = "enforcementpointId"
 	pathParams["site_id"] = "siteId"
 	pathParams["allocation_id"] = "allocationId"
-	pathParams["host_network_configs_id"] = "hostNetworkConfigsId"
 	resultHeaders := map[string]string{}
 	errorHeaders := map[string]map[string]string{}
 	return vapiProtocol_.NewOperationRestMetadata(
@@ -434,7 +399,7 @@ func hostVmkAllocationsUpdateRestMetadata() vapiProtocol_.OperationRestMetadata 
 		"",
 		"host_vmk_allocation",
 		"PUT",
-		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/host-network-configs/{hostNetworkConfigsId}/host-vmk-allocations/{allocationId}",
+		"/policy/api/v1/infra/sites/{siteId}/enforcement-points/{enforcementpointId}/host-vmk-allocations/{allocationId}",
 		"application/json",
 		resultHeaders,
 		200,
