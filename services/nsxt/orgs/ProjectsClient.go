@@ -39,7 +39,7 @@ type ProjectsClient interface {
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
-	// @param shortFormatParam true - result in short format i.e. only id, path and display_name of the listed projects, false - descriptive result with all properties of the projects being listed. (optional, default to false)
+	// @param shortFormatParam true - result in short format including id, path, display_name, short_id and owner_id of the project, false - descriptive result with all properties of the projects being listed. (optional, default to false)
 	// @return com.vmware.nsx_policy.model.Project
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed

@@ -56,7 +56,7 @@ type ClusterConfigsClient interface {
 	// @throws NotFound  Not Found
 	List(cursorParam *string, enabledParam *bool, featureTypeParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.ClusterHypervisorSecurityConfigurationListResult, error)
 
-	// Patch cluster hypervisor security configuration for HYPERVISOR_DFW.
+	//
 	//
 	// @param clusterExternalIdParam Cluster ID (required)
 	// @param clusterHypervisorSecurityConfigurationParam (required)
@@ -69,7 +69,7 @@ type ClusterConfigsClient interface {
 	// @throws NotFound  Not Found
 	Patch(clusterExternalIdParam string, clusterHypervisorSecurityConfigurationParam nsx_policyModel.ClusterHypervisorSecurityConfiguration) error
 
-	// Update cluster hypervisor security configuration for HYPERVISOR_DFW.
+	//
 	//
 	// @param clusterExternalIdParam Cluster ID (required)
 	// @param clusterHypervisorSecurityConfigurationParam (required)
