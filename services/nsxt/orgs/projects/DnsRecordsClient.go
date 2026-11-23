@@ -87,7 +87,7 @@ type DnsRecordsClient interface {
 	// @throws NotFound  Not Found
 	Patch(orgIdParam string, projectIdParam string, dnsRecordIdParam string, dnsRecordParam nsx_policyModel.DnsRecord) error
 
-	// Create or update a DnsRecord within the specified project. The zone_path references a DnsZone (local or shared). For shared zones, the zone must be visible via shared-with-me. The fqdn field is system-computed and must not be provided in the request.
+	// Create or update a DnsRecord within the specified project. The zone_path references a local DnsZone. The fqdn field is system-computed and must not be provided in the request.
 	//
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)

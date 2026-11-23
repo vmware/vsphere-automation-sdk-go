@@ -22,6 +22,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type EndpointPoliciesClient interface {
 
 	// Delete Endpoint policy.
+	//  The vShield Endpoint feature is discontinued from NSX 9.0 and will be removed in NSX 9.2.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param domainIdParam Domain id (required)
 	// @param endpointPolicyIdParam Endpoint policy id (required)
@@ -35,6 +38,9 @@ type EndpointPoliciesClient interface {
 	Delete(domainIdParam string, endpointPolicyIdParam string) error
 
 	// Read Endpoint policy.
+	//  The vShield Endpoint feature is discontinued from NSX 9.0 and will be removed in NSX 9.2.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param domainIdParam Domain id (required)
 	// @param endpointPolicyIdParam Endpoint policy id (required)
@@ -49,6 +55,9 @@ type EndpointPoliciesClient interface {
 	Get(domainIdParam string, endpointPolicyIdParam string) (nsx_policyModel.EndpointPolicy, error)
 
 	// List all Endpoint policies across all domains ordered by precedence.
+	//  The vShield Endpoint feature is discontinued from NSX 9.0 and will be removed in NSX 9.2.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
@@ -68,6 +77,9 @@ type EndpointPoliciesClient interface {
 	List(cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.EndpointPolicyListResult, error)
 
 	// Create or update the Endpoint policy.
+	//  The vShield Endpoint feature is discontinued from NSX 9.0 and will be removed in NSX 9.2.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param domainIdParam Domain id (required)
 	// @param endpointPolicyIdParam Endpoint policy id (required)
@@ -82,6 +94,9 @@ type EndpointPoliciesClient interface {
 	Patch(domainIdParam string, endpointPolicyIdParam string, endpointPolicyParam nsx_policyModel.EndpointPolicy) error
 
 	// Create or update the Endpoint policy.
+	//  The vShield Endpoint feature is discontinued from NSX 9.0 and will be removed in NSX 9.2.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param domainIdParam Domain id (required)
 	// @param endpointPolicyIdParam Endpoint policy id (required)

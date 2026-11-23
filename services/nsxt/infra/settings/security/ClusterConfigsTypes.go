@@ -23,9 +23,6 @@ import (
 const ClusterConfigs_LIST_FEATURE_TYPE_DFW = "DFW"
 
 // Possible value for ``featureType`` of method ClusterConfigs#list.
-const ClusterConfigs_LIST_FEATURE_TYPE_INFRA_SECURITY_DFW = "INFRA_SECURITY_DFW"
-
-// Possible value for ``featureType`` of method ClusterConfigs#list.
 const ClusterConfigs_LIST_FEATURE_TYPE_DISTRIBUTED_TLS = "DISTRIBUTED_TLS"
 
 func clusterConfigsGetInputType() vapiBindings_.StructType {

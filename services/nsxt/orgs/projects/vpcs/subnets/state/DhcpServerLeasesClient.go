@@ -27,7 +27,7 @@ type DhcpServerLeasesClient interface {
 	// @param projectIdParam (required)
 	// @param vpcIdParam (required)
 	// @param subnetIdParam (required)
-	// @param addressParam IPv4 address, IPv4 range or MAC address to retrieve specific lease information. (optional)
+	// @param addressParam IPv4 address, IPv4 range, IPv6 address, IPv6 range or MAC address to retrieve specific lease information. IPv6 addresses and ranges are accepted only when the subnet has an IPv6 CIDR. (optional)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
 	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
 	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)

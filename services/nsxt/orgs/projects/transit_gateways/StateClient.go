@@ -26,6 +26,7 @@ type StateClient interface {
 	// @param orgIdParam (required)
 	// @param projectIdParam (required)
 	// @param transitGatewayIdParam (required)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @param sourceParam Data source type. (optional)
 	// @return com.vmware.nsx_policy.model.TransitGatewayState
 	//
@@ -35,7 +36,7 @@ type StateClient interface {
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, sourceParam *string) (nsx_policyModel.TransitGatewayState, error)
+	Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.TransitGatewayState, error)
 }
 
 type stateClient struct {
@@ -63,7 +64,7 @@ func (sIface *stateClient) GetErrorBindingType(errorName string) vapiBindings_.B
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *stateClient) Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, sourceParam *string) (nsx_policyModel.TransitGatewayState, error) {
+func (sIface *stateClient) Get(orgIdParam string, projectIdParam string, transitGatewayIdParam string, enforcementPointPathParam *string, sourceParam *string) (nsx_policyModel.TransitGatewayState, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := stateGetRestMetadata()
@@ -74,6 +75,7 @@ func (sIface *stateClient) Get(orgIdParam string, projectIdParam string, transit
 	sv.AddStructField("OrgId", orgIdParam)
 	sv.AddStructField("ProjectId", projectIdParam)
 	sv.AddStructField("TransitGatewayId", transitGatewayIdParam)
+	sv.AddStructField("EnforcementPointPath", enforcementPointPathParam)
 	sv.AddStructField("Source", sourceParam)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {

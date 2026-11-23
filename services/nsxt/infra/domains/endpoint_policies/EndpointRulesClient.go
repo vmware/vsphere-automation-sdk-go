@@ -22,6 +22,9 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type EndpointRulesClient interface {
 
 	// Delete EndpointRule
+	//  The vShield Endpoint feature is discontinued from NSX 9.0 and will be removed in NSX 9.2.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param domainIdParam Domain ID (required)
 	// @param endpointPolicyIdParam EndpointPolicy ID (required)
@@ -36,6 +39,9 @@ type EndpointRulesClient interface {
 	Delete(domainIdParam string, endpointPolicyIdParam string, endpointRuleIdParam string) error
 
 	// Read Endpoint rule
+	//  The vShield Endpoint feature is discontinued from NSX 9.0 and will be removed in NSX 9.2.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param domainIdParam Domain id (required)
 	// @param endpointPolicyIdParam Endpoint policy id (required)
@@ -51,6 +57,9 @@ type EndpointRulesClient interface {
 	Get(domainIdParam string, endpointPolicyIdParam string, endpointRuleIdParam string) (nsx_policyModel.EndpointRule, error)
 
 	// List Endpoint rules
+	//  The vShield Endpoint feature is discontinued from NSX 9.0 and will be removed in NSX 9.2.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param domainIdParam Domain id (required)
 	// @param endpointPolicyIdParam Endpoint policy id (required)
@@ -72,6 +81,9 @@ type EndpointRulesClient interface {
 	List(domainIdParam string, endpointPolicyIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_policyModel.EndpointRuleListResult, error)
 
 	// Create a Endpoint rule with the endpoint-rule-id is not already present, otherwise update the Endpoint Rule.
+	//  The vShield Endpoint feature is discontinued from NSX 9.0 and will be removed in NSX 9.2.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param domainIdParam Domain id (required)
 	// @param endpointPolicyIdParam Endpoint policy id (required)
@@ -87,6 +99,9 @@ type EndpointRulesClient interface {
 	Patch(domainIdParam string, endpointPolicyIdParam string, endpointRuleIdParam string, endpointRuleParam nsx_policyModel.EndpointRule) error
 
 	// Create a Endpoint rule with the endpoint-rule-id is not already present, otherwise update the Endpoint Rule.
+	//  The vShield Endpoint feature is discontinued from NSX 9.0 and will be removed in NSX 9.2.
+	//
+	// Deprecated: This API element is deprecated.
 	//
 	// @param domainIdParam Domain id (required)
 	// @param endpointPolicyIdParam Endpoint policy id (required)
