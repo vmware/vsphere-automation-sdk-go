@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,72 +22,78 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type FloodProtectionProfilesClient interface {
 
-	// API will delete Flood Protection Profile
+	// Deletes the specified Flood Protection Profile.
 	//
 	// @param floodProtectionProfileIdParam Flood Protection Profile ID (required)
-	// @param overrideParam Locally override the global object (optional, default to false)
+	// @param overrideParam If true, the global resource can be over written locally. This means that there will be a local only resource in place of the global resource that can reflect local specific settings and values. The global object will continue to exist but will not be used for any configuration until this local object is removed. When the object is overridden the Global resource continues to exist unmodified, while the overridden object is created with all of the user specified values. The Global resource may be updated in the background, however, the overridden object may only be updated by the user. Once the user removes the overridden copy, the Global resource will then resume being used in the configuration. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete(floodProtectionProfileIdParam string, overrideParam *bool) error
 
-	// API will get Flood Protection Profile
+	// Returns the specified Flood Protection Profile, including its TCP, UDP, and ICMP connection limits.
 	//
 	// @param floodProtectionProfileIdParam Flood Protection Profile ID (required)
 	// @return com.vmware.nsx_global_policy.model.FloodProtectionProfile
 	// The return value will contain all the properties defined in nsx_global_policyModel.FloodProtectionProfile.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get(floodProtectionProfileIdParam string) (*vapiData_.StructValue, error)
 
-	// API will list all Flood Protection Profiles
+	// Returns a paginated list of all Flood Protection Profiles.
 	//
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
+	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_global_policy.model.FloodProtectionProfileListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_global_policyModel.FloodProtectionProfileListResult, error)
+	List(cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_global_policyModel.FloodProtectionProfileListResult, error)
 
-	// API will create/update Flood Protection Profile
+	// Creates or partially updates a Flood Protection Profile.
 	//
 	// @param floodProtectionProfileIdParam Firewall Flood Protection Profile ID (required)
 	// @param floodProtectionProfileParam (required)
 	// The parameter must contain all the properties defined in nsx_global_policyModel.FloodProtectionProfile.
-	// @param overrideParam Locally override the global object (optional, default to false)
+	// @param overrideParam If true, the global resource can be over written locally. This means that there will be a local only resource in place of the global resource that can reflect local specific settings and values. The global object will continue to exist but will not be used for any configuration until this local object is removed. When the object is overridden the Global resource continues to exist unmodified, while the overridden object is created with all of the user specified values. The Global resource may be updated in the background, however, the overridden object may only be updated by the user. Once the user removes the overridden copy, the Global resource will then resume being used in the configuration. (optional, default to false)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Patch(floodProtectionProfileIdParam string, floodProtectionProfileParam *vapiData_.StructValue, overrideParam *bool) error
 
-	// API will update Firewall Flood Protection Profile
+	// Fully replaces the specified Flood Protection Profile. Omitted fields are reset to defaults.
 	//
 	// @param floodProtectionProfileIdParam Flood Protection Profile ID (required)
 	// @param floodProtectionProfileParam (required)
 	// The parameter must contain all the properties defined in nsx_global_policyModel.FloodProtectionProfile.
-	// @param overrideParam Locally override the global object (optional, default to false)
+	// @param overrideParam If true, the global resource can be over written locally. This means that there will be a local only resource in place of the global resource that can reflect local specific settings and values. The global object will continue to exist but will not be used for any configuration until this local object is removed. When the object is overridden the Global resource continues to exist unmodified, while the overridden object is created with all of the user specified values. The Global resource may be updated in the background, however, the overridden object may only be updated by the user. Once the user removes the overridden copy, the Global resource will then resume being used in the configuration. (optional, default to false)
 	// @return com.vmware.nsx_global_policy.model.FloodProtectionProfile
 	// The return value will contain all the properties defined in nsx_global_policyModel.FloodProtectionProfile.
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -182,7 +189,7 @@ func (fIface *floodProtectionProfilesClient) Get(floodProtectionProfileIdParam s
 	}
 }
 
-func (fIface *floodProtectionProfilesClient) List(cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_global_policyModel.FloodProtectionProfileListResult, error) {
+func (fIface *floodProtectionProfilesClient) List(cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_global_policyModel.FloodProtectionProfileListResult, error) {
 	typeConverter := fIface.connector.TypeConverter()
 	executionContext := fIface.connector.NewExecutionContext()
 	operationRestMetaData := floodProtectionProfilesListRestMetadata()
@@ -191,6 +198,7 @@ func (fIface *floodProtectionProfilesClient) List(cursorParam *string, includeMa
 
 	sv := vapiBindings_.NewStructValueBuilder(floodProtectionProfilesListInputType(), typeConverter)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)

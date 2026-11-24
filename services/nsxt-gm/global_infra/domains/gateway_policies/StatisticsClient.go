@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -24,11 +25,12 @@ type StatisticsClient interface {
 	//
 	// @param domainIdParam (required)
 	// @param gatewayPolicyIdParam (required)
-	// @param containerClusterPathParam String Path of the Container Cluster entity (optional)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param containerClusterPathParam Path to the container cluster entity where the request will be executed. (optional)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F. (optional)
 	// @return com.vmware.nsx_global_policy.model.SecurityPolicyStatisticsListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

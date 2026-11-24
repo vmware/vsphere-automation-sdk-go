@@ -1,0 +1,355 @@
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
+
+// Auto generated code. DO NOT EDIT.
+
+// Interface file for service: Rules
+// Used by client-side stubs.
+
+package intrusion_service_policies
+
+import (
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_global_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
+)
+
+const _ = vapiCore_.SupportedByRuntimeVersion2
+
+type RulesClient interface {
+
+	// Delete intrusion detection rule.
+	//
+	// @param domainIdParam Domain ID (required)
+	// @param policyIdParam Policy ID (required)
+	// @param ruleIdParam Rule ID (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Delete(domainIdParam string, policyIdParam string, ruleIdParam string) error
+
+	// Returns the configuration of a specific distributed IDS/IPS rule within an intrusion service policy, identified by domain ID, policy ID, and rule ID.
+	//
+	// @param domainIdParam Domain ID (required)
+	// @param policyIdParam Policy ID (required)
+	// @param ruleIdParam Rule ID (required)
+	// @return com.vmware.nsx_global_policy.model.IdsRule
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Get(domainIdParam string, policyIdParam string, ruleIdParam string) (nsx_global_policyModel.IdsRule, error)
+
+	// Returns a paginated list of all Intrusion Detection System (IDS) rules within a specific intrusion service policy. Rules are evaluated in sequence to detect and prevent network intrusion attempts based on configured IDS profiles.
+	//
+	// @param domainIdParam Domain ID (required)
+	// @param policyIdParam Policy ID (required)
+	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
+	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
+	// @param sortByParam Field by which records are sorted (optional)
+	// @return com.vmware.nsx_global_policy.model.IdsRuleListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	List(domainIdParam string, policyIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_global_policyModel.IdsRuleListResult, error)
+
+	// Create or partially update a distributed IDS/IPS intrusion detection rule.
+	//
+	// @param domainIdParam Domain ID (required)
+	// @param policyIdParam Policy ID (required)
+	// @param ruleIdParam Rule ID (required)
+	// @param idsRuleParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Patch(domainIdParam string, policyIdParam string, ruleIdParam string, idsRuleParam nsx_global_policyModel.IdsRule) error
+
+	// This is used to re-order a rule within a security policy.
+	//
+	// @param domainIdParam (required)
+	// @param policyIdParam (required)
+	// @param ruleIdParam (required)
+	// @param idsRuleParam (required)
+	// @param anchorPathParam The security policy/rule path if operation is 'insert_after' or 'insert_before' (optional)
+	// @param operationParam Operation (optional, default to insert_top)
+	// @return com.vmware.nsx_global_policy.model.IdsRule
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Revise(domainIdParam string, policyIdParam string, ruleIdParam string, idsRuleParam nsx_global_policyModel.IdsRule, anchorPathParam *string, operationParam *string) (nsx_global_policyModel.IdsRule, error)
+
+	// Create or update a distributed IDS/IPS intrusion detection rule.
+	//
+	// @param domainIdParam Domain ID (required)
+	// @param policyIdParam Policy ID (required)
+	// @param ruleIdParam Rule ID (required)
+	// @param idsRuleParam (required)
+	// @return com.vmware.nsx_global_policy.model.IdsRule
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Update(domainIdParam string, policyIdParam string, ruleIdParam string, idsRuleParam nsx_global_policyModel.IdsRule) (nsx_global_policyModel.IdsRule, error)
+}
+
+type rulesClient struct {
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
+}
+
+func NewRulesClient(connector vapiProtocolClient_.Connector) *rulesClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_global_policy.global_infra.domains.intrusion_service_policies.rules")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+		"list":   vapiCore_.NewMethodIdentifier(interfaceIdentifier, "list"),
+		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"revise": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "revise"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
+	}
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
+
+	rIface := rulesClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &rIface
+}
+
+func (rIface *rulesClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+	if entry, ok := rIface.errorsBindingMap[errorName]; ok {
+		return entry
+	}
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
+}
+
+func (rIface *rulesClient) Delete(domainIdParam string, policyIdParam string, ruleIdParam string) error {
+	typeConverter := rIface.connector.TypeConverter()
+	executionContext := rIface.connector.NewExecutionContext()
+	operationRestMetaData := rulesDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesDeleteInputType(), typeConverter)
+	sv.AddStructField("DomainId", domainIdParam)
+	sv.AddStructField("PolicyId", policyIdParam)
+	sv.AddStructField("RuleId", ruleIdParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.global_infra.domains.intrusion_service_policies.rules", "delete", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
+}
+
+func (rIface *rulesClient) Get(domainIdParam string, policyIdParam string, ruleIdParam string) (nsx_global_policyModel.IdsRule, error) {
+	typeConverter := rIface.connector.TypeConverter()
+	executionContext := rIface.connector.NewExecutionContext()
+	operationRestMetaData := rulesGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesGetInputType(), typeConverter)
+	sv.AddStructField("DomainId", domainIdParam)
+	sv.AddStructField("PolicyId", policyIdParam)
+	sv.AddStructField("RuleId", ruleIdParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_global_policyModel.IdsRule
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.global_infra.domains.intrusion_service_policies.rules", "get", inputDataValue, executionContext)
+	var emptyOutput nsx_global_policyModel.IdsRule
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RulesGetOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_global_policyModel.IdsRule), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (rIface *rulesClient) List(domainIdParam string, policyIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_global_policyModel.IdsRuleListResult, error) {
+	typeConverter := rIface.connector.TypeConverter()
+	executionContext := rIface.connector.NewExecutionContext()
+	operationRestMetaData := rulesListRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesListInputType(), typeConverter)
+	sv.AddStructField("DomainId", domainIdParam)
+	sv.AddStructField("PolicyId", policyIdParam)
+	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
+	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
+	sv.AddStructField("IncludedFields", includedFieldsParam)
+	sv.AddStructField("PageSize", pageSizeParam)
+	sv.AddStructField("SortAscending", sortAscendingParam)
+	sv.AddStructField("SortBy", sortByParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_global_policyModel.IdsRuleListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.global_infra.domains.intrusion_service_policies.rules", "list", inputDataValue, executionContext)
+	var emptyOutput nsx_global_policyModel.IdsRuleListResult
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RulesListOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_global_policyModel.IdsRuleListResult), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (rIface *rulesClient) Patch(domainIdParam string, policyIdParam string, ruleIdParam string, idsRuleParam nsx_global_policyModel.IdsRule) error {
+	typeConverter := rIface.connector.TypeConverter()
+	executionContext := rIface.connector.NewExecutionContext()
+	operationRestMetaData := rulesPatchRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesPatchInputType(), typeConverter)
+	sv.AddStructField("DomainId", domainIdParam)
+	sv.AddStructField("PolicyId", policyIdParam)
+	sv.AddStructField("RuleId", ruleIdParam)
+	sv.AddStructField("IdsRule", idsRuleParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.global_infra.domains.intrusion_service_policies.rules", "patch", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
+}
+
+func (rIface *rulesClient) Revise(domainIdParam string, policyIdParam string, ruleIdParam string, idsRuleParam nsx_global_policyModel.IdsRule, anchorPathParam *string, operationParam *string) (nsx_global_policyModel.IdsRule, error) {
+	typeConverter := rIface.connector.TypeConverter()
+	executionContext := rIface.connector.NewExecutionContext()
+	operationRestMetaData := rulesReviseRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesReviseInputType(), typeConverter)
+	sv.AddStructField("DomainId", domainIdParam)
+	sv.AddStructField("PolicyId", policyIdParam)
+	sv.AddStructField("RuleId", ruleIdParam)
+	sv.AddStructField("IdsRule", idsRuleParam)
+	sv.AddStructField("AnchorPath", anchorPathParam)
+	sv.AddStructField("Operation", operationParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_global_policyModel.IdsRule
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.global_infra.domains.intrusion_service_policies.rules", "revise", inputDataValue, executionContext)
+	var emptyOutput nsx_global_policyModel.IdsRule
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RulesReviseOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_global_policyModel.IdsRule), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}
+
+func (rIface *rulesClient) Update(domainIdParam string, policyIdParam string, ruleIdParam string, idsRuleParam nsx_global_policyModel.IdsRule) (nsx_global_policyModel.IdsRule, error) {
+	typeConverter := rIface.connector.TypeConverter()
+	executionContext := rIface.connector.NewExecutionContext()
+	operationRestMetaData := rulesUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(rulesUpdateInputType(), typeConverter)
+	sv.AddStructField("DomainId", domainIdParam)
+	sv.AddStructField("PolicyId", policyIdParam)
+	sv.AddStructField("RuleId", ruleIdParam)
+	sv.AddStructField("IdsRule", idsRuleParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_global_policyModel.IdsRule
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := rIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.global_infra.domains.intrusion_service_policies.rules", "update", inputDataValue, executionContext)
+	var emptyOutput nsx_global_policyModel.IdsRule
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), RulesUpdateOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_global_policyModel.IdsRule), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), rIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}

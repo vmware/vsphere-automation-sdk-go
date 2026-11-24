@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -24,21 +25,23 @@ type StateClient interface {
 	//
 	// @param tier1IdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param enforcementPointPathParam Enforcement point path (optional)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
-	// @param interfacePathParam Interface path for interface specific state such as IPv6 DAD state (optional)
+	// @param enforcementPointPathParam String Path of the enforcement point. When not specified, routes from all enforcement-points are returned. (optional)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
+	// @param interfacePathParam String Path of interface on current Tier1 gateway for interface specified state such as IPv6 DAD state. When not specified, IPv6 NDRA state from from all interfaces is returned. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
-	// @param type_Param Returns specific information based on the value specified. (optional)
+	// @param sourceParam The data source can be either realtime or cached. If not provided, cached data is returned. (optional)
+	// @param type_Param Returns specific information based on the value specified. When not specified response include gateway state, status and DAD status from interfaces. (optional)
 	// @return com.vmware.nsx_global_policy.model.Tier1GatewayState
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	Get(tier1IdParam string, cursorParam *string, enforcementPointPathParam *string, includedFieldsParam *string, interfacePathParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsx_global_policyModel.Tier1GatewayState, error)
+	Get(tier1IdParam string, cursorParam *string, enforcementPointPathParam *string, includedFieldsParam *string, interfacePathParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, type_Param *string) (nsx_global_policyModel.Tier1GatewayState, error)
 }
 
 type stateClient struct {
@@ -66,7 +69,7 @@ func (sIface *stateClient) GetErrorBindingType(errorName string) vapiBindings_.B
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
 }
 
-func (sIface *stateClient) Get(tier1IdParam string, cursorParam *string, enforcementPointPathParam *string, includedFieldsParam *string, interfacePathParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, type_Param *string) (nsx_global_policyModel.Tier1GatewayState, error) {
+func (sIface *stateClient) Get(tier1IdParam string, cursorParam *string, enforcementPointPathParam *string, includedFieldsParam *string, interfacePathParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string, sourceParam *string, type_Param *string) (nsx_global_policyModel.Tier1GatewayState, error) {
 	typeConverter := sIface.connector.TypeConverter()
 	executionContext := sIface.connector.NewExecutionContext()
 	operationRestMetaData := stateGetRestMetadata()
@@ -82,6 +85,7 @@ func (sIface *stateClient) Get(tier1IdParam string, cursorParam *string, enforce
 	sv.AddStructField("PageSize", pageSizeParam)
 	sv.AddStructField("SortAscending", sortAscendingParam)
 	sv.AddStructField("SortBy", sortByParam)
+	sv.AddStructField("Source", sourceParam)
 	sv.AddStructField("Type_", type_Param)
 	inputDataValue, inputError := sv.GetStructValue()
 	if inputError != nil {

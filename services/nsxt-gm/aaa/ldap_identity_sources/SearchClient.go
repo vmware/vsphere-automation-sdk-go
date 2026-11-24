@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -23,10 +24,11 @@ type SearchClient interface {
 	// Search the LDAP identity source for users and groups that match the given filter_value. In most cases, the LDAP source performs a case-insensitive search.
 	//
 	// @param ldapIdentitySourceIdParam (required)
-	// @param filterValueParam Search filter value (required)
+	// @param filterValueParam A string to use when searching for users and groups in the LDAP identity source. (required)
 	// @return com.vmware.nsx_global_policy.model.LdapIdentitySourceSearchResultList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

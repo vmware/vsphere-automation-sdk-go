@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,20 +21,21 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type RulesClient interface {
 
-	// Delete rule
+	// Delete a distributed firewall (DFW) rule from a security policy.
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)
 	// @param ruleIdParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Delete(domainIdParam string, securityPolicyIdParam string, ruleIdParam string) error
 
-	// Read rule
+	// Returns the configuration of a specific distributed firewall rule within a security policy.
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)
@@ -41,32 +43,35 @@ type RulesClient interface {
 	// @return com.vmware.nsx_global_policy.model.Rule
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get(domainIdParam string, securityPolicyIdParam string, ruleIdParam string) (nsx_global_policyModel.Rule, error)
 
-	// List rules
+	// Returns a list of all distributed firewall rules within a specific security policy.
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)
 	// @param cursorParam Opaque cursor to be used for getting next page of records (supplied by current result page) (optional)
-	// @param includeMarkForDeleteObjectsParam Include objects that are marked for deletion in results (optional, default to false)
-	// @param includedFieldsParam Comma separated list of fields that should be included in query result (optional)
+	// @param includeConflictsParam If true, resources currently in a sandboxed state due to federation conflicts will be included in the list results alongside active intent. Sandboxed resources will have has_conflict=true in the response. Applicable on LM only. On FNS, all resources including conflicting ones are always returned regardless of this parameter. Default is false. (optional, default to false)
+	// @param includeMarkForDeleteObjectsParam If true, resources that are marked for deletion will be included in the results. By default, these resources are not included. (optional, default to false)
+	// @param includedFieldsParam Note - this parameter currently only works when used with the search APIs /policy/api/v1/search/query and /policy/api/v1/search/dsl. It is ignored for other list APIs. (optional)
 	// @param pageSizeParam Maximum number of results to return in this page (server may return fewer) (optional, default to 1000)
-	// @param sortAscendingParam (optional)
+	// @param sortAscendingParam If true, results are sorted in ascending order (optional)
 	// @param sortByParam Field by which records are sorted (optional)
 	// @return com.vmware.nsx_global_policy.model.RuleListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
-	List(domainIdParam string, securityPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_global_policyModel.RuleListResult, error)
+	List(domainIdParam string, securityPolicyIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_global_policyModel.RuleListResult, error)
 
-	// Patch the rule. If Rule corresponding to the the given rule-id is not present, the object will get created and if it is present it will be updated. This is a full replace. Performance Note: If you want to edit several rules in a security policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/security-policies/<security-policy-id>
+	// Create or partially update a distributed firewall (DFW) rule within a security policy. If a rule with the given rule-id does not exist it will be created; otherwise only the specified fields will be updated. Performance Note: If you want to edit several rules in a security policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/security-policies/<security-policy-id>
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)
@@ -74,13 +79,14 @@ type RulesClient interface {
 	// @param ruleParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Patch(domainIdParam string, securityPolicyIdParam string, ruleIdParam string, ruleParam nsx_global_policyModel.Rule) error
 
-	// This is used to re-order a rule within a security policy.
+	// This is used to re-order a distributed firewall (DFW) rule within a security policy. NOTE: Default rule sequence numbers cannot be modified.
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)
@@ -91,13 +97,14 @@ type RulesClient interface {
 	// @return com.vmware.nsx_global_policy.model.Rule
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Revise(domainIdParam string, securityPolicyIdParam string, ruleIdParam string, ruleParam nsx_global_policyModel.Rule, anchorPathParam *string, operationParam *string) (nsx_global_policyModel.Rule, error)
 
-	// Update the rule. Create new rule if a rule with the rule-id is not already present. Performance Note: If you wish to edit several rules in a security policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/security-policies/<security-policy-id>
+	// Create or update a distributed firewall (DFW) rule within a security policy. If a rule with the given rule-id does not exist it will be created; otherwise it will be updated. Performance Note: If you wish to edit several rules in a security policy, prefer below mentioned API for optimal performance. Pass all the rules which you wish to edit as embedded rules to it. Use this API - PATCH (or PUT) /infra/domains/<domain-id>/security-policies/<security-policy-id>
 	//
 	// @param domainIdParam (required)
 	// @param securityPolicyIdParam (required)
@@ -106,6 +113,7 @@ type RulesClient interface {
 	// @return com.vmware.nsx_global_policy.model.Rule
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -205,7 +213,7 @@ func (rIface *rulesClient) Get(domainIdParam string, securityPolicyIdParam strin
 	}
 }
 
-func (rIface *rulesClient) List(domainIdParam string, securityPolicyIdParam string, cursorParam *string, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_global_policyModel.RuleListResult, error) {
+func (rIface *rulesClient) List(domainIdParam string, securityPolicyIdParam string, cursorParam *string, includeConflictsParam *bool, includeMarkForDeleteObjectsParam *bool, includedFieldsParam *string, pageSizeParam *int64, sortAscendingParam *bool, sortByParam *string) (nsx_global_policyModel.RuleListResult, error) {
 	typeConverter := rIface.connector.TypeConverter()
 	executionContext := rIface.connector.NewExecutionContext()
 	operationRestMetaData := rulesListRestMetadata()
@@ -216,6 +224,7 @@ func (rIface *rulesClient) List(domainIdParam string, securityPolicyIdParam stri
 	sv.AddStructField("DomainId", domainIdParam)
 	sv.AddStructField("SecurityPolicyId", securityPolicyIdParam)
 	sv.AddStructField("Cursor", cursorParam)
+	sv.AddStructField("IncludeConflicts", includeConflictsParam)
 	sv.AddStructField("IncludeMarkForDeleteObjects", includeMarkForDeleteObjectsParam)
 	sv.AddStructField("IncludedFields", includedFieldsParam)
 	sv.AddStructField("PageSize", pageSizeParam)

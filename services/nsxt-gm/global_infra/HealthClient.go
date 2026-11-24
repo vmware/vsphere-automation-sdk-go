@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,10 +23,11 @@ type HealthClient interface {
 
 	// Get health stats for policy modules with success and failure counters
 	//
-	// @param dependentServicesHealthParam Fetch the health of policy and it's dependent services. (optional)
+	// @param dependentServicesHealthParam If set to false, then it will return only policy health. If set to true, then it will return health of policy and it's dependent services. If it is not provided, then then it will return health of policy and it's dependent services. (optional)
 	// @return DynamicStructure
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,12 +21,26 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type PreferencesClient interface {
 
+	// Get user onboarding preferences for every known site (or a requested subset) in a single call, instead of calling GetSiteOnboardingPreference once per site.
+	//
+	// @param bulkSiteRequestParam (required)
+	// @return com.vmware.nsx_global_policy.model.AllSitesOnboardingPreference
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Create(bulkSiteRequestParam nsx_global_policyModel.BulkSiteRequest) (nsx_global_policyModel.AllSitesOnboardingPreference, error)
+
 	// Get user onboarding preferences for a site on global manager.
 	//
 	// @param siteIdParam (required)
 	// @return com.vmware.nsx_global_policy.model.SiteOnboardingPreference
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -39,6 +54,7 @@ type PreferencesClient interface {
 	// @return com.vmware.nsx_global_policy.model.SiteOnboardingPreference
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -55,6 +71,7 @@ type preferencesClient struct {
 func NewPreferencesClient(connector vapiProtocolClient_.Connector) *preferencesClient {
 	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_global_policy.global_infra.sites.onboarding.preferences")
 	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"create": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "create"),
 		"get":    vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
 		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
 	}
@@ -70,6 +87,38 @@ func (pIface *preferencesClient) GetErrorBindingType(errorName string) vapiBindi
 		return entry
 	}
 	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
+}
+
+func (pIface *preferencesClient) Create(bulkSiteRequestParam nsx_global_policyModel.BulkSiteRequest) (nsx_global_policyModel.AllSitesOnboardingPreference, error) {
+	typeConverter := pIface.connector.TypeConverter()
+	executionContext := pIface.connector.NewExecutionContext()
+	operationRestMetaData := preferencesCreateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(preferencesCreateInputType(), typeConverter)
+	sv.AddStructField("BulkSiteRequest", bulkSiteRequestParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_global_policyModel.AllSitesOnboardingPreference
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := pIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.global_infra.sites.onboarding.preferences", "create", inputDataValue, executionContext)
+	var emptyOutput nsx_global_policyModel.AllSitesOnboardingPreference
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), PreferencesCreateOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_global_policyModel.AllSitesOnboardingPreference), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), pIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
 }
 
 func (pIface *preferencesClient) Get(siteIdParam string) (nsx_global_policyModel.SiteOnboardingPreference, error) {

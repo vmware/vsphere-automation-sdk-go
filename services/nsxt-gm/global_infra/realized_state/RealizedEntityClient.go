@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,10 +22,11 @@ type RealizedEntityClient interface {
 
 	// Refresh the status and statistics of all realized entities associated with given intent path synchronously. The vmw-async: True HTTP header cannot be used with this API.
 	//
-	// @param intentPathParam String Path of the intent object (required)
-	// @param enforcementPointPathParam String Path of the enforcement point (optional)
+	// @param intentPathParam Intent path of object, forward slashes must be escaped using %2F (required)
+	// @param enforcementPointPathParam enforcement point path, forward slashes must be escaped using %2F (optional)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

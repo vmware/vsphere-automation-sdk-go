@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,33 +21,36 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type SecurityClient interface {
 
-	// Get the current dfw firewall configurations.
+	// Get the current Distributed Firewall (DFW) and Identity Firewall (IDFW) configurations.
 	// @return com.vmware.nsx_global_policy.model.DfwFirewallConfiguration
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get() (nsx_global_policyModel.DfwFirewallConfiguration, error)
 
-	// Update dfw firewall related configurations.
+	// Update Distributed Firewall (DFW) and Identity Firewall (IDFW) related configurations. Turning off distributed services (\"enable_firewall\": false) will turn off Distributed Firewall, Identity Firewall, Distributed Intrusion Detection and Prevention Service.
 	//
 	// @param dfwFirewallConfigurationParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Patch(dfwFirewallConfigurationParam nsx_global_policyModel.DfwFirewallConfiguration) error
 
-	// Update dfw firewall related configurations.
+	// Update Distributed Firewall (DFW) and Identity Firewall (IDFW) related configurations. Turning off distributed services (\"enable_firewall\": false) will turn off Distributed Firewall, Identity Firewall, Distributed Intrusion Detection and Prevention Service.
 	//
 	// @param dfwFirewallConfigurationParam (required)
 	// @return com.vmware.nsx_global_policy.model.DfwFirewallConfiguration
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

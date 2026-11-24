@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -20,14 +21,15 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 
 type StatusClient interface {
 
-	// Get Consolidated Status of an intent object (with or without enforcement specific status details). The request is evaluated as follows: - <intent_path>: the request is evaluated on all enforcement points for the given intent without enforcement point specific details. - <intent_path, include_enforced_status>: the request is evaluated on all enforcement points for the given intent with enforcement point specific details.
+	// Get Realized Status of an intent object (with or without per-host status details). The realized status is returned in the consolidated_status fields of the response. The request is evaluated as follows: - <intent_path>: the request is evaluated on all enforcement points for the given intent without enforcement point specific details. - <intent_path, include_enforced_status=true>: the request is evaluated on all enforcement points for the given intent with per-host (transport node) realization details. This is only supported when intent_path refers to an object of one of the following types: SECURITY_POLICY, GATEWAY_POLICY, IDS_SECURITY_POLICY, IDS_GATEWAY_POLICY, IDS_COMPRESSED_SIGNATURE, IDS_COMPRESSED_CUSTOM_SIGNATURE, TLS_POLICY, VPC_SECURITY_POLICY, VPC_GATEWAY_POLICY, PUBLIC_CLOUD_VPC_SECURITY_POLICY, Passing the path of an unsupported type (e.g. a rule) with include_enforced_status=true will result in an error. In such cases, pass the path of the parent policy object instead (e.g., the SecurityPolicy or GatewayPolicy that contains the rule).
 	//
-	// @param intentPathParam Policy Path of the intent object (required)
-	// @param includeEnforcedStatusParam Include Enforced Status Flag (optional, default to false)
-	// @param sitePathParam Policy Path of the site from where the realization status needs to be fetched (optional)
+	// @param intentPathParam Policy Path referencing an intent object. (required)
+	// @param includeEnforcedStatusParam Flag conveying whether to include detailed per-transport-node enforcement status in the response. When set to true, each item in consolidated_status_per_enforcement_point is returned as ConsolidatedStatusNsxT (with the enforced_status field populated). When set to false (default), each item is returned as ConsolidatedStatusPerEnforcementPoint (enforced_status absent). Use the resource_type field in each item to distinguish between the two types. This flag is only supported when intent_path refers to an object of one of the following types: SECURITY_POLICY, GATEWAY_POLICY, IDS_SECURITY_POLICY, IDS_GATEWAY_POLICY, IDS_COMPRESSED_SIGNATURE, IDS_COMPRESSED_CUSTOM_SIGNATURE, TLS_POLICY, VPC_SECURITY_POLICY, VPC_GATEWAY_POLICY, PUBLIC_CLOUD_VPC_SECURITY_POLICY, COMMUNICATION_MAP (deprecated alias for SECURITY_POLICY), EDGE_COMMUNICATION_MAP (deprecated alias for GATEWAY_POLICY). Setting this flag for any other type (e.g. a rule path) will result in an error. In such cases, pass the path of the parent policy object instead (e.g., the SecurityPolicy or GatewayPolicy that contains the rule). (optional, default to false)
+	// @param sitePathParam Policy Path referencing a site. This is applicable only on a GlobalManager. If no site_path is specified, then based on the span of the intent the response will be fetched from the respective sites (optional)
 	// @return com.vmware.nsx_global_policy.model.ConsolidatedRealizedStatus
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

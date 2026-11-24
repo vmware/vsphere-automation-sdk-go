@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -21,12 +22,16 @@ const _ = vapiCore_.SupportedByRuntimeVersion2
 type Listener_certificateClient interface {
 
 	// Connects to the given IP and port, and, if an SSL listener is present, returns the certificate of the listener. Intent of this API is \"Do you trust this certificate?\".
+	//  GetInfraSiteListenerCertificate is deprecated and will be removed in a future release. This API is non-functional and has always returned an empty response since it was first introduced.
 	//
-	// @param addressParam Host name or IP address of TLS listener (required)
+	// Deprecated: This API element is deprecated.
+	//
+	// @param addressParam Host name or IP address of TLS listener. (required)
 	// @param portParam TCP port number of the TLS listener (required)
 	// @return com.vmware.nsx_global_policy.model.TlsListenerCertificate
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

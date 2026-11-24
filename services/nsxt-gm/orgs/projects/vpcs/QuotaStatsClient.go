@@ -1,0 +1,101 @@
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
+
+// Auto generated code. DO NOT EDIT.
+
+// Interface file for service: QuotaStats
+// Used by client-side stubs.
+
+package vpcs
+
+import (
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_global_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
+)
+
+const _ = vapiCore_.SupportedByRuntimeVersion2
+
+type QuotaStatsClient interface {
+
+	// Get quota details
+	//
+	// @param orgIdParam (required)
+	// @param projectIdParam (required)
+	// @param vpcIdParam (required)
+	// @param pathPrefixParam Path prefix for retriving the quota details. This value will be compared (exact match) with path-prefix of the quota. - Sample example - path_prefix=/orgs/org-1/projects/project-1/ (required)
+	// @param constraintPathParam Constraint path to retrive the quota details. Please note, when this constraint path is given, only this constraint will be considered on given path_prefix for returning the quota status. - Sample example - constraint_path=/orgs/org-1/projects/project-1/infra/constraints/constraint-1 (optional)
+	// @return com.vmware.nsx_global_policy.model.QuotaStatsListResult
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Get(orgIdParam string, projectIdParam string, vpcIdParam string, pathPrefixParam string, constraintPathParam *string) (nsx_global_policyModel.QuotaStatsListResult, error)
+}
+
+type quotaStatsClient struct {
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
+}
+
+func NewQuotaStatsClient(connector vapiProtocolClient_.Connector) *quotaStatsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_global_policy.orgs.projects.vpcs.quota_stats")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"get": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "get"),
+	}
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
+
+	qIface := quotaStatsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &qIface
+}
+
+func (qIface *quotaStatsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+	if entry, ok := qIface.errorsBindingMap[errorName]; ok {
+		return entry
+	}
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
+}
+
+func (qIface *quotaStatsClient) Get(orgIdParam string, projectIdParam string, vpcIdParam string, pathPrefixParam string, constraintPathParam *string) (nsx_global_policyModel.QuotaStatsListResult, error) {
+	typeConverter := qIface.connector.TypeConverter()
+	executionContext := qIface.connector.NewExecutionContext()
+	operationRestMetaData := quotaStatsGetRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(quotaStatsGetInputType(), typeConverter)
+	sv.AddStructField("OrgId", orgIdParam)
+	sv.AddStructField("ProjectId", projectIdParam)
+	sv.AddStructField("VpcId", vpcIdParam)
+	sv.AddStructField("PathPrefix", pathPrefixParam)
+	sv.AddStructField("ConstraintPath", constraintPathParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_global_policyModel.QuotaStatsListResult
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := qIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.orgs.projects.vpcs.quota_stats", "get", inputDataValue, executionContext)
+	var emptyOutput nsx_global_policyModel.QuotaStatsListResult
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), QuotaStatsGetOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_global_policyModel.QuotaStatsListResult), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), qIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}

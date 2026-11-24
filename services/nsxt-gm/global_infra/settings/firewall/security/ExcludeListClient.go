@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,32 +23,35 @@ type ExcludeListClient interface {
 
 	// Filter the firewall exclude list by the given object, to check whether the object is a member of this exclude list.
 	//
-	// @param intentPathParam Path of the intent object to be searched in the exclude list (required)
-	// @param deepCheckParam Check all parents (optional, default to false)
-	// @param enforcementPointPathParam Path of the enforcement point (optional)
+	// @param intentPathParam Path of the intent object to be searched in the exclude list. (required)
+	// @param deepCheckParam Deep check all parents of requested intent object, if any of them is in exclude list. If found, makes requested object as excluded. (optional, default to false)
+	// @param enforcementPointPathParam Path of the enforcement point from where the result need to be fetched. If not provided, available enforcement point will be considered. (optional)
 	// @return com.vmware.nsx_global_policy.model.PolicyResourceReference
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Filter(intentPathParam string, deepCheckParam *bool, enforcementPointPathParam *string) (nsx_global_policyModel.PolicyResourceReference, error)
 
-	// Read exclude list for firewall
+	// Read the exclude list for the distributed firewall (DFW). Members in this list are excluded from DFW enforcement.
 	// @return com.vmware.nsx_global_policy.model.PolicyExcludeList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
 	// @throws NotFound  Not Found
 	Get() (nsx_global_policyModel.PolicyExcludeList, error)
 
-	// Read security policy exclude list including system and user excluded members.
+	// Read the distributed firewall (DFW) exclude list including both system-owned and user-defined excluded members.
 	// @return com.vmware.nsx_global_policy.model.PolicyExcludeList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -59,6 +63,7 @@ type ExcludeListClient interface {
 	// @param policyExcludeListParam (required)
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
@@ -71,6 +76,7 @@ type ExcludeListClient interface {
 	// @return com.vmware.nsx_global_policy.model.PolicyExcludeList
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error

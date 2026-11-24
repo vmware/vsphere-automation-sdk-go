@@ -1,0 +1,187 @@
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
+// SPDX-License-Identifier: BSD-2-Clause
+
+// Auto generated code. DO NOT EDIT.
+
+// Interface file for service: Constraints
+// Used by client-side stubs.
+
+package infra
+
+import (
+	vapiStdErrors_ "github.com/vmware/vsphere-automation-sdk-go/lib/vapi/std/errors"
+	vapiBindings_ "github.com/vmware/vsphere-automation-sdk-go/runtime/bindings"
+	vapiCore_ "github.com/vmware/vsphere-automation-sdk-go/runtime/core"
+	vapiProtocolClient_ "github.com/vmware/vsphere-automation-sdk-go/runtime/protocol/client"
+	nsx_global_policyModel "github.com/vmware/vsphere-automation-sdk-go/services/nsxt-gm/model"
+)
+
+const _ = vapiCore_.SupportedByRuntimeVersion2
+
+type ConstraintsClient interface {
+
+	// Delete tenant constraint.
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param constraintIdParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Delete(orgIdParam string, projectIdParam string, constraintIdParam string) error
+
+	// Create tenant constraint if not exists, otherwise update the existing constraint. Any quota constraint created under custom project's scope should have path_prefix under the context of VPC Example: path_prefix=\"/orgs/default/projects/project-1/vpcs/vpc-1/\"
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param constraintIdParam (required)
+	// @param constraintParam (required)
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Patch(orgIdParam string, projectIdParam string, constraintIdParam string, constraintParam nsx_global_policyModel.Constraint) error
+
+	// Create tenant constraint if it does not exist, otherwise replace the existing constraint. Any quota constraint created under custom project's scope should have path_prefix under the context of VPC Example: path_prefix=\"/orgs/default/projects/project-1/vpcs/vpc-1/\"
+	//
+	// @param orgIdParam The organization ID (required)
+	// @param projectIdParam The project ID (required)
+	// @param constraintIdParam (required)
+	// @param constraintParam (required)
+	// @return com.vmware.nsx_global_policy.model.Constraint
+	//
+	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
+	// @throws Unauthorized  Forbidden
+	// @throws ServiceUnavailable  Service Unavailable
+	// @throws InternalServerError  Internal Server Error
+	// @throws NotFound  Not Found
+	Update(orgIdParam string, projectIdParam string, constraintIdParam string, constraintParam nsx_global_policyModel.Constraint) (nsx_global_policyModel.Constraint, error)
+}
+
+type constraintsClient struct {
+	connector           vapiProtocolClient_.Connector
+	interfaceDefinition vapiCore_.InterfaceDefinition
+	errorsBindingMap    map[string]vapiBindings_.BindingType
+}
+
+func NewConstraintsClient(connector vapiProtocolClient_.Connector) *constraintsClient {
+	interfaceIdentifier := vapiCore_.NewInterfaceIdentifier("com.vmware.nsx_global_policy.orgs.projects.infra.constraints")
+	methodIdentifiers := map[string]vapiCore_.MethodIdentifier{
+		"delete": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "delete"),
+		"patch":  vapiCore_.NewMethodIdentifier(interfaceIdentifier, "patch"),
+		"update": vapiCore_.NewMethodIdentifier(interfaceIdentifier, "update"),
+	}
+	interfaceDefinition := vapiCore_.NewInterfaceDefinition(interfaceIdentifier, methodIdentifiers)
+	errorsBindingMap := make(map[string]vapiBindings_.BindingType)
+
+	cIface := constraintsClient{interfaceDefinition: interfaceDefinition, errorsBindingMap: errorsBindingMap, connector: connector}
+	return &cIface
+}
+
+func (cIface *constraintsClient) GetErrorBindingType(errorName string) vapiBindings_.BindingType {
+	if entry, ok := cIface.errorsBindingMap[errorName]; ok {
+		return entry
+	}
+	return vapiStdErrors_.ERROR_BINDINGS_MAP[errorName]
+}
+
+func (cIface *constraintsClient) Delete(orgIdParam string, projectIdParam string, constraintIdParam string) error {
+	typeConverter := cIface.connector.TypeConverter()
+	executionContext := cIface.connector.NewExecutionContext()
+	operationRestMetaData := constraintsDeleteRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(constraintsDeleteInputType(), typeConverter)
+	sv.AddStructField("OrgId", orgIdParam)
+	sv.AddStructField("ProjectId", projectIdParam)
+	sv.AddStructField("ConstraintId", constraintIdParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.orgs.projects.infra.constraints", "delete", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
+}
+
+func (cIface *constraintsClient) Patch(orgIdParam string, projectIdParam string, constraintIdParam string, constraintParam nsx_global_policyModel.Constraint) error {
+	typeConverter := cIface.connector.TypeConverter()
+	executionContext := cIface.connector.NewExecutionContext()
+	operationRestMetaData := constraintsPatchRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(constraintsPatchInputType(), typeConverter)
+	sv.AddStructField("OrgId", orgIdParam)
+	sv.AddStructField("ProjectId", projectIdParam)
+	sv.AddStructField("ConstraintId", constraintIdParam)
+	sv.AddStructField("Constraint", constraintParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		return vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.orgs.projects.infra.constraints", "patch", inputDataValue, executionContext)
+	if methodResult.IsSuccess() {
+		return nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return methodError.(error)
+	}
+}
+
+func (cIface *constraintsClient) Update(orgIdParam string, projectIdParam string, constraintIdParam string, constraintParam nsx_global_policyModel.Constraint) (nsx_global_policyModel.Constraint, error) {
+	typeConverter := cIface.connector.TypeConverter()
+	executionContext := cIface.connector.NewExecutionContext()
+	operationRestMetaData := constraintsUpdateRestMetadata()
+	executionContext.SetConnectionMetadata(vapiCore_.RESTMetadataKey, operationRestMetaData)
+	executionContext.SetConnectionMetadata(vapiCore_.ResponseTypeKey, vapiCore_.NewResponseType(true, false))
+
+	sv := vapiBindings_.NewStructValueBuilder(constraintsUpdateInputType(), typeConverter)
+	sv.AddStructField("OrgId", orgIdParam)
+	sv.AddStructField("ProjectId", projectIdParam)
+	sv.AddStructField("ConstraintId", constraintIdParam)
+	sv.AddStructField("Constraint", constraintParam)
+	inputDataValue, inputError := sv.GetStructValue()
+	if inputError != nil {
+		var emptyOutput nsx_global_policyModel.Constraint
+		return emptyOutput, vapiBindings_.VAPIerrorsToError(inputError)
+	}
+
+	methodResult := cIface.connector.GetApiProvider().Invoke("com.vmware.nsx_global_policy.orgs.projects.infra.constraints", "update", inputDataValue, executionContext)
+	var emptyOutput nsx_global_policyModel.Constraint
+	if methodResult.IsSuccess() {
+		output, errorInOutput := typeConverter.ConvertToGolang(methodResult.Output(), ConstraintsUpdateOutputType())
+		if errorInOutput != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInOutput)
+		}
+		return output.(nsx_global_policyModel.Constraint), nil
+	} else {
+		methodError, errorInError := typeConverter.ConvertToGolang(methodResult.Error(), cIface.GetErrorBindingType(methodResult.Error().Name()))
+		if errorInError != nil {
+			return emptyOutput, vapiBindings_.VAPIerrorsToError(errorInError)
+		}
+		return emptyOutput, methodError.(error)
+	}
+}

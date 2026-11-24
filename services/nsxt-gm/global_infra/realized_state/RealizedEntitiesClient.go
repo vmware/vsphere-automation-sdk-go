@@ -1,4 +1,5 @@
-// Copyright © 2019-2023 VMware, Inc. All Rights Reserved.
+// Copyright (c) 2019-2026 Broadcom. All Rights Reserved.
+// The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.
 // SPDX-License-Identifier: BSD-2-Clause
 
 // Auto generated code. DO NOT EDIT.
@@ -22,11 +23,12 @@ type RealizedEntitiesClient interface {
 
 	// Get list of realized entities associated with intent object, specified by path in query parameter
 	//
-	// @param intentPathParam String Path of the intent object (required)
-	// @param sitePathParam Policy Path of the site (optional)
+	// @param intentPathParam Intent path of object, forward slashes must be escaped using %2F (required)
+	// @param sitePathParam Policy Path referencing a site. This is applicable only on a GlobalManager. If no site_path is specified, then based on the span of the intent the response will be fetched from the respective sites (optional)
 	// @return com.vmware.nsx_global_policy.model.GenericPolicyRealizedResourceListResult
 	//
 	// @throws InvalidRequest  Bad Request, Precondition Failed
+	// @throws TimedOut  Gateway Timeout
 	// @throws Unauthorized  Forbidden
 	// @throws ServiceUnavailable  Service Unavailable
 	// @throws InternalServerError  Internal Server Error
